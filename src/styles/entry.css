@@ -38,6 +38,7 @@
 .rc-head { margin-top: 28px; }
 .rc-head h1 { margin: 0; font-size: clamp(30px, 4vw, 52px); line-height: 1.05; font-weight: 600; letter-spacing: -.03em; text-wrap: balance; }
 .rc-head p { margin: 14px 0 0; max-width: 60ch; font-size: 17px; line-height: 1.55; color: var(--ink-2); }
+.rc-head .rc-shot { margin: 10px 0 0; font-size: 11px; line-height: 1.4; color: var(--ink-3); }
 
 /* actions */
 .rc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 24px; }
@@ -47,6 +48,7 @@
 
 /* sections */
 .rc-sec { margin-top: 72px; }
+.rc-howto { margin: 0 0 14px; max-width: 64ch; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
 .rc-sec h2 { margin: 0 0 18px; font-size: 20px; line-height: 1.2; font-weight: 600; letter-spacing: -.02em; }
 
 /* seen in */

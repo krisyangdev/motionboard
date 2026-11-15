@@ -1,9 +1,10 @@
 // The one SEO head function: page data in, meta / canonical / hreflang / Open Graph / JSON-LD out.
 // Every route's head() goes through seoHead(); the sitemap in vite.config.ts uses the same paths.
 import { notFound } from '@tanstack/react-router'
-import { OG_LOCALE } from '@/i18n'
-import { bySlug, loadText } from '@/data/terms'
-import { BRAND, SITE_URL, type Locale } from '@/site'
+import { HERO_FILM } from '@/data/hero'
+import { OG_LOCALE, STRINGS } from '@/i18n'
+import { bySlug, loadText, media, recipePath, termName, type RecipeText, type Term } from '@/data/terms'
+import { absolute, BRAND, SITE_URL, type Locale } from '@/site'
 
 /** Absolute URL of a page; `path` is the English path, starting with a slash. */
 export const pageUrl = (locale: Locale, path: string) => `${SITE_URL}${locale === 'zh' ? '/zh' : ''}${path}`
@@ -69,3 +70,69 @@ export const loadRecipe =
     if (!term) throw notFound()
     return { term, text: await loadText(term.slug, locale) }
   }
+
+/** Date the preview films were published, for VideoObject.uploadDate */
+const FILM_UPLOAD_DATE = '2026-10-30'
+
+export const homeHead = (locale: Locale) =>
+  seoHead({
+    title: BRAND.title[locale],
+    description: BRAND.line[locale],
+    path: '/',
+    lang: locale,
+    type: 'website',
+    image: absolute(HERO_FILM.cover),
+    jsonLd: [
+      {
+        '@type': 'WebSite',
+        name: BRAND.name,
+        url: pageUrl(locale, '/'),
+        inLanguage: IN_LANGUAGE[locale],
+        description: BRAND.line[locale],
+      },
+    ],
+  })
+
+export function recipeHead(locale: Locale, t: Term, text: RecipeText) {
+  const path = recipePath(t)
+  const url = pageUrl(locale, path)
+  const name = termName(t, locale)
+  const image = absolute(media(t, 'jpg'))
+  const video = absolute(media(t, 'mp4'))
+  const { title, description, faq } = text.seo
+  return seoHead({
+    title,
+    description,
+    path,
+    lang: locale,
+    image,
+    video,
+    jsonLd: [
+      {
+        '@type': 'VideoObject',
+        name,
+        description,
+        thumbnailUrl: image,
+        contentUrl: video,
+        uploadDate: FILM_UPLOAD_DATE,
+        duration: `PT${t.dur}S`,
+        inLanguage: IN_LANGUAGE[locale],
+        url,
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: BRAND.name, item: pageUrl(locale, '/') },
+          { '@type': 'ListItem', position: 2, name, item: url },
+        ],
+      },
+    ],
+  })
+}
+
+export const savedHead = (locale: Locale) =>
+  seoHead({ title: STRINGS[locale].saved.title, description: BRAND.line[locale], path: '/saved/', lang: locale, noindex: true })

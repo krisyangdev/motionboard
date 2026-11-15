@@ -5,6 +5,9 @@
 //   skill skills/motionboard/recipes/<slug>.md and index.md (source files by relative path, committed)
 // Also writes src/data/gen/ (gitignored): index.json for every page, text/<slug>.<locale>.json for the
 // recipe page only, so the long copy stays out of the shared client chunk.
+// Search copy (common names, titles, how-to, FAQ) comes from src/data/seo/<slug>.json: the common name goes
+// into index.json and every agent-facing file, the rest into the recipe page text.
+// Also writes public/_redirects (gitignored): 301s from the old recipe slugs in src/data/renamed.json.
 // Also copies skills/motionboard/source to public/source (served by the site) and rewrites the recipe
 // tables in README.md and README_CN.md between the recipes:start and recipes:end markers.
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync, existsSync, cpSync } from 'node:fs'
@@ -43,6 +46,16 @@ const order = [...terms].sort(
   (a, b) => POSITION_ORDER.indexOf(a.pos) - POSITION_ORDER.indexOf(b.pos) || a.n - b.n,
 )
 const bySlug = Object.fromEntries(terms.map((t) => [t.slug, t]))
+const renamed = readJson('src/data/renamed.json')
+
+const seo = Object.fromEntries(
+  terms.map((t) => {
+    const file = `src/data/seo/${t.slug}.json`
+    if (!existsSync(join(ROOT, file))) throw new Error(`missing ${file} for recipe "${t.slug}"`)
+    return [t.slug, readJson(file)]
+  }),
+)
+const commonName = (t) => seo[t.slug].en.name
 
 // Client data: the index fields with the one-line def, and one text file per recipe and locale.
 const GEN_DIR = join(ROOT, 'src/data/gen')
@@ -55,12 +68,26 @@ gen(
   terms.map((t) => {
     if (!en[t.slug]) throw new Error(`no en.json entry for "${t.slug}"`)
     const { n, slug, cat, pos, zh, en: name, star, samples, video, dur, zh1 } = t
-    return { n, slug, cat, pos, zh, en: name, star, samples, video, dur, def: { en: en[t.slug].def, zh: zh1 } }
+    return {
+      n,
+      slug,
+      cat,
+      pos,
+      zh,
+      en: name,
+      name: { en: seo[slug].en.name, zh: seo[slug].zh.name },
+      star,
+      samples,
+      video,
+      dur,
+      def: { en: en[t.slug].def, zh: zh1 },
+    }
   }),
 )
+const pageSeo = ({ title, description, howto, faq }) => ({ title, description, howto, faq })
 for (const t of terms) {
   const { def, ...enText } = en[t.slug]
-  gen(`text/${t.slug}.en.json`, enText)
+  gen(`text/${t.slug}.en.json`, { ...enText, seo: pageSeo(seo[t.slug].en) })
   gen(`text/${t.slug}.zh.json`, {
     why: t.why,
     spec: t.spec,
@@ -68,6 +95,7 @@ for (const t of terms) {
     says: t.says,
     // a source reference to a recipe that is not on the site is dropped
     vs: t.vs.flatMap(([zh, text]) => (slugByZh[zh] ? [[slugByZh[zh], text]] : [])),
+    seo: pageSeo(seo[t.slug].zh),
   })
 }
 
@@ -160,7 +188,8 @@ function recipeMd(t, skill) {
   }
 
   const L = []
-  L.push(`# ${t.en}`, '')
+  L.push(`# ${commonName(t)}`, '')
+  if (t.en.toLowerCase() !== commonName(t).toLowerCase()) L.push(`Motionboard shot name: ${t.en}`, '')
   if (x?.def) L.push(x.def, '')
   L.push(
     `- Position in a launch film: ${POSITIONS[t.pos]}`,
@@ -194,7 +223,7 @@ function recipeMd(t, skill) {
         console.warn(`warn: ${t.slug}: vs references unknown slug "${slug}"`)
         continue
       }
-      L.push(`- [${o.en}](${skill ? `./${slug}.md` : mdUrl(slug)}): ${text}`)
+      L.push(`- [${commonName(o)}](${skill ? `./${slug}.md` : mdUrl(slug)}): ${text}`)
     }
     L.push('')
   }
@@ -252,7 +281,7 @@ for (const p of POSITION_ORDER) {
   const group = order.filter((t) => t.pos === p)
   if (!group.length) continue
   idx.push(`## ${POSITIONS[p]}`, '')
-  for (const t of group) idx.push(`- [${t.en}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
+  for (const t of group) idx.push(`- [${commonName(t)}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
   idx.push('')
 }
 writeFileSync(join(webDir, 'index.md'), idx.join('\n'))
@@ -269,7 +298,7 @@ for (const p of POSITION_ORDER) {
   if (!group.length) continue
   sidx.push(`## ${POSITIONS[p]}`, '')
   for (const t of group) {
-    sidx.push(`- **${t.en}** \`${t.slug}\`: ${en[t.slug]?.def || ''} (${filmSeconds(t.video)}s)`)
+    sidx.push(`- **${commonName(t)}** \`${t.slug}\`: ${en[t.slug]?.def || ''} (${filmSeconds(t.video)}s)`)
   }
   sidx.push('')
 }
@@ -286,7 +315,7 @@ function readmeTable(lang) {
     if (!group.length) continue
     L.push(`### ${zh ? POSITIONS_ZH[p] : POSITIONS[p]} (${group.length})`, '', zh ? '| 配方 | 镜头 |' : '| Recipe | Shot |', '| --- | --- |')
     for (const t of group) {
-      L.push(`| [${zh ? t.zh : t.en}](${base}/${t.slug}/) | ${mdCell(zh ? t.zh1 || '' : en[t.slug]?.def || '')} |`)
+      L.push(`| [${zh ? seo[t.slug].zh.name : commonName(t)}](${base}/${t.slug}/) | ${mdCell(zh ? t.zh1 || '' : en[t.slug]?.def || '')} |`)
     }
     L.push('')
   }
@@ -321,8 +350,18 @@ const llms = [
   '',
   `- [All recipes](${SITE}/r/index.md): the full list grouped by position in a launch film`,
 ]
-for (const t of order) llms.push(`- [${t.en}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
+for (const t of order) llms.push(`- [${commonName(t)}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
 llms.push('')
 writeFileSync(join(ROOT, 'public/llms.txt'), llms.join('\n'))
 
-console.log(`recipes: wrote ${built.length} recipes x 2 variants (public/r, ${SKILL_DIR}/recipes), index.md, llms.txt, README tables (${missing} without en.json text) for ${SITE}`)
+// Cloudflare static-assets redirects: the old recipe URLs, with and without the trailing slash
+const redirects = Object.entries(renamed).flatMap(([old, now]) => [
+  `/recipes/${old}/ /recipes/${now}/ 301`,
+  `/recipes/${old} /recipes/${now}/ 301`,
+  `/zh/recipes/${old}/ /zh/recipes/${now}/ 301`,
+  `/zh/recipes/${old} /zh/recipes/${now}/ 301`,
+  `/r/${old}.md /r/${now}.md 301`,
+])
+writeFileSync(join(ROOT, 'public/_redirects'), `${redirects.join('\n')}\n`)
+
+console.log(`recipes: wrote ${built.length} recipes x 2 variants (public/r, ${SKILL_DIR}/recipes), index.md, llms.txt, README tables, _redirects (${missing} without en.json text) for ${SITE}`)

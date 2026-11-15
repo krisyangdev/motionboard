@@ -4,7 +4,7 @@ import { loadRecipe, recipeHead } from '@/lib/seo'
 
 export const Route = createFileRoute('/zh/recipes/$slug')({
   loader: loadRecipe('zh'),
-  head: ({ loaderData }) => (loaderData ? recipeHead('zh', loaderData.term) : {}),
+  head: ({ loaderData }) => (loaderData ? recipeHead('zh', loaderData.term, loaderData.text) : {}),
   component: RecipeRoute,
 })
 

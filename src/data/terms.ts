@@ -23,6 +23,8 @@ export type RecipeText = {
   says: string[]
   /** [other recipe's slug, how they differ] */
   vs: [string, string][]
+  /** search copy of the recipe page (src/data/seo/<slug>.json) */
+  seo: { title: string; description: string; howto: string[]; faq: [string, string][] }
 }
 
 export type Term = {
@@ -32,6 +34,8 @@ export type Term = {
   pos: Position
   zh: string
   en: string
+  /** common name of the effect, in both locales */
+  name: Record<Locale, string>
   star: boolean
   samples: Sample[]
   video: string
@@ -77,8 +81,10 @@ export type MediaKind = keyof typeof MEDIA_FILE
 export const media = (t: Pick<Term, 'video'>, kind: MediaKind) => `${MEDIA_URL}/${t.video}${MEDIA_FILE[kind]}`
 export const recipePath = (t: Term) => `/recipes/${t.slug}/`
 export const recipeFile = (t: Term) => `/r/${t.slug}.md`
-/** Display name in the given locale */
-export const termName = (t: Term, locale: Locale) => (locale === 'zh' ? t.zh : t.en)
+/** Common name of the effect: tiles, links and the page H1 */
+export const termName = (t: Term, locale: Locale) => t.name[locale]
+/** Motionboard's own name for the shot */
+export const shotName = (t: Term, locale: Locale) => (locale === 'zh' ? t.zh : t.en)
 
 const ARION = 'https://x.com/Stv_Lynn/status/2114270956218892747'
 const sec = (x: string) => x.split(':').reduce((a, b) => a * 60 + Number(b), 0)

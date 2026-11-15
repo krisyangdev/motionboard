@@ -3,13 +3,18 @@ export type Locale = 'en' | 'zh'
 // Brand and canonical host. Change the name or domain here only.
 export const BRAND = {
   name: 'Motionboard',
+  // <title>, H1 and meta description of the home page
+  title: {
+    en: 'Launch-Film Motion Graphics with Claude Code & Codex',
+    zh: '用 Claude Code 和 Codex 做宣传片动效',
+  },
   headline: {
-    en: 'Shots from the best launch films, ready for your agent.',
-    zh: '顶级宣传片里的镜头，交给你的 Agent 做同款。',
+    en: 'Launch-film motion graphics with Claude Code and Codex',
+    zh: '用 Claude Code 和 Codex 做宣传片动效',
   },
   line: {
-    en: 'Shot language broken down from Apple and Linear launch films, rebuilt in code. Copy one to Claude Code and make the same shot for your product.',
-    zh: '拆解苹果、Linear 宣传片的镜头语言，用代码一比一复刻。复制一条给 Claude Code，给你的产品做同款镜头。',
+    en: 'A free HyperFrames skill and 38 shot recipes from Apple and Linear launch films, rebuilt in code. Copy one to your agent and make the same shot for your product.',
+    zh: '免费的 HyperFrames skill 和 38 个镜头配方，拆自苹果、Linear 宣传片，用代码复刻。复制一条给你的 Agent，给你的产品做同款镜头。',
   },
 }
 export const SITE_URL = 'https://motionboard.app'

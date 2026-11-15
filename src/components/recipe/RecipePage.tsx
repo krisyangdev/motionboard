@@ -6,7 +6,8 @@ import { FullRecipe } from '@/components/recipe/FullRecipe'
 import { Compare } from '@/components/recipe/Compare'
 import { Player } from '@/components/recipe/Player'
 import { SourceClip } from '@/components/recipe/SourceClip'
-import { byPos, order, sources, termName, type RecipeText, type Term } from '@/data/terms'
+import { InstallCommand } from '@/components/home/SkillInstall'
+import { byPos, order, shotName, sources, termName, type RecipeText, type Term } from '@/data/terms'
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { PageLink, useGoToRecipe, useLocale, useStrings } from '@/lib/locale'
 import { useStat } from '@/lib/stats'
@@ -30,6 +31,8 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   const k = pick.slug === t.slug ? pick.k : 0
   const selected = clips[k]
   const compare = useRef<HTMLDivElement>(null)
+  const name = termName(t, locale)
+  const shot = shotName(t, locale)
   const more = byPos(t.pos).filter((x) => x.slug !== t.slug)
 
   useEffect(() => {
@@ -95,7 +98,10 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
 
       <div className="rc-col">
         <header className="rc-head">
-          <h1 style={{ viewTransitionName: 'title' }}>{termName(t, locale)}</h1>
+          <h1 style={{ viewTransitionName: 'title' }}>{name}</h1>
+          {shot.toLowerCase() !== name.toLowerCase() && (
+            <p className="rc-shot mono">{s.recipe.shot(shot)}</p>
+          )}
           <p>{t.def[locale]}</p>
         </header>
 
@@ -120,10 +126,33 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
           </section>
         )}
 
+        <section className="rc-sec" data-rv>
+          <h2>{s.recipe.howto(name)}</h2>
+          {text.seo.howto.map((p) => (
+            <p key={p} className="rc-howto">
+              {p}
+            </p>
+          ))}
+          <div className="skill-row">
+            <InstallCommand />
+          </div>
+        </section>
+
         <section className="rc-sec">
           <FullRecipe term={t} text={text} />
         </section>
 
+        <section className="rc-sec" data-rv>
+          <h2>{s.recipe.faq}</h2>
+          <div className="faq">
+            {text.seo.faq.map(([q, a]) => (
+              <details key={q}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
       </div>
       {more.length > 0 && (
         <section className="rc-sec" data-rv>
