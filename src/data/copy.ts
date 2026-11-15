@@ -4,5 +4,5 @@ import type { Term } from './terms'
 import { GITHUB_URL } from '@/site'
 
 export function copyText(t: Term) {
-  return `Install the Motionboard skill from ${GITHUB_URL}, then use it to make the "${t.en}" shot for my product.`
+  return `Install the Motionboard skill from ${GITHUB_URL}, then use it to make the "${t.name.en}" shot (recipe ${t.slug}) for my product.`
 }
