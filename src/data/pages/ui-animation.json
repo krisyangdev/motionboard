@@ -1,0 +1,180 @@
+{
+  "id": "ui-animation",
+  "kind": "hub",
+  "path": "/ui-animation/",
+  "updated": "2026-11-16",
+  "en": {
+    "title": "UI Animation and Motion Graphics Examples",
+    "description": "Ten UI animation recipes from launch films: zoom to cursor, card flip, multiplayer cursors, focus hop and more. Built in code with HyperFrames.",
+    "h1": "UI animation examples from launch films",
+    "lede": "UI animation shows an interface working: a cursor clicks, a card flips, a layout rearranges. These ten recipes are motion graphics examples from software launch films. Each is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with frame timing for every push, click and state change.",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "3d-tilted-ui-depth-of-field",
+          "zoom-to-cursor",
+          "multiplayer-cursor-animation",
+          "card-flip-animation",
+          "focus-hop",
+          "control-driven-change",
+          "pile-up-and-clear",
+          "wireframe-re-layout",
+          "dock-arrival",
+          "confetti-success-animation"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "Where UI animation sits in a launch film"
+      },
+      {
+        "t": "p",
+        "text": "UI animation makes up the middle of a software launch film, between the opening and the closing wordmark. Several of these films show a window arriving, a few interactions, and the window leaving. In Card Flip Animation the window leaves at 9.4 s and the wordmark comes in at 9.85 s. In Control-Driven Change the window leaves at 8.6 s and the wordmark comes in at 9.1 s."
+      },
+      {
+        "t": "p",
+        "text": "Each recipe directs attention to one element at a time. Zoom to Cursor and 3D Tilted UI with Depth of Field move the camera to the active element, Focus Hop moves a highlight, and Control-Driven Change changes the page on the frame a control lands. For the scene changes between these interactions, see [transitions](/transitions/); for how the final shot reveals the product, see [product reveal](/product-reveal/)."
+      },
+      {
+        "t": "h2",
+        "text": "The 10 UI animation recipes"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[3D Tilted UI with Depth of Field](/recipes/3d-tilted-ui-depth-of-field/): A UI plane tilted 10 to 15 degrees is shot up close with only the active row in focus, and the highlight hops between rows in 0.22 s.",
+          "[Zoom to Cursor](/recipes/zoom-to-cursor/): The camera pushes to the target element in 0.6 s, holds for one click or input, then pulls back to the full view in 0.7 s.",
+          "[Multiplayer Cursor Animation](/recipes/multiplayer-cursor-animation/): Enlarged two-color named cursors move across a canvas, leave a comment typed at 15 characters per second, and drag an item to reorder the layout.",
+          "[Card Flip Animation](/recipes/card-flip-animation/): A preview card rotates 180 degrees around the Y axis in 0.8 s and its back face shows the code, then flips back after about 1 s.",
+          "[Focus Hop](/recipes/focus-hop/): A focus frame hops one cell at a time, with a 0.25 s slide and a 0.25 s hold, and takes the color of the icon inside it.",
+          "[Control-Driven Change](/recipes/control-driven-change/): A control lands and the page changes on that same frame: a color dot drags in 0.4 s, and a dark-mode knob flips the theme at 5.17 s.",
+          "[Pile-up and Clear](/recipes/pile-up-and-clear/): 22 emails and 8 notifications pile up with intervals shrinking from 0.62 s to 0.05 s, then clear in one frame to an Inbox Zero state held for about 2 s.",
+          "[Wireframe Re-layout](/recipes/wireframe-re-layout/): Content fades to wireframes in 0.5 s, the wireframes re-flow into a new layout in 0.8 s, then each cell fills with new content 0.15 s apart.",
+          "[Dock Arrival](/recipes/dock-arrival/): A magnified Dock opens a gap and a new icon grows into it in 0.5 s with one small spark, and a cursor click opens the window.",
+          "[Confetti Success Animation](/recipes/confetti-success-animation/): On the frame of a tap, lines, squares and dots radiate from the contact point; on the pay tap the icon pops from 0.6 to 1.1 scale in 0.28 s with an echo outline."
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "How to make these with Claude Code or Codex"
+      },
+      {
+        "t": "p",
+        "text": "Install the Motionboard skill in Claude Code or Codex. Then paste the copy prompt from a recipe page, or ask the skill for a recipe by name and give it your product, logo and brand colors."
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "The agent recreates the shot for your own product. Copy one recipe, or ask the skill for a whole film built from several. The output is an MP4 rendered with HyperFrames, or GSAP motion that runs on your website. The [product launch video guide](/guides/product-launch-video-with-claude-code/) covers the full workflow."
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "What is UI animation in a product video?",
+            "It is motion applied to a recorded or rebuilt interface to show how a feature works: cursor moves, clicks, flips, highlights and state changes. The recipes here rebuild the interface in HTML, so every state change lands on an exact frame that you can adjust."
+          ],
+          [
+            "How fast should UI animation be?",
+            "The recipes use 0.2 to 0.8 s for most movements: Zoom to Cursor pushes in 0.6 s and pulls back in 0.7 s, Card Flip takes 0.8 s each way, and Focus Hop dwells 0.22 to 0.34 s on each cell. Faster steps appear only when the film builds a rhythm, as in Pile-up and Clear."
+          ],
+          [
+            "How do you keep attention on one element in a UI animation?",
+            "The recipes combine camera and focus. 3D Tilted UI with Depth of Field blurs every row except the active one, Zoom to Cursor pushes in on the element being used, and Focus Hop moves a highlight with the cursor so the eye follows the change."
+          ]
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "UI 动画与动态图形示例",
+    "description": "10 个来自发布片的 UI 动画配方，包括推近到光标、卡片翻转、多人光标和焦点跳转等，用 HyperFrames 写代码做出。",
+    "h1": "发布片里的 UI 动画示例",
+    "lede": "UI 动画展示界面在运行：光标点击、卡片翻转、布局重排。这 10 个配方是软件发布片里的动态图形示例。每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，并标出每次推近、点击和状态变化的帧时间。",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "3d-tilted-ui-depth-of-field",
+          "zoom-to-cursor",
+          "multiplayer-cursor-animation",
+          "card-flip-animation",
+          "focus-hop",
+          "control-driven-change",
+          "pile-up-and-clear",
+          "wireframe-re-layout",
+          "dock-arrival",
+          "confetti-success-animation"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "UI 动画在发布片里的位置"
+      },
+      {
+        "t": "p",
+        "text": "UI 动画构成软件发布片的中段，位于开场和结尾字标之间。其中几支片子先让窗口入场，做几次交互，再让窗口离场。卡片翻转动画里窗口在 9.4 秒离场，字标在 9.85 秒进入；控件驱动变化里窗口在 8.6 秒离场，字标在 9.1 秒进入。"
+      },
+      {
+        "t": "p",
+        "text": "每个配方一次只把注意力引向一个元素。推近到光标和 3D 倾斜界面景深把镜头移到当前操作的元素上，焦点跳转移动高亮，控件驱动变化让页面在控件到位的同一帧变化。这些交互之间的场景切换见[转场](/transitions/)，最后一个镜头如何展示产品见[产品揭示](/product-reveal/)。"
+      },
+      {
+        "t": "h2",
+        "text": "10 个 UI 动画配方"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[3D 倾斜界面景深](/recipes/3d-tilted-ui-depth-of-field/)：倾斜 10 到 15 度的 UI 平面近距离拍摄，只有当前操作行在焦内，高亮用 0.22 秒在行间跳动。",
+          "[推近到光标](/recipes/zoom-to-cursor/)：镜头用 0.6 秒推到目标元素，停住完成一次点击或输入，再用 0.7 秒拉回全景。",
+          "[多人光标动画](/recipes/multiplayer-cursor-animation/)：放大的双色带名字光标在画布上移动，留下一条每秒 15 个字符的评论，并拖动一个元素重排布局。",
+          "[卡片翻转动画](/recipes/card-flip-animation/)：预览卡绕 Y 轴在 0.8 秒内翻转 180 度，背面显示代码，约停留 1 秒后翻回。",
+          "[焦点跳转](/recipes/focus-hop/)：焦点框一次跳一格，滑动 0.25 秒、停留 0.25 秒，并取框内图标的颜色。",
+          "[控件驱动变化](/recipes/control-driven-change/)：控件一到位，页面在同一帧变化：色点拖动用 0.4 秒，深色模式旋钮在 5.17 秒切换主题。",
+          "[堆积清空动画](/recipes/pile-up-and-clear/)：22 封邮件和 8 条通知堆积，间隔从 0.62 秒缩短到 0.05 秒，然后在一帧内清空，成为约 2 秒的零收件箱状态。",
+          "[线框重排](/recipes/wireframe-re-layout/)：内容在 0.5 秒内退成线框，线框用 0.8 秒重排成新布局，各格再以 0.15 秒的间隔依次填入新内容。",
+          "[Dock 图标动画](/recipes/dock-arrival/)：放大的 Dock 撑开空位，新图标用 0.5 秒长进去并冒出一次小火花，光标点击后开窗。",
+          "[确认彩屑动画](/recipes/confetti-success-animation/)：点击那一帧，线条、方块和圆点从接触点向外扩散；付款点击时图标在 0.28 秒内从 0.6 倍弹到 1.1 倍，并扩散一圈同形描边。"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "用 Claude Code 或 Codex 做出这些效果"
+      },
+      {
+        "t": "p",
+        "text": "在 Claude Code 或 Codex 里安装 Motionboard skill。之后可以粘贴配方页上的复制提示词，也可以直接按名字向 skill 要一个配方，并提供你的产品、logo 和品牌色。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "Agent 会按你的产品重新做出这个镜头。可以只复制一个配方，也可以让 skill 用多个配方拼成一整支片子。输出是用 HyperFrames 渲染的 MP4，或者可以直接放进网站的 GSAP 动效。完整流程见[产品发布视频指南](/guides/product-launch-video-with-claude-code/)。"
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "产品视频里的 UI 动画是什么？",
+            "指给录制或重建的界面加上运动，用来展示功能怎么用，包括光标移动、点击、翻转、高亮和状态变化。这里的配方用 HTML 重建界面，每次状态变化都落在精确的帧上，可以随时调整。"
+          ],
+          [
+            "UI 动画应该多快？",
+            "多数配方的动作时长在 0.2 到 0.8 秒之间：推近到光标推进用 0.6 秒、拉回用 0.7 秒，卡片翻转每次 0.8 秒，焦点跳转在每格停留 0.22 到 0.34 秒。更快的节奏只出现在需要营造节奏感的地方，例如堆积与清空。"
+          ],
+          [
+            "UI 动画怎样让注意力停在一个元素上？",
+            "这些配方把镜头和焦点结合使用。3D 倾斜界面景深把除当前行以外的行都虚化，推近到光标把镜头推到正在操作的元素上，焦点跳转让高亮随光标移动，视线会跟着变化走。"
+          ]
+        ]
+      }
+    ]
+  }
+}

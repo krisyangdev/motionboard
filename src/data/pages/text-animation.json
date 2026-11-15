@@ -1,0 +1,168 @@
+{
+  "id": "text-animation",
+  "kind": "hub",
+  "path": "/text-animation/",
+  "updated": "2026-11-16",
+  "en": {
+    "title": "Text Animation and Kinetic Typography Examples",
+    "description": "Seven text animation recipes from launch films: kinetic typography, typing animation, typewriter effect and more, built in code with HyperFrames.",
+    "h1": "Text animation examples from launch films",
+    "lede": "Text animation moves words and letters on screen to carry a message in a launch film. These seven recipes cover kinetic typography, typing animation, the typewriter effect, word-by-word highlight and text that interacts with objects. Each is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with timing per word, letter and character.",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "kinetic-typography",
+          "typing-animation",
+          "word-by-word-text-highlight",
+          "text-scramble-logo-reveal",
+          "chromatic-aberration-text-effect",
+          "prompt-carousel",
+          "text-object-interleave"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "How text animation is used in a launch film"
+      },
+      {
+        "t": "p",
+        "text": "Launch films use text for spec lines, taglines and the closing wordmark. Kinetic Typography shows four sentences of 2.05 s each and ends on a wordmark card from 8.3 s. Word-by-Word Text Highlight lights a 37-word paragraph over 5.92 s, then cuts to the wordmark card at 8.3 s. In both recipes the text is the main content of the frame."
+      },
+      {
+        "t": "p",
+        "text": "Typing animation, also called the typewriter effect, appears when a film shows a command, a prompt or a search. Typing at an uneven speed with a typo and a delete reads as a person at a keyboard, and the Prompt Carousel puts the same typing inside an input box. For the type that forms a logo, see [logo animation](/logo-animation/); for text inside interface shots, see [UI animation](/ui-animation/)."
+      },
+      {
+        "t": "h2",
+        "text": "The 7 text animation recipes"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[Kinetic Typography](/recipes/kinetic-typography/): A spec line is split into words on uneven baselines, a connector word steps up letter by letter, and each 2.05 s sentence hard-cuts to the next.",
+          "[Typewriter Typing Animation](/recipes/typing-animation/): Monospace text is typed at uneven human speed with a cursor, including a typo, five backspaces and a retype, then 32 characters are deleted in 0.7 s.",
+          "[Word-by-Word Text Highlight](/recipes/word-by-word-text-highlight/): Words in a small centered paragraph brighten from gray to white one at a time over 5.92 s, and the text never moves.",
+          "[Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/): The wordmark unfolds from behind the mark in 1.3 s, with scrambled characters only on the newly added position before they lock.",
+          "[Chromatic Aberration Text Effect](/recipes/chromatic-aberration-text-effect/): Headline letters stretch horizontally with RGB ghosting for 0.17 to 0.3 s, step down through 2-frame states and snap back clean.",
+          "[Prompt Carousel](/recipes/prompt-carousel/): A line under the headline thickens into a pill and then an input box, types a 41-character prompt in 2.7 s, and scrolls through prompts every 0.85 s.",
+          "[Text and Object Interleave](/recipes/text-object-interleave/): Type and object interleave in depth: the wordmark rises from behind the product over 1.8 s, a word passes through an object and comes out as another, and a device slots into a sentence."
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "How to make these with Claude Code or Codex"
+      },
+      {
+        "t": "p",
+        "text": "Install the Motionboard skill in Claude Code or Codex. Then paste the copy prompt from a recipe page, or ask the skill for a recipe by name and give it your product, logo and brand colors."
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "The agent recreates the shot for your own product. Copy one recipe, or ask the skill for a whole film built from several. The output is an MP4 rendered with HyperFrames, or GSAP motion that runs on your website. The [product launch video guide](/guides/product-launch-video-with-claude-code/) covers the full workflow."
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "What is kinetic typography?",
+            "Kinetic typography is text animated as the main visual. In the Kinetic Typography recipe, a spec line is split into single words placed far apart on uneven baselines, a connector word steps up letter by letter, and roman and italic type are mixed. Each sentence holds about 1 to 1.3 s before a hard cut."
+          ],
+          [
+            "How fast should a typing animation or typewriter effect be?",
+            "The Prompt Carousel types 41 characters in 2.72 s, about 15 characters per second. The Typing Animation recipe varies the speed by character and includes a typo and a delete: 32 characters are removed in 0.7 s. Uneven speed reads as human typing."
+          ],
+          [
+            "How long should text stay on screen?",
+            "In these recipes a finished sentence holds for roughly 1 to 2 s. Kinetic Typography gives each spec sentence 2.05 s in total, and Word-by-Word Text Highlight holds the complete 37-word paragraph for about 1.96 s before the cut."
+          ]
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "文字动画与动态文字排版示例",
+    "description": "7 个来自发布片的文字动画配方，包括动态文字排版、打字动画、打字机效果等，用 HyperFrames 写代码做出，并与原片对照。",
+    "h1": "发布片里的文字动画示例",
+    "lede": "文字动画让文字和字母在画面上运动，用来传达发布片里的信息。这 7 个配方覆盖动态文字排版（kinetic typography）、打字动画、打字机效果、逐词高亮，以及文字与物体的互动。每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，并标出每个词、字母和字符的时间。",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "kinetic-typography",
+          "typing-animation",
+          "word-by-word-text-highlight",
+          "text-scramble-logo-reveal",
+          "chromatic-aberration-text-effect",
+          "prompt-carousel",
+          "text-object-interleave"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "发布片怎么用文字动画"
+      },
+      {
+        "t": "p",
+        "text": "发布片把文字用在参数句、标语和结尾字标上。动态文字排版配方有四句话，每句 2.05 秒，从 8.3 秒起进入字标卡。逐词文字高亮用 5.92 秒点亮一段 37 个词的文字，在 8.3 秒切到字标卡。这两个配方里，文字都是画面的主要内容。"
+      },
+      {
+        "t": "p",
+        "text": "片子里出现命令、提示词或搜索时，会用到打字动画，也就是打字机效果。带打错和删除的不均匀速度打字像有人在键盘前操作，提示词轮播把同样的打字放进输入框里。构成 logo 的文字见 [Logo 动画](/logo-animation/)，界面镜头里的文字见 [UI 动画](/ui-animation/)。"
+      },
+      {
+        "t": "h2",
+        "text": "7 个文字动画配方"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[动态文字排版](/recipes/kinetic-typography/)：参数句拆成单词，落在高低不齐的基线上，连接词的字母逐个错开，每句 2.05 秒后硬切到下一句。",
+          "[打字机动画](/recipes/typing-animation/)：等宽字配光标，以不均匀的人手速度打字，包括一次打错、五次退格和重打，之后 0.7 秒内删掉 32 个字符。",
+          "[逐词高亮动画](/recipes/word-by-word-text-highlight/)：居中小段文字里的词在 5.92 秒内逐个由灰变白，文字本身不位移。",
+          "[文字乱码 Logo 动画](/recipes/text-scramble-logo-reveal/)：字标在 1.3 秒内从符号背后展开，乱码字符只出现在新加入的位置，随后定格。",
+          "[色散文字效果](/recipes/chromatic-aberration-text-effect/)：标题字母横向拉长并带 RGB 重影，持续 0.17 到 0.3 秒，经 2 帧一级的状态逐级回正。",
+          "[输入框提示词轮播](/recipes/prompt-carousel/)：标题下的一条线加厚成胶囊再变成输入框，2.7 秒内打出 41 个字符的提示词，之后约每 0.85 秒滚动到下一条。",
+          "[文字与物体穿插](/recipes/text-object-interleave/)：文字和实物在深度上互相穿插：字标在 1.8 秒内从产品后面升起，一个词穿过物体后变成另一个词，设备被插入句子中间。"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "用 Claude Code 或 Codex 做出这些效果"
+      },
+      {
+        "t": "p",
+        "text": "在 Claude Code 或 Codex 里安装 Motionboard skill。之后可以粘贴配方页上的复制提示词，也可以直接按名字向 skill 要一个配方，并提供你的产品、logo 和品牌色。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "Agent 会按你的产品重新做出这个镜头。可以只复制一个配方，也可以让 skill 用多个配方拼成一整支片子。输出是用 HyperFrames 渲染的 MP4，或者可以直接放进网站的 GSAP 动效。完整流程见[产品发布视频指南](/guides/product-launch-video-with-claude-code/)。"
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "什么是动态文字排版（kinetic typography）？",
+            "动态文字排版指把文字动画本身作为主要画面。动态文字排版配方把参数句拆成单词，放在拉开的高低不齐的基线上，连接词的字母逐个错开，并混排正体和斜体。每句停留约 1 到 1.3 秒后硬切。"
+          ],
+          [
+            "打字动画或打字机效果应该多快？",
+            "提示词轮播在 2.72 秒内打出 41 个字符，约每秒 15 个字符。打字动画配方让每个字符的速度不均匀，还包含一次打错和删除：32 个字符在 0.7 秒内删完。速度不均匀会让人觉得是真人在打字。"
+          ],
+          [
+            "文字应该在画面上停留多久？",
+            "这些配方里，一句完整的文字大约停留 1 到 2 秒。动态文字排版每句参数句共 2.05 秒，逐词文字高亮在 37 个词全部点亮后再停留约 1.96 秒才切走。"
+          ]
+        ]
+      }
+    ]
+  }
+}

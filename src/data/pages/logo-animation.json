@@ -1,0 +1,164 @@
+{
+  "id": "logo-animation",
+  "kind": "hub",
+  "path": "/logo-animation/",
+  "updated": "2026-11-16",
+  "en": {
+    "title": "Logo Animation Examples Made with Code",
+    "description": "Six logo animation and logo reveal recipes from launch films. Each is a 10-second film made with HyperFrames, shown next to the original clip.",
+    "h1": "Logo animation examples from launch films",
+    "lede": "A logo animation is the part of a launch film where a mark or wordmark appears, usually at the end. These six logo reveal recipes come from launch films. Each one is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with the timing and easing written out so you can reuse them for your own logo.",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "text-scramble-logo-reveal",
+          "rotating-logo-reveal",
+          "converge-logo-reveal",
+          "chromatic-aberration-text-effect",
+          "outline-to-solid-reveal",
+          "light-reveal"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "Where a logo animation sits in a launch film"
+      },
+      {
+        "t": "p",
+        "text": "In most of these films the logo animation is the ending. The product or interface demo plays first, then its elements gather, rotate or unfold into the mark, and the wordmark and a tagline follow. In Converge Logo Reveal the demo runs from 0 to 6.2 s, the pieces converge from 6.2 s, the mark lands at 7.32 s and the wordmark pulls out at 8.05 s."
+      },
+      {
+        "t": "p",
+        "text": "The recipes differ in what drives the reveal. Rotation and convergence resolve into the mark, the unfold adds letters beside the mark, and the chromatic stretch distorts the letterforms and returns them clean. Outline to Solid and Light Reveal begin as product shots and finish on a wordmark. For motion between scenes before the logo, see [transitions](/transitions/); for animated type outside the logo, see [text animation](/text-animation/)."
+      },
+      {
+        "t": "h2",
+        "text": "The 6 logo animation recipes"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/): The mark sits centered, then the wordmark unfolds from behind it, with scrambled characters only on the newly added letter position; the unfold runs 1.3 s with letters staggered 0.08 s.",
+          "[Rotating Logo Reveal](/recipes/rotating-logo-reveal/): An object spins 1.62 turns over 2.5 s on an expo.out ease and stops at the angle that forms the logo silhouette, then three slabs fly in to the lockup.",
+          "[Converge Logo Reveal](/recipes/converge-logo-reveal/): The pieces of a workspace demo converge on the frame center from 6.2 s, the mark lands at 7.32 s with a back.out(2.1) settle, and the wordmark pulls out at 8.05 s.",
+          "[Chromatic Aberration Text Effect](/recipes/chromatic-aberration-text-effect/): Letters of the wordmark stretch up to 4.4x with RGB ghosting, step down through 2-frame states and snap back clean, three times in the first 1.5 s.",
+          "[Outline to Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in during the last 0.7 s of the draw, and a 2.8 s logo version repeats the move as wireframe then fill wipe.",
+          "[Light Reveal](/recipes/light-reveal/): The product fades up from black in 1.2 s with a slow push, fades out in reverse at 7.35 s, and the wordmark comes in at 8.78 s and holds to 11 s."
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "How to make these with Claude Code or Codex"
+      },
+      {
+        "t": "p",
+        "text": "Install the Motionboard skill in Claude Code or Codex. Then paste the copy prompt from a recipe page, or ask the skill for a recipe by name and give it your product, logo and brand colors."
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "The agent recreates the shot for your own product. Copy one recipe, or ask the skill for a whole film built from several. The output is an MP4 rendered with HyperFrames, or GSAP motion that runs on your website. The [product launch video guide](/guides/product-launch-video-with-claude-code/) covers the full workflow."
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "How long should a logo animation be?",
+            "In these recipes the closing logo section lasts about 2.8 to 3.3 seconds. Outline to Solid uses a 2.8 s logo version, and in Converge Logo Reveal the mark lands at 7.32 s of a 10.6 s film. The film before it carries the product demo."
+          ],
+          [
+            "What easing works for a logo reveal?",
+            "The wordmark in the Text Scramble and Converge recipes uses cubic-bezier(0.16,1,0.3,1), known as expo.out, which starts fast and settles slowly. Converge Logo Reveal lands its mark with back.out(2.1), a small overshoot that settles into place."
+          ],
+          [
+            "Can Claude Code or Codex make a logo animation from my own logo?",
+            "Yes. Install the skill, give the agent your logo as an SVG or image plus the recipe name, and it writes the HyperFrames composition. The output is an MP4 you render locally, or GSAP motion you can place on your website."
+          ]
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "Logo 动画与 Logo 揭示示例",
+    "description": "6 个来自发布片的 Logo 动画和 Logo 揭示配方，每个都是用 HyperFrames 写代码做出的 10 秒短片，并与原片对照。",
+    "h1": "发布片里的 Logo 动画示例",
+    "lede": "Logo 动画指发布片里符号或字标出场的那一段，通常放在片尾。这 6 个 Logo 揭示配方都来自发布片，每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，并写明时间和缓动参数，方便你套用到自己的 logo 上。",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "text-scramble-logo-reveal",
+          "rotating-logo-reveal",
+          "converge-logo-reveal",
+          "chromatic-aberration-text-effect",
+          "outline-to-solid-reveal",
+          "light-reveal"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "Logo 动画在发布片里的位置"
+      },
+      {
+        "t": "p",
+        "text": "这些片子大多把 Logo 动画放在结尾。先播放产品或界面演示，再由其中的元素聚合、旋转或展开成符号，随后出现字标和一句标语。聚合 Logo 揭示的演示占 0 到 6.2 秒，各元素从 6.2 秒开始聚合，符号在 7.32 秒落定，字标在 8.05 秒拉出。"
+      },
+      {
+        "t": "p",
+        "text": "各配方驱动揭示的方式不同。旋转和聚合最终落成符号，展开类在符号旁边加入字母，色差拉伸则让字形变形后再回正。描边转实心和光线揭示从产品镜头开始，以字标收尾。Logo 之前的场景切换见[转场](/transitions/)，Logo 以外的动态文字见[文字动画](/text-animation/)。"
+      },
+      {
+        "t": "h2",
+        "text": "6 个 Logo 动画配方"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[文字乱码 Logo 动画](/recipes/text-scramble-logo-reveal/)：符号居中，字标从符号背后展开，乱码字符只出现在新加入的字母位置；展开用时 1.3 秒，字母间隔 0.08 秒。",
+          "[旋转 Logo 揭示](/recipes/rotating-logo-reveal/)：物体在 2.5 秒内用 expo.out 缓动旋转 1.62 圈，停在构成 logo 轮廓的角度，随后三块板飞入合成最终的 logo。",
+          "[聚合 Logo 揭示](/recipes/converge-logo-reveal/)：工作区演示里的各个元素从 6.2 秒起向画面中心聚合，符号在 7.32 秒用 back.out(2.1) 落定，字标在 8.05 秒拉出。",
+          "[色散文字效果](/recipes/chromatic-aberration-text-effect/)：字标的部分字母最多横向拉长 4.4 倍并带 RGB 重影，每个状态保持 2 帧后逐级回正，前 1.5 秒内重复三次。",
+          "[描边转实心揭示](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体在描线最后 0.7 秒内淡入；2.8 秒的 logo 版本按线框加填充擦除重复同一动作。",
+          "[光线揭示](/recipes/light-reveal/)：产品在 1.2 秒内从黑场亮起并缓慢推近，7.35 秒起反向熄灭，字标在 8.78 秒进入并停留到 11 秒。"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "用 Claude Code 或 Codex 做出这些效果"
+      },
+      {
+        "t": "p",
+        "text": "在 Claude Code 或 Codex 里安装 Motionboard skill。之后可以粘贴配方页上的复制提示词，也可以直接按名字向 skill 要一个配方，并提供你的产品、logo 和品牌色。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "Agent 会按你的产品重新做出这个镜头。可以只复制一个配方，也可以让 skill 用多个配方拼成一整支片子。输出是用 HyperFrames 渲染的 MP4，或者可以直接放进网站的 GSAP 动效。完整流程见[产品发布视频指南](/guides/product-launch-video-with-claude-code/)。"
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "Logo 动画应该多长？",
+            "这些配方里，片尾的 Logo 部分约 2.8 到 3.3 秒。描边转实心有一个 2.8 秒的 logo 版本，聚合 Logo 揭示在 10.6 秒的片子里于 7.32 秒落定符号。这之前的部分用来放产品演示。"
+          ],
+          [
+            "Logo 揭示适合用什么缓动？",
+            "文字乱码和聚合两个配方里的字标都用 cubic-bezier(0.16,1,0.3,1)，也就是 expo.out，起步快、收尾慢。聚合 Logo 揭示的符号落定用 back.out(2.1)，有一点回弹后再稳住。"
+          ],
+          [
+            "Claude Code 或 Codex 能用我自己的 logo 做 Logo 动画吗？",
+            "可以。安装 skill 后，把 SVG 或图片格式的 logo 和配方名交给 agent，它会写出 HyperFrames 合成。输出是可以在本机渲染的 MP4，也可以是放进网站的 GSAP 动效。"
+          ]
+        ]
+      }
+    ]
+  }
+}

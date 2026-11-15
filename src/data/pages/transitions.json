@@ -1,0 +1,172 @@
+{
+  "id": "transitions",
+  "kind": "hub",
+  "path": "/transitions/",
+  "updated": "2026-11-16",
+  "en": {
+    "title": "Transition Effects and Match Cuts Made with Code",
+    "description": "Eight transition recipes from launch films: match cut, morph, wipe, iris and more. Each is a 10-second film made with HyperFrames next to the original.",
+    "h1": "Transition effects from launch films",
+    "lede": "A transition carries the viewer from one scene to the next in a launch film. These eight recipes cover the match cut, morph transition, wipe transition, iris transition and several others. Each is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with exact frame timing for every cut, sweep and dissolve.",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "match-cut-transition",
+          "morph-transition",
+          "wipe-flash-transition",
+          "iris-transition",
+          "glass-droplet-split",
+          "domino-wave",
+          "locked-layout-reskin",
+          "x-ray-effect"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "What transitions do in a launch film"
+      },
+      {
+        "t": "p",
+        "text": "Transitions sit between the scenes of a product demo, where the film moves from one feature to the next. Some are hard cuts that rely on matching position, as in Match Cut Transition, which cuts five times in its first 5.05 s. Others cover the change: the wipe hides the scene swap behind a ball that sweeps the frame, and the flash swaps the scene while the screen is white."
+      },
+      {
+        "t": "p",
+        "text": "A few recipes have no cut at all. Morph Transition turns one element into the next across the whole film, and X-ray Effect dissolves from the inner structure to the outer shell on one camera position. For motion inside a scene, see [UI animation](/ui-animation/); for the opening and ending shots, see [logo animation](/logo-animation/)."
+      },
+      {
+        "t": "h2",
+        "text": "The 8 transition recipes"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[Match Cut Transition](/recipes/match-cut-transition/): One object is replaced by another at the same anchor point, so the gaze stays put; the film uses hard cuts at 2.0, 3.0, 3.75, 4.4 and 5.05 s.",
+          "[Morph Transition](/recipes/morph-transition/): One element keeps morphing into the next, from a title to a line, a capsule, an input box and a window, with steps of 0.2 to 0.75 s and no hard cut.",
+          "[Wipe and Flash Transition](/recipes/wipe-flash-transition/): A defocused ball sweeps across the frame in 0.5 s and the scene swaps while it covers the screen; a second transition blows a central halo out to white and fades over 0.3 s.",
+          "[Iris Transition](/recipes/iris-transition/): A fixed circular window cuts through 22 images at 0.2 s down to 0.133 s each, then opens, jumps in size on the rhythm and closes onto the logo mark.",
+          "[Glass Droplet Split](/recipes/glass-droplet-split/): A glass slab stretches into a droplet, the neck thins for 0.3 s and breaks at 2.41 s, and the remaining bead later gathers into the logo.",
+          "[Domino Wave](/recipes/domino-wave/): A row of cubes flips 90 degrees one after another with a 0.07 to 0.10 s phase offset while the camera pans along the line.",
+          "[Locked-Layout Reskin](/recipes/locked-layout-reskin/): The layout stays fixed while color and fonts hard-cut every 16, 8 and then 6 frames, landing on one skin at 8.4 s.",
+          "[X-ray Effect](/recipes/x-ray-effect/): The inner structure and the outer shell cross-dissolve from the same camera position over about 0.7 s, then the camera pulls back to the whole device in 1.2 s."
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "How to make these with Claude Code or Codex"
+      },
+      {
+        "t": "p",
+        "text": "Install the Motionboard skill in Claude Code or Codex. Then paste the copy prompt from a recipe page, or ask the skill for a recipe by name and give it your product, logo and brand colors."
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "The agent recreates the shot for your own product. Copy one recipe, or ask the skill for a whole film built from several. The output is an MP4 rendered with HyperFrames, or GSAP motion that runs on your website. The [product launch video guide](/guides/product-launch-video-with-claude-code/) covers the full workflow."
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "What is a match cut?",
+            "A match cut replaces one object with another at the same position, shape or movement, so the viewer does not need to move their eyes. In the Match Cut Transition recipe, hard cuts at 2.0, 3.0, 3.75, 4.4 and 5.05 s each swap one element for another at the same anchor point."
+          ],
+          [
+            "What makes a good transition in a product video?",
+            "Short duration and a clear hand-off. Most transitions in these recipes run between 0.2 and 0.8 s: the wipe sweeps in 0.5 s, the flash fades in 0.3 s, and each morph step takes 0.2 to 0.4 s. The new scene is already in place when the cover clears."
+          ],
+          [
+            "How long is a wipe transition?",
+            "In the Wipe and Flash Transition recipe, the sweep takes 0.5 s: 7 frames to cover the screen and 8 frames to clear it. The scene swaps while the defocused ball covers the whole frame, so the viewer does not see the change."
+          ]
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "转场效果与匹配剪辑示例",
+    "description": "8 个来自发布片的转场配方，包括匹配剪辑、形变、擦除和光圈转场。每个都是用 HyperFrames 做出的 10 秒短片，并与原片对照。",
+    "h1": "发布片里的转场效果示例",
+    "lede": "转场负责把观众从一个场景带到下一个场景。这 8 个配方覆盖匹配剪辑、形变转场、擦除转场、光圈转场等做法。每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，每一次切换、横扫和叠化都标出了精确的帧时间。",
+    "blocks": [
+      {
+        "t": "films",
+        "slugs": [
+          "match-cut-transition",
+          "morph-transition",
+          "wipe-flash-transition",
+          "iris-transition",
+          "glass-droplet-split",
+          "domino-wave",
+          "locked-layout-reskin",
+          "x-ray-effect"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "转场在发布片里的作用"
+      },
+      {
+        "t": "p",
+        "text": "转场出现在产品演示的各个场景之间，把片子从一个功能带到下一个。有些是依靠位置对齐的硬切，例如匹配剪辑转场，在前 5.05 秒里切了五次。有些负责遮住切换：擦除转场把场景切换藏在横扫画面的球后面，闪白转场则在画面全白时换场。"
+      },
+      {
+        "t": "p",
+        "text": "还有几个配方完全没有切镜。形变转场让一个元素在整支片子里不断变成下一个元素，X 光透视效果在同一机位上从内部结构叠化到外壳。场景内部的动效见 [UI 动画](/ui-animation/)，开场和收尾镜头见 [Logo 动画](/logo-animation/)。"
+      },
+      {
+        "t": "h2",
+        "text": "8 个转场配方"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "[匹配剪辑转场](/recipes/match-cut-transition/)：在同一个锚点把一个物体换成另一个，视线位置不动；片中的硬切发生在 2.0、3.0、3.75、4.4 和 5.05 秒。",
+          "[形变转场](/recipes/morph-transition/)：同一个元素连续变形，依次从标题变成线条、胶囊、输入框和窗口，每步 0.2 到 0.75 秒，整段没有硬切。",
+          "[擦除与闪白转场](/recipes/wipe-flash-transition/)：虚焦的球在 0.5 秒内横扫画面，场景在它遮满屏幕时切换；另一处转场把中心光晕吹成白场，再用 0.3 秒淡出。",
+          "[圆形光圈转场](/recipes/iris-transition/)：固定的圆形窗口以每张 0.2 秒到 0.133 秒的节奏快切 22 张图，之后打开、随节奏跳变大小，最后收成 logo 符号。",
+          "[玻璃水滴分离](/recipes/glass-droplet-split/)：玻璃片拉长成水滴，颈部用 0.3 秒收细并在 2.41 秒断开，留下的圆珠之后收拢成 logo。",
+          "[多米诺波浪翻转](/recipes/domino-wave/)：一排方块以 0.07 到 0.10 秒的相位差依次翻转 90 度，镜头沿队列平移。",
+          "[锁定布局换肤](/recipes/locked-layout-reskin/)：布局位置保持不变，配色和字体依次每 16 帧、8 帧、6 帧硬切一次，在 8.4 秒落定到一套皮肤。",
+          "[X 光透视效果](/recipes/x-ray-effect/)：内部结构和外壳在同一机位对位叠化，约 0.7 秒完成，随后镜头用 1.2 秒拉远成整机。"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "用 Claude Code 或 Codex 做出这些效果"
+      },
+      {
+        "t": "p",
+        "text": "在 Claude Code 或 Codex 里安装 Motionboard skill。之后可以粘贴配方页上的复制提示词，也可以直接按名字向 skill 要一个配方，并提供你的产品、logo 和品牌色。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "p",
+        "text": "Agent 会按你的产品重新做出这个镜头。可以只复制一个配方，也可以让 skill 用多个配方拼成一整支片子。输出是用 HyperFrames 渲染的 MP4，或者可以直接放进网站的 GSAP 动效。完整流程见[产品发布视频指南](/guides/product-launch-video-with-claude-code/)。"
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "什么是匹配剪辑（match cut）？",
+            "匹配剪辑指在同一个位置、形状或运动上把一个物体换成另一个，观众的视线不需要移动。匹配剪辑转场配方里，2.0、3.0、3.75、4.4 和 5.05 秒的五次硬切，每次都在同一个锚点把一个元素换成另一个。"
+          ],
+          [
+            "产品视频里的好转场有什么特点？",
+            "时间短，交接清楚。这些配方里的转场大多在 0.2 到 0.8 秒之间：擦除横扫用 0.5 秒，闪白淡出用 0.3 秒，形变的每一步用 0.2 到 0.4 秒。遮挡散去时，新场景已经就位。"
+          ],
+          [
+            "擦除转场（wipe transition）应该多长？",
+            "擦除与闪白转场配方里，横扫共 0.5 秒：7 帧遮满画面，8 帧散开。场景在虚焦的球盖住整个画面时切换，观众看不到切换瞬间。"
+          ]
+        ]
+      }
+    ]
+  }
+}
