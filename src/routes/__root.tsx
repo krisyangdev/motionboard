@@ -5,11 +5,16 @@ import { HTML_LANG } from '@/i18n'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
 import { StatsProvider } from '@/lib/stats'
 import { BRAND } from '@/site'
-import baseCss from '@/styles/base.css?url'
-import actionsCss from '@/styles/actions.css?url'
-import homeCss from '@/styles/home.css?url'
-import entryCss from '@/styles/entry.css?url'
-import pageCss from '@/styles/page.css?url'
+// All CSS (about 11 KB) is inlined into every page: five separate stylesheets were the main
+// render-blocking cost on the home page's mobile Lighthouse run.
+import baseCss from '@/styles/base.css?inline'
+import actionsCss from '@/styles/actions.css?inline'
+import homeCss from '@/styles/home.css?inline'
+import entryCss from '@/styles/entry.css?inline'
+import pageCss from '@/styles/page.css?inline'
+
+const FONT_FACE =
+  "@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/instrument-sans-600-mb.woff2) format('woff2');unicode-range:U+4d,U+61-62,U+64,U+69,U+6e-6f,U+72,U+74}"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -23,16 +28,12 @@ export const Route = createRootRoute({
       { property: 'og:locale', content: 'en_US' },
     ],
     links: [
-      { rel: 'stylesheet', href: baseCss },
-      { rel: 'stylesheet', href: actionsCss },
-      { rel: 'stylesheet', href: homeCss },
-      { rel: 'stylesheet', href: entryCss },
-      { rel: 'stylesheet', href: pageCss },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-      // Instrument Sans for the wordmark only, subset to its letters.
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600&text=Motionboard&display=swap' },
+      // Instrument Sans for the wordmark only, self-hosted and subset to the letters of "Motionboard".
+      { rel: 'preload', href: '/fonts/instrument-sans-600-mb.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
     ],
+    // The @font-face lives here because Vite rewrites public-folder URLs inside ?inline CSS and fails on them.
+    styles: [{ children: FONT_FACE + baseCss + actionsCss + homeCss + entryCss + pageCss }],
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
