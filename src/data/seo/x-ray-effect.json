@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "X-Ray Effect",
+    "title": "X-Ray Effect: Example and Code Recipe",
+    "description": "An inner chip and the phone shell cross-dissolve from one camera position, then the camera pulls back to the phone. Make it with Claude Code or Codex.",
+    "howto": [
+      "Composite two layers at the same position under a 24° perspective camera: the inner part (a chip) at weight 1 and the phone shell at 0. The camera is frontal and fixed from 5.5s. The shell fades in over 0.5s (5.5–6.0s) while the inner layer drops to 30% over 5.5–5.8s, holds 0.2s and reaches 0 at 6.18s, all on power2.inOut.",
+      "Mask the accent tint (orange, rgb(255,107,41)) with a Gaussian around the chip, so color arrives from the chip first, then the brightest shell edges, then the body. Pull back for 1.2s (6.0–7.2s) on expo.out from 5× to 1× with 180° radial shutter blur, ending with the body at 70% of frame height.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds both layers in one Three.js scene so they line up exactly. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is an X-ray effect in video?",
+        "An X-ray effect shows the inside of an object as if its outer surface were transparent. In motion design it is usually built by cross-dissolving an internal layer into the exterior from one fixed camera position, so the internal parts line up with the body."
+      ],
+      [
+        "Why must the camera stay fixed during the dissolve?",
+        "The two layers have to line up exactly. In this recipe the dissolve shot is frontal and fixed from 5.5s, so the chip sits where it would sit inside the shell. A camera move during the dissolve would shift the layers apart."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "X 光透视效果",
+    "title": "X 光透视效果：示例与代码配方",
+    "description": "内部芯片与外壳在同一机位对位叠化，随后镜头拉远成整机。用 Claude Code 或 Codex 按免费配方做出这个 X 光透视效果。",
+    "howto": [
+      "用 24° 透视相机，把两层放在同一位置合成：内部零件（芯片）权重 1，手机外壳权重 0。5.5s 起机位正面固定。外壳在 5.5–6.0s 的 0.5s 内淡入，内部层在 5.5–5.8s 降到 30%，停 0.2s，在 6.18s 降到 0，全程用 power2.inOut。",
+      "主题色（橙色，rgb(255,107,41)）用围绕芯片的高斯遮罩，让颜色先从芯片的辉光里渗出，再到外壳最亮的边缘，最后填满机身。6.0–7.2s 用 expo.out 后拉 1.2s，缩放从 5 倍到 1 倍，带 180° 径向快门模糊，结束时机身占画面高度 70%。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会把两层放进同一个 Three.js 场景，保证对位。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "视频里的 X 光效果是什么？",
+        "X 光效果让外表面像透明一样，露出物体内部。动效设计里通常在同一个固定机位上，把内部层叠化成外观层，内部零件和机身对位。"
+      ],
+      [
+        "叠化时为什么机位必须固定？",
+        "两层必须严格对位。这份配方里叠化镜头从 5.5s 起正面固定，芯片的位置就是它在外壳里的真实位置。叠化中移动镜头会让两层错开。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

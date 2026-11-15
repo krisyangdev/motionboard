@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Light Reveal",
+    "title": "Light Reveal Effect: Example and Code Recipe",
+    "description": "A product fades up out of pure black on exposure alone, with a 3% push-in. Make this light reveal with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Start from a pure black frame with one 3D phone and a 24° perspective camera close on the camera module. Render two light passes and add them: a rim pass that fades in over 0.0–0.4s, and a key pass that rises from 3.5% to 100% exposure over 1.2s (0.4–1.6s) on a power2.inOut curve, cubic-bezier(0.65,0,0.35,1).",
+      "Apply that one curve to each material in sequence: lens glass first (0–0.55 of the curve), then the flash (0.18–0.72), the metal edges and camera bar (0.30–0.95), and the back glass last (0.45–1.0). Hold 2.8s with a 3% push-in on sine.inOut. At 7.35s the film runs the same move in reverse over 1.2s to close.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds a Three.js scene driven by a seekable time function, with the wordmark in GSAP. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a light reveal?",
+        "A light reveal shows a subject by raising the light on it from darkness, usually starting from a black frame. Parts of the subject light up in stages, so edges and highlights appear before the whole surface is visible. This film applies it to a phone."
+      ],
+      [
+        "How long should a light reveal take?",
+        "This recipe uses a 1.2s fade-up (36 frames) followed by a 2.8s hold. The fade is long enough for the lens, flash and metal edges to appear in order, and the hold lets the viewer read the product before the next shot."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "暗场打光显影",
+    "title": "暗场打光显影效果：示例与代码配方",
+    "description": "产品在纯黑画面中只靠提高曝光逐步显出，镜头轻推 3%。用 Claude Code 或 Codex 按免费配方做出这个暗场显影效果。",
+    "howto": [
+      "从纯黑画面开始，放一台 3D 手机，用 24° 透视相机贴近摄像头模组。分两层光渲染再相加：轮廓光 0.0–0.4s 淡入；主光层在 1.2s 内（0.4–1.6s）用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）把曝光从 3.5% 抬到 100%。",
+      "这一条曲线按材质依次生效：镜头玻璃最先（曲线的 0–0.55），然后是闪光灯（0.18–0.72）、金属边框和摄像头模组（0.30–0.95），背面玻璃最后（0.45–1.0）。接着保持 2.8s，用 sine.inOut 慢推 3%。7.35s 起用同一条曲线反向熄灭 1.2s，片尾首尾呼应。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用由可 seek 的时间函数驱动的 Three.js 场景，字标用 GSAP 做。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是暗场显影？",
+        "暗场显影指产品从黑暗中被灯光逐步照亮，通常从全黑画面开始。不同部位按顺序亮起，边缘和高光先出现，然后才是整个表面。这支片子把它用在一台手机上。"
+      ],
+      [
+        "暗场显影应该多长？",
+        "这份配方的亮起用 1.2s（36 帧），之后保持 2.8s。1.2s 足够让镜头、闪光灯和金属边框依次显出，保持阶段让观众在下一个镜头前看清产品。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

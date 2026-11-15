@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Macro Pull-out Reveal",
+    "title": "Macro Pull-out Reveal: Example and Code Recipe",
+    "description": "The camera drifts over a dashboard at extreme close range, then one fast pull-out shows the whole window. Make it with Claude Code or Codex.",
+    "howto": [
+      "Rebuild a 1536×880 dashboard window in DOM and SVG, tilt it with CSS 3D (perspective 2000px, rotateX 25°, rotateZ −3°) and move only the camera. Three macro shots at 4.0–4.2× scale last 1.7s, 1.6s and 1.5s, each drifting linearly at about 8–11% of frame width per second, on a chart, a deployment row and the primary button.",
+      "The pull-out runs 1.2s (4.8–6.0s) on expo.out, cubic-bezier(0.16,1,0.3,1), from 4.0× to 1× with rotateX 25° to 11°, ending with the window at 80% of frame width. Shallow depth of field comes from four stacked copies at blur 0, 2.6, 6 and 11px under a tilted focus band, and a pixel grid fades out 4.8–5.15s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent rebuilds the dashboard window and moves the CSS 3D camera over it. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a macro shot in motion design?",
+        "A macro shot frames a very small area at extreme close range so texture and detail fill the frame. In a UI film the camera travels over details such as a chart or a button, then pulls out to show where they sit in the whole."
+      ],
+      [
+        "Can I build a pull-out reveal with CSS?",
+        "Yes. This recipe builds the dashboard in DOM and SVG and moves the camera with CSS 3D transforms (perspective, rotateX, scale), so the same timeline works in a video render and on a web page. Stacked blur layers add the shallow depth of field."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "微距拉远揭示",
+    "title": "微距拉远揭示：示例与代码配方",
+    "description": "镜头贴着仪表盘局部超近距离慢移，最后一次快速后拉交代整个窗口。用 Claude Code 或 Codex 按免费配方做出这个微距拉远效果。",
+    "howto": [
+      "用 DOM 和 SVG 重建一个 1536×880 的仪表盘窗口，用 CSS 3D 倾斜（perspective 2000px，rotateX 25°，rotateZ −3°），只移动镜头。三个微距镜头缩放 4.0–4.2 倍，依次拍图表、部署行和主按钮，分别持续 1.7s、1.6s、1.5s，每个镜头以每秒约 8–11% 画面宽度线性漂移。",
+      "后拉在 4.8–6.0s 用 1.2s，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)），缩放从 4.0 倍到 1 倍，rotateX 从 25° 到 11°，结束时窗口占画面宽度 80%。浅景深用四层叠放的副本实现，模糊分别为 0、2.6、6、11px，放在一条倾斜的焦点带下，像素网格在 4.8–5.15s 淡出。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会重建仪表盘窗口，并用 CSS 3D 相机在上面移动。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "设计里的微距镜头是什么？",
+        "微距镜头用极近的距离拍摄很小的区域，让质感和细节占满画面。在界面类片子里，镜头先贴着图表、按钮这类细节移动，再拉远，让观众看到这些细节在整体里的位置。"
+      ],
+      [
+        "能用 CSS 做拉远揭示吗？",
+        "可以。这份配方用 DOM 和 SVG 搭仪表盘，用 CSS 3D 变换（perspective、rotateX、scale）移动镜头，同一条时间线既能渲染视频，也能放在网页上。叠放的模糊层负责浅景深。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Converging Logo Reveal",
+    "title": "Converging Logo Reveal: Example and Code Recipe",
+    "description": "Seventeen workspace pieces drift, then gather into one centered app icon and wordmark. Make this logo reveal with Claude Code or Codex.",
+    "howto": [
+      "Start with a workspace demo of 17 pieces: 4 windows, a timer, a notification, a picture-in-picture, a command palette, 2 collaborator cursors and 7 dock icons. The pieces drift down 4–5% of frame height from 5.0s, then converge from 6.2s. Each starts 0–0.55s late and takes 0.65–0.95s on power3.in, so it speeds up near the center.",
+      "Scale the pieces to 0.07–0.4, rotate them 6–30° and fade them over their last 35%. The target is the frame center (960, 540). The 200px mark lands at 7.32s with back.out(2.1) and settles in 0.65s, the wallpaper washes to white 6.4–7.4s, and the wordmark pulls out over 8.05–9.3s on expo.out.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the 17 pieces and their converge paths. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a converging logo reveal?",
+        "A logo animation in which scattered elements move to one point and combine into the mark. The elements shrink and fade as they approach, so only the mark remains on screen."
+      ],
+      [
+        "Why accelerate the pieces as they converge?",
+        "Easing in with power3.in makes each piece faster as it nears the center, which gives the gather a clear end point after the slow drift. The paths curve because one axis uses power3.in and the other power2.in."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "元素汇聚 Logo 动画",
+    "title": "元素汇聚 Logo 动画：示例与代码配方",
+    "description": "十七个工作区元素先缓慢漂移，再收拢成画面中心的一个应用图标和字标。用 Claude Code 或 Codex 按免费配方做出这个汇聚 logo 动画。",
+    "howto": [
+      "先做一段工作区演示，共 17 个元素：4 个窗口、计时器、通知、画中画、命令面板、2 个协作者光标和 7 个 Dock 图标。5.0s 起元素向下漂移画面高度的 4–5%，6.2s 起向中心汇聚。每个元素延迟 0–0.55s 出发，用 0.65–0.95s 完成，缓动 power3.in，越靠近中心越快。",
+      "元素缩放到 0.07–0.4，旋转 6–30°，最后 35% 的时间里淡出。目标位置是画面中心（960, 540）。200px 的标志在 7.32s 落下，用 back.out(2.1) 在 0.65s 内稳定；壁纸在 6.4–7.4s 洗成白色；字标在 8.05–9.3s 用 expo.out 拉出。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出这 17 个元素和各自的汇聚路径。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是汇聚式 logo 动画？",
+        "散开的多个元素移动到同一点，合成一个 logo。元素靠近时缩小、淡出，最后只剩标志。"
+      ],
+      [
+        "为什么元素越靠近越快？",
+        "用 power3.in 缓入，元素靠近中心时加速，在缓慢漂移之后给汇聚一个明确的终点。一条轴用 power3.in、另一条轴用 power2.in，所以路径是弧线。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

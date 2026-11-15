@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Device Push-in Focus",
+    "title": "Device Push-in Focus: Example and Code Recipe",
+    "description": "A line-art 3D laptop opens, pushes in on the keyboard and pans key to key with a dropdown. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Build a white line-art laptop in 3D and shoot it with a 22° telephoto camera at a fixed viewing direction. The laptop rises 0–0.5s, turns upright while closed (yaw 35° to 0°) in 0.7s, opens the lid from 0° to 112° over 0.55s, then dollies from 150 to 60 units onto the keyboard in 1.6s with expo.out, cubic-bezier(0.16,1,0.3,1).",
+      "Each pan follows a UI choice. The dropdown selects at 4.95s and 7.15s, the pan starts 0.05s later and takes 0.8s, the key highlight turns yellow 0.6s into the pan, and the key presses 0.4s after that, sinking 0.22 units in 0.25s. Yellow (#f6c83e) is the only color on white material with gray outlines.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the 3D laptop on the left (760px) and the dropdown UI on the right. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a push-in shot?",
+        "A push-in moves the camera toward the subject, by dolly or zoom, so the frame narrows to a detail. In this film it takes 1.6s and lands on the keyboard, and each later pan finishes within 0.8s."
+      ],
+      [
+        "Why use a telephoto lens for a keyboard close-up?",
+        "A long lens, 22° field of view here, flattens perspective, so the keys stay flat and readable after the push-in. Each key group can be read clearly when the camera pans to it."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "设备推镜聚焦",
+    "title": "设备推镜聚焦：示例与代码配方",
+    "description": "线稿风 3D 笔记本开盖后推近键盘，并随下拉选项逐个平移到对应按键。用 Claude Code 或 Codex 按免费配方做出这个设备推镜效果。",
+    "howto": [
+      "用 3D 做一台白色线稿笔记本，22° 长焦相机，观察方向固定。笔记本 0–0.5s 升起，合盖状态下用 0.7s 从偏航 35° 转正，0.55s 内屏幕从 0° 开到 112°，再用 expo.out（cubic-bezier(0.16,1,0.3,1)）在 1.6s 内把镜头从 150 推到 60 个单位，对准键盘。",
+      "每次平移都对应一次界面选择。下拉框在 4.95s 和 7.15s 选中，平移晚 0.05s 开始，历时 0.8s；平移开始 0.6s 后键位变黄高亮，再过 0.4s 按下，0.25s 内下沉 0.22 个单位。画面里只有黄色（#f6c83e）一种色彩，材质是白色加灰色描边。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会在左侧（760px）做 3D 笔记本，右侧做下拉选项界面。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是推镜头？",
+        "推镜头指镜头通过移动机位或变焦靠近主体，画面收窄到某个细节。这支片子的推近用 1.6s，落在键盘上，之后每次平移都在 0.8s 内完成。"
+      ],
+      [
+        "键盘特写为什么用长焦镜头？",
+        "长焦镜头（这里视场角 22°）会压平透视，推近之后键位仍然平整、好辨认，镜头平移到每组按键时都能看清。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

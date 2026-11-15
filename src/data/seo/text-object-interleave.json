@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Text–Object Interleave",
+    "title": "Text–Object Interleave: Example and Code Recipe",
+    "description": "Type rises from behind a product, an earbud slots into a sentence and a word passes through it as a translation. Make it with Claude Code or Codex.",
+    "howto": [
+      "Order the layers back to front: text, 3D product, text. In the first scene (0–3.2s) the product sinks 165px while the wordmark rises 255px over 1.8s with expo.out, cubic-bezier(0.16,1,0.3,1), so the product covers about a third of the wordmark. Use a fixed 20° fov camera at 34 units.",
+      "In the pass-through scene (3.2–7.8s) the source text slides in linearly over 1.0s and is hidden past x 820px, while the translation is clipped to start at the earbud tip (x 1060px) and emerges in 0.4s. In the slot-in scene (7.8–11.0s) the sentence splits with a 400px gap, one earbud wide, the device drops in over 0.5s and a light ring glows 0.6s later.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the three scenes with the 3D product between two text layers. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a text behind object effect?",
+        "It places type on a layer behind the main subject so the subject partly covers the letters, which gives a flat title a front and a back. This film also lets a word pass through an object and slots a device into a sentence."
+      ],
+      [
+        "How does the film show a translation without arrows?",
+        "The object marks the change. The word enters the earbud as black source text and leaves it as gradient-colored translation clipped at the earbud tip, and a language label follows 0.12s later."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "文字穿插实物效果",
+    "title": "文字穿插实物：示例与代码配方",
+    "description": "文字从产品后面升起，耳机插进句子中间，文字穿过耳机变成译文。用 Claude Code 或 Codex 按免费配方做出这个文字穿插实物效果。",
+    "howto": [
+      "图层从后到前依次是：文字、3D 产品、文字。第一幕（0–3.2s）里产品下沉 165px，字标用 1.8s 上升 255px，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)），产品遮住字标约三分之一。相机固定，视场角 20°，距离 34 个单位。",
+      "穿过场景（3.2–7.8s）中，原文用 1.0s 线性滑入，越过 x 820px 的部分被隐藏；译文从耳机尖端（x 1060px）起裁切，用 0.4s 出现。插入场景（7.8–11.0s）里，句子从中间拉开 400px，宽度正好是一只耳机，设备用 0.5s 落入，之后光环亮起 0.6s。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出这三个场景，让 3D 产品夹在两层文字之间。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是文字在物体后面的效果？",
+        "把文字放在主体后面的图层，主体盖住一部分字，平面标题就有了前后层次。这支片子还让文字穿过实物，并让设备插进句子中间。"
+      ],
+      [
+        "片子怎么表现翻译，又没有箭头？",
+        "靠实物本身标记变化。文字以黑色原文进入耳机，从耳机尖端以渐变色译文出来，语言标签晚 0.12s 跟上。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

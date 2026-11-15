@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Control-Driven Change",
+    "title": "Control-Driven Change: Example and Code Recipe",
+    "description": "Dragging a color dot or flipping a dark-mode switch changes the whole page on the same frame. Make this control-driven animation with Claude Code or Codex.",
+    "howto": [
+      "Open with a 2.6× close-up on the inspector and Brand popover, then pull out over 0.9s on expo.out to the whole window at 1.3×. Drag a dot across a 200×132px color field, 0.4s per drag on power3.inOut, from indigo #6366f1 to emerald #10b981, orange #f97316 and violet #8b5cf6. The cursor drifts 5–6px off the dot path mid-drag.",
+      "On the frame the dot lands, set --brand, --brand-t and --soft on the root so the hex field and the entire page change color together with no transition. The dark-mode knob slides 5.0–5.17s and the theme variables swap on its arrival frame. One timeline drives both the control and the page, and page changes are hard sets.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the editor window with its popover and the theme variables. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What does control-driven change mean?",
+        "A control such as a color picker, toggle or dial changes a page result on the exact frame the control reaches its value. Viewers see cause and effect without narration."
+      ],
+      [
+        "How do I keep the control and the result in sync?",
+        "Drive both from one timeline. Here the page reads CSS variables on the root, and the timeline sets them on the frame the control lands, so no transition delays the result."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "控件联动动画",
+    "title": "控件联动动画：示例与代码配方",
+    "description": "拖一下取色点或拨一下深色模式开关，整页在同一帧跟着变化。用 Claude Code 或 Codex 按免费配方做出这个控件联动动画。",
+    "howto": [
+      "开场是对准检查器和 Brand 弹层的 2.6 倍特写，随后用 0.9s、expo.out 拉出到 1.3 倍的整窗视角。在 200×132px 的色域里拖动取色点，每次拖动 0.4s，缓动 power3.inOut，颜色依次是靛蓝 #6366f1、翡翠绿 #10b981、橙色 #f97316 和紫罗兰 #8b5cf6。拖动途中光标偏离取色点轨迹 5–6px。",
+      "取色点落下的那一帧，在根元素上设置 --brand、--brand-t 和 --soft，十六进制输入框和整个页面一起变色，没有过渡。深色模式开关在 5.0–5.17s 滑动，到位那一帧主题变量切换。控件和页面由同一条时间线驱动，页面变化直接硬设置。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会搭出带弹层的编辑器窗口和主题变量。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "控件联动是什么意思？",
+        "取色器、开关、调节盘这类控件一到位，页面结果就在同一帧变化。观众不需要解说，就能看出因果。"
+      ],
+      [
+        "怎样让控件和结果保持同步？",
+        "让同一条时间线驱动两者。这里页面读取根元素上的 CSS 变量，时间线在控件落下的那一帧设置这些变量，结果没有过渡延迟。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

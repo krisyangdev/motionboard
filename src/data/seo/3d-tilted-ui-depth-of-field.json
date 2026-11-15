@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "3D Tilted UI with Depth of Field",
+    "title": "3D Tilted UI with Depth of Field: Code Recipe",
+    "description": "A command-palette UI is tilted in 3D and shot close, with only the active row in focus. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Build the panel (760×500px) in DOM and tilt it with CSS 3D: perspective 1200px, rotateX 18°, rotateY −16°, rotateZ 5°, scale 2.3. Pan the camera linearly sideways (x 110 to −150px) over 8s while a follow offset keeps the active line at about 40% of frame height.",
+      "Fake the depth of field with the sharp panel plus two blurred copies (4px next to the focus band, 13px beyond), cross-faded through 60px and 200px masks. The band is 168px of panel height and jumps to the highlighted row in 0.22–0.35s on expo.out. The pull-back at 8.0s halves the tilt, scales 2.3 to 1.5 and widens the band to the whole panel.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the panel in DOM with grain at 8% opacity re-rolled every 3 frames. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is depth of field?",
+        "Depth of field is the range of distances that appear sharp in an image. A shallow depth of field keeps one plane sharp and blurs what lies in front of and behind it, which directs attention to the sharp area."
+      ],
+      [
+        "Can I fake depth of field in CSS?",
+        "Yes. This recipe stacks blurred copies of the same panel and reveals the sharp one through a mask band that follows the active row. The same markup works in a video render and on a web page."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "3D 倾斜界面景深效果",
+    "title": "3D 倾斜界面景深效果：示例与代码配方",
+    "description": "命令面板界面在 3D 里倾斜并贴近拍摄，只有当前操作行在焦内。用 Claude Code 或 Codex 按免费配方做出这个倾斜界面景深效果。",
+    "howto": [
+      "用 DOM 做一个 760×500px 的面板，用 CSS 3D 倾斜：perspective 1200px，rotateX 18°，rotateY −16°，rotateZ 5°，缩放 2.3 倍。镜头在 8s 内线性横移（x 从 110 到 −150px），同时用跟随偏移把当前行保持在画面高度约 40% 的位置。",
+      "景深用清晰的面板加两层模糊副本模拟（紧挨焦点带的是 4px，更远的是 13px），通过 60px 和 200px 的遮罩交叉渐变。焦点带高 168px，用 expo.out 在 0.22–0.35s 内跳到高亮行。8.0s 的后拉把倾斜角减半，缩放从 2.3 到 1.5，焦点带扩大到整个面板。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用 DOM 做出面板，并加上不透明度 8%、每 3 帧重抽一次的颗粒。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是景深？",
+        "景深是画面中看起来清晰的距离范围。浅景深只让一个平面清晰，前后都虚化，把注意力引向清晰的区域。"
+      ],
+      [
+        "能用 CSS 模拟景深吗？",
+        "可以。这份配方叠放同一个面板的模糊副本，再用跟随当前行的遮罩带露出清晰的那一层。同一套标记既能渲染视频，也能用在网页上。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

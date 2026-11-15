@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Dispense Line-up",
+    "title": "Dispense Line-up: Example and Code Recipe",
+    "description": "Five power adapters slide out of a dock into a row while the caption appears word by word, then retract in mirror order. Make it with Claude Code or Codex.",
+    "howto": [
+      "Model a dock and five adapters (140W, 96W, 70W, 35W, 20W) in 3D. Each pass extends in 0.9s, holds 1.1s and retracts 0.9s. Accessories start 0.15s apart and each slides out in 0.3s on expo.out, cubic-bezier(0.16,1,0.3,1). The smallest leaves first and travels furthest, and the row steps from large to small, 0.42 units apart.",
+      "Add one caption word 0.1s after each accessory starts moving, appearing with no fade (5 words, 5 accessories). The retract is the exact time mirror: accessories re-enter right to left and words are removed in reverse at 0.15s intervals. Use a locked side view at 13° fov with lens shift, a 23° three-quarter view for shot B, and 14 sub-frames of motion blur.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the dock, the adapters and the caption timing. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a dispense animation?",
+        "A dispense animation moves several objects out of one source object one after another, usually into a line. The delay between items and a mirrored return make the motion read as one mechanism."
+      ],
+      [
+        "How do I sync captions to the objects?",
+        "Tie each caption word to an accessory start time. Here a word appears 0.1s after its accessory starts moving and words disappear in reverse order at 0.15s intervals on retract, so the word count matches the accessory count."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "配件依次滑出排列动画",
+    "title": "配件依次滑出排列：示例与代码配方",
+    "description": "五个电源适配器从底座里逐个滑出排成一行，文案逐词出现，停留后镜像收回。用 Claude Code 或 Codex 按免费配方做出这个效果。",
+    "howto": [
+      "用 3D 做一个底座和五个适配器（140W、96W、70W、35W、20W）。每一轮展开 0.9s、停留 1.1s、收回 0.9s。配件间隔 0.15s 依次出发，各自用 0.3s 滑出，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)）。最小的先出发、走得最远，一排从大到小，间距 0.42 个单位。",
+      "每个配件开始移动 0.1s 后，文案多出一个词，直接出现，不加淡入（5 个词对应 5 个配件）。收回是展开的严格时间镜像：配件从右到左回到底座，文案按相反顺序、每 0.15s 去掉一个词。镜头用锁定的侧视角（视场角 13°，带镜头位移），B 镜头用 23° 的四分之三视角，运动模糊取 14 个子帧。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会搭出底座、适配器和文案时间轴。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是吐出排列动画？",
+        "吐出排列动画让多个物体依次从同一个主体里出来，通常排成一行。物体之间的时间间隔和镜像收回，让整个动作像一套机构。"
+      ],
+      [
+        "文案怎么和物体同步？",
+        "把每个词绑定到对应配件的出发时间。这里词在配件开始移动 0.1s 后出现，收回时按相反顺序每 0.15s 去掉一个词，词数与配件数一一对应。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

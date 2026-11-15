@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Morph Transition",
+    "title": "Morph Transition: Example and Code Recipe",
+    "description": "One black shape morphs from a line to a capsule, an input box, a window and a gallery card with no hard cut. Make it with Claude Code or Codex.",
+    "howto": [
+      "Animate one black shape (#111111) by width, height and corner radius together: a 960×3 line, a 960×96 capsule (radius 48), a 920×88 input box (radius 44), a 1440×820 window (radius 18), then a 0.26-scale gallery card among 11 others. The line, capsule and input steps take 0.2s, 0.3s and 0.4s, and the window growth takes 0.75s on power3.inOut.",
+      "Tie each change to a frame. The headline turns white on the frame after the capsule starts thickening (1.33s), the window fill flips to cream within the first 0.3s of its growth, and the gallery stays hidden until the card forms at 7.6s. The window shrinks into a card over 0.8s on expo.out, and the camera stays nearly fixed.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the shape as one DOM element with the headline, input and gallery around it. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a morph transition?",
+        "A morph transition turns one element into the next by animating its shape, size and color continuously. The next scene arrives as the same object, so the sequence has no hard cut."
+      ],
+      [
+        "Can I use a morph transition on a website?",
+        "Yes. The film animates the width, height and corner radius of one DOM element with GSAP, which also runs on a page. Keep a single subject on screen at a time so the change reads clearly."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "形变转场",
+    "title": "形变转场：示例与代码配方",
+    "description": "一个黑色形状从线变成胶囊、输入框、窗口再变成画廊卡片，全程没有硬切。用 Claude Code 或 Codex 按免费配方做出这个形变转场。",
+    "howto": [
+      "让一个黑色形状（#111111）同时改变宽、高和圆角：960×3 的线、960×96 的胶囊（圆角 48）、920×88 的输入框（圆角 44）、1440×820 的窗口（圆角 18），最后缩成 11 张卡片里的一张，缩放 0.26。线、胶囊、输入框三步分别用 0.2s、0.3s、0.4s，窗口放大用 0.75s，缓动 power3.inOut。",
+      "每个变化都对齐到具体帧。标题在胶囊开始变粗后的下一帧（1.33s）变白，窗口填充色在放大的前 0.3s 内翻成奶油色，画廊在 7.6s 卡片成形前一直隐藏。窗口用 0.8s 缩成卡片，缓动 expo.out，镜头基本固定。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会把形状做成一个 DOM 元素，周围布置标题、输入框和画廊。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是形变转场？",
+        "形变转场让一个元素通过连续改变形状、尺寸和颜色变成下一个元素。下一个场景以同一个物体的身份出现，整段没有硬切。"
+      ],
+      [
+        "网站上能用形变转场吗？",
+        "可以。这支片子用 GSAP 改变一个 DOM 元素的宽、高和圆角，网页上同样能运行。画面里同一时间只保留一个主体，变化才容易看懂。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

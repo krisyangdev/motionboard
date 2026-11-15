@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Focus Hop",
+    "title": "Focus Hop: Example and Code Recipe",
+    "description": "A highlight block hops one cell at a time with the cursor and takes the color of the icon inside it. Make this focus animation with Claude Code or Codex.",
+    "howto": [
+      "On a dark app-store window, use two acts. On the shelf, 10 cards (156×162px, 172px pitch) slide left one step at a time, 0.25s on expo.out with 0.25s holds, under a fixed focus frame on the third slot. The frame’s 2px outline and rgba(r,g,b,0.15) fill take the main color of the icon inside it, tweening on power1.inOut.",
+      "In the grid act (12 cells of 307×134px, 4 columns) the highlight hops as hard jumps (tl.set) along a snake path across 11 cells, dwelling 0.22–0.34s on each, with the cursor following within 8px of the cell center. Camera moves take 0.8s on expo.out. The last cell’s Install chip flips to Installed on the click frame at 7.84s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the shelf, the grid and the focus frame. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a focus hop animation?",
+        "A focus frame or highlight block jumps from one cell to the next, one stop at a time, to show selection moving through a grid or list. Each pause reads as a choice."
+      ],
+      [
+        "How do I set the focus frame color from an icon?",
+        "Take the main color of the icon in each cell and write it to the frame’s outline, fill and glow, tweening through the shelf slide and jumping with each grid hop. The selection state and the content then share one palette."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "焦点跳转动画",
+    "title": "焦点跳转动画：示例与代码配方",
+    "description": "高亮块随光标一格一停地跳动，焦点框取框内图标的颜色。用 Claude Code 或 Codex 按免费配方做出这个焦点跳转动画。",
+    "howto": [
+      "在深色应用商店窗口里分两幕。货架幕里，10 张卡片（156×162px，间距 172px）每步向左滑一格，用 0.25s、expo.out，停 0.25s，固定的焦点框停在第三个位置。焦点框的 2px 描边和 rgba(r,g,b,0.15) 填充取框内图标的主色，用 power1.inOut 过渡。",
+      "网格幕有 12 个格子（307×134px，4 列），高亮沿蛇形路径在 11 个格子间硬跳（tl.set），每格停留 0.22–0.34s，光标跟随，偏离格子中心不超过 8px。镜头移动用 0.8s、expo.out。最后一格的 Install 标签在 7.84s 点击那一帧变成 Installed。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出货架、网格和焦点框。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是焦点跳转动画？",
+        "焦点框或高亮块一格一停地跳到下一格，表现选中状态在网格或列表里移动。每次停顿都像一次选择。"
+      ],
+      [
+        "焦点框颜色怎么取自图标？",
+        "取每个格子里图标的主色，写到焦点框的描边、填充和辉光上，货架滑动时渐变，网格里随每次跳动直接切换。这样选中状态和内容共用一套配色。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

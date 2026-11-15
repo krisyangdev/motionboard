@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Outline-to-Solid Reveal",
+    "title": "Outline-to-Solid Reveal: Example and Code Recipe",
+    "description": "A light point draws a product outline in 3s, then a solid body and highlight fill it in. Make this outline reveal with Claude Code or Codex.",
+    "howto": [
+      "On a pure black background, fade in a light point at top center at 0.45s. Two heads extend symmetrically and draw the outline (a tube about 1.5px wide) from 1.0 to 4.0s on power2.inOut, cubic-bezier(0.65,0,0.35,1), with bloom and a halo on the heads. Use an 18° fov perspective camera, fixed until 6.3s.",
+      "The solid body fades in inside the outline from 3.3 to 4.8s, overlapping the last 0.7s of the draw. The widest highlight, a separate light pass, runs 3.8–5.3s after the body. The outline then fades to 14% over 4.6–5.7s, and a 5% push-in runs 6.3–8.2s. A 2.8s logo version uses a 0.4s wireframe and a 0.6s fill wipe.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the outline, body and highlight as separate layers. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is an outline-to-solid reveal?",
+        "The shape first appears as a line drawing, such as a wireframe or a path drawn by light, and then fills with a solid surface or material. The viewer reads the silhouette before the material."
+      ],
+      [
+        "Should the outline stay visible after the fill?",
+        "In this film the outline fades to 14% between 4.6 and 5.7s, after the body is in. The faint line stays as a silhouette cue while the solid takes over."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "描边到实体显形动画",
+    "title": "描边到实体显形动画：示例与代码配方",
+    "description": "一个光点用 3s 勾出产品轮廓，随后实体和高光填满。用 Claude Code 或 Codex 按免费配方做出这个描边显形动画。",
+    "howto": [
+      "纯黑背景，0.45s 在顶部中心淡入一个光点。两个线头对称向两侧延伸，在 1.0–4.0s 用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）画完整圈轮廓，线宽约 1.5px，线头带辉光和光晕。透视相机视场角 18°，6.3s 之前固定。",
+      "实体在 3.3–4.8s 于轮廓内部淡入，与轮廓绘制的最后 0.7s 重叠。最宽的高光是单独一层光，在实体之后的 3.8–5.3s 出现。轮廓在 4.6–5.7s 降到 14%，6.3–8.2s 慢推 5%。另有 2.8s 的 logo 版本，线框 0.4s，填充擦除 0.6s。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会把轮廓、实体和高光分成三层来做。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是描边到实体的显形？",
+        "形状先以线稿出现，比如线框或光线画出的路径，再填成实心或材质。观众先记住轮廓，再看到材质。"
+      ],
+      [
+        "填充之后轮廓还要保留吗？",
+        "这支片子里轮廓在 4.6–5.7s 降到 14%，此时实体已经进入。保留的淡线起到轮廓提示作用，主体交给实体。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

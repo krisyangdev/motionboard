@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Locked-Layout Reskin",
+    "title": "Locked-Layout Reskin: Example and Code Recipe",
+    "description": "One site layout stays locked while color and font skins hard-cut every 6 to 16 frames. Make this reskin animation with Claude Code or Codex.",
+    "howto": [
+      "Build one site canvas (1240×828px) inside a fixed editor window (1632×918px) and define eight theme classes through CSS variables for background, text, accent, border and font: Mono, Gazette, Neon, Fern, Block, Sorbet, Poster and Noir. Each cut is a class swap with tl.set on a single frame, with no transition.",
+      "Speed up the cuts: 4 at 16-frame spacing (0.53s) from 1.0s, 10 at 8 frames (0.27s) from 3.73s, then 11 at 6 frames (0.2s) from 6.4s. Light an arrow-down key cap for 3 frames on every cut. Place saturated solid skins (Block #ff5a1f, Poster #2340ff) between quiet light and dark ones, land on one skin and press Enter at 8.67s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the eight skins and the cut schedule. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a reskin animation?",
+        "A reskin keeps the layout and swaps the visual theme: colors, fonts and accents. Cutting quickly between skins shows how far the look of a single page structure can change, with every element staying in place."
+      ],
+      [
+        "Should skin changes use transitions?",
+        "In this recipe each switch is a class swap on one frame with no transition. The hard cut lands on a beat and keeps every position locked, so the viewer sees only what changes. Only the toast, the cursor and the final scale push animate."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "固定版式换肤动画",
+    "title": "固定版式换肤动画：示例与代码配方",
+    "description": "同一个网页版式位置锁定，配色和字体每隔 6 到 16 帧硬切一次。用 Claude Code 或 Codex 按免费配方做出这个换肤快切动画。",
+    "howto": [
+      "在固定的编辑器窗口（1632×918px）里放一个 1240×828px 的网页画布，用 CSS 变量定义八个主题类，控制背景、文字、强调色、边框和字体：Mono、Gazette、Neon、Fern、Block、Sorbet、Poster、Noir。每次切换是一帧内用 tl.set 换类名，没有过渡。",
+      "切换越来越快：1.0s 起 4 次，间隔 16 帧（0.53s）；3.73s 起 10 次，间隔 8 帧（0.27s）；6.4s 起 11 次，间隔 6 帧（0.2s）。每次切换让向下箭头键帽亮 3 帧。饱和的纯色皮肤（Block #ff5a1f、Poster #2340ff）放在安静的浅色和深色皮肤之间，最后落在一套皮肤上，8.67s 按下 Enter。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出八套皮肤和切换节奏表。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是换肤动画？",
+        "换肤保持版式不变，只替换视觉主题：颜色、字体和强调色。快速在皮肤之间切换，能展示同一个页面结构的外观可以变化到什么程度。"
+      ],
+      [
+        "换肤要加过渡吗？",
+        "这份配方里每次切换都是一帧内换类名，没有过渡。硬切落在节拍上，所有位置保持锁定，观众只看到变化的部分。只有提示条、光标和最后的缩放推近有动画。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}

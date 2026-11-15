@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Card Flip Animation",
+    "title": "Card Flip Animation: Example and Code Recipe",
+    "description": "A UI component card turns 180° on its Y axis and the back face shows the code. Make this card flip animation with Claude Code or Codex.",
+    "howto": [
+      "Build a 940×680px card in a 3D stage (perspective 2400px, perspective-origin 820px 500px). Rotate it rotateY 0° to 180° about its center in 0.8s (24 frames) on power3.inOut, cubic-bezier(0.65,0,0.35,1). The back face is rotateY(180deg), a dark code editor (#0d1117), and the second turn continues 180° to 360° in the same direction.",
+      "Keep the window chrome, sidebar and header still during the flip. While the card is edge-on, its shadow narrows to scaleX 0.04 and a black shading overlay rises to 0.2 opacity, both read from the same eased angle each frame. The cursor clicks the Preview/Code switch at 0.98s and the flip starts at 1.03s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the card with its preview face and its code face. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a card flip animation?",
+        "A card flip rotates a card 180° around its vertical axis to show the reverse side. In a UI it switches between two views of the same item, such as a preview and its code."
+      ],
+      [
+        "How do I make a card flip in CSS?",
+        "Give the container a perspective, rotate the card with rotateY from 0° to 180°, place the back face at rotateY(180deg) and hide back faces with backface-visibility. This recipe drives the angle from a GSAP timeline."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use the recipe and the code your agent generates from it in personal and commercial projects. The original clip is shown beside the recipe for comparison only."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "卡片翻转动画",
+    "title": "卡片翻转动画：示例与代码配方",
+    "description": "UI 组件卡片绕 Y 轴翻转 180°，背面显示代码。用 Claude Code 或 Codex 按免费配方做出这个卡片翻转动画。",
+    "howto": [
+      "在 3D 舞台里做一张 940×680px 的卡片（perspective 2400px，perspective-origin 820px 500px）。用 0.8s（24 帧）、power3.inOut（cubic-bezier(0.65,0,0.35,1)）让它绕中心 rotateY 从 0° 转到 180°。背面是 rotateY(180deg) 的深色代码编辑器（#0d1117），第二次翻转沿同一方向从 180° 继续到 360°。",
+      "翻转时窗口外框、侧栏和页头保持不动。卡片侧立时，阴影收窄到 scaleX 0.04，黑色遮罩升到 0.2 不透明度，两者每帧读取同一个缓动后的角度。光标在 0.98s 点击预览/代码开关，1.03s 开始翻转。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出带预览面和代码面的卡片。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是卡片翻转动画？",
+        "卡片翻转让卡片绕竖直轴转 180°，露出背面。在界面里，它用来切换同一个对象的两种视图，比如预览和代码。"
+      ],
+      [
+        "用 CSS 怎么做卡片翻转？",
+        "给容器设置 perspective，用 rotateY 把卡片从 0° 转到 180°，背面设为 rotateY(180deg)，再用 backface-visibility 隐藏背面朝向的一面。这份配方用 GSAP 时间线驱动角度。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，采用 MIT 许可，配方和 agent 据此生成的代码可用于个人和商用项目。原片只放在配方旁边做对照。"
+      ]
+    ]
+  }
+}
