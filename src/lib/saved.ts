@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react'
+import { bySlug } from '@/data/terms'
 
 const KEY = 'mb.saved'
 const EMPTY: string[] = []
@@ -16,7 +17,7 @@ function read(): string[] {
   let list = EMPTY
   try {
     const parsed = raw ? JSON.parse(raw) : []
-    if (Array.isArray(parsed)) list = parsed.filter((x): x is string => typeof x === 'string')
+    if (Array.isArray(parsed)) list = parsed.filter((x): x is string => typeof x === 'string' && x in bySlug)
   } catch {}
   cache = { raw, list }
   return list
