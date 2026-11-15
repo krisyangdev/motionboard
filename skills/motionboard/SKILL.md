@@ -1,7 +1,7 @@
 ---
 name: motionboard
 license: MIT
-description: Make product launch films and single shots in the style of Apple and Linear launch films, from 38 recipes (HyperFrames, HTML + GSAP rendered to MP4). Use when the user asks for a product launch film, promo video, product reveal, feature video or app trailer; wants to recreate a specific shot from a launch film; asks for Apple-style or Linear-style motion, either as a video or as a hero animation on a website; or names a shot from the recipe index (Match Cut, Tilted UI with Depth of Field, Auto Zoom, Morph Relay, Light Reveal and the rest). Also applies to requests in Chinese such as 做宣传片, 产品发布视频, 苹果风动效, 复刻某个镜头.
+description: Make product launch videos, promo videos and motion graphics in code with HyperFrames (HTML + GSAP rendered to MP4), from 38 shot recipes taken from Apple and Linear launch films. Use when the user asks to make a launch video, product video, promo or app trailer; asks for a specific effect such as a match cut transition, logo reveal or logo animation, text scramble, kinetic typography, typing / typewriter animation, word-by-word text highlight, morph transition, wipe or iris transition, liquid glass effect, chromatic aberration / RGB split, line boil, dot matrix animation, confetti success animation, card flip, zoom-to-cursor, multiplayer cursors, 3D tilted UI with depth of field or a product light reveal; wants Apple-style or Linear-style motion as a video or as a hero animation on a website; or asks whether Claude Code or Codex can make videos. Also applies to requests in Chinese such as 做宣传片, 产品发布视频, 做个转场, Logo 动画, 苹果风动效, 复刻某个镜头.
 ---
 
 # Motionboard
@@ -24,7 +24,7 @@ Each recipe page at `https://motionboard.app/recipes/<slug>/` shows the preview 
 
 Positions: Opening (`open`), Product reveal (`reveal`), Features (`feature`), Transitions (`bridge`), Ending (`close`).
 
-The source folder name can differ from the recipe slug (`auto-zoom` uses `source/zoom-to-cursor/`). Take it from the recipe's `Source files` section.
+The source folder name can differ from the recipe slug (`match-cut-transition` uses `source/match-cut/`). Take it from the recipe's `Source files` section.
 
 ### Spec, source and preview
 

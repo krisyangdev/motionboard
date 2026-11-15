@@ -1,7 +1,7 @@
 {
   "name": "motionboard",
   "version": "1.0.0",
-  "description": "Shot language from Apple and Linear launch films, rebuilt in HyperFrames (HTML + GSAP). 38 recipes and a skill for making product launch films.",
+  "description": "Make launch videos and motion graphics with Claude Code or Codex: 38 shot recipes (match cut, logo reveal, kinetic typography, liquid glass and more) rebuilt in HyperFrames (HTML + GSAP rendered to MP4) from Apple and Linear launch films.",
   "author": {
     "name": "Kris Yang",
     "url": "https://github.com/krisyangdev"

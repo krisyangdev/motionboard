@@ -2,7 +2,7 @@
 
 # Motionboard
 
-Shot language from Apple and Linear launch films, rebuilt in code for your agent.
+Make launch videos and motion graphics with Claude Code or Codex: a free HyperFrames skill with 38 shot recipes (match cut, logo reveal, kinetic typography, liquid glass effect, typing animation and more), each rebuilt in code from Apple and Linear launch films.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](#install)
@@ -12,7 +12,7 @@ Shot language from Apple and Linear launch films, rebuilt in code for your agent
 
 [![The Motionboard launch film, built from six recipes](assets/readme/film.gif)](https://motionboard.app)
 
-Motionboard breaks real launch films down into 38 shots. Each shot is recreated in code as a ~10 second [HyperFrames](https://github.com/heygen-com/hyperframes) film (HTML and GSAP rendered to video), and the website shows every original next to its recreation. The skill gives your agent all 38 recipes, so it can make one shot or plan and build a whole launch film for your product.
+Ask your agent to "make a launch video for my product", "add a match cut between these two screens" or "animate our logo reveal", and it builds the shot in code and renders an MP4 (or ports the motion to your website). Motionboard breaks real launch films down into 38 shots. Each shot is recreated in code as a ~10 second [HyperFrames](https://github.com/heygen-com/hyperframes) film (HTML and GSAP rendered to video), and the website shows every original next to its recreation. The skill gives your agent all 38 recipes, so it can make one shot or plan and build a whole launch film for your product.
 
 Requirements: Node 22+, HyperFrames (`npx hyperframes`), ffmpeg.
 

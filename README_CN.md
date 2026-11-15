@@ -2,7 +2,7 @@
 
 # Motionboard
 
-拆解苹果、Linear 宣传片的镜头语言，用代码复刻，交给你的 Agent 做同款。
+用 Claude Code 或 Codex 做宣传片和动效：免费的 HyperFrames skill，38 个镜头配方（匹配剪辑转场、Logo 动画、动态文字排版、液态玻璃效果、打字机动画等），每个都拆自苹果、Linear 宣传片，用代码复刻。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](#安装)
@@ -12,7 +12,7 @@
 
 [![Motionboard 宣传片，由六个配方拼成](assets/readme/film.gif)](https://motionboard.app/zh/)
 
-Motionboard 把真实的宣传片拆成 38 个镜头。每个镜头都用代码复刻成约 10 秒的 [HyperFrames](https://github.com/heygen-com/hyperframes) 短片（HTML 加 GSAP，渲染成视频），网站上每个配方都把原片和复刻并排放在一起。这个 skill 让你的 Agent 掌握全部 38 个配方，可以只做一个镜头，也可以为你的产品规划并做出完整的宣传片。
+对 Agent 说「给我的产品做一支宣传片」「在这两个界面之间加一个匹配剪辑」或「给我们的 Logo 做个出场动画」，它会用代码做出镜头并渲染成 MP4，也可以把动效移植到你的网站。Motionboard 把真实的宣传片拆成 38 个镜头。每个镜头都用代码复刻成约 10 秒的 [HyperFrames](https://github.com/heygen-com/hyperframes) 短片（HTML 加 GSAP，渲染成视频），网站上每个配方都把原片和复刻并排放在一起。这个 skill 让你的 Agent 掌握全部 38 个配方，可以只做一个镜头，也可以为你的产品规划并做出完整的宣传片。
 
 环境要求：Node 22+、HyperFrames（`npx hyperframes`）、ffmpeg。
 
