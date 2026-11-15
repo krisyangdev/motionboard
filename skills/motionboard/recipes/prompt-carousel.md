@@ -52,8 +52,8 @@ The input box grows out of the headline itself, with no cut. The prompts show on
 
 ## Often confused with
 
-- [Rhythmic Typing](./rhythmic-typing.md): Rhythmic Typing is a single line typed and deleted in the center of the screen; Prompt Carousel's container is an input box with several prompts scrolling vertically.
-- [Word-by-Word Highlight](./word-by-word-highlight.md): Word-by-Word Highlight only brightens text and involves no change in input box form.
+- [Typing Animation (Typewriter Effect)](./typing-animation.md): Rhythmic Typing is a single line typed and deleted in the center of the screen; Prompt Carousel's container is an input box with several prompts scrolling vertically.
+- [Word-by-Word Text Highlight](./word-by-word-text-highlight.md): Word-by-Word Highlight only brightens text and involves no change in input box form.
 
 ## Source files
 

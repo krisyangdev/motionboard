@@ -9,19 +9,30 @@
     "h1": "Can Claude make videos?",
     "lede": "Yes. Claude makes video by writing code that a renderer turns into an MP4 file, and Anthropic's Claude Motion article says the feature uses no video generation model. As of November 2026 there are three routes: Claude Motion on Team and Enterprise plans, HyperFrames skills in Claude Code or Codex, and Remotion skills. This page compares them and shows real output.",
     "blocks": [
-      { "t": "h2", "text": "How Claude makes a video" },
+      {
+        "t": "h2",
+        "text": "How Claude makes a video"
+      },
       {
         "t": "p",
         "text": "Anthropic's help article for Claude Motion states that the feature does not use a video generation model, so it cannot create realistic footage or people. It generates code that animates text, charts, shapes and images, and the result plays like a short video. The other two routes work the same way. Claude writes project files, a renderer draws each frame, and an encoder produces the MP4."
       },
-      { "t": "h2", "text": "Three ways to make a video with Claude" },
+      {
+        "t": "h2",
+        "text": "Three ways to make a video with Claude"
+      },
       {
         "t": "p",
         "text": "The table compares the three routes as of 16 November 2026. Each cell comes from the official page listed under Sources."
       },
       {
         "t": "table",
-        "head": ["", "Claude Motion", "HyperFrames skills", "Remotion skills"],
+        "head": [
+          "",
+          "Claude Motion",
+          "HyperFrames skills",
+          "Remotion skills"
+        ],
         "rows": [
           [
             "Who it is for",
@@ -61,7 +72,10 @@
           ]
         ]
       },
-      { "t": "h2", "text": "Claude Motion" },
+      {
+        "t": "h2",
+        "text": "Claude Motion"
+      },
       {
         "t": "p",
         "text": "Claude Motion is Anthropic's feature for short animations, described in a help article dated 8 October 2026. You ask for one in any chat, choose Motion under Output in the message box, or start from a Motion template in the Artifacts tab. The article recommends stating the audience, where the video will be shown and the approximate length, and attaching the data or images to use."
@@ -70,7 +84,10 @@
         "t": "p",
         "text": "Changes go through chat, such as adjusting timing or updating a figure, or through the editor. New animations are private until you share them. Owners and Primary Owners switch the feature on or off under Organization settings, in the Artifacts section."
       },
-      { "t": "h2", "text": "HyperFrames skills in Claude Code or Codex" },
+      {
+        "t": "h2",
+        "text": "HyperFrames skills in Claude Code or Codex"
+      },
       {
         "t": "p",
         "text": "HyperFrames is HeyGen's free, open-source framework that turns HTML, CSS, media and seekable animations into deterministic MP4 videos. GSAP is its primary animation runtime. For Claude Code, the HyperFrames docs give a plugin install, and `npx skills add heygen-com/hyperframes` installs the skills for other agents. The repository lists nine skills, and the core set covers the main skill, the CLI, a registry of about 450 blocks, media, reverse-engineering a video into a project, and style sampling."
@@ -79,17 +96,26 @@
         "t": "p",
         "text": "The HyperFrames site also lists a hosted connector for Claude, ChatGPT and Grok chat, in beta, where videos render in the cloud under a HeyGen account. A launch video built this way is covered in [product launch video with Claude Code](/guides/product-launch-video-with-claude-code/)."
       },
-      { "t": "h2", "text": "Remotion skills" },
+      {
+        "t": "h2",
+        "text": "Remotion skills"
+      },
       {
         "t": "p",
         "text": "Remotion is a React framework for making videos with code. Its official agent skills install with `npx skills add remotion-dev/skills`, or with `npx remotion skills add` inside a project. The Remotion docs list Claude Code, Codex, Cursor, Kimi Code and OpenCode as supported agents. The licence terms for companies are explained in [HyperFrames vs Remotion](/guides/hyperframes-vs-remotion/). A longer list of video skills is in [Claude Code video skills](/guides/claude-code-video-skills/)."
       },
-      { "t": "h2", "text": "Where Motionboard fits" },
+      {
+        "t": "h2",
+        "text": "Where Motionboard fits"
+      },
       {
         "t": "p",
         "text": "Motionboard is a free, MIT-licensed site and skill with 38 shot recipes taken from launch films by Apple, Linear and others. Each recipe is a film of about 10 seconds at 1920x1080, made in code with HyperFrames and shown next to the original clip. The skill runs in Claude Code and Codex with Node.js 22+ and FFmpeg installed, on whatever plan or account those agents use. The files are plain HTML in your project folder and render on your own computer."
       },
-      { "t": "h2", "text": "Real output from Claude Code and Codex" },
+      {
+        "t": "h2",
+        "text": "Real output from Claude Code and Codex"
+      },
       {
         "t": "p",
         "text": "These four recipe films were made with HyperFrames. Each recipe page shows the film next to the original clip."
@@ -103,13 +129,22 @@
           "liquid-glass-effect"
         ]
       },
-      { "t": "h2", "text": "Try it" },
+      {
+        "t": "h2",
+        "text": "Try it"
+      },
       {
         "t": "p",
         "text": "Run this in your video project folder, then ask Claude Code or Codex for a recipe by its effect name, such as a match cut transition or a typing animation."
       },
-      { "t": "cmd", "text": "npx skills add krisyangdev/motionboard" },
-      { "t": "h2", "text": "Frequently asked questions" },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "h2",
+        "text": "Frequently asked questions"
+      },
       {
         "t": "faq",
         "items": [
@@ -198,19 +233,30 @@
     "h1": "Claude 能做视频吗？",
     "lede": "能。Claude 通过写代码做视频，由渲染器把代码变成 MP4 文件，Anthropic 的 Claude Motion 说明文章也写明该功能没有使用视频生成模型。截至 2026 年 11 月有三条路线：Team 和 Enterprise 套餐里的 Claude Motion、Claude Code 或 Codex 里的 HyperFrames 技能，以及 Remotion 技能。本文逐项对比，并展示真实成片。",
     "blocks": [
-      { "t": "h2", "text": "Claude 如何做出视频" },
+      {
+        "t": "h2",
+        "text": "Claude 如何做出视频"
+      },
       {
         "t": "p",
         "text": "Anthropic 的 Claude Motion 帮助文章写明，该功能没有使用视频生成模型，因此无法生成真实画面或真人。它生成的是让文字、图表、形状和图片动起来的代码，结果像一段短视频一样播放。另外两条路线的原理相同：Claude 写出项目文件，渲染器逐帧绘制，编码器输出 MP4。"
       },
-      { "t": "h2", "text": "用 Claude 做视频的三种方式" },
+      {
+        "t": "h2",
+        "text": "用 Claude 做视频的三种方式"
+      },
       {
         "t": "p",
         "text": "下表按 2026 年 11 月 16 日的信息对比三条路线，每个单元格都来自文末列出的官方页面。"
       },
       {
         "t": "table",
-        "head": ["", "Claude Motion", "HyperFrames 技能", "Remotion 技能"],
+        "head": [
+          "",
+          "Claude Motion",
+          "HyperFrames 技能",
+          "Remotion 技能"
+        ],
         "rows": [
           [
             "适合谁",
@@ -250,7 +296,10 @@
           ]
         ]
       },
-      { "t": "h2", "text": "Claude Motion" },
+      {
+        "t": "h2",
+        "text": "Claude Motion"
+      },
       {
         "t": "p",
         "text": "Claude Motion 是 Anthropic 推出的短动画功能，帮助文章日期为 2026 年 10 月 8 日。你可以在任意对话里提出需求，也可以在输入框的 Output 中选择 Motion，或从 Artifacts 标签页的 Motion 模板开始。文章建议写明受众、播放场景和大致时长，并附上要用的数据或图片。"
@@ -259,7 +308,10 @@
         "t": "p",
         "text": "修改可以通过对话完成，例如调整节奏或更新数字，也可以在编辑器里改。新动画默认私有，分享后他人才能看到。Owner 和 Primary Owner 可以在 Organization settings 的 Artifacts 部分开启或关闭该功能。"
       },
-      { "t": "h2", "text": "Claude Code 或 Codex 里的 HyperFrames 技能" },
+      {
+        "t": "h2",
+        "text": "Claude Code 或 Codex 里的 HyperFrames 技能"
+      },
       {
         "t": "p",
         "text": "HyperFrames 是 HeyGen 的免费开源框架，把 HTML、CSS、媒体和可定位的动画渲染成确定性的 MP4 视频，主要动画运行时是 GSAP。HyperFrames 文档为 Claude Code 提供了插件安装方式，其他 agent 可以用 `npx skills add heygen-com/hyperframes` 安装技能。仓库列出九个技能，核心技能包括主技能、CLI、约 450 个模块的注册表、媒体处理、把视频还原成项目，以及风格采样。"
@@ -268,17 +320,26 @@
         "t": "p",
         "text": "HyperFrames 网站还列出了面向 Claude、ChatGPT 和 Grok 聊天的托管连接器（beta），视频在 HeyGen 账号下的云端渲染。用这条路线做发布视频的方法见[用 Claude Code 做产品发布视频](/guides/product-launch-video-with-claude-code/)。"
       },
-      { "t": "h2", "text": "Remotion 技能" },
+      {
+        "t": "h2",
+        "text": "Remotion 技能"
+      },
       {
         "t": "p",
         "text": "Remotion 是用代码做视频的 React 框架。它的官方 agent 技能可以用 `npx skills add remotion-dev/skills` 安装，在项目内也可以用 `npx remotion skills add`。Remotion 文档列出的受支持 agent 包括 Claude Code、Codex、Cursor、Kimi Code 和 OpenCode。公司使用的许可证条款见 [HyperFrames 与 Remotion 对比](/guides/hyperframes-vs-remotion/)。更多视频技能见 [Claude Code 视频技能](/guides/claude-code-video-skills/)。"
       },
-      { "t": "h2", "text": "Motionboard 的位置" },
+      {
+        "t": "h2",
+        "text": "Motionboard 的位置"
+      },
       {
         "t": "p",
         "text": "Motionboard 是免费、MIT 许可的站点和技能，收录 38 个取自 Apple、Linear 等发布会影片的镜头配方。每个配方是一支约 10 秒、1920x1080 的影片，用 HyperFrames 以代码制作，并与原片并排展示。技能在 Claude Code 和 Codex 里运行，装好 Node.js 22+ 和 FFmpeg 即可，套餐取决于这些 agent 所用的账号。文件是项目文件夹里的普通 HTML，在你自己的电脑上渲染。"
       },
-      { "t": "h2", "text": "Claude Code 和 Codex 的真实成片" },
+      {
+        "t": "h2",
+        "text": "Claude Code 和 Codex 的真实成片"
+      },
       {
         "t": "p",
         "text": "下面四支配方影片都用 HyperFrames 制作，每个配方页面都把影片与原片并排展示。"
@@ -292,13 +353,22 @@
           "liquid-glass-effect"
         ]
       },
-      { "t": "h2", "text": "动手试试" },
+      {
+        "t": "h2",
+        "text": "动手试试"
+      },
       {
         "t": "p",
         "text": "在你的视频项目文件夹里运行下面的命令，然后让 Claude Code 或 Codex 按效果名称生成配方，例如匹配剪辑转场或打字动画。"
       },
-      { "t": "cmd", "text": "npx skills add krisyangdev/motionboard" },
-      { "t": "h2", "text": "常见问题" },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard"
+      },
+      {
+        "t": "h2",
+        "text": "常见问题"
+      },
       {
         "t": "faq",
         "items": [

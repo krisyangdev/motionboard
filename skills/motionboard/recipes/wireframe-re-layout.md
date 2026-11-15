@@ -52,7 +52,7 @@ The wireframe state separates layout from content, so viewers see the structure 
 
 ## Often confused with
 
-- [Morph Relay](./morph-relay.md): Morph Relay turns one element into another; Wireframe Re-layout strips a group of elements of content and re-flows them together.
+- [Morph Transition](./morph-transition.md): Morph Relay turns one element into another; Wireframe Re-layout strips a group of elements of content and re-flows them together.
 - [Pile-up and Clear](./pile-up-and-clear.md): Pile-up and Clear swaps images with a hard cut; Wireframe Re-layout interpolates continuously between wireframes.
 
 ## Source files

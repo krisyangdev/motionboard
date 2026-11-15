@@ -1,11 +1,13 @@
-# Morph Relay
+# Morph Transition
+
+Motionboard shot name: Morph Relay
 
 One element keeps morphing into the next, replacing cuts, so the whole sequence has no hard cut.
 
 - Position in a launch film: Features
-- Slug: morph-relay
+- Slug: morph-transition
 - Preview video: https://media.motionboard.app/morph-relay.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/morph-relay/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/morph-transition/
 - Film length: 11s, 1920x1080
 - Original reference: Vercel v0 (YouTube, 0:02) https://www.youtube.com/watch?v=By9wCB9IZp0&t=2s
 - Original reference: Vercel v0 (YouTube, 0:35) https://www.youtube.com/watch?v=By9wCB9IZp0&t=35s
@@ -55,7 +57,7 @@ The element from the previous segment becomes the subject of the next, so there 
 ## Often confused with
 
 - [Wireframe Re-layout](./wireframe-re-layout.md): Wireframe Re-layout strips a group of elements down to wireframes and re-flows them together; Morph Relay changes a single element step by step into another kind of element.
-- [Card Flip to Code](./card-flip-to-code.md): Card Flip to Code shows the front and back of the same card, rotating 180° around an axis; Morph Relay changes shape continuously with no front or back.
+- [Card Flip Animation](./card-flip-animation.md): Card Flip to Code shows the front and back of the same card, rotating 180° around an axis; Morph Relay changes shape continuously with no front or back.
 
 ## Source files
 

@@ -1,11 +1,13 @@
-# Mark-to-Wordmark Unfold
+# Logo Wordmark Reveal
+
+Motionboard shot name: Mark-to-Wordmark Unfold
 
 A logo mark sits centered, then the wordmark unfolds from behind it or outward from its center, optionally with a scramble-then-lock effect.
 
 - Position in a launch film: Ending
-- Slug: mark-to-wordmark-unfold
+- Slug: logo-wordmark-reveal
 - Preview video: https://media.motionboard.app/mark-to-wordmark.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/mark-to-wordmark-unfold/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/logo-wordmark-reveal/
 - Film length: 9.4s, 1920x1080
 - Original reference: Linear 发布片 (YouTube, 0:00) https://www.youtube.com/watch?v=lKwyrKUEPS4
 - Original reference: Claude Fable 5.1 (YouTube, 1:19) https://www.youtube.com/watch?v=ROF2Nv_KjOM&t=79s
@@ -55,8 +57,8 @@ The mark and the name are bound into one action: the wordmark is pulled out from
 
 ## Often confused with
 
-- [Chromatic Stretch](./chromatic-stretch.md): Chromatic Stretch locally distorts the wordmark itself with RGB ghosting; Mark-to-Wordmark Unfold is about the order in which the mark and the wordmark appear.
-- [Foreground Wipe & Flash](./foreground-wipe-flash.md): Foreground Wipe & Flash is a transition between scenes; Mark-to-Wordmark Unfold is often followed by a white flash.
+- [Chromatic Aberration Text Effect](./chromatic-aberration-text-effect.md): Chromatic Stretch locally distorts the wordmark itself with RGB ghosting; Mark-to-Wordmark Unfold is about the order in which the mark and the wordmark appear.
+- [Wipe and Flash Transition](./wipe-flash-transition.md): Foreground Wipe & Flash is a transition between scenes; Mark-to-Wordmark Unfold is often followed by a white flash.
 
 ## Source files
 

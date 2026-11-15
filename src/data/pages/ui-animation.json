@@ -44,7 +44,7 @@
         "t": "ul",
         "items": [
           "[3D Tilted UI with Depth of Field](/recipes/3d-tilted-ui-depth-of-field/): A UI plane tilted 10 to 15 degrees is shot up close with only the active row in focus, and the highlight hops between rows in 0.22 s.",
-          "[Zoom to Cursor](/recipes/zoom-to-cursor/): The camera pushes to the target element in 0.6 s, holds for one click or input, then pulls back to the full view in 0.7 s.",
+          "[Zoom-to-Cursor Effect](/recipes/zoom-to-cursor/): The camera pushes to the target element in 0.6 s, holds for one click or input, then pulls back to the full view in 0.7 s.",
           "[Multiplayer Cursor Animation](/recipes/multiplayer-cursor-animation/): Enlarged two-color named cursors move across a canvas, leave a comment typed at 15 characters per second, and drag an item to reorder the layout.",
           "[Card Flip Animation](/recipes/card-flip-animation/): A preview card rotates 180 degrees around the Y axis in 0.8 s and its back face shows the code, then flips back after about 1 s.",
           "[Focus Hop](/recipes/focus-hop/): A focus frame hops one cell at a time, with a 0.25 s slide and a 0.25 s hold, and takes the color of the icon inside it.",
@@ -130,16 +130,16 @@
       {
         "t": "ul",
         "items": [
-          "[3D 倾斜界面景深](/recipes/3d-tilted-ui-depth-of-field/)：倾斜 10 到 15 度的 UI 平面近距离拍摄，只有当前操作行在焦内，高亮用 0.22 秒在行间跳动。",
-          "[推近到光标](/recipes/zoom-to-cursor/)：镜头用 0.6 秒推到目标元素，停住完成一次点击或输入，再用 0.7 秒拉回全景。",
-          "[多人光标动画](/recipes/multiplayer-cursor-animation/)：放大的双色带名字光标在画布上移动，留下一条每秒 15 个字符的评论，并拖动一个元素重排布局。",
+          "[3D 倾斜界面景深效果](/recipes/3d-tilted-ui-depth-of-field/)：倾斜 10 到 15 度的 UI 平面近距离拍摄，只有当前操作行在焦内，高亮用 0.22 秒在行间跳动。",
+          "[光标自动放大效果](/recipes/zoom-to-cursor/)：镜头用 0.6 秒推到目标元素，停住完成一次点击或输入，再用 0.7 秒拉回全景。",
+          "[多人协作光标动画](/recipes/multiplayer-cursor-animation/)：放大的双色带名字光标在画布上移动，留下一条每秒 15 个字符的评论，并拖动一个元素重排布局。",
           "[卡片翻转动画](/recipes/card-flip-animation/)：预览卡绕 Y 轴在 0.8 秒内翻转 180 度，背面显示代码，约停留 1 秒后翻回。",
-          "[焦点跳转](/recipes/focus-hop/)：焦点框一次跳一格，滑动 0.25 秒、停留 0.25 秒，并取框内图标的颜色。",
-          "[控件驱动变化](/recipes/control-driven-change/)：控件一到位，页面在同一帧变化：色点拖动用 0.4 秒，深色模式旋钮在 5.17 秒切换主题。",
+          "[焦点跳转动画](/recipes/focus-hop/)：焦点框一次跳一格，滑动 0.25 秒、停留 0.25 秒，并取框内图标的颜色。",
+          "[控件联动动画](/recipes/control-driven-change/)：控件一到位，页面在同一帧变化：色点拖动用 0.4 秒，深色模式旋钮在 5.17 秒切换主题。",
           "[堆积清空动画](/recipes/pile-up-and-clear/)：22 封邮件和 8 条通知堆积，间隔从 0.62 秒缩短到 0.05 秒，然后在一帧内清空，成为约 2 秒的零收件箱状态。",
-          "[线框重排](/recipes/wireframe-re-layout/)：内容在 0.5 秒内退成线框，线框用 0.8 秒重排成新布局，各格再以 0.15 秒的间隔依次填入新内容。",
+          "[线框重排动画](/recipes/wireframe-re-layout/)：内容在 0.5 秒内退成线框，线框用 0.8 秒重排成新布局，各格再以 0.15 秒的间隔依次填入新内容。",
           "[Dock 图标动画](/recipes/dock-arrival/)：放大的 Dock 撑开空位，新图标用 0.5 秒长进去并冒出一次小火花，光标点击后开窗。",
-          "[确认彩屑动画](/recipes/confetti-success-animation/)：点击那一帧，线条、方块和圆点从接触点向外扩散；付款点击时图标在 0.28 秒内从 0.6 倍弹到 1.1 倍，并扩散一圈同形描边。"
+          "[撒花成功动画](/recipes/confetti-success-animation/)：点击那一帧，线条、方块和圆点从接触点向外扩散；付款点击时图标在 0.28 秒内从 0.6 倍弹到 1.1 倍，并扩散一圈同形描边。"
         ]
       },
       {

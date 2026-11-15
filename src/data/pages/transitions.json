@@ -48,7 +48,7 @@
           "[Glass Droplet Split](/recipes/glass-droplet-split/): A glass slab stretches into a droplet, the neck thins for 0.3 s and breaks at 2.41 s, and the remaining bead later gathers into the logo.",
           "[Domino Wave](/recipes/domino-wave/): A row of cubes flips 90 degrees one after another with a 0.07 to 0.10 s phase offset while the camera pans along the line.",
           "[Locked-Layout Reskin](/recipes/locked-layout-reskin/): The layout stays fixed while color and fonts hard-cut every 16, 8 and then 6 frames, landing on one skin at 8.4 s.",
-          "[X-ray Effect](/recipes/x-ray-effect/): The inner structure and the outer shell cross-dissolve from the same camera position over about 0.7 s, then the camera pulls back to the whole device in 1.2 s."
+          "[X-Ray Effect](/recipes/x-ray-effect/): The inner structure and the outer shell cross-dissolve from the same camera position over about 0.7 s, then the camera pulls back to the whole device in 1.2 s."
         ]
       },
       {
@@ -126,11 +126,11 @@
         "items": [
           "[匹配剪辑转场](/recipes/match-cut-transition/)：在同一个锚点把一个物体换成另一个，视线位置不动；片中的硬切发生在 2.0、3.0、3.75、4.4 和 5.05 秒。",
           "[形变转场](/recipes/morph-transition/)：同一个元素连续变形，依次从标题变成线条、胶囊、输入框和窗口，每步 0.2 到 0.75 秒，整段没有硬切。",
-          "[擦除与闪白转场](/recipes/wipe-flash-transition/)：虚焦的球在 0.5 秒内横扫画面，场景在它遮满屏幕时切换；另一处转场把中心光晕吹成白场，再用 0.3 秒淡出。",
+          "[遮挡闪白转场](/recipes/wipe-flash-transition/)：虚焦的球在 0.5 秒内横扫画面，场景在它遮满屏幕时切换；另一处转场把中心光晕吹成白场，再用 0.3 秒淡出。",
           "[圆形光圈转场](/recipes/iris-transition/)：固定的圆形窗口以每张 0.2 秒到 0.133 秒的节奏快切 22 张图，之后打开、随节奏跳变大小，最后收成 logo 符号。",
-          "[玻璃水滴分离](/recipes/glass-droplet-split/)：玻璃片拉长成水滴，颈部用 0.3 秒收细并在 2.41 秒断开，留下的圆珠之后收拢成 logo。",
-          "[多米诺波浪翻转](/recipes/domino-wave/)：一排方块以 0.07 到 0.10 秒的相位差依次翻转 90 度，镜头沿队列平移。",
-          "[锁定布局换肤](/recipes/locked-layout-reskin/)：布局位置保持不变，配色和字体依次每 16 帧、8 帧、6 帧硬切一次，在 8.4 秒落定到一套皮肤。",
+          "[玻璃水滴分离动画](/recipes/glass-droplet-split/)：玻璃片拉长成水滴，颈部用 0.3 秒收细并在 2.41 秒断开，留下的圆珠之后收拢成 logo。",
+          "[方块波浪翻转](/recipes/domino-wave/)：一排方块以 0.07 到 0.10 秒的相位差依次翻转 90 度，镜头沿队列平移。",
+          "[固定版式换肤动画](/recipes/locked-layout-reskin/)：布局位置保持不变，配色和字体依次每 16 帧、8 帧、6 帧硬切一次，在 8.4 秒落定到一套皮肤。",
           "[X 光透视效果](/recipes/x-ray-effect/)：内部结构和外壳在同一机位对位叠化，约 0.7 秒完成，随后镜头用 1.2 秒拉远成整机。"
         ]
       },

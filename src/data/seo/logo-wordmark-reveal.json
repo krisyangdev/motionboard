@@ -1,8 +1,8 @@
 {
   "en": {
-    "name": "Text Scramble Logo Reveal",
-    "title": "Text Scramble Logo Reveal: Recipe and Code",
-    "description": "A logo mark slides aside while the wordmark unfolds letter by letter from behind it. Make it with Claude Code or Codex from the free recipe.",
+    "name": "Logo Wordmark Reveal",
+    "title": "Logo Wordmark Reveal: Logo Animation Recipe and Code",
+    "description": "A logo mark slides aside while the wordmark unfolds letter by letter from behind it, each letter sharpening from blur. Make it with Claude Code or Codex.",
     "howto": [
       "Start on a product window in 1600 px perspective (rotationY 9 to 5.5 degrees, scale 1.06 to 1.16 over 2.6 s). Push about 12.6x into the sidebar mark over 1.0 s with expo.out while the tilt flattens. At 3.6 s swap to a 328 x 208 px vector mark at the same size and position on the same frame.",
       "Lean the accent half back -20 degrees over 0.3 s and return it with back.out(2.2). From 4.15 s slide the mark left 322 px over 1.3 s with expo.out while a clip-path edge follows its right side. Four letters start 0.08 s apart and go from blur 12 px to sharp. For a scramble, cycle random characters in the newest slot before it locks.",
@@ -10,23 +10,23 @@
     ],
     "faq": [
       [
-        "What is a text scramble logo reveal?",
-        "Letters cycle through random characters before settling on the final name. It is used for logo and title reveals, and the scramble can be limited to the newly added letter while the others stay stable."
+        "What is a logo wordmark reveal?",
+        "The animation starts on the logo mark alone, then the brand name appears beside it. It is the common ending of a launch film: the mark lands first, the name follows, and the full lockup holds for a second or two."
       ],
       [
-        "Does this film use a scramble effect?",
-        "The film unfolds the wordmark from behind the mark, with letters resolving from a 12 px blur. The scramble-then-lock variant is the same move with random characters shown in the newest slot, and you can ask the agent for it in the prompt."
+        "Can I add a text scramble to the letters?",
+        "Yes. The film resolves each letter from a 12 px blur. For a scramble-then-lock version, cycle random characters in the newest letter slot before it locks; ask the agent for it in the prompt."
       ],
       [
-        "Is the Text Scramble Logo Reveal recipe free to use?",
+        "Is the Logo Wordmark Reveal recipe free to use?",
         "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
       ]
     ]
   },
   "zh": {
-    "name": "文字乱码 Logo 动画",
-    "title": "文字乱码 Logo 揭示：示例与配方",
-    "description": "Logo 符号向一侧滑开，字标从符号背后逐个字母展开，可以加乱码定格。用免费配方，让 Claude Code 或 Codex 做出这段 logo 动画。",
+    "name": "Logo 字标展开动画",
+    "title": "Logo 字标展开动画：示例与配方",
+    "description": "Logo 符号向一侧滑开，字标从符号背后逐个字母展开，字母从模糊变清晰。用免费配方，让 Claude Code 或 Codex 做出这段 Logo 动画。",
     "howto": [
       "开场是 1600px 透视下倾斜的产品窗口（rotationY 从 9° 到 5.5°，2.6 秒内缩放 1.06 到 1.16）。随后用 expo.out 在 1.0 秒内推近约 12.6 倍到侧栏的符号，倾斜同时归零。3.6 秒的同一帧换成 328 x 208px 的矢量符号，大小和位置与原符号一致。",
       "彩色半边向后倾 -20°，用时 0.3 秒，再用 back.out(2.2) 回正。4.15 秒起，符号用 expo.out 在 1.3 秒内左移 322px，clip-path 的边缘跟着符号右侧移动。四个字母间隔 0.08 秒出现，从 12px 模糊变清晰。要加乱码，就让最新一个位置先轮换随机字符再定格。",
@@ -34,15 +34,15 @@
     ],
     "faq": [
       [
-        "文字乱码 Logo 揭示是什么？",
-        "指字母先轮换随机字符，再停在最终的名字上，常用于 logo 和标题出场。乱码可以只出现在新加入的字母位置，其余字母保持稳定。"
+        "Logo 字标展开动画是什么？",
+        "先只出现 Logo 符号，再在旁边出现品牌名。这是宣传片常见的结尾：符号先落定，名字随后出现，完整的组合停留一两秒。"
       ],
       [
-        "这支片子里有乱码效果吗？",
-        "片子里字标从符号背后展开，字母从 12px 模糊中变清晰。乱码定格版本是同一个动作，只是在最新字母的位置显示随机字符，可以在提示词里让智能体加上。"
+        "可以给字母加乱码效果吗？",
+        "可以。片子里每个字母从 12px 模糊变清晰。要做乱码定格版本，就让最新一个字母位置先轮换随机字符再定格，在提示词里告诉智能体即可。"
       ],
       [
-        "文字乱码 Logo 配方可以免费使用吗？",
+        "Logo 字标展开配方可以免费使用吗？",
         "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
       ]
     ]

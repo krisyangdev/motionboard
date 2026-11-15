@@ -1117,7 +1117,7 @@
       ]
     ]
   },
-  "text-scramble-logo-reveal": {
+  "logo-wordmark-reveal": {
     "def": "A logo mark sits centered, then the wordmark unfolds from behind it or outward from its center, optionally with a scramble-then-lock effect.",
     "why": "The mark and the name are bound into one action: the wordmark is pulled out from behind the mark, or the mark stays put while the other letters grow around it. Scrambled characters appear only on the newly added position, and the other letters stay stable. The opening and the ending can use the same move, one in black and one in white.",
     "spec": [
@@ -1196,7 +1196,7 @@
     ],
     "vs": [
       [
-        "text-scramble-logo-reveal",
+        "logo-wordmark-reveal",
         "Mark-to-Wordmark Unfold changes the order in which the wordmark appears; Chromatic Stretch locally distorts a wordmark that is already visible."
       ],
       [
@@ -1648,7 +1648,7 @@
         "Match Cut keeps the anchor still and swaps the object directly; Foreground Wipe & Flash changes scenes on the frame that covers the screen."
       ],
       [
-        "text-scramble-logo-reveal",
+        "logo-wordmark-reveal",
         "Mark-to-Wordmark Unfold is often followed by a white flash; the flash itself is only a transition device."
       ]
     ]

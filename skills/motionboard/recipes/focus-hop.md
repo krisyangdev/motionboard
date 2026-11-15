@@ -53,8 +53,8 @@ The highlight block is the strongest color in the frame and leads the eye cell b
 
 ## Often confused with
 
-- [Multiplayer Cursors](./multiplayer-cursors.md): In Multiplayer Cursors the cursors are characters and perform actions; in Focus Hop the cursor only guides the highlight, and the attention is on the highlight block and focus frame.
-- [Auto Zoom / Zoom-to-Cursor](./auto-zoom.md): Auto Zoom moves the camera; in Focus Hop the camera is nearly still and the highlight block moves.
+- [Multiplayer Cursor Animation](./multiplayer-cursor-animation.md): In Multiplayer Cursors the cursors are characters and perform actions; in Focus Hop the cursor only guides the highlight, and the attention is on the highlight block and focus frame.
+- [Zoom-to-Cursor Effect](./zoom-to-cursor.md): Auto Zoom moves the camera; in Focus Hop the camera is nearly still and the highlight block moves.
 
 ## Source files
 

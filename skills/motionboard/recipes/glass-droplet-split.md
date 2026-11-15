@@ -52,7 +52,7 @@ On an all-black background, a single highlight along the glass edge outlines the
 
 ## Often confused with
 
-- [Glass Lens](./glass-lens.md): Glass Lens emphasizes refraction of content; Glass Droplet Split emphasizes the glass stretching and breaking.
+- [Liquid Glass Effect](./liquid-glass-effect.md): Glass Lens emphasizes refraction of content; Glass Droplet Split emphasizes the glass stretching and breaking.
 - [Branching Growth](./branching-growth.md): Branching Growth grows a multi-level structure outward from a point; Glass Droplet Split is one shape shedding one bead.
 
 ## Source files

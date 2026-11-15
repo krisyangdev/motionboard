@@ -1,7 +1,7 @@
 {
   "match-cut": "match-cut-transition",
   "rhythmic-typing": "typing-animation",
-  "mark-to-wordmark-unfold": "text-scramble-logo-reveal",
+  "mark-to-wordmark-unfold": "logo-wordmark-reveal",
   "word-by-word-highlight": "word-by-word-text-highlight",
   "line-boil": "line-boil-effect",
   "glass-lens": "liquid-glass-effect",

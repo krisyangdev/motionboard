@@ -1,11 +1,13 @@
-# Glass Lens
+# Liquid Glass Effect
+
+Motionboard shot name: Glass Lens
 
 A transparent glass disc, loupe, or control moves over content, magnifying and refracting what lies beneath, with dispersion at the edge.
 
 - Position in a launch film: Features
-- Slug: glass-lens
+- Slug: liquid-glass-effect
 - Preview video: https://media.motionboard.app/glass-lens.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/glass-lens/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/liquid-glass-effect/
 - Film length: 10.8s, 1920x1080
 - Original reference: Apple iOS 26 Liquid Glass (YouTube, 1:48) https://www.youtube.com/watch?v=jGztGfRujSE&t=108s
 - Original reference: Apple iOS 26 Liquid Glass (YouTube, 1:32) https://www.youtube.com/watch?v=jGztGfRujSE&t=92s
@@ -55,7 +57,7 @@ Barrel distortion at the edge says "this is glass" more than the magnification i
 ## Often confused with
 
 - [Glass Droplet Split](./glass-droplet-split.md): Glass Droplet Split shows glass deforming and breaking apart; Glass Lens shows glass refracting and magnifying the content below it.
-- [Match Cut](./match-cut.md): Match Cut swaps in another object at the same anchor; Glass Lens flips the scene on the one frame where the lens fills the screen.
+- [Match Cut Transition](./match-cut-transition.md): Match Cut swaps in another object at the same anchor; Glass Lens flips the scene on the one frame where the lens fills the screen.
 
 ## Source files
 

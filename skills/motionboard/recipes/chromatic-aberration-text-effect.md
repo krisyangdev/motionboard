@@ -1,11 +1,13 @@
-# Chromatic Stretch
+# Chromatic Aberration Text Effect
+
+Motionboard shot name: Chromatic Stretch
 
 Some letters of a wordmark stretch horizontally with RGB ghosting, distort in steps, then snap back clean.
 
 - Position in a launch film: Ending
-- Slug: chromatic-stretch
+- Slug: chromatic-aberration-text-effect
 - Preview video: https://media.motionboard.app/chromatic-stretch.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/chromatic-stretch/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/chromatic-aberration-text-effect/
 - Film length: 10.5s, 1920x1080
 - Original reference: Apple AirPods Pro 3 (YouTube, 0:00) https://www.youtube.com/watch?v=EMmKs8vMKhU
 
@@ -51,8 +53,8 @@ The background and the type are black and white, and only the few distorted fram
 
 ## Often confused with
 
-- [Mark-to-Wordmark Unfold](./mark-to-wordmark-unfold.md): Mark-to-Wordmark Unfold changes the order in which the wordmark appears; Chromatic Stretch locally distorts a wordmark that is already visible.
-- [Foreground Wipe & Flash](./foreground-wipe-flash.md): Foreground Wipe & Flash is a scene transition; Chromatic Stretch happens on the wordmark itself.
+- [Logo Wordmark Reveal](./logo-wordmark-reveal.md): Mark-to-Wordmark Unfold changes the order in which the wordmark appears; Chromatic Stretch locally distorts a wordmark that is already visible.
+- [Wipe and Flash Transition](./wipe-flash-transition.md): Foreground Wipe & Flash is a scene transition; Chromatic Stretch happens on the wordmark itself.
 
 ## Source files
 

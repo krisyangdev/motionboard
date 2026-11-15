@@ -1,11 +1,13 @@
-# X-ray Dissolve
+# X-Ray Effect
+
+Motionboard shot name: X-ray Dissolve
 
 The internal structure and the outer shell cross-dissolve from the same camera position, then the camera pulls back to the whole device.
 
 - Position in a launch film: Product reveal
-- Slug: x-ray-dissolve
+- Slug: x-ray-effect
 - Preview video: https://media.motionboard.app/x-ray-dissolve.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/x-ray-dissolve/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/x-ray-effect/
 - Film length: 10s, 1920x1080
 - Original reference: Apple A19 Pro 芯片 (YouTube, 0:55) https://www.youtube.com/watch?v=dJObc0V6hJU&t=55s
 - Original reference: Apple A19 Pro 芯片 (YouTube, 0:53) https://www.youtube.com/watch?v=dJObc0V6hJU&t=53s

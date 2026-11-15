@@ -26,3 +26,4 @@ public/llms.txt
 public/_redirects
 src/data/gen/
 *.tsbuildinfo
+public/sitemap-video.xml

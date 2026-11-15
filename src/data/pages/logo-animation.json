@@ -12,7 +12,7 @@
       {
         "t": "films",
         "slugs": [
-          "text-scramble-logo-reveal",
+          "logo-wordmark-reveal",
           "rotating-logo-reveal",
           "converge-logo-reveal",
           "chromatic-aberration-text-effect",
@@ -39,11 +39,11 @@
       {
         "t": "ul",
         "items": [
-          "[Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/): The mark sits centered, then the wordmark unfolds from behind it, with scrambled characters only on the newly added letter position; the unfold runs 1.3 s with letters staggered 0.08 s.",
+          "[Logo Wordmark Reveal](/recipes/logo-wordmark-reveal/): The mark sits centered, then the wordmark unfolds from behind it, each letter sharpening from a 12 px blur; the unfold runs 1.3 s with letters staggered 0.08 s.",
           "[Rotating Logo Reveal](/recipes/rotating-logo-reveal/): An object spins 1.62 turns over 2.5 s on an expo.out ease and stops at the angle that forms the logo silhouette, then three slabs fly in to the lockup.",
-          "[Converge Logo Reveal](/recipes/converge-logo-reveal/): The pieces of a workspace demo converge on the frame center from 6.2 s, the mark lands at 7.32 s with a back.out(2.1) settle, and the wordmark pulls out at 8.05 s.",
+          "[Converging Logo Reveal](/recipes/converge-logo-reveal/): The pieces of a workspace demo converge on the frame center from 6.2 s, the mark lands at 7.32 s with a back.out(2.1) settle, and the wordmark pulls out at 8.05 s.",
           "[Chromatic Aberration Text Effect](/recipes/chromatic-aberration-text-effect/): Letters of the wordmark stretch up to 4.4x with RGB ghosting, step down through 2-frame states and snap back clean, three times in the first 1.5 s.",
-          "[Outline to Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in during the last 0.7 s of the draw, and a 2.8 s logo version repeats the move as wireframe then fill wipe.",
+          "[Outline-to-Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in during the last 0.7 s of the draw, and a 2.8 s logo version repeats the move as wireframe then fill wipe.",
           "[Light Reveal](/recipes/light-reveal/): The product fades up from black in 1.2 s with a slow push, fades out in reverse at 7.35 s, and the wordmark comes in at 8.78 s and holds to 11 s."
         ]
       },
@@ -72,7 +72,7 @@
           ],
           [
             "What easing works for a logo reveal?",
-            "The wordmark in the Text Scramble and Converge recipes uses cubic-bezier(0.16,1,0.3,1), known as expo.out, which starts fast and settles slowly. Converge Logo Reveal lands its mark with back.out(2.1), a small overshoot that settles into place."
+            "The wordmark in the Logo Wordmark Reveal and Converging Logo Reveal recipes uses cubic-bezier(0.16,1,0.3,1), known as expo.out, which starts fast and settles slowly. Converge Logo Reveal lands its mark with back.out(2.1), a small overshoot that settles into place."
           ],
           [
             "Can Claude Code or Codex make a logo animation from my own logo?",
@@ -91,7 +91,7 @@
       {
         "t": "films",
         "slugs": [
-          "text-scramble-logo-reveal",
+          "logo-wordmark-reveal",
           "rotating-logo-reveal",
           "converge-logo-reveal",
           "chromatic-aberration-text-effect",
@@ -118,12 +118,12 @@
       {
         "t": "ul",
         "items": [
-          "[文字乱码 Logo 动画](/recipes/text-scramble-logo-reveal/)：符号居中，字标从符号背后展开，乱码字符只出现在新加入的字母位置；展开用时 1.3 秒，字母间隔 0.08 秒。",
-          "[旋转 Logo 揭示](/recipes/rotating-logo-reveal/)：物体在 2.5 秒内用 expo.out 缓动旋转 1.62 圈，停在构成 logo 轮廓的角度，随后三块板飞入合成最终的 logo。",
-          "[聚合 Logo 揭示](/recipes/converge-logo-reveal/)：工作区演示里的各个元素从 6.2 秒起向画面中心聚合，符号在 7.32 秒用 back.out(2.1) 落定，字标在 8.05 秒拉出。",
+          "[Logo 字标展开动画](/recipes/logo-wordmark-reveal/)：符号居中，字标从符号背后展开，每个字母从 12px 模糊变清晰；展开用时 1.3 秒，字母间隔 0.08 秒。",
+          "[旋转 Logo 揭示动画](/recipes/rotating-logo-reveal/)：物体在 2.5 秒内用 expo.out 缓动旋转 1.62 圈，停在构成 logo 轮廓的角度，随后三块板飞入合成最终的 logo。",
+          "[元素汇聚 Logo 动画](/recipes/converge-logo-reveal/)：工作区演示里的各个元素从 6.2 秒起向画面中心聚合，符号在 7.32 秒用 back.out(2.1) 落定，字标在 8.05 秒拉出。",
           "[色散文字效果](/recipes/chromatic-aberration-text-effect/)：字标的部分字母最多横向拉长 4.4 倍并带 RGB 重影，每个状态保持 2 帧后逐级回正，前 1.5 秒内重复三次。",
-          "[描边转实心揭示](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体在描线最后 0.7 秒内淡入；2.8 秒的 logo 版本按线框加填充擦除重复同一动作。",
-          "[光线揭示](/recipes/light-reveal/)：产品在 1.2 秒内从黑场亮起并缓慢推近，7.35 秒起反向熄灭，字标在 8.78 秒进入并停留到 11 秒。"
+          "[描边到实体显形动画](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体在描线最后 0.7 秒内淡入；2.8 秒的 logo 版本按线框加填充擦除重复同一动作。",
+          "[暗场打光显影](/recipes/light-reveal/)：产品在 1.2 秒内从黑场亮起并缓慢推近，7.35 秒起反向熄灭，字标在 8.78 秒进入并停留到 11 秒。"
         ]
       },
       {
@@ -151,7 +151,7 @@
           ],
           [
             "Logo 揭示适合用什么缓动？",
-            "文字乱码和聚合两个配方里的字标都用 cubic-bezier(0.16,1,0.3,1)，也就是 expo.out，起步快、收尾慢。聚合 Logo 揭示的符号落定用 back.out(2.1)，有一点回弹后再稳住。"
+            "Logo 字标展开和元素汇聚两个配方里的字标都用 cubic-bezier(0.16,1,0.3,1)，也就是 expo.out，起步快、收尾慢。聚合 Logo 揭示的符号落定用 back.out(2.1)，有一点回弹后再稳住。"
           ],
           [
             "Claude Code 或 Codex 能用我自己的 logo 做 Logo 动画吗？",

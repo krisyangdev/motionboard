@@ -1,11 +1,13 @@
-# Scattered Spec Type
+# Kinetic Typography
+
+Motionboard shot name: Scattered Spec Type
 
 A spec line is split into words placed far apart on uneven baselines, with a connector word stepping up letter by letter.
 
 - Position in a launch film: Features
-- Slug: scattered-spec-type
+- Slug: kinetic-typography
 - Preview video: https://media.motionboard.app/scattered-spec.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/scattered-spec-type/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/kinetic-typography/
 - Film length: 11s, 1920x1080
 - Original reference: Apple MacBook Pro M5 (YouTube, 0:20) https://www.youtube.com/watch?v=GriXfu4tL30&t=20s
 - Original reference: Apple MacBook Pro M5 (YouTube, 0:31) https://www.youtube.com/watch?v=GriXfu4tL30&t=31s
@@ -54,8 +56,8 @@ Words are spread far apart on staggered baselines, so reading the spec sentence 
 
 ## Often confused with
 
-- [Rhythmic Typing](./rhythmic-typing.md): In Rhythmic Typing the text is appended character by character on one fixed line; in Scattered Spec Type the words land at spread-out positions.
-- [Word-by-Word Highlight](./word-by-word-highlight.md): In Word-by-Word Highlight the words turn from gray to white on one line; in Scattered Spec Type the words appear with a hard cut at staggered positions.
+- [Typing Animation (Typewriter Effect)](./typing-animation.md): In Rhythmic Typing the text is appended character by character on one fixed line; in Scattered Spec Type the words land at spread-out positions.
+- [Word-by-Word Text Highlight](./word-by-word-text-highlight.md): In Word-by-Word Highlight the words turn from gray to white on one line; in Scattered Spec Type the words appear with a hard cut at staggered positions.
 
 ## Source files
 

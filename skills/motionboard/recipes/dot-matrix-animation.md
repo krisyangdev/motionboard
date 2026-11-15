@@ -1,11 +1,13 @@
-# Dot-Matrix Glyph
+# Dot Matrix Animation
+
+Motionboard shot name: Dot-Matrix Glyph
 
 A graphic is quantized onto a circular dot-matrix display, and every frame of its rotation or change snaps to the dot grid.
 
 - Position in a launch film: Features
-- Slug: dot-matrix-glyph
+- Slug: dot-matrix-animation
 - Preview video: https://media.motionboard.app/dot-matrix-glyph.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/dot-matrix-glyph/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/dot-matrix-animation/
 - Film length: 11s, 1920x1080
 - Original reference: Nothing Phone (3) (YouTube, 0:03) https://www.youtube.com/watch?v=MHGQRnvE9GQ&t=3s
 - Original reference: Nothing Phone (3) (YouTube, 0:15) https://www.youtube.com/watch?v=MHGQRnvE9GQ&t=15s
@@ -53,8 +55,8 @@ Rotation is quantized onto a low-resolution dot matrix, so the motion jumps cell
 
 ## Often confused with
 
-- [Line Boil](./line-boil.md): Line Boil is a low frame rate that swaps in a new trace each frame; Dot-Matrix Glyph quantizes spatial resolution to a grid of points.
-- [Iris Window Montage](./iris-window-montage.md): The window in Iris Window Montage cuts quickly between real images; the round screen in Dot-Matrix Glyph holds a single discretized graphic.
+- [Line Boil Effect](./line-boil-effect.md): Line Boil is a low frame rate that swaps in a new trace each frame; Dot-Matrix Glyph quantizes spatial resolution to a grid of points.
+- [Iris Transition](./iris-transition.md): The window in Iris Window Montage cuts quickly between real images; the round screen in Dot-Matrix Glyph holds a single discretized graphic.
 
 ## Source files
 

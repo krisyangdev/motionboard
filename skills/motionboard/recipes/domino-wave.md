@@ -53,7 +53,7 @@ Each cube does only a simple flip, and the phase offset combines into a sense of
 ## Often confused with
 
 - [Branching Growth](./branching-growth.md): Branching Growth is node count growing; Domino Wave is a fixed number of objects flipping in turn.
-- [Foreground Wipe & Flash](./foreground-wipe-flash.md): Foreground Wipe & Flash is a scene transition; Domino Wave is an action within a scene and ends with a white flash.
+- [Wipe and Flash Transition](./wipe-flash-transition.md): Foreground Wipe & Flash is a scene transition; Domino Wave is an action within a scene and ends with a white flash.
 
 ## Source files
 

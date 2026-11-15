@@ -55,7 +55,7 @@ Viewers first learn the material and texture up close, then see where those deta
 
 ## Often confused with
 
-- [Auto Zoom / Zoom-to-Cursor](./auto-zoom.md): Auto Zoom serves a single UI action in 0.6–0.8s and then pulls back so the action can continue; Macro Pull-out Reveal ends on its pull-out.
+- [Zoom-to-Cursor Effect](./zoom-to-cursor.md): Auto Zoom serves a single UI action in 0.6–0.8s and then pulls back so the action can continue; Macro Pull-out Reveal ends on its pull-out.
 - [Device Push-in Focus](./device-push-in-focus.md): Device Push-in Focus pans to one key after another on a single device; Macro Pull-out Reveal tours one detail in a single shot, then pulls out once.
 
 ## Source files

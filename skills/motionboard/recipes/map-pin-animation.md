@@ -1,11 +1,13 @@
-# Map Pin Drop
+# Map Pin Drop Animation
+
+Motionboard shot name: Map Pin Drop
 
 A pin drops onto a map with a bounce and bursts into fragments, the map zooms out to the whole country, and a route line draws to the next city.
 
 - Position in a launch film: Features
-- Slug: map-pin-drop
+- Slug: map-pin-animation
 - Preview video: https://media.motionboard.app/map-pin-drop.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/map-pin-drop/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/map-pin-animation/
 - Film length: 11s, 1920x1080
 - Original reference: Stripe Reader S700 (YouTube, 0:04) https://www.youtube.com/watch?v=9oieNo53aNY&t=4s
 - Original reference: Stripe Reader S700 (YouTube, 0:19) https://www.youtube.com/watch?v=9oieNo53aNY&t=19s
@@ -53,8 +55,8 @@ Map, pin, and fragments use only one brand color plus deep blue and white, and t
 
 ## Often confused with
 
-- [Confirmation Burst](./confirmation-burst.md): Confirmation Burst puts fragments at the contact point of a tap or payment; in Map Pin Drop the fragments appear at the pin's landing point on the map.
-- [Match Cut](./match-cut.md): Match Cut swaps the map pin for a pin in real footage; Map Pin Drop is the pin dropping, the fragments, and the pull-back route.
+- [Confetti Success Animation](./confetti-success-animation.md): Confirmation Burst puts fragments at the contact point of a tap or payment; in Map Pin Drop the fragments appear at the pin's landing point on the map.
+- [Match Cut Transition](./match-cut-transition.md): Match Cut swaps the map pin for a pin in real footage; Map Pin Drop is the pin dropping, the fragments, and the pull-back route.
 
 ## Source files
 

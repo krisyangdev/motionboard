@@ -1,11 +1,13 @@
-# Line Boil
+# Line Boil Effect
+
+Motionboard shot name: Line Boil
 
 Hand-drawn outlines swap to a slightly different trace every few frames, and motion steps at a low frame rate with no tweening.
 
 - Position in a launch film: Opening
-- Slug: line-boil
+- Slug: line-boil-effect
 - Preview video: https://media.motionboard.app/line-boil.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/line-boil/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/line-boil-effect/
 - Film length: 11s, 1920x1080
 - Original reference: Superhuman (YouTube, 0:01) https://www.youtube.com/watch?v=nJUylrt1OdU&t=1s
 - Original reference: Superhuman (YouTube, 0:05) https://www.youtube.com/watch?v=nJUylrt1OdU&t=5s
@@ -53,7 +55,7 @@ Lines keep trembling slightly even when the picture is still, so the frame alway
 
 ## Often confused with
 
-- [Dot-Matrix Glyph](./dot-matrix-glyph.md): Dot-Matrix Glyph restricts the graphic to grid points; Line Boil keeps continuous lines and only lowers the frame rate in time.
+- [Dot Matrix Animation](./dot-matrix-animation.md): Dot-Matrix Glyph restricts the graphic to grid points; Line Boil keeps continuous lines and only lowers the frame rate in time.
 - [Branching Growth](./branching-growth.md): The doubling version of Branching Growth also uses 8fps frame skipping; Line Boil is the trace itself changing frame by frame.
 
 ## Source files

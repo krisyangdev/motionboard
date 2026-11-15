@@ -1,11 +1,13 @@
-# Outline to Solid
+# Outline-to-Solid Reveal
+
+Motionboard shot name: Outline to Solid
 
 A wireframe or light-drawn outline appears first, then fills into a solid shape or material.
 
 - Position in a launch film: Product reveal
-- Slug: outline-to-solid
+- Slug: outline-to-solid-reveal
 - Preview video: https://media.motionboard.app/outline-to-solid.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/outline-to-solid/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/outline-to-solid-reveal/
 - Film length: 11s, 1920x1080
 - Original reference: Apple Vision Pro (YouTube, 0:01) https://www.youtube.com/watch?v=7B-rzR2avR0&t=1s
 - Original reference: Vercel v0 (YouTube, 0:00) https://www.youtube.com/watch?v=By9wCB9IZp0
@@ -53,7 +55,7 @@ The shape comes before the material, so the first thing viewers remember is the 
 ## Often confused with
 
 - [Light Reveal](./light-reveal.md): Light Reveal raises overall exposure; Outline to Solid shows the line first, then the solid.
-- [Rotate to Lockup](./rotate-to-lockup.md): Rotate to Lockup aligns to the target by rotating; Outline to Solid changes the material from line to surface.
+- [Rotating Logo Reveal](./rotating-logo-reveal.md): Rotate to Lockup aligns to the target by rotating; Outline to Solid changes the material from line to surface.
 
 ## Source files
 

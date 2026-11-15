@@ -1,11 +1,13 @@
-# Auto Zoom / Zoom-to-Cursor
+# Zoom-to-Cursor Effect
+
+Motionboard shot name: Auto Zoom / Zoom-to-Cursor
 
 The camera pushes to the target element in 0.4–0.8s, holds for one click or input, then pulls back to the full view.
 
 - Position in a launch film: Features
-- Slug: auto-zoom
+- Slug: zoom-to-cursor
 - Preview video: https://media.motionboard.app/zoom-to-cursor.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/auto-zoom/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/zoom-to-cursor/
 - Film length: 11s, 1920x1080
 - Original reference: Vercel v0 (YouTube, 0:13) https://www.youtube.com/watch?v=By9wCB9IZp0&t=13s
 - Original reference: Notion Calendar (YouTube, 0:39) https://www.youtube.com/watch?v=C4Q2ezioTUM&t=39s
@@ -54,7 +56,7 @@ Each push-in serves exactly one action and pulls back as soon as the action is d
 
 ## Often confused with
 
-- [Tilted UI with Depth of Field](./tilted-ui-with-depth-of-field.md): Tilted UI with Depth of Field stays close and pans sideways, shooting a flat UI like a physical object through tilt and blur; Auto Zoom uses scale to go back and forth between the full view and a detail.
+- [3D Tilted UI with Depth of Field](./3d-tilted-ui-depth-of-field.md): Tilted UI with Depth of Field stays close and pans sideways, shooting a flat UI like a physical object through tilt and blur; Auto Zoom uses scale to go back and forth between the full view and a detail.
 - [Focus Hop](./focus-hop.md): Focus Hop moves a highlight between cells while the camera barely moves; in Auto Zoom the camera is what moves.
 
 ## Source files

@@ -1,11 +1,13 @@
-# Converge to Mark
+# Converging Logo Reveal
+
+Motionboard shot name: Converge to Mark
 
 At the end, multiple elements gather and compress into a single icon or logo, always centered in the frame.
 
 - Position in a launch film: Ending
-- Slug: converge-to-mark
+- Slug: converge-logo-reveal
 - Preview video: https://media.motionboard.app/converge-to-mark.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/converge-to-mark/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/converge-logo-reveal/
 - Film length: 10.6s, 1920x1080
 - Original reference: Apple AirPods Pro 3 (YouTube, 0:38) https://www.youtube.com/watch?v=EMmKs8vMKhU&t=38s
 - Original reference: Notion Calendar (YouTube, 1:12) https://www.youtube.com/watch?v=C4Q2ezioTUM&t=72s
@@ -54,7 +56,7 @@ A slow drift followed by a fast gather contrasts speeds and gives a clear end po
 
 ## Often confused with
 
-- [Rotate to Lockup](./rotate-to-lockup.md): Converge to Mark gathers many elements to a point; Rotate to Lockup turns one object to a target angle.
+- [Rotating Logo Reveal](./rotating-logo-reveal.md): Converge to Mark gathers many elements to a point; Rotate to Lockup turns one object to a target angle.
 - [Dispense Line-up](./dispense-line-up.md): The retract in Dispense Line-up only returns to the original subject; Converge to Mark ends on a new icon or logo.
 
 ## Source files

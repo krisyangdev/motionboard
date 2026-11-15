@@ -1,11 +1,13 @@
-# Word-by-Word Highlight
+# Word-by-Word Text Highlight
+
+Motionboard shot name: Word-by-Word Highlight
 
 Words in a small centered line brighten from gray to white one at a time, and the text never moves.
 
 - Position in a launch film: Opening
-- Slug: word-by-word-highlight
+- Slug: word-by-word-text-highlight
 - Preview video: https://media.motionboard.app/word-highlight.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/word-by-word-highlight/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/word-by-word-text-highlight/
 - Film length: 11s, 1920x1080
 - Original reference: Apple iPhone 17 Pro (YouTube, 0:05) https://www.youtube.com/watch?v=TNhX1uR2vO8&t=5s
 - Original reference: Apple MacBook Pro M5 (YouTube, 1:31) https://www.youtube.com/watch?v=GriXfu4tL30&t=91s
@@ -54,8 +56,8 @@ The type is only 2.5% of frame height with over 90% empty space around it, so re
 
 ## Often confused with
 
-- [Rhythmic Typing](./rhythmic-typing.md): Rhythmic Typing appends characters one at a time with a cursor; Word-by-Word Highlight brightens whole words in sequence, with no cursor.
-- [Scattered Spec Type](./scattered-spec-type.md): In Scattered Spec Type the words land at spread-out positions and appear with a hard cut; in Word-by-Word Highlight the words sit on one line.
+- [Typing Animation (Typewriter Effect)](./typing-animation.md): Rhythmic Typing appends characters one at a time with a cursor; Word-by-Word Highlight brightens whole words in sequence, with no cursor.
+- [Kinetic Typography](./kinetic-typography.md): In Scattered Spec Type the words land at spread-out positions and appear with a hard cut; in Word-by-Word Highlight the words sit on one line.
 
 ## Source files
 

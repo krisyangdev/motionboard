@@ -1,7 +1,7 @@
 {
   "en": {
-    "name": "Typewriter Typing Animation",
-    "title": "Typewriter Typing Animation: Recipe and Code",
+    "name": "Typing Animation (Typewriter Effect)",
+    "title": "Typing Animation (Typewriter Effect): Recipe and Code",
     "description": "Monospace text types at uneven human speed, fixes a typo with backspaces, then deletes and retypes. Make it with Claude Code or Codex from the free recipe.",
     "howto": [
       "Anchor a left-aligned line at x 240 px in JetBrains Mono 56 px on #09090c, with a 33.6 x 66 px white block cursor at the end of the text. Each character is an opacity hard set (tl.set) on a fixed 33.6 px grid with no tweening. Gaps between characters run 0.04 to 0.11 s, with 0.3 to 0.5 s pauses between words.",
@@ -10,7 +10,7 @@
     ],
     "faq": [
       [
-        "What is a typewriter typing animation?",
+        "What is a typing animation (typewriter effect)?",
         "Text appears one character at a time, usually with a cursor at the end of the line, imitating keystrokes. More realistic versions vary the speed, pause between words and backspace over mistakes."
       ],
       [
@@ -18,7 +18,7 @@
         "Vary the delay between characters within a range, here 0.04 to 0.11 s, which is about 9 to 25 characters per second. Add longer pauses between words (0.3 to 0.5 s) and delete much faster than you type. Seed the random jitter so every render is identical."
       ],
       [
-        "Is the Typewriter Typing Animation recipe free to use?",
+        "Is the Typing Animation (Typewriter Effect) recipe free to use?",
         "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
       ]
     ]

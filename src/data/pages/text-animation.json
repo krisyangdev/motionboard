@@ -15,7 +15,7 @@
           "kinetic-typography",
           "typing-animation",
           "word-by-word-text-highlight",
-          "text-scramble-logo-reveal",
+          "logo-wordmark-reveal",
           "chromatic-aberration-text-effect",
           "prompt-carousel",
           "text-object-interleave"
@@ -41,12 +41,12 @@
         "t": "ul",
         "items": [
           "[Kinetic Typography](/recipes/kinetic-typography/): A spec line is split into words on uneven baselines, a connector word steps up letter by letter, and each 2.05 s sentence hard-cuts to the next.",
-          "[Typewriter Typing Animation](/recipes/typing-animation/): Monospace text is typed at uneven human speed with a cursor, including a typo, five backspaces and a retype, then 32 characters are deleted in 0.7 s.",
+          "[Typing Animation (Typewriter Effect)](/recipes/typing-animation/): Monospace text is typed at uneven human speed with a cursor, including a typo, five backspaces and a retype, then 32 characters are deleted in 0.7 s.",
           "[Word-by-Word Text Highlight](/recipes/word-by-word-text-highlight/): Words in a small centered paragraph brighten from gray to white one at a time over 5.92 s, and the text never moves.",
-          "[Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/): The wordmark unfolds from behind the mark in 1.3 s, with scrambled characters only on the newly added position before they lock.",
+          "[Logo Wordmark Reveal](/recipes/logo-wordmark-reveal/): The wordmark unfolds from behind the mark in 1.3 s, each letter sharpening from a 12 px blur, 0.08 s apart.",
           "[Chromatic Aberration Text Effect](/recipes/chromatic-aberration-text-effect/): Headline letters stretch horizontally with RGB ghosting for 0.17 to 0.3 s, step down through 2-frame states and snap back clean.",
           "[Prompt Carousel](/recipes/prompt-carousel/): A line under the headline thickens into a pill and then an input box, types a 41-character prompt in 2.7 s, and scrolls through prompts every 0.85 s.",
-          "[Text and Object Interleave](/recipes/text-object-interleave/): Type and object interleave in depth: the wordmark rises from behind the product over 1.8 s, a word passes through an object and comes out as another, and a device slots into a sentence."
+          "[Text–Object Interleave](/recipes/text-object-interleave/): Type and object interleave in depth: the wordmark rises from behind the product over 1.8 s, a word passes through an object and comes out as another, and a device slots into a sentence."
         ]
       },
       {
@@ -96,7 +96,7 @@
           "kinetic-typography",
           "typing-animation",
           "word-by-word-text-highlight",
-          "text-scramble-logo-reveal",
+          "logo-wordmark-reveal",
           "chromatic-aberration-text-effect",
           "prompt-carousel",
           "text-object-interleave"
@@ -124,10 +124,10 @@
           "[动态文字排版](/recipes/kinetic-typography/)：参数句拆成单词，落在高低不齐的基线上，连接词的字母逐个错开，每句 2.05 秒后硬切到下一句。",
           "[打字机动画](/recipes/typing-animation/)：等宽字配光标，以不均匀的人手速度打字，包括一次打错、五次退格和重打，之后 0.7 秒内删掉 32 个字符。",
           "[逐词高亮动画](/recipes/word-by-word-text-highlight/)：居中小段文字里的词在 5.92 秒内逐个由灰变白，文字本身不位移。",
-          "[文字乱码 Logo 动画](/recipes/text-scramble-logo-reveal/)：字标在 1.3 秒内从符号背后展开，乱码字符只出现在新加入的位置，随后定格。",
+          "[Logo 字标展开动画](/recipes/logo-wordmark-reveal/)：字标在 1.3 秒内从符号背后展开，每个字母从 12px 模糊变清晰，间隔 0.08 秒。",
           "[色散文字效果](/recipes/chromatic-aberration-text-effect/)：标题字母横向拉长并带 RGB 重影，持续 0.17 到 0.3 秒，经 2 帧一级的状态逐级回正。",
           "[输入框提示词轮播](/recipes/prompt-carousel/)：标题下的一条线加厚成胶囊再变成输入框，2.7 秒内打出 41 个字符的提示词，之后约每 0.85 秒滚动到下一条。",
-          "[文字与物体穿插](/recipes/text-object-interleave/)：文字和实物在深度上互相穿插：字标在 1.8 秒内从产品后面升起，一个词穿过物体后变成另一个词，设备被插入句子中间。"
+          "[文字穿插实物效果](/recipes/text-object-interleave/)：文字和实物在深度上互相穿插：字标在 1.8 秒内从产品后面升起，一个词穿过物体后变成另一个词，设备被插入句子中间。"
         ]
       },
       {

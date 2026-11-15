@@ -54,8 +54,8 @@ The reveal comes from light alone, with no fade or cross-dissolve. The camera ho
 
 ## Often confused with
 
-- [Rotate to Lockup](./rotate-to-lockup.md): Light Reveal keeps the subject still and changes only the light; Rotate to Lockup turns the object to a target angle.
-- [X-ray Dissolve](./x-ray-dissolve.md): X-ray Dissolve switches between an inner layer and an outer shell, while Light Reveal only adjusts exposure.
+- [Rotating Logo Reveal](./rotating-logo-reveal.md): Light Reveal keeps the subject still and changes only the light; Rotate to Lockup turns the object to a target angle.
+- [X-Ray Effect](./x-ray-effect.md): X-ray Dissolve switches between an inner layer and an outer shell, while Light Reveal only adjusts exposure.
 
 ## Source files
 

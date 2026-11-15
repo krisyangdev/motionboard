@@ -1,11 +1,13 @@
-# Foreground Wipe & Flash
+# Wipe and Flash Transition
+
+Motionboard shot name: Foreground Wipe & Flash
 
 A defocused foreground object sweeps across and covers the frame to cut scenes, or a central glow blows out to white before the next scene.
 
 - Position in a launch film: Transitions
-- Slug: foreground-wipe-flash
+- Slug: wipe-flash-transition
 - Preview video: https://media.motionboard.app/foreground-wipe-flash.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/foreground-wipe-flash/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/wipe-flash-transition/
 - Film length: 11s, 1920x1080
 - Original reference: Linear 发布片 (YouTube, 0:15) https://www.youtube.com/watch?v=lKwyrKUEPS4&t=15s
 - Original reference: Linear 发布片 (YouTube, 0:03) https://www.youtube.com/watch?v=lKwyrKUEPS4&t=3s
@@ -54,8 +56,8 @@ The transition object comes straight from the current scene (a ball, a halo), so
 
 ## Often confused with
 
-- [Match Cut](./match-cut.md): Match Cut keeps the anchor still and swaps the object directly; Foreground Wipe & Flash changes scenes on the frame that covers the screen.
-- [Mark-to-Wordmark Unfold](./mark-to-wordmark-unfold.md): Mark-to-Wordmark Unfold is often followed by a white flash; the flash itself is only a transition device.
+- [Match Cut Transition](./match-cut-transition.md): Match Cut keeps the anchor still and swaps the object directly; Foreground Wipe & Flash changes scenes on the frame that covers the screen.
+- [Logo Wordmark Reveal](./logo-wordmark-reveal.md): Mark-to-Wordmark Unfold is often followed by a white flash; the flash itself is only a transition device.
 
 ## Source files
 

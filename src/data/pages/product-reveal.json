@@ -43,10 +43,10 @@
           "[Light Reveal](/recipes/light-reveal/): The product fades up from black in 1.2 s with a barely perceptible push, holds 2.8 s, shows three colorways, and fades out in reverse at the end.",
           "[Device Push-in Focus](/recipes/device-push-in-focus/): A line-art 3D laptop turns upright while closed, opens in 0.55 s, pushes in on the keyboard over 1.6 s, then pans key to key with the option picked in the UI.",
           "[Macro Pull-out Reveal](/recipes/macro-pull-out-reveal/): The camera drifts across a chart, a deployment row and a button at extreme close range for 4.8 s, then one 1.2 s pull-back reveals the whole page.",
-          "[X-ray Effect](/recipes/x-ray-effect/): Macro shots of a chip and a board cross-dissolve to the outer shell on one camera position, then the camera pulls back to the whole device in 1.2 s.",
-          "[Text and Object Interleave](/recipes/text-object-interleave/): The product lights up, sinks, and the wordmark rises from behind it over 1.8 s; later a device drops into a gap in a sentence in 0.5 s.",
+          "[X-Ray Effect](/recipes/x-ray-effect/): Macro shots of a chip and a board cross-dissolve to the outer shell on one camera position, then the camera pulls back to the whole device in 1.2 s.",
+          "[Text–Object Interleave](/recipes/text-object-interleave/): The product lights up, sinks, and the wordmark rises from behind it over 1.8 s; later a device drops into a gap in a sentence in 0.5 s.",
           "[Dispense Line-up](/recipes/dispense-line-up/): Accessories slide out of the main object 0.15 s apart into a row, hold 1.1 s and retract in mirrored order while the caption appears word by word.",
-          "[Outline to Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in 1.5 s, a highlight sweeps across, and a slow push follows until 8.2 s."
+          "[Outline-to-Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in 1.5 s, a highlight sweeps across, and a slow push follows until 8.2 s."
         ]
       },
       {
@@ -121,13 +121,13 @@
       {
         "t": "ul",
         "items": [
-          "[光线揭示](/recipes/light-reveal/)：产品在 1.2 秒内从黑场亮起，伴随极轻的推近，停留 2.8 秒，展示三种配色，结尾再反向熄灭。",
-          "[设备推进聚焦](/recipes/device-push-in-focus/)：线稿风 3D 笔记本合盖转正，用 0.55 秒开盖，在 1.6 秒内推近键盘，再随界面里选中的选项逐个平移到对应按键。",
-          "[微距拉出揭示](/recipes/macro-pull-out-reveal/)：镜头用 4.8 秒贴着图表、部署条目和按钮超近距离慢移，随后一次 1.2 秒的后拉交代出整页。",
+          "[暗场打光显影](/recipes/light-reveal/)：产品在 1.2 秒内从黑场亮起，伴随极轻的推近，停留 2.8 秒，展示三种配色，结尾再反向熄灭。",
+          "[设备推镜聚焦](/recipes/device-push-in-focus/)：线稿风 3D 笔记本合盖转正，用 0.55 秒开盖，在 1.6 秒内推近键盘，再随界面里选中的选项逐个平移到对应按键。",
+          "[微距拉远揭示](/recipes/macro-pull-out-reveal/)：镜头用 4.8 秒贴着图表、部署条目和按钮超近距离慢移，随后一次 1.2 秒的后拉交代出整页。",
           "[X 光透视效果](/recipes/x-ray-effect/)：芯片和主板的微距镜头在同一机位叠化成外壳，随后镜头用 1.2 秒拉远成整机。",
-          "[文字与物体穿插](/recipes/text-object-interleave/)：产品亮起后下沉，字标在 1.8 秒内从它后面升起；之后一台设备在 0.5 秒内落入句子中的空位。",
-          "[配件依次滑出](/recipes/dispense-line-up/)：配件从主体里以 0.15 秒的间隔逐个滑出排成一行，停留 1.1 秒后按镜像顺序收回，文案逐词同步出现。",
-          "[描边转实心揭示](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体用 1.5 秒淡入，一道高光扫过，之后缓慢推近到 8.2 秒。"
+          "[文字穿插实物效果](/recipes/text-object-interleave/)：产品亮起后下沉，字标在 1.8 秒内从它后面升起；之后一台设备在 0.5 秒内落入句子中的空位。",
+          "[配件依次滑出排列动画](/recipes/dispense-line-up/)：配件从主体里以 0.15 秒的间隔逐个滑出排成一行，停留 1.1 秒后按镜像顺序收回，文案逐词同步出现。",
+          "[描边到实体显形动画](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体用 1.5 秒淡入，一道高光扫过，之后缓慢推近到 8.2 秒。"
         ]
       },
       {

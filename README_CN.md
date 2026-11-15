@@ -61,64 +61,64 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 
 | 配方 | 镜头 |
 | --- | --- |
-| [暗场显影](https://motionboard.app/zh/recipes/light-reveal/) | 产品从全黑中靠提高曝光逐步显出，镜头只有极轻的推近，片尾同镜头反向熄灭。 |
-| [作品墙漂移](https://motionboard.app/zh/recipes/showcase-wall/) | 满屏作品卡片斜向匀速漂移并慢放大，结尾加速推近一张。 |
-| [逐词点亮](https://motionboard.app/zh/recipes/word-by-word-highlight/) | 黑场小字按顺序由灰变白，一次点亮一个词，字本身不位移。 |
-| [节奏打字](https://motionboard.app/zh/recipes/rhythmic-typing/) | 等宽字加光标逐字打出，速度不均匀，可打出、停住、删除再重打。 |
-| [分叉生长](https://motionboard.app/zh/recipes/branching-growth/) | 一个点逐层分叉长成网络，前慢后快；或一个点按翻倍节奏分裂铺满画面。 |
-| [圆窗蒙太奇](https://motionboard.app/zh/recipes/iris-window-montage/) | 固定圆形取景窗，窗里快切图像或重看同一张图，圆窗大小随节奏跳变。 |
-| [手绘抖线](https://motionboard.app/zh/recipes/line-boil/) | 手绘线条每 2–3 帧换一版描线，动作按低帧率逐帧，没有补间。 |
+| [暗场打光显影](https://motionboard.app/zh/recipes/light-reveal/) | 产品从全黑中靠提高曝光逐步显出，镜头只有极轻的推近，片尾同镜头反向熄灭。 |
+| [作品墙展示动画](https://motionboard.app/zh/recipes/showcase-wall/) | 满屏作品卡片斜向匀速漂移并慢放大，结尾加速推近一张。 |
+| [逐词高亮动画](https://motionboard.app/zh/recipes/word-by-word-text-highlight/) | 黑场小字按顺序由灰变白，一次点亮一个词，字本身不位移。 |
+| [打字机动画](https://motionboard.app/zh/recipes/typing-animation/) | 等宽字加光标逐字打出，速度不均匀，可打出、停住、删除再重打。 |
+| [分叉生长动画](https://motionboard.app/zh/recipes/branching-growth/) | 一个点逐层分叉长成网络，前慢后快；或一个点按翻倍节奏分裂铺满画面。 |
+| [圆形光圈转场](https://motionboard.app/zh/recipes/iris-transition/) | 固定圆形取景窗，窗里快切图像或重看同一张图，圆窗大小随节奏跳变。 |
+| [线条抖动效果](https://motionboard.app/zh/recipes/line-boil-effect/) | 手绘线条每 2–3 帧换一版描线，动作按低帧率逐帧，没有补间。 |
 
 ### 产品亮相 (7)
 
 | 配方 | 镜头 |
 | --- | --- |
-| [实物推进聚焦](https://motionboard.app/zh/recipes/device-push-in-focus/) | 线稿风 3D 笔记本合盖转正、开盖、推近键盘，再随右侧选项逐次平移到对应按键并按下。 |
-| [微距拉出](https://motionboard.app/zh/recipes/macro-pull-out-reveal/) | 镜头贴着局部超近距离慢移，最后一次后拉把整机或整页交代出来。 |
-| [透视叠化](https://motionboard.app/zh/recipes/x-ray-dissolve/) | 内部结构和外壳在同一机位对位叠化，随后镜头拉远成整机。 |
-| [字物穿插](https://motionboard.app/zh/recipes/text-object-interleave/) | 文字和实物在深度上互相穿插：文字出现在产品后面，设备插入句子中间，或文字穿过实物变成另一种文字。 |
-| [描边显形](https://motionboard.app/zh/recipes/outline-to-solid/) | 先出线框或光线勾出的轮廓，再填成实心或材质。 |
-| [斜拍景深界面](https://motionboard.app/zh/recipes/tilted-ui-with-depth-of-field/) | UI 平面倾斜 10–15° 贴近拍摄，只有当前操作行在焦内，其余行虚化。 |
-| [Dock 登场](https://motionboard.app/zh/recipes/dock-arrival/) | 放大的 Dock 撑开空位长出新图标，冒一次小火花，光标点击后开窗。 |
+| [设备推镜聚焦](https://motionboard.app/zh/recipes/device-push-in-focus/) | 线稿风 3D 笔记本合盖转正、开盖、推近键盘，再随右侧选项逐次平移到对应按键并按下。 |
+| [微距拉远揭示](https://motionboard.app/zh/recipes/macro-pull-out-reveal/) | 镜头贴着局部超近距离慢移，最后一次后拉把整机或整页交代出来。 |
+| [X 光透视效果](https://motionboard.app/zh/recipes/x-ray-effect/) | 内部结构和外壳在同一机位对位叠化，随后镜头拉远成整机。 |
+| [文字穿插实物效果](https://motionboard.app/zh/recipes/text-object-interleave/) | 文字和实物在深度上互相穿插：文字出现在产品后面，设备插入句子中间，或文字穿过实物变成另一种文字。 |
+| [描边到实体显形动画](https://motionboard.app/zh/recipes/outline-to-solid-reveal/) | 先出线框或光线勾出的轮廓，再填成实心或材质。 |
+| [3D 倾斜界面景深效果](https://motionboard.app/zh/recipes/3d-tilted-ui-depth-of-field/) | UI 平面倾斜 10–15° 贴近拍摄，只有当前操作行在焦内，其余行虚化。 |
+| [Dock 图标动画](https://motionboard.app/zh/recipes/dock-arrival/) | 放大的 Dock 撑开空位长出新图标，冒一次小火花，光标点击后开窗。 |
 
 ### 功能展示 (15)
 
 | 配方 | 镜头 |
 | --- | --- |
-| [吐出排列](https://motionboard.app/zh/recipes/dispense-line-up/) | 配件从主体里逐个滑出排成一行，文案逐词同步出现，停留后对称收回。 |
-| [推近操作再拉回](https://motionboard.app/zh/recipes/auto-zoom/) | 镜头 0.4–0.8s 快推到要操作的元素，完成一次点击或输入后拉回全景。 |
-| [形变接力](https://motionboard.app/zh/recipes/morph-relay/) | 同一个元素连续变形成下一个元素，代替切镜，整段没有硬切。 |
-| [线框重排](https://motionboard.app/zh/recipes/wireframe-re-layout/) | 内容退成线框，线框 Flip 重排成新布局，各格依次填入新内容。 |
-| [翻面看代码](https://motionboard.app/zh/recipes/card-flip-to-code/) | 预览卡绕 Y 轴翻转 180°，背面是代码。 |
-| [控件驱动](https://motionboard.app/zh/recipes/control-driven-change/) | 控件（取色器、开关、调节盘）一到位，页面结果同帧变化，可分屏左控件右结果。 |
-| [多人光标](https://motionboard.app/zh/recipes/multiplayer-cursors/) | 放大的双色带名字光标在画布上移动、评论、拖动重排。 |
-| [焦点跳格](https://motionboard.app/zh/recipes/focus-hop/) | 高亮块或焦点框随光标一格一停跳动，焦点框可取框内图标的颜色。 |
-| [堆积清空](https://motionboard.app/zh/recipes/pile-up-and-clear/) | 任务、标签或事件逐个堆满画面，然后一次清空成一个结果状态。 |
-| [提示词轮播](https://motionboard.app/zh/recipes/prompt-carousel/) | 标题下一条线加厚成胶囊再变输入框，框内逐条打提示词并上下滚动。 |
-| [散排参数](https://motionboard.app/zh/recipes/scattered-spec-type/) | 参数句拆成单词落在拉开的位置，连接词字母阶梯错开，正斜体混排。 |
-| [玻璃透镜](https://motionboard.app/zh/recipes/glass-lens/) | 透明玻璃圆、放大镜或控件在内容上移动，折射放大下方内容，边缘带色散。 |
-| [地图落钉](https://motionboard.app/zh/recipes/map-pin-drop/) | 定位钉回弹落下并爆出碎片，镜头拉远到全国，轨迹线划向下一座城市。 |
-| [点阵量化](https://motionboard.app/zh/recipes/dot-matrix-glyph/) | 图形被量化到圆形点阵屏上，旋转或变化时每一帧都对齐到点阵。 |
-| [确认爆发](https://motionboard.app/zh/recipes/confirmation-burst/) | 点击或付款那一帧，接触点外扩线条、方块、圆点，或图标回弹弹出并扩散同形描边。 |
+| [配件依次滑出排列动画](https://motionboard.app/zh/recipes/dispense-line-up/) | 配件从主体里逐个滑出排成一行，文案逐词同步出现，停留后对称收回。 |
+| [光标自动放大效果](https://motionboard.app/zh/recipes/zoom-to-cursor/) | 镜头 0.4–0.8s 快推到要操作的元素，完成一次点击或输入后拉回全景。 |
+| [形变转场](https://motionboard.app/zh/recipes/morph-transition/) | 同一个元素连续变形成下一个元素，代替切镜，整段没有硬切。 |
+| [线框重排动画](https://motionboard.app/zh/recipes/wireframe-re-layout/) | 内容退成线框，线框 Flip 重排成新布局，各格依次填入新内容。 |
+| [卡片翻转动画](https://motionboard.app/zh/recipes/card-flip-animation/) | 预览卡绕 Y 轴翻转 180°，背面是代码。 |
+| [控件联动动画](https://motionboard.app/zh/recipes/control-driven-change/) | 控件（取色器、开关、调节盘）一到位，页面结果同帧变化，可分屏左控件右结果。 |
+| [多人协作光标动画](https://motionboard.app/zh/recipes/multiplayer-cursor-animation/) | 放大的双色带名字光标在画布上移动、评论、拖动重排。 |
+| [焦点跳转动画](https://motionboard.app/zh/recipes/focus-hop/) | 高亮块或焦点框随光标一格一停跳动，焦点框可取框内图标的颜色。 |
+| [堆积清空动画](https://motionboard.app/zh/recipes/pile-up-and-clear/) | 任务、标签或事件逐个堆满画面，然后一次清空成一个结果状态。 |
+| [输入框提示词轮播](https://motionboard.app/zh/recipes/prompt-carousel/) | 标题下一条线加厚成胶囊再变输入框，框内逐条打提示词并上下滚动。 |
+| [动态文字排版](https://motionboard.app/zh/recipes/kinetic-typography/) | 参数句拆成单词落在拉开的位置，连接词字母阶梯错开，正斜体混排。 |
+| [液态玻璃效果](https://motionboard.app/zh/recipes/liquid-glass-effect/) | 透明玻璃圆、放大镜或控件在内容上移动，折射放大下方内容，边缘带色散。 |
+| [地图标记动画](https://motionboard.app/zh/recipes/map-pin-animation/) | 定位钉回弹落下并爆出碎片，镜头拉远到全国，轨迹线划向下一座城市。 |
+| [点阵动画](https://motionboard.app/zh/recipes/dot-matrix-animation/) | 图形被量化到圆形点阵屏上，旋转或变化时每一帧都对齐到点阵。 |
+| [撒花成功动画](https://motionboard.app/zh/recipes/confetti-success-animation/) | 点击或付款那一帧，接触点外扩线条、方块、圆点，或图标回弹弹出并扩散同形描边。 |
 
 ### 转场 (5)
 
 | 配方 | 镜头 |
 | --- | --- |
-| [同版换肤快切](https://motionboard.app/zh/recipes/locked-layout-reskin/) | 布局位置不变，每 6–10 帧硬切换一套配色和字体。 |
-| [玻璃水滴分离](https://motionboard.app/zh/recipes/glass-droplet-split/) | 玻璃片拉长成水滴，颈部收细断开，留下一颗圆珠；同类形式是色散玻璃环向中心收束。 |
-| [波浪翻转](https://motionboard.app/zh/recipes/domino-wave/) | 一排方块按相位差依次翻转 90°，镜头沿队列平移。 |
-| [同位替换](https://motionboard.app/zh/recipes/match-cut/) | 在同一个锚点把一个东西换成另一个，视线位置不动。 |
-| [遮挡与闪白](https://motionboard.app/zh/recipes/foreground-wipe-flash/) | 场景内虚焦大物体横扫遮满画面切场，或中心光晕吹白后切场。 |
+| [固定版式换肤动画](https://motionboard.app/zh/recipes/locked-layout-reskin/) | 布局位置不变，每 6–10 帧硬切换一套配色和字体。 |
+| [玻璃水滴分离动画](https://motionboard.app/zh/recipes/glass-droplet-split/) | 玻璃片拉长成水滴，颈部收细断开，留下一颗圆珠；同类形式是色散玻璃环向中心收束。 |
+| [方块波浪翻转](https://motionboard.app/zh/recipes/domino-wave/) | 一排方块按相位差依次翻转 90°，镜头沿队列平移。 |
+| [匹配剪辑转场](https://motionboard.app/zh/recipes/match-cut-transition/) | 在同一个锚点把一个东西换成另一个，视线位置不动。 |
+| [遮挡闪白转场](https://motionboard.app/zh/recipes/wipe-flash-transition/) | 场景内虚焦大物体横扫遮满画面切场，或中心光晕吹白后切场。 |
 
 ### 结尾 (4)
 
 | 配方 | 镜头 |
 | --- | --- |
-| [旋转落定](https://motionboard.app/zh/recipes/rotate-to-lockup/) | 物体在缓出旋转中停下，停止那一帧的角度正好是 logo 轮廓或产品的主视角。 |
-| [收束成标](https://motionboard.app/zh/recipes/converge-to-mark/) | 片尾把多个元素收拢、压缩成一个图标或 logo，位置始终在画面中心。 |
-| [符号展开字标](https://motionboard.app/zh/recipes/mark-to-wordmark-unfold/) | logo 符号居中，字标从符号背后或中心向两侧展开，可带乱码定格。 |
-| [色散拉伸](https://motionboard.app/zh/recipes/chromatic-stretch/) | 字标局部字母被横向拉长并分出 RGB 重影，阶跃式扭曲后回正。 |
+| [旋转 Logo 揭示动画](https://motionboard.app/zh/recipes/rotating-logo-reveal/) | 物体在缓出旋转中停下，停止那一帧的角度正好是 logo 轮廓或产品的主视角。 |
+| [元素汇聚 Logo 动画](https://motionboard.app/zh/recipes/converge-logo-reveal/) | 片尾把多个元素收拢、压缩成一个图标或 logo，位置始终在画面中心。 |
+| [Logo 字标展开动画](https://motionboard.app/zh/recipes/logo-wordmark-reveal/) | logo 符号居中，字标从符号背后或中心向两侧展开，可带乱码定格。 |
+| [色散文字效果](https://motionboard.app/zh/recipes/chromatic-aberration-text-effect/) | 字标局部字母被横向拉长并分出 RGB 重影，阶跃式扭曲后回正。 |
 
 <!-- recipes:end -->
 

@@ -1,11 +1,13 @@
-# Iris Window Montage
+# Iris Transition
+
+Motionboard shot name: Iris Window Montage
 
 A fixed circular window cuts rapidly between images, or revisits the same image, while its size jumps with the rhythm.
 
 - Position in a launch film: Opening
-- Slug: iris-window-montage
+- Slug: iris-transition
 - Preview video: https://media.motionboard.app/iris-montage.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/iris-window-montage/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/iris-transition/
 - Film length: 11s, 1920x1080
 - Original reference: Claude Fable 5.1 (YouTube, 1:14) https://www.youtube.com/watch?v=ROF2Nv_KjOM&t=74s
 - Original reference: Claude Fable 5.1 (YouTube, 0:32) https://www.youtube.com/watch?v=ROF2Nv_KjOM&t=32s
@@ -53,7 +55,7 @@ Dozens of images from completely different sources are unified into one series b
 ## Often confused with
 
 - [Branching Growth](./branching-growth.md): Branching Growth is one structure growing; Iris Window Montage replaces content inside a fixed frame.
-- [Glass Lens](./glass-lens.md): Glass Lens is a moving lens refracting content; the window in Iris Window Montage stays in place while the content cuts quickly.
+- [Liquid Glass Effect](./liquid-glass-effect.md): Glass Lens is a moving lens refracting content; the window in Iris Window Montage stays in place while the content cuts quickly.
 
 ## Source files
 

@@ -1,11 +1,13 @@
-# Card Flip to Code
+# Card Flip Animation
+
+Motionboard shot name: Card Flip to Code
 
 The preview card rotates 180° around the Y axis and its back face shows the code.
 
 - Position in a launch film: Features
-- Slug: card-flip-to-code
+- Slug: card-flip-animation
 - Preview video: https://media.motionboard.app/card-flip-code.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/card-flip-to-code/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/card-flip-animation/
 - Film length: 11s, 1920x1080
 - Original reference: Vercel v0 (YouTube, 0:28) https://www.youtube.com/watch?v=By9wCB9IZp0&t=28s
 
@@ -52,7 +54,7 @@ Preview and code are the front and back of one card, which says they are the sam
 
 ## Often confused with
 
-- [Morph Relay](./morph-relay.md): Morph Relay turns one element into a different shape; Card Flip to Code shows two faces of the same card, and the shape does not change.
+- [Morph Transition](./morph-transition.md): Morph Relay turns one element into a different shape; Card Flip to Code shows two faces of the same card, and the shape does not change.
 - [Control-Driven Change](./control-driven-change.md): In Control-Driven Change a control changes the page on the same frame; here the trigger and the result are on the same element.
 
 ## Source files

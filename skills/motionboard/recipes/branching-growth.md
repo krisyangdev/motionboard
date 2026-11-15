@@ -53,7 +53,7 @@ Going from one dot to thousands uses only black lines, black dots, and paper tex
 
 ## Often confused with
 
-- [Iris Window Montage](./iris-window-montage.md): Iris Window Montage cuts rapidly between images in a fixed frame; Branching Growth is one structure that keeps getting bigger.
+- [Iris Transition](./iris-transition.md): Iris Window Montage cuts rapidly between images in a fixed frame; Branching Growth is one structure that keeps getting bigger.
 - [Glass Droplet Split](./glass-droplet-split.md): Glass Droplet Split is one shape shedding one bead; Branching Growth is a multi-level structural expansion.
 
 ## Source files

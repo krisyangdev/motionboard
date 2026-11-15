@@ -53,7 +53,7 @@ The number of words in the caption matches the number of accessories one to one,
 ## Often confused with
 
 - [Text–Object Interleave](./text-object-interleave.md): Text–Object Interleave is front-and-back occlusion between text and object; the caption in Dispense Line-up syncs only with the accessory count.
-- [Converge to Mark](./converge-to-mark.md): Converge to Mark gathers many elements into one icon; the retract in Dispense Line-up returns to the original subject and creates no new shape.
+- [Converging Logo Reveal](./converge-logo-reveal.md): Converge to Mark gathers many elements into one icon; the retract in Dispense Line-up returns to the original subject and creates no new shape.
 
 ## Source files
 

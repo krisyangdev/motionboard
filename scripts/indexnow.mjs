@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const HOST = 'motionboard.app'
-const SITEMAP = join(ROOT, 'dist/client/sitemap.xml')
+const SITEMAP = join(ROOT, '.cloudflare/output/v0/workers/default/assets/sitemap.xml')
 
 try {
   const keyFile = readdirSync(join(ROOT, 'public')).find((f) => /^[0-9a-f]{32}\.txt$/.test(f))

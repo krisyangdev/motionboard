@@ -1,11 +1,13 @@
-# Rhythmic Typing
+# Typing Animation (Typewriter Effect)
+
+Motionboard shot name: Rhythmic Typing
 
 Monospace text is typed character by character with a cursor at uneven human speed, then deleted and retyped.
 
 - Position in a launch film: Opening
-- Slug: rhythmic-typing
+- Slug: typing-animation
 - Preview video: https://media.motionboard.app/rhythmic-typing.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/rhythmic-typing/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/typing-animation/
 - Film length: 11s, 1920x1080
 - Original reference: Linear Releases (YouTube, 0:22) https://www.youtube.com/watch?v=6dIwFoQ0eVg&t=22s
 - Original reference: Cursor 1.0 (YouTube, 0:01) https://www.youtube.com/watch?v=s5kX-UHgMLo&t=1s
@@ -55,7 +57,7 @@ The screen holds only a cursor and one line of small text, with a great deal of 
 
 ## Often confused with
 
-- [Word-by-Word Highlight](./word-by-word-highlight.md): Word-by-Word Highlight brightens words and never deletes; Rhythmic Typing appends characters and has a cursor and delete-and-retype.
+- [Word-by-Word Text Highlight](./word-by-word-text-highlight.md): Word-by-Word Highlight brightens words and never deletes; Rhythmic Typing appends characters and has a cursor and delete-and-retype.
 - [Prompt Carousel](./prompt-carousel.md): Prompt Carousel happens inside an input box with several prompts scrolling vertically; Rhythmic Typing is a single line of text.
 
 ## Source files

@@ -1,11 +1,13 @@
-# Tilted UI with Depth of Field
+# 3D Tilted UI with Depth of Field
+
+Motionboard shot name: Tilted UI with Depth of Field
 
 A UI plane tilted 10–15° and shot up close, with only the active row in focus and the rest blurred.
 
 - Position in a launch film: Product reveal
-- Slug: tilted-ui-with-depth-of-field
+- Slug: 3d-tilted-ui-depth-of-field
 - Preview video: https://media.motionboard.app/tilted-ui.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/tilted-ui-with-depth-of-field/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/3d-tilted-ui-depth-of-field/
 - Film length: 10s, 1920x1080
 - Original reference: Dia (YouTube, 0:42) https://www.youtube.com/watch?v=YVOw0TAO9ok&t=42s
 - Original reference: Dia (YouTube, 0:18) https://www.youtube.com/watch?v=YVOw0TAO9ok&t=18s
@@ -56,7 +58,7 @@ Tilt, shallow depth of field, and grain make the screen UI read as a physical ob
 ## Often confused with
 
 - [Macro Pull-out Reveal](./macro-pull-out-reveal.md): In Macro Pull-out Reveal the subject is a physical product and the shot pulls out to show it whole; here the subject is a flat UI shot as a physical object through tilt and depth of field, and the camera never pulls out.
-- [Auto Zoom / Zoom-to-Cursor](./auto-zoom.md): Auto Zoom uses scale to serve a single action and then pulls back; this shot stays close and only pans slowly sideways.
+- [Zoom-to-Cursor Effect](./zoom-to-cursor.md): Auto Zoom uses scale to serve a single action and then pulls back; this shot stays close and only pans slowly sideways.
 
 ## Source files
 

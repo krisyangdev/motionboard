@@ -1,11 +1,13 @@
-# Match Cut
+# Match Cut Transition
+
+Motionboard shot name: Match Cut
 
 One object is replaced by another at the same anchor point, so the viewer's gaze never moves.
 
 - Position in a launch film: Transitions
-- Slug: match-cut
+- Slug: match-cut-transition
 - Preview video: https://media.motionboard.app/match-cut.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/match-cut/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/match-cut-transition/
 - Film length: 10s, 1920x1080
 - Original reference: Apple Vision Pro (YouTube, 0:41) https://www.youtube.com/watch?v=7B-rzR2avR0&t=41s
 - Original reference: Apple A19 Pro 芯片 (YouTube, 0:55) https://www.youtube.com/watch?v=dJObc0V6hJU&t=55s
@@ -54,8 +56,8 @@ The new subject appears exactly where the eye already is, so the viewer never ha
 
 ## Often confused with
 
-- [Foreground Wipe & Flash](./foreground-wipe-flash.md): Foreground Wipe & Flash uses a large object or white light to cover the frame before changing scenes; Match Cut keeps the anchor point still.
-- [Glass Lens](./glass-lens.md): Glass Lens flips the background on the frame where the lens fills the screen; Match Cut keeps the composition position unchanged.
+- [Wipe and Flash Transition](./wipe-flash-transition.md): Foreground Wipe & Flash uses a large object or white light to cover the frame before changing scenes; Match Cut keeps the anchor point still.
+- [Liquid Glass Effect](./liquid-glass-effect.md): Glass Lens flips the background on the frame where the lens fills the screen; Match Cut keeps the composition position unchanged.
 
 ## Source files
 

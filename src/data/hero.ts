@@ -25,5 +25,5 @@ export const HERO: HeroSegment[] = [
   seg('zoom-to-cursor', 5.5, 8.2),
   seg('morph-transition', 8.2, 10.6),
   seg('match-cut-transition', 10.6, 12.4),
-  seg('text-scramble-logo-reveal', 12.4, 15.8),
+  seg('logo-wordmark-reveal', 12.4, 15.8),
 ]

@@ -1,11 +1,13 @@
-# Rotate to Lockup
+# Rotating Logo Reveal
+
+Motionboard shot name: Rotate to Lockup
 
 An object spins with a long ease-out and stops at the exact angle that forms the logo silhouette or the hero view of the product.
 
 - Position in a launch film: Ending
-- Slug: rotate-to-lockup
+- Slug: rotating-logo-reveal
 - Preview video: https://media.motionboard.app/rotate-to-lockup.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/rotate-to-lockup/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/rotating-logo-reveal/
 - Film length: 10s, 1920x1080
 - Original reference: Cursor 1.0 (YouTube, 1:53) https://www.youtube.com/watch?v=s5kX-UHgMLo&t=113s
 - Original reference: Nothing Phone (3) (YouTube, 0:25) https://www.youtube.com/watch?v=MHGQRnvE9GQ&t=25s
@@ -53,8 +55,8 @@ The last frame of the rotation is the logo, and the motion shows where the flat 
 
 ## Often confused with
 
-- [Converge to Mark](./converge-to-mark.md): Rotate to Lockup turns one object to a target angle; Converge to Mark gathers many elements and compresses them into one icon.
-- [Outline to Solid](./outline-to-solid.md): Outline to Solid goes from line to fill; in Rotate to Lockup the material stays the same and only the orientation changes.
+- [Converging Logo Reveal](./converge-logo-reveal.md): Rotate to Lockup turns one object to a target angle; Converge to Mark gathers many elements and compresses them into one icon.
+- [Outline-to-Solid Reveal](./outline-to-solid-reveal.md): Outline to Solid goes from line to fill; in Rotate to Lockup the material stays the same and only the orientation changes.
 
 ## Source files
 

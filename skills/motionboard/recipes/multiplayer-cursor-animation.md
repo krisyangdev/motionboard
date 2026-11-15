@@ -1,11 +1,13 @@
-# Multiplayer Cursors
+# Multiplayer Cursor Animation
+
+Motionboard shot name: Multiplayer Cursors
 
 Enlarged two-color named cursors move across a canvas, leave comments, and drag items to reorder.
 
 - Position in a launch film: Features
-- Slug: multiplayer-cursors
+- Slug: multiplayer-cursor-animation
 - Preview video: https://media.motionboard.app/multiplayer-cursors.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/multiplayer-cursors/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/multiplayer-cursor-animation/
 - Film length: 10.5s, 1920x1080
 - Original reference: Figma Slides (YouTube, 0:01) https://www.youtube.com/watch?v=p-B--SGq_ZQ&t=1s
 - Original reference: Figma Slides (YouTube, 1:20) https://www.youtube.com/watch?v=p-B--SGq_ZQ&t=80s

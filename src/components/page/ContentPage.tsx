@@ -11,7 +11,7 @@ import { PAGES } from '@/data/pages'
 import { bySlug, termName } from '@/data/terms'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
 
-const anchor = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/g, '-').replace(/^-|-$/g, '')
+const anchor = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '')
 
 // A one-line command with a copy button, in the look of the home page's skill install box.
 function Command({ text }: { text: string }) {

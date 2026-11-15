@@ -52,7 +52,7 @@ The number of cards shows that many people use the product. The cards all have d
 
 ## Often confused with
 
-- [Auto Zoom / Zoom-to-Cursor](./auto-zoom.md): Auto Zoom serves one action and pulls back; Showcase Wall drifts at constant speed and ends with a one-way push-in and a cut.
+- [Zoom-to-Cursor Effect](./zoom-to-cursor.md): Auto Zoom serves one action and pulls back; Showcase Wall drifts at constant speed and ends with a one-way push-in and a cut.
 - [Pile-up and Clear](./pile-up-and-clear.md): Pile-up and Clear adds elements one at a time and then clears them; the cards in Showcase Wall fill the frame from the start and move as a whole.
 
 ## Source files

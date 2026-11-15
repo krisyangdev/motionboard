@@ -52,7 +52,7 @@ A familiar macOS Dock motion says "an app was installed" with no text needed. Th
 
 ## Often confused with
 
-- [Morph Relay](./morph-relay.md): Morph Relay is one element changing shape continuously; Dock Arrival adds a new element to the Dock and then opens a window on click.
+- [Morph Transition](./morph-transition.md): Morph Relay is one element changing shape continuously; Dock Arrival adds a new element to the Dock and then opens a window on click.
 - [Pile-up and Clear](./pile-up-and-clear.md): Pile-up and Clear piles up more and more elements and then clears them; Dock Arrival adds only one element.
 
 ## Source files

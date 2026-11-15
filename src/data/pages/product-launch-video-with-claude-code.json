@@ -76,12 +76,12 @@
       {
         "t": "ol",
         "items": [
-          "0 to 2.8 s, opening: [Typing Animation](/recipes/typing-animation/). Monospace text is typed character by character with a cursor at uneven human speed, then deleted and retyped.",
-          "2.8 to 5.5 s, product reveal: [3D Tilted UI Depth of Field](/recipes/3d-tilted-ui-depth-of-field/). A UI plane tilted 10 to 15 degrees is shot up close, with only the active row in focus and the rest blurred.",
-          "5.5 to 8.2 s, feature: [Zoom to Cursor](/recipes/zoom-to-cursor/). The camera pushes to the target element in 0.4 to 0.8 seconds, holds for one click or input, then pulls back to the full view.",
+          "0 to 2.8 s, opening: [Typing Animation (Typewriter Effect)](/recipes/typing-animation/). Monospace text is typed character by character with a cursor at uneven human speed, then deleted and retyped.",
+          "2.8 to 5.5 s, product reveal: [3D Tilted UI with Depth of Field](/recipes/3d-tilted-ui-depth-of-field/). A UI plane tilted 10 to 15 degrees is shot up close, with only the active row in focus and the rest blurred.",
+          "5.5 to 8.2 s, feature: [Zoom-to-Cursor Effect](/recipes/zoom-to-cursor/). The camera pushes to the target element in 0.4 to 0.8 seconds, holds for one click or input, then pulls back to the full view.",
           "8.2 to 10.6 s, feature: [Morph Transition](/recipes/morph-transition/). One element keeps morphing into the next, so the sequence has no hard cut.",
           "10.6 to 12.4 s, transition: [Match Cut Transition](/recipes/match-cut-transition/). One object is replaced by another at the same anchor point, so the viewer's gaze stays in place.",
-          "12.4 to 15.8 s, ending: [Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/). A logo mark sits centred, then the wordmark unfolds from behind it, with a scramble-then-lock effect on the new letters."
+          "12.4 to 15.8 s, ending: [Logo Wordmark Reveal](/recipes/logo-wordmark-reveal/). A logo mark sits centred, then the wordmark unfolds from behind it, each letter sharpening from a 12 px blur."
         ]
       },
       {
@@ -160,7 +160,7 @@
           "zoom-to-cursor",
           "morph-transition",
           "match-cut-transition",
-          "text-scramble-logo-reveal"
+          "logo-wordmark-reveal"
         ]
       },
       {
@@ -292,12 +292,12 @@
       {
         "t": "ol",
         "items": [
-          "0 到 2.8 秒，开场：[Typing Animation](/recipes/typing-animation/)（打字动画）。等宽文字带着光标，以不均匀的人类速度逐字打出，然后删除并重新打字。",
-          "2.8 到 5.5 秒，产品亮相：[3D Tilted UI Depth of Field](/recipes/3d-tilted-ui-depth-of-field/)（斜拍景深界面）。界面平面倾斜 10 到 15 度，近距离拍摄，只有当前行清晰，其余模糊。",
-          "5.5 到 8.2 秒，功能：[Zoom to Cursor](/recipes/zoom-to-cursor/)（推近到光标）。镜头用 0.4 到 0.8 秒推向目标元素，停住完成一次点击或输入，再拉回完整画面。",
-          "8.2 到 10.6 秒，功能：[Morph Transition](/recipes/morph-transition/)（形变转场）。一个元素不断变形为下一个，整段没有硬切。",
-          "10.6 到 12.4 秒，转场：[Match Cut Transition](/recipes/match-cut-transition/)（匹配剪辑转场）。一个物体在同一锚点被另一个物体替换，观众的视线保持不动。",
-          "12.4 到 15.8 秒，结尾：[Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/)（乱码锁定 logo 揭示）。logo 符号居中，字标从它身后展开，新增的字母带有先乱码、后锁定的效果。"
+          "0 到 2.8 秒，开场：[打字机动画](/recipes/typing-animation/)（打字动画）。等宽文字带着光标，以不均匀的人类速度逐字打出，然后删除并重新打字。",
+          "2.8 到 5.5 秒，产品亮相：[3D 倾斜界面景深效果](/recipes/3d-tilted-ui-depth-of-field/)（斜拍景深界面）。界面平面倾斜 10 到 15 度，近距离拍摄，只有当前行清晰，其余模糊。",
+          "5.5 到 8.2 秒，功能：[光标自动放大效果](/recipes/zoom-to-cursor/)（推近到光标）。镜头用 0.4 到 0.8 秒推向目标元素，停住完成一次点击或输入，再拉回完整画面。",
+          "8.2 到 10.6 秒，功能：[形变转场](/recipes/morph-transition/)（形变转场）。一个元素不断变形为下一个，整段没有硬切。",
+          "10.6 到 12.4 秒，转场：[匹配剪辑转场](/recipes/match-cut-transition/)（匹配剪辑转场）。一个物体在同一锚点被另一个物体替换，观众的视线保持不动。",
+          "12.4 到 15.8 秒，结尾：[Logo 字标展开动画](/recipes/logo-wordmark-reveal/)。logo 符号居中，字标从它身后展开，每个字母从 12px 模糊变清晰。"
         ]
       },
       {
@@ -376,7 +376,7 @@
           "zoom-to-cursor",
           "morph-transition",
           "match-cut-transition",
-          "text-scramble-logo-reveal"
+          "logo-wordmark-reveal"
         ]
       },
       {

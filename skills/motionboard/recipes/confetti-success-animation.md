@@ -1,11 +1,13 @@
-# Confirmation Burst
+# Confetti Success Animation
+
+Motionboard shot name: Confirmation Burst
 
 On the frame of a tap, payment, or confirmation, lines, squares, and dots radiate from the contact point, or an icon pops with a bounce and an echo outline expands.
 
 - Position in a launch film: Features
-- Slug: confirmation-burst
+- Slug: confetti-success-animation
 - Preview video: https://media.motionboard.app/confirmation-burst.mp4
-- Recipe page (preview film and original side by side): https://motionboard.app/recipes/confirmation-burst/
+- Recipe page (preview film and original side by side): https://motionboard.app/recipes/confetti-success-animation/
 - Film length: 11s, 1920x1080
 - Original reference: Stripe Reader S700 (YouTube, 0:44) https://www.youtube.com/watch?v=9oieNo53aNY&t=44s
 - Original reference: Stripe Reader S700 (YouTube, 1:06) https://www.youtube.com/watch?v=9oieNo53aNY&t=66s
@@ -54,8 +56,8 @@ Graphics appear only on key action frames such as a tap or a successful payment,
 
 ## Often confused with
 
-- [Map Pin Drop](./map-pin-drop.md): Map Pin Drop's fragments appear at the pin's landing position; Confirmation Burst's fragments appear at the tap contact point.
-- [Match Cut](./match-cut.md): Match Cut swaps the whole object for another; Confirmation Burst only overlays feedback graphics on the existing picture.
+- [Map Pin Drop Animation](./map-pin-animation.md): Map Pin Drop's fragments appear at the pin's landing position; Confirmation Burst's fragments appear at the tap contact point.
+- [Match Cut Transition](./match-cut-transition.md): Match Cut swaps the whole object for another; Confirmation Burst only overlays feedback graphics on the existing picture.
 
 ## Source files
 

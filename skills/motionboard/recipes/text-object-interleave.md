@@ -54,7 +54,7 @@ The text sits one layer behind the product, and the product covers about 1/3 of 
 
 ## Often confused with
 
-- [Word-by-Word Highlight](./word-by-word-highlight.md): Word-by-Word Highlight controls reading pace on plain text; Text–Object Interleave puts text and object into an occlusion relationship.
+- [Word-by-Word Text Highlight](./word-by-word-text-highlight.md): Word-by-Word Highlight controls reading pace on plain text; Text–Object Interleave puts text and object into an occlusion relationship.
 - [Dispense Line-up](./dispense-line-up.md): Dispense Line-up has objects slide out of the main subject in turn, synced word by word with the caption; Text–Object Interleave emphasizes the front-and-back layering of text and object.
 
 ## Source files
