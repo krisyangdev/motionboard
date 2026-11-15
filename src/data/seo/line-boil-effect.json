@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Line Boil Effect",
+    "title": "Line Boil Effect: Hand-Drawn Animation Recipe",
+    "description": "Hand-drawn lines swap to a new trace every 4 frames and motion steps at 7.5 fps with no tweening. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Drive every state from one index, K = floor(t x 7.5), so a new trace appears every 4 frames (0.133 s) for the whole 11 s film. Redraw the whole canvas from a clean white background at each index. Use no tweening and no easing: position and shape jump per index, and scenes hard-cut at K 20, 44, 59 and 66.",
+      "Redraw each stroke with a sine displacement of 1.05 px amplitude plus a random offset up to 0.65 px per axis, over a fixed 1.9 px wobble. Open strokes overshoot up to 3 px, fills sit up to 2.2 px off the outline with marker streaks, and lettering uses 3 variants per letter. Ink is #1c1a21 at 4.4 px with pressure variation.",
+      "Key every change to the same index: counters step at K 1, 4, 7, 10 and 13, and one envelope launches per index. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own characters and scenes."
+    ],
+    "faq": [
+      [
+        "What is line boil in animation?",
+        "Line boil is the slight wobble of outlines that appears when every frame of a hand-drawn animation is redrawn separately, so lines shimmer even when the pose is still. Digital work can reproduce it on purpose."
+      ],
+      [
+        "How do I fake line boil in code?",
+        "Generate each stroke from a seeded random function keyed to a frame index that changes every few frames, offset the points by about 1 to 2 px and redraw. This recipe uses one new trace every 4 frames at 30 fps, which is 7.5 traces per second."
+      ],
+      [
+        "Is the Line Boil Effect recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "线条抖动效果",
+    "title": "线条抖动效果：手绘动画示例与配方",
+    "description": "手绘线条每 4 帧换一版描线，动作按每秒 7.5 帧逐帧走，没有补间。用免费配方，让 Claude Code 或 Codex 做出这个线条抖动效果。",
+    "howto": [
+      "所有状态都由一个序号驱动：K = floor(t x 7.5)，整支 11 秒的片子每 4 帧（0.133 秒）出现一版新描线。每个序号都在干净的白底上重绘整个画布。不用补间也不用缓动，位置和形状按序号跳变，场景在 K 为 20、44、59、66 时硬切。",
+      "每条笔画重绘时加一个振幅 1.05px 的正弦位移，再加每轴最多 0.65px 的随机偏移，叠在固定的 1.9px 抖动上。开放笔画最多多出 3px，色块偏离轮廓最多 2.2px 并带马克笔纹理，每个字母有 3 种写法。墨色 #1c1a21，线宽 4.4px，带压感变化。",
+      "所有变化都对齐同一个序号：计数器在 K 为 1、4、7、10、13 时跳变，每个序号发出一个信封。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，角色和场景换成你自己的。"
+    ],
+    "faq": [
+      [
+        "动画里的线条抖动是什么？",
+        "手绘动画的每一帧都要单独重画，轮廓会有轻微的晃动，姿势静止时线条也在闪动，这就是线条抖动（line boil）。数字制作里可以刻意还原这种效果。"
+      ],
+      [
+        "怎样用代码做线条抖动？",
+        "用带种子的随机函数生成每条笔画，随机的键是每隔几帧才变化一次的帧序号，把点偏移 1 到 2px 后重绘。这份配方每 4 帧换一版描线，帧率 30fps，也就是每秒 7.5 版。"
+      ],
+      [
+        "线条抖动效果配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Typewriter Typing Animation",
+    "title": "Typewriter Typing Animation: Recipe and Code",
+    "description": "Monospace text types at uneven human speed, fixes a typo with backspaces, then deletes and retypes. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Anchor a left-aligned line at x 240 px in JetBrains Mono 56 px on #09090c, with a 33.6 x 66 px white block cursor at the end of the text. Each character is an opacity hard set (tl.set) on a fixed 33.6 px grid with no tweening. Gaps between characters run 0.04 to 0.11 s, with 0.3 to 0.5 s pauses between words.",
+      "Build in a typo: 'bakcoff' typed at 1.2 s, five backspaces at 0.04 s each from 2.1 s, then the retype. Deleting is much faster than typing: 32 characters in 0.69 s. The cursor stays solid on every keystroke and blinks 0.5 s on and 0.5 s off in idle gaps. At 9.43 s it turns green (#3ddc97) as the tagline appears.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own command line, status text and wordmark."
+    ],
+    "faq": [
+      [
+        "What is a typewriter typing animation?",
+        "Text appears one character at a time, usually with a cursor at the end of the line, imitating keystrokes. More realistic versions vary the speed, pause between words and backspace over mistakes."
+      ],
+      [
+        "How do I make typing look human?",
+        "Vary the delay between characters within a range, here 0.04 to 0.11 s, which is about 9 to 25 characters per second. Add longer pauses between words (0.3 to 0.5 s) and delete much faster than you type. Seed the random jitter so every render is identical."
+      ],
+      [
+        "Is the Typewriter Typing Animation recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "打字机动画",
+    "title": "打字机动画：示例与制作配方",
+    "description": "等宽字以不均匀的人手速度逐字打出，打错后退格修正，再删除重打。用免费配方，让 Claude Code 或 Codex 做出这段打字机动画。",
+    "howto": [
+      "在 #09090c 的背景上，把一行左对齐文字锚定在 x 240px，用 JetBrains Mono 56px，末尾跟一个 33.6 x 66px 的白色方块光标。每个字符是一次 opacity 硬切（tl.set），落在 33.6px 的固定网格上，不做补间。字符间隔 0.04 到 0.11 秒，词与词之间停 0.3 到 0.5 秒。",
+      "加入一次打错：1.2 秒打出 'bakcoff'，从 2.1 秒起每 0.04 秒退格一次，共五次，再重打。删除比打字快得多，32 个字符只用 0.69 秒。每次按键时光标实心，空闲间隙里 0.5 秒亮、0.5 秒灭，9.43 秒标语出现的同一帧光标变成绿色（#3ddc97）。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，换成你自己的命令行、状态文字和字标。"
+    ],
+    "faq": [
+      [
+        "打字机动画是什么？",
+        "文字一个字符一个字符地出现，行尾通常带光标，模仿敲键盘。更真实的版本会改变速度、在词间停顿，还会退格修改错字。"
+      ],
+      [
+        "怎样让打字看起来像真人？",
+        "让字符间隔在一个范围内变化，这里是 0.04 到 0.11 秒，约每秒 9 到 25 个字符；词间加 0.3 到 0.5 秒的停顿，删除速度明显快于打字。随机抖动用固定种子，保证每次渲染结果一致。"
+      ],
+      [
+        "打字机动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

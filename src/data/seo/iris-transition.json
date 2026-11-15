@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Iris Transition",
+    "title": "Iris Transition: Circular Window Recipe",
+    "description": "A circular window cuts through 22 images in 3.5 s while its size jumps with the rhythm. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Center a circular window with a 3 px #030303 edge, a 70 px soft shadow and an inset vignette on #0d0d0e. Hard-set its diameter per image between 52% and 110% of frame height (560 to 1188 px). Cut 22 images in 3.5 s: 6 frames each for images 1 to 3, 5 frames for 4 to 14 and 4 frames for 15 to 22. Size and image changes use no easing.",
+      "Inside the window each image starts at scale 0.6 to 1.0 with up to 8 degrees of rotation and 40 px of offset, then drifts to 1.02 to 1.05x over its 4 to 6 frames. The final window opens at 3.7 s with expo.out over 0.45 s and a push-in follows at 4.15 s. A scan window expands from 4.65 s, jumps at 5.7, 6.1 and 6.48 s, and closes to the mark at 8.38 s.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own images."
+    ],
+    "faq": [
+      [
+        "What is an iris transition?",
+        "In film, a circular mask opens or closes around the picture to reveal or end a shot, known as iris in and iris out. The circle can also stay fixed while the content inside it changes."
+      ],
+      [
+        "Can I make an iris transition with CSS?",
+        "Yes. Animate clip-path: circle() from a radius of 0 to one that covers the frame, or the reverse, centered on the frame. In this recipe the window size is hard-set per image with no easing, which gives the jump-cut rhythm."
+      ],
+      [
+        "Is the Iris Transition recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "圆形光圈转场",
+    "title": "圆形光圈转场：圆窗快切示例与配方",
+    "description": "固定的圆形窗口在 3.5 秒内快切 22 张图像，窗口大小随节奏跳变。用免费配方，让 Claude Code 或 Codex 做出这段圆形光圈转场。",
+    "howto": [
+      "在 #0d0d0e 背景上居中放一个圆形窗口，3px 的 #030303 边缘，70px 柔和阴影和内侧暗角。每张图的窗口直径硬切设定，在画面高度的 52% 到 110% 之间（560 到 1188px）。3.5 秒切 22 张图：第 1 到 3 张各 6 帧，第 4 到 14 张各 5 帧，第 15 到 22 张各 4 帧。大小和图像变化都不加缓动。",
+      "窗口内每张图从 0.6 到 1.0 倍缩放起步，带最多 8° 旋转和 40px 偏移，在自己的 4 到 6 帧里漂移到 1.02 到 1.05 倍。最后一个窗口 3.7 秒用 expo.out 在 0.45 秒内打开，4.15 秒开始推近。扫描窗口从 4.65 秒展开，在 5.7、6.1、6.48 秒跳变，8.38 秒收拢成符号。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，图像换成你自己的。"
+    ],
+    "faq": [
+      [
+        "光圈转场是什么？",
+        "电影里，圆形遮罩在画面周围张开或收拢，用来引出或结束一个镜头，叫做 iris in 和 iris out。圆也可以固定不动，只让里面的内容切换。"
+      ],
+      [
+        "能用 CSS 做光圈转场吗？",
+        "可以。以画面中心为圆心，用 clip-path: circle() 把半径从 0 动画到能盖住画面，或者反过来。这份配方里窗口大小逐张硬切设定，不加缓动，形成跳切的节奏。"
+      ],
+      [
+        "光圈转场配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

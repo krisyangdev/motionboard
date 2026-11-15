@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Glass Droplet Split",
+    "title": "Glass Droplet Split: 3D Glass Animation Recipe",
+    "description": "A glass slab stretches into a droplet, its neck thins and breaks, and the bead opens into a ring. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Render glass with a raymarching shader (IOR 1.47, RGB spread 0.016) on #04060b, with an edge highlight only, no fill and no drop shadow. A thin slab (thickness 0.085 of its width) slides along an arc over 0 to 1.2 s while a 15 degree perspective camera arcs from 101.5 to 90 degrees. It then stands up and stretches from 1.2 to 2.2 s with cubic-bezier(0.65,0,0.35,1).",
+      "Thin the neck from radius 18 to 1.6 between 2.12 and 2.41 s and break it at 2.41 s with a flash. The bead (radius 150 shrinking to 70) swells 5% and rebounds 8% vertically with cubic-bezier(0.34,1.56,0.64,1) over 0.5 s. At 3.45 s it opens into a ring that contracts from radius 1000 to 350 over 0.8 s with expo.out, sprouting up to 18 spikes as the RGB spread grows to 0.12.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site where WebGL is available."
+    ],
+    "faq": [
+      [
+        "What is a glass droplet split animation?",
+        "A 3D glass shape stretches under surface-tension-like motion, its neck thins until it breaks, and a single rounded bead remains. On a dark background a thin edge highlight is enough to outline the glass."
+      ],
+      [
+        "What does this recipe use to render the glass?",
+        "A raymarching shader with an index of refraction of 1.47 and an RGB spread for dispersion, running inside a HyperFrames composition. The same timeline can run in a browser page, and the MP4 render covers viewers without GPU support."
+      ],
+      [
+        "Is the Glass Droplet Split recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "玻璃水滴分离动画",
+    "title": "玻璃水滴分离动画：3D 玻璃配方",
+    "description": "玻璃片拉长成水滴，颈部收细断开，留下的圆珠再展开成色散玻璃环。用免费配方，让 Claude Code 或 Codex 做出这段 3D 玻璃动画。",
+    "howto": [
+      "玻璃用光线步进着色器渲染（折射率 1.47，RGB 分离 0.016），背景 #04060b，只有边缘高光，没有填充和投影。一块薄玻璃片（厚度为宽度的 0.085）在 0 到 1.2 秒沿弧线滑入，15° 视场的透视相机同时从 101.5° 转到 90°。1.2 到 2.2 秒玻璃片立起并拉长，缓动 cubic-bezier(0.65,0,0.35,1)。",
+      "2.12 到 2.41 秒颈部半径从 18 收细到 1.6，2.41 秒伴随一次闪光断开。圆珠半径从 150 缩到 70，用 cubic-bezier(0.34,1.56,0.64,1) 在 0.5 秒内膨胀 5%，纵向回弹 8%。3.45 秒圆珠展开成环，用 expo.out 在 0.8 秒内从半径 1000 收到 350，长出最多 18 根尖刺，RGB 分离增加到 0.12。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，在支持 WebGL 的环境里运行。"
+    ],
+    "faq": [
+      [
+        "玻璃水滴分离动画是什么？",
+        "一块 3D 玻璃按类似表面张力的方式被拉长，颈部越来越细直到断开，只留下一颗圆珠。深色背景上，一条细的边缘高光就足以勾出玻璃的轮廓。"
+      ],
+      [
+        "这份配方用什么渲染玻璃？",
+        "用光线步进着色器，折射率 1.47，用 RGB 分离表现色散，跑在 HyperFrames 合成里。同一条时间线可以放进浏览器页面，没有 GPU 支持的观众则用渲染好的 MP4。"
+      ],
+      [
+        "玻璃水滴分离动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

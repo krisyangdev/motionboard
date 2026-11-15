@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Branching Growth",
+    "title": "Branching Growth: Network Animation Recipe",
+    "description": "One dot branches layer by layer into a network, slow then fast, then doubles into 77 documents. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Draw a root dot (radius 34) and seven layers. Layer 1 splits in 2 at 31 degrees either side; layers 2 to 6 split in 2 or 3 (45% chance of 3) at 34 to 38 degrees with 5.5 degrees of jitter. Radii step 24, 17, 12, 8, 5.6, 3.6, 1.9 and edge lengths 300, 235, 195, 150, 110, 80, 42, in pencil ink #1d1b18 on paper #e3d5b5.",
+      "Speed the layers up: layers 1 to 3 take 0.5 s each, layers 4 to 6 take 0.333 s, layer 7 takes 0.4 s. Each line draws outward from its parent with 1-(1-p)^2.4, and its dot pops with cubic-bezier(0.34,1.56,0.64,1). The camera pulls back from scale 2.0 over 0.45 to 3.45 s, interpolated on a log scale, and six nodes turn green.",
+      "Then dive into one node and run doubling beats at 4.48 to 7.9 s (1, 2, 4, 8, 16, 32, 77 documents) re-dealt at 8 fps. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site."
+    ],
+    "faq": [
+      [
+        "What is a branching growth animation?",
+        "One point splits into branches, and each branch splits again, layer by layer, until a network fills the frame. A second form doubles the item count on every beat. Both show scale as a visible rhythm."
+      ],
+      [
+        "How do I make growth feel like it accelerates?",
+        "Shorten the time per layer as depth increases, here 0.5 s and then 0.333 s, and zoom the camera out at a constant rate by interpolating scale on a log scale. The network then speeds up while staying in frame."
+      ],
+      [
+        "Is the Branching Growth recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "分叉生长动画",
+    "title": "分叉生长动画：网络扩张示例与配方",
+    "description": "一个点逐层分叉长成网络，前慢后快，再按翻倍节奏分裂出 77 份文档。用免费配方，让 Claude Code 或 Codex 做出这段分叉生长动画。",
+    "howto": [
+      "画一个根节点（半径 34）和七层分叉。第 1 层向两侧各 31° 分成 2 支；第 2 到 6 层分成 2 或 3 支（45% 的概率是 3 支），角度 34° 到 38°，带 5.5° 的抖动。半径依次为 24、17、12、8、5.6、3.6、1.9，边长依次为 300、235、195、150、110、80、42，铅笔墨色 #1d1b18，纸色 #e3d5b5。",
+      "层与层越来越快：第 1 到 3 层各 0.5 秒，第 4 到 6 层各 0.333 秒，第 7 层 0.4 秒。每条线按 1-(1-p)^2.4 从父节点向外画出，节点用 cubic-bezier(0.34,1.56,0.64,1) 弹出。镜头在 0.45 到 3.45 秒从 2.0 倍拉远，缩放按对数插值，六个节点变绿。",
+      "随后镜头扎进其中一个节点，4.48 到 7.9 秒按翻倍节奏推进（1、2、4、8、16、32、77 份文档），以 8fps 重新排布。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站。"
+    ],
+    "faq": [
+      [
+        "分叉生长动画是什么？",
+        "一个点分出枝，每根枝再分，逐层展开，直到网络铺满画面。另一种形式是每一拍把数量翻倍。两种都把规模变成看得见的节奏。"
+      ],
+      [
+        "怎样让生长看起来在加速？",
+        "层数越深，每层用时越短，这里是 0.5 秒再到 0.333 秒，同时让镜头按对数插值缩放，匀速拉远。网络越长越快，又始终留在画面里。"
+      ],
+      [
+        "分叉生长动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

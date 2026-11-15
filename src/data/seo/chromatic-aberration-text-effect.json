@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Chromatic Aberration Text Effect",
+    "title": "Chromatic Aberration Text Effect: Recipe",
+    "description": "Letters of a wordmark stretch up to 4.4x with RGB ghosting, distort in steps, then snap back clean. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Distort the wordmark (Inter 500, 214 px, letter-spacing -0.034em) in steps with no tween. Each state holds 2 frames (66 ms), then ghost strength drops to 0.3 for 1 frame and the line returns clean. The stretch decays across the steps: 4.4x, 3.7x, 2.9x, 1.8x.",
+      "Pick one segment of 2 to 8 characters, stretch it horizontally, scale it 1.1 to 1.55x vertically, arc the baseline up to 28 px and squeeze the rest of the line to 0.6 to 0.96x. Warp the R, G and B channels separately and offset each by 2.2% of the font size (about 4.7 px), with a 12 px horizontal blur on R and B.",
+      "Settled frames are pure black on #f4f4f6, so color shows only on distorted frames. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site."
+    ],
+    "faq": [
+      [
+        "What is chromatic aberration in text?",
+        "In optics, a lens focuses colors at slightly different points and leaves colored fringes at edges. In motion design the effect imitates this by offsetting the red, green and blue channels of text, which shows as cyan, magenta and yellow ghosts."
+      ],
+      [
+        "Can I make a chromatic aberration text effect in CSS?",
+        "A basic version layers three copies of the text in red, green and blue, offsets them a few pixels and combines them with mix-blend-mode. The recipe goes further and warps each channel separately, so the stretch and the color split come from one distortion."
+      ],
+      [
+        "Is the Chromatic Aberration Text Effect recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "色散文字效果",
+    "title": "色散文字效果：RGB 重影示例与配方",
+    "description": "字标的局部字母横向拉长最多 4.4 倍并分出 RGB 重影，阶跃式扭曲后回正。用免费配方，让 Claude Code 或 Codex 做出这个色散文字效果。",
+    "howto": [
+      "字标（Inter 500，214px，字距 -0.034em）按阶跃方式扭曲，状态之间没有补间。每个状态保持 2 帧（66 毫秒），然后重影强度降到 0.3 保持 1 帧，再回到干净状态。拉伸量逐步衰减：4.4 倍、3.7 倍、2.9 倍、1.8 倍。",
+      "每次选一段 2 到 8 个字符，横向拉长，纵向放大 1.1 到 1.55 倍，基线最多弧起 28px，其余部分压缩到 0.6 到 0.96 倍。R、G、B 三个通道分别变形，各自偏移字号的 2.2%（约 4.7px），R 和 B 再加 12px 的横向模糊。",
+      "稳定帧是 #f4f4f6 底上的纯黑字，颜色只在扭曲的几帧出现。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站。"
+    ],
+    "faq": [
+      [
+        "文字的色散是什么？",
+        "光学里，镜头对不同颜色的聚焦位置略有差异，物体边缘会出现彩色边。动态设计用错开文字红、绿、蓝三个通道来模仿它，画面上表现为青、品红、黄三色重影。"
+      ],
+      [
+        "能用 CSS 做色散文字效果吗？",
+        "基础版本是叠三份文字，分别设为红、绿、蓝，错开几个像素，再用 mix-blend-mode 混合。配方更进一步，三个通道分别变形，拉伸和色彩分离来自同一次扭曲。"
+      ],
+      [
+        "色散文字配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Dot Matrix Animation",
+    "title": "Dot Matrix Animation: LED Display Recipe",
+    "description": "A graphic is quantized onto a 481-dot circular display, and each rotation frame snaps to the grid. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Build a 25 x 25 grid cropped to a circle of radius 12.3 cells (481 dots), with dot diameter at 60% of the pitch. On every frame, rotate a vector glyph (arrow, hourglass, bell with badge, letter M) by the current angle and test whether each cell's rotated position falls inside the shape. Lit dots are white, unlit dots #1a1713, and dots switch with a hard cut, with no glow and no trail.",
+      "Each rotation covers 120 degrees with cubic-bezier(0.16,1,0.3,1) and gets longer shot by shot: 0.8, 1.15, 1.6 and 2.0 s. Alternate them with crown close-ups at zoom 4.2, 4.8 and 3.3 with depth of field. Eight hard-cut shots fill 11 s under a 20 degree perspective camera. On the end card the dots spell the name letter by letter every 0.1 s from 8.8 s.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own glyphs."
+    ],
+    "faq": [
+      [
+        "What is a dot matrix animation?",
+        "It is motion on a display built from a grid of dots that are either on or off. Each frame decides which dots are lit, so movement advances cell by cell and edges look stepped, as on real dot-matrix hardware."
+      ],
+      [
+        "Can I build a dot matrix display in the browser?",
+        "Yes. Draw the grid with canvas or SVG circles and, for each dot, test whether it lies inside the shape at the current angle. The test runs per frame, so the same code renders to MP4 or runs live on a page."
+      ],
+      [
+        "Is the Dot Matrix Animation recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "点阵动画",
+    "title": "点阵动画：圆形点阵屏示例与配方",
+    "description": "图形被量化到 481 个点组成的圆形点阵屏上，旋转的每一帧都对齐到点阵。用免费配方，让 Claude Code 或 Codex 做出这段点阵动画。",
+    "howto": [
+      "做一个 25 x 25 的网格，裁成半径 12.3 格的圆（481 个点），点的直径是间距的 60%。每一帧把矢量图形（箭头、沙漏、带角标的铃铛、字母 M）按当前角度旋转，再判断每个格子旋转后的位置是否落在图形内。亮点为白色，暗点 #1a1713，点的开关是硬切，没有辉光和拖尾。",
+      "每次旋转 120°，缓动 cubic-bezier(0.16,1,0.3,1)，时长逐镜头加长：0.8、1.15、1.6、2.0 秒，中间穿插表冠特写（缩放 4.2、4.8、3.3，带景深）。11 秒里有 8 个硬切镜头，用 20° 视场的透视相机。结尾画面从 8.8 秒起，每 0.1 秒用点阵拼出一个字母。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，图形换成你自己的。"
+    ],
+    "faq": [
+      [
+        "点阵动画是什么？",
+        "指在由点阵构成的屏幕上做动画，每个点只有亮和灭两种状态。每一帧决定哪些点亮，运动因此逐格推进，边缘呈阶梯状，和真实点阵硬件的显示方式一致。"
+      ],
+      [
+        "能在浏览器里做点阵屏吗？",
+        "可以。用 canvas 或 SVG 圆点画出网格，对每个点判断它在当前角度下是否落在图形内。判断逐帧运行，同一份代码既能渲染成 MP4，也能在网页里实时运行。"
+      ],
+      [
+        "点阵动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Dock Arrival",
+    "title": "Dock Arrival: macOS Dock Animation Recipe",
+    "description": "A new icon grows into a magnified macOS Dock with one small spark, and a click opens a window. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Start with a 13-slot Dock magnified 3.0x on a fixed point, pushing slowly to 3.06x. At 0.45 s the new icon's slot grows from 0 to 64 px wide while the icon scales from 0.6 to 1 with back.out(1.4) over 0.5 s, and its neighbors slide apart as the Dock re-centers. At 0.95 s four 2.1 px strokes flick out of the icon's upper right corner.",
+      "Bring in the cursor at 1.5 s with a 0.6 s power3.inOut move. Dim the icon on the press frame at 2.4 s, then open the window at 2.5 s with expo.out over 0.55 s while the shot cuts to a 1.0x medium view. The dim, the click and the window opening sit on adjacent frames, so the three read as one gesture.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an 11-second MP4 with HyperFrames, or ports the GSAP timeline to your website with your own app icon and window content."
+    ],
+    "faq": [
+      [
+        "What is a Dock arrival animation?",
+        "It is a motion pattern where a new app icon appears in a macOS-style Dock. The existing icons slide apart, the new icon grows into the gap, and a short flourish marks where it landed. It tells the viewer an app was installed or became available without any text."
+      ],
+      [
+        "Can I build a Dock animation on a website?",
+        "Yes. The Dock is a row of HTML elements whose width and scale are animated with GSAP, on a plate with backdrop-filter: blur(24px). In this recipe icons magnify 1.58x near the cursor, and the same timeline runs on a page or in a rendered video."
+      ],
+      [
+        "Is the Dock Arrival recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "Dock 图标动画",
+    "title": "Dock 图标出现动画：示例与配方",
+    "description": "放大的 macOS Dock 撑开空位，新图标长进去并冒出一次小火花，点击后打开窗口。用免费配方，让 Claude Code 或 Codex 做出这段动画。",
+    "howto": [
+      "先做一个 13 格、放大 3.0 倍的 Dock，镜头定点缓推到 3.06 倍。0.45 秒起，新图标所在格的宽度从 0 长到 64px，图标缩放从 0.6 到 1，缓动用 back.out(1.4)，历时 0.5 秒，相邻图标随 Dock 重新居中而滑开。0.95 秒时，四条 2.1px 的短线从图标右上角弹出。",
+      "光标 1.5 秒出现，用 power3.inOut 移动 0.6 秒。2.4 秒的按下帧让图标变暗，2.5 秒窗口用 expo.out 在 0.55 秒内打开，镜头同时切到 1.0 倍中景。变暗、点击和开窗放在相邻帧上，观众会把它们看成同一个动作。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 11 秒的 MP4，或者把 GSAP 时间线移植到你的网站，图标和窗口内容换成你自己的产品。"
+    ],
+    "faq": [
+      [
+        "Dock 图标出现动画是什么？",
+        "指在 macOS 风格的 Dock 里出现一个新应用图标的动效：原有图标向两侧滑开，新图标长进空位，再用一个很短的小动作标出落点。不用文字，观众就能看出应用已经安装或可以使用。"
+      ],
+      [
+        "能在网站上做 Dock 动画吗？",
+        "可以。Dock 是一排 HTML 元素，用 GSAP 动画控制宽度和缩放，底板用 backdrop-filter: blur(24px) 做磨砂。配方里光标附近的图标放大 1.58 倍，同一条时间线既能放在网页里，也能渲染成视频。"
+      ],
+      [
+        "Dock 图标动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

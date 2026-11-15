@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Domino Wave",
+    "title": "Domino Wave: Flipping Cubes Animation Recipe",
+    "description": "A row of 36 matte cubes flips in turn with a phase offset while the camera tracks along the line. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Place 36 matte cubes (#5a5b60, edge 1.45, spacing 2.2, hovering at 1.32) on a light gray studio gradient. Pass 1 starts at 0.34 s: each cube turns 90 degrees in 0.6 s with cubic-bezier(0.65,0,0.35,1), 0.10 s after its neighbor, with a 0.1 unit hop. Pass 2 turns each 180 degrees in 0.72 s with a 0.8 unit hop. Pass 3 runs right to left with a 0.07 s offset.",
+      "Track the row with a 24 degree perspective camera at 2.03 world units per second, linear, from (-8, 3.9, 13.5) with a -0.1 rad roll and a 0.30 lens radius for depth of field. Light it with a top softbox, a floor reflection at 20% opacity and a 0.3 vignette. From 6.2 s dive toward cube 7 with t^2 easing and end in a white flash at 7.42 s.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own marks and slogan."
+    ],
+    "faq": [
+      [
+        "What is a domino wave animation?",
+        "Objects in a row perform the same movement one after another with a fixed delay, a phase offset, so the motion travels along the row like a wave. Each object does only a simple move."
+      ],
+      [
+        "How do I make a wave of flips in GSAP?",
+        "Animate every cube with the same tween and start each at index x offset, here 0.10 s, or 0.07 s on the last pass. A GSAP stagger does this. Changing the offset changes the wave speed without touching the individual flip."
+      ],
+      [
+        "Is the Domino Wave recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "方块波浪翻转",
+    "title": "方块波浪翻转动画：示例与制作配方",
+    "description": "一排 36 个哑光方块按相位差依次翻转，镜头沿队列平移。用免费配方，让 Claude Code 或 Codex 做出这段方块波浪翻转动画。",
+    "howto": [
+      "在浅灰色影棚渐变背景上放 36 个哑光方块（#5a5b60，边长 1.45，间距 2.2，悬浮高度 1.32）。第 1 轮 0.34 秒开始：每个方块用 cubic-bezier(0.65,0,0.35,1) 在 0.6 秒内翻转 90°，比前一个晚 0.10 秒，带 0.1 单位的跳起。第 2 轮每个翻 180°，用时 0.72 秒，跳起 0.8 单位。第 3 轮从右向左，错开 0.07 秒。",
+      "用 24° 视场的透视相机沿队列平移，匀速每秒 2.03 个世界单位，起点 (-8, 3.9, 13.5)，滚转 -0.1 弧度，镜头半径 0.30 用于景深。灯光是顶部柔光箱，加 20% 不透明度的地面倒影和 0.3 的暗角。6.2 秒起用 t^2 缓动扎向第 7 个方块，7.42 秒以一次闪白收尾。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，标志和口号换成你自己的。"
+    ],
+    "faq": [
+      [
+        "方块波浪翻转是什么？",
+        "一排物体依次做同一个动作，每个比前一个晚固定的时间，这个时间差叫相位差，动作就像波浪一样沿队列传递。每个物体只做一个简单动作。"
+      ],
+      [
+        "怎样用 GSAP 做一排依次翻转？",
+        "给每个方块同一个动画，起点按序号乘以间隔错开，这里是 0.10 秒，最后一轮是 0.07 秒，用 GSAP 的 stagger 就能实现。改变间隔就改变波的速度，单个翻转不用动。"
+      ],
+      [
+        "方块波浪翻转配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

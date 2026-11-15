@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Wipe and Flash Transition",
+    "title": "Wipe and Flash Transition: Recipe and Code",
+    "description": "A defocused black ball sweeps across the frame to change scenes, and a central halo blows out to white. Make it with Claude Code or Codex from the recipe.",
+    "howto": [
+      "For the wipe, hold a matte black ball (2800 px, scale 0.42 to 0.45, 54 px blur) at the lower left. It sweeps to frame center at scale 1 with expo.out over 7 frames (0.233 s), then leaves right at 1.08 with power2.in over 8 frames. Swap scenes on the frame where the ball is centered, at 2.6 s and 7.4 s.",
+      "For the flash, scale a 5200 px radial halo (white core to 42%) from 0.05 to 1.5 with ease none over 8 frames, ending at 5.1 s in a full white plate. Swap the scene on the full white frame and fade the white out with power3.out over 9 frames. Scene camera moves use ease none, for example content x 70 to -60 and scale 1.26 to 1.36 in 1700 px perspective.",
+      "Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own scenes."
+    ],
+    "faq": [
+      [
+        "What are wipe and flash transitions?",
+        "A wipe replaces one shot with another by moving a shape across the frame, and here the shape is a foreground object from the scene. A flash brightens the frame to full white, cuts to the next scene and fades the white away."
+      ],
+      [
+        "Where should the scene change land?",
+        "On a frame that is fully covered. In this recipe the swap lands on frame 78 and frame 222, when the ball is centered, and on frame 153, when the white is full, so the cut is hidden inside the transition object."
+      ],
+      [
+        "Is the Wipe and Flash Transition recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "遮挡闪白转场",
+    "title": "遮挡与闪白转场：示例与制作配方",
+    "description": "场景里虚焦的黑色大球横扫遮满画面来切场，或中心光晕吹白后换场。用免费配方，让 Claude Code 或 Codex 做出这段转场。",
+    "howto": [
+      "遮挡转场：一个哑光黑球（2800px，缩放 0.42 到 0.45，54px 模糊）等在左下角。它用 expo.out 在 7 帧（0.233 秒）内扫到画面中心，缩放 1，再用 power2.in 在 8 帧内向右离开，缩放 1.08。场景在球位于中心的那一帧切换，分别是 2.6 秒和 7.4 秒。",
+      "闪白转场：一个 5200px 的径向光晕（白色核心到 42%）用 ease none 在 8 帧内从 0.05 倍放大到 1.5 倍，5.1 秒变成整屏纯白。在全白那一帧换场景，再用 power3.out 在 9 帧内淡出白色。场景里的镜头运动用 ease none，例如内容 x 从 70 到 -60，缩放从 1.26 到 1.36，透视 1700px。",
+      "在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，场景换成你自己的。"
+    ],
+    "faq": [
+      [
+        "遮挡转场和闪白转场是什么？",
+        "遮挡转场让一个形状划过画面，用它盖住一个镜头再露出下一个，这里的形状是场景里的前景物体。闪白转场把画面亮到全白，在白屏时切到下一个场景，再淡出白色。"
+      ],
+      [
+        "换场景应该落在哪一帧？",
+        "落在画面被完全盖住的那一帧。配方里换场景在第 78 帧和第 222 帧，此时球在中心，以及第 153 帧，此时白色最满，切换藏在转场物体里面。"
+      ],
+      [
+        "遮挡闪白转场配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

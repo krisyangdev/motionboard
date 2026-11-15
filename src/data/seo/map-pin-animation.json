@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Map Pin Drop Animation",
+    "title": "Map Pin Drop Animation: Recipe and Code",
+    "description": "A pin drops onto a map and bursts into fragments, the map zooms out and a route draws to the next city. Make it with Claude Code or Codex from the recipe.",
+    "howto": [
+      "Drop a navy pin (#0f1f3d, scale 1.45) 360 px from above at 0.5 s over 0.3 s with cubic-bezier(0.34,1.56,0.64,1). At impact (0.63 s) 9 fragments burst outward: 4 white lines, 3 dots and 2 squares, expanding with cubic-bezier(0.16,1,0.3,1) over 0.6 s. The 168 px city name (Oswald, white at 43%) is locked to the map and scales with the camera push.",
+      "Hold city one until 3.9 s, then pull back over 1.0 s to the whole country with cubic-bezier(0.65,0,0.35,1), interpolating zoom on a log scale. 19 small indigo pins pop from 4.45 s, a white 5 px route arcs between 5.0 and 5.8 s, and the camera pushes into city two from 5.85 to 6.95 s. The second pin drops at 7.0 s with 10 fragments and a ring growing from radius 48 to 150.",
+      "Dive into the pin at 8.05 to 8.6 s with a t^3 zoom, then cut to the end card. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own cities."
+    ],
+    "faq": [
+      [
+        "What is a map pin drop animation?",
+        "A location pin falls onto a map, lands with a bounce and often releases a small burst at the landing point. The camera then moves to the next place, so a single point and a place name carry the information."
+      ],
+      [
+        "How do I keep labels and pins locked to the map?",
+        "Put the map, pins and labels in one container and scale that container for every camera move, so everything stays registered. Interpolating zoom on a log scale keeps pull-backs and push-ins at a constant perceived speed."
+      ],
+      [
+        "Is the Map Pin Drop Animation recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "地图标记动画",
+    "title": "地图定位钉落下动画：示例与配方",
+    "description": "定位钉回弹落在地图上并爆出碎片，镜头拉远到全国，轨迹线划向下一座城市。用免费配方，让 Claude Code 或 Codex 做出这段地图标记动画。",
+    "howto": [
+      "深蓝定位钉（#0f1f3d，缩放 1.45）0.5 秒从上方 360px 处落下，用时 0.3 秒，缓动 cubic-bezier(0.34,1.56,0.64,1)。0.63 秒落地的瞬间爆出 9 个碎片：4 条白线、3 个圆点、2 个方块，用 cubic-bezier(0.16,1,0.3,1) 在 0.6 秒内向外扩散。168px 的城市名（Oswald，白色 43% 不透明度）锁定在地图上，随镜头推拉缩放。",
+      "第一座城市停到 3.9 秒，然后用 cubic-bezier(0.65,0,0.35,1) 在 1.0 秒内拉远到全国，缩放按对数插值。19 个靛蓝小钉从 4.45 秒起弹出，白色 5px 的轨迹线在 5.0 到 5.8 秒划过，镜头 5.85 到 6.95 秒推向第二座城市。第二枚钉 7.0 秒落下，带 10 个碎片和一个半径 48 到 150 的扩散环。",
+      "8.05 到 8.6 秒用 t^3 的缩放扎进定位钉，再切到结尾画面。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，城市换成你自己的。"
+    ],
+    "faq": [
+      [
+        "地图定位钉动画是什么？",
+        "一枚定位钉落到地图上，回弹着落地，常在落点放出一小团碎片，随后镜头移向下一个地点。一个点和一个地名就承担了全部信息。"
+      ],
+      [
+        "怎样让标签和定位钉始终锁在地图上？",
+        "把地图、钉和标签放进同一个容器，每次镜头运动都缩放这个容器，各元素就始终对位。缩放按对数插值，拉远和推近的体感速度才会恒定。"
+      ],
+      [
+        "地图标记动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}
