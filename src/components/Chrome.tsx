@@ -1,4 +1,7 @@
 import { useLocation } from '@tanstack/react-router'
+import { SiteLink } from '@/components/page/SiteLink'
+import { PAGE_STRINGS } from '@/components/page/strings'
+import { PAGES } from '@/data/page-index'
 import { HTML_LANG } from '@/i18n'
 import { PageLink, switchPath, useLocale, useStrings } from '@/lib/locale'
 import { useSaved } from '@/lib/saved'
@@ -57,8 +60,26 @@ export function Nav() {
 
 export function Footer() {
   const s = useStrings()
+  const locale = useLocale()
+  const t = PAGE_STRINGS[locale]
+  const groups = [
+    { name: t.effects, kind: 'hub' },
+    { name: t.guides, kind: 'guide' },
+  ]
   return (
     <footer className="foot gut">
+      <div className="foot-links">
+        {groups.map((g) => (
+          <nav key={g.kind} aria-label={g.name}>
+            <span className="mono">{g.name}</span>
+            {PAGES.filter((p) => p.kind === g.kind).map((p) => (
+              <SiteLink key={p.id} href={p.path}>
+                {p.label[locale]}
+              </SiteLink>
+            ))}
+          </nav>
+        ))}
+      </div>
       <span>{BRAND.name}</span>
       <span>
         {s.foot.credit} ·{' '}

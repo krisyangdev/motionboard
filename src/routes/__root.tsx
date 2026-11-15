@@ -9,6 +9,7 @@ import baseCss from '@/styles/base.css?url'
 import actionsCss from '@/styles/actions.css?url'
 import homeCss from '@/styles/home.css?url'
 import entryCss from '@/styles/entry.css?url'
+import pageCss from '@/styles/page.css?url'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -26,6 +27,7 @@ export const Route = createRootRoute({
       { rel: 'stylesheet', href: actionsCss },
       { rel: 'stylesheet', href: homeCss },
       { rel: 'stylesheet', href: entryCss },
+      { rel: 'stylesheet', href: pageCss },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       // Instrument Sans for the wordmark only, subset to its letters.
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
