@@ -20,10 +20,10 @@ export type HeroSegment = { slug: string; start: number; end: number }
 const seg = (slug: string, start: number, end: number): HeroSegment => ({ slug, start, end })
 
 export const HERO: HeroSegment[] = [
-  seg('rhythmic-typing', 0, 2.8),
-  seg('tilted-ui-with-depth-of-field', 2.8, 5.5),
-  seg('auto-zoom', 5.5, 8.2),
-  seg('morph-relay', 8.2, 10.6),
-  seg('match-cut', 10.6, 12.4),
-  seg('mark-to-wordmark-unfold', 12.4, 15.8),
+  seg('typing-animation', 0, 2.8),
+  seg('3d-tilted-ui-depth-of-field', 2.8, 5.5),
+  seg('zoom-to-cursor', 5.5, 8.2),
+  seg('morph-transition', 8.2, 10.6),
+  seg('match-cut-transition', 10.6, 12.4),
+  seg('text-scramble-logo-reveal', 12.4, 15.8),
 ]

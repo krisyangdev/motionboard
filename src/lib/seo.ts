@@ -1,26 +1,65 @@
-// Recipe route loader and head tags per page and locale: localized title and description,
-// canonical URL of the page's own locale, and hreflang links to both versions.
+// The one SEO head function: page data in, meta / canonical / hreflang / Open Graph / JSON-LD out.
+// Every route's head() goes through seoHead(); the sitemap in vite.config.ts uses the same paths.
 import { notFound } from '@tanstack/react-router'
-import { HERO_FILM } from '@/data/hero'
-import { bySlug, loadText, media, recipePath, termName, type Term } from '@/data/terms'
-import { OG_LOCALE, STRINGS } from '@/i18n'
-import { absolute, BRAND, SITE_URL, type Locale } from '@/site'
+import { OG_LOCALE } from '@/i18n'
+import { bySlug, loadText } from '@/data/terms'
+import { BRAND, SITE_URL, type Locale } from '@/site'
 
 /** Absolute URL of a page; `path` is the English path, starting with a slash. */
 export const pageUrl = (locale: Locale, path: string) => `${SITE_URL}${locale === 'zh' ? '/zh' : ''}${path}`
 
-const IN_LANGUAGE: Record<Locale, string> = { en: 'en', zh: 'zh-CN' }
+export const IN_LANGUAGE: Record<Locale, string> = { en: 'en', zh: 'zh-CN' }
 
-const alternates = (path: string) => [
-  { rel: 'alternate', hrefLang: 'en', href: pageUrl('en', path) },
-  { rel: 'alternate', hrefLang: 'zh-CN', href: pageUrl('zh', path) },
-  { rel: 'alternate', hrefLang: 'x-default', href: pageUrl('en', path) },
+/** hreflang alternates of an English path, also used for the sitemap */
+export const alternates = (path: string) => [
+  { hrefLang: 'en', href: pageUrl('en', path) },
+  { hrefLang: 'zh-CN', href: pageUrl('zh', path) },
+  { hrefLang: 'x-default', href: pageUrl('en', path) },
 ]
 
-const links = (locale: Locale, path: string) => [{ rel: 'canonical', href: pageUrl(locale, path) }, ...alternates(path)]
+export type SeoPage = {
+  /** full <title>; the brand is appended unless it already contains it */
+  title: string
+  description: string
+  /** English path, leading and trailing slash */
+  path: string
+  lang: Locale
+  type?: 'website' | 'article'
+  /** absolute image URL for Open Graph and Twitter */
+  image?: string
+  /** absolute video URL for og:video */
+  video?: string
+  /** JSON-LD nodes; wrapped in one @graph */
+  jsonLd?: object[]
+  noindex?: boolean
+}
 
-/** Date the preview films were published, for VideoObject.uploadDate */
-const FILM_UPLOAD_DATE = '2026-10-30'
+export function seoHead(p: SeoPage) {
+  const title = p.title.includes(BRAND.name) ? p.title : `${p.title} · ${BRAND.name}`
+  const url = pageUrl(p.lang, p.path)
+  const meta: Record<string, string>[] = [
+    { title },
+    { name: 'description', content: p.description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: p.description },
+    { property: 'og:type', content: p.type ?? 'article' },
+    { property: 'og:url', content: url },
+    { property: 'og:locale', content: OG_LOCALE[p.lang] },
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ]
+  if (p.image) meta.push({ property: 'og:image', content: p.image }, { name: 'twitter:image', content: p.image })
+  if (p.video) meta.push({ property: 'og:video', content: p.video })
+  if (p.noindex) meta.push({ name: 'robots', content: 'noindex' })
+  return {
+    meta,
+    links: p.noindex
+      ? []
+      : [{ rel: 'canonical', href: url }, ...alternates(p.path).map((a) => ({ rel: 'alternate', ...a }))],
+    scripts: p.jsonLd?.length
+      ? [{ type: 'application/ld+json', children: JSON.stringify({ '@context': 'https://schema.org', '@graph': p.jsonLd }) }]
+      : [],
+  }
+}
 
 /** Route loader of the recipe pages: the term and its long text in the page locale. */
 export const loadRecipe =
@@ -30,87 +69,3 @@ export const loadRecipe =
     if (!term) throw notFound()
     return { term, text: await loadText(term.slug, locale) }
   }
-
-export function homeHead(locale: Locale) {
-  const line = BRAND.line[locale]
-  const url = pageUrl(locale, '/')
-  const image = absolute(HERO_FILM.cover)
-  return {
-    meta: [
-      { title: `${BRAND.name} · ${BRAND.headline[locale]}` },
-      { name: 'description', content: line },
-      { property: 'og:title', content: BRAND.name },
-      { property: 'og:description', content: line },
-      { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: url },
-      { property: 'og:locale', content: OG_LOCALE[locale] },
-      { property: 'og:image', content: image },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: image },
-    ],
-    links: links(locale, '/'),
-    scripts: [
-      {
-        type: 'application/ld+json',
-        children: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: BRAND.name,
-          url,
-          inLanguage: IN_LANGUAGE[locale],
-          description: line,
-        }),
-      },
-    ],
-  }
-}
-
-export function recipeHead(locale: Locale, t: Term) {
-  const title = `${termName(t, locale)} · ${BRAND.name}`
-  const description = t.def[locale]
-  const url = pageUrl(locale, recipePath(t))
-  const name = termName(t, locale)
-  const image = absolute(media(t, 'jpg'))
-  return {
-    meta: [
-      { title },
-      { name: 'description', content: description },
-      { property: 'og:title', content: title },
-      { property: 'og:description', content: description },
-      { property: 'og:type', content: 'article' },
-      { property: 'og:url', content: url },
-      { property: 'og:locale', content: OG_LOCALE[locale] },
-      { property: 'og:image', content: image },
-      { property: 'og:video', content: absolute(media(t, 'mp4')) },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: image },
-    ],
-    links: links(locale, recipePath(t)),
-    scripts: [
-      {
-        type: 'application/ld+json',
-        children: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@graph': [
-            { '@type': 'DefinedTerm', name, description, url },
-            {
-              '@type': 'VideoObject',
-              name,
-              description,
-              thumbnailUrl: image,
-              contentUrl: absolute(media(t, 'mp4')),
-              uploadDate: FILM_UPLOAD_DATE,
-              duration: `PT${t.dur}S`,
-              inLanguage: IN_LANGUAGE[locale],
-              url,
-            },
-          ],
-        }),
-      },
-    ],
-  }
-}
-
-export const savedHead = (locale: Locale) => ({
-  meta: [{ title: `${STRINGS[locale].saved.title} · ${BRAND.name}` }, { name: 'robots', content: 'noindex' }],
-})

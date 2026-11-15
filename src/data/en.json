@@ -32,11 +32,11 @@
     ],
     "vs": [
       [
-        "rotate-to-lockup",
+        "rotating-logo-reveal",
         "Light Reveal keeps the subject still and changes only the light; Rotate to Lockup turns the object to a target angle."
       ],
       [
-        "x-ray-dissolve",
+        "x-ray-effect",
         "X-ray Dissolve switches between an inner layer and an outer shell, while Light Reveal only adjusts exposure."
       ]
     ]
@@ -116,7 +116,7 @@
     ],
     "vs": [
       [
-        "auto-zoom",
+        "zoom-to-cursor",
         "Auto Zoom serves a single UI action in 0.6–0.8s and then pulls back so the action can continue; Macro Pull-out Reveal ends on its pull-out."
       ],
       [
@@ -125,7 +125,7 @@
       ]
     ]
   },
-  "x-ray-dissolve": {
+  "x-ray-effect": {
     "def": "The internal structure and the outer shell cross-dissolve from the same camera position, then the camera pulls back to the whole device.",
     "why": "The internal parts and the shell dissolve in exact alignment, so viewers see where the chip sits inside the body. Orange bleeds in from the glow before it switches to the body, so color changes before shape and the transition has no hard jump. One camera position explains what is inside.",
     "spec": [
@@ -204,7 +204,7 @@
     ],
     "vs": [
       [
-        "word-by-word-highlight",
+        "word-by-word-text-highlight",
         "Word-by-Word Highlight controls reading pace on plain text; Text–Object Interleave puts text and object into an occlusion relationship."
       ],
       [
@@ -254,12 +254,12 @@
         "Text–Object Interleave is front-and-back occlusion between text and object; the caption in Dispense Line-up syncs only with the accessory count."
       ],
       [
-        "converge-to-mark",
+        "converge-logo-reveal",
         "Converge to Mark gathers many elements into one icon; the retract in Dispense Line-up returns to the original subject and creates no new shape."
       ]
     ]
   },
-  "rotate-to-lockup": {
+  "rotating-logo-reveal": {
     "def": "An object spins with a long ease-out and stops at the exact angle that forms the logo silhouette or the hero view of the product.",
     "why": "The last frame of the rotation is the logo, and the motion shows where the flat mark comes from in three dimensions. Rotation speed keeps dropping, so the last 0.8s is a slow approach to the target. The material uses only three gray tones with flat light, so the angle reads clearly.",
     "spec": [
@@ -292,16 +292,16 @@
     ],
     "vs": [
       [
-        "converge-to-mark",
+        "converge-logo-reveal",
         "Rotate to Lockup turns one object to a target angle; Converge to Mark gathers many elements and compresses them into one icon."
       ],
       [
-        "outline-to-solid",
+        "outline-to-solid-reveal",
         "Outline to Solid goes from line to fill; in Rotate to Lockup the material stays the same and only the orientation changes."
       ]
     ]
   },
-  "outline-to-solid": {
+  "outline-to-solid-reveal": {
     "def": "A wireframe or light-drawn outline appears first, then fills into a solid shape or material.",
     "why": "The shape comes before the material, so the first thing viewers remember is the silhouette. The light stays the only light source, and when the solid appears its highlight sits where the light comes from. The wireframe stage has very low opacity, so it does not compete with the solid that follows.",
     "spec": [
@@ -338,12 +338,12 @@
         "Light Reveal raises overall exposure; Outline to Solid shows the line first, then the solid."
       ],
       [
-        "rotate-to-lockup",
+        "rotating-logo-reveal",
         "Rotate to Lockup aligns to the target by rotating; Outline to Solid changes the material from line to surface."
       ]
     ]
   },
-  "converge-to-mark": {
+  "converge-logo-reveal": {
     "def": "At the end, multiple elements gather and compress into a single icon or logo, always centered in the frame.",
     "why": "A slow drift followed by a fast gather contrasts speeds and gives a clear end point. The shape loses detail step by step, from a concrete product to geometry to a brand mark, while its position stays at the center of the frame without jumping. When the ending uses the same technique as the opening, the film closes on itself.",
     "spec": [
@@ -376,7 +376,7 @@
     ],
     "vs": [
       [
-        "rotate-to-lockup",
+        "rotating-logo-reveal",
         "Converge to Mark gathers many elements to a point; Rotate to Lockup turns one object to a target angle."
       ],
       [
@@ -385,7 +385,7 @@
       ]
     ]
   },
-  "tilted-ui-with-depth-of-field": {
+  "3d-tilted-ui-depth-of-field": {
     "def": "A UI plane tilted 10–15° and shot up close, with only the active row in focus and the rest blurred.",
     "why": "Tilt, shallow depth of field, and grain make the screen UI read as a physical object, and they match the color grade of the live-action shots before and after it. Only the row being typed in is in focus, so the eye has nothing to search for.",
     "spec": [
@@ -426,12 +426,12 @@
         "In Macro Pull-out Reveal the subject is a physical product and the shot pulls out to show it whole; here the subject is a flat UI shot as a physical object through tilt and depth of field, and the camera never pulls out."
       ],
       [
-        "auto-zoom",
+        "zoom-to-cursor",
         "Auto Zoom uses scale to serve a single action and then pulls back; this shot stays close and only pans slowly sideways."
       ]
     ]
   },
-  "auto-zoom": {
+  "zoom-to-cursor": {
     "def": "The camera pushes to the target element in 0.4–0.8s, holds for one click or input, then pulls back to the full view.",
     "why": "Each push-in serves exactly one action and pulls back as soon as the action is done, so viewers always know where they are on the full page. The ease is fast at first and slow at the end, so the camera lands crisply.",
     "spec": [
@@ -468,7 +468,7 @@
     ],
     "vs": [
       [
-        "tilted-ui-with-depth-of-field",
+        "3d-tilted-ui-depth-of-field",
         "Tilted UI with Depth of Field stays close and pans sideways, shooting a flat UI like a physical object through tilt and blur; Auto Zoom uses scale to go back and forth between the full view and a detail."
       ],
       [
@@ -477,7 +477,7 @@
       ]
     ]
   },
-  "morph-relay": {
+  "morph-transition": {
     "def": "One element keeps morphing into the next, replacing cuts, so the whole sequence has no hard cut.",
     "why": "The element from the previous segment becomes the subject of the next, so there is always only one shape changing in the frame, with empty space around it. Shape, corner radius, and text color inversion happen on the same frame, so the morph reads as one continuous action.",
     "spec": [
@@ -518,7 +518,7 @@
         "Wireframe Re-layout strips a group of elements down to wireframes and re-flows them together; Morph Relay changes a single element step by step into another kind of element."
       ],
       [
-        "card-flip-to-code",
+        "card-flip-animation",
         "Card Flip to Code shows the front and back of the same card, rotating 180° around an axis; Morph Relay changes shape continuously with no front or back."
       ]
     ]
@@ -560,7 +560,7 @@
     ],
     "vs": [
       [
-        "morph-relay",
+        "morph-transition",
         "Morph Relay turns one element into another; Wireframe Re-layout strips a group of elements of content and re-flows them together."
       ],
       [
@@ -602,7 +602,7 @@
     ],
     "vs": [
       [
-        "auto-zoom",
+        "zoom-to-cursor",
         "Auto Zoom serves one action and pulls back; Showcase Wall drifts at constant speed and ends with a one-way push-in and a cut."
       ],
       [
@@ -611,7 +611,7 @@
       ]
     ]
   },
-  "card-flip-to-code": {
+  "card-flip-animation": {
     "def": "The preview card rotates 180° around the Y axis and its back face shows the code.",
     "why": "Preview and code are the front and back of one card, which says they are the same thing. The surrounding interface stays completely still during the flip, so the motion happens on one element only.",
     "spec": [
@@ -648,7 +648,7 @@
     ],
     "vs": [
       [
-        "morph-relay",
+        "morph-transition",
         "Morph Relay turns one element into a different shape; Card Flip to Code shows two faces of the same card, and the shape does not change."
       ],
       [
@@ -749,7 +749,7 @@
       ]
     ]
   },
-  "multiplayer-cursors": {
+  "multiplayer-cursor-animation": {
     "def": "Enlarged two-color named cursors move across a canvas, leave comments, and drag items to reorder.",
     "why": "Enlarged cursors become characters in the frame, and the interaction between two cursors stages collaboration. The comment bubble matches its cursor's color, so it maps to a person at a glance. The thumbnail grid provides density, and after the push-in only a small part of it is visible.",
     "spec": [
@@ -832,11 +832,11 @@
     ],
     "vs": [
       [
-        "multiplayer-cursors",
+        "multiplayer-cursor-animation",
         "In Multiplayer Cursors the cursors are characters and perform actions; in Focus Hop the cursor only guides the highlight, and the attention is on the highlight block and focus frame."
       ],
       [
-        "auto-zoom",
+        "zoom-to-cursor",
         "Auto Zoom moves the camera; in Focus Hop the camera is nearly still and the highlight block moves."
       ]
     ]
@@ -878,7 +878,7 @@
     ],
     "vs": [
       [
-        "morph-relay",
+        "morph-transition",
         "Morph Relay is one element changing shape continuously; Dock Arrival adds a new element to the Dock and then opens a window on click."
       ],
       [
@@ -933,7 +933,7 @@
       ]
     ]
   },
-  "word-by-word-highlight": {
+  "word-by-word-text-highlight": {
     "def": "Words in a small centered line brighten from gray to white one at a time, and the text never moves.",
     "why": "The type is only 2.5% of frame height with over 90% empty space around it, so reading pace is controlled entirely by the word-by-word brightening. A slowly rotating product sits under each selling-point card, so the card always has something to look at. In the closing version, the frame where the last word of the subtitle appears lines up with the end frame of the lid-closing motion.",
     "spec": [
@@ -970,16 +970,16 @@
     ],
     "vs": [
       [
-        "rhythmic-typing",
+        "typing-animation",
         "Rhythmic Typing appends characters one at a time with a cursor; Word-by-Word Highlight brightens whole words in sequence, with no cursor."
       ],
       [
-        "scattered-spec-type",
+        "kinetic-typography",
         "In Scattered Spec Type the words land at spread-out positions and appear with a hard cut; in Word-by-Word Highlight the words sit on one line."
       ]
     ]
   },
-  "rhythmic-typing": {
+  "typing-animation": {
     "def": "Monospace text is typed character by character with a cursor at uneven human speed, then deleted and retyped.",
     "why": "The screen holds only a cursor and one line of small text, with a great deal of empty space. Typing pauses 0.3–0.5s between words like real keystrokes, and deleting is twice as fast as typing, which splits the product name and the launch status into two beats. The font is the same monospace used for the numbered labels in the product UI.",
     "spec": [
@@ -1016,7 +1016,7 @@
     ],
     "vs": [
       [
-        "word-by-word-highlight",
+        "word-by-word-text-highlight",
         "Word-by-Word Highlight brightens words and never deletes; Rhythmic Typing appends characters and has a cursor and delete-and-retype."
       ],
       [
@@ -1062,16 +1062,16 @@
     ],
     "vs": [
       [
-        "rhythmic-typing",
+        "typing-animation",
         "Rhythmic Typing is a single line typed and deleted in the center of the screen; Prompt Carousel's container is an input box with several prompts scrolling vertically."
       ],
       [
-        "word-by-word-highlight",
+        "word-by-word-text-highlight",
         "Word-by-Word Highlight only brightens text and involves no change in input box form."
       ]
     ]
   },
-  "scattered-spec-type": {
+  "kinetic-typography": {
     "def": "A spec line is split into words placed far apart on uneven baselines, with a connector word stepping up letter by letter.",
     "why": "Words are spread far apart on staggered baselines, so reading the spec sentence has pauses. Italics are used only on key words such as \"faster\" and \"Introducing\", and the type stays at about 3% of frame height so it does not compete with the main picture.",
     "spec": [
@@ -1108,16 +1108,16 @@
     ],
     "vs": [
       [
-        "rhythmic-typing",
+        "typing-animation",
         "In Rhythmic Typing the text is appended character by character on one fixed line; in Scattered Spec Type the words land at spread-out positions."
       ],
       [
-        "word-by-word-highlight",
+        "word-by-word-text-highlight",
         "In Word-by-Word Highlight the words turn from gray to white on one line; in Scattered Spec Type the words appear with a hard cut at staggered positions."
       ]
     ]
   },
-  "mark-to-wordmark-unfold": {
+  "text-scramble-logo-reveal": {
     "def": "A logo mark sits centered, then the wordmark unfolds from behind it or outward from its center, optionally with a scramble-then-lock effect.",
     "why": "The mark and the name are bound into one action: the wordmark is pulled out from behind the mark, or the mark stays put while the other letters grow around it. Scrambled characters appear only on the newly added position, and the other letters stay stable. The opening and the ending can use the same move, one in black and one in white.",
     "spec": [
@@ -1154,16 +1154,16 @@
     ],
     "vs": [
       [
-        "chromatic-stretch",
+        "chromatic-aberration-text-effect",
         "Chromatic Stretch locally distorts the wordmark itself with RGB ghosting; Mark-to-Wordmark Unfold is about the order in which the mark and the wordmark appear."
       ],
       [
-        "foreground-wipe-flash",
+        "wipe-flash-transition",
         "Foreground Wipe & Flash is a transition between scenes; Mark-to-Wordmark Unfold is often followed by a white flash."
       ]
     ]
   },
-  "chromatic-stretch": {
+  "chromatic-aberration-text-effect": {
     "def": "Some letters of a wordmark stretch horizontally with RGB ghosting, distort in steps, then snap back clean.",
     "why": "The background and the type are black and white, and only the few distorted frames show a saturated separation into cyan, magenta, and yellow, so the color flashes and never stays. The distortion acts only on some letters and the rest stay clean, so the wordmark remains readable.",
     "spec": [
@@ -1196,16 +1196,16 @@
     ],
     "vs": [
       [
-        "mark-to-wordmark-unfold",
+        "text-scramble-logo-reveal",
         "Mark-to-Wordmark Unfold changes the order in which the wordmark appears; Chromatic Stretch locally distorts a wordmark that is already visible."
       ],
       [
-        "foreground-wipe-flash",
+        "wipe-flash-transition",
         "Foreground Wipe & Flash is a scene transition; Chromatic Stretch happens on the wordmark itself."
       ]
     ]
   },
-  "glass-lens": {
+  "liquid-glass-effect": {
     "def": "A transparent glass disc, loupe, or control moves over content, magnifying and refracting what lies beneath, with dispersion at the edge.",
     "why": "Barrel distortion at the edge says \"this is glass\" more than the magnification inside the lens does. The transition tool is the material being introduced: on the frame where the camera pushes in until the glass fills the screen, the background flips from black to light gray-white, and the flip hides in the fully covered frame.",
     "spec": [
@@ -1246,7 +1246,7 @@
         "Glass Droplet Split shows glass deforming and breaking apart; Glass Lens shows glass refracting and magnifying the content below it."
       ],
       [
-        "match-cut",
+        "match-cut-transition",
         "Match Cut swaps in another object at the same anchor; Glass Lens flips the scene on the one frame where the lens fills the screen."
       ]
     ]
@@ -1284,7 +1284,7 @@
     ],
     "vs": [
       [
-        "glass-lens",
+        "liquid-glass-effect",
         "Glass Lens emphasizes refraction of content; Glass Droplet Split emphasizes the glass stretching and breaking."
       ],
       [
@@ -1326,7 +1326,7 @@
     ],
     "vs": [
       [
-        "iris-window-montage",
+        "iris-transition",
         "Iris Window Montage cuts rapidly between images in a fixed frame; Branching Growth is one structure that keeps getting bigger."
       ],
       [
@@ -1335,7 +1335,7 @@
       ]
     ]
   },
-  "iris-window-montage": {
+  "iris-transition": {
     "def": "A fixed circular window cuts rapidly between images, or revisits the same image, while its size jumps with the rhythm.",
     "why": "Dozens of images from completely different sources are unified into one series by the same circular frame, so the circle is what the viewer watches. During the fast cuts the eye remembers only the circle and the change of content. The scan-line version looks at the same network graph again through an oscilloscope view.",
     "spec": [
@@ -1372,12 +1372,12 @@
         "Branching Growth is one structure growing; Iris Window Montage replaces content inside a fixed frame."
       ],
       [
-        "glass-lens",
+        "liquid-glass-effect",
         "Glass Lens is a moving lens refracting content; the window in Iris Window Montage stays in place while the content cuts quickly."
       ]
     ]
   },
-  "map-pin-drop": {
+  "map-pin-animation": {
     "def": "A pin drops onto a map with a bounce and bursts into fragments, the map zooms out to the whole country, and a route line draws to the next city.",
     "why": "Map, pin, and fragments use only one brand color plus deep blue and white, and the information is a single point and a single place name. The same pin-and-fragment burst carries on from the graphic world into real street view, connecting a customer from a dot on a map to a real storefront.",
     "spec": [
@@ -1414,16 +1414,16 @@
     ],
     "vs": [
       [
-        "confirmation-burst",
+        "confetti-success-animation",
         "Confirmation Burst puts fragments at the contact point of a tap or payment; in Map Pin Drop the fragments appear at the pin's landing point on the map."
       ],
       [
-        "match-cut",
+        "match-cut-transition",
         "Match Cut swaps the map pin for a pin in real footage; Map Pin Drop is the pin dropping, the fragments, and the pull-back route."
       ]
     ]
   },
-  "dot-matrix-glyph": {
+  "dot-matrix-animation": {
     "def": "A graphic is quantized onto a circular dot-matrix display, and every frame of its rotation or change snaps to the dot grid.",
     "why": "Rotation is quantized onto a low-resolution dot matrix, so the motion jumps cell by cell and the edges are jagged, matching how real hardware displays work. Rotation speed drops from shot to shot, so the slowing down itself builds suspense, and alternating dot-matrix shots with expression shots deepens the wait.",
     "spec": [
@@ -1460,16 +1460,16 @@
     ],
     "vs": [
       [
-        "line-boil",
+        "line-boil-effect",
         "Line Boil is a low frame rate that swaps in a new trace each frame; Dot-Matrix Glyph quantizes spatial resolution to a grid of points."
       ],
       [
-        "iris-window-montage",
+        "iris-transition",
         "The window in Iris Window Montage cuts quickly between real images; the round screen in Dot-Matrix Glyph holds a single discretized graphic."
       ]
     ]
   },
-  "line-boil": {
+  "line-boil-effect": {
     "def": "Hand-drawn outlines swap to a slightly different trace every few frames, and motion steps at a low frame rate with no tweening.",
     "why": "Lines keep trembling slightly even when the picture is still, so the frame always seems to be moving while keeping the hand-drawn stroke. Low-frame-rate frame-by-frame animation reads differently from smooth tweened vector animation, and the action frame rate matches the boil frame rate.",
     "spec": [
@@ -1506,7 +1506,7 @@
     ],
     "vs": [
       [
-        "dot-matrix-glyph",
+        "dot-matrix-animation",
         "Dot-Matrix Glyph restricts the graphic to grid points; Line Boil keeps continuous lines and only lowers the frame rate in time."
       ],
       [
@@ -1556,12 +1556,12 @@
         "Branching Growth is node count growing; Domino Wave is a fixed number of objects flipping in turn."
       ],
       [
-        "foreground-wipe-flash",
+        "wipe-flash-transition",
         "Foreground Wipe & Flash is a scene transition; Domino Wave is an action within a scene and ends with a white flash."
       ]
     ]
   },
-  "match-cut": {
+  "match-cut-transition": {
     "def": "One object is replaced by another at the same anchor point, so the viewer's gaze never moves.",
     "why": "The new subject appears exactly where the eye already is, so the viewer never has to search the frame. The product stopping at the spot where it is worn ties object and person together without a visible cut.",
     "spec": [
@@ -1598,16 +1598,16 @@
     ],
     "vs": [
       [
-        "foreground-wipe-flash",
+        "wipe-flash-transition",
         "Foreground Wipe & Flash uses a large object or white light to cover the frame before changing scenes; Match Cut keeps the anchor point still."
       ],
       [
-        "glass-lens",
+        "liquid-glass-effect",
         "Glass Lens flips the background on the frame where the lens fills the screen; Match Cut keeps the composition position unchanged."
       ]
     ]
   },
-  "foreground-wipe-flash": {
+  "wipe-flash-transition": {
     "def": "A defocused foreground object sweeps across and covers the frame to cut scenes, or a central glow blows out to white before the next scene.",
     "why": "The transition object comes straight from the current scene (a ball, a halo), so viewers see the transition as part of the camera movement. The whole film uses only these two transitions and very few hard cuts, which keeps continuity in a monochrome style; the switch point lands on a fully covered frame.",
     "spec": [
@@ -1644,16 +1644,16 @@
     ],
     "vs": [
       [
-        "match-cut",
+        "match-cut-transition",
         "Match Cut keeps the anchor still and swaps the object directly; Foreground Wipe & Flash changes scenes on the frame that covers the screen."
       ],
       [
-        "mark-to-wordmark-unfold",
+        "text-scramble-logo-reveal",
         "Mark-to-Wordmark Unfold is often followed by a white flash; the flash itself is only a transition device."
       ]
     ]
   },
-  "confirmation-burst": {
+  "confetti-success-animation": {
     "def": "On the frame of a tap, payment, or confirmation, lines, squares, and dots radiate from the contact point, or an icon pops with a bounce and an echo outline expands.",
     "why": "Graphics appear only on key action frames such as a tap or a successful payment, which marks the key moments of the product. The fragments share shapes and colors with the maps and feature cards used elsewhere in the film. The confirmation icon has thickness and highlights that contrast in material with the flat interface, and the expanding outline reuses the same shape.",
     "spec": [
@@ -1690,11 +1690,11 @@
     ],
     "vs": [
       [
-        "map-pin-drop",
+        "map-pin-animation",
         "Map Pin Drop's fragments appear at the pin's landing position; Confirmation Burst's fragments appear at the tap contact point."
       ],
       [
-        "match-cut",
+        "match-cut-transition",
         "Match Cut swaps the whole object for another; Confirmation Burst only overlays feedback graphics on the existing picture."
       ]
     ]

@@ -76,7 +76,7 @@
     ],
     "video": "light-reveal",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 2,
@@ -147,7 +147,7 @@
     ],
     "video": "device-focus",
     "pos": "reveal",
-    "dur": 10.0
+    "dur": 10
   },
   {
     "n": 3,
@@ -236,7 +236,7 @@
   },
   {
     "n": 4,
-    "slug": "x-ray-dissolve",
+    "slug": "x-ray-effect",
     "cat": "A",
     "zh": "透视叠化",
     "en": "X-ray Dissolve",
@@ -299,7 +299,7 @@
     ],
     "video": "x-ray-dissolve",
     "pos": "reveal",
-    "dur": 10.0
+    "dur": 10
   },
   {
     "n": 5,
@@ -376,7 +376,7 @@
     ],
     "video": "text-object-interleave",
     "pos": "reveal",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 6,
@@ -445,7 +445,7 @@
   },
   {
     "n": 7,
-    "slug": "rotate-to-lockup",
+    "slug": "rotating-logo-reveal",
     "cat": "A",
     "zh": "旋转落定",
     "en": "Rotate to Lockup",
@@ -514,11 +514,11 @@
     ],
     "video": "rotate-to-lockup",
     "pos": "close",
-    "dur": 10.0
+    "dur": 10
   },
   {
     "n": 8,
-    "slug": "outline-to-solid",
+    "slug": "outline-to-solid-reveal",
     "cat": "A",
     "zh": "描边显形",
     "en": "Outline to Solid",
@@ -581,11 +581,11 @@
     ],
     "video": "outline-to-solid",
     "pos": "reveal",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 9,
-    "slug": "converge-to-mark",
+    "slug": "converge-logo-reveal",
     "cat": "A",
     "zh": "收束成标",
     "en": "Converge to Mark",
@@ -664,7 +664,7 @@
   },
   {
     "n": 10,
-    "slug": "tilted-ui-with-depth-of-field",
+    "slug": "3d-tilted-ui-depth-of-field",
     "cat": "B",
     "zh": "斜拍景深界面",
     "en": "Tilted UI with Depth of Field",
@@ -743,11 +743,11 @@
     ],
     "video": "tilted-ui",
     "pos": "reveal",
-    "dur": 10.0
+    "dur": 10
   },
   {
     "n": 11,
-    "slug": "auto-zoom",
+    "slug": "zoom-to-cursor",
     "cat": "B",
     "zh": "推近操作再拉回",
     "en": "Auto Zoom / Zoom-to-Cursor",
@@ -820,11 +820,11 @@
     ],
     "video": "zoom-to-cursor",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 12,
-    "slug": "morph-relay",
+    "slug": "morph-transition",
     "cat": "B",
     "zh": "形变接力",
     "en": "Morph Relay",
@@ -897,7 +897,7 @@
     ],
     "video": "morph-relay",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 13,
@@ -1029,11 +1029,11 @@
     ],
     "video": "showcase-wall",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 15,
-    "slug": "card-flip-to-code",
+    "slug": "card-flip-animation",
     "cat": "B",
     "zh": "翻面看代码",
     "en": "Card Flip to Code",
@@ -1094,7 +1094,7 @@
     ],
     "video": "card-flip-code",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 16,
@@ -1171,7 +1171,7 @@
     ],
     "video": "control-driven",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 17,
@@ -1236,11 +1236,11 @@
     ],
     "video": "locked-reskin",
     "pos": "bridge",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 18,
-    "slug": "multiplayer-cursors",
+    "slug": "multiplayer-cursor-animation",
     "cat": "B",
     "zh": "多人光标",
     "en": "Multiplayer Cursors",
@@ -1449,7 +1449,7 @@
     ],
     "video": "dock-arrival",
     "pos": "reveal",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 21,
@@ -1524,7 +1524,7 @@
   },
   {
     "n": 22,
-    "slug": "word-by-word-highlight",
+    "slug": "word-by-word-text-highlight",
     "cat": "C",
     "zh": "逐词点亮",
     "en": "Word-by-Word Highlight",
@@ -1597,11 +1597,11 @@
     ],
     "video": "word-highlight",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 23,
-    "slug": "rhythmic-typing",
+    "slug": "typing-animation",
     "cat": "C",
     "zh": "节奏打字",
     "en": "Rhythmic Typing",
@@ -1680,7 +1680,7 @@
     ],
     "video": "rhythmic-typing",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 24,
@@ -1745,11 +1745,11 @@
     ],
     "video": "prompt-carousel",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 25,
-    "slug": "scattered-spec-type",
+    "slug": "kinetic-typography",
     "cat": "C",
     "zh": "散排参数",
     "en": "Scattered Spec Type",
@@ -1822,11 +1822,11 @@
     ],
     "video": "scattered-spec",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 26,
-    "slug": "mark-to-wordmark-unfold",
+    "slug": "text-scramble-logo-reveal",
     "cat": "C",
     "zh": "符号展开字标",
     "en": "Mark-to-Wordmark Unfold",
@@ -1909,7 +1909,7 @@
   },
   {
     "n": 27,
-    "slug": "chromatic-stretch",
+    "slug": "chromatic-aberration-text-effect",
     "cat": "C",
     "zh": "色散拉伸",
     "en": "Chromatic Stretch",
@@ -1970,7 +1970,7 @@
   },
   {
     "n": 28,
-    "slug": "glass-lens",
+    "slug": "liquid-glass-effect",
     "cat": "D",
     "zh": "玻璃透镜",
     "en": "Glass Lens",
@@ -2110,7 +2110,7 @@
     ],
     "video": "glass-droplet-split",
     "pos": "bridge",
-    "dur": 10.0
+    "dur": 10
   },
   {
     "n": 30,
@@ -2183,11 +2183,11 @@
     ],
     "video": "branching-growth",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 31,
-    "slug": "iris-window-montage",
+    "slug": "iris-transition",
     "cat": "D",
     "zh": "圆窗蒙太奇",
     "en": "Iris Window Montage",
@@ -2250,11 +2250,11 @@
     ],
     "video": "iris-montage",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 32,
-    "slug": "map-pin-drop",
+    "slug": "map-pin-animation",
     "cat": "D",
     "zh": "地图落钉",
     "en": "Map Pin Drop",
@@ -2321,11 +2321,11 @@
     ],
     "video": "map-pin-drop",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 33,
-    "slug": "dot-matrix-glyph",
+    "slug": "dot-matrix-animation",
     "cat": "D",
     "zh": "点阵量化",
     "en": "Dot-Matrix Glyph",
@@ -2392,11 +2392,11 @@
     ],
     "video": "dot-matrix-glyph",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 34,
-    "slug": "line-boil",
+    "slug": "line-boil-effect",
     "cat": "D",
     "zh": "手绘抖线",
     "en": "Line Boil",
@@ -2463,7 +2463,7 @@
     ],
     "video": "line-boil",
     "pos": "open",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 35,
@@ -2532,7 +2532,7 @@
   },
   {
     "n": 36,
-    "slug": "match-cut",
+    "slug": "match-cut-transition",
     "cat": "E",
     "zh": "同位替换",
     "en": "Match Cut",
@@ -2605,11 +2605,11 @@
     ],
     "video": "match-cut",
     "pos": "bridge",
-    "dur": 10.0
+    "dur": 10
   },
   {
     "n": 37,
-    "slug": "foreground-wipe-flash",
+    "slug": "wipe-flash-transition",
     "cat": "E",
     "zh": "遮挡与闪白",
     "en": "Foreground Wipe & Flash",
@@ -2682,11 +2682,11 @@
     ],
     "video": "foreground-wipe-flash",
     "pos": "bridge",
-    "dur": 11.0
+    "dur": 11
   },
   {
     "n": 38,
-    "slug": "confirmation-burst",
+    "slug": "confetti-success-animation",
     "cat": "E",
     "zh": "确认爆发",
     "en": "Confirmation Burst",
@@ -2759,6 +2759,6 @@
     ],
     "video": "confirmation-burst",
     "pos": "feature",
-    "dur": 11.0
+    "dur": 11
   }
 ]
