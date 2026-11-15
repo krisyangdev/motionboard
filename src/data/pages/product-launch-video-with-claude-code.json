@@ -1,0 +1,438 @@
+{
+  "id": "product-launch-video-with-claude-code",
+  "kind": "guide",
+  "path": "/guides/product-launch-video-with-claude-code/",
+  "updated": "2026-11-16",
+  "en": {
+    "title": "How to Make a Product Launch Video with Claude Code",
+    "description": "Install the Motionboard skill, describe your product and render a launch film with Claude Code: the 6-shot, 15.8 s example, commands and a starter prompt.",
+    "h1": "How to Make a Product Launch Video with Claude Code",
+    "lede": "To make a product launch video with Claude Code, install the Motionboard skill, describe your product, and let the agent plan a 4 to 6 shot film from 38 recipes, build each shot in HyperFrames and render it to MP4. The example film below has 6 shots and runs 15.8 seconds.",
+    "blocks": [
+      {
+        "t": "hero"
+      },
+      {
+        "t": "p",
+        "text": "The film above is Motionboard's own launch film, cut into the 6 recipes it is made of. Each recipe page shows the shot next to the original launch-film clip it was recreated from."
+      },
+      {
+        "t": "h2",
+        "text": "Step 1: Install the skill"
+      },
+      {
+        "t": "p",
+        "text": "Run the install command once. `-g` installs the skill for all your projects, so Claude Code and Codex can use it from any folder."
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard -g -y"
+      },
+      {
+        "t": "p",
+        "text": "Rendering uses HyperFrames, which needs Node.js 22 or later and FFmpeg on your machine. The skill checks `node --version` and `ffmpeg -version` before it builds anything, and it stops with a message if one is missing. `npm run check` and the render also need network access, because HyperFrames fetches Google Fonts and GSAP from a CDN."
+      },
+      {
+        "t": "h2",
+        "text": "Step 2: Describe your product"
+      },
+      {
+        "t": "p",
+        "text": "Give the agent a link, a repository or a short description. The skill reads what it can from your repository: the product name, logo, brand colours, fonts and real screens. It asks once for whatever is missing. Have these ready:"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "The product name and one sentence on what it does.",
+          "The logo as an SVG or PNG file.",
+          "Brand colours and the font, if you have one.",
+          "Your strongest claims, in your own words."
+        ]
+      },
+      {
+        "t": "p",
+        "text": "The skill rebuilds your product's interface in HTML and CSS at the density of the recipe it adapts. Grey boxes, lorem ipsum and pasted screenshots are excluded by its rules."
+      },
+      {
+        "t": "h2",
+        "text": "Step 3: Plan the film from positions"
+      },
+      {
+        "t": "p",
+        "text": "The 38 recipes are grouped by where they sit in a launch film: Opening (7 recipes), Product reveal (7), Features (15), Transitions (5) and Ending (4). The skill proposes 4 to 6 shots in that order: one Opening, one Product reveal, one to three Features, optionally one Transition, and one Ending. A recipe is chosen when its mechanism shows something true about your product."
+      },
+      {
+        "t": "p",
+        "text": "The agent shows the plan as a table with the shot, the recipe, what it shows for your product, the seconds and a link to the preview film. It waits for your confirmation before building. This is the moment to change a shot, cut the length or ask for another recipe."
+      },
+      {
+        "t": "h2",
+        "text": "Step 4: The six shots in the example film"
+      },
+      {
+        "t": "p",
+        "text": "Motionboard's launch film is 6 shots in 15.8 seconds. Each recipe is a film of about 10 seconds, and the example uses a segment of each:"
+      },
+      {
+        "t": "ol",
+        "items": [
+          "0 to 2.8 s, opening: [Typing Animation](/recipes/typing-animation/). Monospace text is typed character by character with a cursor at uneven human speed, then deleted and retyped.",
+          "2.8 to 5.5 s, product reveal: [3D Tilted UI Depth of Field](/recipes/3d-tilted-ui-depth-of-field/). A UI plane tilted 10 to 15 degrees is shot up close, with only the active row in focus and the rest blurred.",
+          "5.5 to 8.2 s, feature: [Zoom to Cursor](/recipes/zoom-to-cursor/). The camera pushes to the target element in 0.4 to 0.8 seconds, holds for one click or input, then pulls back to the full view.",
+          "8.2 to 10.6 s, feature: [Morph Transition](/recipes/morph-transition/). One element keeps morphing into the next, so the sequence has no hard cut.",
+          "10.6 to 12.4 s, transition: [Match Cut Transition](/recipes/match-cut-transition/). One object is replaced by another at the same anchor point, so the viewer's gaze stays in place.",
+          "12.4 to 15.8 s, ending: [Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/). A logo mark sits centred, then the wordmark unfolds from behind it, with a scramble-then-lock effect on the new letters."
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Brand, colours and type stay identical across the shots. The agent builds each shot as its own HyperFrames project, adapts only the brand and UI layers of the recipe and keeps its timing and easing."
+      },
+      {
+        "t": "h2",
+        "text": "Step 5: Render with HyperFrames"
+      },
+      {
+        "t": "p",
+        "text": "Every shot is a project with the same scripts. Run the check once on the untouched copy, because some recipes report errors on purpose, for example dim text in blurred depth-of-field layers. After your edits, fix every error your changes add. The check takes about a minute."
+      },
+      {
+        "t": "cmd",
+        "text": "npm run dev"
+      },
+      {
+        "t": "cmd",
+        "text": "npm run check"
+      },
+      {
+        "t": "p",
+        "text": "`npm run dev` opens the preview in the HyperFrames studio, and `npm run check` runs the lint, layout and contrast checks. They wrap `npx hyperframes preview`, `check` and `render`. Render a draft while you iterate and the delivery quality for the final file. HyperFrames accepts `draft`, `looks` (the default), `standard` and `high` for `--quality`, and `delivery` is an alias of `high`."
+      },
+      {
+        "t": "cmd",
+        "text": "npm run render -- --quality draft"
+      },
+      {
+        "t": "cmd",
+        "text": "npm run render -- --quality delivery"
+      },
+      {
+        "t": "p",
+        "text": "The MP4 lands in `renders/<project>_<timestamp>.mp4`. For a whole film the skill joins the shot renders with hard cuts, or with a Transition recipe as its own shot, and re-encodes so the parts match. Music is added only when you ask."
+      },
+      {
+        "t": "cmd",
+        "text": "ffmpeg -f concat -safe 0 -i list.txt -c:v libx264 -crf 14 -pix_fmt yuv420p -an launch-film.mp4"
+      },
+      {
+        "t": "h2",
+        "text": "Step 6: Check against the preview films"
+      },
+      {
+        "t": "p",
+        "text": "A shot is finished when it reaches the finish of its preview film on motionboard.app: timing, easing, camera, blur, depth, lighting and UI density. The skill renders the project, downloads the preview film and captures the same moments from both, taken from the beat times in the recipe's spec table. It compares each pair and fixes differences in timing, blur, shadow and scale. Only brand and UI content should differ."
+      },
+      {
+        "t": "cmd",
+        "text": "npx --yes hyperframes@<version> snapshot --at 0.5,2.4,4.0,6.3,9.5 --against preview.mp4"
+      },
+      {
+        "t": "p",
+        "text": "The agent ends with a short list of the parameters it changed for your product and the reason for each."
+      },
+      {
+        "t": "h2",
+        "text": "Step 7: Put it on a website instead"
+      },
+      {
+        "t": "p",
+        "text": "The same recipe works as a hero animation. Tell the agent that the motion is for your site. It ports the GSAP timeline from the recipe's `index.html` into your stack (React, Vue, Svelte or plain HTML), builds the same DOM and keeps the durations, delays and easings. The animation starts when the element scrolls into view. With `prefers-reduced-motion: reduce` it shows the final frame as a static state."
+      },
+      {
+        "t": "h2",
+        "text": "Shots from this film"
+      },
+      {
+        "t": "films",
+        "slugs": [
+          "typing-animation",
+          "3d-tilted-ui-depth-of-field",
+          "zoom-to-cursor",
+          "morph-transition",
+          "match-cut-transition",
+          "text-scramble-logo-reveal"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "Prompt to start with"
+      },
+      {
+        "t": "p",
+        "text": "Paste this into Claude Code from your project folder and replace the product details: \"I'm launching Tasklane, a project tracker for design teams, at tasklane.app. Use the motionboard skill to plan a 15 second launch film for our website and X. Read this repository for the logo, the brand colours and the real screens, and ask me only for what you cannot find. Propose the shots as a table with the recipe, what each shot shows for Tasklane and the seconds, and wait for my confirmation. After I confirm, build every shot, run npm run check, render drafts, compare each shot against its preview film, then render at delivery quality and join the shots into launch-film.mp4.\""
+      },
+      {
+        "t": "p",
+        "text": "For other kinds of video, see [Claude Code video skills](/guides/claude-code-video-skills/). For the framework comparison, see [HyperFrames vs Remotion](/guides/hyperframes-vs-remotion/). [Can Claude make videos?](/guides/can-claude-make-videos/) covers what Claude does without a skill."
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "How long should a product launch video be?",
+            "The Motionboard skill plans 4 to 6 shots, and its own launch film runs 6 shots in 15.8 seconds. Each recipe is about 10 seconds long and can be trimmed with your agreement. Other video skills target different lengths: HeyGen's `motion-graphics` makes pieces under about 10 seconds and Barty-Bart's `explainer-high-energy` makes 12 to 20 second promos. Set the length by where the video plays, and cut shots in the confirmation step."
+          ],
+          [
+            "Do I need After Effects?",
+            "No video editor is needed to make or render the film. HyperFrames renders HTML and GSAP to MP4 with Node.js 22 or later and FFmpeg, and the skill joins the shots with an `ffmpeg` command. You can still import the MP4 into an editor to add music or captions."
+          ],
+          [
+            "Can I use it commercially?",
+            "Yes. The Motionboard skill is MIT licensed, and its recipes and source files are free to use in your own work, including commercial launch films. HyperFrames is Apache-2.0. The skill ships its own recreations, and the recipe pages link to the original films on YouTube. Fonts, music, logos and footage you add keep their own licences."
+          ]
+        ]
+      },
+      {
+        "t": "sources",
+        "items": [
+          {
+            "label": "HyperFrames docs: CLI reference (preview, check, render, --quality, --fps, --format)",
+            "url": "https://hyperframes.heygen.com/packages/cli",
+            "checked": "2026-11-16"
+          },
+          {
+            "label": "GitHub: heygen-com/hyperframes (Apache-2.0, Node.js 22 or later, FFmpeg)",
+            "url": "https://github.com/heygen-com/hyperframes",
+            "checked": "2026-11-16"
+          },
+          {
+            "label": "GitHub: krisyangdev/motionboard (38 recipes, MIT, skill and source projects)",
+            "url": "https://github.com/krisyangdev/motionboard",
+            "checked": "2026-11-16"
+          },
+          {
+            "label": "skills CLI: `npx skills add --help` (-g, -y, --skill)",
+            "url": "https://skills.sh/",
+            "checked": "2026-11-16"
+          }
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "用 Claude Code 制作产品发布视频",
+    "description": "安装 Motionboard skill，描述产品，用 Claude Code 渲染发布片：6 个镜头、15.8 秒的示例片、完整命令和可直接粘贴的提示词。",
+    "h1": "用 Claude Code 制作产品发布视频",
+    "lede": "用 Claude Code 制作产品发布视频：安装 Motionboard skill，描述你的产品，让 agent 从 38 个配方里规划 4 到 6 个镜头，在 HyperFrames 里逐个搭建并渲染成 MP4。下面的示例片有 6 个镜头，时长 15.8 秒。",
+    "blocks": [
+      {
+        "t": "hero"
+      },
+      {
+        "t": "p",
+        "text": "上面的片子是 Motionboard 自己的发布片，剪成了它所用的 6 个配方。每个配方页都把该镜头与它所复刻的发布片原片并排展示。"
+      },
+      {
+        "t": "h2",
+        "text": "第 1 步：安装 skill"
+      },
+      {
+        "t": "p",
+        "text": "运行一次安装命令。`-g` 把 skill 安装给你的所有项目，Claude Code 和 Codex 在任意文件夹里都能使用。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard -g -y"
+      },
+      {
+        "t": "p",
+        "text": "渲染使用 HyperFrames，需要你的电脑上有 Node.js 22 或更高版本和 FFmpeg。skill 在动手前会检查 `node --version` 和 `ffmpeg -version`，缺少任何一个就会提示并停止。`npm run check` 和渲染还需要联网，因为 HyperFrames 会从 CDN 获取 Google Fonts 和 GSAP。"
+      },
+      {
+        "t": "h2",
+        "text": "第 2 步：描述你的产品"
+      },
+      {
+        "t": "p",
+        "text": "给 agent 一个链接、一个仓库或一段简短描述。skill 会先从仓库里读取产品名、logo、品牌色、字体和真实界面，缺什么只问一次。请准备好这些内容："
+      },
+      {
+        "t": "ul",
+        "items": [
+          "产品名，以及一句话说明它做什么。",
+          "SVG 或 PNG 格式的 logo。",
+          "品牌色和字体（如果有）。",
+          "你最有力的卖点，用你自己的话写。"
+        ]
+      },
+      {
+        "t": "p",
+        "text": "skill 会用 HTML 和 CSS 重建你产品的界面，信息密度与所改编配方一致。灰色方块、占位文字和粘贴的截图都被它的规则排除在外。"
+      },
+      {
+        "t": "h2",
+        "text": "第 3 步：按位置规划整支片子"
+      },
+      {
+        "t": "p",
+        "text": "38 个配方按它们在发布片里的位置分组：开场 7 个、产品亮相 7 个、功能 15 个、转场 5 个、结尾 4 个。skill 按这个顺序提出 4 到 6 个镜头：一个开场、一个产品亮相、一到三个功能、可选的一个转场，以及一个结尾。只有当配方的机制能表现你产品的真实特点时，才会被选中。"
+      },
+      {
+        "t": "p",
+        "text": "agent 会用表格给出方案，列出镜头、配方、它为你的产品展示什么、秒数和预览片链接，并等你确认后才开始搭建。这是更换镜头、缩短时长或要求换配方的时机。"
+      },
+      {
+        "t": "h2",
+        "text": "第 4 步：示例片里的六个镜头"
+      },
+      {
+        "t": "p",
+        "text": "Motionboard 的发布片共 6 个镜头、15.8 秒。每个配方的原片约 10 秒，示例片取用其中一段："
+      },
+      {
+        "t": "ol",
+        "items": [
+          "0 到 2.8 秒，开场：[Typing Animation](/recipes/typing-animation/)（打字动画）。等宽文字带着光标，以不均匀的人类速度逐字打出，然后删除并重新打字。",
+          "2.8 到 5.5 秒，产品亮相：[3D Tilted UI Depth of Field](/recipes/3d-tilted-ui-depth-of-field/)（斜拍景深界面）。界面平面倾斜 10 到 15 度，近距离拍摄，只有当前行清晰，其余模糊。",
+          "5.5 到 8.2 秒，功能：[Zoom to Cursor](/recipes/zoom-to-cursor/)（推近到光标）。镜头用 0.4 到 0.8 秒推向目标元素，停住完成一次点击或输入，再拉回完整画面。",
+          "8.2 到 10.6 秒，功能：[Morph Transition](/recipes/morph-transition/)（形变转场）。一个元素不断变形为下一个，整段没有硬切。",
+          "10.6 到 12.4 秒，转场：[Match Cut Transition](/recipes/match-cut-transition/)（匹配剪辑转场）。一个物体在同一锚点被另一个物体替换，观众的视线保持不动。",
+          "12.4 到 15.8 秒，结尾：[Text Scramble Logo Reveal](/recipes/text-scramble-logo-reveal/)（乱码锁定 logo 揭示）。logo 符号居中，字标从它身后展开，新增的字母带有先乱码、后锁定的效果。"
+        ]
+      },
+      {
+        "t": "p",
+        "text": "各镜头的品牌、颜色和字体保持一致。agent 把每个镜头做成独立的 HyperFrames 项目，只改配方里的品牌层和界面层，保留它的节奏和缓动。"
+      },
+      {
+        "t": "h2",
+        "text": "第 5 步：用 HyperFrames 渲染"
+      },
+      {
+        "t": "p",
+        "text": "每个镜头都是带有相同脚本的项目。先在未修改的副本上运行一次检查，因为有些配方会有意报错，例如景深虚化图层里偏暗的文字。改动之后，修掉你的改动新增的每个错误。检查大约需要一分钟。"
+      },
+      {
+        "t": "cmd",
+        "text": "npm run dev"
+      },
+      {
+        "t": "cmd",
+        "text": "npm run check"
+      },
+      {
+        "t": "p",
+        "text": "`npm run dev` 在 HyperFrames 工作室里打开预览，`npm run check` 运行 lint、布局和对比度检查。它们封装了 `npx hyperframes preview`、`check` 和 `render`。迭代时渲染草稿，最终文件用 delivery 质量。HyperFrames 的 `--quality` 接受 `draft`、`looks`（默认）、`standard` 和 `high`，`delivery` 是 `high` 的别名。"
+      },
+      {
+        "t": "cmd",
+        "text": "npm run render -- --quality draft"
+      },
+      {
+        "t": "cmd",
+        "text": "npm run render -- --quality delivery"
+      },
+      {
+        "t": "p",
+        "text": "MP4 输出到 `renders/<project>_<timestamp>.mp4`。做整支片子时，skill 用硬切把各镜头的渲染结果拼接起来，或者把转场配方单独作为一个镜头放在两个镜头之间，并重新编码让各段规格一致。只有你提出要求时才加音乐。"
+      },
+      {
+        "t": "cmd",
+        "text": "ffmpeg -f concat -safe 0 -i list.txt -c:v libx264 -crf 14 -pix_fmt yuv420p -an launch-film.mp4"
+      },
+      {
+        "t": "h2",
+        "text": "第 6 步：与预览片对照"
+      },
+      {
+        "t": "p",
+        "text": "一个镜头要达到 motionboard.app 上预览片的完成度才算做完，包括节奏、缓动、镜头、虚化、景深、光照和界面密度。skill 渲染项目、下载预览片，并按配方参数表里的节拍时间，从两边截取相同的时刻。它逐对比较，修正节奏、虚化、阴影和比例上的差异。只有品牌和界面内容应该不同。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx --yes hyperframes@<version> snapshot --at 0.5,2.4,4.0,6.3,9.5 --against preview.mp4"
+      },
+      {
+        "t": "p",
+        "text": "最后，agent 会列出为你的产品改动过的参数和每处改动的原因。"
+      },
+      {
+        "t": "h2",
+        "text": "第 7 步：改用到网站上"
+      },
+      {
+        "t": "p",
+        "text": "同一个配方可以做成网站的首屏动画。告诉 agent 这段动效用于你的网站，它会把配方 `index.html` 里的 GSAP 时间线移植到你的技术栈（React、Vue、Svelte 或纯 HTML），搭出相同的 DOM，保留时长、延迟和缓动。元素滚动进入视口时动画开始。当系统设置了 `prefers-reduced-motion: reduce` 时，显示最后一帧的静态状态。"
+      },
+      {
+        "t": "h2",
+        "text": "这支片子里的镜头"
+      },
+      {
+        "t": "films",
+        "slugs": [
+          "typing-animation",
+          "3d-tilted-ui-depth-of-field",
+          "zoom-to-cursor",
+          "morph-transition",
+          "match-cut-transition",
+          "text-scramble-logo-reveal"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "可以直接用的起始提示词"
+      },
+      {
+        "t": "p",
+        "text": "在项目文件夹里把下面这段粘贴到 Claude Code，并换成你的产品信息：“我要发布 Tasklane，一款面向设计团队的项目管理工具，网址 tasklane.app。用 motionboard skill 为我们的网站和 X 规划一支 15 秒的发布片。读取这个仓库里的 logo、品牌色和真实界面，只问我找不到的内容。把镜头整理成表格，列出配方、每个镜头为 Tasklane 展示什么以及秒数，然后等我确认。我确认后，逐个搭建镜头，运行 npm run check，渲染草稿，把每个镜头与它的预览片对照，再用 delivery 质量渲染，并把镜头拼成 launch-film.mp4。”"
+      },
+      {
+        "t": "p",
+        "text": "其他类型的视频见 [Claude Code 视频 skills 清单](/guides/claude-code-video-skills/)。框架对比见 [HyperFrames 与 Remotion](/guides/hyperframes-vs-remotion/)。[Claude 能做视频吗](/guides/can-claude-make-videos/)介绍不用 skill 时 Claude 能做什么。"
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "产品发布视频应该多长？",
+            "Motionboard skill 规划 4 到 6 个镜头，它自己的发布片是 6 个镜头、15.8 秒。每个配方约 10 秒，经你同意可以裁短。其他视频 skill 的目标时长各不相同：HeyGen 的 `motion-graphics` 做约 10 秒以内的片段，Barty-Bart 的 `explainer-high-energy` 做 12 到 20 秒的宣传片。时长按播放位置来定，在确认镜头方案时裁剪。"
+          ],
+          [
+            "需要 After Effects 吗？",
+            "制作和渲染都不需要视频编辑软件。HyperFrames 用 Node.js 22 或更高版本和 FFmpeg 把 HTML 与 GSAP 渲染成 MP4，skill 用 `ffmpeg` 命令拼接镜头。你仍然可以把 MP4 导入剪辑软件添加音乐或字幕。"
+          ],
+          [
+            "可以商用吗？",
+            "可以。Motionboard skill 使用 MIT 许可证，配方和源文件可以免费用于你自己的作品，包括商业发布片。HyperFrames 使用 Apache-2.0。skill 提供的是自己复刻的作品，配方页链接到 YouTube 上的原片。你自己添加的字体、音乐、logo 和素材保留各自的许可证。"
+          ]
+        ]
+      },
+      {
+        "t": "sources",
+        "items": [
+          {
+            "label": "HyperFrames docs: CLI reference (preview, check, render, --quality, --fps, --format)",
+            "url": "https://hyperframes.heygen.com/packages/cli",
+            "checked": "2026-11-16"
+          },
+          {
+            "label": "GitHub: heygen-com/hyperframes (Apache-2.0, Node.js 22 or later, FFmpeg)",
+            "url": "https://github.com/heygen-com/hyperframes",
+            "checked": "2026-11-16"
+          },
+          {
+            "label": "GitHub: krisyangdev/motionboard (38 recipes, MIT, skill and source projects)",
+            "url": "https://github.com/krisyangdev/motionboard",
+            "checked": "2026-11-16"
+          },
+          {
+            "label": "skills CLI: `npx skills add --help` (-g, -y, --skill)",
+            "url": "https://skills.sh/",
+            "checked": "2026-11-16"
+          }
+        ]
+      }
+    ]
+  }
+}
