@@ -14,6 +14,7 @@ motionboard.app: 38 launch-film shot recipes and a free HyperFrames skill for Cl
 - Content: `src/data/terms.json` + `en.json` (recipes), `src/data/seo/<slug>.json` (search copy), `src/data/pages/<id>.json` (hubs and guides, schema in `src/data/content.ts`), `src/data/renamed.json` (old slug → new, drives the 301s).
 - SEO head: `seoHead()` in `src/lib/seo.ts`; sitemap pages in `vite.config.ts`.
 - Analytics: `src/lib/track.ts` (PostHog, shared project "Sites", cookieless) + `src/components/Analytics.tsx`. Every event has `site=motionboard` and `lang`. Cloudflare Web Analytics is injected at the edge.
+- Script loading: `src/components/Scripts.tsx` replaces TanStack's `<HeadContent>`/`<Scripts>` in `__root.tsx`. The app JS (modulepreload links + entry) is only added once the posters with `elementtiming="poster"` are on screen; otherwise PSI mobile counts the JS toward LCP (recipe pages fell to 90-95). A new LCP image needs `fetchPriority="high"` and `elementtiming="poster"`.
 - Skill: `skills/motionboard/` (runnable HyperFrames sources per recipe).
 
 ## Checks before reporting a UI change
