@@ -151,6 +151,7 @@ export function HeroFilm() {
               width={1920}
               height={1080}
               fetchPriority="high"
+              elementtiming="poster"
               decoding="async"
             />
             {/* Sources are in the markup so the download starts with the page, before the script runs. */}

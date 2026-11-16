@@ -83,6 +83,7 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
           width={1920}
           height={1080}
           fetchPriority="high"
+          elementtiming="poster"
           decoding="async"
         />
         <video key={src} ref={video} autoPlay muted loop playsInline preload="auto" />
