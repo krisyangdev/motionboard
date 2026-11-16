@@ -4,10 +4,10 @@ import { media, termName, type Term } from '@/data/terms'
 import { useLocale, useStrings } from '@/lib/locale'
 import { track } from '@/lib/track'
 
-type FilmProps = { src: string; mobileSrc?: string; poster: string; name: string; transitionName?: string; slug?: string }
+type FilmProps = { src: string; mobileSrc?: string; poster: string; posterSmall?: string; name: string; transitionName?: string; slug?: string }
 
 // Autoplays muted on loop; click toggles. Reduced motion shows the poster and plays only on click.
-export function Film({ src, mobileSrc, poster, name, transitionName, slug }: FilmProps) {
+export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName, slug }: FilmProps) {
   const video = useRef<HTMLVideoElement>(null)
   const bar = useRef<HTMLElement>(null)
   const [paused, setPaused] = useState(false)
@@ -73,7 +73,19 @@ export function Film({ src, mobileSrc, poster, name, transitionName, slug }: Fil
     <div className="rc-player">
       <div className="frame" style={transitionName ? { viewTransitionName: transitionName } : undefined}>
         {/* keyed so a new source remounts the video and autoplays */}
-        <video key={src} ref={video} poster={poster} autoPlay muted loop playsInline preload="auto" />
+        {/* The poster is an image in the markup (not the video's poster attribute) so it downloads with the page, at
+            960px on phones; the video paints over it once it has a frame. */}
+        <img
+          src={poster}
+          srcSet={posterSmall ? `${posterSmall} 960w, ${poster} 1920w` : undefined}
+          sizes={posterSmall ? '(min-width: 900px) 1100px, 100vw' : undefined}
+          alt=""
+          width={1920}
+          height={1080}
+          fetchPriority="high"
+          decoding="async"
+        />
+        <video key={src} ref={video} autoPlay muted loop playsInline preload="auto" />
         <button type="button" className="rc-hit" aria-label={paused ? recipe.play(name) : recipe.pause(name)} onClick={toggle}>
           <span className="rc-glyph" data-on={paused}>
             <Play aria-hidden="true" fill="currentColor" />
@@ -90,5 +102,5 @@ export function Film({ src, mobileSrc, poster, name, transitionName, slug }: Fil
 // The full film of a recipe.
 export function Player({ term: t }: { term: Term }) {
   const locale = useLocale()
-  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} name={termName(t, locale)} transitionName="film" slug={t.slug} />
+  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} posterSmall={media(t, 'jpgSmall')} name={termName(t, locale)} transitionName="film" slug={t.slug} />
 }
