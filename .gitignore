@@ -27,3 +27,4 @@ public/_redirects
 src/data/gen/
 *.tsbuildinfo
 public/sitemap-video.xml
+public/robots.txt

@@ -4,17 +4,12 @@ import viteReact from '@vitejs/plugin-react'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import terms from './src/data/terms.json'
 import { PAGES } from './src/data/page-index'
-import { SITE_URL } from './src/site'
+import { ALT_LANGS, alternateUrls, SITE_URL } from './src/site.config'
 
-// A page in both locales with its hreflang alternates (same URLs as alternates() in src/lib/seo.ts,
-// which cannot be imported here: it pulls in import.meta.glob data).
+// A page in every language with its hreflang alternates.
 const indexed = (path: string) => {
-  const alternateRefs = [
-    { hreflang: 'en', href: `${SITE_URL}${path}` },
-    { hreflang: 'zh-CN', href: `${SITE_URL}/zh${path}` },
-    { hreflang: 'x-default', href: `${SITE_URL}${path}` },
-  ]
-  return ['', '/zh'].map((prefix) => ({ path: `${prefix}${path}`, sitemap: { alternateRefs } }))
+  const alternateRefs = alternateUrls(path).map((a) => ({ hreflang: a.lang, href: a.href }))
+  return ALT_LANGS.map(({ prefix }) => ({ path: `${prefix}${path}`, sitemap: { alternateRefs } }))
 }
 
 export default defineConfig({

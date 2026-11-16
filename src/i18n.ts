@@ -1,7 +1,7 @@
 // UI strings per locale. The en object is the type source; zh must have the same shape.
-// Recipe names and text live in data/terms.ts, brand copy in site.ts.
+// Recipe names and text live in data/terms.ts, brand copy in site.config.ts.
 import type { Position } from '@/data/terms'
-import type { Locale } from '@/site'
+import { BRAND, type Locale } from '@/site.config'
 
 const en = {
   lang: { label: '中文', aria: 'View in Chinese' },
@@ -34,13 +34,13 @@ const en = {
     next: (name: string) => `Next: ${name}`,
     copiedTimes: (n: number) => `Copied ${n.toLocaleString('en-US')} ${n === 1 ? 'time' : 'times'}`,
     seenIn: 'Seen in',
-    shot: (name: string) => `Motionboard shot: ${name}`,
+    shot: (name: string) => `${BRAND.name} shot: ${name}`,
     howto: (name: string) => `How to make a ${name} with Claude Code or Codex`,
     faq: 'FAQ',
     more: (position: string) => `More ${position}`,
     original: 'Original',
     originalAria: (title: string) => `Original: ${title}`,
-    recreation: 'Motionboard recreation',
+    recreation: `${BRAND.name} recreation`,
     compare: 'Compare',
     showing: 'Showing',
     watchOnX: 'Watch on X ↗',
@@ -95,13 +95,13 @@ const zh: Strings = {
     next: (name) => `下一个：${name}`,
     copiedTimes: (n) => `已复制 ${n.toLocaleString('zh-CN')} 次`,
     seenIn: '原片出处',
-    shot: (name) => `Motionboard 镜头名：${name}`,
+    shot: (name) => `${BRAND.name} 镜头名：${name}`,
     howto: (name) => `用 Claude Code 或 Codex 做${name}`,
     faq: '常见问题',
     more: (position) => `更多「${position}」`,
     original: '原片',
     originalAria: (title) => `原片：${title}`,
-    recreation: 'Motionboard 复刻',
+    recreation: `${BRAND.name} 复刻`,
     compare: '对比',
     showing: '对比中',
     watchOnX: '在 X 上观看 ↗',

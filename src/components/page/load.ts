@@ -1,7 +1,7 @@
 import { notFound } from '@tanstack/react-router'
 import type { PageCopy } from '@/data/content'
 import { loadPage, PAGES, type PageKind } from '@/data/pages'
-import type { Locale } from '@/site'
+import type { Locale } from '@/site.config'
 
 /** What a route hands to the page: the copy of one locale only, so the prerendered HTML carries one language. */
 export type PageData = { id: string; kind: PageKind; path: string; updated: string; copy: PageCopy }

@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://motionboard.app/sitemap.xml
-Sitemap: https://motionboard.app/sitemap-video.xml

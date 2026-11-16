@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useRouterState } from '@tanstack/react-router'
 import { initTracking, referrerType, track } from '@/lib/track'
-import { POSTHOG_HOST, SITE_ID } from '@/site'
+import { SITE } from '@/site.config'
 
 let inited = false
 let landing = ''
@@ -18,7 +18,7 @@ function pageType(pathname: string) {
 function init() {
   if (inited) return
   inited = true
-  initTracking({ site: SITE_ID, key: import.meta.env.VITE_POSTHOG_KEY, host: POSTHOG_HOST })
+  initTracking({ site: SITE.id, key: (import.meta.env as Record<string, string | undefined>)[SITE.posthogKeyEnv], host: SITE.posthogHost })
   addEventListener('error', (e) => {
     track('error', { page: location.pathname, endpoint: 'window', code: String(e.message).slice(0, 80) })
   })

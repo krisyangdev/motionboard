@@ -5,7 +5,7 @@
 // Text fields are plain text. Paragraph, list and table text may contain two inline forms only:
 // [label](url) links and `code`. Internal links are written as English paths ("/recipes/x/") and the
 // renderer prefixes /zh on Chinese pages.
-import type { Locale } from '@/site'
+import type { Locale } from '@/site.config'
 
 export type RecipeSeoCopy = {
   /** Common name of the effect, the H1 and the name used in tiles and links ("Match Cut Transition") */

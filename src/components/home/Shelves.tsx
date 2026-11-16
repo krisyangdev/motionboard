@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import { TileGrid } from '@/components/TileGrid'
 import { POSITION_ORDER, byPos } from '@/data/terms'
@@ -9,7 +9,6 @@ const shelfId = (p: Position) => `shelf-${p}`
 
 export function Shelves() {
   const [active, setActive] = useState<Position | null>(null)
-  const bar = useRef<HTMLDivElement>(null)
   const s = useStrings()
 
   // The shelf crossing a band just under the sticky bars is the one in view.
@@ -33,14 +32,6 @@ export function Shelves() {
     return () => io.disconnect()
   }, [])
 
-  // Keep the active chip visible in the horizontally scrolling bar (phones).
-  useEffect(() => {
-    const b = bar.current
-    const chip = active && b?.querySelector<HTMLElement>(`[data-pos="${active}"]`)
-    if (!b || !chip) return
-    b.scrollTo({ left: chip.offsetLeft - 16, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
-  }, [active])
-
   const go = (p: Position) => (e: MouseEvent) => {
     e.preventDefault()
     setActive(p)
@@ -51,7 +42,7 @@ export function Shelves() {
   return (
     <section className="recipes" id="recipes">
       <nav className="chips gut" aria-label={s.shelves.label}>
-        <div className="chips-in wrap" ref={bar}>
+        <div className="chips-in wrap">
           {POSITION_ORDER.map((p) => (
             <a key={p} className="chip" href={`#${shelfId(p)}`} data-pos={p} aria-current={active === p ? 'true' : undefined} onClick={go(p)}>
               {s.positions[p]}

@@ -2,7 +2,7 @@
 // One film (Motionboard's own launch film, made with the recipes below); each segment is a
 // time range of it, taken from the film's segments.json. Both encodes have a keyframe at every
 // segment start, so jumping to a segment shows its first frame at once.
-import { MEDIA_URL } from '@/site'
+import { MEDIA_URL } from '@/site.config'
 
 export const HERO_FILM = {
   /** 1080p film; phones play `mobile` (720p), same timeline */

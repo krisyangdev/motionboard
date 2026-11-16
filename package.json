@@ -6,6 +6,7 @@
     "dev": "node scripts/recipes.mjs && node scripts/video-sitemap.mjs && vite dev --host 127.0.0.1 --port 3000",
     "recipes": "node scripts/recipes.mjs",
     "build": "node scripts/recipes.mjs && node scripts/video-sitemap.mjs && vite build",
+    "test": "npm run build && node scripts/test.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "typecheck": "node scripts/recipes.mjs && tsc --noEmit",
     "deploy": "node scripts/recipes.mjs && node scripts/video-sitemap.mjs && cf deploy && node scripts/indexnow.mjs",

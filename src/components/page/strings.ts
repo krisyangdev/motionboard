@@ -1,5 +1,5 @@
 // UI strings of the hub and guide pages. Kept here because src/i18n.ts is shared with the recipe pages.
-import type { Locale } from '@/site'
+import type { Locale } from '@/site.config'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 

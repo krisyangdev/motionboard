@@ -5,7 +5,7 @@ import { Footer, Nav } from '@/components/Chrome'
 import { HTML_LANG } from '@/i18n'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
 import { StatsProvider } from '@/lib/stats'
-import { BRAND } from '@/site'
+import { BRAND } from '@/site.config'
 // All CSS (about 11 KB) is inlined into every page: five separate stylesheets were the main
 // render-blocking cost on the home page's mobile Lighthouse run.
 import baseCss from '@/styles/base.css?inline'
@@ -22,7 +22,9 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-      { name: 'theme-color', content: '#0a0a0b' },
+      // Motionboard is dark in both schemes; one value per scheme so browsers never guess.
+      { name: 'theme-color', content: '#0a0a0b', media: '(prefers-color-scheme: light)' },
+      { name: 'theme-color', content: '#0a0a0b', media: '(prefers-color-scheme: dark)' },
       { title: BRAND.name },
       { name: 'description', content: BRAND.line.en },
       { property: 'og:site_name', content: BRAND.name },

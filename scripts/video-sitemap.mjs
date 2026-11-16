@@ -4,10 +4,9 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { MEDIA_URL, SITE_URL } from '../src/site.config.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const SITE = (process.env.SITE_URL || 'https://motionboard.app').replace(/\/+$/, '')
-const MEDIA = (process.env.MEDIA_URL || 'https://media.motionboard.app').replace(/\/+$/, '')
 // Date the films went online
 const PUBLISHED = '2026-10-30'
 
@@ -22,12 +21,12 @@ const urls = terms.flatMap((t) => {
     { locale: 'en', prefix: '' },
     { locale: 'zh', prefix: '/zh' },
   ].map(({ locale, prefix }) => `  <url>
-    <loc>${SITE}${prefix}/recipes/${t.slug}/</loc>
+    <loc>${SITE_URL}${prefix}/recipes/${t.slug}/</loc>
     <video:video>
-      <video:thumbnail_loc>${MEDIA}/${t.video}.jpg</video:thumbnail_loc>
+      <video:thumbnail_loc>${MEDIA_URL}/${t.video}.jpg</video:thumbnail_loc>
       <video:title>${esc(seo[locale].name)}</video:title>
       <video:description>${esc(seo[locale].description)}</video:description>
-      <video:content_loc>${MEDIA}/${t.video}.mp4</video:content_loc>
+      <video:content_loc>${MEDIA_URL}/${t.video}.mp4</video:content_loc>
       <video:duration>${Math.round(t.dur)}</video:duration>
       <video:publication_date>${PUBLISHED}</video:publication_date>
     </video:video>

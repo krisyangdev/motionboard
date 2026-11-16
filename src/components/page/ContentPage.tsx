@@ -11,7 +11,7 @@ import { PAGES } from '@/data/pages'
 import { bySlug, termName } from '@/data/terms'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
 import { track } from '@/lib/track'
-import { SKILL_INSTALL } from '@/site'
+import { SITE, SKILL_INSTALL } from '@/site.config'
 
 const anchor = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '')
 
@@ -26,7 +26,7 @@ function Command({ text }: { text: string }) {
 
   async function copy() {
     await writeClipboard(text)
-    track('copy', { tool: 'motionboard', what: text === SKILL_INSTALL ? 'install' : 'command', page: location.pathname })
+    track('copy', { tool: SITE.id, what: text === SKILL_INSTALL ? 'install' : 'command', page: location.pathname })
     if (btn.current) burst(btn.current)
     setDone(true)
     window.clearTimeout(timer.current)

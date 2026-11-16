@@ -3,7 +3,7 @@ import { Check, Copy } from 'lucide-react'
 import { burst, writeClipboard } from '@/components/CopyButton'
 import { useStrings } from '@/lib/locale'
 import { track } from '@/lib/track'
-import { GITHUB_URL, SKILL_INSTALL } from '@/site'
+import { GITHUB_URL, SITE, SKILL_INSTALL } from '@/site.config'
 
 // The skill install command with a copy button; shared by the home page and the recipe pages.
 export function InstallCommand() {
@@ -16,7 +16,7 @@ export function InstallCommand() {
 
   async function copy() {
     await writeClipboard(SKILL_INSTALL)
-    track('copy', { tool: 'motionboard', what: 'install', page: location.pathname })
+    track('copy', { tool: SITE.id, what: 'install', page: location.pathname })
     if (btn.current) burst(btn.current)
     setDone(true)
     window.clearTimeout(timer.current)

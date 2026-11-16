@@ -8,19 +8,18 @@
 // Search copy (common names, titles, how-to, FAQ) comes from src/data/seo/<slug>.json: the common name goes
 // into index.json and every agent-facing file, the rest into the recipe page text.
 // Also writes public/_redirects (gitignored): 301s from the old recipe slugs in src/data/renamed.json.
+// Also writes public/robots.txt (gitignored) with the sitemap URLs from src/site.config.ts.
 // Also copies skills/motionboard/source to public/source (served by the site) and rewrites the recipe
 // tables in README.md and README_CN.md between the recipes:start and recipes:end markers.
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync, existsSync, cpSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { GITHUB_URL, MEDIA_URL, SITE, SITE_URL, SKILL_INSTALL } from '../src/site.config.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const SITE = (process.env.SITE_URL || 'https://motionboard.app').replace(/\/+$/, '')
-const MEDIA = (process.env.MEDIA_URL || 'https://media.motionboard.app').replace(/\/+$/, '')
-const SKILL_DIR = 'skills/motionboard'
+const SKILL_DIR = `skills/${SITE.id}`
 const SOURCE_DIR = `${SKILL_DIR}/source`
-const SKILL_INSTALL = 'npx skills add krisyangdev/motionboard'
-const REPO = 'https://github.com/krisyangdev/motionboard'
+const REPO = GITHUB_URL
 
 const POSITIONS = {
   open: 'Opening',
@@ -100,7 +99,7 @@ for (const t of terms) {
 }
 
 const encodePath = (p) => p.split('/').map(encodeURIComponent).join('/')
-const mdUrl = (slug) => `${SITE}/r/${slug}.md`
+const mdUrl = (slug) => `${SITE_URL}/r/${slug}.md`
 
 // The site serves the source projects from public/source; the skill keeps the originals.
 rmSync(join(ROOT, 'public/source'), { recursive: true, force: true })
@@ -189,13 +188,13 @@ function recipeMd(t, skill) {
 
   const L = []
   L.push(`# ${commonName(t)}`, '')
-  if (t.en.toLowerCase() !== commonName(t).toLowerCase()) L.push(`Motionboard shot name: ${t.en}`, '')
+  if (t.en.toLowerCase() !== commonName(t).toLowerCase()) L.push(`${SITE.name} shot name: ${t.en}`, '')
   if (x?.def) L.push(x.def, '')
   L.push(
     `- Position in a launch film: ${POSITIONS[t.pos]}`,
     `- Slug: ${t.slug}`,
-    `- Preview video: ${MEDIA}/${t.video}.mp4`,
-    `- Recipe page${skill ? ' (preview film and original side by side)' : ''}: ${SITE}/recipes/${t.slug}/`,
+    `- Preview video: ${MEDIA_URL}/${t.video}.mp4`,
+    `- Recipe page${skill ? ' (preview film and original side by side)' : ''}: ${SITE_URL}/recipes/${t.slug}/`,
   )
   if (skill) {
     L.push(`- Film length: ${filmSeconds(t.video)}s, 1920x1080`)
@@ -234,10 +233,10 @@ function recipeMd(t, skill) {
     L.push('', `Read \`../source/${t.video}/index.html\` in full before adapting it: it holds the whole composition and its GSAP timeline.`, '')
     return L.join('\n')
   }
-  for (const f of files) L.push(`- ${SITE}/source/${t.video}/${encodePath(f.path)} (${formatSize(f.size)})`)
+  for (const f of files) L.push(`- ${SITE_URL}/source/${t.video}/${encodePath(f.path)} (${formatSize(f.size)})`)
   L.push('', 'Download all of them:', '', '```sh')
   for (const f of files) {
-    L.push(`curl -fsSL --create-dirs -o "${t.video}/${f.path}" "${SITE}/source/${t.video}/${encodePath(f.path)}"`)
+    L.push(`curl -fsSL --create-dirs -o "${t.video}/${f.path}" "${SITE_URL}/source/${t.video}/${encodePath(f.path)}"`)
   }
   L.push('```', '')
 
@@ -276,7 +275,7 @@ for (const t of order) {
 }
 
 // index.md, web variant
-const idx = ['# Motionboard recipes', '', `${order.length} motion recipes from launch films, grouped by where they sit in a film. Each link is a self-contained instruction file for a coding agent.`, '', `License: MIT. Free to use in your own projects, including commercial launch films. ${REPO}/blob/main/LICENSE`, '']
+const idx = [`# ${SITE.name} recipes`, '', `${order.length} motion recipes from launch films, grouped by where they sit in a film. Each link is a self-contained instruction file for a coding agent.`, '', `License: MIT. Free to use in your own projects, including commercial launch films. ${REPO}/blob/main/LICENSE`, '']
 for (const p of POSITION_ORDER) {
   const group = order.filter((t) => t.pos === p)
   if (!group.length) continue
@@ -288,9 +287,9 @@ writeFileSync(join(webDir, 'index.md'), idx.join('\n'))
 
 // index.md, skill variant: the list the agent scans to pick shots
 const sidx = [
-  '# Motionboard recipes',
+  `# ${SITE.name} recipes`,
   '',
-  `${built.length} recipes, grouped by where they sit in a launch film. Each line: English name, slug (the file is \`./<slug>.md\`), what the shot does, film length. Each recipe page on ${SITE} shows the preview film next to the original.`,
+  `${built.length} recipes, grouped by where they sit in a launch film. Each line: English name, slug (the file is \`./<slug>.md\`), what the shot does, film length. Each recipe page on ${SITE_URL} shows the preview film next to the original.`,
   '',
 ]
 for (const p of POSITION_ORDER) {
@@ -308,7 +307,7 @@ writeFileSync(join(skillDir, 'index.md'), sidx.join('\n'))
 const mdCell = (s) => cell(s).replace(/`/g, '')
 function readmeTable(lang) {
   const zh = lang === 'zh'
-  const base = zh ? `${SITE}/zh/recipes` : `${SITE}/recipes`
+  const base = zh ? `${SITE_URL}/zh/recipes` : `${SITE_URL}/recipes`
   const L = []
   for (const p of POSITION_ORDER) {
     const group = built.filter((t) => t.pos === p)
@@ -336,19 +335,19 @@ writeReadmeTable('README_CN.md', 'zh')
 
 // llms.txt
 const llms = [
-  '# Motionboard',
+  `# ${SITE.name}`,
   '',
-  `> Motionboard is a library of ${order.length} motion recipes broken down from Apple-grade launch films. Each recipe is a 10-second 1920x1080 shot made with code (HyperFrames, HTML and GSAP), with a Markdown file that contains the spec, the prompt and the full runnable source. Give a recipe file to a coding agent such as Claude Code, Codex or Cursor and it recreates the shot for the user's own product, as a video or as motion on a website.`,
+  `> ${SITE.name} is a library of ${order.length} motion recipes broken down from Apple-grade launch films. Each recipe is a 10-second 1920x1080 shot made with code (HyperFrames, HTML and GSAP), with a Markdown file that contains the spec, the prompt and the full runnable source. Give a recipe file to a coding agent such as Claude Code, Codex or Cursor and it recreates the shot for the user's own product, as a video or as motion on a website.`,
   '',
   `License: MIT. Free to use in your own projects, including commercial launch films. ${REPO}/blob/main/LICENSE`,
   '',
   '## Agent skill',
   '',
-  `Install the Motionboard skill in Claude Code or Codex and the agent knows all ${order.length} recipes: \`${SKILL_INSTALL}\`. Or tell the agent: "Install this skill: ${REPO}". The skill plans and builds a whole launch film for the user's product, or a single shot. Source: ${REPO}`,
+  `Install the ${SITE.name} skill in Claude Code or Codex and the agent knows all ${order.length} recipes: \`${SKILL_INSTALL}\`. Or tell the agent: "Install this skill: ${REPO}". The skill plans and builds a whole launch film for the user's product, or a single shot. Source: ${REPO}`,
   '',
   '## Recipes',
   '',
-  `- [All recipes](${SITE}/r/index.md): the full list grouped by position in a launch film`,
+  `- [All recipes](${SITE_URL}/r/index.md): the full list grouped by position in a launch film`,
 ]
 for (const t of order) llms.push(`- [${commonName(t)}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
 llms.push('')
@@ -364,4 +363,9 @@ const redirects = Object.entries(renamed).flatMap(([old, now]) => [
 ])
 writeFileSync(join(ROOT, 'public/_redirects'), `${redirects.join('\n')}\n`)
 
-console.log(`recipes: wrote ${built.length} recipes x 2 variants (public/r, ${SKILL_DIR}/recipes), index.md, llms.txt, README tables, _redirects (${missing} without en.json text) for ${SITE}`)
+writeFileSync(
+  join(ROOT, 'public/robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-video.xml\n`,
+)
+
+console.log(`recipes: wrote ${built.length} recipes x 2 variants (public/r, ${SKILL_DIR}/recipes), index.md, llms.txt, README tables, _redirects (${missing} without en.json text) for ${SITE_URL}`)

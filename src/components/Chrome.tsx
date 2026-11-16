@@ -5,7 +5,7 @@ import { PAGES } from '@/data/page-index'
 import { HTML_LANG } from '@/i18n'
 import { PageLink, switchPath, useLocale, useStrings } from '@/lib/locale'
 import { useSaved } from '@/lib/saved'
-import { BRAND, GITHUB_URL, LICENSE_URL } from '@/site'
+import { BRAND, GITHUB_URL, LICENSE_URL } from '@/site.config'
 
 // Match cut: a circle cut to a square in the same position.
 export function Logo() {

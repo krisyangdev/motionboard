@@ -4,7 +4,7 @@
 // Adding a film: an entry in both files, then media/<video>.mp4, <video>-s.mp4, <video>.jpg (uploaded to R2)
 // and the runnable HyperFrames folder in skills/motionboard/source/<video>/ (copied to public/source at build).
 import raw from './gen/index.json'
-import { MEDIA_URL, type Locale } from '@/site'
+import { MEDIA_URL, type Locale } from '@/site.config'
 
 export type Category = 'A' | 'B' | 'C' | 'D' | 'E'
 

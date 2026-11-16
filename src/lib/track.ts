@@ -8,7 +8,7 @@ type Dict = Record<string, string | number | boolean | undefined>;
 /** Browser events from the shared schema in ~/code/home/lines/sites.md. `lang` and `site` are added automatically. */
 export type TrackEvent =
   | { event: 'page_view'; page: string; page_type: string; landing_page: string; referrer_type: string; device: string }
-  | { event: 'copy'; tool: 'motionboard'; what: 'prompt' | 'install' | 'command'; recipe?: string; page: string }
+  | { event: 'copy'; tool: string; what: 'prompt' | 'install' | 'command'; recipe?: string; page: string }
   | { event: 'cta_click'; page: string; to: 'github' | 'skills.sh' }
   | { event: 'video_play'; recipe: string; page: string; trigger: 'auto' | 'click' }
   | { event: 'error'; page: string; endpoint: string; code: string };

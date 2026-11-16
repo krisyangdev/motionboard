@@ -4,7 +4,7 @@ import { bySlug, media, recipePath, termName } from '@/data/terms'
 import { plain } from '@/components/page/inline'
 import { PAGES } from '@/data/pages'
 import { IN_LANGUAGE, pageUrl, seoHead } from '@/lib/seo'
-import { BRAND, SITE_URL, type Locale } from '@/site'
+import { BRAND, SITE_URL, type Locale } from '@/site.config'
 import type { PageData } from '@/components/page/load'
 
 const PUBLISHED = '2026-11-16'

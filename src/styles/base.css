@@ -25,6 +25,8 @@ body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(-
 a { color: inherit; text-decoration: none; }
 button, input { font: inherit; color: inherit; }
 img, video { display: block; max-width: 100%; }
+h1, h2, h3, h4 { text-wrap: balance; }
+p, li, dd, blockquote { text-wrap: pretty; }
 .mono { font: 11px/1.4 var(--mono); letter-spacing: .02em; color: var(--ink-3); text-transform: uppercase; }
 .gut { padding-inline: max(24px, env(safe-area-inset-left, 0px)) max(24px, env(safe-area-inset-right, 0px)); }
 @media (max-width: 640px) { .gut { padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); } }

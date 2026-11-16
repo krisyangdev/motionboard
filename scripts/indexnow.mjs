@@ -4,15 +4,17 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { SITE } from '../src/site.config.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const HOST = 'motionboard.app'
+const HOST = SITE.domain
 const SITEMAP = join(ROOT, '.cloudflare/output/v0/workers/default/assets/sitemap.xml')
 
 try {
   const keyFile = readdirSync(join(ROOT, 'public')).find((f) => /^[0-9a-f]{32}\.txt$/.test(f))
   if (!keyFile) throw new Error('no IndexNow key file (<32 hex>.txt) in public/')
   const key = keyFile.replace('.txt', '')
+  if (key !== SITE.indexNowKey) throw new Error(`public/${keyFile} does not match SITE.indexNowKey`)
   const urlList = [...readFileSync(SITEMAP, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
   if (!urlList.length) throw new Error(`no URLs in ${SITEMAP}`)
 

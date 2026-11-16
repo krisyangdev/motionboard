@@ -5,7 +5,7 @@ import { HERO, HERO_FILM } from '@/data/hero'
 import { bySlug, termName } from '@/data/terms'
 import { gsap, useGSAP } from '@/lib/gsap'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
-import { BRAND } from '@/site'
+import { BRAND } from '@/site.config'
 
 const SEGS = HERO.map((s) => ({ ...s, term: bySlug[s.slug], dur: s.end - s.start }))
 

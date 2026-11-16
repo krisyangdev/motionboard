@@ -56,9 +56,13 @@
 /* ---------- recipes ---------- */
 .recipes { --bar: 56px; scroll-margin-top: calc(var(--nav) + env(safe-area-inset-top, 0px)); padding-bottom: 40px; }
 
-.chips { position: sticky; top: calc(var(--nav) + env(safe-area-inset-top, 0px)); z-index: 20; height: var(--bar); background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: saturate(1.6) blur(18px); -webkit-backdrop-filter: saturate(1.6) blur(18px); border-bottom: 1px solid var(--line); }
-.chips-in { position: relative; display: flex; align-items: center; gap: 4px; height: 100%; overflow-x: auto; scrollbar-width: none; }
-.chips-in::-webkit-scrollbar { display: none; }
+.chips { position: sticky; top: calc(var(--nav) + env(safe-area-inset-top, 0px)); z-index: 20; min-height: var(--bar); background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: saturate(1.6) blur(18px); -webkit-backdrop-filter: saturate(1.6) blur(18px); border-bottom: 1px solid var(--line); }
+.chips-in { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-height: var(--bar); padding: 4px 0; }
+/* Phones: the chips wrap onto two or three rows, so the bar scrolls away with the page instead of sticking. */
+@media (max-width: 767px) {
+  .recipes { --bar: 0px; }
+  .chips { position: static; }
+}
 .chip { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--ink-2); transition: color .2s, background .2s; }
 .chip .mono { color: var(--ink-3); }
 .chip:hover { color: var(--ink); }

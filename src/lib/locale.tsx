@@ -2,7 +2,7 @@
 import { useCallback, type MouseEventHandler, type ReactNode, type Ref } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { STRINGS } from '@/i18n'
-import type { Locale } from '@/site'
+import type { Locale } from '@/site.config'
 
 export const localeOf = (pathname: string): Locale => (pathname === '/zh' || pathname.startsWith('/zh/') ? 'zh' : 'en')
 

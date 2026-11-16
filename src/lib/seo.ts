@@ -4,7 +4,7 @@ import { notFound } from '@tanstack/react-router'
 import { HERO_FILM } from '@/data/hero'
 import { OG_LOCALE, STRINGS } from '@/i18n'
 import { bySlug, loadText, media, recipePath, termName, type RecipeText, type Term } from '@/data/terms'
-import { absolute, BRAND, SITE_URL, type Locale } from '@/site'
+import { absolute, alternateUrls, BRAND, SITE, SITE_URL, type Locale } from '@/site.config'
 
 /** Absolute URL of a page; `path` is the English path, starting with a slash. */
 export const pageUrl = (locale: Locale, path: string) => `${SITE_URL}${locale === 'zh' ? '/zh' : ''}${path}`
@@ -12,11 +12,7 @@ export const pageUrl = (locale: Locale, path: string) => `${SITE_URL}${locale ==
 export const IN_LANGUAGE: Record<Locale, string> = { en: 'en', zh: 'zh-CN' }
 
 /** hreflang alternates of an English path, also used for the sitemap */
-export const alternates = (path: string) => [
-  { hrefLang: 'en', href: pageUrl('en', path) },
-  { hrefLang: 'zh-CN', href: pageUrl('zh', path) },
-  { hrefLang: 'x-default', href: pageUrl('en', path) },
-]
+export const alternates = (path: string) => alternateUrls(path).map((a) => ({ hrefLang: a.lang, href: a.href }))
 
 export type SeoPage = {
   /** full <title>; the brand is appended unless it already contains it */
@@ -46,7 +42,7 @@ export function seoHead(p: SeoPage) {
     { property: 'og:type', content: p.type ?? 'article' },
     { property: 'og:url', content: url },
     { property: 'og:locale', content: OG_LOCALE[p.lang] },
-    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:card', content: SITE.social.twitterCard },
   ]
   if (p.image) meta.push({ property: 'og:image', content: p.image }, { name: 'twitter:image', content: p.image })
   if (p.video) meta.push({ property: 'og:video', content: p.video })
