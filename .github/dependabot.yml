@@ -31,6 +31,10 @@ updates:
       - dependency-name: "vite"
         update-types:
           - "version-update:semver-major"
+      # Match the Node major the build runs on (Node 22 locally and in CI); the Worker uses workerd's nodejs_compat.
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: github-actions
     directory: /
     schedule:
