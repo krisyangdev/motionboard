@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import { HeadContent, createRootRoute } from '@tanstack/react-router'
+import { createRootRoute } from '@tanstack/react-router'
 import { Analytics } from '@/components/Analytics'
 import { Footer, Nav } from '@/components/Chrome'
-import { Scripts } from '@/components/Scripts'
+import { Head, Scripts } from '@/components/Scripts'
 import { HTML_LANG } from '@/i18n'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
 import { StatsProvider } from '@/lib/stats'
@@ -59,7 +59,7 @@ function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang={HTML_LANG[locale]}>
       <head>
-        <HeadContent />
+        <Head />
         <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: light)" />
       </head>
       <body>
