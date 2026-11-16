@@ -87,6 +87,7 @@ export function Footer() {
           {s.foot.license}
         </a>
       </span>
+      <span>{s.foot.privacy}</span>
     </footer>
   )
 }

@@ -5,6 +5,7 @@ import type { Term } from '@/data/terms'
 import { useLike, trackCopy, trackWish } from '@/lib/stats'
 import { useSaved } from '@/lib/saved'
 import { useStrings } from '@/lib/locale'
+import { track } from '@/lib/track'
 import { burst, writeClipboard } from '@/components/CopyButton'
 
 // A link bar above a film frame: your product link becomes a shot. Drawn on lucide's 24px grid.
@@ -40,6 +41,7 @@ export function CopyAction({ term, compact }: { term: Term; compact?: boolean })
     await writeClipboard(copyText(term))
     if (ref.current) burst(ref.current)
     trackCopy(term.slug)
+    track('copy', { tool: 'motionboard', what: 'prompt', recipe: term.slug, page: location.pathname })
     setDone(true)
     window.clearTimeout(timer.current)
     timer.current = window.setTimeout(() => setDone(false), 1600)

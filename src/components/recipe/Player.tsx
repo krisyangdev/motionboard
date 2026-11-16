@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Play } from 'lucide-react'
 import { media, termName, type Term } from '@/data/terms'
 import { useLocale, useStrings } from '@/lib/locale'
+import { track } from '@/lib/track'
 
-type FilmProps = { src: string; mobileSrc?: string; poster: string; name: string; transitionName?: string }
+type FilmProps = { src: string; mobileSrc?: string; poster: string; name: string; transitionName?: string; slug?: string }
 
 // Autoplays muted on loop; click toggles. Reduced motion shows the poster and plays only on click.
-export function Film({ src, mobileSrc, poster, name, transitionName }: FilmProps) {
+export function Film({ src, mobileSrc, poster, name, transitionName, slug }: FilmProps) {
   const video = useRef<HTMLVideoElement>(null)
   const bar = useRef<HTMLElement>(null)
   const [paused, setPaused] = useState(false)
@@ -36,6 +37,8 @@ export function Film({ src, mobileSrc, poster, name, transitionName }: FilmProps
       cancelAnimationFrame(raf)
       draw()
     }
+    const onFirstPlaying = () => track('video_play', { recipe: slug!, page: location.pathname, trigger: 'auto' })
+    if (slug) v.addEventListener('playing', onFirstPlaying, { once: true })
     v.addEventListener('play', onPlay)
     v.addEventListener('pause', onPause)
     v.addEventListener('seeked', draw)
@@ -50,17 +53,20 @@ export function Film({ src, mobileSrc, poster, name, transitionName }: FilmProps
     }
     return () => {
       cancelAnimationFrame(raf)
+      v.removeEventListener('playing', onFirstPlaying)
       v.removeEventListener('play', onPlay)
       v.removeEventListener('pause', onPause)
       v.removeEventListener('seeked', draw)
     }
-  }, [src, mobileSrc])
+  }, [src, mobileSrc, slug])
 
   const toggle = () => {
     const v = video.current
     if (!v) return
-    if (v.paused) v.play().catch(() => {})
-    else v.pause()
+    if (v.paused) {
+      if (slug) track('video_play', { recipe: slug, page: location.pathname, trigger: 'click' })
+      v.play().catch(() => {})
+    } else v.pause()
   }
 
   return (
@@ -84,5 +90,5 @@ export function Film({ src, mobileSrc, poster, name, transitionName }: FilmProps
 // The full film of a recipe.
 export function Player({ term: t }: { term: Term }) {
   const locale = useLocale()
-  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} name={termName(t, locale)} transitionName="film" />
+  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} name={termName(t, locale)} transitionName="film" slug={t.slug} />
 }

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { Analytics } from '@/components/Analytics'
 import { Footer, Nav } from '@/components/Chrome'
 import { HTML_LANG } from '@/i18n'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
@@ -60,6 +61,7 @@ function RootDocument({ children }: { children: ReactNode }) {
       </head>
       <body>
         <StatsProvider>
+          <Analytics />
           <Nav />
           {children}
           <Footer />

@@ -6,7 +6,7 @@ import type { Locale } from '@/site'
 const en = {
   lang: { label: '中文', aria: 'View in Chinese' },
   nav: { recipes: 'Recipes', saved: 'Saved', github: 'GitHub' },
-  foot: { credit: 'Recreations rendered with HyperFrames · Original films © their owners', license: 'License' },
+  foot: { credit: 'Recreations rendered with HyperFrames · Original films © their owners', license: 'License', privacy: 'Anonymous usage stats via PostHog and Cloudflare Web Analytics: no cookies, no stored IDs, no IP, no recordings.' },
   notFound: { title: 'Page not found', browse: 'Browse recipes' },
   positions: {
     open: 'Opening',
@@ -67,7 +67,7 @@ export type Strings = typeof en
 const zh: Strings = {
   lang: { label: 'EN', aria: '切换到 English' },
   nav: { recipes: '配方', saved: '收藏', github: 'GitHub' },
-  foot: { credit: '复刻由 HyperFrames 渲染 · 原片版权归各自所有者', license: '许可证' },
+  foot: { credit: '复刻由 HyperFrames 渲染 · 原片版权归各自所有者', license: '许可证', privacy: '用 PostHog 和 Cloudflare Web Analytics 匿名统计访问：不用 Cookie，不存 ID，不记 IP，不录屏。' },
   notFound: { title: '页面不存在', browse: '浏览配方' },
   positions: {
     open: '开场',

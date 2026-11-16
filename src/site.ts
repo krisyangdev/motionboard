@@ -18,6 +18,8 @@ export const BRAND = {
   },
 }
 export const SITE_URL = 'https://motionboard.app'
+export const SITE_ID = 'motionboard'
+export const POSTHOG_HOST = 'https://us.i.posthog.com'
 export const GITHUB_URL = 'https://github.com/krisyangdev/motionboard'
 export const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`
 export const SKILL_INSTALL = 'npx skills add krisyangdev/motionboard'
