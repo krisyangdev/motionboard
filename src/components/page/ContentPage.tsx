@@ -15,6 +15,9 @@ import { SITE, SKILL_INSTALL } from '@/site.config'
 
 const anchor = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '')
 
+/** Header text without the inline link and code marks, for the phone layout's cell labels. */
+const plain = (t: string) => t.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/`/g, '')
+
 // A one-line command with a copy button, in the look of the home page's skill install box.
 function Command({ text }: { text: string }) {
   const s = useStrings()
@@ -98,7 +101,7 @@ function BlockView({ block: b }: { block: Block }) {
     }
     case 'table':
       return (
-        <div className="pg-med pg-table" tabIndex={0}>
+        <div className="pg-med pg-table">
           <table>
             <thead>
               <tr>
@@ -113,7 +116,7 @@ function BlockView({ block: b }: { block: Block }) {
               {b.rows.map((row, r) => (
                 <tr key={r}>
                   {row.map((cell, i) => (
-                    <td key={i}>
+                    <td key={i} data-label={plain(b.head[i] ?? '')}>
                       <Inline text={cell} />
                     </td>
                   ))}

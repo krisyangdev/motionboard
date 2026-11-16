@@ -22,8 +22,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-      // Motionboard is dark in both schemes; one value per scheme so browsers never guess.
-      { name: 'theme-color', content: '#0a0a0b', media: '(prefers-color-scheme: light)' },
+      // Motionboard is dark in both schemes. The light value is written in RootDocument: head() keeps one meta per name.
       { name: 'theme-color', content: '#0a0a0b', media: '(prefers-color-scheme: dark)' },
       { title: BRAND.name },
       { name: 'description', content: BRAND.line.en },
@@ -60,6 +59,7 @@ function RootDocument({ children }: { children: ReactNode }) {
     <html lang={HTML_LANG[locale]}>
       <head>
         <HeadContent />
+        <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: light)" />
       </head>
       <body>
         <StatsProvider>
