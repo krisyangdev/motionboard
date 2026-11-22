@@ -119,11 +119,19 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
     if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
     const f = frame.current
     const t = title.current
+    // On a recipe page the current film and heading already carry these names; a name may appear only
+    // once per page, so they give them up for the transition and the tile morphs into the next recipe.
+    const current = [...document.querySelectorAll<HTMLElement>('[style*="view-transition-name"]')].filter(
+      (el) => el !== f && el !== t && (el.style.viewTransitionName === 'film' || el.style.viewTransitionName === 'title'),
+    )
+    const names = current.map((el) => el.style.viewTransitionName)
+    current.forEach((el) => (el.style.viewTransitionName = 'none'))
     f?.style.setProperty('view-transition-name', 'film')
     t?.style.setProperty('view-transition-name', 'title')
     setTimeout(() => {
       f?.style.removeProperty('view-transition-name')
       t?.style.removeProperty('view-transition-name')
+      current.forEach((el, i) => (el.style.viewTransitionName = names[i]))
     }, 1000)
   }
 
