@@ -1,12 +1,12 @@
 ---
 name: motionboard
 license: MIT
-description: Make product launch videos, promo videos and motion graphics in code with HyperFrames (HTML + GSAP rendered to MP4), from 38 shot recipes taken from Apple and Linear launch films. Use when the user asks to make a launch video, product video, promo or app trailer; asks for a specific effect such as a match cut transition, logo reveal or logo animation, text scramble, kinetic typography, typing / typewriter animation, word-by-word text highlight, morph transition, wipe or iris transition, liquid glass effect, chromatic aberration / RGB split, line boil, dot matrix animation, confetti success animation, card flip, zoom-to-cursor, multiplayer cursors, 3D tilted UI with depth of field or a product light reveal; wants Apple-style or Linear-style motion as a video or as a hero animation on a website; or asks whether Claude Code or Codex can make videos. Also applies to requests in Chinese such as 做宣传片, 产品发布视频, 做个转场, Logo 动画, 苹果风动效, 复刻某个镜头.
+description: Make product launch videos, promo videos and motion graphics in code with HyperFrames (HTML + GSAP rendered to MP4), from 38 shot recipes taken from Apple and Linear launch films. Use when the user asks to make a launch video, product video, promo or app trailer, including from just a product URL or repo in one command; asks for a specific effect such as a match cut transition, logo reveal or logo animation, text scramble, kinetic typography, typing / typewriter animation, word-by-word text highlight, morph transition, wipe or iris transition, liquid glass effect, chromatic aberration / RGB split, line boil, dot matrix animation, confetti success animation, card flip, zoom-to-cursor, multiplayer cursors, 3D tilted UI with depth of field or a product light reveal; wants Apple-style or Linear-style motion as a video or as a hero animation on a website; or asks whether Claude Code or Codex can make videos. Also applies to requests in Chinese such as 做宣传片, 产品发布视频, 做个转场, Logo 动画, 苹果风动效, 复刻某个镜头.
 ---
 
 # Motionboard
 
-Motionboard is shot language broken down from real Apple and Linear launch films. Each shot is recreated in code as a ~10s HyperFrames film (HTML + GSAP rendered to video). This skill holds 38 recipes and their runnable source projects. You make one shot, or plan and build a whole launch film, for the user's product.
+Motionboard is shot language broken down from real Apple and Linear launch films. Each shot is recreated in code as a ~10s HyperFrames film (HTML + GSAP rendered to video). This skill holds 38 recipes and their runnable source projects. You make one shot, plan and build a whole launch film, or turn a product URL or repo into a launch film in one command.
 
 Reply in the user's language. The files here are in English.
 
@@ -19,6 +19,7 @@ Every shot must reach the finish of its preview film on https://motionboard.app.
 - `recipes/index.md`: all recipes grouped by position in a launch film, one line each. Scan this to pick shots.
 - `recipes/<slug>.md`: one recipe. Spec table, why it works, the prompt, "matches requests like" phrases, the preview and recipe page links.
 - `source/<video>/`: the runnable HyperFrames project for the recipe (`index.html`, `package.json`, `hyperframes.json`). The `Source files` section of each recipe names the folder.
+- `film/`: the one-command launch film (section 4). `shots.json` lists the recipes that fit a film, with the part of each render that goes in; `join.mjs` cuts and joins the renders.
 
 Each recipe page at `https://motionboard.app/recipes/<slug>/` shows the preview film next to the original it was recreated from. Preview film: `https://media.motionboard.app/<video>.mp4`.
 
@@ -73,7 +74,7 @@ Use when the user wants one shot, or names a recipe.
 
 1. **Find the recipe.** By name or slug: open `recipes/<slug>.md`. By description: match it against `recipes/index.md` and the "Matches requests like" phrases in the likely recipes; read two or three candidates and choose. If two fit, name both in one sentence and let the user pick. Ask nothing else when the choice is clear.
 2. **Know the product.** From the user's repo or message: name, logo, brand colours, fonts, real UI. Ask once for what is missing and cannot be read from the repo.
-3. **Pick the output.** A video by default. Website motion (section 4) when the user mentions their site or a hero animation.
+3. **Pick the output.** A video by default. Website motion (section 5) when the user mentions their site or a hero animation.
 4. **Read the whole recipe file**, then the whole `source/<video>/index.html`.
 5. **Copy the project** and run `npm run check` on the untouched copy. `cp -R <skill dir>/source/<video> <user folder>/<video>`. Never edit files inside the skill folder.
 6. **Adapt two layers only.**
@@ -108,11 +109,41 @@ Use when the user wants a launch film, promo, trailer or feature video.
    Add music only when the user asks.
 5. **Deliver** `launch-film.mp4` and the editable project folder (all shot folders plus `list.txt`). Report the quality-check notes per shot.
 
-## 4. Website motion
+## 4. Mode C: launch film in one command
+
+Use when the user gives a product URL or repo and asks for a launch film without planning it with you: "make a launch film for https://…", "turn this repo into a launch video", "/motionboard film <url>". It runs from input to MP4 without questions. Mode B is the version where the user approves the storyboard.
+
+Defaults: 1920x1080, 30 fps, 5 shots, 22–32 seconds, hard cuts, no music, no voice. The user can change length, shot count (4 to 6) or name a recipe to use or avoid, in plain words.
+
+Everything stays local: no sign-in, no paid generation, no cloud render. Use `capture` with `--skip-vision` and never run `hyperframes auth login`. Setting `HYPERFRAMES_NO_TELEMETRY=1` turns off HyperFrames' anonymous counters.
+
+Work in `launch-film/` next to the user's project.
+
+1. **Gather the product into `launch-film/brief.md`.**
+   - URL: `npx --yes hyperframes@0.9.81 capture <url> -o launch-film/capture --skip-vision --json` (tested with 0.9.81; the shot projects keep their own pinned version). Stop and tell the user if it exits non-zero, prints `ok: false`, writes `BLOCKED.md`, or captures almost no text. Capture also writes `CLAUDE.md`, `AGENTS.md` and `.cursorrules` for a different workflow: delete them from `launch-film/capture/` right away and do not follow them. Read the extracted page and its CSS, the brand tokens, the screenshots and the downloaded images.
+   - Repo: read, in this order, the main HTML or app entry, the global CSS (`:root` variables, fonts), the README, `package.json`, the main routes and components, and `public/` (logo, favicon, screenshots). If the README or `package.json` names a live URL, capture it as well.
+   - Logo: open the file before using it. The capture's "logo" can be a third-party icon (a GitHub or social link). Check `favicon.svg` and the header markup; when the logo is HTML (a tile with a letter), rebuild it as HTML or SVG.
+   - Fonts: captured brand fonts are often subsets that only hold the letters of the name. Check that the file covers all the text you will set; otherwise use Inter for that text. For text in Unicode styles (𝓯𝓪𝓷𝓬𝔂, 𝔤𝔬𝔱𝔥𝔦𝔠), bundle a font that has those glyphs, such as Noto Sans Math, and look at a frame to confirm they do not render as boxes.
+   - Write the brief: name; a one-liner of at most 12 words in the product's own words; three specific claims (no "streamline your workflow"); the story as one line, who it is for, then entry, key action, result; colours as hex for background, text and accent (the accent is the colour that recurs across the brand, never link blue or a status red or green); light or dark brand; the font; the logo file; the one or two screens to rebuild and the capture screenshot each is based on. Carry no secrets, tokens, real customer names or emails into the film; people in the UI get invented names.
+2. **Storyboard.** Pick 5 shots from `film/shots.json` in this order: one `open`, one `reveal`, one or two `feature`, an optional `bridge`, one `close`. Each shot shows one beat of the story line (entry, key action, result, proof), so the film reads as the product being used, not as a reel of effects. A recipe fits when its mechanism shows something true about this product (the `fits` field). Prefer shots whose `theme` matches the brand. Do not put two text-only shots, or two shots of the same app window, next to each other. Read each shot's `note`. The sum of `out − in` is the film length. Write `launch-film/film.json`:
+
+   ```json
+   { "out": "launch-film.mp4", "shots": [
+     { "dir": "shots/01-typing-animation", "slug": "typing-animation", "in": 0.0, "out": 5.2, "shows": "the install command" }
+   ] }
+   ```
+
+   Print the storyboard as a table and continue without waiting.
+3. **Build each shot** with Mode A steps 4 to 8, one folder per shot: `launch-film/shots/01-<slug>/`, `02-<slug>/`, and so on. Only the part between `in` and `out` is seen, so put the product's strongest content there and leave the motion layer as it is. Rebuild screens from the captured markup and CSS (scripts removed, assets copied into the shot) at the source's density; a flat screenshot is never the UI (section 7). Show only screens and features the product has: replace or remove any prop of the source that belongs to its sample brand (a camera lens, a site editor, a phone). When a dark shot goes on a light brand (or the reverse), change the stage, shadows, reflections and glows with it, not only the text colours. Keep name, colours and type identical across shots. If you can run subagents, build the shots in parallel, one per shot, each given the brief, its recipe and its `in`/`out`.
+4. **Check and render** every shot: `npm run check`, then `npm run render -- --quality delivery`, two renders at a time at most. Take frames at `in`, the middle and `out` with `snapshot --at`. Text inside the window must be readable: about 0.3 seconds per word and at least 0.8 seconds once settled. When text is not readable or a cut lands mid-move, shift `in` or `out` by up to 0.5 seconds in `film.json`; keep typing speed and other motion values.
+5. **Join**: `node <skill dir>/film/join.mjs launch-film/film.json` writes `launch-film/launch-film.mp4` with hard cuts (needs ffmpeg and ffprobe). It uses the newest MP4 in each shot's `renders/` unless the shot names a `render`, and it stops when a window does not fit its render. Add `"fade": 0.4` only for a dark brand that should open and end on black. Confirm with `ffprobe` that the film is 1920x1080 and as long as the storyboard.
+6. **Deliver** the MP4, `film.json`, `brief.md` and the shot folders, with one line per shot on what was changed for the product.
+
+## 5. Website motion
 
 The same recipe can be a hero animation on a website. Do it when the user asks. Port the GSAP timeline in the source `index.html` into the user's stack (React, Vue, Svelte, plain HTML). Build the same DOM, keep durations, delays and easings, start it when the element scrolls into view, and respect `prefers-reduced-motion: reduce` by showing the final frame as a static state.
 
-## 5. Quality check before delivering
+## 6. Quality check before delivering
 
 1. Render the project.
 2. Download the preview film (`https://media.motionboard.app/<video>.mp4`) and capture the same moments from both:
@@ -126,11 +157,11 @@ The same recipe can be a hero animation on a website. Do it when the user asks. 
 3. Compare each pair. Fix differences in timing, easing, blur, depth of field, shadows, lighting, scale and density. The frames should match beat for beat; only brand and UI content differ.
 4. Deliver with a short list of the parameters that were changed for the product and why.
 
-## 6. No placeholder UI
+## 7. No placeholder UI
 
 Never ship grey boxes, lorem ipsum, stock icons standing in for real ones, or a pasted screenshot. Product UI is rebuilt in code at the density of the source project: real-looking copy, icons, avatars, data, states, hairline borders, shadows. If the user's product has no UI yet, design a believable one from its description, at the same density as the source.
 
-## 7. Boundaries
+## 8. Boundaries
 
 - The skill ships recreations only. Do not download or embed the original third-party films. The recipe pages link to YouTube for the originals.
 - Recipes and source files are free to use in the user's own work, including commercial launch films.

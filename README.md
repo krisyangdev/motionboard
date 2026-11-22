@@ -48,6 +48,7 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | Say | What happens |
 | --- | --- |
 | Make a launch film for my product with Motionboard. | The agent reads your product, proposes a 4 to 6 shot storyboard with preview links, waits for your OK, builds each shot and joins them into one MP4. |
+| Make a launch film for https://your-product.com with Motionboard. | One command, no questions: the agent captures the page, writes a brief, picks five recipes, builds and renders each one, and joins them into a 22 to 32 second MP4. |
 | Use the match-cut recipe to go from my logo to the app. | The agent builds that one shot with your brand and UI, renders it, and checks it against the preview. |
 | Make the Tilted UI with Depth of Field shot for this landing page. | The agent ports the recipe's GSAP timeline into your site as a hero animation. |
 

@@ -46,6 +46,7 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | 你说 | 发生什么 |
 | --- | --- |
 | 用 Motionboard 给我的产品做一支宣传片。 | Agent 先了解你的产品，给出 4 到 6 个镜头的分镜表和预览链接，等你确认后逐个做出镜头，再拼成一个 MP4。 |
+| 用 Motionboard 给 https://your-product.com 做一支宣传片，直接做完。 | 一条命令，中途不问：Agent 抓取网页、写产品简报、挑 5 个配方，逐个做出并渲染，再拼成 22 到 32 秒的 MP4。 |
 | 用 match-cut 配方，从我的 logo 切到应用界面。 | Agent 用你的品牌和界面做出这一个镜头，渲染后对照预览片检查。 |
 | 给这个落地页做「斜拍景深界面」镜头。 | Agent 把配方里的 GSAP 时间线移植到你的网站，做成首屏动效。 |
 
