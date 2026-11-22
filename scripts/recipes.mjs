@@ -361,6 +361,8 @@ const redirects = Object.entries(renamed).flatMap(([old, now]) => [
   `/zh/recipes/${old} /zh/recipes/${now}/ 301`,
   `/r/${old}.md /r/${now}.md 301`,
 ])
+// There is no recipe index page; the "Recipes" breadcrumb goes to the home page's recipe list.
+redirects.push('/recipes/ / 301', '/recipes / 301', '/zh/recipes/ /zh/ 301', '/zh/recipes /zh/ 301')
 writeFileSync(join(ROOT, 'public/_redirects'), `${redirects.join('\n')}\n`)
 
 writeFileSync(

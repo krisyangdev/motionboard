@@ -70,23 +70,29 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
   const video = useRef<HTMLVideoElement>(null)
   const title = useRef<HTMLAnchorElement>(null)
   const [live, setLive] = useState(false)
+  // The <video> is only rendered once the tile first needs to play, so the page markup carries one
+  // video per page (the recipe film) for search engines, and tiles download nothing until then.
+  const [armed, setArmed] = useState(false)
   const locale = useLocale()
   const s = useStrings()
   const src = media(term, 'small')
 
   const play = useCallback(() => {
+    if (reducedMotion()) return
     const v = video.current
-    if (!v || reducedMotion()) return
-    // the preview is fetched the first time the tile needs to play
-    if (!v.getAttribute('src')) v.src = src
-    v.play().catch(() => {})
-  }, [src])
+    if (!v) setArmed(true)
+    else v.play().catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    if (armed) video.current?.play().catch(() => {})
+  }, [armed])
 
   const stop = useCallback(() => {
     const v = video.current
     if (!v) return
     v.pause()
-    if (v.getAttribute('src')) v.currentTime = 0
+    v.currentTime = 0
     setLive(false)
   }, [])
 
@@ -132,7 +138,7 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
     >
       <div className="frame tile-frame" ref={frame}>
         <img src={media(term, 'jpgSmall')} alt="" width={960} height={540} loading={eager ? 'eager' : 'lazy'} decoding="async" />
-        <video ref={video} className="tile-vid" muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1} onPlaying={() => setLive(true)} />
+        {armed && <video ref={video} className="tile-vid" src={src} muted loop playsInline aria-hidden="true" tabIndex={-1} onPlaying={() => setLive(true)} />}
       </div>
       <div className="tile-actions">
         <CopyAction term={term} compact />

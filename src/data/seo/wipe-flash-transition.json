@@ -1,7 +1,7 @@
 {
   "en": {
     "name": "Wipe and Flash Transition",
-    "title": "Wipe and Flash Transition: Recipe and Code",
+    "title": "Foreground Wipe and Flash Transition: Recipe and Code",
     "description": "A defocused black ball sweeps across the frame to change scenes, and a central halo blows out to white. Make it with Claude Code or Codex from the recipe.",
     "howto": [
       "For the wipe, hold a matte black ball (2800 px, scale 0.42 to 0.45, 54 px blur) at the lower left. It sweeps to frame center at scale 1 with expo.out over 7 frames (0.233 s), then leaves right at 1.08 with power2.in over 8 frames. Swap scenes on the frame where the ball is centered, at 2.6 s and 7.4 s.",

@@ -1,8 +1,8 @@
 {
   "en": {
     "name": "Line Boil Effect",
-    "title": "Line Boil Effect: Hand-Drawn Animation Recipe",
-    "description": "Hand-drawn lines swap to a new trace every 4 frames and motion steps at 7.5 fps with no tweening. Make it with Claude Code or Codex from the free recipe.",
+    "title": "Line Boil: What It Is and How to Animate It in Code",
+    "description": "Line boil is the shimmer of hand-drawn lines redrawn every frame. This free recipe redraws each line every 4 frames (7.5 fps) with Claude Code or Codex.",
     "howto": [
       "Drive every state from one index, K = floor(t x 7.5), so a new trace appears every 4 frames (0.133 s) for the whole 11 s film. Redraw the whole canvas from a clean white background at each index. Use no tweening and no easing: position and shape jump per index, and scenes hard-cut at K 20, 44, 59 and 66.",
       "Redraw each stroke with a sine displacement of 1.05 px amplitude plus a random offset up to 0.65 px per axis, over a fixed 1.9 px wobble. Open strokes overshoot up to 3 px, fills sit up to 2.2 px off the outline with marker streaks, and lettering uses 3 variants per letter. Ink is #1c1a21 at 4.4 px with pressure variation.",

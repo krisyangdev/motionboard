@@ -11,14 +11,17 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
   const video = useRef<HTMLVideoElement>(null)
   const bar = useRef<HTMLElement>(null)
   const [paused, setPaused] = useState(false)
+  // Other films (the original clip next to the recipe film) render their <video> after mount, so the page
+  // markup carries one video, the recipe film.
+  const [mounted, setMounted] = useState(!!slug)
+  useEffect(() => setMounted(true), [])
   const { recipe } = useStrings()
 
   useEffect(() => {
     const v = video.current
     if (!v) return
-    // Phones get the 720p film; picked after mount so the prerendered markup carries no source to preload.
-    const film = mobileSrc && matchMedia('(max-width: 767px)').matches ? mobileSrc : src
-    if (v.getAttribute('src') !== film) v.src = film
+    // A recipe film's sources are in the markup; other films get their source after mount.
+    if (!slug && v.getAttribute('src') !== src) v.src = src
     let raf = 0
     const draw = () => {
       if (bar.current && v.duration) bar.current.style.transform = `scaleX(${v.currentTime / v.duration})`
@@ -58,7 +61,7 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
       v.removeEventListener('pause', onPause)
       v.removeEventListener('seeked', draw)
     }
-  }, [src, mobileSrc, slug])
+  }, [src, mobileSrc, slug, mounted])
 
   const toggle = () => {
     const v = video.current
@@ -86,7 +89,15 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
           elementtiming="poster"
           decoding="async"
         />
-        <video key={src} ref={video} autoPlay muted loop playsInline preload="auto" />
+        {/* A recipe film carries its sources in the prerendered markup so search engines find the video without
+            running the script; preload="none" and no autoPlay keep it from downloading before the poster is
+            painted, and the effect above starts it. Phones get the 720p film. */}
+        {mounted && (
+          <video key={src} ref={video} muted loop playsInline preload={slug ? 'none' : 'auto'}>
+            {slug && mobileSrc && <source src={mobileSrc} type="video/mp4" media="(max-width: 767px)" />}
+            {slug && <source src={src} type="video/mp4" />}
+          </video>
+        )}
         <button type="button" className="rc-hit" aria-label={paused ? recipe.play(name) : recipe.pause(name)} onClick={toggle}>
           <span className="rc-glyph" data-on={paused}>
             <Play aria-hidden="true" fill="currentColor" />

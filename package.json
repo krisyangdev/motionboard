@@ -9,7 +9,7 @@
     "test": "npm run build && node scripts/test.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "typecheck": "node scripts/recipes.mjs && tsc --noEmit",
-    "deploy": "node scripts/recipes.mjs && node scripts/video-sitemap.mjs && cf deploy && node scripts/indexnow.mjs",
+    "deploy": "node scripts/recipes.mjs && node scripts/video-sitemap.mjs && cf deploy && node scripts/zone-redirects.mjs && node scripts/indexnow.mjs",
     "indexnow": "node scripts/indexnow.mjs",
     "cf-typegen": "cf workers types"
   },
