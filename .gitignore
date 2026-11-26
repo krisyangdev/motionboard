@@ -1,0 +1,31 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.local
+coverage/
+playwright-report/
+test-results/
+.wrangler/
+.cloudflare/*
+!.cloudflare/types/
+.impeccable/
+.tanstack
+.output
+dist-ssr
+.dev.vars*
+!.dev.vars.example
+
+
+# films and posters live in R2 (scripts/upload-media.sh)
+media/
+# copied from skills/motionboard/source by scripts/recipes.mjs
+public/source
+public/r/
+public/llms.txt
+public/_redirects
+src/data/gen/
+*.tsbuildinfo
+public/sitemap-video.xml
+public/robots.txt
+src/routeTree.gen.ts

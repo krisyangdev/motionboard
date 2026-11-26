@@ -1,0 +1,11 @@
+@import "../core/styles/app.css";
+
+/* The one per-site colour: logo, links, highlights. Leave coss tokens (--primary etc.) alone. */
+:root {
+  --brand: oklch(0.55 0.2 260);
+  --brand-foreground: oklch(0.99 0 0);
+}
+.dark {
+  --brand: oklch(0.7 0.16 260);
+  --brand-foreground: oklch(0.15 0 0);
+}
