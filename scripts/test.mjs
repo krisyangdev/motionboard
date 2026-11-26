@@ -45,6 +45,8 @@ const walk = (dir) =>
 const prerendered = walk(assets)
   .map((f) => relative(assets, f))
   .filter((f) => f === '404.html' || f === 'index.html' || f.endsWith('/index.html'))
+  // HTML copied from public/ (e.g. runnable example projects) is a static asset, not a prerendered page.
+  .filter((f) => !existsSync(join(root, 'public', f)))
   .map((f) => ({ file: f, path: f === '404.html' ? '/404/' : `/${f.slice(0, -'index.html'.length)}`, is404: f === '404.html' || f === '404/index.html', html: read(f) }))
 
 // 1. sitemap.xml
@@ -124,7 +126,8 @@ const redirectSources = new Set(redirectLines.map((l) => l.split(/\s+/)[0]))
 check('redirects', redirectLines, (line) => {
   const [from, to, code] = line.split(/\s+/)
   if (!from || !to || code !== '301') return `bad line (want "from to 301"): ${line}`
-  if (!pageExists(stripOrigin(to))) return `target missing: ${line}`
+  // The target is a page or a static file (e.g. a renamed /r/<slug>.md).
+  if (!pageExists(stripOrigin(to)) && !has(stripOrigin(to).slice(1))) return `target missing: ${line}`
   if (pageExists(from)) return `source still exists as a page: ${line}`
   return ''
 })
@@ -142,6 +145,11 @@ check('internal links', [...links], ([href, from]) => {
   if (!href.endsWith('/')) return `link without trailing slash ${href} (on ${from})`
   return isPrivatePath(href) || pageExists(href) || redirectSources.has(href) ? '' : `broken ${href} (on ${from})`
 })
+
+// 6b. values repeated in cloudflare.config.ts (it cannot import site.config.ts, see the comment there)
+const cfConfig = readFileSync(join(root, 'cloudflare.config.ts'), 'utf8')
+check('cloudflare.config.ts matches site.config.ts', [`name: '${SITE.worker}'`, `domains: ['${SITE.domain}']`], (s) =>
+  cfConfig.includes(s) ? '' : `cloudflare.config.ts lacks ${s}`)
 
 // 7. robots.txt
 const robots = has('robots.txt') ? read('robots.txt') : ''
