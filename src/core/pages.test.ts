@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { mockSite } from './test-site'
 import type { Locale } from './i18n'
@@ -10,6 +11,9 @@ async function load(languages: string[]): Promise<Pages> {
 }
 
 const L = (code: string) => code as Locale
+
+// The template's demo collection. A site built from the template drops it, and these tests with it.
+const demo = existsSync(new URL('../../content/collections/symbols/', import.meta.url))
 
 describe('pageLocales', () => {
   it('lists the languages that have a title, in site order', async () => {
@@ -102,7 +106,7 @@ describe('quality gate in the registry', () => {
   })
 })
 
-describe('collection items in the registry (template demo content: the symbols collection)', () => {
+describe.runIf(demo)('collection items in the registry (template demo content: the symbols collection)', () => {
   it('lists every item page with its collection, a 4-level breadcrumb and the kind of its main media', async () => {
     const { sitePages, pageLocales } = await load(['en', 'zh'])
     const items = sitePages().filter((p) => p.type === 'item')
@@ -173,7 +177,7 @@ describe('collection items in the registry (template demo content: the symbols c
   })
 })
 
-describe('noindex share of a collection', () => {
+describe.runIf(demo)('noindex share of a collection', () => {
   it('fails the build naming the collection and the noindex items when the share is above seo.maxNoindexShare', async () => {
     const { sitePages } = await load(['en', 'zh'])
     expect(() => sitePages()).not.toThrow()
