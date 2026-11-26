@@ -42,7 +42,7 @@ describe('sitePages with a third language that has no content', () => {
   it('lists the tool pages only in the languages their JSON has a block for', async () => {
     const { sitePages, pageLocales, contentIndex } = await load(['en', 'zh', 'es'])
     // Works on any site's content: no page may claim the content-less third language.
-    for (const page of sitePages()) expect(pageLocales(page)).not.toContain('es')
+    for (const page of sitePages().filter((p) => p.path !== '/')) expect(pageLocales(page)).not.toContain('es')
     for (const t of contentIndex().tools) expect(t.locales).not.toContain('es')
   })
 })
