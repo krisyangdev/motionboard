@@ -7,7 +7,7 @@
     "title": "How to Make a Product Launch Video with Claude Code",
     "description": "Install the Motionboard skill, describe your product and render a launch film with Claude Code: the 6-shot, 15.8 s example, commands and a starter prompt.",
     "h1": "How to Make a Product Launch Video with Claude Code",
-    "lede": "To make a product launch video with Claude Code, install the Motionboard skill, describe your product, and let the agent plan a 4 to 6 shot film from 38 recipes, build each shot in HyperFrames and render it to MP4. The example film below has 6 shots and runs 15.8 seconds.",
+    "lede": "To make a product launch video with Claude Code, install the Motionboard skill, describe your product, and let the agent plan a 4 to 6 shot film from 48 recipes, build each shot in HyperFrames and render it to MP4. The example film below has 6 shots and runs 15.8 seconds.",
     "blocks": [
       {
         "t": "hero"
@@ -59,7 +59,7 @@
       },
       {
         "t": "p",
-        "text": "The 38 recipes are grouped by where they sit in a launch film: Opening (7 recipes), Product reveal (7), Features (15), Transitions (5) and Ending (4). The skill proposes 4 to 6 shots in that order: one Opening, one Product reveal, one to three Features, optionally one Transition, and one Ending. A recipe is chosen when its mechanism shows something true about your product."
+        "text": "The 48 recipes are grouped by where they sit in a launch film: Opening (10 recipes), Product reveal (9), Features (17), Transitions (7) and Ending (5). The skill proposes 4 to 6 shots in that order: one Opening, one Product reveal, one to three Features, optionally one Transition, and one Ending. A recipe is chosen when its mechanism shows something true about your product."
       },
       {
         "t": "p",
@@ -206,7 +206,7 @@
             "checked": "2026-11-16"
           },
           {
-            "label": "GitHub: krisyangdev/motionboard (38 recipes, MIT, skill and source projects)",
+            "label": "GitHub: krisyangdev/motionboard (48 recipes, MIT, skill and source projects)",
             "url": "https://github.com/krisyangdev/motionboard",
             "checked": "2026-11-16"
           },
@@ -223,7 +223,7 @@
     "title": "用 Claude Code 制作产品发布视频",
     "description": "安装 Motionboard skill，描述产品，用 Claude Code 渲染发布片：6 个镜头、15.8 秒的示例片、完整命令和可直接粘贴的提示词。",
     "h1": "用 Claude Code 制作产品发布视频",
-    "lede": "用 Claude Code 制作产品发布视频：安装 Motionboard skill，描述你的产品，让 agent 从 38 个配方里规划 4 到 6 个镜头，在 HyperFrames 里逐个搭建并渲染成 MP4。下面的示例片有 6 个镜头，时长 15.8 秒。",
+    "lede": "用 Claude Code 制作产品发布视频：安装 Motionboard skill，描述你的产品，让 agent 从 48 个配方里规划 4 到 6 个镜头，在 HyperFrames 里逐个搭建并渲染成 MP4。下面的示例片有 6 个镜头，时长 15.8 秒。",
     "blocks": [
       {
         "t": "hero"
@@ -275,7 +275,7 @@
       },
       {
         "t": "p",
-        "text": "38 个配方按它们在发布片里的位置分组：开场 7 个、产品亮相 7 个、功能 15 个、转场 5 个、结尾 4 个。skill 按这个顺序提出 4 到 6 个镜头：一个开场、一个产品亮相、一到三个功能、可选的一个转场，以及一个结尾。只有当配方的机制能表现你产品的真实特点时，才会被选中。"
+        "text": "48 个配方按它们在发布片里的位置分组：开场 10 个、产品亮相 9 个、功能 17 个、转场 7 个、结尾 5 个。skill 按这个顺序提出 4 到 6 个镜头：一个开场、一个产品亮相、一到三个功能、可选的一个转场，以及一个结尾。只有当配方的机制能表现你产品的真实特点时，才会被选中。"
       },
       {
         "t": "p",
@@ -422,7 +422,7 @@
             "checked": "2026-11-16"
           },
           {
-            "label": "GitHub: krisyangdev/motionboard (38 recipes, MIT, skill and source projects)",
+            "label": "GitHub: krisyangdev/motionboard (48 recipes, MIT, skill and source projects)",
             "url": "https://github.com/krisyangdev/motionboard",
             "checked": "2026-11-16"
           },

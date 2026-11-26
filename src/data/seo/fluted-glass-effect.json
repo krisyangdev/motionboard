@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Fluted Glass Effect",
+    "title": "Fluted Glass Effect: Example and Code Recipe",
+    "description": "Light streaks rise through 28 glass ribs on a laptop screen and form a big word; the camera pushes in, the glass flattens and the title sharpens.",
+    "howto": [
+      "Split the screen into 28 vertical ribs, 39px wide on a 1092×680px screen, and put a full copy of the word in each one. Scale each copy horizontally to 0.6 around the rib's center and offset it by ±9px horizontally with no vertical offset, so the word breaks into slices like fluted glass. Shade each rib like a cylinder over the letters (dark left edge, a bright band about 7px in, darker falloff to the right), give it its own vertical brightness and a 2px specular line on its left edge, and keep a soft ice-blue glow from 46% at the foot to 9% at the top.",
+      "The film opens on lit streaks: four per rib rise with power2.in from 0s, then the word rises in from 520–780px below at 1.4s, stretched 5–8× and settling to 1× over 1.55s with expo.out. The camera lowers from a 66° to a 14° angle over 3.55s with power3.out, and a highlight sweeps across the ribs from 3.0s to 4.8s.",
+      "At 4.7s the camera pushes 1.4s to 1.36× and moves down 58px so the lid's bottom edge meets the frame bottom. The word lifts out between 4.8s and 5.4s and the new title (Inter 640, 176px) starts rising at 5.2s at 0.6× compression. Between 5.95s and 7.4s each rib goes back to 1× while a 3.5px blur clears, and the rib shading fades to nothing around the title by 7.9s, leaving faint lines on the three ribs at each side. Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard, then render an MP4 with HyperFrames."
+    ],
+    "faq": [
+      [
+        "How do you make a fluted glass effect in CSS?",
+        "Cut the element into narrow vertical strips and put a copy of the content in each. Scale each copy horizontally around the strip's center, usually to 0.5–0.7, and offset it a few pixels. The strips then show shifted slices of the same content, like a ribbed pane."
+      ],
+      [
+        "Why do the streaks come before the word?",
+        "The streaks are already rising at 0s and the word starts rising at 1.4s, so the light is on screen about 1.4s before any letter. The word is also stretched 5–8× vertically while it rises, so it looks like a streak until it settles."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "棱镜玻璃效果",
+    "title": "棱镜玻璃显字效果：示例与代码配方",
+    "description": "笔记本屏幕被切成 28 条玻璃棱，亮线穿过棱条收成大字，再变平变清晰。用 Claude Code 或 Codex 按免费配方做出这个效果。",
+    "howto": [
+      "把屏幕切成 28 条竖向棱，1092×680px 的屏幕里每条宽 39px，每条放一份完整的字。每份字以条中心为原点横向缩放到 0.6，再随机错位横向 ±9px，竖向不错位，字就被切成像棱镜玻璃一样的错位竖片。每条在字面上叠一层圆柱明暗（左边缘暗、约 7px 处一条亮带、右侧渐暗），再加各自的竖向明暗、左边缘一条 2px 的高光线，以及从底部 46% 渐弱到顶部 9% 的冰蓝柔光。",
+      "开场就是亮着的亮线：0s 起每条升起四道（power2.in），1.4s 字从下方 520–780px 处升起，竖向拉伸 5–8 倍，用 expo.out 1.55s 落回 1 倍。镜头用 power3.out 在 3.55s 内从 66° 降到 14° 俯角，3.0s 到 4.8s 一道高光逐条扫过棱条。",
+      "4.7s 起镜头用 1.4s 推到 1.36 倍并下移 58px，盖板下沿落在画面底边。字在 4.8s 到 5.4s 被抽走，新字标（Inter 640，176px）5.2s 起以 0.6 倍压缩升起，5.95s 到 7.4s 每条逐条变回 1 倍，同时 3.5px 模糊散去，7.9s 前字标周围的棱条阴影淡到 0，只在屏幕左右各 3 条留淡线。点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill，再用 HyperFrames 渲染成 MP4。"
+    ],
+    "faq": [
+      [
+        "棱镜玻璃效果用 CSS 怎么做？",
+        "把元素切成窄的竖条，每条里放一份内容副本。每份副本以条中心为原点横向缩放，一般取 0.5 到 0.7，再错位几个像素。每条显示同一内容的不同片段，就像一块条纹玻璃。"
+      ],
+      [
+        "为什么亮线比字先出现？",
+        "亮线 0s 就已经在升起，字 1.4s 才开始升起，屏幕上先有约 1.4s 只有光、没有字。字升起时还被竖向拉伸 5 到 8 倍，在落定前看起来就是一条亮线。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

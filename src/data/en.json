@@ -1698,5 +1698,465 @@
         "Match Cut swaps the whole object for another; Confirmation Burst only overlays feedback graphics on the existing picture."
       ]
     ]
+  },
+  "text-behind-object-effect": {
+    "def": "A giant headline sits behind a product window and the window covers its lower edge. The window holds still while each feature swaps the headline: the old word sinks behind it, the new word rises from behind it, and the app content changes on the same frame.",
+    "why": "The headline and the window sit on two layers, so when the camera turns slowly the back layer moves about 60px less than the window and the viewer reads real depth from parallax. The window covers only about a quarter of the lowercase letter height, so the word stays readable. Each swap happens at the window's top edge, so the eye never leaves one spot, and the headline word, the window content and the camera push start on the same frame, which ties each word to one feature.",
+    "spec": [
+      [
+        "Timing",
+        "Film 11s. Headline settles 0–1.2s, window rises 0.3–1.45s (1.15s, 34 frames); typing 1.45–2.4s (40 characters), task tick 2.5s, web clip card 2.62s (0.45s). First swap: old word sinks 3.0–3.3s (0.3s), new word rises for 0.9s from 3.32s, window content changes on the same frame; hover card appears 4.7s and leaves 5.3s. Second swap: sink 5.5–5.8s, rise 5.82–6.72s, command palette opens 5.82s already listing 6 recent notes; query typed 6.15–6.9s, matched results replace the recents at 7.0s, answer streams 7.1–7.75s. Finish: Recall sinks 8.2–8.5s (230px, power3.in), palette closes 8.3s, wordmark rises 8.52–9.42s, window sinks 8.45–9.45s (1.0s), icon 8.75s, tagline 9.1s (after the window's top edge has sunk below it, 0.55s rise), hold to 11s with about 1.6s of settled wordmark and about 1.35s of settled tagline"
+      ],
+      [
+        "Easing",
+        "Rises and word swaps <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); old word sinks with power3.in (0.3s); the closing window sink uses power3.inOut; camera pushes and the closing pull-back both use expo.out, with a 3px blur added for the first 0.12s of each push (2px on the pull-back) and removed over 0.3s; the world rotation is linear"
+      ],
+      [
+        "Camera",
+        "3D world with 2600px perspective: the headline layer sits 420px behind the window and is scaled 1.1615 to cancel the perspective shrink, so it looks the same size from the front. The whole world turns from rotateY −4° to +4° at constant speed over 11s, with a slow push 1.00→1.03. The window rises from below the frame (y 800px) with rotateX 10°→0 and stays opaque throughout. On each swap the camera pushes fast: from 3.32s, 0.7s to 1.10x on the right panel, with the window's left edge about 55px outside the frame, then from 5.82s, 0.7s to 1.12x on the palette, then from 8.3s a 0.9s pull-back to full frame"
+      ],
+      [
+        "Subject",
+        "Headline Inter 650, 340px, letter-spacing −0.045em, no punctuation; window 1500×900px at (210,425), bottom 245px off-frame. Its top edge covers the letters by about 51px, a quarter of the letter height. The window is a three-pane notes app: sidebar 248px, note list 352px, editor 590px, right panel 310px, body text 12.5–15px, secondary text 10.5–12px, note title 31px, section headings 17px, palette query 18px, answer text 15.5px; header collaborator avatars 28px, right-panel collaborator list avatars 22px. Ending: the app icon is a 100px emerald rounded square (23px radius, gradient <code>#17c585</code> to <code>#0a8a5c</code>, white H), centred, top at y 70px; the tagline \"Notes that remember.\" is Inter 500 at 32px in <code>#7a7b83</code>, centred, top at y 520px. The headline text box starts at y 182px with 340px line height, so the window's top edge at y 425px covers about 51px of the letter bottoms"
+      ],
+      [
+        "Sync",
+        "First swap (3.32s): the right panel changes from outline to linked notes, six links turn accent every 0.1s from 3.42s, ten graph lines draw every 0.07s from 3.52s. The cursor moves in 4.1–4.65s and stops about 8px below the link text so the link stays readable. When the hover card appears (4.7s) the matching graph node rings on the same frame and its graph edge thickens to 2.4px. Second swap (5.82s): the new word, the command palette and the camera push start on the same frame, and the window dims by 16%"
+      ],
+      [
+        "Style",
+        "Light stage gradient <code>#f3f2ee</code> to <code>#e9e7e2</code>, headline ink <code>#17171b</code>, one accent emerald <code>#0f9d68</code> (links, selected row, icon); white window with <code>#e7e6e3</code> hairlines and a <code>#f3f2ef</code> sidebar, four layered soft shadows, soft corner vignette"
+      ]
+    ],
+    "prompt": "Build an 11-second product opener called Headline Behind Product for a fictional Mac notes app named Halden. Light stage (gradient #f3f2ee to #e9e7e2), 1920x1080, 30fps. Put two layers in one 3D world with 2600px perspective: the headline layer sits 420px behind the window (translateZ(-420px), scaled 1.1615 to cancel the perspective shrink), set in Inter 650 at 340px with letter-spacing -0.045em, ink #17171b, text box top at y 182px with 340px line height, centred, with no punctuation after the word; the window layer is a 1500x900px macOS-style window that stays fully opaque, with its top-left at (210,425) and its bottom 245px off-frame, so its top edge covers about a quarter of the letter height. The window is a three-pane notes app: sidebar 248px (inbox, folders, tags with counts), note list 352px, editor 590px, right panel 310px, filled with real work content (Pricing review, Atlas launch checklist, Maya Chen) with body text 12.5-15px, secondary text 10.5-12px, note title 31px, section headings 17px, palette query 18px, answer text 15.5px, header avatars 28px and collaborator-list avatars 22px, with grey text at least 4.5:1 against white. Turn the whole world from rotateY -4deg to +4deg at constant speed over 11s with a slow push 1.00 to 1.03, so the back headline shifts against the window. Timeline: 0.3-1.45s the window rises from below the frame (y 800px to 0, rotateX 10deg to 0, expo.out); 1.45-2.4s a 40-character bullet types in the editor; 3.0-3.3s the headline Capture sinks 230px (power3.in) behind the window, and once it is fully hidden Connect rises from behind it at 3.32s (expo.out, 0.9s), so only one word is on screen in any frame; on the same frame the right panel becomes linked notes, six links turn accent every 0.1s, ten graph lines draw every 0.07s and the camera pushes to 1.10x in 0.7s (expo.out, 3px blur for the first 0.12s, leaving the window's left edge about 55px outside the frame); the cursor moves in 4.1-4.65s and stops about 8px below the link text; at 4.7s a hover card opens and the matching graph node rings and its edge thickens to 2.4px on the same frame, and the card leaves at 5.3s; 5.5-5.8s the word sinks and Recall rises at 5.82s (0.9s), with a command palette opening on the same frame (background dimmed 16%, six recent notes listed from the first frame) and the camera pushing to 1.12x in 0.7s; 6.15-6.9s a question types in, at 7.0s the recents are replaced by matched results, 7.1-7.75s the answer streams word by word with three sources; Recall sinks 230px (power3.in) behind the window 8.2-8.5s, at 8.3s the palette closes, and the Halden wordmark rises 8.52-9.42s, the window sinks 210px over 1.0s with power3.inOut, the camera pulls back to full frame in 0.9s (expo.out, 2px blur), the app icon appears at 8.75s (100px emerald rounded square, 23px radius, gradient #17c585 to #0a8a5c, white H, centred, top at y 70px) and the tagline \"Notes that remember.\" rises at 9.1s, after the window top has sunk below it (Inter 500, 32px, #7a7b83, centred, top at y 520px, 0.55s), then hold to 11s. Use plain HTML elements and GSAP on one paused timeline.",
+    "says": [
+      "A giant headline hides behind the app window and the window covers its lower edge",
+      "The product holds still while the headline words swap behind it",
+      "The window content changes on the same frame as the headline word"
+    ],
+    "vs": [
+      [
+        "text-object-interleave",
+        "Text–Object Interleave has a 3D product rise in front of the type and lets words pass through an object; Headline Behind Product uses a real app window that holds still while only the word and the window content change."
+      ],
+      [
+        "3d-tilted-ui-depth-of-field",
+        "Tilted UI with Depth of Field shoots one interface at an angle with only the active row in focus; Headline Behind Product shows the whole window and builds the shot on the occlusion between the window and a giant headline."
+      ]
+    ]
+  },
+  "infinite-zoom": {
+    "def": "The camera dives into one card, its preview fills the frame and becomes the next screen, and after four levels the shot lands on the first screen again, so it loops.",
+    "why": "The preview on each screen is the next screen itself, so content sharpens as the camera moves in and the viewer sees one product going deeper with no cut. Every dive starts from a click, with the cursor press and the start of the move on the same frame, so cause and effect are clear. The first and last frames are identical, so the film loops.",
+    "spec": [
+      [
+        "Timing",
+        "Film 10s (300 frames), four levels. Level 1 takes 2.2s: slow push-in 0–0.9s (27 frames, scale 1.00 to 1.02), cursor glide 0.15–0.8s, accent ring on the card 0.78–0.9s, click at 0.9s, dive 0.9–2.2s (1.3s, 39 frames). Levels 2–4 take 1.95s each, starting at 2.2, 4.15 and 6.1s, with a shorter 0.65s push-in (scale 1.00 to 1.02), a 0.45s cursor glide from the start of the level, clicks at 2.85, 4.8 and 6.75s and 1.3s dives. The dives end at 2.2, 4.15, 6.1 and 8.05s, the cursor returns 8.05–8.9s and rests until 10s, and the last frame matches the first pixel for pixel"
+      ],
+      [
+        "Easing",
+        "Push-in <code>sine.inOut</code>; dive <code>cubic-bezier(0.45,0,0.12,1)</code> applied to the logarithm of the scale, so each doubling of scale takes the same eased time and the zoom looks even at every scale; blur is measured on screen and rises to 1px 0.04–0.94s after the click (peak about 0.49s) and returns to 0, with the blur on the scaled layer divided by the current scale so the incoming preview stays readable; the card's corner radius drops to 0 over 0.5s starting 0.6s after the click; cursor <code>power2.inOut</code> (0.65s on level 1, 0.45s on the others), press to 0.86 scale in 0.08s, release <code>back.out(1.7)</code> 0.25s, and a click ripple (a 2px <code>#0f9d6e</code> ring at the click point, scale 0.3 to 1.6 and opacity 0.75 to 0 over 0.5s, <code>power2.out</code>); the cursor then fades out over 0.22s starting 0.08s after the click and fade back in over 0.15s at the start of the next level"
+      ],
+      [
+        "Camera",
+        "Flat 2D, no tilt. The slow push-in pivots about a point left of the card (x 720 to 800, y 400) so the sidebar icons and labels stay in frame at the click. A fixed-point zoom takes the card rectangle to the full frame, at 3.75x, 3.33x, 5.03x and 4.0x, about 251x in total. On the frame where each dive ends, a fresh copy of the next screen at 1x scale takes over with identical pixels, so the scale never exceeds 5.03x"
+      ],
+      [
+        "Subject",
+        "Four 1920x1080 product screens, each holding a preview of the next: a projects grid (9 cards, 512x288 covers), a project overview (4 stat tiles, burndown chart, 5 milestones, two view cards with 576x324 covers), a kanban board (4 columns, 24 cards, a 382x215 cover on ATL-214) and an issue page (properties panel, 2 comments, a 480x270 embedded view of the projects grid). Each screen nests four deeper previews"
+      ],
+      [
+        "Sync",
+        "The cursor press, the ring fading and the start of the dive share one frame (0.9, 2.85, 4.8 and 6.75s) and the cursor fades out right after; when the dive ends the corner radius is 0, the preview fills the frame exactly, and the next screen's fresh copy takes over on that same frame while the cursor fades back in and starts its next glide"
+      ],
+      [
+        "Style",
+        "Light UI with one accent, <code>#0f9d6e</code> (primary button, selection ring, charts); Inter 14px UI text with real English content (Maya Chen, ATL-214, Nov 26); pastel label chips; 5% vignette at the edges"
+      ]
+    ],
+    "prompt": "Build a looping shot called Infinite UI Zoom for a project-collaboration product: 10 seconds, 1920x1080, 30fps, light UI with a single accent color #0f9d6e, Inter 14px UI text and real English content (people's names, issue IDs like ATL-214, dates). Make four full-screen product screens: a projects grid (9 cards, 512x288 covers), a project overview (4 stat tiles, burndown chart, 5 milestones, two view cards with 576x324 covers), a kanban board (4 columns, 24 cards, a 382x215 cover on ATL-214) and an issue page (properties panel, 2 comments, an embedded 480x270 view of the projects grid). On each screen one card's cover is the complete next screen scaled down, the embedded view on the last screen is the first screen, and each screen nests four deeper previews. Run four levels starting at 0, 2.2, 4.15 and 6.1s: a slow push-in from 1.00 to 1.02 (sine.inOut, pivoting about a point left of the card at x 720 to 800 and y 400 so the sidebar stays in frame) lasting 0.9s on level 1 and 0.65s on the other three, the cursor gliding to the card before the click (0.15–0.8s on level 1, 0.45s from the start of the level on the others), a 3px accent ring on the card 0.12s before the click, a 2px accent click ripple growing from scale 0.3 to 1.6 and fading from 0.75 to 0 over 0.5s (power2.out), and the click at 0.9, 2.85, 4.8 and 6.75s with the dive starting on that same frame. Each dive takes 1.3s as a fixed-point zoom from the card rectangle to the full frame (3.75x, 3.33x, 5.03x and 4.0x), with cubic-bezier(0.45,0,0.12,1) applied to the logarithm of the scale, on-screen blur rising to 1px and back to 0 (divide the blur on the scaled layer by the current scale so the incoming preview stays readable), and the card's corner radius dropping to 0 near the end. Fade the cursor out over 0.22s starting 0.08s after the click and fade it back in over 0.15s at the start of the next level. On the frame where each dive ends, swap in a fresh copy of the next screen at 1x scale so the scale never exceeds 5.03x. From 8.05 to 8.9s the cursor returns to its start position and rests until 10s; the last frame matches the first pixel for pixel so the film loops. Use HTML + GSAP with no bitmaps.",
+    "says": [
+      "The camera dives into a card and the card becomes the next screen",
+      "Projects, board and issue zoom open one inside the other",
+      "After the fourth level the shot lands on the first screen again"
+    ],
+    "vs": [
+      [
+        "zoom-to-cursor",
+        "Zoom-to-Cursor pushes in on one control and pulls back out on the same screen; Infinite UI Zoom keeps going in through four levels and never pulls back."
+      ],
+      [
+        "match-cut-transition",
+        "Match Cut swaps content on a fixed anchor with hard cuts; Infinite UI Zoom uses one continuous zoom with no cut."
+      ]
+    ]
+  },
+  "fluted-glass-effect": {
+    "def": "A laptop screen is split into 28 vertical glass ribs. Light streaks rise through the ribs and settle into a big word. The camera then pushes into the screen, the word lifts out, the title rises in, the glass flattens and the blur clears into a lockup with only a few faint ribs left at the screen edges.",
+    "why": "Every rib shows the same content compressed to 0.6 of its width, so the word breaks into offset vertical slices. Each rib also carries cylinder shading on top of the letters (dark left edge, a bright band near the left, darker falloff to the right), so the glass shading sits on the letters as well as in the gaps. The streaks are already on screen at frame 0 and the word starts rising at 1.4s. The lockup starts rising at 5.2s, while the last of the word is still lifting out, so the two overlap inside the blur and the screen is never empty. The rib shading starts to fade at 6.3s. Around the title it goes to zero, leaving faint lines only on the three ribs at each side. The only color is ice blue #7fc8ff.",
+    "spec": [
+      [
+        "Timing",
+        "Film 10s, starting on lit streaks with no black lead-in. Streaks rise 0–3.4s (four per rib, 0.9–1.3s each, the first already part-way up at frame 0); PRO rises in 1.4–3.55s (1.55s per rib, staggered over about 0.6s); highlight sweep 3.0–4.8s; push-in 4.7–6.1s (1.4s, 42 frames); PRO lifts out 4.8–5.4s (0.42s per rib, staggered over about 0.15s); lockup rises 5.2–6.7s (1.25s per rib, staggered over about 0.22s); blur-to-sharp 5.7–7.4s; glass flattens 5.95–7.4s (1.2s per rib); rib shading fades 6.3–7.9s; sub line 7.4–8.2s (0.8s); closing shimmer 8.0–9.8s"
+      ],
+      [
+        "Easing",
+        "PRO and lockup entrances expo.out; streak rise power2.in (accelerating); PRO exit power2.in; camera descent power3.out; push-in power4.out; glass flattening power2.inOut; blur clearing power2.out; drift sine.out"
+      ],
+      [
+        "Camera",
+        "2600px perspective. 0–1.15s holds at a 66° high angle with the lid leaning back 8°; 1.15–4.7s the angle lowers to 14° (3.55s) while scale goes 1.0→1.2; from 4.7s it pushes to 1.36× in 1.4s and squares up to the lid (8° angle), moving the view down 58px so the lid's bottom edge meets the frame bottom and the keyboard is out of frame, with the screen bezel and notch still in frame; then a 3.9s drift to 1.4×"
+      ],
+      [
+        "Subject",
+        "Lid 1116×704px (12px screen bezel, 8px lid edge thickness, ice-blue rim light on the edge), deck 1160×740px (14px front lip, dim backlit keys with an arrow cluster, ice-blue floor reflection). Screen 1092×680px in 28 ribs, 39px wide. Each rib holds a full copy of the word, compressed horizontally to 0.6× (the refraction), entering at 1.7× width, stretched vertically 5–8× and settling to 1×, with a random offset of ±9px horizontal and none vertical. Each rib has cylinder shading over the letters (left edge 60% black fading to 0 by 12% of the width, a 50% ice-white band about 7px from the left edge, darkening from 44% of the width to 78% black on the right), its own vertical brightness (47%–100%), four thin texture lines, a 2px specular line on its left edge, and an ice-blue glow from 46% at the foot to 9% at the top. Word: Inter 800 448px, vertical gradient #ffffff → #dcefff → #7fc8ff"
+      ],
+      [
+        "Sync",
+        "The PRO exit runs 4.8–5.4s and the lockup starts rising at 5.2s, so they overlap for about 0.2s while the whole screen is under the 3.5px blur. The lockup arrives at 0.6× compression with ±6px per-rib offsets, then each rib returns to 1× between 5.95s and 7.4s. Rib shading, edge lines and texture lines hold until 6.3s, then fade over 1.3s per rib. The middle ribs go to 0 and the three ribs at each side keep their lines at 30%. The foot glow drops to 23–30% in the middle ribs and 38–50% in the three edge ribs. The blur returns to 0 between 5.7s and 7.4s"
+      ],
+      [
+        "Style",
+        "Pure black background, charcoal laptop, one accent: ice blue #7fc8ff. Sub line Inter 500 22px: Opal Display · 2,000 nits peak · 120 Hz. Lockup Inter 640 176px, Novis near-white, Pro in an ice-blue gradient. The end frame keeps the bezel, the notch and faint vertical ribs on the three ribs at each side, with a clean field around the lockup"
+      ]
+    ],
+    "prompt": "Build a 10-second laptop screen launch shot called Fluted Glass Reveal, 1920×1080, pure black background, one accent color ice blue #7fc8ff. Make a charcoal laptop in CSS 3D with a 2600px perspective: lid 1116×704px leaning back 8° with a 12px screen bezel, 8px lid edge thickness and an ice-blue rim light; deck 1160×740px with a 14px front lip, dim backlit keys including an arrow cluster, and a soft ice-blue reflection on the floor. The screen is 1092×680px, split into 28 vertical ribs 39px wide. Each rib holds a copy of the same content scaled horizontally by 0.6 around the rib's center and offset randomly by ±9px horizontally. Shade each rib like a cylinder on top of the content: left edge 60% black fading to 0 by 12% of the width, a 50% ice-white band about 7px from the left edge (screen blend), right half darkening from 44% of the width to 78% black. Add a 2px white specular line on the left edge, four thin texture lines, its own vertical brightness (47%–100%) and an ice-blue foot glow from 46% at the bottom to 9% at the top. Timeline: at frame 0 the laptop is already lit at a 66° high angle (halo, rim light, foot glow, the first streak part-way up each rib; no black lead-in). 0–3.4s four light streaks per rib rise (2–34px wide, 200–560px tall, white head and ice-blue tail, one wide and soft, power2.in, 0.9–1.3s each, staggered). From 1.4s the word PRO (Inter 800 448px, vertical gradient white to #7fc8ff) rises into each rib from 520–780px below, entering at scaleX 1.7 and settling to 0.6, stretched vertically 5–8× and settling to 1×, expo.out 1.55s, staggered over about 0.6s (done by 3.55s). 1.15–4.7s the camera lowers from 66° to 14° (power3.out) while scale goes 1.0→1.2. 3.0–4.8s a highlight sweeps left to right rib by rib (0.3s up to 0.38, 0.5s out). From 4.7s push into the screen for 1.4s (power4.out), square up to the lid (8°), scale to 1.36× and move the view down 58px so the lid's bottom edge meets the frame bottom, with bezel and notch in frame. From 4.95s the whole screen goes to blur 3.5px at brightness 1.3. 4.8–5.4s PRO lifts out rib by rib (0.42s each, power2.in, up 420–520px, stretched 1.8×). From 5.2s the lockup Novis Pro (Inter 640 176px, Pro in an ice-blue gradient, ±6px offset per rib) rises from 420–520px below (expo.out 1.25s, stretched 3.5× settling to 1×, done by 6.7s) at 0.6× compression, overlapping the tail of the PRO exit inside the blur. 5.7–7.4s blur returns to 0 and brightness to 1 (power2.out); 5.95–7.4s each rib returns from 0.6× to 1× (1.2s, power2.inOut). From 6.3s rib shading, edge lines and texture lines fade over 1.3s per rib: the middle ribs go to 0, the three ribs at each side keep their lines at 30%, and the foot glow drops to 23–30% in the middle ribs and 38–50% in the edge ribs. At 7.4s the sub line Opal Display · 2,000 nits peak · 120 Hz (Inter 500 22px) rises 14px and fades in over 0.8s. 8.0–9.8s a faint highlight sweeps the lockup once more while the camera drifts to 1.4×; hold on the lockup until 10s.",
+    "says": [
+      "Light streaks rise through a row of glass ribs",
+      "The streaks settle into a big word on a laptop screen",
+      "The glass flattens and the title sharpens"
+    ],
+    "vs": [
+      [
+        "text-object-interleave",
+        "Text–Object Interleave builds depth by putting the product in front of the type; Fluted Glass Reveal slices one piece of content into ribs and clears them to reveal it."
+      ],
+      [
+        "liquid-glass-effect",
+        "Glass Lens is one round lens that sweeps across copy and magnifies it; here the whole screen is cut into vertical ribs and the word grows out of light streaks."
+      ]
+    ]
+  },
+  "light-beam-effect": {
+    "def": "Small laptops on black each throw a trapezoid beam of light with an app screen inside it. The beams swing, hand off, merge into one wide beam that carries a stat along its right edge, and the last laptop closes.",
+    "why": "The beam is a trapezoid window and the screen sits fixed in screen space. When the beam leans, only its far edge moves and the near edge stays on the lid top, so a swinging beam changes which part of the screen shows while the text stays level and readable. On a black frame only the beam has content, so the eye follows the light. The three screens go dark, light, dark (code editor, build console, mail), so the same beam never repeats itself. Every sync beat lands inside a beam: the completion pill, the build status cell, the mail toast and a whole mail paragraph sit where the beam shows them. The stat comes last, outside the right slanted edge of the widest beam, reading upward, and the number 2.4× is the largest element in the only accent color, teal #2dd4bf. The laptop is a thin silver lid seen from behind with a slim base edge, and it ends as a thin chamfered slab.",
+    "spec": [
+      [
+        "Timing",
+        "Film 11s. Laptop 1 rises 0–1.4s; beam 1 opens at 0.75s (1.0s); completion pill appears 1.15s and is accepted 1.9s; hand-off 3.0–3.45s (beam 1 leans left to -26° and narrows), then laptop 1 fades out 3.45–3.85s and back in at 4.45s (0.35s); beam 2 opens at 3.4s (1.0s); camera pulls back 4.4–5.5s; beam 1 reopens at 4.75s, beam 3 opens for the first time at 5.0s (laptop 3 fades in at 4.7s over 0.35s) and three beams run until 6.4s; beams 1 and 3 narrow 6.42–6.92s and their laptops fade out 6.5–6.9s (0.4s); wide beam 6.5–7.5s; stat slides in at 7.05s (0.9s) and fades at 8.3s (0.3s); beam narrows 8.25–8.85s; lid closes 8.4–9.4s; wordmark at 8.9s and held to the end (2.1s)"
+      ],
+      [
+        "Easing",
+        "Opening and slide-in <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); slow sweeps sine.inOut; narrowing power3.in (power2.inOut at the hand-off); camera pans, widening and lid closing power3.inOut"
+      ],
+      [
+        "Camera",
+        "Flat framing on black, never still: slow push 0.86→0.9x over 0–3.0s; a 1.1s pan to laptop 2 at 3.0–4.1s at 0.9x with a -3° roll; drift to 0.94x at 4.1–4.4s; pull back to 0.72x and level at 4.4–5.5s; roll to -3° and drift to 0.74x at 5.5–6.4s with all three beams inside the frame; 1.1s move to 0.9x at 6.4–7.5s with the frame centre 60px right of and 175px above laptop 2, so the whole wide beam and the stat stay in frame; 0.93x at 7.5–8.3s; push to 1.2x at 8.3–11.0s"
+      ],
+      [
+        "Subject",
+        "Lid 380x268px, corner radius 14px at the top and 9px at the bottom, 6px narrower per side at the top edge than at the bottom, a 4px bright line along the top, a two-line chamfer around the edge and a 44px darkening gradient along the bottom whose last 6px is a dark hinge band; open, the lid is 262px high (98% of 268px) with a slim 374x11px base edge (no key texture) showing about 4px under it and a 360x30px soft contact shadow; laptops 1 and 3 raise the base edge 2px while they yaw (4.6–5.6s) so the visible edge halves to about 2px and the lid reads as a thin slab; closed, the lid is a 380x268px rectangle, the hinge band fades out and the base edge drops 9px so about 7px of it shows. The beam's near edge stays on the lid top; leaning moves only the far edge (offset = length × tan of the angle) and the far-edge skew k lowers the right far corner by k px and raises the left one by k px (negative reverses). Beam 1 opens 800px long (820px by 3.1s), near half-width 170px, far half-width 520px; beam 2 is 860px long, near 170px, far 560px, k=30; in the three-beam stage beam 1 is 650px long, near 150px, far 330px, k=-40, beam 2 is 680px, near 150px, far 330px, k=0, and beam 3 is 650px, near 160px, far 350px, k=45; the wide beam is 560px long, near half-width 190px, far half-width 800px. Each screen is a full 1280x800 display scaled 1.25x (mail 1.1x with its layer 20px left of and 114px below the centred position so the toast and a whole paragraph sit inside the beam without text cut at the beam's left edge; the console in the wide beam 1.3x)"
+      ],
+      [
+        "Sync",
+        "The completion accepted at 1.9s, the pill vanishing and 5 code lines turning solid share one frame, all inside the beam; the build row going from Building to Ready and 0.9 s to 1.8 s lands at 5.05s, both cells in the middle of beam 2; the mail toast appears at 5.5s on the axis of beam 3 with one whole paragraph and both attachments in the same beam; the lid edge lights 0.2s before each beam opens"
+      ],
+      [
+        "Style",
+        "Pure black <code>#040405</code>, one accent teal <code>#2dd4bf</code>; UI in Inter 13px; stat in League Gothic, 40px small line, 224px number and 94px label, skewed -10° and rotated about -43° along the right edge, 18px off it; wordmark Inter 600; grain re-rolled every 3 frames and a vignette"
+      ]
+    ],
+    "prompt": "Build an 11-second, 1920x1080, 30 fps product film called Screen Projection Beams for a fictional product, Harbor (a laptop and its three app screens). The frame is pure black #040405 and the only accent color is teal #2dd4bf. The laptop is a thin silver lid seen from behind and slightly above: 380x268 px, corner radius 14 px at the top and 9 px at the bottom, 6 px narrower per side at the top edge than at the bottom, a 4 px bright line along the top edge, a two-line chamfer around the edge (1 px light line plus 3 px dark line), a 44 px gradient that darkens the bottom with a 6 px dark hinge band on its last pixels and a very faint vertical brushed texture. Open, the lid is 262 px high (98% of 268 px) with a slim 374x11 px base edge under it (a dark-to-light metal gradient, no key texture) showing about 4 px, and a 360x30 px soft contact shadow; laptops 1 and 3 raise the base edge 2 px while they yaw so the visible edge halves; when a beam is on, a faint teal pool of light shows on the floor. A dark engraved mark sits in the middle of the lid and the top edge of the lid is where light comes out. A beam is a clip-path trapezoid window whose near edge sits on the lid top and opens outward from it. To lean a beam, move only the far edge sideways (offset = length × tan of the angle); the near edge never moves, so it stays pinned to the lid. The far-edge skew k lowers the right far corner by k px and raises the left far corner by k px (negative k does the opposite). Behind the window sits a screen-space UI layer (a full 1280x800 screen scaled 1.25x) that does not move when the beam leans; the beam only changes which part of it is revealed. Add a 3 px bright line along the beam edges, a soft bloom at the lid edge (peak opacity 50% so the screens read first) and a lit edge on the lid top. Three screens, all real English product UI: A is a dark code editor (file tree, tabs, 33 lines of TypeScript, minimap, terminal, status bar); B is a light build console (sidebar, four KPI cards, a 14-day build-time line chart with a v2.14 · cache on annotation, a builds table with the columns Build, Commit, Status, Duration, Branch, Author, Started; median build 1.8 s, cache hit rate 94.2%); C is a dark mail app (sidebar, a list of 10 emails, an open thread titled Re: Q4 launch checklist with two body paragraphs and two attachments). Timeline: 0 to 1.4 s laptop 1 rises from 80 px below at 1.14x scale (expo.out) and fades from 0.35 to 1 over 0.7 s. The camera starts at 0.86x and pushes slowly to 0.9x over the first 3 s. At 0.55 s the lid top edge lights; at 0.75 s beam 1 opens (length 0 to 800, far half-width 170 to 520, near half-width 170, 1.0 s expo.out; lean -14 to -3 degrees over 1.3 s expo.out; k=0). At 1.15 s a floating Accept Tab pill appears in the middle of the beam above the cursor line; at 1.9 s the grayed-out completion in the editor is accepted, the pill disappears and 5 lines turn solid on the same frame, and the beam length eases to 820 by 3.1 s. From 2.05 to 3.0 s beam 1 sweeps slowly to +12 degrees (sine.inOut). From 2.35 to 3.0 s the terminal prints a line every 0.12 s, 6 lines, ending with Build complete in 1.8s. Hand-off from 3.0 s: beam 1 leans left to -26 degrees in 0.45 s and narrows to a line in the same 0.45 s (power2.in for the lean, power2.inOut for the narrowing) while the camera pans 1.1 s (power3.inOut) to laptop 2 on the right at 0.9x with a -3 degree roll. Beam 2 opens only after beam 1 has closed, at 3.4 s (lean -30 to -6 degrees over 1.3 s; length 860, near half-width 170, far half-width 560, k=30, over 1.0 s), so the two windows never overlap. Laptop 1 fades out from 3.45 to 3.85 s and fades back in over 0.35 s from 4.45 s; laptop 3 stays out of the frame until it fades in over 0.35 s at 4.7 s, so no unlit side laptop is cut off by the bottom of the frame. Beam 2 reveals the console and its line chart draws from 3.75 to 4.75 s; the camera drifts to 0.94x from 4.1 to 4.4 s. From 4.4 to 5.5 s the camera pulls back to 0.72x and levels out (1.1 s, power3.inOut). Beam 2 leans slowly to +4 degrees from 4.55 to 5.65 s and narrows from 4.65 to 5.55 s to length 680, near half-width 150, far half-width 330, k=0. Beam 1 reopens at 4.75 s (lean -30 to -17 degrees over 1.3 s; length 650, near half-width 150, far half-width 330, k=-40, over 1.0 s). Beam 3 opens for the first time at 5.0 s (lean +28 to +20 degrees over 1.3 s; length 650, near half-width 160, far half-width 350, k=45, over 1.0 s). Laptops 1 and 3 yaw -9 and +10 degrees from 4.6 to 5.6 s. Three beams run together; the mail screen is scaled 1.1x and its layer sits 20 px left of and 114 px below the centred position, so the middle of beam 3 shows one whole body paragraph and the two attachments with no letters cut at the beam's left edge. At 5.05 s the first row of the builds table turns from Building to Ready and its duration from 0.9 s to 1.8 s, both cells in the middle of beam 2 (the Ready cell flashes a green tint). At 5.5 s a mail toast (Priya Nair: Legal signed off on the terms. Sending the final PDF now.) appears above the paragraph in beam 3 and fades at 6.3 s. From 5.5 to 6.4 s beam 2 leans to -4 degrees, beam 3 leans to +18 degrees and the camera rolls to -3 degrees and drifts to 0.74x, with all three beams inside the frame. From 6.4 to 6.9 s beams 1 and 3 lean inward to +12 and -12 degrees and narrow (6.42 to 6.92 s, power3.in) and from 6.5 to 6.9 s their laptops fade out (0.4 s), so they are gone before the stat appears; the camera moves to laptop 2 at 0.9x over 1.1 s with the frame centre 60 px right of and 175 px above laptop 2. From 6.5 to 7.5 s beam 2 levels out and becomes one wide flat beam that sits entirely inside the frame (near half-width 190, far half-width 800, length 560, k=0, power3.inOut) and the console scales to 1.3x; the chart annotation v2.14 · cache on sits right next to the dashed line and the Nov 4 tooltip (Median 1.8 s, p95 4.1 s) sits in the free space further right, so they never overlap. At 7.05 s the stat slides in along the right slanted edge (200 px along the edge, 0.9 s expo.out). It sits outside the edge, 18 px away from it, starting 200 px along the edge from the lid corner, and the whole block is rotated about -43 degrees so it reads upward, parallel to the edge. It has three parts: a small UP TO (League Gothic 40 px), the number 2.4× in a teal gradient (224 px, the largest element) and FASTER BUILDS (94 px, white-to-gray gradient), all skewed -10 degrees and all inside the frame. The camera drifts to 0.93x from 7.5 to 8.3 s. At 8.3 s the stat fades over 0.3 s. From 8.25 to 8.85 s the beam narrows (power3.in); from 8.4 to 9.4 s the lid height goes from 0.98 to 1, its trapezoid outline becomes a rectangle, the hinge band fades out and the base edge drops 9 px so only about 7 px of it shows, and the laptop moves to the center of the frame (1.0 s, power3.inOut) while the camera pushes to 1.2x from 8.3 to 11.0 s; at 8.9 s the lid mark lights teal over 0.8 s and the word Harbor fades in under the lid (Inter 600, 52 px growing to 62 px with the camera, 0.6 s expo.out). The wordmark is placed in the same group as the lid so it moves with it and never overlaps it, and it holds to the end of the film (2.1 s); at 9.2 s a highlight sweeps across the lid. Add film grain re-rolled every 3 frames and a vignette.",
+    "says": [
+      "The trapezoid beam is a window that reveals the fixed screen behind it as it sweeps",
+      "One laptop's light sweeps away and the next one lights up",
+      "The stat runs along the right slanted edge of the wide beam, then the laptop closes"
+    ],
+    "vs": [
+      [
+        "3d-tilted-ui-depth-of-field",
+        "Tilted UI with Depth of Field tilts one interface and uses blur to lead the eye; here the interface stays still behind a trapezoid beam window and the light hands off between several laptops."
+      ],
+      [
+        "light-reveal",
+        "Light Reveal uses a sweeping light to bring out the material of a product on black; the beams here reveal app screens and pass from one laptop to the next."
+      ]
+    ]
+  },
+  "3d-ribbon-text-animation": {
+    "def": "A two-line title folds between its words into zig-zag 3D ribbons and multiplies into a field of rows, wide arrow bands sweep past the camera, the last band fills the frame and wipes to the product UI, and the film ends on the product wordmark.",
+    "why": "The title is already rising on the first frame. Each word group gets its own panel, so every crease falls between words and every face shows a whole word, which keeps the title readable while it folds. The fold stays near 37° and the camera pitch is moderate, so no panel turns edge-on, and the multiplied rows sit 340px apart so no row crosses another. The wide bands carry arrow copy that names the feature (TILT → SKEW → ROTATE → PERSPECTIVE) and double as the transition: the editor appears on the frame where the last band covers the screen, with no extra transition element. In the editor one drag turns the frame and a second drag changes the perspective distance, then the editor dims and the wordmark holds at a large size to the end. The whole film uses black, white and one violet accent.",
+    "spec": [
+      [
+        "Timing",
+        "Film 10.5s. Title rises line by line through a mask 0–0.8s (expo.out, second line 0.12s later), accent color sweeps across both lines panel by panel 0.3–1.16s; fold 1.0–2.3s (1.3s, 39 frames), second line 0.1s later; row spacing opens from 176px to 340px (1.0–2.4s); 6 more rows multiply 2.25–3.38s (0.95s each, staggered 0.09s per ring); violet sweep over the rows 2.79–3.87s; the four wide bands enter at 3.0s, 3.3s, 3.55s and 3.75s and run to 5.05s; wipe 4.3–5.8s, full cover at 5.05s; editor from 5.05s, Rotate Y handle drag 6.25–7.3s, Distance slider drag 7.8–8.3s, editor dims 8.2–8.85s and the wordmark lands 8.35–9.35s, wordmark holds to 10.5s"
+      ],
+      [
+        "Easing",
+        "Title rise expo.out; title fold easeInOut cubic; multiplying rows and editor settle expo.out; Rotate Y drag expo.out; band paths monotone cubic splines, fast then slow; wipe easeInOut cubic; Distance slider sine inOut; wordmark fades with easeOut cubic and rises with expo.out"
+      ],
+      [
+        "Camera",
+        "Rows scene, perspective 2400px: camera pitches down 0°→26° (2.3s)→30° (3.3s)→34° (4.6s)→36° (5.05s), rolls −6°→−10°→−22° (4.6s)→−27° (5.05s), yaw within 4°; it pulls back 300px at 2.3s and 560px at 3.3s to fit more rows, then dollies in to +400px at 4.6s and about +617px at 5.05s. Bands scene, perspective 1100px: dolly 0→360px (3.0–5.1s), roll 0°→−8°. The editor settles from 1.14x scale, 7° tilt and −5° yaw to 1.0 in 1.15s (expo.out), pushes slowly from 6.0s with sine inOut to reach 1.05x at 8.35s, then pulls back to 0.97x as it dims and drifts back to 0.99x by 10.5s"
+      ],
+      [
+        "Subject",
+        "Each row is a folded strip with one panel per word group, so creases fall only between words: PERSPECTIVE (865px) and FRAMES (545px) in line one, NOW (348px), IN (161px) and PLANAR (537px) in line two; each panel is its word width plus 18px each side (Inter 700, 128px, letter-spacing −0.035em). Neighbouring panels alternate ±37° with their edges joined; the two title rows overshoot to about 44° while folding (peak near 2.3–2.5s, second line 0.1s later) and settle back to 37° by 3.4s (second line 3.5s) so the zig-zag shows sooner; from 2.25s every row breathes ±3°, 34–44° in all; panels leaning away drop to 50% brightness. 8 rows in all, 4 of PERSPECTIVE FRAMES and 4 of NOW IN PLANAR, 340px apart. Bands are 300px, 230px, 420px and 160px high and 9000px wide with text scrolling along them (1100–1700px/s); the wipe band is 3000px thick and carries two lines of 620px type that cross the frame near 4.95s and 5.05s, so the cover frame still shows type, with a 150px white band and a 120px dark band beside it. The editor window is 1700x900 with three phone frames on the canvas"
+      ],
+      [
+        "Sync",
+        "The last band fills the frame at 5.05s, the rows and bands scenes end on that frame and the editor shows underneath; during the Rotate Y drag the value, the Home frame on the canvas, the highlight box on the Y field and the tooltip above the frame (it follows the cursor sideways) change on the same frame, and the cursor stays on the handle; during the Distance drag the Distance field lights up and the frame's perspective distance changes from 1200px to 450px in step"
+      ],
+      [
+        "Style",
+        "Background <code>#050507</code>, white type, violet accent <code>#6e56ff</code> (band gradient <code>#5b44f0</code> → <code>#7a65ff</code>, light violet type <code>#a597ff</code>); three band looks: white type on violet, black type on near-white, violet type on black; the editor is a dark UI with three light phone frames; at the end the editor drops to 20% opacity, a dark radial scrim fades in behind the mark (8.0–8.5s) and the Planar wordmark sits centered (120px icon, Inter 700 at 136px, fading in from 8.35s and growing 2.5% to 10.5s)"
+      ]
+    ],
+    "prompt": "Build a 10.5-second opening called Folded Ribbon Text for a design tool named Planar, 1920x1080, background #050507, white type and one violet accent #6e56ff, font Inter. From 0s a two-line title PERSPECTIVE FRAMES / NOW IN PLANAR rises line by line through a mask (0 to 0.8s, expo.out, second line 0.12s later) (Inter 700, 128px, letter-spacing -0.035em, PLANAR in #a597ff); from 0.3 to 1.16s the accent color #a597ff sweeps across both lines left to right, panel by panel. From 1.0 to 2.3s (easeInOut cubic, second line 0.1s later) split each line into one panel per word, each panel as wide as its word plus 18px on each side (line one: PERSPECTIVE 865px, FRAMES 545px; line two: NOW 348px, IN 161px, PLANAR 537px), so every crease falls between words; rotate neighbouring panels alternately by ±37° with their edges joined so the strip folds into a zig-zag, and drop panels that lean away to 50% brightness; the two title rows overshoot to about 44° (peak near 2.3–2.5s, second line 0.1s later) and settle back to 37° by 3.4s; the camera uses 2400px perspective, pitches down to 26° and rolls -6°. From 1.0 to 2.4s open the row spacing from 176px to 340px, and from 2.25 to 3.38s multiply 6 more rows (3 of PERSPECTIVE FRAMES above, 3 of NOW IN PLANAR below; 0.95s each, expo.out, fading in, staggered 0.09s per ring), with the fold angle breathing ±3°, the camera pulling back to 560px and pitching to 30° with -10° roll, and a violet sweep running across the rows from 2.79 to 3.87s. From 3.0 to 5.05s four wide bands (300, 230, 420 and 160px high, 9000px wide; white type on violet, black type on near-white, violet type on black, and a thin violet band; entering at 3.0, 3.3, 3.55 and 3.75s; text TILT → SKEW → ROTATE → PERSPECTIVE →, PERSPECTIVE → ROTATE → SKEW → TILT →, SKEW → TILT → ROTATE → PERSPECTIVE → and NOW IN PLANAR →, scrolling at 1500, 1300, 1100 and 1700px/s) fly in from off-screen in a second 3D scene with 1100px perspective that dollies in 360px and rolls -8°, while the rows camera reaches 34° pitch, -22° roll and +400px dolly at 4.6s and about 36° pitch, -27° roll and +617px dolly at 5.05s (yaw stays within 4°), and the rows fade to 32% between 3.4 and 4.5s. From 4.3 to 5.8s a 3000px-thick violet band (tilted -26°, with two lines of 620px type PERSPECTIVE → FRAMES → on it that cross the frame near 4.95s and 5.05s, and a 150px white band and a 120px dark band beside it) sweeps across with easeInOut cubic and fills the frame at 5.05s; on that frame swap the rows scene for the Planar editor (a 1700x900 dark window: layers on the left, three phone frames on the canvas, a properties panel on the right with a Perspective section). The window settles from 1.14x scale, 7° tilt and -5° yaw to 1.0 in 1.15s with expo.out, then from 6.0s pushes slowly with sine inOut to reach 1.05x at 8.35s. The cursor fades in at 5.5s and reaches the handle at the right-middle of the selected frame at 6.15s; from 6.25 to 7.3s it drags the handle and Rotate Y goes 0° to -38° with expo.out, with the frame, the value, the highlight box on the Y field and a Rotate Y -38° tooltip above the frame (following the cursor sideways) changing on the same frame; from 7.4 to 7.78s the cursor moves to the Distance slider and from 7.8 to 8.3s it drags it, the frame's perspective going 1200px to 450px with sine inOut and the Distance field lighting up. From 8.2 to 8.85s the editor drops to 20% opacity and pulls back to 0.97x (then drifts back to 0.99x by 10.5s), a dark radial scrim fades in behind the mark from 8.0 to 8.5s, and from 8.35s the Planar wordmark (a 120px violet icon and 136px Inter 700 text) fades in centered and rises 36px with expo.out until 9.35s, then holds to the end.",
+    "says": [
+      "A title folds into 3D ribbons and multiplies",
+      "Wide arrow bands sweep past the camera",
+      "The last band covers the frame and wipes to the product UI"
+    ],
+    "vs": [
+      [
+        "wipe-flash-transition",
+        "Foreground Wipe & Flash hides the frame behind a foreground object and flashes to change scene; Folded Ribbon Text uses bands that carry feature copy as the transition and wipes straight to the product UI."
+      ],
+      [
+        "kinetic-typography",
+        "Scattered Spec Type places spec words around the lens; Folded Ribbon Text takes one title line, folds it into ribbons, multiplies it and sweeps bands over it."
+      ]
+    ]
+  },
+  "line-drawing-logo-animation": {
+    "def": "A low macro camera follows a plotter pen across paper: it draws a ring and a meridian, sketches each letter as a skeleton, a heavy pen fills them in, then the film cuts to the flat logo, which blurs while the date and URL type on below it.",
+    "why": "Macro paper with depth of field makes a few thin lines the subject, so the viewer sees how the logo is drawn before seeing the finished mark. Four camera positions cut at 1.9s, 3.4s and 4.7s, each showing one thing (ring, meridian, letters, fill), and the three cut points set the rhythm. After the hard cut to the flat logo it defocuses into the paper over 0.9s (moving up 90px) and the date and URL type on below it once the defocus has finished, so the two never overlap and the eye does not have to move. The whole film has one accent color, used only for the meridian, the 26 and the URL.",
+    "spec": [
+      [
+        "Timing",
+        "Film 11s. Hard cuts at 1.9s, 3.4s and 4.7s, and to the flat logo at 5.8s. A thin pen draws the ring 0–2.6s (55% to closed) and a blue pen the meridian 2.3–3.2s. The 10 skeletons start from 3.0s to 4.78s, 0.16–0.22s apart, 0.3–0.55s each. The heavy pen fills 4.5–5.755s, characters 0.075s apart, 0.42s each. Flat logo 5.8–7.0s, defocus 7.0–7.9s, the lockup moves up 90px as it defocuses, date types from 7.75s, URL from 8.15s, held to 11s. The paper texture and guides are on screen from frame 0 with no fade-in"
+      ],
+      [
+        "Easing",
+        "Ring pen <code>none</code> (constant speed); meridian and letter skeletons <code>power1.inOut</code>; heavy fill <code>power2.out</code>; guides <code>power2.out</code>; camera constant speed (<code>none</code>) in takes 1, 2 and 3, <code>power3.out</code> in take 4; logo defocus <code>power2.inOut</code>; date and URL <code>expo.out</code> (0.5s per character, 0.035s apart, each character rising 8px from below and going from 6px blur to sharp)"
+      ],
+      [
+        "Camera",
+        "Perspective 1500px, the paper tilted about a horizontal axis. Take 1 zoom 5.2→4.4, tilt 58°→55°, roll −10°→−6°, the camera aimed 4° of arc ahead of the pen tip so the tip stays near the middle of the frame (about 45% of the frame height); take 2 zoom 2.5→2.2, tilt 50°→47°; take 3 zoom 1.9→1.75, tilt 55°→52°, the camera sliding right aimed about 25 units left of the letter being drawn, so the pen tip sits in the middle-right of the frame; take 4 zoom 1.15→0.78, tilt 52°→46°, pulling back and sliding right while the fill runs, with the whole mark inside the frame at its start and the right edge of the 6 about 280px inside the frame at the end. An extra 1.00→1.02 slow push runs across all four takes. Depth of field uses four identical copies of the plane blurred 0, 2.4, 6 and 12px, with a focus band half-width of 150, 190, 160 and 330px (takes 1 to 4)"
+      ],
+      [
+        "Subject",
+        "Plane units: 1 unit = 2.8px, x-height 100 units (280px). Mark: an ink ring plus a blue meridian ellipse (radius 66, half-width 30 units); wordmark meridian plus a blue 26, 10 characters built from arcs and straight lines. Thin pen 0.7 units (about 2px), heavy pen 16 units (about 45px) for letters and 13 units for the ring and meridian. 36 guide strokes: 4 horizontal rulings, 3 concentric circles, 3 diagonals, 2 cross lines, the left and right edge of every character and the bounding circle of each round letter, plus baseline ticks every 6 units and registration crosses"
+      ],
+      [
+        "Sync",
+        "Each character's guides are drawn 0.8–0.9s before its skeleton; each character's heavy stroke starts only after its own skeleton is done (the m skeleton ends at 3.55s and its fill starts at 4.66s; the 6 skeleton ends at 5.28s and its fill starts at 5.335s); strokes inside a character run one after another in both passes (m: stem, then the two arches; e: crossbar, then the bowl) and the character's total time stays the same; the i-dots fill 0.28s after the heavy stroke starts; the last character is filled at 5.755s and the film cuts to the flat logo at 5.8s, 0.045s later"
+      ],
+      [
+        "Style",
+        "Paper base <code>#f3f4f6</code> with two multiply relief textures (256px and 1024px); ink <code>#0d0f13</code>, ultramarine accent <code>#2346ff</code> (meridian, 26, URL), guides <code>#7d838d</code>; a 256px grain tile jumped every frame (9% multiply, 3% screen) and a 30% vignette; date and URL Inter 500, 50px, centered (date text box top at y=600px, URL at y=680px), the URL in the accent color"
+      ]
+    ],
+    "prompt": "Build a closing shot called Plotter-Drawn Logo for an event, 11 seconds, 1920×1080, 30fps. Use one paper plane (base #f3f4f6 with relief texture) that carries the whole logo: a mark made of an ink ring and a blue (#2346ff) meridian ellipse, plus a lowercase wordmark meridian built from arcs and lines and a blue 26, 10 characters in all, x-height 100 units = 280px. The camera is a low macro with 1500px perspective, and depth of field comes from four identical copies of the plane blurred 0, 2.4, 6 and 12px with a focus band half-width of 150–330px. Draw every stroke with stroke-dashoffset and set pathLength to 10000 (GSAP rounds CSS lengths to whole numbers, so a pathLength of 1 makes strokes jump). 0–1.9s take 1 (zoom 5.2→4.4, tilt 58°→55°, constant speed): the paper texture and gray guides (cross lines, concentric circles, diagonals, horizontal rulings) are on screen from frame 0 with no fade-in, and a thin pen (about 2px) draws the ring at constant speed from 55% to 79% while the camera is aimed 4° of arc ahead of the pen tip, so the tip stays in the middle of the frame. At 1.9s hard cut to take 2 (zoom 2.5→2.2, tilt 50°→47°): the ring closes at 2.6s, a blue pen draws the meridian ellipse over 0.9s (power1.inOut), and from 3.0s the m appears at the right edge. At 3.4s hard cut to take 3 (zoom 1.9→1.75, tilt 55°→52°, constant speed): the 10 character skeletons start in turn at 3.0, 3.22, 3.44, 3.62, 3.78, 3.98, 4.14, 4.34, 4.56 and 4.78s, 0.3–0.55s each with power1.inOut, the strokes inside a character drawn one after another, each character's edge lines and bounding circle start drawing 0.8–0.9s earlier; the camera slides right, aimed about 25 units left of the letter being drawn, so the pen tip sits middle-right in the frame. At 4.7s hard cut to take 4 (zoom 1.15→0.78, tilt 52°→46°, power3.out, the camera pulling back and sliding right), opening with the whole ring mark inside the frame and ending with the right edge of the 6 about 280px inside the frame: a heavy pen (letters 16 units, about 45px; ring 13 units) traces over every skeleton, ring at 4.5s, meridian at 4.58s, characters from 4.66s every 0.075s, 0.42s each (power2.out), the strokes inside a character drawn one after another (m: stem, then the two arches; e: crossbar, then the bowl), the i-dots filling 0.28s later. At 5.8s hard cut to the flat paper: the logo is 1480px wide and centered, pushing 1.00→1.03 until 7.0s, then over 0.9s (power2.inOut) it defocuses to 16px blur, 18% opacity and scale 1.10 while moving up 90px, and keeps drifting to 1.14. From 7.75s the date \"16 Dec 2026\" (Inter 500, 50px, text box top at y=600px, below the defocused logo) types in character by character, 0.5s each with expo.out, 0.035s apart, rising 8px from below and going from 6px blur to sharp; from 8.15s the URL \"meridian26.com\" (text box top at y=680px) types in the same way in the accent color; hold to 11s. Finish with a per-frame jumping grain tile and a vignette. Build it with HTML/SVG + GSAP.",
+    "says": [
+      "The camera hugs the paper while a pen draws a ring and letters",
+      "After the line drawing, a heavy pen fills every letter from left to right",
+      "The logo blurs back into the paper and the date and URL type on below it"
+    ],
+    "vs": [
+      [
+        "logo-wordmark-reveal",
+        "Mark-to-Wordmark Unfold pushes the wordmark out of an existing mark in one 1.3s move; Plotter-Drawn Logo draws the mark and wordmark stroke by stroke on blank paper with a moving camera and ends on a date and URL."
+      ],
+      [
+        "outline-to-solid-reveal",
+        "Outline to Solid lights a product outline and fills it in place on a fixed camera; Plotter-Drawn Logo draws the strokes one by one on paper with a moving macro camera."
+      ]
+    ]
+  },
+  "scrolling-text-animation": {
+    "def": "One dictated line scrolls sideways from slow to fast, the last m is held and zoomed into giant humps, then the whole line squeezes into a bar and blooms into a two-line message bubble while the camera pulls back to the chat window around it.",
+    "why": "The scroll starts almost still, so viewers can read the first words, then accelerates to about 8,200 px/s with horizontal blur that grows with speed. They read first and are then left behind, which shows how long the input is. Holding the last m and zooming into it fills the frame with repeated shapes and sets the beat of the film. The squeeze and the bloom happen at the same spot, frame center: the zoomed frame squeezes into a bar whose width, height and color match the bubble's starting bar, and the bubble opens from it evenly to both sides, so the eye does not move. The result sits next to the input: the counter stops at 36 words and the line under the bubble says 36 words to 10. One accent color (violet #5b3df5) is shared by the bubble, the mic, the badge and the mark.",
+    "spec": [
+      [
+        "Timing",
+        "Film 11s. Scroll 0.1–3.2s (3.1s, 93 frames); brake 3.2–3.7s; held m 3.3–4.1s (0.8s, 26 extra m); zoom-in 3.45–4.4s (0.95s); squeeze 4.6–5.05s (0.45s, about 14 frames); bubble bloom 5.05–5.75s (0.7s); summary words 5.3–6.3s; camera pull-back 6.3–8.0s (1.7s, 51 frames); reply bubble 7.6s; window drift 8.0–8.9s (0.9s); window fades 8.65–8.9s; lockup lands at 8.9s and holds to the end (2.1s)"
+      ],
+      [
+        "Easing",
+        "Scroll power2.in (cubic ease-in); brake and bloom expo.out; zoom-in and pull-back interpolate scale in log space (outQuart and outQuint curves); squeeze power3.inOut; summary words expo.out"
+      ],
+      [
+        "Camera",
+        "One 120px line (Inter 500, letter-spacing -0.035em), 36 words, 9,833px wide, starting at x=160 and ending with \"um\" parked at x=930, next to frame center; horizontal blur stdDeviation 0 to 36px with speed, back to 0 within 0.5s of the brake; zoom-in 1x to 6.8x about frame center, so each m hump is about 446px tall (41% of the frame height) and only 2 to 3 m's stay in view; the 140px side fades go to 0 over 3.5–3.95s (0.45s, power2.inOut), so an m cut by the frame edge reads as part of an m; the squeeze treats the zoomed frame as one flat image, clipped to the 446px band the m's occupy so no blurred glyph tops show above the bar, and scales it on X about frame center from 1 to 0.0075, a bar about 14px wide and 446px tall, while its color turns from ink to violet (4.78–5.03s) and the horizontal blur rises to 14px (4.6–4.9s) and returns to 0 within 0.13s; pull-back 6.03x to 1x with no tilt at the start, a tilt that grows to -2° (Y) and 1° (X) as it pulls back and stays (perspective 2600px), then a slow drift 1.00 to 1.02 over 8.0–8.9s with the Y tilt easing to -1.4°"
+      ],
+      [
+        "Subject",
+        "The bubble is 277×74px in the chat window with 15px type, violet, 20px corners and a 6px bottom-right corner. Its close-up is a separate element at screen size, 1,671×446px with 91px type and 121px and 36px corners (the same shape times 6.03), so the text stays sharp and the bubble keeps at least 120px to each frame edge. It opens from the squeezed bar, 14px wide and 446px tall and centered on x=960, widening evenly to both sides over 5.05–5.75s while the corner radius grows with the width. On the first frame of the pull-back (6.3s) the bubble inside the chat window, scaled 6.03x, takes over at the same size and position. The chat window is 1640×900px with an 11-conversation sidebar, 5 earlier messages, the summary bubble, Liam's reply and a composer with a Gist button; after the pull-back to 1x the bubble lands in the lower right of the window"
+      ],
+      [
+        "Sync",
+        "The pill label changes from Listening to Summarizing at 4.4s, the moment the zoom lands and 0.2s before the squeeze starts, while the mic icon swaps to a sparkle icon and the waveform bars flatten to scaleY 0.12 over 0.25s (power2.out); the pill fades out from 4.9s over 0.35s (power2.in) and drops 14px; the word counter climbs to 36 words with the scroll and the last word is counted at 3.18s; the window background fades in over 0.35s starting at 6.3s and the window content over 0.45s starting at 6.35s; the line under the bubble (Summarized by Gist · 36 words to 10 · Delivered) fades in over 0.5s from 6.45s, after the pull-back has made it narrower than the frame; the reply bubble appears and the sidebar preview (Liam's reply, cut with an ellipsis) and time change on the same frame (7.6s)"
+      ],
+      [
+        "Style",
+        "Warm cream background #f2efe9, text #1c1b19, one violet accent #5b3df5; the chat window is white with #e9e6e0 hairlines; Inter throughout; the closing mark is a violet rounded square with three white bars (84, 84 and 42px) and a 176px Inter 700 wordmark"
+      ]
+    ],
+    "prompt": "Build a shot called Ramble to Summary, 11 seconds, 1920×1080, 30 fps, silent, for a product named Gist (a chat app that turns a long voice note into one short message). Light theme: warm cream background #f2efe9, text #1c1b19, one violet accent #5b3df5, Inter throughout. A white listening pill (720×84px) rises at the bottom from 0.05s over 0.7s with expo.out, with a violet mic circle, the label \"Listening\", 28 violet waveform bars and a word counter that climbs from 0 to 36 words; label and counter are 23px and the counter number is bold violet. In the middle of the frame one line of dictated text, Inter 500 120px, letter-spacing -0.035em, starting at x=160: \"ok so basically Thursday is a problem because Priya is out and Liam hasn't finished the pricing page and legal wants one more look so I think we push the launch review to Friday and um\" (36 words). It scrolls left from 0.1s to 3.2s with power2.in (cubic ease-in), starting almost still and reaching about 8,200 px/s, with horizontal motion blur (an SVG feGaussianBlur whose stdDeviation grows from 0 to 36px with speed) and 140px edge fades that go to 0 between 3.5 and 3.95s. From 3.2 to 3.7s it brakes with expo.out and the blur returns to 0; after the brake the end of \"um\" rests at x=930, next to frame center, so the text fills the left half and the right half is left for the m's. From 3.3 to 4.1s the final m of \"um\" is held down: 26 more m appear one by one, slightly accelerating. From 3.45 to 4.4s zoom the whole line in 6.8x about frame center (interpolate scale in log space, outQuart) until each m hump is about 446px tall and only 2 to 3 m's are in view. At 4.4s the pill label switches to \"Summarizing\", the mic icon swaps to a sparkle icon and the waveform bars flatten to scaleY 0.12 over 0.25s (power2.out); the pill fades out from 4.9s over 0.35s with power2.in, moving down 14px. From 4.6 to 5.05s treat the zoomed frame as one flat image, clipped to the 446px band the m's occupy (so no blurred glyph tops show above the bar), and squeeze it horizontally about frame center (scaleX 1 to 0.0075, power3.inOut) into a vertical bar about 14px wide and 446px tall; from 4.78 to 5.03s the ink color turns violet, and horizontal blur rises to 14px between 4.6 and 4.9s and returns to 0 within 0.13s. On the frame the bar disappears, a violet bubble of the same center, width and height takes over and widens evenly to both sides, staying centered on x=960, from 5.05 to 5.75s to its full 1,671px width (expo.out). In this close-up the bubble is its own element at screen size: 1,671×446px, 91px type, 121px corners and a 36px bottom-right corner (the 20px and 6px corners of the 277×74px bubble times 6.03); the corner radius grows with the width, so the bubble stays sharp and keeps at least 120px to each frame edge. It holds the summary \"Launch review moves to Friday. / Pricing page and legal pending.\" (10 words); from 5.3s each word rises in 65ms apart (0.4s expo.out). The bubble is the newest sent message in a macOS-style chat window (1640×900px: 360px sidebar with 11 conversations, a Launch crew thread with 5 earlier messages followed by the summary bubble and Liam's reply, a composer with a violet Gist button), and in the chat window it is 277×74px with 15px type. During the close-up the window is scaled 6.03x about the bubble center with no tilt and its background and content hidden; at 6.3s, on the first frame of the pull-back, the bubble inside the window takes over at the same size and position. From 6.3 to 8.0s pull the camera back to 1x (log-space scale, outQuint) while a perspective tilt grows from 0 to -2° Y and 1° X (perspective 2600px) and stays; the window background fades in over 0.35s starting at 6.3s and the window content over 0.45s starting at 6.35s, and a small line under the bubble, \"Summarized by Gist · 36 words to 10 · Delivered\", fades in over 0.5s from 6.45s. At 7.6s Liam's reply \"Friday works. I'll have the pricing copy by Thursday night.\" rises in, and on the same frame the sidebar preview changes to Liam's reply cut with an ellipsis and the time updates. From 8.0 to 8.9s the window drifts from 1.00 to 1.02 while the Y tilt eases to -1.4°; from 8.65 to 8.9s it fades out. From 8.9s a violet mark (156px rounded square with three white bars), a 176px Gist wordmark and \"Voice notes, summarized.\" rise in with expo.out and hold to 11s, drifting up 6px. Use HTML plus one paused GSAP timeline, fully deterministic, with no random numbers and no requestAnimationFrame.",
+    "says": [
+      "A sentence too long to finish scrolls faster and faster",
+      "The last letter is stretched into giant shapes",
+      "The whole line squeezes to a bar and pops out as one short bubble"
+    ],
+    "vs": [
+      [
+        "word-by-word-text-highlight",
+        "Word-by-Word Highlight sets the reading pace of a paragraph with color changes; Ramble to Summary scrolls the text itself at rising speed and then compresses it into a very short result."
+      ],
+      [
+        "typing-animation",
+        "Rhythmic Typing types one command at a steady pace; Ramble to Summary accelerates from slow to fast and ends as a single message."
+      ]
+    ]
+  },
+  "flipbook-animation": {
+    "def": "After a click, the 15 cards on a moodboard collapse into a book, the pages flip faster and faster, then burst into a 3D collage that drifts toward the camera and settles behind a wordmark.",
+    "why": "The collapse, the flip and the burst all use the same 15 cards, so the viewer recognizes them the whole time and the cut from interface to collage needs no mask or cross-fade. The gap between page turns shrinks from 0.20s to 0.07s, and the last six pages are in the air together and stop as a fan that the burst starts from. The burst uses expo.out and is followed by 4s of linear drift, so the frame never stops. Depth-of-field blur separates near and far cards, and vermilion is the only accent color against neutrals.",
+    "spec": [
+      [
+        "Timing",
+        "Film 10.5s. Interface 0–1.62s, camera pushes from z 0 to z 70 over 0–1.9s (power1.out), cursor travels to the button 0.45–1.6s, click at 1.62s; cards collapse into a book 1.62–2.9s (1.15s); window recedes and fades over 0.8s (24 frames); page flips 2.6–4.78s (15 pages; the first 9 take 0.64s shrinking to 0.51s each with the gap shrinking from 0.20s to 0.07s; the last 6 take 0.94s shrinking to 0.56s and all stop in a fan at 4.78s); fan holds 4.78–4.95s, anticipation 4.85–4.95s (0.1s, 3 frames); burst 4.95–6.3s (1.35s); drift 6.2–10.5s; veil rises from 7.7s over 0.9s, wordmark 8.0–9.1s, tagline from 8.4s over 0.7s"
+      ],
+      [
+        "Easing",
+        "Collapse and burst <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); first 9 page flips power2.inOut, last 6 a front-loaded ease that starts fast and settles into the fan (0.7 × out power 1.6 + 0.3 × inOut power 1.6); window recede power2.in; camera orbit power3.inOut; camera pan power2.inOut; opening push power1.out; post-burst drift and slow camera push linear; wordmark expo.out"
+      ],
+      [
+        "Camera",
+        "Perspective 1600px. From 0–1.9s the camera pushes from z 0 to z 70 (power1.out). From 1.9–3.4s it turns to rotY −26°, rotX 8° and pushes to z 150; the view also pans 211px left to center the closed book (1.62–2.52s) and pans back to 0 as the pages open (2.7–3.6s); during the flips rotY turns at constant speed from −26° to +20° (3.4–4.95s) while z pushes slowly from 150 to 260 (3.4–4.85s), backing to z 200 at the anticipation; at the burst the camera returns to rotY −4°, z 150 (expo.out, 1.5s), then pushes slowly for about 4s to z 330, rotY 5°"
+      ],
+      [
+        "Subject",
+        "15 cards of 240×320, each with a front and a back showing another card's content; each card has a cream paper edge on its right and bottom sides as thick as the page spacing (two creams alternating) and a 46px dark gradient at the spine side (opacity 0.36), so the closed book shows its thickness; scale 0.76 in the interface, 1.6 as the book (384×512, page spacing 3.6px, book about 50px thick), 0.8–1.1 in the collage; pages turn about the spine (x 960): the first 9 to −180°, the last 6 stop at −168°, −146°, −124°, −102°, −80° and −58° as a fan; at the burst each card keeps turning another 160°–320° and lands within ±25° of face-on between z −330 and +340, with 8 extra shapes (4 discs, 2 rounded squares, 1 dotted ring, 1 thin outline ring) between z −420 and +380; card depth-of-field blur up to about 4px, plus a 0.12s 3px motion blur that starts on all 15 cards together at the burst, ignoring the stagger; during the 0.1s anticipation the first 9 pages fan apart in z, page spacing from 3.6px to 9px (the last 6 are already 9px apart while flipping)"
+      ],
+      [
+        "Sync",
+        "Click at 1.62s: the button press and the card launch are on the same frame; the last 6 pages stop in the fan at 4.78s, hold for 0.17s, and the burst starts from the fan at 4.95s; cards are staggered 0–0.16s at the burst and the shapes start 0.05–0.16s after it; the collage keeps drifting while the veil rises; the dark quote card lands in the upper left of the collage, fully inside the frame and clear of the wordmark area"
+      ],
+      [
+        "Style",
+        "Light theme. Warm gray desktop <code>#dcd7ce</code> → <code>#cfc9bf</code>, neutrals <code>#1b1a18</code>, <code>#8d877e</code>, <code>#cfc8bb</code>, <code>#e9e4da</code>, vermilion accent <code>#ff5a36</code>; interface in Inter, serif for the type-specimen card, Archivo Black for the poster card; grain and vignette on top"
+      ]
+    ],
+    "prompt": "Build a moodboard-app transition called Flipbook Burst as a 10.5-second light film for an app named Pinwheel. Use one accent color, vermilion #ff5a36, and neutrals (#1b1a18, #8d877e, #cfc8bb, #e9e4da) on a warm gray desktop. Use HTML + CSS 3D (perspective 1600px) and GSAP. Prepare 15 cards of 240×320 (photo poster, color palette, type specimen, phone screenshot, quote, product shot, article link, sticky note, texture, typographic poster, chart, architecture illustration, materials, record sleeve, component kit), each with a front and a back; give each card a cream paper edge on its right and bottom sides as thick as the page spacing, and a 46px dark gradient at the spine side (opacity 0.36). 0–1.62s: a 1700×960 macOS-style window with a sidebar, top bar, a 5×3 card grid (cards scaled 0.76) and a details panel on the right; the camera pushes in slowly from z 0 to z 70 over 0–1.9s (power1.out); the cursor travels to the Present button over 0.45–1.6s. Click at 1.62s: the button presses and on the same frame the cards launch and collapse with expo.out over 1.15s into a closed book at screen center (scale 1.6, page spacing 3.6px, spine at x 960); the window recedes to z −320 and fades over 0.8s (power2.in); the camera turns to rotY −26°, rotX 8°, z 150 over 1.9–3.4s, and the view pans 211px left to center the closed book (1.62–2.52s, power2.inOut) and back to 0 as the pages open (2.7–3.6s). Page flips 2.6–4.78s: each page turns about the spine (the first 9 with power2.inOut, the last 6 with a front-loaded ease that starts fast and settles into the fan: 0.7 × out power 1.6 + 0.3 × inOut power 1.6), with the gap between flips shrinking from 0.20s to 0.07s; the first 9 pages turn to −180°, each 0.64s shrinking to 0.51s; the last 6 pages take 0.94s shrinking to 0.56s and all end at 4.78s as a fan at −168°, −146°, −124°, −102°, −80° and −58°, so six pages are in the air together; add a shade on a page while it turns; camera rotY turns at constant speed from −26° to +20° (3.4–4.95s) while z pushes slowly from 150 to 260 (3.4–4.85s, power1.in). The fan holds for 0.17s; anticipation 4.85–4.95s: cards scale to 0.93, the first 9 pages fan apart in z to 9px spacing (the last 6 already are) and the camera backs to z 200. Burst at 4.95s from the fan: the 15 cards fly with expo.out over 1.35s to 3D positions between z −330 and +340, staggered 0–0.16s, each card turning another 160°–320° and ending within ±25° of face-on at scale 0.8–1.1; 8 shapes (4 discs, 2 rounded squares, 1 dotted ring, 1 thin outline ring) start 0.05–0.16s later and fly with expo.out over 1.3s to z −420 to +380; the camera returns to rotY −4°, z 150 over 1.5s with expo.out. Add a 3px blur for 0.12s starting on all cards together at the burst, then depth-of-field blur by distance (up to about 4px). Place the dark quote card in the upper left of the collage, fully inside the frame and clear of the wordmark area. From 6.2s to 10.5s every card drifts toward the camera 40–170px at constant speed while the camera keeps pushing to z 330. From 7.7s a cream radial veil rises over 0.9s; at 8.0s a pinwheel mark turns from −200° to 0 and scales 0.4 to 1 (1.1s, expo.out); at 8.2s the wordmark Pinwheel rises 26px into place (0.9s); at 8.4s the tagline fades in. Finish with grain and vignette.",
+    "says": [
+      "The cards on the board collapse into a small book",
+      "Pages flip one after another, faster and faster",
+      "The pages burst into a 3D collage that drifts toward the camera"
+    ],
+    "vs": [
+      [
+        "card-flip-animation",
+        "Card Flip to Code turns one card over and stops on its back; Flipbook Burst turns a whole set of cards into a book and then scatters them as a collage."
+      ],
+      [
+        "confetti-success-animation",
+        "Confirmation Burst is a particle burst after a click; Flipbook Burst bursts the interface's own cards and lets them drift toward the camera in 3D."
+      ]
+    ]
+  },
+  "one-word-per-cut": {
+    "def": "One line is split into one word per shot. Each word sits at the center of the frame over a different product screen, file-name captions follow, then the full line lands on a cream card before the wordmark.",
+    "why": "The word keeps its position and size while only the screen behind it changes, so the viewer's eye never moves and each word has 0.5s to read. Eight words map to eight real screens (doc, inbox, board, meeting notes, calendar, dashboard, customer table, Q&A), so by the end of the sentence the product's main modules have all appeared. The comma holds 0.2s longer and the last word holds 0.9s, which gives the line a rhythm. The complete sentence appears once, at the end, on a cream card, and the closing wordmark uses a single accent color.",
+    "spec": [
+      [
+        "Timing",
+        "Film 10.8s, all hard cuts. Eight words: Everything 0–0.6s, your 0.6–1.1s, team 1.1–1.6s, knows, 1.6–2.3s (comma holds 0.2s longer), ready 2.3–2.8s, when 2.8–3.3s, you 3.3–3.8s, ask. 3.8–4.7s (last word holds 0.9s). Four file-name captions at 4.7–5.2s, 5.2–5.8s, 5.8–6.3s and 6.3–6.8s. Full-line card 6.8–8.6s (1.8s), wordmark 8.6–10.8s (2.2s)"
+      ],
+      [
+        "Easing",
+        "Each shot's camera move uses <code>power3.out</code> for the full shot length (0.5–0.9s), so it is still moving at the cut; word entrance <code>expo.out</code> 0.28s, scale 1.08 to 1 and blur 10px to 0; the screen's defocus settles from 6px to 2.5px in 0.3s (caption shots 5px to 3px); caption <code>expo.out</code> 0.22s, rising 6px while fading in; card lines <code>expo.out</code> 0.5s, rising 14px, 0.08s apart; icon tiles <code>expo.out</code> 0.8s, 0.07s apart; wordmark letters <code>expo.out</code> 0.9s, 0.05s apart"
+      ],
+      [
+        "Camera",
+        "Each shot is one 1920×1080 app screen (a 1560×900 window, alternating light and dark) with 1800px perspective. Everything pulls from 2.0x to 1.5x with Y rotation -7° to -2°; your pushes from 1.15x to 1.45x, rotation 10° to 4°, roll -1.5° to -0.5°; team holds 1.5x while the camera center slides 360px right; knows, pulls from 2.3x to 1.4x, roll 1.5° to 0°; ready pulls from 1.6x to 1.45x, X rotation -6° to -1°, roll 3° to 0°; when pushes from 1.05x to 1.6x; you goes 1.55x to 1.45x, X rotation 8° to 2°, roll -1° to 0°; ask. pushes from 1.25x to 1.4x. Caption shots are macro crops of four screens, each centered on a dense, colorful area, alternating light and dark: 4.7s light doc, goals list above and the milestone table with avatars and status pills below, the caption in the blank band between them, 2.6x to 2.9x; 5.2s dark meeting notes, waveforms and transcript, 2.5x to 2.8x; 5.8s light dashboard, metric cards and the line-and-area chart, 2.6x to 3.1x; 6.3s dark inbox, avatars and mail rows, 2.6x to 3.0x; roll within ±2°. The card scales 1.00 to 1.035 and the wordmark 1.00 to 1.04, linear"
+      ],
+      [
+        "Subject",
+        "Word: EB Garamond 500, 184px, letter-spacing -0.025em, fixed at frame center; warm white <code>#f8f4ec</code> on dark screens, ink <code>#17161b</code> on light screens. Behind each word sits a soft ellipse scrim (dark screens 1000×340px <code>rgba(6,6,10,0.72)</code>, light screens 1240×440px <code>rgba(250,249,253,0.72)</code>, fading out in steps to 0) plus a vignette (dark screens edge <code>rgba(0,0,0,0.42)</code>, light screens edge <code>rgba(40,36,60,0.18)</code>). All eight screens belong to the product Tessel: doc, inbox, board, meeting notes, calendar, dashboard, customer table and Q&A, each with 12–30 items of real content. Captions use JetBrains Mono 38px, centered over each macro crop on a rounded backing pill (17px 32px 19px padding, 14px radius; dark crops <code>rgba(8,8,12,0.72)</code>, light crops <code>rgba(250,249,253,0.94)</code> with a 1px <code>rgba(23,22,27,0.08)</code> border and a <code>0 6px 24px rgba(30,28,60,0.12)</code> shadow), for example <code>/ Q4-launch-plan /</code>. On dark crops the text is <code>#f6f3ee</code> with <code>#a9a9ff</code> slashes under a 1100×420px dimming scrim (<code>rgba(6,6,10,0.5)</code> fading to 0.14); on light crops the text is <code>#17161b</code> with <code>#5b5bf0</code> slashes under a 1240×440px light scrim (<code>rgba(250,249,253,0.56)</code> fading to 0)"
+      ],
+      [
+        "Sync",
+        "The cut, the word and the screen change on the same frame; the word's entrance blur clears within 0.28s and the screen's defocus settles to 2.5px within 0.3s, so both turn sharp almost together. Captions start fading in 0.04s after the cut. On the card the first line appears at 6.8s and the second 0.08s later, with the last word ask. in the accent color. Wordmark scene: icon base from 8.6s for 0.7s, the four tiles from 8.68s each 0.07s later, letters from 8.65s, tagline at 8.6s (0.3s fade)"
+      ],
+      [
+        "Style",
+        "Dark screens (window <code>#0f0f13</code>, panel <code>#17171c</code>) alternate with light screens (window <code>#f3f3f6</code>, panel <code>#ffffff</code>) over soft violet-blue and peach radial wallpapers; the only accent is indigo <code>#5b5bf0</code> (<code>#9a9aff</code> for text on dark screens); the ending uses a cream background <code>#f3efe6</code>, wordmark Inter 600 176px, letter-spacing -0.04em, and a 210px app icon (indigo rounded square, four tiles, one of them amber)"
+      ]
+    ],
+    "prompt": "Build a 10.8s opening shot called One Word per Cut, 1920×1080, 30fps, silent, all hard cuts. Split the line \"Everything your team knows, ready when you ask.\" into words: Everything 0–0.6s, your 0.6–1.1s, team 1.1–1.6s, knows, 1.6–2.3s, ready 2.3–2.8s, when 2.8–3.3s, you 3.3–3.8s, ask. 3.8–4.7s. Set each word in EB Garamond 500, 184px, letter-spacing -0.025em, always at the exact center of the frame, warm white #f8f4ec on dark screens and ink #17161b on light screens. Behind each word is a different product screen (a 1560×900 macOS window with 12–30 items of real English content, alternating light and dark): doc, inbox, board, meeting notes, calendar, dashboard, customer table, Q&A. Use 1800px perspective. Each screen has its own camera move with power3.out for the full shot length: shot 1 pulls from 2.0x to 1.5x with Y rotation -7° to -2°; shot 2 pushes from 1.15x to 1.45x with rotation 10° to 4°; shot 3 holds 1.5x and slides 360px right; shot 4 pulls from 2.3x to 1.4x; shot 5 pulls from 1.6x to 1.45x with X rotation -6° to -1°; shot 6 pushes from 1.05x to 1.6x; shot 7 goes 1.55x to 1.45x with X rotation 8° to 2°; shot 8 pushes from 1.25x to 1.4x. Each screen lands defocused by 6px and settles to 2.5px in 0.3s, and the word resolves with expo.out in 0.28s from scale 1.08 and 10px blur. Put a soft ellipse scrim behind the word (dark screens 1000×340px rgba(6,6,10,0.72); light screens 1240×440px rgba(250,249,253,0.72); both fading out in steps to 0) plus a vignette (dark edge rgba(0,0,0,0.42), light edge rgba(40,36,60,0.18)) so the word stays readable. From 4.7 to 6.8s add four file-name captions with fixed windows: 4.7–5.2s \"/ Q4-launch-plan /\", 5.2–5.8s \"/ Acme-renewal-call-Nov-6 /\", 5.8–6.3s \"/ Ask-usage-last-90-days /\", 6.3–6.8s \"/ Q3-pricing-review-final /\". Each is a macro crop of one of the same screens, centered on a dense, colorful area and alternating light and dark: 4.7s the light doc with the goals list above and the milestone table (avatars and status pills) below, the caption in the blank band between them, at 2.6x to 2.9x; 5.2s the dark meeting notes (waveforms and transcript) at 2.5x to 2.8x; 5.8s the light dashboard (metric cards and the line-and-area chart) at 2.6x to 3.1x; 6.3s the dark inbox (avatars and mail rows) at 2.6x to 3.0x; roll within ±2°, defocus 5px settling to 3px. Set each caption in JetBrains Mono 38px, centered on a rounded backing pill (17px 32px 19px padding, 14px radius; rgba(8,8,12,0.72) on dark crops, rgba(250,249,253,0.94) on light crops, with a 1px rgba(23,22,27,0.08) border and a 0 6px 24px rgba(30,28,60,0.12) shadow), entering 0.04s after the cut with expo.out over 0.22s while rising 6px. On dark crops the text is #f6f3ee with #a9a9ff slashes over a 1100×420px scrim (rgba(6,6,10,0.5) fading to 0.14); on light crops the text is #17161b with #5b5bf0 slashes over a 1240×440px light scrim (rgba(250,249,253,0.56) fading to 0). From 6.8 to 8.6s hard cut to a cream #f3efe6 card with two lines, \"Everything your team knows,\" and \"ready when you ask.\", in EB Garamond 500 124px, ink, with the last word ask. in the accent #5b5bf0; each line rises 14px and fades in with expo.out over 0.5s, the second line 0.08s after the first, and the card pushes slowly from 1.00 to 1.035. From 8.6 to 10.8s hard cut to the wordmark: a 210px app icon (indigo rounded square, four tiles, one amber) whose four tiles settle from the corners with expo.out over 0.8s, 0.07s apart, then the wordmark \"Tessel\" (or your product name) in Inter 600 176px, letters appearing one by one from 8.65s with expo.out over 0.9s, a one-line tagline reading \"Docs, mail, meetings and answers in one place.\" (Inter 32px, grey #6b685f) at 8.6s with a 0.3s fade, and a slow push from 1.00 to 1.04. The only accent color is indigo #5b5bf0.",
+    "says": [
+      "One line is split so each word gets its own shot",
+      "The word stays dead center while a new product screen changes behind it every 0.5s",
+      "File-name captions follow, then the full line lands on a cream card"
+    ],
+    "vs": [
+      [
+        "kinetic-typography",
+        "Scattered Spec Type scatters several spec lines around the camera; One Word per Cut shows one word at a time at a fixed center while the whole screen behind it changes."
+      ],
+      [
+        "typing-animation",
+        "Rhythmic Typing types one line out in place letter by letter; One Word per Cut swaps whole words by cutting, so the cuts set the rhythm and the screen behind changes each time."
+      ]
+    ]
+  },
+  "dolly-zoom-effect": {
+    "def": "The camera backs away while the lens zooms in, so the phone holds its size in frame, the perspective behind it flattens, and the hall collapses into one wall of dashboard.",
+    "why": "Camera distance and focal length move in opposite directions, so the subject keeps its size while only the perspective behind it stretches or flattens. The viewer sees the space deform without finding where the camera moved. The shot starts wide, with the hall converging on a vanishing point and small windows on its sides, and ends long, with the hall pressed flat and one wall filling the frame, so the change itself is the reveal. The foreground chips sit nearer to the camera than the phone, so they shrink as the camera backs away while the background grows, which shows which layer is moving.",
+    "spec": [
+      [
+        "Timing",
+        "Film 10.5s. 0–0.9s fade in from black; 0–1.0s slow creep back (distance 905→950px); 0.1–0.95s the hall rings light up from far to near (0.5s each, 0.05s apart) and the light strips fade in over 0.1–1.0s; 1.0–5.8s dolly zoom (4.8s, 144 frames); 5.8–10.5s slow residual drift (distance 7000→9800px); 0.1–1.3s phone rises; 0.5–1.8s the six floating windows are revealed top-down with expo.out (0.8s each, 0.1s apart, fully opaque); 0.5–1.7s the phone's hero number counts 47,602→48,213 and the line chart draws over 0.5–1.8s; the two chips pop in at 0.9s and 1.1s (0.6s each, back.out(1.6)); 1.6–2.7s the six windows slide out to the sides in turn while fading (each slides 450px over 0.6s and fades over 0.4s starting at the same moment: the four far ones from 1.6s, 0.15s apart; the two nearest, at z=−300 and z=−600, from 2.2s and 2.3s), and no window is left on the wall from 2.7s; 2.1–2.7s the two chips fade; 5.0s a new signup lands on the phone and on the web dashboard in the same frame; 6.2–7.6s wall darkens and phone moves right, 6.7–8.0s mark, wordmark, tagline and URL enter; hold to 10.5s"
+      ],
+      [
+        "Easing",
+        "Distance is eased in log space with <code>cubic-bezier(0.55,0.05,0.5,1)</code>: distance = 950 × (7000/950)^e, about 1,100px at 2.0s, 1,800px at 3.0s, 4,000px at 4.0s and 6,400px at 5.0s, so the wall is still growing between 3.8s and 5.8s; residual drift 7000→9800px with power1.out; phone tilt −16°→−9° with <code>cubic-bezier(0.3,0,0.1,1)</code> over 1.3–5.8s (4.5s), then →−4° with power1.out over 5.8–10.5s; window slide-out power2.in 0.6s with a 0.4s power2.out fade; window reveal, lockup entrance and the phone's move right (1.3s) use expo.out"
+      ],
+      [
+        "Camera",
+        "CSS 3D, <code>perspective</code> grows from 950px to 7000px, which narrows the vertical field of view from about 59° to about 9° (7.4x). The subject plane at z=0 is unaffected by perspective and stays 1:1. The end-wall dashboard at z=−2800 is 2650px wide in the world (1866×1.42) and grows on screen from 671px to 1893px (2.8x), and the residual drift takes it to 2061px at 10.5s. Foreground chips at z=+170 scale from about 1.22 at 1.0s to about 1.18 at 2.1s, when they start to fade"
+      ],
+      [
+        "Subject",
+        "Phone 410×864px (screen 390×844, 54px corner radius), about 16px thick, built from 8 slices, tilt rotateY −30°→−16° (0.1–1.3s, expo.out). Hall 2760×1552 in cross-section and 2800px long, four 6px accent light strips, 9 hairline rings every 280px (white at 20%), grid lines on floor, ceiling and side walls at 7.5–12% white. Six 520px-wide windows whose content is not repeated on the end wall: checkout funnel, alert rules, experiments, error rate, top events, traffic sources, at z=−300 to −2400. The web dashboard is 1866×1050, scaled 1.42x onto the end wall. The two chips sit in empty space: the online count outside the phone's top-right corner, Signups +6.1% at the lower left"
+      ],
+      [
+        "Sync",
+        "At 5.0s the phone's Live now list and the web dashboard's Live events both insert a Priya Nair signup_completed row, both Signups values change from 8,412 to 8,413 and online users go 2,418→2,419; both chips have faded by 2.7s, and the +6.1% on the Signups chip matches the KPI on the phone and the web dashboard; the lockup enters after the phone has moved right (from 6.7s)"
+      ],
+      [
+        "Style",
+        "Dark, background <code>#09090b</code>, one accent <code>#c9f24b</code>; UI in Inter: dashboard text 11–14.5px with a 19px page title and 28–30px values; window text 11–15px (windows scaled 1.18x) with 24–34px values; phone text 10.5–16.5px with 21px KPI values, a 32px Overview title and a 42px hero number; wordmark Vantage 156px, tagline 40px, URL button 28px; vignette to 55% black, wall dimming from 22% to 65% plus a scrim behind the lockup that is about 97% black on the left and 50% black on the right"
+      ]
+    ],
+    "prompt": "Build a product reveal called Dolly Zoom Reveal as a 10.5-second dark film (#09090b, accent #c9f24b). Use a CSS 3D world whose stage perspective is driven by a variable and whose subject plane is z=0. The subject is a phone (410×864px, screen 390×844) rebuilt in DOM/SVG as the Vantage mobile Overview screen: Active users 48,213, a 7-day line chart, four KPI cards, a Live now list and a tab bar. It rises from tilt rotateY −30° to −16° over 0.1–1.3s with expo.out; its hero number counts from 47,602 to 48,213 over 0.5–1.7s and the line chart draws over 0.5–1.8s. The background is a hall 2760×1552 in cross-section and 2800px long with four 6px accent light strips (fading in over 0.1–1.0s), 9 hairline rings every 280px (white at 20%, lighting from far to near over 0.1–0.95s, 0.5s each, 0.05s apart), grid lines on the floor, ceiling and side walls (7.5–12% white), six 520px-wide dashboard windows whose content is not repeated on the end wall (checkout funnel, alert rules, experiments, error rate, top events, traffic sources; z from −300 to −2400, each turned 10–14° toward the center), and at the far end (z=−2800) a wall holding the Vantage web dashboard (1866×1050, scaled 1.42x, 2650px wide in the world). Two foreground chips sit at z=+170 in empty space: '2,418 online now' outside the phone's top-right corner and 'Signups +6.1%' at the lower left, with values that match the KPIs in the UI; they pop in at 0.9s and 1.1s with back.out(1.6), 0.6s each. The picture fades in from black over 0–0.9s. Camera: 0–1.0s creep back from distance 905 to 950px; 1.0–5.8s dolly zoom with perspective distance 950→7000px, eased in log space with cubic-bezier(0.55,0.05,0.5,1) (distance = 950 × (7000/950)^e, about 1,100px at 2.0s, 1,800px at 3.0s, 4,000px at 4.0s and 6,400px at 5.0s, so the wall keeps growing between 3.8s and 5.8s), which narrows the vertical field of view from about 59° to about 9° while the phone keeps its size, the hall opens out and flattens, the dashboard on the end wall grows from 671px to 1893px wide to fill the frame, the chips shrink and fade out between 2.1 and 2.7s, and the tilt eases −16°→−9° with cubic-bezier(0.3,0,0.1,1) over 4.5s. The six windows are revealed top-down between 0.5 and 1.8s without transparency, in the order checkout funnel, experiments, alert rules, error rate, traffic sources, top events (expo.out, 0.8s each, 0.1s apart, a clip-path opening from the top edge with a 36px rise). They then slide out 450px to the sides in turn (power2.in, 0.6s) and fade over 0.4s (power2.out) starting at the same moment: the four far ones from 1.6s, 0.15s apart, the two nearest (z=−300 and z=−600) from 2.2s and 2.3s. All windows are gone from 2.7s, so none covers the wall once it is readable. From 5.8 to 10.5s the distance drifts 7000→9800px with power1.out and the tilt goes −9°→−4°. At 5.0s a new signup row (Priya Nair, signup_completed) appears on the phone and on the web dashboard in the same frame, and Signups changes from 8,412 to 8,413 and online users from 2,418 to 2,419. From 6.2 to 7.6s the wall dims to 65% with a scrim of about 97% black on the left and 50% black on the right, the phone moves 470px right with expo.out (1.3s), and the lockup (mark, Vantage 156px, the 40px tagline 'Live product analytics on every screen.', and the 28px button 'vantage.app') enters on the left between 6.7 and 8.0s with expo.out and holds to 10.5s. Use no Date.now or Math.random.",
+    "says": [
+      "The phone keeps its size while the hall behind it stretches and flattens",
+      "The camera backs away but the frame seems to push in",
+      "The background goes from a deep hall to one wall of dashboard"
+    ],
+    "vs": [
+      [
+        "macro-pull-out-reveal",
+        "Macro Pull-out Reveal pulls the camera back so the subject shrinks; in Dolly Zoom Reveal the phone keeps its size and only the perspective of the background changes."
+      ],
+      [
+        "device-push-in-focus",
+        "Device Push-in Focus moves the camera toward parts of a device; Dolly Zoom Reveal picks no part and changes the depth of the whole space."
+      ]
+    ]
   }
 }

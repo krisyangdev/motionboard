@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Infinite Zoom Effect",
+    "title": "Infinite Zoom Effect: Example and Code Recipe",
+    "description": "The camera dives through four nested UI screens and lands back on the first, so the shot loops. Make it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Build four 1920x1080 product screens where one card's cover is the next screen scaled down: a projects grid with a 512x288 cover, a project overview with a 576x324 view card, a kanban board with a 382x215 cover and an issue page with a 480x270 embedded view of the first screen. Nest four deeper previews inside each screen so the detail is already there when the camera arrives.",
+      "Zoom each card rectangle to the full frame with a fixed-point zoom, at 3.75x, 3.33x, 5.03x and 4.0x. A dive takes 1.3s with cubic-bezier(0.45,0,0.12,1) applied to the logarithm of the scale, so each doubling of scale takes the same eased time and the zoom looks even at every scale. Start it on the cursor click, after a slow push from 1.00 to 1.02 that lasts 0.9s on level 1 and 0.65s on the other three. On-screen blur peaks at 1px and the card's corner radius drops to 0 at the end. The cursor fades out as the dive starts. Swap in a fresh copy of the next screen on the last frame of each dive so the scale never exceeds 5.03x.",
+      "Level 1 takes 2.2s and levels 2–4 take 1.95s each, so the fourth dive ends at 8.05s. The cursor returns to its start from 8.05s to 8.9s and the film rests until 10s, with the last frame identical to the first. Press the copy button to send the recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. Render an MP4 with HyperFrames, or port the GSAP timeline to your site."
+    ],
+    "faq": [
+      [
+        "What is an infinite zoom effect?",
+        "An infinite zoom keeps moving the camera into the content, and each new frame contains the next level inside the current one. In a product film the camera dives through nested screens: a project, its board, one issue, and so on. Here each dive takes 1.3s, four levels in all."
+      ],
+      [
+        "How do I make an infinite zoom loop?",
+        "Make the deepest screen contain the first screen as a preview, so the last frame matches the first. Nest a few levels of previews inside each screen so detail is there during the dive, and swap in a fresh copy of the next screen at the end of each dive to keep the scale small."
+      ],
+      [
+        "Is the Infinite UI Zoom recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "无限缩放效果",
+    "title": "无限缩放效果：示例与代码配方",
+    "description": "镜头连续钻进四层嵌套的界面，最后回到第一屏，画面首尾相接可循环。用免费配方，让 Claude Code 或 Codex 做出这段无限缩放。",
+    "howto": [
+      "做四个 1920×1080 的产品界面，每一屏有一张卡片，封面是缩小的下一屏：项目列表（封面 512×288）、项目概览（视图卡片 576×324）、看板（封面 382×215）、任务页（内嵌 480×270 的第一屏视图）。每一屏里再嵌套四层预览，镜头到达时细节已经在了。",
+      "以每张卡片的矩形为目标做定点缩放，倍率依次为 3.75×、3.33×、5.03×、4.0×。一次推进 1.3 秒，用 cubic-bezier(0.45,0,0.12,1) 作用在缩放比例的对数上，缩放每翻一倍用同样的缓动时间，放大在各个倍数上看起来均匀。推进从光标点击开始，点击前先慢推，缩放从 1.00 到 1.02，第 1 层 0.9 秒，后三层 0.65 秒。屏幕上的模糊最高 1px，卡片圆角在结尾降到 0，光标在推进开始时淡出。每次推进的最后一帧换成下一屏的新副本，缩放倍率始终不超过 5.03×。",
+      "第 1 层 2.2 秒，第 2–4 层各 1.95 秒，第四次推进在 8.05 秒结束。光标在 8.05–8.9 秒回到起点，静止到 10 秒，末帧与首帧相同。点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装技能。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "无限缩放效果是什么？",
+        "无限缩放让镜头不断钻进内容，每个画面里都包含下一层。产品片里常见的做法是钻进一层层嵌套的界面：项目、看板、某一条任务，依此类推。这支片子每次推进 1.3 秒，共四层。"
+      ],
+      [
+        "怎样做出可以循环的无限缩放？",
+        "让最深的一屏把第一屏作为预览放进自己里面，这样末帧和首帧相同。每一屏里嵌套几层预览，推进时细节才是现成的；每次推进结束时换成下一屏的新副本，缩放倍率就不会越来越大。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

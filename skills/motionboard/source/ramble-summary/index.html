@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #f2efe9;
+        --ink: #1c1b19;
+        --sub: #5f5d58;
+        --mut: #6d6b66;
+        --line: #e9e6e0;
+        --side: #f7f6f3;
+        --bub: #f2f0ec;
+        --accent: #5b3df5;
+        --tint: rgba(91, 61, 245, 0.09);
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .a { position: absolute; }
+      svg { display: block; }
+      #bg { background: radial-gradient(ellipse 75% 80% at 50% 46%, #f6f3ee 0%, #f2efe9 55%, #e9e5dd 100%); }
+
+      /* ---------- ramble line ---------- */
+      #vp {
+        z-index: 2; overflow: hidden; filter: url(#mb);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--ml), #000 var(--mr), transparent 1920px);
+        mask-image: linear-gradient(90deg, transparent 0, #000 var(--ml), #000 var(--mr), transparent 1920px);
+      }
+      #cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+      #track, #track2 {
+        position: absolute; left: 0; top: 455px; height: 145px; line-height: 145px; white-space: nowrap;
+        font-family: var(--font-ui); font-weight: 500; font-size: 120px; letter-spacing: -0.035em; color: var(--ink);
+      }
+      .mx { opacity: 0; }
+      #sq { z-index: 3; overflow: hidden; visibility: hidden; transform-origin: 960px 540px; }
+      #cb { z-index: 5; }
+      #cb .ct { position: absolute; left: 0; top: 0; white-space: nowrap; font-weight: 500; color: #fff; background: var(--accent); }
+      #cb .w { display: inline-block; }
+      #cam2 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+
+      /* ---------- listening pill ---------- */
+      #hud {
+        z-index: 6; left: 600px; top: 910px; width: 720px; height: 84px; border-radius: 42px; background: #fff;
+        box-shadow: 0 0 0 1px rgba(28, 27, 25, 0.08), 0 2px 6px rgba(28, 27, 25, 0.06), 0 18px 40px rgba(60, 50, 30, 0.14);
+        font-size: 23px; font-weight: 600; white-space: nowrap;
+      }
+      #hudIc { left: 18px; top: 18px; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; }
+      #hudIc svg { position: absolute; }
+      .lab { left: 86px; top: 28px; line-height: 28px; letter-spacing: -0.005em; }
+      #wave { left: 282px; top: 22px; width: 235px; height: 40px; }
+      #wave i { position: absolute; top: 3px; width: 5px; height: 34px; border-radius: 2.5px; background: var(--accent); }
+      #cntw { right: 30px; top: 28px; line-height: 28px; color: var(--sub); font-weight: 500; }
+      #cntw b { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; display: inline-block; min-width: 30px; text-align: right; }
+
+      /* ---------- chat window ---------- */
+      #stage { z-index: 4; }
+      #win { position: absolute; left: 140px; top: 90px; width: 1640px; height: 900px; }
+      #wbg { left: 0; top: 0; width: 1640px; height: 900px; border-radius: 14px; background: #fff; overflow: hidden;
+        box-shadow: 0 0 0 1px rgba(28, 27, 25, 0.12), 0 2px 6px rgba(28, 27, 25, 0.08), 0 30px 70px rgba(60, 50, 30, 0.2), 0 80px 160px rgba(60, 50, 30, 0.16); }
+      #wchrome { left: 0; top: 0; width: 1640px; height: 900px; border-radius: 14px; overflow: hidden; }
+      #sb { left: 0; top: 0; width: 360px; height: 900px; background: var(--side); border-right: 1px solid var(--line); }
+      #mn { left: 360px; top: 0; width: 1280px; height: 900px; }
+      .tlt { top: 19px; width: 12px; height: 12px; border-radius: 50%; }
+      .brand { left: 20px; top: 52px; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: center; gap: 9px; height: 30px; }
+      .mk { width: 26px; height: 26px; border-radius: 7px; background: var(--accent); position: relative; }
+      .mk i { position: absolute; left: 6px; height: 2.6px; border-radius: 2px; background: #fff; }
+      .srch { left: 16px; top: 96px; width: 328px; height: 34px; border-radius: 9px; background: #ecebe6; display: flex; align-items: center; gap: 8px; padding: 0 11px; font-size: 14px; color: var(--mut); }
+      .srch .k { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--mut); }
+      .row { left: 8px; width: 344px; height: 62px; border-radius: 10px; }
+      .row.sel { background: var(--tint); }
+      .row .nm { left: 62px; top: 11px; font-size: 14.5px; font-weight: 600; line-height: 20px; white-space: nowrap; }
+      .row .pv { left: 62px; top: 33px; width: 270px; font-size: 13px; line-height: 18px; color: var(--sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .row .tm { right: 12px; top: 12px; font-size: 12px; line-height: 18px; color: var(--mut); white-space: nowrap; }
+      .row .bd { right: 12px; top: 34px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 10px; background: var(--accent); color: #fff; font-size: 11.5px; font-weight: 600; text-align: center; line-height: 19px; }
+      .av { display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-weight: 600; letter-spacing: 0; flex: none; }
+      .foot { left: 0; top: 852px; width: 360px; height: 48px; border-top: 1px solid var(--line); }
+
+      #hd { left: 0; top: 0; width: 1280px; height: 68px; border-bottom: 1px solid var(--line); }
+      #hd .t1 { left: 100px; top: 15px; font-size: 16px; font-weight: 600; line-height: 22px; }
+      #hd .t2 { left: 100px; top: 37px; font-size: 12.5px; line-height: 18px; color: var(--sub); }
+      #hdi { right: 28px; top: 23px; display: flex; gap: 24px; color: var(--sub); }
+      .dv { left: 607px; top: 84px; height: 26px; padding: 0 12px; border-radius: 13px; background: var(--bub); color: var(--sub); font-size: 12px; font-weight: 600; line-height: 26px; }
+      .g { left: 28px; width: 700px; }
+      .g .av { position: absolute; left: 0; top: 2px; width: 32px; height: 32px; font-size: 12px; }
+      .g .who { position: absolute; left: 44px; top: 0; font-size: 13px; font-weight: 600; line-height: 20px; white-space: nowrap; }
+      .g .who span { color: var(--mut); font-weight: 500; font-size: 12px; margin-left: 7px; }
+      .g .bb { position: absolute; left: 44px; top: 22px; padding: 9px 14px; border-radius: 6px 16px 16px 16px; background: var(--bub); font-size: 15px; line-height: 21px; white-space: nowrap; font-weight: 400; }
+      #bub {
+        left: 1335px; top: 548px; width: 277px; height: 74px; padding: 15px 18px; border-radius: 20px 20px 6px 20px; background: var(--accent); color: #fff;
+        font-size: 15px; line-height: 22px; font-weight: 500; white-space: nowrap; z-index: 3;
+      }
+      #bub .w { display: inline-block; }
+      #bmeta { right: 28px; top: 630px; display: flex; align-items: center; gap: 6px; font-size: 12.5px; line-height: 18px; color: var(--mut); white-space: nowrap; z-index: 3; }
+      #bmeta .gs { display: flex; align-items: center; gap: 5px; color: var(--accent); font-weight: 600; }
+      #bmeta .sp { width: 3px; height: 3px; border-radius: 50%; background: #c9c6bf; }
+      #bmeta .ok { display: flex; align-items: center; gap: 4px; color: var(--sub); font-weight: 500; }
+      #reply { left: 388px; top: 668px; width: 700px; z-index: 3; }
+      #comp { left: 28px; top: 812px; width: 1224px; height: 54px; border-radius: 14px; border: 1px solid #e2dfd8; background: #fff; }
+      #comp .ph { left: 52px; top: 16px; font-size: 15px; line-height: 21px; color: var(--mut); }
+      #comp .pc { left: 16px; top: 15px; color: var(--sub); }
+      #comp .mc { right: 128px; top: 15px; color: var(--sub); }
+      #comp .gc { right: 54px; top: 11px; height: 30px; padding: 0 12px 0 10px; border-radius: 15px; background: var(--tint); color: var(--accent); font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+      #comp .sd { right: 10px; top: 10px; width: 32px; height: 32px; border-radius: 50%; background: #ece9e3; color: var(--mut); display: flex; align-items: center; justify-content: center; }
+
+      /* ---------- lockup ---------- */
+      #end { z-index: 8; }
+      #lock { left: 0; top: 0; width: 1920px; height: 1080px; }
+      #lmk { left: 636px; top: 438px; width: 156px; height: 156px; border-radius: 40px; background: var(--accent); box-shadow: 0 24px 50px rgba(91, 61, 245, 0.28); }
+      #lmk i { position: absolute; left: 36px; height: 12px; border-radius: 6px; background: #fff; }
+      #lwm { left: 832px; top: 400px; font-size: 176px; line-height: 230px; font-weight: 700; letter-spacing: -0.055em; color: var(--ink); white-space: nowrap; }
+      #lsub { left: 836px; top: 628px; font-size: 34px; line-height: 44px; font-weight: 500; letter-spacing: -0.015em; color: var(--sub); white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <filter id="mb" x="-2%" y="-10%" width="104%" height="120%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbl" stdDeviation="0 0" /></filter>
+    </svg>
+
+    <div id="root" data-composition-id="main" data-start="0" data-duration="11" data-width="1920" data-height="1080">
+      <div id="bg" class="layer clip" data-start="0" data-duration="11" data-track-index="0"></div>
+
+      <div id="vp" class="layer clip" data-start="0" data-duration="5.2" data-track-index="1" data-layout-allow-overlap>
+        <div id="cam" data-layout-allow-overflow><div id="track" data-layout-allow-overflow data-layout-allow-occlusion></div></div>
+        <div id="sq" class="layer" data-layout-allow-overflow data-layout-allow-occlusion><div id="cam2" data-layout-allow-overflow><div id="track2" data-layout-allow-overflow data-layout-allow-occlusion></div></div></div>
+      </div>
+
+      <div id="stage" class="layer clip" data-start="0" data-duration="8.9" data-track-index="2" data-layout-allow-overlap>
+        <div id="win" data-layout-allow-overlap data-layout-allow-overflow>
+          <div id="wbg" class="a"></div>
+          <div id="wchrome" class="a" data-layout-allow-overlap>
+            <div id="sb" class="a"></div>
+            <div id="mn" class="a"></div>
+          </div>
+          <div id="reply" class="a g" data-layout-allow-overlap></div>
+          <div id="bub" class="a"></div>
+          <div id="bmeta" class="a"></div>
+        </div>
+      </div>
+
+      <div id="hud" class="a clip" data-start="0" data-duration="5.4" data-track-index="3" data-layout-allow-overlap></div>
+
+      <div id="cb" class="a clip" data-start="0" data-duration="6.3" data-track-index="5" data-layout-allow-overlap></div>
+
+      <div id="end" class="layer clip" data-start="8.8" data-duration="2.2" data-track-index="4" data-layout-allow-overlap>
+        <div id="lock" class="a" data-layout-allow-overlap>
+          <div id="lmk" class="a"><i style="top:46px;width:84px"></i><i style="top:72px;width:84px"></i><i style="top:98px;width:42px"></i></div>
+          <div id="lwm" class="a">Gist</div>
+          <div id="lsub" class="a">Voice notes, summarized.</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ---------- icons (lucide-style, 1.5px strokes) ---------- */
+      const ICON = {
+        mic: '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>',
+        spark: '<path d="M11 3c.6 4.8 2.2 6.4 7 7-4.8.6-6.4 2.2-7 7-.6-4.8-2.2-6.4-7-7 4.8-.6 6.4-2.2 7-7Z"/><path d="M19 15c.3 2.4 1.1 3.2 3.5 3.5-2.4.3-3.2 1.1-3.5 3.5-.3-2.4-1.1-3.2-3.5-3.5 2.4-.3 3.2-1.1 3.5-3.5Z"/>',
+        phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/>',
+        video: '<path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
+        search: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+        side: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/>',
+        clip: '<path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>',
+        send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+        compose: '<path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4Z"/>',
+        checks: '<path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/>',
+        users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/>'
+      };
+      const ic = (n, s, sw, st) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.5) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (st ? ' style="' + st + '"' : "") + ">" + ICON[n] + "</svg>";
+
+      /* ---------- people ---------- */
+      const P = {
+        maya: ["Maya Chen", "MC", "#d9577f"], liam: ["Liam Ortiz", "LO", "#3b82f6"], priya: ["Priya Nair", "PN", "#8b5cf6"],
+        alex: ["Alex Rivera", "AR", "#4b5563"], dana: ["Dana Whitfield", "DW", "#e8803a"], sofia: ["Sofia Reyes", "SR", "#1fa5a5"],
+        ethan: ["Ethan Walker", "EW", "#b7791f"], hannah: ["Hannah Brooks", "HB", "#0e8f8a"], omar: ["Omar Haddad", "OH", "#64748b"],
+        aisha: ["Aisha Khan", "AK", "#be3a2a"], daniel: ["Daniel Kim", "DK", "#0f766e"]
+      };
+      const av = (k, s, f, st) => '<span class="av" style="width:' + s + "px;height:" + s + "px;font-size:" + f + "px;background:" + P[k][2] + (st || "") + '">' + P[k][1] + "</span>";
+
+      /* ---------- the dictated sentence (36 words, 9833 px at 120 px) ---------- */
+      const TEXT = "ok so basically Thursday is a problem because Priya is out and Liam hasn’t finished the pricing page and legal wants one more look so I think we push the launch review to Friday and u";
+      const TEXT_W = 9833 - 102.4; // width without the last m; every m is 102.4 px
+      const NM = 26; // extra m typed after "um"
+      const WORD_ENDS = [159,316,812,1350,1464,1556,2027,2516,2814,2928,3129,3359,3642,3995,4449,4648,5044,5343,5573,5853,6204,6434,6740,6992,7150,7205,7494,7682,7976,8175,8562,8944,9076,9433,9663,9833];
+      let mh = "";
+      for (let i = 0; i < NM; i++) mh += '<span class="mx" id="m' + i + '">m</span>';
+      document.getElementById("track").innerHTML = TEXT + '<span id="m99">m</span>' + mh;
+      document.getElementById("track2").innerHTML = TEXT + "m" + "m".repeat(NM);
+
+      /* ---------- listening pill ---------- */
+      let bars = "";
+      for (let i = 0; i < 28; i++) bars += '<i id="wb' + i + '" style="left:' + (i * 8.4) + 'px"></i>';
+      document.getElementById("hud").innerHTML =
+        '<div id="hudIc" class="a"><span id="icMic" class="a" style="left:12px;top:12px">' + ic("mic", 24, 1.7) + '</span><span id="icSp" class="a" style="left:12px;top:12px;opacity:0">' + ic("spark", 24, 1.7) + "</span></div>" +
+        '<div id="labA" class="a lab">Listening</div><div id="labB" class="a lab" style="opacity:0">Summarizing</div>' +
+        '<div id="wave" class="a">' + bars + "</div>" +
+        '<div id="cntw" class="a"><b id="cnt">0</b> words</div>';
+
+      /* ---------- chat window: sidebar ---------- */
+      const rowsData = [
+        ["grp", "Launch crew", "You: Launch review moves to Friday.", "9:41 AM", 0, "Liam: Friday works. I’ll have the pricing copy by Thursday night.", "9:42 AM"],
+        ["priya", "Priya Nair", "Okay, I’ll check in from my phone", "9:33 AM", 0],
+        ["liam", "Liam Ortiz", "Sent you the Figma link for pricing", "9:14 AM", 2],
+        ["dana", "Dana Whitfield", "Can we get 15 minutes at 3?", "8:52 AM", 0],
+        ["grp2", "Design team", "Sofia: New icons are in the library", "Yesterday", 0],
+        ["sofia", "Sofia Reyes", "Thanks, that works for me", "Yesterday", 0],
+        ["ethan", "Ethan Walker", "Ship it", "Tue", 0],
+        ["hannah", "Hannah Brooks", "See you all at the offsite", "Tue", 0],
+        ["omar", "Omar Haddad", "Invoice attached", "Mon", 0],
+        ["aisha", "Aisha Khan", "Left a few comments on the doc", "Mon", 0],
+        ["daniel", "Daniel Kim", "Q4 forecast is ready for review", "Nov 3", 0]
+      ];
+      let sb =
+        '<span class="a tlt" style="left:20px;background:#ff5f57"></span><span class="a tlt" style="left:40px;background:#febc2e"></span><span class="a tlt" style="left:60px;background:#28c840"></span>' +
+        '<span class="a" style="right:18px;top:15px;color:var(--sub)">' + ic("compose", 19) + "</span>" +
+        '<div class="a brand"><span class="mk"><i style="top:8px;width:14px"></i><i style="top:12.7px;width:14px"></i><i style="top:17.4px;width:7px"></i></span>Gist</div>' +
+        '<div class="a srch">' + ic("search", 16) + 'Search<span class="k">⌘K</span></div>';
+      rowsData.forEach((r, i) => {
+        const top = 144 + i * 62;
+        let a;
+        if (r[0] === "grp") a = '<span class="av a" style="left:12px;top:11px;width:40px;height:40px;background:#e5e0fb;color:var(--accent)">' + ic("users", 20, 1.7) + "</span>";
+        else if (r[0] === "grp2") a = '<span class="av a" style="left:12px;top:11px;width:40px;height:40px;background:#efe5d6;color:#8a5a1f">' + ic("users", 20, 1.7) + "</span>";
+        else a = '<span class="a" style="left:12px;top:11px">' + av(r[0], 40, 14) + "</span>";
+        const pv = r[5]
+          ? '<div class="a pv" id="pvA">' + r[2] + '</div><div class="a pv" id="pvB" style="opacity:0">' + r[5] + "</div>"
+          : '<div class="a pv">' + r[2] + "</div>";
+        const tm = r[6]
+          ? '<div class="a tm" id="tmA">' + r[3] + '</div><div class="a tm" id="tmB" style="opacity:0">' + r[6] + "</div>"
+          : '<div class="a tm">' + r[3] + "</div>";
+        const bd = r[4] ? '<div class="a bd">' + r[4] + "</div>" : "";
+        sb += '<div class="a row' + (i === 0 ? " sel" : "") + '" style="top:' + top + 'px">' + a + '<div class="a nm">' + r[1] + "</div>" + pv + tm + bd + "</div>";
+      });
+      sb += '<div class="a foot"><span class="a" style="left:16px;top:6px">' + av("alex", 34, 12) + '</span><div class="a" style="left:60px;top:7px;font-size:13.5px;font-weight:600;line-height:18px">Alex Rivera</div><div class="a" style="left:60px;top:25px;font-size:12px;line-height:16px;color:var(--sub)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2fa763;margin-right:6px"></span>Available</div></div>';
+      document.getElementById("sb").innerHTML = sb;
+
+      /* ---------- chat window: thread ---------- */
+      const grp = (k, y, time, text) =>
+        '<div class="a g" style="top:' + y + 'px">' + av(k, 32, 12) + '<div class="who">' + P[k][0] + "<span>" + time + '</span></div><div class="bb">' + text + "</div></div>";
+      let mn =
+        '<div class="a" id="hd">' +
+        '<span class="a" style="left:28px;top:19px">' + av("maya", 30, 11, ";box-shadow:0 0 0 2px #fff").replace("<span ", "<span data-layout-allow-occlusion ") + "</span>" +
+        '<span class="a" style="left:54px;top:19px">' + av("liam", 30, 11, ";box-shadow:0 0 0 2px #fff").replace("<span ", "<span data-layout-allow-occlusion ") + "</span>" +
+        '<span class="a" style="left:80px;top:19px">' + av("priya", 30, 11, ";box-shadow:0 0 0 2px #fff").replace("<span ", "<span data-layout-allow-occlusion ") + "</span>" +
+        '<div class="a t1" style="left:124px">Launch crew</div><div class="a t2" style="left:124px">Maya, Liam, Priya, Dana and you</div>' +
+        '<div class="a" id="hdi">' + ic("phone", 20) + ic("video", 20) + ic("search", 20) + ic("side", 20) + "</div></div>" +
+        '<div class="a dv">Today</div>' +
+        grp("maya", 128, "9:02 AM", "Morning all. Launch review is on the calendar for Thursday at 2.") +
+        grp("liam", 206, "9:12 AM", "Pricing page draft is up. Still waiting on final copy for the Team plan.") +
+        grp("dana", 284, "9:20 AM", "Legal wants another pass on the terms before we publish anything.") +
+        grp("priya", 362, "9:31 AM", "Heads up, I’m out Thursday. Back Friday morning.") +
+        grp("maya", 440, "9:38 AM", "Alex, can you tell everyone where we landed?") +
+        '<div class="a" id="comp"><span class="a pc">' + ic("clip", 22) + '</span><div class="a ph">Message Launch crew</div><span class="a mc">' + ic("mic", 22) +
+        '</span><div class="a gc">' + ic("spark", 16, 1.8) + 'Gist</div><div class="a sd">' + ic("send", 16, 1.8) + "</div></div>";
+      document.getElementById("mn").innerHTML = mn;
+      document.getElementById("reply").innerHTML =
+        '<span class="av" style="position:absolute;left:0;top:2px;width:32px;height:32px;font-size:12px;background:' + P.liam[2] + '">LO</span>' +
+        '<div class="who">Liam Ortiz<span>9:42 AM</span></div><div class="bb">Friday works. I’ll have the pricing copy by Thursday night.</div>';
+
+      /* the sent bubble: the summary */
+      document.getElementById("bub").innerHTML =
+        '<span class="w">Launch</span> <span class="w">review</span> <span class="w">moves</span> <span class="w">to</span> <span class="w">Friday.</span><br>' +
+        '<span class="w">Pricing</span> <span class="w">page</span> <span class="w">and</span> <span class="w">legal</span> <span class="w">pending.</span>';
+      document.getElementById("bmeta").innerHTML =
+        '<span class="gs">' + ic("spark", 14, 1.8) + 'Summarized by Gist</span><span class="sp"></span><span>36 words to 10</span><span class="sp"></span><span class="ok">' + ic("checks", 15, 1.7) + "Delivered</span>";
+
+      /* ---------- timing ---------- */
+      const tl = gsap.timeline({ paused: true });
+      const EXPO = "expo.out";
+      const outQuint = (p) => 1 - Math.pow(1 - p, 5);
+      const outQuart = (p) => 1 - Math.pow(1 - p, 4);
+      const logUp = (S, g) => (p) => (Math.pow(S, g(p)) - 1) / (S - 1);
+      const logDown = (S, g) => (p) => (S - Math.pow(S, 1 - g(p))) / (S - 1);
+
+      const T = {
+        scroll: [0.1, 3.2], brake: [3.2, 3.7], mType: [3.3, 4.1], zoom: [3.45, 4.4], swap: 4.4,
+        squeeze: [4.6, 5.05], bloom: [5.05, 5.75], words: 5.3, pull: [6.3, 8.0], reply: 7.6, out: 8.65, lock: 8.9
+      };
+      const ZOOM = 6.8; // m glyph height on screen = GH * ZOOM
+const GH = 65.65; // x-height of the m at 120 px
+const S0 = (GH * ZOOM) / 74; // window scale at the start of the pull-back: the bubble bar is as tall as the squeezed glyphs
+      const BX = 1473.5, BY = 585; // bubble centre in window px
+const CY = 540 + (571.25 - GH / 2 - 540) * ZOOM; // screen y of the zoomed m band centre (baseline 571.25 px, x-height GH)
+const BH = GH * ZOOM; // bar and close-up bubble height on screen
+
+      /* backdrop and ramble line */
+      gsap.set("#track", { x: 160 });
+      const PARK = 930; // "um" ends here after the brake, next to the zoom centre
+      const K = 1 + (3 / (T.scroll[1] - T.scroll[0])) * (T.brake[1] - T.brake[0]) / 6.93;
+      const DA = (160 + TEXT_W + 102.4 - PARK) / K; // distance covered before the brake
+      tl.to("#track", { x: 160 - DA, duration: T.scroll[1] - T.scroll[0], ease: "power2.in" }, T.scroll[0]);
+      const VPEAK = (3 * DA) / (T.scroll[1] - T.scroll[0]);
+      const DB = (VPEAK * (T.brake[1] - T.brake[0])) / 6.93;
+      gsap.set("#track2", { x: 160 - DA - DB });
+      tl.to("#track", { x: "-=" + DB.toFixed(0), duration: T.brake[1] - T.brake[0], ease: EXPO }, T.brake[0]);
+
+      /* horizontal blur follows speed */
+      tl.to("#mbl", { attr: { stdDeviation: "36 0" }, duration: T.scroll[1] - T.scroll[0], ease: "power1.in" }, T.scroll[0]);
+      tl.to("#mbl", { attr: { stdDeviation: "0 0" }, duration: 0.5, ease: "power2.out" }, T.brake[0]);
+
+      /* the last m is held down: 26 more, accelerating */
+      for (let i = 0; i < NM; i++) {
+        const k = i / (NM - 1);
+        tl.set("#m" + i, { opacity: 1 }, T.mType[0] + (T.mType[1] - T.mType[0]) * Math.pow(k, 0.85));
+      }
+
+      /* camera dives into the humps */
+      // side fades leave while the camera is inside the m run, so the cut humps at the frame edge read as m
+gsap.set("#vp", { "--ml": "140px", "--mr": "1780px" });
+tl.to("#vp", { "--ml": "0px", "--mr": "1920px", duration: 0.45, ease: "power2.inOut" }, 3.5);
+tl.to("#cam", { scale: ZOOM, duration: T.zoom[1] - T.zoom[0], ease: logUp(ZOOM, outQuart) }, T.zoom[0]);
+
+      /* squeeze: the frame as it stands (a flat copy of the m humps) collapses to a bar at frame centre, turning violet */
+      gsap.set("#cam2", { scale: ZOOM });
+      gsap.set("#sq", { scaleX: 1, clipPath: "inset(" + (CY - BH / 2).toFixed(2) + "px 0px " + (1080 - CY - BH / 2).toFixed(2) + "px 0px)" });
+      tl.set("#cam", { visibility: "hidden" }, T.squeeze[0]);
+      tl.set("#sq", { visibility: "visible" }, T.squeeze[0]);
+      tl.to("#sq", { scaleX: 14.4 / 1920, duration: T.squeeze[1] - T.squeeze[0], ease: "power3.inOut" }, T.squeeze[0]);
+      tl.to("#track2", { color: "#5b3df5", duration: 0.25, ease: "power1.in" }, 4.78);
+      tl.to("#mbl", { attr: { stdDeviation: "14 0" }, duration: 0.3, ease: "power2.in" }, T.squeeze[0]);
+      tl.to("#mbl", { attr: { stdDeviation: "0 0" }, duration: 0.13, ease: "power2.out" }, T.squeeze[0] + 0.3);
+      tl.set("#sq", { visibility: "hidden" }, T.squeeze[1]);
+
+      /* listening pill */
+      tl.set("#hud", { opacity: 0, y: 24 }, 0);
+      tl.to("#hud", { opacity: 1, y: 0, duration: 0.7, ease: EXPO }, 0.05);
+      tl.set(["#labB", "#icSp"], { opacity: 0 }, 0);
+      tl.set(["#labA", "#icMic"], { opacity: 1, immediateRender: false }, 0);
+      tl.set(["#labA", "#icMic"], { opacity: 0 }, T.swap);
+      tl.set(["#labB", "#icSp"], { opacity: 1 }, T.swap);
+      tl.to("#hud", { opacity: 0, y: 14, duration: 0.35, ease: "power2.in" }, 4.9);
+      // waveform: seeded levels, finite yoyo repeats
+      let seed = 7;
+      const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+      for (let i = 0; i < 28; i++) {
+        const a = 0.18 + rnd() * 0.3, b = 0.55 + rnd() * 0.45, d0 = 0.16 + rnd() * 0.16;
+        const n = Math.round(T.swap / d0), d = T.swap / n; // whole number of half-cycles, so the yoyo ends exactly at the swap
+        gsap.set("#wb" + i, { scaleY: a });
+        tl.to("#wb" + i, { scaleY: b, duration: d, ease: "sine.inOut", repeat: n - 1, yoyo: true }, 0);
+        tl.to("#wb" + i, { scaleY: 0.12, duration: 0.25, ease: "power2.out", immediateRender: false }, T.swap);
+      }
+      // word counter: a word counts when its end passes x = 1700
+      const sw = T.scroll[1] - T.scroll[0];
+      let last = 0;
+      WORD_ENDS.forEach((e, i) => {
+        const k3 = (e - 1540) / DA;
+        let t;
+        if (k3 <= 0) t = 0.1;
+        else if (k3 >= 1) t = T.brake[0] + 0.12 + (i - 33) * 0.04;
+        else t = T.scroll[0] + sw * Math.cbrt(k3);
+        t = Math.max(t, last + 0.001);
+        last = t;
+        tl.set("#cnt", { textContent: String(i + 1) }, t);
+      });
+
+      /* ---------- chat window camera ---------- */
+      // The close-up bubble (#cb) is its own element at screen size, so it stays sharp. It opens from the squeezed bar,
+      // centred on x = 960, and hands off to the bubble inside the window on the first frame of the pull-back.
+      const BSX = 140 + BX, BSY = 90 + BY; // bubble centre on screen at scale 1
+      const TX = 960 - BSX, TY = CY - BSY;
+      const CW = 277 * S0; // close-up bubble width on screen
+      const cb = document.getElementById("cb");
+      cb.style.cssText = "left:" + (960 - CW / 2).toFixed(2) + "px;top:" + (CY - BH / 2).toFixed(2) + "px;width:" + CW.toFixed(2) + "px;height:" + BH.toFixed(2) + "px;" +
+        "--w:14.4px;clip-path:inset(0px calc((" + CW.toFixed(2) + "px - var(--w)) / 2) 0px calc((" + CW.toFixed(2) + "px - var(--w)) / 2) round min(" + (20 * S0).toFixed(2) + "px, calc(var(--w) * 0.25)) min(" + (20 * S0).toFixed(2) + "px, calc(var(--w) * 0.25)) min(" + (6 * S0).toFixed(2) + "px, calc(var(--w) * 0.075)) min(" + (20 * S0).toFixed(2) + "px, calc(var(--w) * 0.25)))";
+      cb.innerHTML = '<div class="ct" style="width:' + CW.toFixed(2) + "px;height:" + BH.toFixed(2) + "px;padding:" + (15 * S0).toFixed(2) + "px " + (18 * S0).toFixed(2) + "px;font-size:" + (15 * S0).toFixed(2) + "px;line-height:" + (22 * S0).toFixed(2) + 'px">' +
+        document.getElementById("bub").innerHTML + "</div>";
+      gsap.set("#win", { transformOrigin: BX + "px " + BY + "px", transformPerspective: 2600, scale: S0, x: TX, y: TY, rotationX: 0, rotationY: 0 });
+      tl.set(["#wbg", "#wchrome", "#reply", "#bmeta"], { opacity: 0 }, 0);
+      tl.set("#bub", { opacity: 0 }, 0);
+      tl.set("#cb .w", { opacity: 0, y: 10 * S0 }, 0);
+
+      // bubble blooms from the bar
+      tl.set("#cb", { opacity: 0 }, 0);
+      tl.set("#cb", { opacity: 1 }, T.squeeze[1] - 0.06);
+      tl.to("#cb", { "--w": CW.toFixed(2) + "px", duration: T.bloom[1] - T.bloom[0], ease: EXPO }, T.bloom[0]);
+      const ws = document.querySelectorAll("#cb .w");
+      ws.forEach((w, i) => {
+        tl.to(w, { opacity: 1, y: 0, duration: 0.4, ease: EXPO }, T.words + i * 0.065);
+      });
+      // hand-off: the bubble inside the window takes over on the first pull-back frame
+      tl.set("#bub", { opacity: 1 }, T.pull[0]);
+      tl.to("#bmeta", { opacity: 1, duration: 0.5, ease: "power2.out" }, T.pull[0] + 0.15);
+
+      // pull back
+      const PD = T.pull[1] - T.pull[0];
+      tl.to("#win", { scale: 1, duration: PD, ease: logDown(S0, outQuint) }, T.pull[0]);
+      tl.to("#win", { x: 0, y: 0, rotationX: 1, rotationY: -2, duration: PD, ease: outQuint }, T.pull[0]);
+      tl.to("#wbg", { opacity: 1, duration: 0.35, ease: "power2.out" }, T.pull[0]);
+      tl.to("#wchrome", { opacity: 1, duration: 0.45, ease: "power2.out" }, T.pull[0] + 0.05);
+      // settle drift keeps a small residual tilt
+      tl.to("#win", { scale: 1.02, rotationY: -1.4, duration: T.out + 0.25 - T.pull[1], ease: "none" }, T.pull[1]);
+
+      // reply arrives; sidebar preview and time change on the same frame
+      tl.set("#reply", { opacity: 0, y: 14 }, 0);
+      tl.to("#reply", { opacity: 1, y: 0, duration: 0.55, ease: EXPO }, T.reply);
+      tl.set(["#pvA", "#tmA"], { opacity: 0 }, T.reply);
+      tl.set(["#pvB", "#tmB"], { opacity: 1 }, T.reply);
+      tl.set("#pvA, #tmA", { opacity: 1 }, 0);
+
+      // out and lockup
+      tl.to("#win", { opacity: 0, duration: 0.25, ease: "power2.in" }, T.out);
+      tl.set("#lock", { opacity: 0, y: 26 }, 0);
+      tl.to("#lock", { opacity: 1, y: 0, duration: 0.9, ease: EXPO }, T.lock);
+      tl.to("#lock", { y: -6, duration: 11 - (T.lock + 0.9), ease: "none" }, T.lock + 0.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

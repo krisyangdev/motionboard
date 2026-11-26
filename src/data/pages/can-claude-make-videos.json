@@ -110,7 +110,7 @@
       },
       {
         "t": "p",
-        "text": "Motionboard is a free, MIT-licensed site and skill with 38 shot recipes taken from launch films by Apple, Linear and others. Each recipe is a film of about 10 seconds at 1920x1080, made in code with HyperFrames and shown next to the original clip. The skill runs in Claude Code and Codex with Node.js 22+ and FFmpeg installed, on whatever plan or account those agents use. The files are plain HTML in your project folder and render on your own computer."
+        "text": "Motionboard is a free, MIT-licensed site and skill with 48 shot recipes taken from launch films by Apple, Linear and others. Each recipe is a film of about 10 seconds at 1920x1080, made in code with HyperFrames and shown next to the original clip. The skill runs in Claude Code and Codex with Node.js 22+ and FFmpeg installed, on whatever plan or account those agents use. The files are plain HTML in your project folder and render on your own computer."
       },
       {
         "t": "h2",
@@ -334,7 +334,7 @@
       },
       {
         "t": "p",
-        "text": "Motionboard 是免费、MIT 许可的站点和技能，收录 38 个取自 Apple、Linear 等发布会影片的镜头配方。每个配方是一支约 10 秒、1920x1080 的影片，用 HyperFrames 以代码制作，并与原片并排展示。技能在 Claude Code 和 Codex 里运行，装好 Node.js 22+ 和 FFmpeg 即可，套餐取决于这些 agent 所用的账号。文件是项目文件夹里的普通 HTML，在你自己的电脑上渲染。"
+        "text": "Motionboard 是免费、MIT 许可的站点和技能，收录 48 个取自 Apple、Linear 等发布会影片的镜头配方。每个配方是一支约 10 秒、1920x1080 的影片，用 HyperFrames 以代码制作，并与原片并排展示。技能在 Claude Code 和 Codex 里运行，装好 Node.js 22+ 和 FFmpeg 即可，套餐取决于这些 agent 所用的账号。文件是项目文件夹里的普通 HTML，在你自己的电脑上渲染。"
       },
       {
         "t": "h2",

@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "3D Ribbon Text Animation",
+    "title": "3D Ribbon Text Animation: Example and Code Recipe",
+    "description": "A title folds into zig-zag 3D ribbons, multiplies, then arrow bands sweep past and wipe to the product UI. Make it with Claude Code or Codex.",
+    "howto": [
+      "Cut each title line at the word breaks, one panel per word (PERSPECTIVE 865px and FRAMES 545px in line one; NOW 348px, IN 161px and PLANAR 537px in line two), set in Inter 700 at 128px. From 1.0 to 2.3s rotate neighbouring panels alternately by 37° with easeInOut (the two title rows overshoot to about 44° near 2.3–2.5s, then settle back to 37°) so their edges stay joined and the strip folds into a zig-zag whose creases fall between words, while the camera pitches down to 26° with a 2400px perspective. Then open the row spacing from 176px to 340px and add 6 more rows from 2.25 to 3.38s.",
+      "From 3.0 to 5.05s send four bands (300, 230, 420 and 160px high) past a camera that dollies in 360px with 1100px perspective, with TILT → SKEW → ROTATE → PERSPECTIVE → and three other short arrow lines scrolling along them at 1100–1700px/s. A 3000px violet band with two lines of 620px type wipes across from 4.3 to 5.8s and covers the frame at 5.05s, where the scene switches to the product UI.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the folded strips, the band scene and the wipe with GSAP. Render an MP4 with HyperFrames, or port the timeline to your website."
+    ],
+    "faq": [
+      [
+        "How do you make text fold into 3D ribbons?",
+        "Split one line at its word breaks into panels that each show one word, then rotate neighbouring panels in opposite directions by about 37° and move each panel so its edge meets the previous one. Animating the angle from 0° over 1.3s folds the strip into a zig-zag, and because the creases fall between words every word stays readable."
+      ],
+      [
+        "How do the bands work as a transition?",
+        "The bands carry copy that names the feature and move through a second 3D scene. A thick band sweeps across at 4.3–5.8s and covers the screen at 5.05s, so the next scene can replace the ribbons on that frame."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "3D 折带文字动画",
+    "title": "3D 折带文字动画：示例与代码配方",
+    "description": "标题折成锯齿状 3D 折带并增殖，随后带箭头的宽色带扫过，擦出产品界面。用 Claude Code 或 Codex 按免费配方做出这个 3D 文字动画。",
+    "howto": [
+      "把每行标题按词切成面板，每个词一块（第一行 PERSPECTIVE 865px、FRAMES 545px，第二行 NOW 348px、IN 161px、PLANAR 537px），用 Inter 700、128px 显示。1.0–2.3s 用 easeInOut 让相邻面板交替旋转 37°（两行标题在 2.3–2.5s 过冲到约 44° 再回到 37°），边与边保持相接，整条折成锯齿状，折痕落在词与词之间，同时机位下俯到 26°，透视 2400px。之后把行距从 176px 拉到 340px，并在 2.25–3.38s 再复制出 6 行。",
+      "3.0–5.05s 让四条色带（高 300、230、420、160px）从镜头旁飞过，镜头推近 360px，透视 1100px，「TILT → SKEW → ROTATE → PERSPECTIVE →」和另外三行短箭头文案沿带身以 1100–1700px/s 滚动。4.3–5.8s 一条 3000px 厚、带两行 620px 巨型文字的紫色大带扫过，5.05s 铺满画面，这一帧把场景换成产品界面。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用 GSAP 做出折带、色带场景和擦除转场。可以用 HyperFrames 渲染成 MP4，也可以把时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "文字怎么折成 3D 折带？",
+        "把一行字按词切成面板，每个面板只显示一个词，让相邻面板往相反方向各转约 37°，再移动每个面板，使它的边接上前一个的边。让角度在 1.3s 内从 0° 变化到目标值，整条字就折成锯齿状，折痕落在词与词之间，每个词都读得清。"
+      ],
+      [
+        "色带怎么当转场用？",
+        "色带上写着点明功能的文案，在第二个 3D 场景里穿过。4.3–5.8s 一条厚色带扫过，5.05s 铺满画面，下一个场景就在这一帧替换掉折带。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Scrolling Text Animation",
+    "title": "Scrolling Text Animation: Example and Code Recipe",
+    "description": "A long run-on line scrolls faster and faster, then squeezes into one short chat bubble. Build it with Claude Code or Codex from the free recipe.",
+    "howto": [
+      "Set one 120px line of text (Inter 500, letter-spacing -0.035em, 36 words, 9,833px wide) at x=160 and scroll it left from 0.1 to 3.2s with power2.in, so it starts almost still and reaches about 8,200 px/s. Add horizontal blur with an SVG feGaussianBlur that grows from 0 to 36px with speed, then brake with expo.out over 0.5s so \"um\" rests at x=930, next to frame center.",
+      "Hold the last letter: 26 extra m appear between 3.3 and 4.1s, and the camera zooms 6.8x into them from 3.45 to 4.4s, so each m is about 446px tall. At 4.6s squeeze the zoomed frame into a bar about 14px wide over 0.45s (scaleX 1 to 0.0075, power3.inOut) while it turns violet, then open a violet bubble from the same bar, centered on x=960, from 5.05 to 5.75s with expo.out. Build the close-up bubble as its own element at screen size so the text stays sharp. The 10 summary words rise in one by one, 65ms apart.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the scroll, the squeeze and the 1.7s pull-back to the chat window. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "How do you make a scrolling text animation that speeds up?",
+        "Put the whole sentence in one nowrap line and translate it left with power2.in, a cubic ease-in, so the speed starts near 0. Here the line travels about 8,500px in 3.1s and ends near 8,200 px/s. Link a horizontal blur to the speed so fast text smears into streaks."
+      ],
+      [
+        "How does the long line turn into one short message?",
+        "The line squeezes to a bar at frame center in 0.45s and a bubble of the same height replaces it on the same frame. The bubble blooms in 0.7s and the summary words rise in one after another, so the eye stays on one spot."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "滚动文字动画",
+    "title": "滚动文字动画：示例与代码配方",
+    "description": "一整行长句越滚越快，随后压成一个短消息气泡。用 Claude Code 或 Codex 按免费配方做出这个滚动文字动画。",
+    "howto": [
+      "用一行 120px 的文字（Inter 500，字距 -0.035em，36 词，宽 9833px），起点 x=160，在 0.1 到 3.2s 用 power2.in 向左滚动，起步几乎静止，末速约 8200px/s。用 SVG feGaussianBlur 加横向模糊，stdDeviation 随速度从 0 增到 36px，之后用 expo.out 在 0.5s 内刹车，让“um”停在 x=930，靠近画面中心。",
+      "句尾的字母被按住：3.3 到 4.1s 追加 26 个 m，3.45 到 4.4s 镜头推近 6.8 倍，每个 m 约 446px 高。4.6s 用 0.45s 把推近到位的画面压成约 14px 宽的竖线（scaleX 1 到 0.0075，power3.inOut），同时字色变成紫色；5.05 到 5.75s 紫色气泡从这条线、以 x=960 为中线用 expo.out 向两侧展开。特写里的气泡单独做成按屏幕尺寸的元素，文字才保持清晰。10 词摘要逐词升入，间隔 65ms。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出滚动、压缩和 1.7s 拉远到聊天窗口的整个镜头。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "怎么做一段越滚越快的滚动文字动画？",
+        "把整句话放进一行不换行的文本，用 power2.in（三次方缓入）向左平移，速度从接近 0 开始。这支片子里整行在 3.1s 内移动约 8500px，末速约 8200px/s。让横向模糊跟着速度走，快的文字会被抹成一道横向的拖影。"
+      ],
+      [
+        "长句怎么变成一条短消息？",
+        "整行在 0.45s 内压成画面中心的竖线，同一帧换成同样高度的气泡。气泡 0.7s 展开，摘要的词逐个升入，视线始终停在同一个位置。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --base: #000;
+        --accent: #7fc8ff;
+        --ink: #f3f7fb;
+        --font-ui: "Inter", -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--base); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--base); font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+
+      /* ---------- camera and laptop ---------- */
+      #cam { z-index: 1; perspective: 2600px; perspective-origin: 960px 540px; overflow: hidden; }
+      #world { position: absolute; left: 960px; top: 540px; width: 0; height: 0; transform-style: preserve-3d; transform-origin: 0 0; }
+      #halo { position: absolute; left: -800px; top: -600px; width: 1600px; height: 1200px; opacity: 0; }
+      #halo svg { display: block; }
+      #floor {
+        position: absolute; left: -1100px; top: 366px; width: 2200px; height: 1500px; transform-origin: 50% 0; opacity: 0;
+        background: radial-gradient(ellipse 50% 40% at 50% 48%, rgba(120,190,255,0.30) 0%, rgba(120,190,255,0.12) 45%, rgba(120,190,255,0) 100%);
+      }
+      #lid {
+        position: absolute; left: -558px; top: -352px; width: 1116px; height: 704px; transform-origin: 50% 100%; transform-style: preserve-3d;
+        border-radius: 26px 26px 6px 6px; background: linear-gradient(180deg, #0b0c0f 0%, #050607 100%);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 1px 0 rgba(255,255,255,0.20), 0 0 0 1px rgba(0,0,0,0.9);
+      }
+      .rim {
+        position: absolute; left: 0; top: 0; width: 1116px; height: 704px; border-radius: 26px 26px 6px 6px; padding: 2px; opacity: 0.55; pointer-events: none;
+        background: linear-gradient(180deg, rgba(200,230,255,0.85) 0%, rgba(160,205,255,0.22) 26%, rgba(160,205,255,0.04) 62%, rgba(160,205,255,0.30) 100%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+      }
+      .lbk { position: absolute; left: 0; top: 0; width: 1116px; height: 704px; border-radius: 26px 26px 6px 6px; background: #08090b; transform: translateZ(-8px); }
+      .lft { position: absolute; left: 0; top: 26px; width: 8px; height: 678px; transform-origin: 0 50%; transform: rotateY(90deg); background: linear-gradient(90deg, #9fb0c4 0%, #2b3139 30%, #14171b 100%); }
+      .lrt { position: absolute; left: 1108px; top: 26px; width: 8px; height: 678px; transform-origin: 100% 50%; transform: rotateY(-90deg); background: linear-gradient(270deg, #9fb0c4 0%, #2b3139 30%, #14171b 100%); }
+      .ltp { position: absolute; left: 30px; top: 0; width: 1056px; height: 8px; transform-origin: 50% 0; transform: rotateX(-90deg); background: linear-gradient(180deg, #c3d3e6 0%, #39414b 35%, #15181c 100%); }
+      .scr { position: absolute; left: 12px; top: 12px; width: 1092px; height: 680px; overflow: hidden; border-radius: 14px 14px 2px 2px; background: #000; }
+      .scr-in { position: absolute; left: 0; top: 0; width: 1092px; height: 680px; background: #000; }
+      .notch { position: absolute; left: 496px; top: 0; width: 100px; height: 20px; border-radius: 0 0 11px 11px; background: #000; z-index: 6; }
+      .notch i { position: absolute; left: 46px; top: 7px; width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #20314a, #05070b 70%); }
+
+      /* ---------- fluted strips ---------- */
+      .st { position: absolute; top: 0; width: 39px; height: 680px; overflow: hidden; isolation: isolate; background: #000; }
+      .art { position: absolute; top: 0; width: 1092px; height: 680px; }
+      .gl { position: absolute; left: 0; top: 0; width: 39px; height: 680px; opacity: 0; background: linear-gradient(0deg, rgba(127,200,255,0.46) 0%, rgba(127,200,255,0.26) 38%, rgba(127,200,255,0.16) 72%, rgba(127,200,255,0.09) 100%); }
+      .sk { position: absolute; top: 680px; opacity: 0; border-radius: 4px; will-change: transform; background: linear-gradient(0deg, rgba(127,200,255,0) 0%, rgba(127,200,255,0.7) 55%, #ffffff 100%); box-shadow: 0 0 18px rgba(127,200,255,0.8); }
+      .sk.sw { border-radius: 14px; background: linear-gradient(0deg, rgba(127,200,255,0) 0%, rgba(150,210,255,0.34) 50%, rgba(235,246,255,0.55) 100%); box-shadow: 0 0 26px rgba(127,200,255,0.45); }
+      .rib { position: absolute; left: 0; top: 0; width: 39px; height: 680px; z-index: 4; mix-blend-mode: screen; background: linear-gradient(90deg, rgba(210,234,255,0) 4%, rgba(210,234,255,0.5) 17%, rgba(210,234,255,0) 36%); }
+      .rb { position: absolute; left: 0; top: 0; width: 39px; height: 680px; z-index: 4; background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 44%, rgba(0,0,0,0.34) 72%, rgba(0,0,0,0.78) 100%); box-shadow: inset -1px 0 0 rgba(0,0,0,0.7); }
+      .vm { position: absolute; left: 0; top: 0; width: 39px; height: 680px; z-index: 3; mix-blend-mode: multiply; }
+      .tx { position: absolute; left: 0; top: 0; width: 39px; height: 680px; z-index: 3; opacity: 0.2; }
+      .sl { position: absolute; left: 0; top: 0; width: 2px; height: 680px; z-index: 5; opacity: 0; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(235,246,255,0.85) 35%, rgba(190,226,255,0.55) 75%, rgba(127,200,255,0.9) 100%); }
+      .hl { position: absolute; left: 0; top: 0; width: 39px; height: 680px; z-index: 5; opacity: 0; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(190,226,255,0) 0%, rgba(235,246,255,1) 32%, rgba(190,226,255,0) 78%); }
+
+      .pro, .lock { position: absolute; left: 0; top: 0; width: 1092px; height: 680px; display: flex; align-items: center; justify-content: center; }
+      .pro span {
+        font-weight: 800; font-size: 448px; line-height: 1; letter-spacing: -0.04em; padding: 0 0.14em 0 0.1em; margin-top: -8px;
+        background: linear-gradient(180deg, #ffffff 0%, #dcefff 42%, #7fc8ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lock { padding-bottom: 96px; }
+      .lock span { font-weight: 640; font-size: 176px; line-height: 1; letter-spacing: -0.04em; color: #f6f9fc; }
+      .lock .w2 { margin-left: 0.24em; background: linear-gradient(180deg, #d3ecff 0%, #7fc8ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .sub { position: absolute; left: 0; top: 440px; width: 1092px; text-align: center; font-size: 22px; font-weight: 500; letter-spacing: 0.02em; color: rgba(205,222,240,0.78); opacity: 0; z-index: 7; }
+      .sub b { font-weight: 600; color: #f1f7fd; }
+      .sub i { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: rgba(127,200,255,0.8); margin: 0 16px; vertical-align: middle; }
+
+      /* ---------- deck ---------- */
+      #deck {
+        position: absolute; left: -580px; top: 352px; width: 1160px; height: 740px; transform-origin: 50% 0; border-radius: 4px 4px 28px 28px; overflow: hidden;
+        background: linear-gradient(180deg, #1a1c21 0%, #101216 38%, #0a0b0e 100%);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07), inset 0 1px 0 rgba(255,255,255,0.12);
+      }
+      .hinge { position: absolute; left: 0; top: 0; width: 1160px; height: 14px; background: linear-gradient(180deg, #050607, #0e1013); }
+      .kb { position: absolute; left: 80px; top: 46px; width: 1000px; height: 390px; }
+      .k { position: absolute; border-radius: 8px; background: #0b0c0f; box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 1px 0 rgba(0,0,0,0.7); color: rgba(205,218,235,0.42); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+      .k::after { content: attr(data-l); }
+      .k.ar { padding: 0; }
+      .k.ar i { display: block; width: 0; height: 0; border-style: solid; border-color: transparent; }
+      .k.l { justify-content: flex-start; padding-left: 9px; }
+      .k.r { justify-content: flex-end; padding-right: 9px; }
+      .tp { position: absolute; left: 370px; top: 462px; width: 420px; height: 250px; border-radius: 14px; background: linear-gradient(180deg, #0c0d10, #0a0b0d); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+      .dedge { position: absolute; left: 0; bottom: 0; width: 1160px; height: 4px; background: linear-gradient(180deg, rgba(210,228,248,0.34), rgba(210,228,248,0.06)); }
+      #lip {
+        position: absolute; left: -580px; top: 352px; width: 1160px; height: 14px; transform: translateZ(740px); border-radius: 0 0 28px 28px / 0 0 14px 14px;
+        background: linear-gradient(180deg, #8c9cb0 0%, #2a3038 22%, #0d0f12 100%); box-shadow: 0 0 40px rgba(110,184,255,0.18);
+      }
+      .spill { position: absolute; left: 0; top: 0; width: 1160px; height: 740px; opacity: 0; background: radial-gradient(ellipse 78% 62% at 50% 0%, rgba(120,190,255,0.34) 0%, rgba(120,190,255,0.10) 45%, rgba(120,190,255,0) 78%); }
+
+      #cam::after { content: ""; position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; background: radial-gradient(ellipse 85% 75% at 50% 46%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.62) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+      <div id="cam" class="clip full" data-start="0" data-duration="10" data-track-index="0" data-layout-allow-overlap data-layout-allow-occlusion>
+        <div id="world">
+          <div id="halo"><svg width="1600" height="1200" viewBox="0 0 1600 1200"><defs><radialGradient id="hg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#6eb8ff" stop-opacity="0.30"/><stop offset="0.56" stop-color="#6eb8ff" stop-opacity="0.10"/><stop offset="1" stop-color="#6eb8ff" stop-opacity="0"/></radialGradient></defs><ellipse cx="800" cy="600" rx="800" ry="600" fill="url(#hg)"/></svg></div>
+          <div id="floor"></div>
+          <div id="deck">
+            <div class="hinge"></div>
+            <div class="kb" id="kb" data-layout-allow-occlusion></div>
+            <div class="tp"></div>
+            <div class="spill" id="spill"></div>
+            <div class="dedge"></div>
+          </div>
+          <div id="lip"></div>
+          <div id="lid">
+            <div class="lbk"></div><div class="lft"></div><div class="lrt"></div><div class="ltp"></div>
+            <div class="scr">
+              <div class="scr-in" id="scrin">
+                <div id="strips"></div>
+                <div class="sub" id="sub"><b>Opal Display</b><i></i>2,000 nits peak<i></i>120 Hz</div>
+              </div>
+              <div class="notch"><i></i></div>
+            </div>
+            <div class="rim" id="rim"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const EXPO = "expo.out";
+      const N = 28, W = 39, H = 680;
+      const K_GLASS = 0.6;
+
+      function mulberry(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const rnd = mulberry(41);
+      const R = [];
+      for (let i = 0; i < N; i++) R.push({ a: rnd(), b: rnd(), c: rnd(), d: rnd(), e: rnd(), f: rnd(), g: rnd() });
+
+      /* ---------- strips ---------- */
+      const rnd2 = mulberry(97);
+      const R2 = [];
+      for (let i = 0; i < N; i++) {
+        const o = { v: [], l: [] };
+        for (let k = 0; k < 4; k++) o.v.push(rnd2());
+        for (let k = 0; k < 4; k++) o.l.push([rnd2(), rnd2(), rnd2()]);
+        o.w3 = rnd2(); o.h3 = rnd2(); o.l3 = rnd2(); o.w4 = rnd2(); o.h4 = rnd2(); o.l4 = rnd2();
+        R2.push(o);
+      }
+      let sh = "";
+      for (let i = 0; i < N; i++) {
+        const r = R[i], q = R2[i];
+        const w1 = 5 + Math.round(r.e * 9), h1 = 240 + Math.round(r.f * 260), l1 = 6 + Math.round(r.g * 22);
+        const w2 = 4 + Math.round(r.a * 7), h2 = 200 + Math.round(r.b * 300), l2 = 4 + Math.round(r.c * 26);
+        const w3 = 16 + Math.round(q.w3 * 18), h3 = 300 + Math.round(q.h3 * 260), l3 = Math.round(q.l3 * 12);
+        const w4 = 2 + Math.round(q.w4 * 4), h4 = 260 + Math.round(q.h4 * 300), l4 = 3 + Math.round(q.l4 * 30);
+        const g = (v) => { const c = Math.round(120 + v * 135); return "rgb(" + c + "," + c + "," + Math.min(255, c + 8) + ")"; };
+        const vm = "linear-gradient(180deg," + g(q.v[0]) + " 0%," + g(q.v[1]) + " 30%," + g(q.v[2]) + " 62%," + g(q.v[3]) + " 100%)";
+        const tx = q.l.map((L, k) => {
+          const x = Math.round(2 + L[0] * 32), w = 1 + Math.round(L[1] * 2), a = (0.14 + L[2] * 0.3).toFixed(2);
+          const col = k % 2 === 0 ? "rgba(225,242,255," + a + ")" : "rgba(8,36,84," + (a * 1.3).toFixed(2) + ")";
+          return "linear-gradient(90deg,transparent " + x + "px," + col + " " + x + "px," + col + " " + (x + w) + "px,transparent " + (x + w) + "px)";
+        }).join(",");
+        sh +=
+          '<div class="st" id="st' + i + '" style="left:' + i * W + 'px">' +
+            '<div class="gl"></div>' +
+            '<div class="art ap" data-layout-allow-overflow id="ap' + i + '"><div class="pro"><span>PRO</span></div></div>' +
+            '<div class="art ab" data-layout-allow-overflow id="ab' + i + '"><div class="lock"><span class="w1">Novis</span><span class="w2">Pro</span></div></div>' +
+            '<div class="sk sw s3" data-layout-allow-overflow id="s3_' + i + '" style="left:' + l3 + 'px;width:' + w3 + 'px;height:' + h3 + 'px"></div>' +
+            '<div class="sk s1" data-layout-allow-overflow id="s1_' + i + '" style="left:' + l1 + 'px;width:' + w1 + 'px;height:' + h1 + 'px"></div>' +
+            '<div class="sk s2" data-layout-allow-overflow id="s2_' + i + '" style="left:' + l2 + 'px;width:' + w2 + 'px;height:' + h2 + 'px"></div>' +
+            '<div class="sk s4" data-layout-allow-overflow id="s4_' + i + '" style="left:' + l4 + 'px;width:' + w4 + 'px;height:' + h4 + 'px"></div>' +
+            '<div class="vm" style="background:' + vm + '"></div><div class="tx" style="background:' + tx + '"></div><div class="rib"></div><div class="rb"></div><div class="sl"></div><div class="hl"></div>' +
+          '</div>';
+      }
+      document.getElementById("strips").innerHTML = sh;
+
+      /* ---------- keyboard ---------- */
+      const ROWS = [
+        { y: 0, h: 34, keys: [["esc", 1.0, "l"], ["F1", 1], ["F2", 1], ["F3", 1], ["F4", 1], ["F5", 1], ["F6", 1], ["F7", 1], ["F8", 1], ["F9", 1], ["F10", 1], ["F11", 1], ["F12", 1], ["", 1]] },
+        { y: 39, h: 62, keys: "` 1 2 3 4 5 6 7 8 9 0 - =".split(" ").map((l) => [l, 1]).concat([["delete", 2, "r"]]) },
+        { y: 106, h: 62, keys: [["tab", 1.5, "l"]].concat("Q W E R T Y U I O P [ ]".split(" ").map((l) => [l, 1]), [["\\", 1.5]]) },
+        { y: 173, h: 62, keys: [["caps", 1.75, "l"]].concat("A S D F G H J K L ; '".split(" ").map((l) => [l, 1]), [["return", 2.25, "r"]]) },
+        { y: 240, h: 62, keys: [["shift", 2.25, "l"]].concat("Z X C V B N M , . /".split(" ").map((l) => [l, 1]), [["shift", 2.75, "r"]]) },
+        { y: 307, h: 62, keys: [["ctrl", 1.25, "l"], ["opt", 1.25, "l"], ["cmd", 1.25, "l"], ["", 6.25], ["cmd", 1.25, "r"], ["opt", 1.25, "r"]] },
+      ];
+      let kh = "";
+      const P = 67;
+      ROWS.forEach((row) => {
+        let x = 0;
+        row.keys.forEach((k) => {
+          const w = k[1] * P - 5;
+          kh += '<div class="k ' + (k[2] || "") + '" data-l="' + k[0] + '" style="left:' + Math.round(x) + "px;top:" + row.y + "px;width:" + Math.round(w) + "px;height:" + row.h + 'px"></div>';
+          x += k[1] * P;
+        });
+      });
+      // inverted-T arrow cluster: left/right/down half-height keys on the bottom line, up above down
+      {
+        const ax = 12.5 * P, aw = Math.round((2.5 / 3) * P - 5), step = Math.round((2.5 / 3) * P);
+        const tri = (d) => {
+          const c = "rgba(205,218,235,0.42)";
+          if (d === "l") return '<i style="border-width:4px 6px 4px 0;border-right-color:' + c + '"></i>';
+          if (d === "r") return '<i style="border-width:4px 0 4px 6px;border-left-color:' + c + '"></i>';
+          if (d === "u") return '<i style="border-width:0 4px 6px 4px;border-bottom-color:' + c + '"></i>';
+          return '<i style="border-width:6px 4px 0 4px;border-top-color:' + c + '"></i>';
+        };
+        [["l", 0, 339], ["d", 1, 339], ["r", 2, 339], ["u", 1, 307]].forEach((a) => {
+          kh += '<div class="k ar" style="left:' + Math.round(ax + a[1] * step) + "px;top:" + a[2] + "px;width:" + aw + 'px;height:30px">' + tri(a[0]) + "</div>";
+        });
+      }
+      document.getElementById("kb").innerHTML = kh;
+
+      /* ---------- timeline ---------- */
+      const tl = gsap.timeline({ paused: true });
+      function F(target, from, to, at) {
+        tl.fromTo(target, from, Object.assign({ immediateRender: false }, to), at);
+      }
+
+      const LEAN = 8;
+      gsap.set("#deck", { rotationX: 90 });
+      gsap.set("#floor", { rotationX: 90, opacity: 0.55 });
+      gsap.set("#lid", { rotationX: LEAN });
+      gsap.set("#halo", { z: -220, opacity: 0.8 });
+      gsap.set("#spill", { opacity: 0.7 });
+gsap.set("#rim", { opacity: 0.9 });
+      for (let i = 0; i < N; i++) {
+        const ox = i * W + W / 2;
+        gsap.set("#ap" + i, { left: -i * W, transformOrigin: ox + "px 340px", opacity: 0 });
+        gsap.set("#ab" + i, { left: -i * W, transformOrigin: ox + "px 340px", scaleX: K_GLASS, opacity: 0 });
+      }
+
+      // camera: high angle over the deck, lowers to a front view, then pushes to 1.45x and squares up to the lid so the bezel and notch stay in frame
+      gsap.set("#world", { rotationX: -66, y: -150, scale: 1.0 });
+      tl.to("#world", { rotationX: -14, y: -40, duration: 3.55, ease: "power3.out" }, 1.15);
+      tl.to("#world", { scale: 1.2, duration: 3.55, ease: "sine.inOut" }, 1.15);
+      tl.to("#world", { rotationX: -LEAN, y: 58, scale: 1.36, duration: 1.4, ease: "power4.out" }, 4.7);
+      tl.to("#world", { scale: 1.4, duration: 3.9, ease: "sine.out" }, 6.1);
+
+      // light and surroundings
+      tl.to("#halo", { opacity: 1, duration: 1.5, ease: "power2.out" }, 0.1);
+      tl.to("#halo", { opacity: 0.55, duration: 1.2, ease: "power2.inOut" }, 4.8);
+      tl.to("#spill", { opacity: 1, duration: 1.6, ease: "power2.out" }, 0.3);
+      tl.to("#spill", { opacity: 0.35, duration: 1.0, ease: "power2.inOut" }, 4.8);
+      tl.to("#floor", { opacity: 1, duration: 1.6, ease: "power2.out" }, 0.3);
+      tl.to("#floor", { opacity: 0.45, duration: 1.0, ease: "power2.inOut" }, 4.8);
+      tl.to("#rim", { opacity: 1, duration: 1.4, ease: "power2.out" }, 0.2);
+
+      for (let i = 0; i < N; i++) {
+        const r = R[i], q = R2[i];
+        const p = i / N;
+        const st = "#st" + i;
+
+        // base glow at the foot of each rib stays on as a faint residue under the lockup
+        const gk = 0.75 + r.g * 0.25;
+        gsap.set(st + " .gl", { opacity: 0.5 * gk });
+        F(st + " .gl", { opacity: 0.5 * gk }, { opacity: gk, duration: 0.8, ease: "power2.out" }, r.a * 0.3);
+        F(st + " .gl", { opacity: gk }, { opacity: 0.75 * gk, duration: 1.4, ease: "power2.inOut" }, 2.6);
+        // rib edge specular line lights up with the glow
+        gsap.set(st + " .sl", { opacity: 0.5 });
+        gsap.set(st + " .tx", { opacity: 0.4 });
+        F(st + " .sl", { opacity: 0.5 }, { opacity: 1, duration: 1.0, ease: "power2.out" }, 0.1 + r.a * 0.5);
+        F(st + " .tx", { opacity: 0.4 }, { opacity: 1, duration: 1.0, ease: "power2.out" }, 0.1 + r.a * 0.5);
+
+        // rising streaks: four per rib (thin, thin, wide soft, hair)
+        const t1 = p * 0.45 + r.d * 0.4;
+        const y1 = -(70 + r.d * 330);
+        gsap.set("#s1_" + i, { y: y1, opacity: 1 });
+        F("#s1_" + i, { y: y1, opacity: 1 }, { y: -(H + 560), opacity: 1, duration: 1.3, ease: "power2.in" }, t1);
+        const t2 = 1.3 + p * 0.5 + r.b * 0.45;
+        F("#s2_" + i, { y: 0, opacity: 0 }, { y: -(H + 520), opacity: 0.9, duration: 1.0, ease: "power2.in" }, t2);
+        const t3 = 0.7 + p * 0.5 + r.c * 0.5;
+        F("#s3_" + i, { y: 0, opacity: 0 }, { y: -(H + 600), opacity: 1, duration: 1.3, ease: "power2.in" }, t3);
+        const t4 = 1.9 + p * 0.35 + r.e * 0.3;
+        F("#s4_" + i, { y: 0, opacity: 0 }, { y: -(H + 580), opacity: 1, duration: 0.9, ease: "power2.in" }, t4);
+
+        // PRO rises into the ribs, stretched, and settles through the glass
+        const ea = 1.4 + p * 0.3 + r.a * 0.3;
+        const ty = 0;
+        const tx = (r.b - 0.5) * 18;
+        F("#ap" + i, { y: 520 + r.b * 260, scaleY: 5 + r.c * 3, scaleX: 1.7, x: 0, opacity: 0 }, { y: ty, scaleY: 1, scaleX: K_GLASS, x: tx, opacity: 1, duration: 1.55, ease: EXPO }, ea);
+        // PRO lifts out as streaks and is gone from every rib before the lockup rises
+        const xa = 4.82 + p * 0.1 + r.a * 0.05;
+        F("#ap" + i, { y: ty, scaleY: 1 }, { y: -(420 + r.b * 100), scaleY: 1.8, duration: 0.42, ease: "power2.in" }, xa);
+        tl.to("#ap" + i, { opacity: 0, duration: 0.2, ease: "power1.in" }, xa + 0.17);
+
+        // lockup rises in at 0.6x compression, then the glass relaxes
+        const eb = 5.2 + p * 0.18 + r.d * 0.05;
+        const tx0 = (r.e - 0.5) * 12;
+        F("#ab" + i, { y: 420 + r.f * 100, scaleY: 3.5, x: tx0, opacity: 0 }, { y: 0, scaleY: 1, x: tx0, opacity: 1, duration: 1.25, ease: EXPO }, eb);
+        F("#ab" + i, { scaleX: K_GLASS, x: tx0 }, { scaleX: 1, x: 0, duration: 1.2, ease: "power2.inOut" }, 5.95 + p * 0.25);
+
+        // specular sweep across the ribs
+        const sw = 3.0 + p * 1.0;
+        F(st + " .hl", { opacity: 0 }, { opacity: 0.38, duration: 0.3, ease: "power2.out" }, sw);
+        tl.to(st + " .hl", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, sw + 0.3);
+
+        // rib shading and edge lines hold until the lockup has settled, then drop to a faint residue
+        const fd = 6.3 + p * 0.3;
+        F(st + " .vm", { opacity: 1 }, { opacity: 0, duration: 1.2, ease: "power2.inOut" }, fd);
+        const keep = Math.abs(i - (N - 1) / 2) >= 11.5 ? 0.3 : 0;
+        F(st + " .rib", { opacity: 1 }, { opacity: keep, duration: 1.3, ease: "power2.inOut" }, fd);
+        F(st + " .rb", { opacity: 1 }, { opacity: keep, duration: 1.3, ease: "power2.inOut" }, fd);
+        F(st + " .sl", { opacity: 1 }, { opacity: keep, duration: 1.3, ease: "power2.inOut" }, fd);
+        F(st + " .tx", { opacity: 1 }, { opacity: keep, duration: 1.3, ease: "power2.inOut" }, fd);
+        F(st + " .gl", { opacity: 0.75 * gk }, { opacity: keep ? 0.5 * gk : 0.3 * gk, duration: 1.3, ease: "power2.inOut" }, fd);
+
+        // closing shimmer over the clear lockup
+        const sw2 = 8.0 + p * 0.9;
+        F(st + " .hl", { opacity: 0 }, { opacity: 0.3, duration: 0.35, ease: "power2.out" }, sw2);
+        tl.to(st + " .hl", { opacity: 0, duration: 0.6, ease: "power1.inOut" }, sw2 + 0.35);
+      }
+
+      // glow to sharp
+      gsap.set("#scrin", { filter: "blur(0px) brightness(1)" });
+      tl.to("#scrin", { filter: "blur(3.5px) brightness(1.3)", duration: 0.35, ease: "power2.out" }, 4.95);
+      tl.to("#scrin", { filter: "blur(0px) brightness(1)", duration: 1.7, ease: "power2.out" }, 5.7);
+
+      // sub line
+      F("#sub", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: EXPO }, 7.4);
+
+      tl.set({}, {}, 10);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

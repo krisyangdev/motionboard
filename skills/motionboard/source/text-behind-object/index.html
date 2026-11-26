@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ink: #1b1b1f;
+        --sub: #40414a;
+        --mut: #4d4e56;
+        --line: #e7e6e3;
+        --line2: #efeeec;
+        --side: #f3f2ef;
+        --brand: #0f9d68;
+        --brandInk: #07603f;
+        --tint: rgba(15, 157, 104, 0.12);
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #efeeea; }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #efeeea;
+        font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased;
+      }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .a { position: absolute; }
+      svg { display: block; flex: none; }
+
+      /* ---------- stage and 3D world ---------- */
+      #stage {
+        background:
+          radial-gradient(ellipse 70% 60% at 50% 22%, #fcfbf9 0%, rgba(252, 251, 249, 0) 70%),
+          linear-gradient(180deg, #f3f2ee 0%, #e9e7e2 100%);
+      }
+      #persp { perspective: 2600px; perspective-origin: 960px 540px; }
+      #world { transform-style: preserve-3d; }
+      #hplane { transform: translateZ(-420px) scale(1.1615); transform-origin: 960px 540px; }
+      .hw {
+        position: absolute; left: 0; top: 182px; width: 1920px; height: 340px; text-align: center; white-space: nowrap;
+        font-family: "Inter", sans-serif; font-weight: 650; font-size: 340px; line-height: 340px; letter-spacing: -0.045em; color: #17171b;
+        opacity: 0;
+      }
+      #h1 { opacity: 1; }
+      
+      /* ---------- window ---------- */
+      #win {
+        position: absolute; left: 210px; top: 425px; width: 1500px; height: 900px;
+        border-radius: 14px; overflow: hidden; background: #fff;
+        box-shadow: 0 0 0 1px rgba(20, 20, 30, 0.16), 0 -6px 60px rgba(20, 20, 30, 0.2), 0 30px 80px rgba(20, 20, 30, 0.22), 0 90px 180px rgba(20, 20, 30, 0.2);
+      }
+      #win::before { content: ""; position: absolute; left: 0; top: 0; width: 1500px; height: 1px; background: rgba(255, 255, 255, 0.9); z-index: 30; }
+      .tl { position: absolute; top: 19px; width: 12px; height: 12px; border-radius: 50%; }
+      .pi { color: #8a8b93; }
+
+      /* sidebar */
+      #side { position: absolute; left: 0; top: 0; width: 248px; height: 900px; background: var(--side); border-right: 1px solid var(--line); }
+      .srch { position: absolute; left: 14px; top: 52px; width: 220px; height: 32px; border-radius: 8px; background: #e9e8e4; display: flex; align-items: center; gap: 8px; padding: 0 10px; font-size: 13px; color: var(--mut); }
+      .srch kbd { margin-left: auto; font-family: var(--font-ui); font-size: 11px; color: #55565c; background: rgba(255, 255, 255, 0.7); border-radius: 4px; padding: 1px 5px; }
+      .nav { position: absolute; left: 8px; width: 232px; height: 30px; border-radius: 7px; display: flex; align-items: center; gap: 10px; padding: 0 10px; font-size: 13.5px; font-weight: 450; color: #2b2b31; white-space: nowrap; }
+      .nav.sel { background: rgba(20, 20, 30, 0.07); font-weight: 550; }
+      .nav .n { margin-left: auto; font-size: 12px; color: var(--mut); font-weight: 450; }
+      .sh { position: absolute; left: 18px; font-size: 12px; font-weight: 600; color: var(--sub); display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+
+      /* note list */
+      #list { position: absolute; left: 248px; top: 0; width: 352px; height: 900px; background: #fff; border-right: 1px solid var(--line); }
+      .lh { position: absolute; left: 0; width: 352px; height: 52px; border-bottom: 1px solid var(--line2); }
+      .ls { position: absolute; left: 20px; font-size: 12px; font-weight: 600; color: var(--sub); white-space: nowrap; }
+      .row { position: absolute; left: 8px; width: 336px; height: 76px; border-radius: 9px; }
+      .row.sel { background: var(--tint); }
+      .row .t { position: absolute; left: 12px; top: 10px; width: 250px; font-size: 14px; line-height: 19px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .row .d { position: absolute; right: 12px; top: 11px; font-size: 11.5px; color: var(--mut); white-space: nowrap; }
+      .row .s { position: absolute; left: 12px; top: 32px; width: 312px; font-size: 12.5px; line-height: 17px; color: var(--sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .row .m { position: absolute; left: 12px; top: 53px; display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--mut); white-space: nowrap; }
+      .row .m b { font-weight: 500; color: #4f5057; background: #f0efec; border-radius: 4px; padding: 0 5px; line-height: 16px; margin-left: 4px; }
+      .row.sel .m { color: #3b3c43; }
+      .row.sel .m b { background: rgba(255, 255, 255, 0.75); color: #36373e; }
+      .rl { position: absolute; left: 20px; width: 312px; height: 1px; background: var(--line2); }
+
+      /* editor */
+      #ed { position: absolute; left: 600px; top: 0; width: 590px; height: 900px; background: #fff; }
+      .bc { position: absolute; left: 44px; top: 17px; display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--sub); white-space: nowrap; }
+      .bc b { font-weight: 550; color: var(--ink); }
+      .shr { position: absolute; top: 11px; height: 30px; padding: 0 12px; border-radius: 7px; background: #0a7a50; color: #fff; font-size: 13px; font-weight: 550; display: flex; align-items: center; gap: 6px; }
+      .av { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-weight: 600; flex: none; }
+      .dt { position: absolute; left: 44px; top: 72px; font-size: 31px; line-height: 40px; font-weight: 650; letter-spacing: -0.02em; white-space: nowrap; }
+      .meta { position: absolute; left: 44px; top: 124px; display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--sub); white-space: nowrap; }
+      .meta span { display: flex; align-items: center; gap: 6px; }
+      .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 6px; background: #f0efec; color: #5f6068; font-size: 12px; font-weight: 500; }
+      .h { position: absolute; left: 44px; font-size: 17px; line-height: 24px; font-weight: 650; letter-spacing: -0.01em; white-space: nowrap; }
+      .p { position: absolute; left: 44px; width: 500px; font-size: 15px; line-height: 23px; color: #2b2b31; }
+      .bl { position: absolute; left: 44px; width: 500px; font-size: 15px; line-height: 23px; color: #2b2b31; padding-left: 20px; }
+      .bl::before { content: ""; position: absolute; left: 6px; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: #55565e; }
+      .tk { position: absolute; left: 44px; width: 500px; height: 24px; font-size: 15px; line-height: 24px; color: #2b2b31; padding-left: 28px; white-space: nowrap; }
+      .tk .cb { position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 5px; border: 1.5px solid #b9bac1; display: flex; align-items: center; justify-content: center; }
+      .tk .cb svg { width: 11px; height: 11px; opacity: 0; }
+      #tk3 .cb { border-color: #b9bac1; }
+      #tk3 .tx { color: #2b2b31; }
+      .lk { padding: 0 3px; margin: 0 -3px; border-radius: 4px; font-weight: 500; }
+      .c { display: none; }
+      #car { display: inline-block; width: 1.5px; height: 17px; margin-left: 1px; vertical-align: -3px; background: var(--brand); opacity: 0; }
+      .clip-card { position: absolute; left: 44px; top: 582px; width: 500px; height: 72px; border-radius: 10px; border: 1px solid var(--line); background: #fff; opacity: 0; }
+      .clip-card .th { position: absolute; left: 10px; top: 10px; width: 52px; height: 52px; border-radius: 8px; background: #e7f4ee; color: var(--brand); display: flex; align-items: center; justify-content: center; }
+      .clip-card .ct { position: absolute; left: 76px; top: 13px; font-size: 13.5px; font-weight: 600; line-height: 18px; white-space: nowrap; }
+      .clip-card .cu { position: absolute; left: 76px; top: 34px; font-size: 12px; color: var(--sub); white-space: nowrap; }
+      .clip-card .cm { position: absolute; left: 76px; top: 51px; font-size: 11.5px; color: #2c2d33; white-space: nowrap; }
+
+      /* right panel */
+      #pan { position: absolute; left: 1190px; top: 0; width: 310px; height: 900px; background: #fbfaf9; border-left: 1px solid var(--line); }
+      .pl { position: absolute; left: 20px; font-size: 12px; font-weight: 600; color: var(--sub); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+      .pl em { font-style: normal; font-weight: 500; color: var(--mut); }
+      .ol { position: absolute; left: 20px; font-size: 13px; color: #2b2b31; white-space: nowrap; }
+      .kv { position: absolute; left: 20px; width: 270px; font-size: 12.5px; color: var(--sub); display: flex; justify-content: space-between; white-space: nowrap; }
+      .kv b { font-weight: 500; color: var(--ink); }
+      .pdiv { position: absolute; left: 20px; width: 270px; height: 1px; background: var(--line); }
+      .col { position: absolute; left: 20px; width: 270px; height: 26px; display: flex; align-items: center; gap: 9px; font-size: 13px; color: #2b2b31; }
+      .col .st { margin-left: auto; font-size: 11.5px; color: var(--mut); display: flex; align-items: center; gap: 5px; }
+      .col .st i { width: 6px; height: 6px; border-radius: 50%; background: #2fa763; }
+      .bk { position: absolute; left: 20px; width: 270px; height: 46px; }
+      .bk .bt { position: absolute; left: 24px; top: 0; font-size: 13px; line-height: 18px; font-weight: 550; white-space: nowrap; }
+      .bk .bs { position: absolute; left: 24px; top: 20px; width: 246px; font-size: 11.5px; line-height: 16px; color: var(--mut); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .bk .bi { position: absolute; left: 0; top: 1px; color: #8a8b93; }
+      .og { position: absolute; left: 20px; width: 270px; height: 26px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #2b2b31; white-space: nowrap; }
+      #pB { opacity: 0; }
+      #graph { position: absolute; left: 20px; top: 48px; width: 270px; height: 182px; border-radius: 10px; background: #f4f3f0; border: 1px solid var(--line); overflow: hidden; }
+      #graph text { font-family: var(--font-ui); font-size: 10.5px; font-weight: 500; fill: #4b4c53; }
+      .ge { fill: none; stroke: #bdbec5; stroke-width: 1.2; stroke-linecap: round; }
+      .ge.m { stroke: var(--brand); stroke-width: 1.6; }
+      .gn { fill: #8b8c94; }
+
+      /* hover card and cursor */
+      #hov { position: absolute; left: 880px; top: 428px; width: 330px; height: 128px; border-radius: 12px; background: #fff; opacity: 0; z-index: 12;
+        box-shadow: 0 0 0 1px rgba(20, 20, 30, 0.1), 0 14px 36px rgba(20, 20, 30, 0.2); }
+      #hov .t { position: absolute; left: 16px; top: 14px; font-size: 14px; font-weight: 650; white-space: nowrap; }
+      #hov .s { position: absolute; left: 16px; top: 38px; width: 298px; font-size: 12.5px; line-height: 18px; color: var(--sub); }
+      #hov .bar { position: absolute; left: 16px; top: 88px; width: 298px; height: 5px; border-radius: 3px; background: #ebeae6; }
+      #hov .bar i { position: absolute; left: 0; top: 0; width: 190px; height: 5px; border-radius: 3px; background: var(--brand); }
+      #hov .f { position: absolute; left: 16px; top: 102px; font-size: 11.5px; color: var(--mut); white-space: nowrap; }
+      #cur { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; z-index: 40; }
+      #cur svg { position: absolute; left: -2px; top: -2px; width: 22px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); }
+
+      /* command palette */
+      #dim { position: absolute; left: 0; top: 0; width: 1500px; height: 900px; background: rgba(18, 18, 24, 0.16); opacity: 0; z-index: 20; }
+      #pal { position: absolute; left: 345px; top: 56px; width: 810px; height: 572px; border-radius: 16px; background: #fff; opacity: 0; z-index: 22; overflow: hidden;
+        box-shadow: 0 0 0 1px rgba(20, 20, 30, 0.12), 0 30px 80px rgba(10, 10, 20, 0.36); }
+      .qt { position: absolute; left: 54px; top: 18px; font-size: 18px; line-height: 24px; letter-spacing: -0.005em; white-space: nowrap; }
+      #qph { position: absolute; left: 0; top: 0; color: #6f7079; }
+      #qcar { display: inline-block; width: 1.5px; height: 20px; margin-left: 1px; vertical-align: -4px; background: var(--brand); }
+      .fc { position: absolute; top: 70px; height: 26px; padding: 0 11px; border-radius: 13px; font-size: 12.5px; font-weight: 500; color: var(--sub); border: 1px solid var(--line); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+      .fc.on { background: #1b1b1f; border-color: #1b1b1f; color: #fff; }
+      .fc em { font-style: normal; color: var(--mut); }
+      .fc.on em { color: #b9bac1; }
+      #ans { position: absolute; left: 16px; top: 112px; width: 778px; height: 150px; border-radius: 12px; background: #f3faf6; border: 1px solid #cde8db; opacity: 0; }
+      #ans .al { position: absolute; left: 16px; top: 14px; display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--brandInk); }
+      #ans .at { position: absolute; left: 16px; top: 42px; width: 746px; font-size: 15.5px; line-height: 24px; color: #22262a; }
+      #ans .at span { opacity: 0; }
+      #ans .at sup { font-size: 10px; font-weight: 600; color: var(--brandInk); background: #d6eee3; border-radius: 4px; padding: 0 4px; margin-left: 2px; vertical-align: 4px; }
+      #ans .sr { position: absolute; left: 16px; top: 112px; display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--sub); opacity: 0; white-space: nowrap; }
+      #ans .sr b { font-weight: 500; color: #2b2b31; background: #fff; border: 1px solid #cde8db; border-radius: 6px; padding: 2px 8px; display: flex; align-items: center; gap: 5px; }
+      .pr { position: absolute; left: 8px; width: 794px; height: 54px; border-radius: 9px; opacity: 0; }
+      .pr.sel { background: var(--tint); }
+      .pr.rcr { opacity: 1; }
+      #nlab { opacity: 0; }
+      .pr .t { position: absolute; left: 44px; top: 9px; font-size: 14px; line-height: 19px; font-weight: 600; white-space: nowrap; }
+      .pr .t mark { background: rgba(15, 157, 104, 0.2); color: inherit; border-radius: 3px; padding: 0 1px; }
+      .pr .s { position: absolute; left: 44px; top: 29px; font-size: 12.5px; line-height: 17px; color: var(--sub); white-space: nowrap; }
+      .pr .s mark { background: rgba(15, 157, 104, 0.2); color: inherit; border-radius: 3px; padding: 0 1px; }
+      .pr .ic { position: absolute; left: 14px; top: 17px; color: #8a8b93; }
+      .pr .r { position: absolute; right: 14px; top: 18px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mut); white-space: nowrap; }
+      .pr kbd, #foot kbd { font-family: var(--font-ui); font-size: 11px; color: #4b4c53; background: #f0efec; border-radius: 4px; padding: 1px 6px; }
+      #foot { position: absolute; left: 0; top: 524px; width: 810px; height: 48px; border-top: 1px solid var(--line2); background: #fbfaf9; display: flex; align-items: center; gap: 18px; padding: 0 20px; font-size: 12px; color: var(--sub); white-space: nowrap; }
+      #foot span { display: flex; align-items: center; gap: 6px; }
+
+      /* ---------- finish ---------- */
+      #vig { pointer-events: none; z-index: 5; background: radial-gradient(ellipse at 50% 46%, rgba(30, 28, 20, 0) 58%, rgba(30, 28, 20, 0.1) 100%); }
+      #endIcon { position: absolute; left: 878px; top: 70px; width: 164px; height: 100px; opacity: 0; display: flex; justify-content: center; }
+      #endSub { position: absolute; left: 0; top: 520px; width: 1920px; text-align: center; font-size: 32px; line-height: 40px; font-weight: 500; letter-spacing: -0.012em; color: #7a7b83; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="11" data-width="1920" data-height="1080">
+      <div id="stage" class="clip full" data-start="0" data-duration="11" data-track-index="0">
+        <div id="drift" class="full" data-layout-allow-overlap>
+          <div id="cam" class="full" data-layout-allow-overlap>
+            <div id="persp" class="full" data-layout-allow-overlap>
+              <div id="world" class="full" data-layout-allow-overlap>
+                <div id="hplane" class="full" data-layout-allow-overlap>
+                  <div id="h1" class="hw" data-layout-allow-occlusion data-layout-allow-overflow>Capture</div>
+                  <div id="h2" class="hw" data-layout-allow-occlusion data-layout-allow-overflow>Connect</div>
+                  <div id="h3" class="hw" data-layout-allow-occlusion data-layout-allow-overflow>Recall</div>
+                  <div id="h4" class="hw" data-layout-allow-occlusion data-layout-allow-overflow>Halden</div>
+                </div>
+                <div id="win" data-layout-allow-overlap></div>
+              </div>
+            </div>
+            <div id="endIcon" data-layout-allow-overlap>
+              <svg width="100" height="100" viewBox="0 0 100 100">
+                <defs><linearGradient id="ig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17c585"/><stop offset="1" stop-color="#0a8a5c"/></linearGradient></defs>
+                <rect width="100" height="100" rx="23" fill="url(#ig)"/>
+                <rect x="29" y="24" width="12" height="52" rx="6" fill="#fff"/>
+                <rect x="59" y="24" width="12" height="52" rx="6" fill="#fff"/>
+                <rect x="29" y="44" width="42" height="12" rx="6" fill="#fff"/>
+              </svg>
+            </div>
+            <div id="endSub">Notes that remember.</div>
+          </div>
+        </div>
+      </div>
+      <div id="vig" class="clip full" data-start="0" data-duration="11" data-track-index="1"></div>
+    </div>
+
+    <script>
+      const EIO = "power3.inOut";
+      const EXPO = "expo.out";
+      const BACK = "back.out(1.7)";
+
+      /* ---------- icons (lucide-style, 1.5px strokes) ---------- */
+      const ICON = {
+        chD: '<path d="m6 9 6 6 6-6"/>',
+        chR: '<path d="m9 18 6-6-6-6"/>',
+        search: '<circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.3-4.3"/>',
+        inbox: '<polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+        notes: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+        today: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/>',
+        pin: '<path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>',
+        users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/>',
+        folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+        hash: '<line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/>',
+        plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+        compose: '<path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>',
+        sort: '<path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/>',
+        share: '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/>',
+        more: '<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+        sparkle: '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>',
+        link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+        check: '<path d="M20 6 9 17l-5-5"/>',
+        globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+        cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+        list: '<path d="M17 6H3"/><path d="M21 12H3"/><path d="M15 18H3"/>',
+        enter: '<polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/>',
+        side: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/>',
+        graph: '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="8" r="3"/><circle cx="12" cy="19" r="3"/><path d="m8.6 7.2 6.8.4"/><path d="m7.4 8.8 3.4 7.6"/><path d="m16.6 10.6-3 6.4"/>'
+      };
+      const ic = (n, s, sw, st) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.5) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (st ? ' style="' + st + '"' : "") + ">" + ICON[n] + "</svg>";
+
+      const P = {
+        maya: ["Maya Chen", "MC", "#d9577f"],
+        liam: ["Liam Ortiz", "LO", "#3b82f6"],
+        priya: ["Priya Nair", "PN", "#8b5cf6"],
+        alex: ["Alex Rivera", "AR", "#4b5563"]
+      };
+      const av = (k, s, f, extra) =>
+        '<span class="av" data-layout-ignore style="width:' + s + "px;height:" + s + "px;font-size:" + f + "px;background:" + P[k][2] + (extra || "") + '">' + P[k][1] + "</span>";
+      const FOLD = { Product: "#8b5cf6", Design: "#e0568b", Engineering: "#2fa763", Customers: "#1fa5a5", Research: "#f08c3c", Personal: "#8b8b96" };
+
+      /* deterministic typing times: seeded jitter scaled to the target span */
+      function typeTimes(n, start, dur) {
+        let s = 7919, acc = 0; const w = [];
+        for (let i = 0; i < n; i++) { s = (s * 16807) % 2147483647; w.push(0.7 + (s % 1000) / 1000 * 0.9); }
+        const tot = w.reduce((a, b) => a + b, 0);
+        return w.map((x) => { acc += x; return start + (acc / tot) * dur; });
+      }
+      const chars = (str, pre) => str.split("").map((c, i) => '<span class="c" id="' + pre + i + '">' + (c === " " ? "&nbsp;" : c) + "</span>").join("");
+
+      /* ---------- build the window ---------- */
+      const S = [];
+
+      /* sidebar */
+      S.push('<div id="side">');
+      S.push('<i class="tl" style="left:19px;background:#ff5f57"></i><i class="tl" style="left:39px;background:#febc2e"></i><i class="tl" style="left:59px;background:#28c840"></i>');
+      S.push('<div class="a pi" style="left:212px;top:17px">' + ic("side", 17) + "</div>");
+      S.push('<div class="srch">' + ic("search", 15) + "Search<kbd>⌘K</kbd></div>");
+      const nav = (y, icon, label, n, sel) => '<div class="nav' + (sel ? " sel" : "") + '" style="top:' + y + 'px"><span class="pi">' + ic(icon, 17) + "</span>" + label + '<span class="n">' + n + "</span></div>";
+      S.push(nav(98, "inbox", "Inbox", 12), nav(128, "notes", "All notes", 482, true), nav(158, "today", "Today", 3), nav(188, "pin", "Pinned", 6), nav(218, "users", "Shared", 14));
+      S.push('<div class="sh" style="top:268px">' + ic("chD", 13, 1.8) + "Folders</div>");
+      S.push('<div class="a pi" style="left:212px;top:266px">' + ic("plus", 15) + "</div>");
+      [["Product", 64], ["Design", 41], ["Engineering", 112], ["Customers", 38], ["Research", 27], ["Personal", 9]].forEach((f, i) => {
+        S.push('<div class="nav" style="top:' + (292 + i * 28) + 'px;height:28px"><span style="color:' + FOLD[f[0]] + '">' + ic("folder", 16) + "</span>" + f[0] + '<span class="n">' + f[1] + "</span></div>");
+      });
+      S.push('<div class="sh" style="top:484px">' + ic("chD", 13, 1.8) + "Tags</div>");
+      [["pricing", 18], ["roadmap", 12], ["interview", 9], ["q4", 21]].forEach((t, i) => {
+        S.push('<div class="nav" style="top:' + (508 + i * 28) + 'px;height:28px"><span class="pi">' + ic("hash", 15) + "</span>" + t[0] + '<span class="n">' + t[1] + "</span></div>");
+      });
+      S.push('<div class="a" style="left:0;top:842px;width:248px;height:1px;background:var(--line)"></div>');
+      S.push('<div class="a" style="left:16px;top:856px">' + av("alex", 28, 10.5) + '</div><div class="a" style="left:52px;top:861px;font-size:13px;font-weight:550">Alex Rivera</div>');
+      S.push("</div>");
+
+      /* note list */
+      S.push('<div id="list"><div class="lh"><div class="a" style="left:20px;top:16px;font-size:15px;font-weight:650;letter-spacing:-0.01em">All notes<span style="color:var(--mut);font-weight:500;margin-left:6px">482</span></div>' +
+        '<div class="a pi" style="left:284px;top:17px">' + ic("sort", 17) + '</div><div class="a" style="left:314px;top:17px;color:var(--brand)">' + ic("compose", 17) + "</div></div>");
+      S.push('<div class="ls" style="top:62px">Today</div>');
+      const NOTES = [
+        [84, "Pricing review", "Just now", "Keep Team at $12 per seat. Annual billing with two months free…", "Product", "pricing", true],
+        [164, "Atlas launch checklist", "9:42 AM", "Final QA pass, status page copy, support macros and the launch email…", "Product", "q4"],
+        [250, null],
+        [272, "Customer interview · Northgate", "Yesterday", "Wants SSO before rollout. 40 seats in January, asked about annual discounts…", "Customers", "interview"],
+        [352, "Q4 roadmap draft", "Oct 27", "Search v2, offline mode, shared folders. Pricing changes land with Atlas…", "Product", "roadmap"],
+        [432, "Retro notes · Sprint 42", "Oct 25", "Went well: faster reviews. Improve: handoff to support, billing page took 3 days…", "Engineering", "retro"],
+        [512, "Onboarding copy v3", "Oct 24", "Welcome back. Pick up where you left off, or start a new note from a template…", "Design", "copy"],
+        [592, "Pricing survey results", "Oct 22", "412 responses. 63% prefer annual billing, 21% want a lower Team price…", "Research", "pricing"]
+      ];
+      NOTES.forEach((r) => {
+        if (r[1] === null) { S.push('<div class="ls" style="top:' + r[0] + 'px">Previous 7 days</div>'); return; }
+        S.push('<div class="row' + (r[6] ? " sel" : "") + '" style="top:' + r[0] + 'px"><div class="t">' + r[1] + '</div><div class="d">' + r[2] + '</div><div class="s" data-layout-allow-overflow>' + r[3] +
+          '</div><div class="m"><span style="color:' + FOLD[r[4]] + ';display:flex">' + ic("folder", 12, 1.6) + "</span>" + r[4] + "<b>" + r[5] + "</b></div></div>");
+        if (!r[6] && r[0] !== 164 && r[0] !== 592) S.push('<div class="rl" style="top:' + (r[0] + 78) + 'px"></div>');
+      });
+      S.push("</div>");
+
+      /* editor */
+      S.push('<div id="ed">');
+      S.push('<div class="bc"><span class="pi">' + ic("folder", 15) + "</span>Product<span class=\"pi\">" + ic("chR", 13) + "</span><b>Pricing review</b></div>");
+      S.push('<div class="a" style="left:352px;top:12px;display:flex">' + av("maya", 28, 10, ";box-shadow:0 0 0 2px #fff") + av("liam", 28, 10, ";margin-left:-3px;box-shadow:0 0 0 2px #fff") + av("priya", 28, 10, ";margin-left:-3px;box-shadow:0 0 0 2px #fff") + "</div>");
+      S.push('<div class="shr" style="left:440px">' + ic("share", 14, 1.7) + "Share</div>");
+      S.push('<div class="a pi" style="left:530px;top:17px">' + ic("more", 17) + "</div>");
+      S.push('<div class="dt">Pricing review</div>');
+      S.push('<div class="meta"><span>' + ic("cal", 14) + 'Oct 28, 2026</span><span style="color:#8b5cf6">' + ic("folder", 14) + '</span><span style="margin-left:-14px">Product</span><span class="chip">pricing</span><span class="chip" style="margin-left:-8px">q4</span></div>');
+      S.push('<div class="a" style="left:44px;top:170px;font-size:13px;color:var(--sub)">Attendees</div>');
+      S.push('<div class="a" style="left:118px;top:168px;font-size:14px;line-height:20px;color:#2b2b31;white-space:nowrap"><span class="lk mn">Maya Chen</span>, <span class="lk mn">Liam Ortiz</span>, <span class="lk mn">Priya Nair</span></div>');
+      S.push('<div class="p" style="top:204px">Settle pricing for the Atlas release and decide what changes for existing teams before the Nov 12 launch.</div>');
+      S.push('<div class="h" style="top:268px">Decisions</div>');
+      S.push('<div class="bl" style="top:300px">Keep Team at $12 per seat. The <span class="lk">Pricing survey results</span> show 63% prefer annual billing.</div>');
+      const BUL = "Add annual billing with two months free.";
+      S.push('<div class="bl" style="top:350px"><span id="bt">' + chars(BUL, "bc") + '</span><i id="car"></i></div>');
+      S.push('<div class="bl" style="top:380px">Free keeps 50 notes until the <span class="lk" id="lkAtlas">Atlas launch checklist</span> ships.</div>');
+      S.push('<div class="h" style="top:450px">Action items</div>');
+      const chk = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+      S.push('<div class="tk" style="top:484px"><span class="cb">' + chk + '</span><span class="tx">Maya: update the pricing page copy by Fri</span></div>');
+      S.push('<div class="tk" style="top:514px"><span class="cb">' + chk + '</span><span class="tx">Liam: model annual discounts, see <span class="lk">Q4 roadmap draft</span></span></div>');
+      S.push('<div id="tk3" class="tk" style="top:544px"><span class="cb" id="cb3">' + chk + '</span><span class="tx" id="tx3">Priya: send survey results to the team</span></div>');
+      S.push('<div class="clip-card" id="clipc"><div class="th">' + ic("globe", 24, 1.5) + '</div><div class="ct">Plans and pricing · Northwind</div><div class="cu">northwind.co/pricing</div><div class="cm">Web clip · saved today at 10:41 AM</div></div>');
+      S.push("</div>");
+
+      /* right panel */
+      S.push('<div id="pan">');
+      S.push('<div id="pA" class="a" style="left:0;top:0;width:310px;height:900px">' +
+        '<div class="pl" style="top:20px"><span class="pi">' + ic("list", 14) + "</span>Outline</div>" +
+        '<div class="ol" style="top:48px">Context</div><div class="ol" style="top:74px">Decisions</div><div class="ol" style="top:100px">Action items</div><div class="ol" style="top:126px;color:var(--mut)">Web clip</div>' +
+        '<div class="pdiv" style="top:166px"></div>' +
+        '<div class="pl" style="top:182px">Details</div>' +
+        '<div class="kv" style="top:212px">Created<b>Oct 28, 2026</b></div><div class="kv" style="top:238px">Edited<b>Just now</b></div><div class="kv" style="top:264px">Words<b>214</b></div>' +
+        '<div class="kv" style="top:290px">Reading time<b>1 min</b></div><div class="kv" style="top:316px">Folder<b>Product</b></div><div class="kv" style="top:342px">Tags<b>pricing, q4</b></div>' +
+        '<div class="pdiv" style="top:386px"></div>' +
+        '<div class="pl" style="top:402px">Collaborators</div>' +
+        '<div class="col" style="top:430px">' + av("maya", 22, 9) + 'Maya Chen<span class="st"><i></i>Editing</span></div>' +
+        '<div class="col" style="top:460px">' + av("liam", 22, 9) + 'Liam Ortiz<span class="st">Viewing</span></div>' +
+        '<div class="col" style="top:490px">' + av("priya", 22, 9) + 'Priya Nair<span class="st">Viewing</span></div>' +
+        "</div>");
+      const gl = (x1, y1, x2, y2, id, m) => '<path class="ge' + (m ? " m" : "") + '" id="' + id + '" d="M' + x1 + " " + y1 + " L" + x2 + " " + y2 + '" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>';
+      S.push('<div id="pB" class="a" style="left:0;top:0;width:310px;height:900px">' +
+        '<div class="pl" style="top:20px"><span class="pi">' + ic("link", 14) + "</span>Linked notes</div>" +
+        '<div class="a pi" style="left:262px;top:19px">' + ic("graph", 16) + "</div>" +
+        '<div id="graph"><svg width="270" height="182" viewBox="0 0 270 182">' +
+        gl(135, 92, 62, 44, "e1", true) + gl(135, 92, 210, 40, "e2", true) + gl(135, 92, 222, 124, "e3", true) + gl(135, 92, 52, 134, "e4") + gl(135, 92, 130, 160, "e5") + gl(135, 92, 118, 24, "e6") +
+        gl(62, 44, 24, 82, "e7") + gl(210, 40, 250, 80, "e8") + gl(222, 124, 250, 152, "e9") + gl(52, 134, 22, 112, "e10") +
+        '<circle class="gn" id="n7" cx="24" cy="82" r="3.2"/><circle class="gn" id="n8" cx="250" cy="80" r="3.2"/><circle class="gn" id="n9" cx="250" cy="152" r="3.2"/><circle class="gn" id="n10" cx="22" cy="112" r="3.2"/>' +
+        '<circle class="gn" id="n1" cx="62" cy="44" r="6.5"/><circle class="gn" id="n2" cx="210" cy="40" r="6.5"/><circle class="gn" id="n3" cx="222" cy="124" r="6.5"/><circle class="gn" id="n4" cx="52" cy="134" r="6"/><circle class="gn" id="n5" cx="130" cy="160" r="5.5"/><circle class="gn" id="n6" cx="118" cy="24" r="5" fill="#d9577f"/>' +
+        '<circle id="n0r" cx="135" cy="92" r="16" fill="rgba(15,157,104,0.16)"/><circle id="n0" cx="135" cy="92" r="9.5" fill="#0f9d68"/>' +
+        '<text id="t1" x="62" y="31" text-anchor="middle">Atlas checklist</text><text id="t2" x="206" y="29" text-anchor="middle">Survey results</text><text id="t3" x="214" y="143" text-anchor="middle">Q4 roadmap</text>' +
+        '<text id="t4" x="52" y="152" text-anchor="middle">Northgate</text><text id="t5" x="130" y="177" text-anchor="middle">Sprint 42</text>' +
+        '<circle id="n1r" cx="62" cy="44" r="12" fill="none" stroke="#0f9d68" stroke-width="1.8" opacity="0"/>' +
+        "</svg></div>" +
+        '<div class="pl" style="top:252px">Backlinks<em>4</em></div>' +
+        [["Pricing survey results", "…63% prefer annual billing, so Team stays at $12"], ["Q4 roadmap draft", "…pricing changes land with Atlas on Nov 12"], ["Customer interview · Northgate", "…asked about annual discounts for 40 seats"], ["Retro notes · Sprint 42", "…billing page took 3 days, plan for it in Q1"]]
+          .map((b, i) => '<div class="bk bkr" style="top:' + (280 + i * 52) + 'px"><span class="bi">' + ic("notes", 15) + '</span><div class="bt">' + b[0] + '</div><div class="bs" data-layout-allow-overflow>' + b[1] + "</div></div>").join("") +
+        '<div class="pl" style="top:500px">Outgoing links<em>3</em></div>' +
+        ["Atlas launch checklist", "Pricing survey results", "Q4 roadmap draft"].map((o, i) => '<div class="og ogr" style="top:' + (528 + i * 26) + 'px"><span class="pi">' + ic("notes", 14) + "</span>" + o + "</div>").join("") +
+        "</div>");
+      S.push("</div>");
+
+      /* hover card and cursor */
+      S.push('<div id="hov"><div class="t">Atlas launch checklist</div><div class="s">Final QA pass, status page copy, support macros and the launch email. Owner: Liam Ortiz.</div><div class="bar"><i></i></div><div class="f">14 of 22 done · Edited 9:42 AM</div></div>');
+      S.push('<div id="cur"><svg viewBox="0 0 24 28"><path d="M2 2 L2 22.5 L7.4 17.6 L11.4 26.4 L15 24.8 L11 16.2 L18.6 16.2 Z" fill="#111" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>');
+
+      /* command palette */
+      const QRY = "what did we decide about annual billing";
+      S.push('<div id="dim"></div>');
+      S.push('<div id="pal">' +
+        '<div class="a pi" style="left:20px;top:20px">' + ic("search", 20, 1.6) + "</div>" +
+        '<div class="qt"><span id="qph">Search notes or ask a question</span>' + chars(QRY, "qc") + '<i id="qcar"></i></div>' +
+        '<div class="a" style="left:742px;top:20px"><kbd style="font-family:var(--font-ui);font-size:11px;color:#4b4c53;background:#f0efec;border-radius:4px;padding:2px 7px">esc</kbd></div>' +
+        '<div class="a" style="left:0;top:60px;width:810px;height:1px;background:var(--line2)"></div>' +
+        '<div class="fc on" style="left:16px">All</div><div class="fc" style="left:62px">Notes<em>18</em></div><div class="fc" style="left:140px">Tasks<em>6</em></div><div class="fc" style="left:212px">People<em>3</em></div><div class="fc" style="left:290px">Web clips<em>2</em></div>' +
+        '<div id="ans"><div class="al">' + ic("sparkle", 15, 1.7) + 'Answer</div><div class="at" id="atxt"></div>' +
+        '<div class="sr" id="asrc">Sources<b>' + ic("notes", 12, 1.7) + 'Pricing review</b><b>' + ic("notes", 12, 1.7) + 'Pricing survey results</b><b>' + ic("notes", 12, 1.7) + "Atlas launch checklist</b></div></div>" +
+        '<div id="rec"><div class="a" style="left:20px;top:116px;font-size:12px;font-weight:600;color:var(--sub)">Recent</div>' +
+        [
+          [140, "Atlas launch checklist", "Product · 14 of 22 tasks done", "Opened 9:42 AM", true],
+          [196, "Q4 roadmap draft", "Product · Search v2, offline mode, shared folders", "Opened yesterday"],
+          [252, "Customer interview · Northgate", "Customers · Wants SSO before rollout", "Opened yesterday"],
+          [308, "Retro notes · Sprint 42", "Engineering · Went well: faster reviews", "Opened Oct 25"],
+          [364, "Onboarding copy v3", "Design · Welcome back. Pick up where you left off", "Opened Oct 24"],
+          [420, "Pricing survey results", "Research · 412 responses, 63% prefer annual billing", "Opened Oct 22"]
+        ].map((r) => '<div class="pr rcr' + (r[4] ? " sel" : "") + '" style="top:' + r[0] + 'px"><span class="ic">' + ic("notes", 16) + '</span><div class="t">' + r[1] + '</div><div class="s">' + r[2] + '</div><div class="r">' + r[3] + (r[4] ? '<kbd>↵</kbd>' : "") + "</div></div>").join("") + "</div>" +
+        '<div id="nlab" class="a" style="left:20px;top:274px;font-size:12px;font-weight:600;color:var(--sub)">Notes</div>' +
+        [
+          [296, "Pricing review", "…<mark>annual billing</mark> with two months free. Keep Team at $12 per seat…", "Product · Just now", true],
+          [352, "Pricing survey results", "…63% prefer <mark>annual billing</mark>, 21% want a lower Team price…", "Research · Oct 22"],
+          [408, "Customer interview · Northgate", "…asked about <mark>annual</mark> discounts for 40 seats in January…", "Customers · Yesterday"],
+          [464, "Q4 roadmap draft", "…<mark>billing</mark> page rebuild and pricing changes land with Atlas…", "Product · Oct 27"]
+        ].map((r, i) => '<div class="pr prr' + (r[4] ? " sel" : "") + '" style="top:' + r[0] + 'px"><span class="ic">' + ic("notes", 16) + '</span><div class="t">' + r[1] + '</div><div class="s">' + r[2] + '</div><div class="r">' + r[3] + (r[4] ? '<kbd>' + "↵" + "</kbd>" : "") + "</div></div>").join("") +
+        '<div id="foot"><span><kbd>↑</kbd><kbd>↓</kbd>Navigate</span><span><kbd>↵</kbd>Open</span><span><kbd>⌘↵</kbd>Open in new window</span><span style="margin-left:auto"><kbd>Tab</kbd>Ask a follow-up</span></div>' +
+        "</div>");
+
+      document.getElementById("win").insertAdjacentHTML("beforeend", S.join(""));
+
+      /* answer text, one span per word */
+      const ANS = [
+        ["Annual", "billing", "with", "two", "months", "free", "was", "approved", "on", "Oct", "28.", 1],
+        ["Team", "stays", "at", "$12", "per", "seat.", 2],
+        ["Free", "keeps", "its", "50-note", "limit", "until", "Atlas", "ships.", 3]
+      ];
+      let aw = 0; const ansHtml = []; const citeAt = {};
+      ANS.forEach((seg) => seg.forEach((w) => {
+        if (typeof w === "number") { citeAt[w] = aw; ansHtml.push('<sup id="cs' + w + '" style="opacity:0">' + w + "</sup> "); }
+        else { ansHtml.push('<span id="aw' + aw + '">' + w + "</span> "); aw++; }
+      }));
+      document.getElementById("atxt").innerHTML = ansHtml.join("");
+      const AW = aw;
+
+      /* ---------- camera and scene ---------- */
+      const Z = (px, py, sx, sy, s) => ({ x: sx - s * px, y: sy - s * py, scale: s });
+      const FULL = { x: 0, y: 0, scale: 1 };
+      const ZB = Z(1460, 640, 1320, 610, 1.1);
+      const ZC = Z(960, 750, 960, 700, 1.12);
+
+      gsap.set("#cam", { transformOrigin: "0px 0px", x: 0, y: 0, scale: 1 });
+      gsap.set("#drift", { transformOrigin: "50% 50%" });
+      gsap.set("#world", { transformOrigin: "960px 540px", rotateY: -4 });
+      gsap.set("#win", { transformOrigin: "50% 100%" });
+      gsap.set("#cur", { x: 1120, y: 560 });
+      gsap.set("#n1r", { svgOrigin: "62 44" });
+
+      const tl = gsap.timeline({ paused: true });
+      function F(target, from, to, at) {
+        tl.fromTo(target, from, Object.assign({ immediateRender: false }, to), at);
+      }
+      function camMove(from, to, at, dur, blur) {
+        F("#cam", from, Object.assign({ duration: dur, ease: EXPO }, to), at);
+        F("#cam", { filter: "blur(0px)" }, { filter: "blur(" + blur + "px)", duration: 0.12, ease: "power1.out" }, at);
+        tl.to("#cam", { filter: "blur(0px)", duration: 0.3, ease: "power1.in" }, at + 0.12);
+      }
+      /* headline word swap: old sinks behind the window, new rises from behind it */
+      function wordOut(id, at) {
+        tl.to(id, { y: 230, duration: 0.3, ease: "power3.in" }, at);
+        tl.set(id, { opacity: 0 }, at + 0.31);
+      }
+      function wordIn(id, at, dur) {
+        F(id, { opacity: 1, y: 230 }, { opacity: 1, y: 0, duration: dur || 0.9, ease: EXPO }, at);
+      }
+
+      /* slow world rotation: the headline drifts against the window all film long */
+      F("#world", { rotateY: -4 }, { rotateY: 4, duration: 11, ease: "none" }, 0);
+      F("#drift", { scale: 1 }, { scale: 1.03, duration: 11, ease: "none" }, 0);
+
+      /* 1. headline in, opaque window rises over it (0 - 1.45) */
+      gsap.set("#win", { y: 800, rotateX: 10 });
+      F("#h1", { y: 40 }, { y: 0, duration: 1.2, ease: EXPO }, 0);
+      F("#win", { y: 800, rotateX: 10 }, { y: 0, rotateX: 0, duration: 1.15, ease: EXPO }, 0.3);
+
+      /* 2. type a new bullet, tick a task, drop in a web clip (1.4 - 2.9) */
+      tl.set("#car", { opacity: 1 }, 1.0);
+      typeTimes(BUL.length, 1.45, 0.95).forEach((t, i) => tl.set("#bc" + i, { display: "inline" }, t));
+      tl.set("#car", { opacity: 0 }, 2.5);
+      tl.set("#cb3", { backgroundColor: "#0f9d68", borderColor: "#0f9d68" }, 2.5);
+      F("#cb3 svg", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.25, ease: BACK }, 2.5);
+      tl.set("#tx3", { color: "#4d4e56", textDecoration: "line-through" }, 2.5);
+      F("#clipc", { opacity: 0, y: 10, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: EXPO }, 2.62);
+
+      /* 3. Capture -> Connect: the old word is fully behind the window at 3.3, then the new one rises (3.0 - 4.6) */
+      const D = 3.32;
+      wordOut("#h1", 3.0);
+      wordIn("#h2", D);
+      camMove(FULL, ZB, D, 0.7, 3);
+      tl.to("#pA", { opacity: 0, duration: 0.25, ease: "power2.out" }, D);
+      F("#pB", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, D + 0.05);
+      const links = document.querySelectorAll("#ed .lk");
+      links.forEach((el, i) => {
+        tl.to(el, { color: "#07603f", backgroundColor: "rgba(15,157,104,0.12)", duration: 0.25, ease: "power2.out" }, D + 0.1 + i * 0.1);
+      });
+      ["e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e10"].forEach((id, i) => {
+        tl.to("#" + id, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, D + 0.2 + i * 0.07);
+      });
+      for (let i = 1; i <= 6; i++) F("#n" + i + (i < 5 ? ", #t" + i : ""), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, D + 0.2 + i * 0.08);
+      F("#t5", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, D + 0.75);
+      for (let i = 7; i <= 10; i++) F("#n" + i, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, D + 0.7 + (i - 7) * 0.06);
+      F("#n0, #n0r", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, D + 0.1);
+      gsap.utils.toArray(".bkr").forEach((el, i) => F(el, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: EXPO }, D + 0.45 + i * 0.09));
+      gsap.utils.toArray(".ogr").forEach((el, i) => F(el, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: EXPO }, D + 0.8 + i * 0.08));
+
+      /* 4. cursor hovers a link, the hover card and the graph node light together (4.05 - 5.3) */
+      F("#cur", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 4.05);
+      F("#cur", { x: 1120, y: 560 }, { x: 1000, y: 404, duration: 0.55, ease: "power2.inOut" }, 4.1);
+      F("#hov", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: EXPO }, 4.7);
+      F("#n1r", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: EXPO }, 4.7);
+      tl.to("#e1", { strokeWidth: 2.4, duration: 0.3, ease: "power2.out" }, 4.7);
+      tl.to("#hov", { opacity: 0, y: 4, duration: 0.25, ease: "power2.in" }, 5.3);
+      tl.to("#n1r", { opacity: 0, duration: 0.25, ease: "power2.in" }, 5.3);
+      tl.to("#cur", { opacity: 0, duration: 0.25, ease: "power2.in" }, 5.3);
+
+      /* 5. Connect -> Recall: the palette opens on the same frame as the new word (5.5 - 8.3) */
+      const R = 5.82;
+      wordOut("#h2", 5.5);
+      wordIn("#h3", R);
+      camMove(ZB, ZC, R, 0.7, 3);
+      F("#dim", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, R);
+      F("#pal", { opacity: 0, y: 14, scale: 0.965 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: EXPO }, R);
+      tl.set("#qph", { opacity: 0 }, 6.15);
+      typeTimes(QRY.length, 6.15, 0.75).forEach((t, i) => tl.set("#qc" + i, { display: "inline" }, t));
+      tl.set("#qcar", { opacity: 0 }, 6.95);
+      tl.set("#rec", { opacity: 0 }, 7.0);
+      F("#nlab", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 7.0);
+      F("#ans", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: EXPO }, 7.0);
+      gsap.utils.toArray(".prr").forEach((el, i) => F(el, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: EXPO }, 7.05 + i * 0.07));
+      const A0 = 7.1, AD = 0.65;
+      for (let i = 0; i < AW; i++) tl.set("#aw" + i, { opacity: 1 }, A0 + (i / AW) * AD);
+      [1, 2, 3].forEach((c) => tl.set("#cs" + c, { opacity: 1 }, A0 + (citeAt[c] / AW) * AD + 0.02));
+      F("#asrc", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 7.8);
+
+      /* 6. Recall -> Halden: palette closes, window sinks, camera pulls back (8.3 - 9.4) */
+      tl.to("#pal", { opacity: 0, y: 8, duration: 0.25, ease: "power2.in" }, 8.3);
+      tl.to("#dim", { opacity: 0, duration: 0.3, ease: "power2.in" }, 8.35);
+      wordOut("#h3", 8.2);
+      wordIn("#h4", 8.52, 0.9);
+      tl.to("#win", { y: 210, duration: 1.0, ease: EIO }, 8.45);
+      camMove(ZC, FULL, 8.3, 0.9, 2);
+      F("#endIcon", { opacity: 0, y: 10, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: EXPO }, 8.75);
+      F("#endSub", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.55, ease: EXPO }, 9.1);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

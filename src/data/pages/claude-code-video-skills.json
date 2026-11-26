@@ -64,7 +64,7 @@
           ],
           [
             "[Motionboard](https://github.com/krisyangdev/motionboard)",
-            "38 launch-film shot recipes, or a whole launch film",
+            "48 launch-film shot recipes, or a whole launch film",
             "HyperFrames",
             "MIT",
             "13 (plus 27 under the former name motion-lexicon)"
@@ -146,7 +146,7 @@
       },
       {
         "t": "p",
-        "text": "[Motionboard](https://github.com/krisyangdev/motionboard) is a free, MIT-licensed skill with 38 shot recipes taken from launch films by Apple, Linear and others. Each recipe is a film of about 10 seconds at 1920x1080, built with HyperFrames and shown next to the original clip. The skill plans a whole launch film from 4 to 6 recipes or builds a single shot, and it can port a shot to a website. The repository has 63 stars. skills.sh shows 13 installs for `motionboard` and 27 for the earlier name `motion-lexicon`. The step-by-step guide is [How to make a product launch video with Claude Code](/guides/product-launch-video-with-claude-code/)."
+        "text": "[Motionboard](https://github.com/krisyangdev/motionboard) is a free, MIT-licensed skill with 48 shot recipes taken from launch films by Apple, Linear and others. Each recipe is a film of about 10 seconds at 1920x1080, built with HyperFrames and shown next to the original clip. The skill plans a whole launch film from 4 to 6 recipes or builds a single shot, and it can port a shot to a website. The repository has 63 stars. skills.sh shows 13 installs for `motionboard` and 27 for the earlier name `motion-lexicon`. The step-by-step guide is [How to make a product launch video with Claude Code](/guides/product-launch-video-with-claude-code/)."
       },
       {
         "t": "cmd",
@@ -233,7 +233,7 @@
         "items": [
           [
             "Which Claude Code skill makes a product launch video?",
-            "HeyGen's `product-launch-video` (539.5K installs), `brag` (24.4K), Motionboard (38 shot recipes) and `launch-video` in charlie947/motion-graphics-skills all target launch videos. The first two build a whole film from a product; Motionboard works from named shots."
+            "HeyGen's `product-launch-video` (539.5K installs), `brag` (24.4K), Motionboard (48 shot recipes) and `launch-video` in charlie947/motion-graphics-skills all target launch videos. The first two build a whole film from a product; Motionboard works from named shots."
           ],
           [
             "Do these skills work in Codex?",
@@ -432,7 +432,7 @@
           ],
           [
             "[Motionboard](https://github.com/krisyangdev/motionboard)",
-            "38 个发布片镜头配方，或整支发布片",
+            "48 个发布片镜头配方，或整支发布片",
             "HyperFrames",
             "MIT",
             "13（另有旧名 motion-lexicon 的 27）"
@@ -514,7 +514,7 @@
       },
       {
         "t": "p",
-        "text": "[Motionboard](https://github.com/krisyangdev/motionboard) 是免费的 MIT 许可 skill，包含 38 个镜头配方，取自 Apple、Linear 等公司的发布片。每个配方是一支约 10 秒、1920x1080 的短片，用 HyperFrames 制作，并与原片并排展示。这个 skill 能用 4 到 6 个配方规划整支发布片，也能单独做一个镜头，还能把镜头移植到网站。仓库有 63 个星标。skills.sh 显示 `motionboard` 有 13 次安装，旧名 `motion-lexicon` 有 27 次。分步教程见[用 Claude Code 制作产品发布视频](/guides/product-launch-video-with-claude-code/)。"
+        "text": "[Motionboard](https://github.com/krisyangdev/motionboard) 是免费的 MIT 许可 skill，包含 48 个镜头配方，取自 Apple、Linear 等公司的发布片。每个配方是一支约 10 秒、1920x1080 的短片，用 HyperFrames 制作，并与原片并排展示。这个 skill 能用 4 到 6 个配方规划整支发布片，也能单独做一个镜头，还能把镜头移植到网站。仓库有 63 个星标。skills.sh 显示 `motionboard` 有 13 次安装，旧名 `motion-lexicon` 有 27 次。分步教程见[用 Claude Code 制作产品发布视频](/guides/product-launch-video-with-claude-code/)。"
       },
       {
         "t": "cmd",
@@ -601,7 +601,7 @@
         "items": [
           [
             "哪个 Claude Code skill 能做产品发布视频？",
-            "HeyGen 的 `product-launch-video`（539.5K 次安装）、`brag`（24.4K）、Motionboard（38 个镜头配方）和 charlie947/motion-graphics-skills 里的 `launch-video` 都面向发布视频。前两个从产品出发做整支片子，Motionboard 从指定镜头出发。"
+            "HeyGen 的 `product-launch-video`（539.5K 次安装）、`brag`（24.4K）、Motionboard（48 个镜头配方）和 charlie947/motion-graphics-skills 里的 `launch-video` 都面向发布视频。前两个从产品出发做整支片子，Motionboard 从指定镜头出发。"
           ],
           [
             "这些 skill 能在 Codex 里用吗？",

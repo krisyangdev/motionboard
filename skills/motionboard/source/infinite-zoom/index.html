@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ink: #17181c;
+        --sub: #5c6070;
+        --mut: #9094a2;
+        --line: #e8e8ed;
+        --line2: #f1f1f4;
+        --side: #f6f6f8;
+        --acc: #0f9d6e;
+        --accs: #e5f5ee;
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #fff; }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #fff;
+        font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased;
+      }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      svg { display: block; flex: none; }
+
+      .world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; opacity: 0; }
+      #w0 { opacity: 1; }
+
+      /* ---------- one product screen, 1920 x 1080 ---------- */
+      .scn { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: #fff; font-size: 14px; color: var(--ink); font-variant-numeric: tabular-nums; transform-origin: 0 0; }
+      .scn * { box-sizing: border-box; }
+      .a { position: absolute; }
+      .t { position: absolute; white-space: nowrap; line-height: 1.25; }
+      .fx { display: flex; align-items: center; }
+      .sp { flex: 1; }
+      .slot { position: absolute; left: 0; top: 0; overflow: hidden; background: #f1f2f5; }
+
+      /* sidebar */
+      .sb { position: absolute; left: 0; top: 0; width: 244px; height: 1080px; background: var(--side); border-right: 1px solid var(--line); padding: 14px 10px; }
+      .sbh { display: flex; align-items: center; gap: 9px; height: 32px; padding: 0 6px; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; }
+      .sbh svg.g { color: #80848f; }
+      .wsw { display: flex; align-items: center; gap: 9px; height: 34px; margin-top: 6px; padding: 0 8px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+      .wsw .wa { width: 20px; height: 20px; border-radius: 6px; background: #1f2937; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+      .wsw svg { color: #9094a2; }
+      .srch { display: flex; align-items: center; gap: 8px; height: 34px; margin: 8px 0 8px; padding: 0 10px; border: 1px solid var(--line); background: #fff; border-radius: 8px; color: var(--mut); font-size: 13.5px; }
+      kbd { font-family: var(--font-ui); font-size: 11px; font-weight: 500; color: #8a8e9b; background: #f1f1f4; border-radius: 4px; padding: 2px 5px; }
+      .srch kbd { margin-left: auto; }
+      .ni { display: flex; align-items: center; gap: 10px; height: 31px; padding: 0 8px; border-radius: 7px; font-size: 14px; font-weight: 500; color: #3a3d48; white-space: nowrap; }
+      .ni.on { background: #e9e9ee; color: var(--ink); font-weight: 600; }
+      .ni svg { color: #7a7e8a; }
+      .ni .bd { margin-left: auto; font-size: 11.5px; font-weight: 600; color: #fff; background: var(--acc); border-radius: 9px; padding: 1px 6px; }
+      .ni .dot { width: 9px; height: 9px; border-radius: 3px; flex: none; margin: 0 4px 0 4px; }
+      .sl { font-size: 12px; font-weight: 600; color: #8a8e9b; padding: 16px 8px 6px; }
+      .sbf { position: absolute; left: 10px; right: 10px; bottom: 14px; }
+      .usr { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 8px; border-top: 1px solid var(--line); margin-top: 6px; font-size: 14px; font-weight: 600; }
+
+      /* top bar */
+      .tb { position: absolute; left: 244px; top: 0; width: 1676px; height: 52px; border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 28px 0 28px; background: #fff; z-index: 3; }
+      .crumb { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--sub); font-weight: 500; white-space: nowrap; }
+      .crumb b { color: var(--ink); font-weight: 600; }
+      .crumb svg { color: #a5a9b5; }
+      .btn { display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border: 1px solid #dedee4; border-radius: 8px; background: #fff; font-size: 13.5px; font-weight: 500; color: #2c2f3a; white-space: nowrap; }
+      .btn svg { color: #747885; }
+      .btn.pri { background: var(--acc); border-color: var(--acc); color: #fff; font-weight: 600; }
+      .btn.pri svg { color: #fff; }
+      .btn.ic { width: 32px; padding: 0; justify-content: center; }
+      .btn.sm { height: 28px; font-size: 12.5px; padding: 0 10px; }
+
+      /* shared bits */
+      .av { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-weight: 600; flex: none; }
+      .pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: 12px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+      .pill i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+      .chip { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+      .card { background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px #e3e3e8, 0 1px 2px rgba(15, 23, 42, 0.04); }
+      .h3 { font-size: 14.5px; font-weight: 600; letter-spacing: -0.005em; white-space: nowrap; }
+      .mut { color: var(--mut); }
+      .sub { color: var(--sub); }
+
+      /* projects */
+      .pg { position: absolute; background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px #e3e3e8, 0 1px 2px rgba(15, 23, 42, 0.04); }
+      .cv { position: absolute; left: 0; top: 0; overflow: hidden; border-radius: 12px 12px 0 0; background: #fff; }
+      .pi { width: 22px; height: 22px; border-radius: 6px; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
+      .seg { display: flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--sub); white-space: nowrap; }
+      .seg.on { background: #efeff3; color: var(--ink); font-weight: 600; }
+      .seg b { font-weight: 500; color: var(--mut); }
+
+      /* overview */
+      .stat { position: absolute; height: 92px; padding: 14px 16px; }
+      .tab { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 2px; margin-right: 22px; font-size: 14px; font-weight: 500; color: var(--sub); white-space: nowrap; }
+      .tab.on { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--acc); }
+      .tab span { font-size: 12px; color: var(--mut); font-weight: 500; }
+      .ms { display: flex; align-items: center; height: 46px; padding: 0 20px; border-top: 1px solid var(--line2); font-size: 14px; font-weight: 500; white-space: nowrap; }
+      .bar { height: 6px; border-radius: 3px; background: #ececf0; position: relative; overflow: hidden; }
+      .bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--acc); }
+
+      /* board */
+      .kcol { position: absolute; width: 382px; display: flex; flex-direction: column; gap: 10px; }
+      .kc { position: relative; background: #fff; border-radius: 10px; padding: 12px 14px 12px; box-shadow: 0 0 0 1px #e6e6eb, 0 1px 2px rgba(15, 23, 42, 0.05); }
+      .k1 { display: flex; align-items: center; gap: 8px; height: 22px; }
+      .k1 .id { font-size: 12px; color: var(--mut); font-weight: 500; }
+      .k2 { font-size: 14.5px; line-height: 20px; font-weight: 500; margin: 6px 0 10px; letter-spacing: -0.005em; }
+      .k3 { display: flex; align-items: center; gap: 6px; height: 22px; font-size: 12px; color: var(--mut); font-weight: 500; }
+      .k3 .m { display: flex; align-items: center; gap: 4px; margin-left: 6px; }
+      .kh { position: absolute; height: 28px; display: flex; align-items: center; gap: 8px; width: 382px; font-size: 14px; font-weight: 600; }
+      .kh span { color: var(--mut); font-weight: 500; font-size: 13px; }
+
+      /* issue */
+      .pr { display: flex; align-items: center; gap: 12px; height: 34px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+      .pr label { width: 92px; color: var(--mut); font-size: 13px; font-weight: 500; }
+      .cmt { position: absolute; display: flex; gap: 12px; }
+      .cmt .hd { font-size: 14px; font-weight: 600; }
+      .cmt .hd span { font-weight: 400; color: var(--mut); margin-left: 8px; font-size: 13px; }
+      .cmt .bd { font-size: 14.5px; line-height: 22px; color: #2c2f3a; margin-top: 3px; }
+
+      /* ---------- cursor ---------- */
+      #cur { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 30; }
+      #curi { position: absolute; left: -2px; top: -2px; width: 24px; height: 28px; }
+      #curi svg { width: 24px; height: 28px; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3)); }
+      #rip { position: absolute; left: -24px; top: -24px; width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--acc); opacity: 0; z-index: 29; }
+      #vig { pointer-events: none; z-index: 20; background: radial-gradient(ellipse at 50% 50%, rgba(20, 24, 40, 0) 70%, rgba(20, 24, 40, 0.05) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+      <div id="scene" class="clip full" data-start="0" data-duration="10" data-track-index="0">
+        <div id="w0" class="world" data-layout-allow-overlap data-layout-ignore></div>
+        <div id="w1" class="world" data-layout-allow-overlap data-layout-ignore></div>
+        <div id="w2" class="world" data-layout-allow-overlap data-layout-ignore></div>
+        <div id="w3" class="world" data-layout-allow-overlap data-layout-ignore></div>
+        <div id="rip"></div>
+        <div id="cur" data-layout-ignore>
+          <div id="curi">
+            <svg viewBox="0 0 24 28"><path d="M2 2 L2 22.5 L7.4 17.6 L11.4 26.4 L15 24.8 L11 16.2 L18.6 16.2 Z" fill="#111" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div id="vig" class="clip full" data-start="0" data-duration="10" data-track-index="1"></div>
+    </div>
+
+    <script>
+      const ACC = "#0f9d6e";
+
+      /* ---------- icons (lucide-style, 1.5px strokes) ---------- */
+      const ICON = {
+        chD: '<path d="m6 9 6 6 6-6"/>',
+        chR: '<path d="m9 18 6-6-6-6"/>',
+        chL: '<path d="m15 18-6-6 6-6"/>',
+        chU: '<path d="m18 15-6-6-6 6"/>',
+        search: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+        home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+        inbox: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+        checkC: '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+        layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+        folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+        list: '<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/>',
+        file: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+        target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+        kanban: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7"/><path d="M12 7v4"/><path d="M16 7v9"/>',
+        gantt: '<path d="M3 5h8"/><path d="M7 12h10"/><path d="M13 19h8"/><path d="M3 19h4"/>',
+        bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+        edit: '<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',
+        plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+        more: '<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+        filter: '<path d="M22 3H2l8 9.46V19l4 2v-8.54z"/>',
+        sliders: '<path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
+        grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+        star: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>',
+        link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+        clip: '<path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>',
+        msg: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+        cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        tag: '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".6" fill="currentColor"/>',
+        users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/>',
+        chart: '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/>',
+        pr: '<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M6 9v12"/>',
+        share: '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/>',
+        eye: '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+        help: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+        arrowUR: '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+        user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+        send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>'
+      };
+      const ic = (n, s, sw, st) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.5) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (st ? ' style="' + st + '"' : "") + ">" + ICON[n] + "</svg>";
+      const MARK = (s) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="' + ACC + '"/><g transform="translate(4.6 4.6) scale(0.6)" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' + ICON.layers + "</g></svg>";
+
+      /* issue status and priority glyphs */
+      const STC = { backlog: "#a0a4b0", todo: "#a0a4b0", prog: "#e7a20b", review: "#3b82f6", done: ACC };
+      const STB = {
+        backlog: '<circle cx="12" cy="12" r="8.5" stroke-dasharray="2.6 2.6"/>',
+        todo: '<circle cx="12" cy="12" r="8.5"/>',
+        prog: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7a5 5 0 0 1 0 10z" fill="currentColor" stroke="none"/>',
+        review: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7a5 5 0 1 1-5 5h5z" fill="currentColor" stroke="none"/>',
+        done: '<circle cx="12" cy="12" r="9.5" fill="currentColor" stroke="none"/><path d="m8.3 12.4 2.5 2.5 4.9-5" stroke="#fff" stroke-width="2"/>'
+      };
+      const st = (k, s) =>
+        '<svg width="' + (s || 16) + '" height="' + (s || 16) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:' + STC[k] + '">' + STB[k] + "</svg>";
+      const pri = (l) => {
+        const c = (i) => (i < l ? "#5c6070" : "#d3d5dc");
+        return '<svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="9" width="3" height="5" rx="1" fill="' + c(0) + '"/><rect x="6.5" y="6" width="3" height="8" rx="1" fill="' + c(1) + '"/><rect x="11" y="3" width="3" height="11" rx="1" fill="' + c(2) + '"/></svg>';
+      };
+
+      /* ---------- people ---------- */
+      const PE = {
+        maya: ["Maya Chen", "MC", "#d9577f"],
+        liam: ["Liam Ortiz", "LO", "#3b82f6"],
+        priya: ["Priya Nair", "PN", "#8b5cf6"],
+        daniel: ["Daniel Kim", "DK", "#6d6bd8"],
+        sofia: ["Sofia Reyes", "SR", "#1fa5a5"],
+        hana: ["Hana Sato", "HS", "#e8803a"],
+        omar: ["Omar Haddad", "OH", "#64748b"],
+        ethan: ["Ethan Walker", "EW", "#b7791f"],
+        aisha: ["Aisha Khan", "AK", "#c2410c"]
+      };
+      const av = (k, s, ex) =>
+        '<span class="av" style="width:' + s + "px;height:" + s + "px;font-size:" + (s * 0.4).toFixed(1) + "px;background:" + PE[k][2] + (ex || "") + '">' + PE[k][1] + "</span>";
+      const avs = (ks, s) => ks.map((k, i) => av(k, s, ";margin-left:" + (i ? -s * 0.2 : 0) + "px;box-shadow:0 0 0 2px #fff")).join("");
+
+      const LBL = {
+        Payments: ["#e6efff", "#2457c5"], Bug: ["#fde7e7", "#b42318"], Design: ["#f1e8ff", "#6a3fc4"],
+        Feature: ["#e2f5ec", "#0b7a55"], Chore: ["#eeeff2", "#555b66"], Mobile: ["#fff0d9", "#9a5a06"]
+      };
+      const lb = (n) => '<span class="chip" style="background:' + LBL[n][0] + ";color:" + LBL[n][1] + '">' + n + "</span>";
+      const SPILL = {
+        ok: ["On track", "#e2f5ec", "#0b7a55"], risk: ["At risk", "#fff0d9", "#9a5a06"], plan: ["Planned", "#eeeff2", "#555b66"],
+        done: ["Completed", "#e6efff", "#2457c5"]
+      };
+      const pill = (k) => '<span class="pill" style="background:' + SPILL[k][1] + ";color:" + SPILL[k][2] + '"><i></i>' + SPILL[k][0] + "</span>";
+
+      const T = (x, y, s, css) => '<div class="t" style="left:' + x + "px;top:" + y + "px;" + (css || "") + '">' + s + "</div>";
+      const B = (x, y, w, h, css) => '<div class="a" style="left:' + x + "px;top:" + y + "px;width:" + w + "px;height:" + h + "px;" + (css || "") + '"></div>';
+
+      /* ---------- thumbnails (drawn at 512 x 288, scaled to fit) ---------- */
+      function path(pts) { return pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" "); }
+      function cChart(title, big, delta, data, col) {
+        const mx = Math.max.apply(null, data), n = data.length;
+        const P1 = data.map((v, i) => [24 + (i * 464) / (n - 1), 250 - (v / mx) * 138]);
+        const P2 = data.map((v, i) => [24 + (i * 464) / (n - 1), 250 - (v / mx) * 138 * (0.62 + 0.1 * Math.sin(i * 1.3))]);
+        let grid = "";
+        for (let i = 0; i < 5; i++) grid += '<path d="M24 ' + (250 - i * 35) + 'H488" stroke="#e8ebef" stroke-width="1"/>';
+        const lab = ["Oct 20", "Oct 27", "Nov 3", "Nov 10", "Nov 17"].map((s, i) => T(24 + i * 112, 262, s, "font-size:9px;color:#9094a2;font-weight:500")).join("");
+        return B(0, 0, 512, 288, "background:#f8f9fb") + B(0, 0, 512, 40, "background:#fff;border-bottom:1px solid #eceef2") +
+          T(20, 13, title, "font-size:11px;font-weight:600;color:#3a3d48") +
+          T(20, 56, big, "font-size:32px;font-weight:700;letter-spacing:-0.03em") +
+          '<div class="a chip" style="left:' + (20 + big.length * 19 + 10) + 'px;top:68px;height:18px;font-size:10px;background:#e2f5ec;color:#0b7a55">' + delta + "</div>" +
+          '<svg class="a" style="left:0;top:0" width="512" height="288" viewBox="0 0 512 288"><defs><linearGradient id="g' + big.length + col.slice(1) + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".22"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
+          grid + '<path d="' + path(P1) + " L488 250 L24 250Z\" fill=\"url(#g" + big.length + col.slice(1) + ')"/>' +
+          '<path d="' + path(P2) + '" fill="none" stroke="#b8bcc7" stroke-width="1.5" stroke-dasharray="3 3"/>' +
+          '<path d="' + path(P1) + '" fill="none" stroke="' + col + '" stroke-width="2.2" stroke-linejoin="round"/>' +
+          '<circle cx="' + P1[n - 1][0] + '" cy="' + P1[n - 1][1] + '" r="4" fill="#fff" stroke="' + col + '" stroke-width="2"/></svg>' + lab;
+      }
+      function cBoard(cols) {
+        let s = B(0, 0, 512, 288, "background:#f4f5f7") + B(0, 0, 512, 40, "background:#fff;border-bottom:1px solid #eceef2") + T(20, 13, "Sprint board", "font-size:11px;font-weight:600;color:#3a3d48");
+        cols.forEach((c, i) => {
+          const x = 14 + i * 166;
+          s += T(x + 4, 52, c[0] + ' <span style="color:#9094a2;font-weight:500">' + c[1].length + "</span>", "font-size:10px;font-weight:600;color:#3a3d48");
+          c[1].forEach((r, j) => {
+            const y = 72 + j * 52;
+            s += B(x, y, 156, 46, "background:#fff;border-radius:6px;box-shadow:0 0 0 1px #e6e6eb") +
+              T(x + 8, y + 7, r[0], "font-size:8px;color:#9094a2;font-weight:500") +
+              T(x + 8, y + 19, r[1], "font-size:9px;font-weight:500;color:#2c2f3a") +
+              '<div class="a" style="left:' + (x + 8) + 'px;top:' + (y + 32) + 'px;height:10px;padding:0 5px;border-radius:3px;display:flex;align-items:center;font-size:6.5px;font-weight:600;line-height:10px;white-space:nowrap;background:' + LBL[r[2]][0] + ";color:" + LBL[r[2]][1] + '">' + r[2] + "</div>" + '<div class="a" style="left:' + (x + 134) + "px;top:" + (y + 28) + 'px">' + av(r[3], 14) + "</div>";
+          });
+        });
+        return s;
+      }
+      function cList(title, rows) {
+        let s = B(0, 0, 512, 288, "background:#fff") + B(0, 0, 512, 40, "background:#fff;border-bottom:1px solid #eceef2") + T(20, 13, title, "font-size:11px;font-weight:600;color:#3a3d48") +
+          '<div class="a" style="left:400px;top:11px">' + ic("filter", 14, 1.6, "color:#9094a2") + "</div>";
+        rows.forEach((r, i) => {
+          const y = 46 + i * 27;
+          s += B(0, y + 26, 512, 1, "background:#f1f1f4") + '<div class="a" style="left:16px;top:' + (y + 6) + 'px">' + st(r[0], 14) + "</div>" +
+            T(40, y + 8, r[1], "font-size:8.5px;color:#9094a2;font-weight:500") + T(82, y + 7, r[2], "font-size:10px;font-weight:500;color:#2c2f3a") +
+            '<div class="a" style="left:420px;top:' + (y + 6) + 'px">' + av(r[3], 15) + "</div>" + T(446, y + 8, r[4], "font-size:9px;color:#9094a2;font-weight:500");
+        });
+        return s;
+      }
+      function cRoad(rows, today) {
+        let s = B(0, 0, 512, 288, "background:#fff") + B(0, 0, 512, 40, "background:#fff;border-bottom:1px solid #eceef2") + T(20, 13, "Timeline", "font-size:11px;font-weight:600;color:#3a3d48");
+        ["Nov", "Dec", "Jan", "Feb"].forEach((m, i) => { s += T(150 + i * 90, 52, m, "font-size:9.5px;font-weight:600;color:#9094a2") + B(150 + i * 90 - 6, 48, 1, 230, "background:#f1f1f4"); });
+        rows.forEach((r, i) => {
+          const y = 76 + i * 30;
+          s += T(18, y + 6, r[0], "font-size:9.5px;font-weight:500;color:#2c2f3a") + B(r[1], y, r[2], 18, "background:" + r[3] + ";border-radius:5px") + B(r[1], y, r[2] * r[4], 18, "background:" + r[5] + ";border-radius:5px");
+        });
+        return s + B(today, 44, 2, 236, "background:" + ACC);
+      }
+      function cDoc(title, lines) {
+        let s = B(0, 0, 512, 288, "background:#fff") + B(0, 0, 512, 40, "background:#fff;border-bottom:1px solid #eceef2") + T(20, 13, "Docs / Research", "font-size:11px;font-weight:600;color:#3a3d48");
+        s += T(56, 62, title, "font-size:19px;font-weight:700;letter-spacing:-0.02em");
+        s += T(56, 92, "Hana Sato · Edited 2h ago · 9 min read", "font-size:9.5px;color:#9094a2;font-weight:500");
+        lines.forEach((l, i) => { s += T(56, 118 + i * 17, l, l.charAt(0) === "•" ? "font-size:10px;color:#3a3d48;padding-left:6px" : "font-size:10px;color:#3a3d48"); });
+        return s + B(56, 232, 400, 36, "background:#e5f5ee;border-radius:6px") + B(56, 232, 3, 36, "background:" + ACC + ";border-radius:2px") + T(70, 243, "7 of 9 interviewees abandoned checkout at the card form.", "font-size:10px;font-weight:600;color:#0b6b4a");
+      }
+      const COV = {
+        chart1: () => cChart("Weekly active teams", "4,218", "+12.4%", [22, 26, 25, 31, 30, 36, 34, 41, 44, 43, 50, 55, 53, 60], ACC),
+        chart2: () => cChart("Conversion rate", "3.84%", "+0.6 pt", [30, 28, 34, 33, 38, 36, 41, 45, 44, 49, 52, 50, 57, 61], "#3b82f6"),
+        board1: () => cBoard([
+          ["Todo", [["COB-41", "Welcome screen copy", "Design", "liam"], ["COB-44", "Permission prompts", "Mobile", "priya"], ["COB-47", "Skip flow analytics", "Chore", "omar"]]],
+          ["In progress", [["COB-38", "Progress dots animation", "Design", "sofia"], ["COB-39", "Account creation form", "Feature", "liam"], ["COB-40", "Biometric sign-in", "Mobile", "daniel"]]],
+          ["Done", [["COB-31", "Splash and app icon", "Design", "hana"], ["COB-33", "Deep link handling", "Mobile", "omar"], ["COB-35", "Localize to 8 languages", "Chore", "priya"]]]
+        ]),
+        board2: () => cBoard([
+          ["Backlog", [["KEY-12", "SAML metadata import", "Feature", "daniel"], ["KEY-15", "SCIM user provisioning", "Feature", "omar"], ["KEY-16", "Audit log retention", "Chore", "ethan"]]],
+          ["Review", [["KEY-09", "Session timeout policy", "Bug", "aisha"], ["KEY-10", "IdP login error states", "Design", "sofia"], ["KEY-11", "Okta test tenant", "Chore", "omar"]]],
+          ["Done", [["KEY-03", "Domain verification", "Feature", "daniel"], ["KEY-05", "Role mapping UI", "Design", "hana"], ["KEY-06", "Export audit CSV", "Chore", "ethan"]]]
+        ]),
+        list1: () => cList("Issues · Billing migration", [
+          ["done", "DEL-112", "Backfill invoices to the new ledger", "daniel", "Nov 14"], ["done", "DEL-115", "Dual-write subscription events", "omar", "Nov 17"],
+          ["review", "DEL-118", "Reconcile Stripe balance transactions", "ethan", "Nov 21"], ["prog", "DEL-121", "Proration for mid-cycle seat changes", "daniel", "Nov 26"],
+          ["prog", "DEL-122", "Webhook retries with backoff", "omar", "Nov 27"], ["todo", "DEL-124", "Migrate coupons and credits", "aisha", "Dec 1"],
+          ["todo", "DEL-126", "Cut over EU entities", "daniel", "Dec 2"], ["backlog", "DEL-129", "Remove legacy invoice renderer", "ethan", "Dec 9"],
+          ["backlog", "DEL-131", "Archive old billing tables", "omar", "Dec 11"]
+        ]),
+        list2: () => cList("Issues · Help center", [
+          ["done", "JUN-21", "Article template with callouts", "hana", "Nov 10"], ["done", "JUN-24", "Search ranking by click-through", "priya", "Nov 12"],
+          ["done", "JUN-25", "Redirect map for 140 old URLs", "omar", "Nov 14"], ["review", "JUN-28", "Related articles module", "sofia", "Nov 20"],
+          ["prog", "JUN-30", "Contact form with account lookup", "liam", "Nov 25"], ["prog", "JUN-31", "Feedback widget on articles", "hana", "Nov 26"],
+          ["todo", "JUN-33", "Translate top 40 articles to ES", "aisha", "Dec 3"], ["todo", "JUN-34", "Sitemap and canonical audit", "omar", "Dec 4"],
+          ["backlog", "JUN-36", "Video embeds with transcripts", "priya", "Dec 12"]
+        ]),
+        road1: () => cRoad([
+          ["Discovery", 150, 80, "#d5e8ff", 1, "#3b82f6"], ["Design system", 190, 110, "#e8dcff", 0.8, "#8b5cf6"], ["Planning tools", 240, 120, "#d9f1e5", 0.45, ACC],
+          ["Integrations", 300, 100, "#ffe9c7", 0.3, "#e7a20b"], ["Mobile app", 340, 130, "#fde0e0", 0.1, "#e5484d"], ["Public beta", 420, 70, "#d5e8ff", 0, "#3b82f6"], ["Launch", 470, 30, "#eeeff2", 0, "#9094a2"]
+        ], 258),
+        road2: () => cRoad([
+          ["Payment sheet", 150, 90, "#d9f1e5", 0.72, ACC], ["Address autocomplete", 180, 100, "#ffe9c7", 0.4, "#e7a20b"], ["Express wallets", 230, 110, "#e8dcff", 0.2, "#8b5cf6"],
+          ["Order confirmation", 270, 90, "#d5e8ff", 0.1, "#3b82f6"], ["Checkout analytics", 300, 110, "#eeeff2", 0.18, "#9094a2"], ["Beta rollout", 380, 80, "#fde0e0", 0, "#e5484d"], ["GA", 450, 40, "#eeeff2", 0, "#9094a2"]
+        ], 262),
+        doc1: () => cDoc("Customer interviews: Q4 synthesis", [
+          "Key themes", "We spoke with 12 customers between Oct 28 and Nov 14. Three", "patterns repeat across segments and plan sizes:", "• Card entry feels long on mobile, especially expiry and CVC",
+          "• Buyers want saved cards and wallets before they type anything", "• Shipping costs appear too late and break trust at step three"
+        ])
+      };
+      const cov = (kind, w) => '<div class="a" style="left:0;top:0;width:512px;height:288px;transform:scale(' + w / 512 + ');transform-origin:0 0">' + COV[kind]() + "</div>";
+
+      /* ---------- sidebar and top bar ---------- */
+      function side(act) {
+        const n = (k, i, l, b) => '<div class="ni' + (act === k ? " on" : "") + '">' + ic(i, 17) + "<span>" + l + "</span>" + (b ? '<span class="bd">' + b + "</span>" : "") + "</div>";
+        const d = (k, c, l) => '<div class="ni' + (act === k ? " on" : "") + '"><i class="dot" style="background:' + c + '"></i><span>' + l + "</span></div>";
+        return '<div class="sb">' +
+          '<div class="sbh">' + MARK(24) + "<span>Strata</span><span class=\"sp\"></span>" + ic("bell", 16, 1.5, "color:#80848f") + ic("edit", 16, 1.5, "color:#80848f;margin-left:6px") + "</div>" +
+          '<div class="wsw"><span class="wa">N</span>Northwind' + ic("chD", 14, 1.8) + "</div>" +
+          '<div class="srch">' + ic("search", 15) + "<span>Search</span><kbd>⌘K</kbd></div>" +
+          n("home", "home", "Home") + n("inbox", "inbox", "Inbox", "3") + n("tasks", "checkC", "My tasks") +
+          '<div class="sl">Workspace</div>' + n("projects", "folder", "Projects") + n("views", "list", "Views") + n("docs", "file", "Docs") + n("goals", "target", "Goals") +
+          '<div class="sl">Favorites</div>' + d("atlas", ACC, "Atlas") + n("board", "kanban", "Sprint 14 board") + n("plan", "file", "Launch plan") +
+          '<div class="sl">Teams</div>' + d("t1", "#8b5cf6", "Product design") + d("t2", "#3b82f6", "Engineering") + d("t3", "#e7a20b", "Growth") +
+          '<div class="sl">Recent</div>' + n("r1", "file", "ATL-214 Payment sheet") + n("r2", "file", "Q4 roadmap review") + n("r3", "chart", "Beacon dashboard v2") + n("r4", "file", "Research notes") +
+          '<div class="sbf"><div class="ni">' + ic("users", 17) + "<span>Invite people</span></div><div class=\"ni\">" + ic("help", 17) + "<span>Help and feedback</span></div>" +
+          '<div class="usr">' + av("maya", 26) + "<span>Maya Chen</span><span class=\"sp\"></span>" + ic("sliders", 16, 1.5, "color:#80848f") + "</div></div></div>";
+      }
+      const sep = ic("chR", 14, 1.8);
+      const topbar = (crumbs, right) => '<div class="tb"><div class="crumb">' + crumbs + '</div><div class="sp"></div><div class="fx" style="gap:8px">' + right + "</div></div>";
+
+      /* ---------- the four screens ---------- */
+      const SLOT = [
+        { x: 826, y: 176, w: 512 },
+        { x: 1308, y: 250, w: 576 },
+        { x: 1092, y: 164, w: 382 },
+        { x: 462, y: 630, w: 480 }
+      ];
+      const RAD = ["12px 12px 0 0", "12px 12px 0 0", "10px 10px 0 0", "12px 12px 0 0"];
+
+      function slotEl(k, kid, root, wi) {
+        const w = SLOT[k].w;
+        return '<div ' + (root ? 'id="sl' + wi + '" ' : "") + 'class="slot" style="width:' + w + "px;height:" + (w * 9) / 16 + "px;border-radius:" + RAD[k] + '">' + kid + "</div>";
+      }
+
+      /* 0: projects */
+      function S0(kid, root, wi) {
+        const PJ = [
+          { n: "Beacon", d: "Analytics v2", c: "#3b82f6", s: "ok", p: 71, l: "priya", due: "Dec 4", cv: "chart1" },
+          { n: "Atlas", d: "Checkout redesign", c: ACC, s: "ok", p: 52, l: "maya", due: "Dec 12", cv: null },
+          { n: "Cobalt", d: "Mobile onboarding", c: "#8b5cf6", s: "risk", p: 38, l: "liam", due: "Dec 18", cv: "board1" },
+          { n: "Gantry", d: "Partner API", c: "#64748b", s: "done", p: 100, l: "omar", due: "Nov 8", cv: "chart2" },
+          { n: "Ember", d: "Q1 roadmap", c: "#e5484d", s: "plan", p: 12, l: "sofia", due: "Jan 15", cv: "road1" },
+          { n: "Fathom", d: "Customer research", c: "#1fa5a5", s: "ok", p: 46, l: "hana", due: "Dec 20", cv: "doc1" },
+          { n: "Delta", d: "Billing migration", c: "#e7a20b", s: "ok", p: 84, l: "daniel", due: "Nov 30", cv: "list1" },
+          { n: "Juniper", d: "Help center", c: "#d9577f", s: "ok", p: 63, l: "aisha", due: "Dec 6", cv: "list2" },
+          { n: "Keystone", d: "SSO and audit logs", c: "#475569", s: "risk", p: 29, l: "ethan", due: "Jan 9", cv: "board2" }
+        ];
+        let cards = "";
+        PJ.forEach((p, i) => {
+          const x = 280 + (i % 3) * 546, y = 176 + Math.floor(i / 3) * 414;
+          const isT = i === 1;
+          const cover = isT ? slotEl(0, kid, root, wi) : '<div class="cv" style="width:512px;height:288px">' + cov(p.cv, 512) + "</div>";
+          cards += '<div ' + (isT && root ? 'id="tg' + wi + '" ' : "") + 'class="pg" style="left:' + x + "px;top:" + y + "px;width:512px;height:384px;" + '">' + cover +
+            '<div class="a fx" style="left:16px;top:302px;gap:9px"><span class="pi" style="background:' + p.c + '">' + p.n[0] + '</span><b style="font-size:15px;font-weight:600">' + p.n + '</b><span style="font-size:13.5px;color:var(--sub)">' + p.d + "</span></div>" +
+            '<div class="a" style="right:16px;top:300px">' + pill(p.s) + "</div>" +
+            '<div class="a fx" style="left:16px;top:338px;gap:8px;font-size:12.5px;color:var(--sub);font-weight:500">' + av(p.l, 20) + PE[p.l][0] + '<span class="mut">·</span><span class="mut">Due ' + p.due + "</span></div>" +
+            '<div class="t" style="right:16px;top:340px;font-size:12.5px;font-weight:600">' + p.p + "%</div>" +
+            '<div class="a bar" style="left:16px;top:368px;width:480px"><i style="width:' + p.p + '%;' + (p.s === "risk" ? "background:#e7a20b" : p.s === "done" ? "background:#3b82f6" : "") + '"></i></div></div>';
+        });
+        return side("projects") +
+          topbar(ic("folder", 16, 1.5, "color:#7a7e8a") + "<b>Projects</b>", '<div class="btn ic">' + ic("search", 16) + "</div>" + '<div class="btn">' + ic("filter", 15) + "Filter</div>" + '<div class="btn">' + ic("sliders", 15) + "Display</div>" + '<div class="btn pri">' + ic("plus", 15, 2) + "New project</div>") +
+          T(280, 80, "All projects", "font-size:26px;font-weight:700;letter-spacing:-0.025em") +
+          '<div class="a fx" style="left:280px;top:128px;gap:6px"><div class="seg on">All <b>9</b></div><div class="seg">Active <b>5</b></div><div class="seg">Planned <b>2</b></div><div class="seg">Completed <b>2</b></div></div>' +
+          '<div class="a fx" style="right:36px;top:128px;gap:6px;height:30px;font-size:13.5px;color:var(--sub);font-weight:500">' + ic("sliders", 15) + "Sorted by Last updated" + ic("chD", 14, 1.8) + "</div>" + cards;
+      }
+
+      /* 1: project overview */
+      function S1(kid, root, wi) {
+        const stats = [["layers", "Scope", "128", "+6 this week"], ["prog", "In progress", "24", "9 in review"], ["done", "Completed", "67", "52% of scope"], ["chart", "Velocity", "21.4", "per week, up 8%"]];
+        const sx = stats.map((s, i) => '<div class="stat card" style="left:' + (280 + i * 252) + 'px;top:220px;width:236px">' +
+          '<div class="fx" style="gap:7px;font-size:12.5px;color:var(--sub);font-weight:500">' + (s[0] === "prog" || s[0] === "done" ? st(s[0], 15) : ic(s[0], 15)) + s[1] + "</div>" +
+          '<div class="t" style="left:16px;top:42px;font-size:27px;font-weight:700;letter-spacing:-0.03em">' + s[2] + "</div>" +
+          '<div class="t" style="left:' + (16 + s[2].length * 16 + 10) + 'px;top:56px;font-size:12.5px;color:var(--mut);font-weight:500">' + s[3] + "</div></div>").join("");
+
+        /* burndown */
+        const X = (i) => 70 + i * 86, Y = (v) => 250 - (v / 70) * 226;
+        const act = [64, 62, 60, 55, 51, 48, 42, 39];
+        const AP = act.map((v, i) => [X(i), Y(v)]);
+        const FP = [[X(7), Y(39)], [X(8), Y(30)], [X(9), Y(21)], [X(10), Y(11)]];
+        let g = "";
+        [0, 20, 40, 60].forEach((v) => { g += '<path d="M70 ' + Y(v) + 'H930" stroke="#eef0f3"/>' + '<text x="48" y="' + (Y(v) + 4) + '" font-size="11" fill="#9094a2" text-anchor="end" font-weight="500" font-family="Inter">' + v + "</text>"; });
+        const DL = ["Nov 17", "Nov 18", "Nov 19", "Nov 20", "Nov 21", "Nov 24", "Nov 25", "Nov 26", "Nov 27", "Nov 28", "Dec 1"];
+        DL.forEach((s, i) => { g += '<text x="' + X(i) + '" y="276" font-size="11" fill="#9094a2" text-anchor="middle" font-weight="500" font-family="Inter">' + s + "</text>"; });
+        const chart = '<svg class="a" style="left:0;top:50px" width="992" height="290" viewBox="0 0 992 290"><defs><linearGradient id="bd' + wi + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + ACC + '" stop-opacity=".2"/><stop offset="1" stop-color="' + ACC + '" stop-opacity="0"/></linearGradient></defs>' + g +
+          '<path d="M' + X(0) + " " + Y(64) + " L" + X(10) + " " + Y(0) + '" stroke="#b8bcc7" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>' +
+          '<path d="' + path(AP) + " L" + X(7) + " 250 L" + X(0) + ' 250Z" fill="url(#bd' + wi + ')"/>' +
+          '<path d="' + path(AP) + '" stroke="' + ACC + '" stroke-width="2.4" fill="none" stroke-linejoin="round"/>' +
+          '<path d="' + path(FP) + '" stroke="' + ACC + '" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round" fill="none"/>' +
+          '<path d="M' + X(7) + ' 24V250" stroke="#d3d5dc" stroke-width="1" stroke-dasharray="3 3"/><circle cx="' + X(7) + '" cy="' + Y(39) + '" r="5" fill="#fff" stroke="' + ACC + '" stroke-width="2.4"/>' +
+          '<rect x="' + (X(7) - 62) + '" y="' + (Y(39) - 52) + '" width="124" height="34" rx="8" fill="#1c1d22"/><text x="' + X(7) + '" y="' + (Y(39) - 31) + '" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600" font-family="Inter">Nov 26 · 39 left</text></svg>';
+        const chartCard = '<div class="a card" style="left:280px;top:332px;width:992px;height:372px">' +
+          '<div class="t h3" style="left:20px;top:18px">Burndown</div>' +
+          '<div class="a fx" style="left:112px;top:18px;gap:16px;font-size:12.5px;color:var(--sub);font-weight:500"><span class="fx" style="gap:6px"><i style="width:14px;height:2px;background:' + ACC + '"></i>Remaining</span><span class="fx" style="gap:6px"><i style="width:14px;height:0;border-top:2px dashed #b8bcc7"></i>Ideal</span></div>' +
+          '<div class="a btn sm" style="right:16px;top:12px">Sprint 14' + ic("chD", 13, 1.8) + "</div>" + chart + "</div>";
+
+        const MS = [["Design system tokens", 100, "done", "Nov 14", "hana"], ["Payment sheet redesign", 72, "ok", "Nov 28", "maya"], ["Address autocomplete", 40, "risk", "Dec 3", "daniel"], ["Express wallets", 18, "plan", "Dec 8", "liam"], ["Beta rollout", 0, "plan", "Dec 12", "omar"]];
+        const ms = MS.map((m) => '<div class="ms">' + st(m[1] === 100 ? "done" : m[1] > 0 ? "prog" : "todo", 17) + '<span style="margin-left:12px;width:250px">' + m[0] + "</span>" +
+          '<div class="bar" style="width:220px;margin-right:12px"><i style="width:' + m[1] + '%;' + (m[2] === "risk" ? "background:#e7a20b" : m[2] === "done" ? "background:#3b82f6" : "") + '"></i></div><span style="width:46px;color:var(--sub);font-size:13px">' + m[1] + '%</span><span class="sp"></span><span class="sub" style="width:68px;font-size:13px;margin-right:18px">' + m[3] + "</span>" + pill(m[2]) + '<span style="margin-left:18px">' + av(m[4], 22) + "</span></div>").join("");
+        const msCard = '<div class="a card" style="left:280px;top:720px;width:992px;height:316px;overflow:hidden"><div class="fx" style="height:50px;padding:0 20px"><span class="h3">Milestones</span><span class="mut" style="margin-left:8px;font-size:13px">5</span><span class="sp"></span>' + ic("plus", 16, 1.8, "color:#80848f") + "</div>" + ms + "</div>";
+
+        const view = (y, ttl, meta, icn, cover, isT) =>
+          '<div ' + (isT && root ? 'id="tg' + wi + '" ' : "") + 'class="pg" style="left:1308px;top:' + y + 'px;width:576px;height:380px">' + cover +
+          '<div class="a fx" style="left:16px;top:340px;gap:10px;height:24px">' + ic(icn, 17, 1.6, "color:" + ACC) + '<b style="font-size:14.5px;font-weight:600">' + ttl + '</b><span class="mut" style="font-size:13px">' + meta + "</span></div>" +
+          '<div class="a" style="right:14px;top:340px;color:#9094a2">' + ic("more", 18) + "</div></div>";
+        const right = '<div class="t h3" style="left:1308px;top:222px">Views</div><div class="a btn sm" style="left:1790px;top:208px;border:0;color:var(--sub)">' + ic("plus", 14, 2) + "Add view</div>" +
+          view(250, "Sprint 14 board", "Board · Updated 4 min ago", "kanban", slotEl(1, kid, root, wi), true) +
+          view(654, "Launch timeline", "Timeline · Updated yesterday", "gantt", '<div class="cv" style="width:576px;height:324px">' + cov("road2", 576) + "</div>", false);
+
+        return side("atlas") +
+          topbar("<span>Projects</span>" + sep + "<b>Atlas</b>", '<div class="btn ic">' + ic("star", 16) + '</div><div class="btn">' + ic("link", 15) + "Share</div>" + '<div class="btn ic">' + ic("more", 16) + "</div>") +
+          '<div class="a" style="left:280px;top:74px"><span class="pi" style="width:36px;height:36px;border-radius:9px;font-size:19px;background:' + ACC + '">A</span></div>' +
+          T(332, 76, "Atlas", "font-size:28px;font-weight:700;letter-spacing:-0.025em") +
+          '<div class="a" style="left:430px;top:81px">' + pill("ok") + "</div>" +
+          '<div class="a fx" style="left:280px;top:126px;gap:26px;font-size:13.5px;font-weight:500;white-space:nowrap">' +
+          '<span class="fx" style="gap:8px"><span class="mut">Lead</span>' + av("maya", 20) + "Maya Chen</span>" +
+          '<span class="fx" style="gap:8px"><span class="mut">Target</span>' + ic("cal", 15, 1.6, "color:#80848f") + "Dec 12</span>" +
+          '<span class="fx" style="gap:8px"><span class="mut">Team</span><i class="dot" style="width:9px;height:9px;border-radius:3px;background:#8b5cf6"></i>Product design</span>' +
+          '<span class="fx" style="gap:8px"><span class="mut">Members</span>' + avs(["maya", "liam", "priya", "daniel", "sofia"], 22) + '<span class="mut" style="margin-left:4px">+4</span></span></div>' +
+          '<div class="a fx" style="left:280px;top:162px;width:1604px;height:36px;border-bottom:1px solid var(--line)"><div class="tab on">Overview</div><div class="tab">Board <span>24</span></div><div class="tab">Timeline</div><div class="tab">Docs <span>6</span></div><div class="tab">Files <span>31</span></div><div class="tab">Updates</div></div>' +
+          sx + chartCard + msCard + right;
+      }
+
+      /* 2: board */
+      function S2(kid, root, wi) {
+        const COLS = [
+          ["backlog", "Backlog", [
+            ["ATL-198", "Add saved cards to the payment sheet", "Feature", 2, "hana", "", 3], ["ATL-199", "Gift card balance not applied on step 3", "Bug", 3, "omar", "Nov 27", 1],
+            ["ATL-205", "Express checkout with Google Pay", "Feature", 2, "liam", "", 0], ["ATL-206", "Audit tax calculation for Ontario orders", "Chore", 1, "daniel", "Dec 2", 2],
+            ["ATL-207", "Sticky order summary on tablet widths", "Design", 2, "sofia", "", 4], ["ATL-209", "Empty states for cart and saved items", "Design", 1, "hana", "", 0], ["ATL-211", "Rename Pay to Place order", "Chore", 1, "maya", "", 1]]],
+          ["prog", "In progress", [
+            ["ATL-187", "Address autocomplete with postal validation", "Feature", 3, "maya", "Nov 28", 6], ["ATL-191", "Retry failed payments with idempotency keys", "Payments", 3, "daniel", "Nov 27", 5],
+            ["ATL-193", "Shipping method selector redesign", "Design", 2, "sofia", "Dec 1", 2], ["ATL-195", "Apply promo code inline without a reload", "Feature", 2, "liam", "", 4],
+            ["ATL-196", "Fix focus order in the card form", "Bug", 2, "priya", "Nov 26", 3], ["ATL-200", "Checkout analytics events v2", "Chore", 1, "omar", "", 0]]],
+          ["review", "In review", [
+            ["ATL-208", "Order confirmation email template", "Design", 1, "hana", "Nov 28", 2], ["ATL-203", "3-D Secure challenge in a modal", "Payments", 3, "daniel", "Nov 27", 7],
+            ["ATL-202", "Localize currency formats for EUR, GBP, CAD", "Feature", 2, "liam", "", 3], ["ATL-212", "Reduce checkout bundle size by 18%", "Chore", 2, "omar", "", 1]]],
+          ["done", "Done", [
+            ["ATL-181", "Design tokens for spacing and radius", "Design", 1, "hana", "", 4], ["ATL-183", "Replace legacy card input component", "Feature", 2, "maya", "", 9],
+            ["ATL-184", "Currency rounding bug on JPY orders", "Bug", 3, "daniel", "", 2], ["ATL-185", "Instrument cart abandonment funnel", "Chore", 1, "omar", "", 0],
+            ["ATL-186", "Autofill support for address fields", "Feature", 2, "priya", "", 5], ["ATL-188", "Dark mode contrast fixes", "Design", 1, "sofia", "", 1]]]
+        ];
+        const card = (r, stK) => '<div class="kc"><div class="k1">' + st(stK, 16) + '<span class="id">' + r[0] + '</span><span class="sp"></span>' + pri(r[3]) + av(r[4], 22) + "</div>" +
+          '<div class="k2">' + r[1] + '</div><div class="k3">' + lb(r[2]) + (r[5] ? '<span class="m">' + ic("cal", 13, 1.6) + r[5] + "</span>" : "") + '<span class="sp"></span>' + (r[6] ? '<span class="m">' + ic("msg", 13, 1.6) + r[6] + "</span>" : "") + "</div></div>";
+        const tcard = '<div ' + (root ? 'id="tg' + wi + '" ' : "") + 'class="kc" style="padding:0;height:338px">' + '<div class="a" style="left:0;top:0;width:382px;height:215px">' + slotEl(2, kid, root, wi) + "</div>" +
+          '<div class="a fx" style="left:14px;top:226px;gap:8px;height:22px;width:354px">' + st("review", 16) + '<span class="id" style="font-size:12px;color:var(--mut);font-weight:500">ATL-214</span><span class="sp"></span>' + pri(3) + av("maya", 22) + "</div>" +
+          '<div class="a" style="left:14px;top:254px;width:354px;font-size:14.5px;line-height:20px;font-weight:500;letter-spacing:-0.005em">Redesign the payment sheet with saved cards and wallets</div>' +
+          '<div class="a k3" style="left:14px;top:304px;width:354px">' + lb("Payments") + lb("Design") + '<span class="sp"></span><span class="m">' + ic("clip", 13, 1.6) + '3</span><span class="m">' + ic("msg", 13, 1.6) + "8</span></div></div>";
+        let cols = "", heads = "";
+        COLS.forEach((c, i) => {
+          const x = 280 + i * 406;
+          heads += '<div class="kh" style="left:' + x + 'px;top:124px">' + st(c[0], 16) + c[1] + "<span>" + (c[0] === "review" ? c[2].length + 1 : c[2].length) + '</span><span class="sp"></span>' + ic("plus", 16, 1.8, "color:#9094a2") + ic("more", 16, 1.6, "color:#9094a2") + "</div>";
+          cols += '<div class="kcol" style="left:' + x + 'px;top:164px">' + (c[0] === "review" ? tcard : "") + c[2].map((r) => card(r, c[0])).join("") + "</div>";
+        });
+        return side("board") +
+          topbar("<span>Atlas</span>" + sep + "<b>Sprint 14 board</b>", '<div class="btn ic">' + ic("star", 16) + '</div><div class="btn">' + ic("users", 15) + "Share</div>" + '<div class="btn pri">' + ic("plus", 15, 2) + "New issue</div>") +
+          '<div class="a fx" style="left:280px;top:66px;gap:4px"><div class="seg on">' + ic("kanban", 15) + "Board</div><div class=\"seg\">" + ic("list", 15) + "List</div><div class=\"seg\">" + ic("gantt", 15) + "Timeline</div></div>" +
+          '<div class="a fx" style="left:620px;top:68px;gap:7px;font-size:13.5px;color:var(--sub);font-weight:500">' + ic("cal", 15, 1.6) + "Nov 17 – Dec 1<span class=\"mut\">·</span>9 days left</div>" +
+          '<div class="a fx" style="right:36px;top:66px;gap:8px"><div class="btn sm">' + ic("user", 14) + 'Assignee</div><div class="btn sm">' + ic("tag", 14) + 'Label</div><div class="btn sm">' + ic("filter", 14) + 'Priority</div><div class="btn sm">' + ic("grid", 14) + "Group: Status</div><div class=\"btn sm\">" + ic("sliders", 14) + "Display</div></div>" +
+          heads + cols;
+      }
+
+      /* 3: issue */
+      function S3(kid, root, wi) {
+        const prow = (l, v) => '<div class="pr"><label>' + l + "</label>" + v + "</div>";
+        const checks = [[1, "Saved cards list with last four digits and expiry"], [1, "Wallet buttons above the card form"], [0, "Inline validation for card number and expiry"], [0, "Loading and error states for 3-D Secure"]];
+        const tick = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+        const cl = checks.map((c, i) => '<div class="a fx" style="left:422px;top:' + (290 + i * 28) + 'px;gap:11px;font-size:14.5px;color:' + (c[0] ? "var(--mut)" : "#2c2f3a") + ";" + (c[0] ? "text-decoration:line-through;" : "") + '">' +
+          '<span style="width:16px;height:16px;border-radius:5px;display:flex;align-items:center;justify-content:center;' + (c[0] ? "background:" + ACC + ";" : "box-shadow:inset 0 0 0 1.5px #c4c7d0;") + '">' + (c[0] ? tick : "") + "</span>" + c[1] + "</div>").join("");
+        const emb = '<div ' + (root ? 'id="tg' + wi + '" ' : "") + 'class="a card" style="left:462px;top:630px;width:480px;height:320px;border-radius:12px">' + slotEl(3, kid, root, wi) +
+          '<div class="a fx" style="left:14px;top:280px;gap:10px;height:30px;width:452px">' + MARK(22) + '<b style="font-size:14px;font-weight:600">Projects</b><span class="mut" style="font-size:13px">Strata view</span><span class="sp"></span><span class="mut" style="font-size:12.5px">Updated 2 min ago</span></div></div>';
+        return side("r1") +
+          topbar("<span>Atlas</span>" + sep + "<span>Sprint 14</span>" + sep + "<b>ATL-214</b>", '<span class="sub" style="font-size:13px;margin-right:6px">214 of 361</span><div class="btn ic">' + ic("chU", 16) + '</div><div class="btn ic">' + ic("chD", 16) + '</div><div class="btn ic">' + ic("star", 16) + '</div><div class="btn ic">' + ic("more", 16) + "</div>") +
+          T(422, 82, "Redesign the payment sheet with saved cards and wallets", "font-size:28px;font-weight:700;letter-spacing:-0.025em") +
+          '<div class="a fx" style="left:422px;top:136px;gap:8px"><div class="btn sm">' + st("review", 15) + 'In review</div><div class="btn sm">' + pri(3) + 'High</div><div class="btn sm">' + av("maya", 18) + 'Maya Chen</div><div class="btn sm">' + ic("cal", 14, 1.6) + 'Dec 4</div><div class="btn sm">' + lb("Payments") + "</div><div class=\"btn sm\">" + ic("plus", 14, 2) + "</div></div>" +
+          T(422, 192, "Replace the three-step payment form with a single sheet. Show saved cards first, then Apple Pay and Google Pay, and collapse", "font-size:14.5px;color:#2c2f3a") +
+          T(422, 216, "the card form behind “Add new card”. Keep the order summary visible on every width and preserve the current analytics events.", "font-size:14.5px;color:#2c2f3a") +
+          T(422, 258, "Scope", "font-size:12.5px;font-weight:600;color:var(--mut)") + cl +
+          T(422, 420, "Activity", "font-size:15px;font-weight:600") +
+          '<div class="a fx" style="left:422px;top:456px;gap:9px;font-size:13px;color:var(--sub)">' + av("maya", 20) + '<span><b style="color:var(--ink);font-weight:600">Maya Chen</b> moved this from In progress to In review<span class="mut" style="margin-left:8px">2h ago</span></span></div>' +
+          '<div class="cmt" style="left:422px;top:490px;width:800px">' + av("priya", 28) + '<div><div class="hd">Priya Nair<span>1h ago</span></div><div class="bd">Wallet buttons and saved cards are in on the preview branch. Validation is next.</div></div></div>' +
+          '<div class="cmt" style="left:422px;top:560px;width:800px">' + av("liam", 28) + '<div><div class="hd">Liam Ortiz<span>40 min ago</span></div><div class="bd">Pinned the project overview so everyone starts from the same view for the review.</div></div></div>' + emb +
+          '<div class="a fx" style="left:422px;top:982px;width:960px;height:48px;border-radius:12px;box-shadow:0 0 0 1px #dedee4;padding:0 16px;font-size:14px;color:var(--mut);gap:10px">' + av("maya", 24) + 'Leave a comment…<span class="sp"></span>' + ic("clip", 17, 1.5, "color:#80848f") + ic("send", 17, 1.5, "color:#80848f") + "</div>" +
+          '<div class="a" style="left:1560px;top:52px;width:360px;height:1028px;border-left:1px solid var(--line);background:#fff"></div>' +
+          '<div class="a" style="left:1588px;top:76px;width:304px">' +
+          '<div class="t" style="left:0;top:0;font-size:13px;font-weight:600;color:var(--mut)">Properties</div><div style="height:30px"></div>' +
+          prow("Status", st("review", 16) + "In review") + prow("Priority", pri(3) + "High") + prow("Assignee", av("maya", 20) + "Maya Chen") + prow("Labels", lb("Payments") + lb("Design")) +
+          prow("Project", '<i class="dot" style="width:9px;height:9px;border-radius:3px;background:' + ACC + '"></i>Atlas') + prow("Cycle", ic("clock", 15, 1.6, "color:#80848f") + "Sprint 14") + prow("Estimate", ic("target", 15, 1.6, "color:#80848f") + "5 points") +
+          prow("Due date", ic("cal", 15, 1.6, "color:#80848f") + "Dec 4") + prow("Parent", ic("layers", 15, 1.6, "color:#80848f") + "ATL-180 Checkout v2") +
+          '<div style="height:22px"></div><div class="t" style="position:relative;font-size:13px;font-weight:600;color:var(--mut);margin-bottom:12px">Pull requests</div>' +
+          '<div class="fx" style="gap:10px;font-size:13.5px;font-weight:500;height:34px;white-space:nowrap">' + ic("pr", 16, 1.6, "color:#80848f") + '#4821 Add PaymentSheet<span class="chip" style="background:var(--accs);color:#0b7a55">Open</span></div>' +
+          '<div class="fx" style="gap:10px;font-size:13.5px;font-weight:500;height:34px;white-space:nowrap">' + ic("pr", 16, 1.6, "color:#80848f") + '#4807 Saved cards API<span class="chip" style="background:#eeeff2;color:#555b66">Merged</span></div>' +
+          '<div style="height:22px"></div><div class="t" style="position:relative;font-size:13px;font-weight:600;color:var(--mut);margin-bottom:12px">Subscribers</div>' +
+          '<div class="fx">' + avs(["maya", "priya", "liam", "daniel", "sofia", "hana"], 26) + '<span class="mut" style="margin-left:8px;font-size:13px">+2</span></div>' +
+          "</div>";
+      }
+      const SCENES = [S0, S1, S2, S3];
+
+      /* nested screens: the card on each screen holds a live preview of the next one */
+      function scene(k, depth, root, wi) {
+        k = k % 4;
+        const kid = depth < 4 ? scene(k + 1, depth + 1, false, wi) : "";
+        const body = SCENES[k](kid, root, wi);
+        const sc = root ? "" : ' style="transform:scale(' + SLOT[(k + 3) % 4].w / 1920 + ')"';
+        return '<div class="scn"' + sc + ">" + body + "</div>";
+      }
+      for (let wi = 0; wi < 4; wi++) document.getElementById("w" + wi).insertAdjacentHTML("beforeend", scene(wi, 0, true, wi));
+
+      /* ---------- camera ---------- */
+      function bez(x1, y1, x2, y2) {
+        const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx, cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+        const X = (t) => ((ax * t + bx) * t + cx) * t, Y = (t) => ((ay * t + by) * t + cy) * t;
+        return (x) => {
+          if (x <= 0) return 0;
+          if (x >= 1) return 1;
+          let lo = 0, hi = 1, t = x;
+          for (let i = 0; i < 40; i++) { const v = X(t); if (Math.abs(v - x) < 1e-7) break; if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+          return Y(t);
+        };
+      }
+      const DIVE_E = bez(0.45, 0, 0.12, 1);
+      const diveEase = (r) => (t) => (Math.pow(r, DIVE_E(t)) - 1) / (r - 1);
+
+      const LV = [0, 2.2, 4.15, 6.1];
+      const PUSHES = [0.9, 0.65, 0.65, 0.65];
+      const DV = 1.3, DRIFT = 1.02, BLUR = 1.0;
+      /* pivot of the slow push per level: pulled toward the left so the sidebar icons and labels stay in frame at the click */
+      const PIV = [[720, 400], [800, 400], [720, 400], [720, 400]];
+      const CLICK = [[1210, 405], [1790, 500], [1400, 330], [850, 850]];
+      const P0 = [1600, 110];
+      const RING0 = "0 0 0 1px #e3e3e8, 0 1px 2px rgba(15,23,42,0.04), 0 0 0 0 rgba(15,23,42,0)";
+      const RING2 = "0 0 0 0px rgba(15,157,110,0), 0 1px 2px rgba(15,23,42,0.04), 0 0 0 rgba(15,23,42,0)";
+      const RING1 = "0 0 0 3px #0f9d6e, 0 1px 2px rgba(15,23,42,0.04), 0 14px 34px rgba(15,23,42,0.16)";
+
+      gsap.set(".world", { transformOrigin: "0px 0px" });
+      gsap.set("#cur", { x: P0[0], y: P0[1], opacity: 1 });
+      gsap.set("#curi", { transformOrigin: "2px 2px" });
+
+      const tl = gsap.timeline({ paused: true });
+      function F(target, from, to, at) { tl.fromTo(target, from, Object.assign({ immediateRender: false }, to), at); }
+
+      for (let k = 0; k < 4; k++) {
+        const T0 = LV[k], PUSH = PUSHES[k], tc = T0 + PUSH, tEnd = tc + DV;
+        const R = SLOT[k], s1 = 1920 / R.w;
+        const w = "#w" + k;
+        const from = { scale: DRIFT, x: PIV[k][0] * (1 - DRIFT), y: PIV[k][1] * (1 - DRIFT) };
+        /* slow push toward the card */
+        F(w, { scale: 1, x: 0, y: 0 }, { scale: DRIFT, x: from.x, y: from.y, duration: PUSH, ease: "sine.inOut" }, T0);
+        /* cursor to the card, hover ring */
+        if (k) {
+          F("#cur", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power1.out" }, T0);
+          F("#cur", { x: CLICK[k - 1][0], y: CLICK[k - 1][1] }, { x: CLICK[k][0], y: CLICK[k][1], duration: 0.45, ease: "power2.inOut" }, T0);
+        } else {
+          F("#cur", { x: P0[0], y: P0[1] }, { x: CLICK[k][0], y: CLICK[k][1], duration: 0.65, ease: "power2.inOut" }, T0 + 0.15);
+        }
+        F("#tg" + k, { boxShadow: RING0 }, { boxShadow: RING1, duration: 0.12, ease: "power2.out" }, tc - 0.12);
+        tl.to("#tg" + k, { boxShadow: RING2, duration: 0.3, ease: "power2.out" }, tc);
+        /* click */
+        F("#curi", { scale: 1 }, { scale: 0.86, duration: 0.08, ease: "power2.out" }, tc - 0.08);
+        F("#curi", { scale: 0.86 }, { scale: 1, duration: 0.25, ease: "back.out(1.7)" }, tc);
+        tl.set("#rip", { opacity: 0.75, scale: 0.3, x: CLICK[k][0], y: CLICK[k][1] }, tc);
+        tl.to("#rip", { opacity: 0, scale: 1.6, duration: 0.5, ease: "power2.out" }, tc);
+        /* dive */
+        const r = s1 / DRIFT;
+        F(w, { scale: DRIFT, x: from.x, y: from.y }, { scale: s1, x: -s1 * R.x, y: -s1 * R.y, duration: DV, ease: diveEase(r) }, tc);
+        /* the cursor fades out as the world takes over the frame */
+        F("#cur", { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power1.in" }, tc + 0.08);
+        /* blur peaks at BLUR px on screen: the world is scaled, so the local blur is divided by the current scale */
+        const bp = { t: 0 }, el = document.getElementById("w" + k);
+        tl.fromTo(bp, { t: 0 }, { t: 1, duration: DV, ease: "none", immediateRender: false, onUpdate: () => {
+          const e = Math.sin(Math.PI * Math.min(1, Math.max(0, (bp.t * DV - 0.04) / 0.9)));
+          const sc = DRIFT * Math.pow(r, DIVE_E(bp.t));
+          el.style.filter = e > 0.001 ? "blur(" + ((BLUR * e) / sc).toFixed(3) + "px)" : "none";
+        } }, tc);
+        tl.to("#sl" + k, { borderRadius: "0px 0px 0px 0px", duration: 0.5, ease: "power2.in" }, tc + 0.6);
+        /* hand over to the next world, which shows the same pixels */
+        if (k < 3) {
+          tl.set(w, { opacity: 0, filter: "none" }, tEnd);
+          tl.set("#w" + (k + 1), { opacity: 1 }, tEnd);
+        } else {
+          tl.set(w, { opacity: 0, filter: "none" }, tEnd);
+          tl.set("#w0", { opacity: 1, scale: 1, x: 0, y: 0, filter: "none" }, tEnd);
+          tl.set("#sl0", { borderRadius: RAD[0] }, tEnd);
+          tl.set("#tg0", { boxShadow: RING0 }, tEnd);
+        }
+      }
+      /* the cursor comes back and returns to where it started, so the last frame equals the first */
+      const TR = LV[3] + PUSHES[3] + DV;
+      F("#cur", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power1.out" }, TR);
+      F("#cur", { x: CLICK[3][0], y: CLICK[3][1] }, { x: P0[0], y: P0[1], duration: 0.85, ease: "power2.inOut" }, TR);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

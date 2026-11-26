@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Light Beam Effect",
+    "title": "Light Beam Effect: Example and Code Recipe",
+    "description": "Laptops throw trapezoid beams of light that reveal app screens, hand off and carry a stat along one edge. Make it with Claude Code or Codex.",
+    "howto": [
+      "Build each beam as a clip-path trapezoid window over a screen that stays fixed in screen space. The first beam opens at 0.75s over 1.0s with expo.out, cubic-bezier(0.16,1,0.3,1): length 0 to 800px, far half-width 170px to 520px, lean -14° to -3°. Lean a beam by moving only its far edge sideways (length × tan of the angle), so the near edge stays pinned to the lid top and the beam sweeps across a still, readable UI. Each laptop lid is 380x268px, 262px high when open, with a slim 11px base edge under a dark hinge band.",
+      "Hand the light from one laptop to the next. At 3.0s beam 1 leans left to -26° and narrows in 0.45s while the camera pans for 1.1s to laptop 2, whose beam opens at 3.4s once beam 1 has closed. At 4.4s the camera pulls back to 0.72x and three beams run together, each 650–680px long with a far half-width of 330–350px. At 6.5s one beam widens to 800px half-width and 560px length, fully inside the frame, and at 7.05s the stat slides in along its right edge at about 43° over 0.9s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the laptops, the three screens and the beams. Close the lid from 8.4s to 9.4s, light the mark teal #2dd4bf and fade the word Harbor in under the lid at 8.9s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a light beam effect in a product film?",
+        "A light beam effect throws a cone of light from a screen or a device and shows content inside the cone. In this film the cone is a window onto an app screen, so the beam can swing and hand off between devices while the screen itself stays still."
+      ],
+      [
+        "How do you keep the UI readable while the beam moves?",
+        "Keep the screen layer fixed in screen space and lean the beam by moving only its far edge, so the near edge stays on the lid. The beam changes which part of the UI shows, but the text never tilts. Scale the screen 1.25x so 13px interface text stays legible inside a beam about 1000px wide."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "光束效果",
+    "title": "光束效果：示例与代码配方",
+    "description": "笔记本向外投出梯形光束，光束露出 App 界面、在几台设备间交接，并沿右侧斜边展开参数文字。用 Claude Code 或 Codex 按免费配方做出这个光束效果。",
+    "howto": [
+      "每束光是一个 clip-path 梯形窗口，窗口后面的界面固定在屏幕空间。第一束光 0.75s 开始展开，用 1.0s，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)）：长度 0 到 800px，远端半宽 170px 到 520px，倾斜 −14° 到 −3°。倾斜时只平移光束的远端边（长度 × tan 角度），近端边始终贴在盖板上沿，光束扫过的是一块不动、读得清的界面。笔记本盖板 380x268px，打开时高 262px，下面是 11px 的薄底边和一条深色铰链暗带。",
+      "光在笔记本之间交接。3.0s 光束 1 用 0.45s 向左倾到 −26° 并收窄，镜头同时用 1.1s 平移到笔记本 2，光束 1 收完后它的光束 3.4s 展开。4.4s 镜头拉到 0.72 倍，三束光同时亮，每束长 650–680px，远端半宽 330–350px。6.5s 一束光变宽，远端半宽 800px、长 560px，整束都在画面内，7.05s 参数文字用 0.9s 沿右侧约 43° 的斜边滑入。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出笔记本、三块界面和光束。8.4s 到 9.4s 合上盖板，字标亮成青绿 #2dd4bf，8.9s 字标文字 Harbor 在盖板下淡入。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "产品片里的光束效果是什么？",
+        "光束效果从屏幕或设备向外投出一束光，光束里显示内容。这支片子里光束是一扇窗，后面是 App 界面，所以光束可以摆动、在设备之间交接，而界面本身不动。"
+      ],
+      [
+        "光束移动时怎么让界面保持可读？",
+        "把界面图层固定在屏幕空间，倾斜光束时只平移远端边，近端边留在盖板上。光束只改变露出界面的哪一部分，文字不会倾斜。界面放大 1.25 倍，13px 的界面文字在约 1000px 宽的光束里仍然清楚。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

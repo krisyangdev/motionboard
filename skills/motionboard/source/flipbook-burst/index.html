@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ink: #1b1a18;
+        --sub: #6f6a62;
+        --mut: #9a948a;
+        --line: #e6e1d9;
+        --bone: #e9e4da;
+        --sand: #cfc8bb;
+        --stone: #8d877e;
+        --paper: #f5f2ec;
+        --acc: #ff5a36;
+        --acc2: #ffd3c4;
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #d4cfc7; }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #d4cfc7;
+        font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased;
+        font-variant-numeric: tabular-nums;
+      }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      svg { display: block; flex: none; }
+      .pf { font-family: "Playfair Display", serif; }
+      .ab { font-family: "Archivo Black", "Inter", sans-serif; }
+      .mn { font-family: "JetBrains Mono", monospace; }
+      .a { position: absolute; }
+
+      /* ---------- desktop ---------- */
+      #wall {
+        z-index: 1;
+        background:
+          radial-gradient(ellipse 70% 80% at 12% 105%, rgba(255, 196, 172, 0.55) 0%, rgba(255, 196, 172, 0) 70%),
+          radial-gradient(ellipse 60% 70% at 92% -5%, rgba(250, 246, 238, 0.9) 0%, rgba(250, 246, 238, 0) 70%),
+          linear-gradient(160deg, #dcd7ce 0%, #cfc9bf 100%);
+      }
+
+      /* ---------- 3D stage ---------- */
+      #stage { z-index: 2; overflow: hidden; perspective: 1600px; perspective-origin: 50% 50%; }
+      #world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-style: preserve-3d; }
+
+      /* app window */
+      #win {
+        position: absolute; left: 110px; top: 60px; width: 1700px; height: 960px;
+        border-radius: 14px; overflow: hidden; background: #fbfaf8;
+        box-shadow: 0 0 0 1px rgba(40, 30, 20, 0.12), 0 2px 6px rgba(40, 30, 20, 0.10), 0 34px 80px rgba(60, 45, 30, 0.22), 0 90px 180px rgba(60, 45, 30, 0.16);
+      }
+      #win .tlt { position: absolute; top: 20px; width: 12px; height: 12px; border-radius: 50%; }
+      #side { position: absolute; left: 0; top: 0; width: 232px; height: 960px; background: #f2efea; border-right: 1px solid var(--line); }
+      #topbar { position: absolute; left: 232px; top: 0; width: 1468px; height: 52px; background: #fbfaf8; border-bottom: 1px solid var(--line); }
+      #main { position: absolute; left: 232px; top: 52px; width: 1148px; height: 908px; background: #fbfaf8; }
+      #insp { position: absolute; left: 1380px; top: 52px; width: 320px; height: 908px; background: #fbfaf8; border-left: 1px solid var(--line); }
+
+      .ws { position: absolute; left: 12px; top: 52px; width: 208px; height: 34px; display: flex; align-items: center; gap: 9px; padding: 0 8px; border-radius: 8px; font-size: 13.5px; font-weight: 600; }
+      .wsl { width: 22px; height: 22px; border-radius: 6px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+      .sbox { position: absolute; left: 12px; top: 94px; width: 208px; height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-radius: 8px; background: #e9e5de; font-size: 13px; color: var(--mut); }
+      .kbd { margin-left: auto; font-size: 11px; font-weight: 500; color: var(--mut); background: #f7f5f1; border-radius: 4px; padding: 1px 5px; }
+      .nav { position: absolute; left: 12px; width: 208px; height: 30px; display: flex; align-items: center; gap: 10px; padding: 0 10px; border-radius: 7px; font-size: 13.5px; font-weight: 500; color: #3a3834; }
+      .nav svg { color: #7a746a; }
+      .nav.sel { background: #e7e2da; color: var(--ink); }
+      .nav .ct { margin-left: auto; font-size: 12px; color: var(--mut); font-weight: 500; }
+      .nav .bd { margin-left: auto; font-size: 11px; font-weight: 600; color: #fff; background: var(--acc); border-radius: 9px; min-width: 18px; height: 18px; padding: 0 5px; display: flex; align-items: center; justify-content: center; }
+      .sec { position: absolute; left: 22px; width: 190px; font-size: 11.5px; font-weight: 600; color: var(--mut); display: flex; align-items: center; justify-content: space-between; letter-spacing: 0.01em; }
+      .dot { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+      .av { display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-weight: 600; flex: none; }
+
+      .crumb { position: absolute; left: 20px; top: 0; height: 52px; display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--sub); font-weight: 500; }
+      .crumb b { color: var(--ink); font-weight: 600; }
+      .btn { position: absolute; top: 11px; height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+      #share { left: 1266px; width: 82px; border: 1px solid #ddd8cf; background: #fff; color: var(--ink); }
+      #present { left: 1356px; width: 96px; background: var(--acc); color: #fff; justify-content: center; box-shadow: 0 1px 2px rgba(200, 60, 30, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+
+      .ttl { position: absolute; left: 86px; top: 14px; font-size: 24px; font-weight: 650; letter-spacing: -0.02em; }
+      .meta { position: absolute; left: 86px; top: 46px; font-size: 12.5px; color: var(--mut); display: flex; align-items: center; gap: 6px; }
+      .seg { position: absolute; left: 928px; top: 18px; height: 30px; display: flex; padding: 2px; border-radius: 8px; background: #eeeae3; }
+      .seg span { width: 36px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #7a746a; }
+      .seg span.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+      .chip { height: 26px; display: flex; align-items: center; gap: 6px; padding: 0 10px; border-radius: 13px; font-size: 12.5px; font-weight: 500; color: var(--sub); border: 1px solid #e3ded5; background: #fff; white-space: nowrap; }
+      .chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+      .chip i { font-style: normal; color: var(--mut); font-weight: 500; }
+      .chip.on i { color: rgba(255, 255, 255, 0.6); }
+      .sortb { position: absolute; left: 868px; top: 69px; height: 26px; display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 500; color: var(--sub); }
+
+      .ih { position: absolute; left: 20px; top: 14px; font-size: 13px; font-weight: 600; }
+      .it { position: absolute; left: 20px; top: 52px; width: 280px; font-size: 19px; font-weight: 650; letter-spacing: -0.015em; line-height: 24px; }
+      .row { position: absolute; left: 20px; width: 280px; height: 28px; display: flex; align-items: center; font-size: 12.5px; }
+      .row .k { width: 92px; color: var(--mut); display: flex; align-items: center; gap: 7px; font-weight: 500; }
+      .row .v { color: #34312c; font-weight: 500; display: flex; align-items: center; gap: 7px; }
+      .tag { height: 22px; padding: 0 8px; border-radius: 6px; background: #efebe4; font-size: 12px; font-weight: 500; color: #4a463f; display: flex; align-items: center; }
+      .nt { position: absolute; left: 20px; top: 446px; width: 280px; height: 84px; border: 1px solid #e3ded5; border-radius: 9px; padding: 10px 12px; font-size: 12.5px; line-height: 18px; color: #3a3834; background: #fff; }
+      .cm { position: absolute; left: 20px; width: 280px; display: flex; gap: 10px; font-size: 12.5px; line-height: 17px; color: #3a3834; }
+      .cm b { font-weight: 600; color: var(--ink); }
+      .cm span.t { color: var(--mut); font-weight: 400; margin-left: 4px; }
+      .cmi { position: absolute; left: 20px; top: 846px; width: 280px; height: 38px; border: 1px solid #e3ded5; border-radius: 9px; background: #fff; display: flex; align-items: center; padding: 0 12px; font-size: 12.5px; color: var(--mut); }
+      .ln { position: absolute; left: 0; width: 320px; height: 1px; background: var(--line); }
+
+      /* cursor */
+      #cursor { position: absolute; left: 0; top: 0; width: 24px; height: 28px; opacity: 0; }
+      #rip { position: absolute; left: 0; top: 0; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.85); background: rgba(255, 90, 54, 0.28); opacity: 0; }
+
+      /* cards */
+      .card { position: absolute; left: 0; top: 0; width: 240px; height: 320px; transform-style: preserve-3d; transform-origin: 0px 160px; }
+      .face { position: absolute; left: 0; top: 0; width: 240px; height: 320px; border-radius: 14px; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #fbfaf7; box-shadow: 0 0 0 1px rgba(40, 30, 20, 0.07), 0 2px 5px rgba(40, 30, 20, 0.08), 0 14px 34px rgba(40, 30, 20, 0.14); }
+      .face.bk { transform: rotateY(180deg); }
+      .edge { position: absolute; pointer-events: none; }
+      .edge.er { left: calc(240px - var(--t) / 2); top: 5px; width: var(--t); height: 310px; transform: rotateY(90deg); }
+      .edge.eb { left: 6px; top: calc(320px - var(--t) / 2); width: 228px; height: var(--t); transform: rotateX(90deg); }
+      .gut { position: absolute; left: 0; top: 0; width: 46px; height: 320px; background: linear-gradient(90deg, rgba(30, 22, 14, 0.36), rgba(30, 22, 14, 0)); opacity: 0; pointer-events: none; }
+      .bk .gut { left: auto; right: 0; background: linear-gradient(270deg, rgba(30, 22, 14, 0.36), rgba(30, 22, 14, 0)); }
+      .sh { position: absolute; left: 0; top: 0; width: 240px; height: 320px; background: linear-gradient(90deg, rgba(30, 22, 14, 0.5), rgba(30, 22, 14, 0.05)); opacity: 0; pointer-events: none; }
+      .ring { position: absolute; left: 0; top: 0; width: 240px; height: 320px; border-radius: 14px; border: 4px solid var(--acc); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.9); pointer-events: none; }
+      .fx { position: absolute; left: 0; top: 0; }
+      .dc { position: absolute; left: 0; top: 0; }
+
+      /* card internals */
+      .t11 { font-size: 11px; } .t12 { font-size: 12px; } .t13 { font-size: 13px; }
+      .b600 { font-weight: 600; } .b700 { font-weight: 700; } .b500 { font-weight: 500; }
+
+      /* ---------- finish ---------- */
+      #veil { z-index: 3; pointer-events: none; opacity: 0;
+        background: radial-gradient(ellipse 46% 40% at 50% 50%, rgba(236, 231, 222, 0.96) 0%, rgba(236, 231, 222, 0.9) 38%, rgba(236, 231, 222, 0.55) 70%, rgba(236, 231, 222, 0) 100%); }
+      #lock { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; z-index: 4; pointer-events: none; }
+      #lockrow { position: absolute; left: 0; top: 410px; width: 1920px; height: 130px; display: flex; align-items: center; justify-content: center; gap: 26px; }
+      #glyph { width: 104px; height: 104px; opacity: 0; }
+      #word { font-size: 124px; font-weight: 700; letter-spacing: -0.045em; line-height: 130px; color: var(--ink); opacity: 0; }
+      #tag { position: absolute; left: 0; top: 562px; width: 1920px; text-align: center; font-size: 30px; font-weight: 500; color: #6f6a62; letter-spacing: -0.01em; opacity: 0; }
+      #grain {
+        z-index: 5; pointer-events: none; opacity: 0.07; background-size: 256px 256px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      #vig { z-index: 6; pointer-events: none; background: radial-gradient(ellipse at center, rgba(60, 45, 30, 0) 58%, rgba(60, 45, 30, 0.2) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.5" data-width="1920" data-height="1080">
+      <div id="wall" class="clip full" data-start="0" data-duration="10.5" data-track-index="0"></div>
+      <div id="stage" class="clip full" data-start="0" data-duration="10.5" data-track-index="1">
+        <div id="world" data-layout-allow-overlap>
+          <div id="win" data-layout-allow-overlap></div>
+          <div id="cursor" data-layout-ignore>
+            <div id="rip"></div>
+            <svg width="24" height="28" viewBox="0 0 24 28"><path d="M3 2 L3 21 L8 16.6 L11.4 24.2 L14.6 22.8 L11.2 15.4 L18 15 Z" fill="#161513" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div id="veil" class="clip full" data-start="0" data-duration="10.5" data-track-index="2"></div>
+      <div id="lock" class="clip" data-start="0" data-duration="10.5" data-track-index="3">
+        <div id="lockrow">
+          <svg id="glyph" viewBox="0 0 64 64">
+            <g id="blades">
+              <path d="M32 32 L32 2 C48 2 62 15 62 32 Z" fill="#ff5a36"/>
+              <path d="M32 32 L62 32 C62 48 49 62 32 62 Z" fill="#1b1a18"/>
+              <path d="M32 32 L32 62 C16 62 2 49 2 32 Z" fill="#ff5a36"/>
+              <path d="M32 32 L2 32 C2 16 15 2 32 2 Z" fill="#1b1a18"/>
+              <circle cx="32" cy="32" r="3.2" fill="#f5f2ec"/>
+            </g>
+          </svg>
+          <div id="word">Pinwheel</div>
+        </div>
+        <div id="tag">Every reference, on one board.</div>
+      </div>
+      <div id="grain" class="clip full" data-start="0" data-duration="10.5" data-track-index="4"></div>
+      <div id="vig" class="clip full" data-start="0" data-duration="10.5" data-track-index="5"></div>
+    </div>
+
+    <script>
+      const ACC = "#ff5a36";
+      const EXPO = "expo.out";
+
+      /* ---------- icons (lucide-style, 24 grid) ---------- */
+      const G = {
+        search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+        home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+        inbox: '<polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+        grid: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
+        image: '<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+        star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+        plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+        chevD: '<path d="m6 9 6 6 6-6"/>',
+        chevR: '<path d="m9 18 6-6-6-6"/>',
+        link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+        share: '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/>',
+        play: '<polygon points="6 3 20 12 6 21 6 3"/>',
+        sort: '<path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/>',
+        list: '<line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>',
+        board: '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>',
+        type: '<polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/>',
+        clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+        tag: '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/>',
+        user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+        cal: '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+        ruler: '<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/>',
+        x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+        sliders: '<line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/>',
+        route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+        heart: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+        mount: '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>',
+        home2: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+        wave: '<path d="M2 12h2l3-8 4 16 4-12 2 4h5"/>',
+      };
+      const ic = (g, s, sw, extra) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.7) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (extra || "") + ">" + G[g] + "</svg>";
+
+      let UID = 0;
+      const uid = () => "u" + ++UID;
+      const GRAIN = (u, op) => '<filter id="gr' + u + '"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0"/></filter><rect width="240" height="320" filter="url(#gr' + u + ')" opacity="' + op + '"/>';
+
+      /* ---------- 15 card designs, 240 x 320 ---------- */
+      const DES = [];
+
+      // 0 dunes poster
+      DES[0] = () => {
+        const u = uid();
+        return '<svg class="fx" width="240" height="320" viewBox="0 0 240 320"><defs>' +
+          '<linearGradient id="sk' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e0d6"/><stop offset=".5" stop-color="#f2d4c4"/><stop offset="1" stop-color="#f7bea4"/></linearGradient>' +
+          '<radialGradient id="gl' + u + '" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff5a36" stop-opacity=".5"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></radialGradient>' +
+          '<linearGradient id="sh' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient></defs>' +
+          '<rect width="240" height="320" fill="url(#sk' + u + ')"/>' +
+          '<circle cx="158" cy="134" r="96" fill="url(#gl' + u + ')"/><circle cx="158" cy="134" r="29" fill="#ff5a36"/>' +
+          '<path d="M0 176 C34 160 74 166 112 180 S190 194 240 170 V320 H0Z" fill="#d9c7b8"/>' +
+          '<path d="M0 204 C46 178 96 190 140 208 S210 216 240 198 V320 H0Z" fill="#b8a191"/>' +
+          '<path d="M0 236 C40 216 92 222 130 242 S200 252 240 230 V320 H0Z" fill="#8a7464"/>' +
+          '<path d="M0 270 C50 248 104 258 150 278 S214 284 240 268 V320 H0Z" fill="#4c3f37"/>' +
+          '<path d="M0 204 C46 178 96 190 140 208 S210 216 240 198" fill="none" stroke="#fbeee2" stroke-opacity=".75" stroke-width="1.2"/>' +
+          '<path d="M0 236 C40 216 92 222 130 242 S200 252 240 230" fill="none" stroke="#f3dccb" stroke-opacity=".6" stroke-width="1.2"/>' +
+          '<rect y="190" width="240" height="130" fill="url(#sh' + u + ')"/>' + GRAIN(u, ".18") + "</svg>" +
+          '<div class="a mn" style="left:16px;bottom:34px;font-size:10px;color:rgba(255,255,255,.78);letter-spacing:.06em">06:42 · 35 MM</div>' +
+          '<div class="a b600" style="left:16px;bottom:14px;font-size:15px;color:#fff;letter-spacing:-0.01em">White Sands, NM</div>';
+      };
+
+      // 1 palette
+      DES[1] = () => {
+        const bands = [
+          ["Vermilion", "#FF5A36", "#fff", 76], ["Ink", "#1B1A18", "#fff", 50], ["Stone", "#8D877E", "#fff", 46],
+          ["Sand", "#CFC8BB", "#1b1a18", 44], ["Bone", "#E9E4DA", "#1b1a18", 44],
+        ];
+        let y = 48, h = '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#fbfaf7"></div>' +
+          '<div class="a b600" style="left:16px;top:16px;font-size:14px;letter-spacing:-0.01em">Autumn palette</div>' +
+          '<div class="a" style="right:16px;top:19px;font-size:11px;color:#9a948a;font-weight:500">5 colors</div>';
+        bands.forEach((b) => {
+          h += '<div class="a" style="left:10px;top:' + y + 'px;width:220px;height:' + (b[3] - 3) + 'px;border-radius:8px;background:' + b[1] + ';' + (b[0] === "Bone" ? "box-shadow:inset 0 0 0 1px #ddd7cc;" : "") + '">' +
+            '<span class="a b600" style="left:11px;bottom:9px;font-size:12px;color:' + b[2] + '">' + b[0] + "</span>" +
+            '<span class="a mn" style="right:11px;bottom:9px;font-size:10.5px;color:' + b[2] + ';opacity:.82">' + b[1] + "</span></div>";
+          y += b[3];
+        });
+        return h;
+      };
+
+      // 2 type specimen
+      DES[2] = () =>
+        '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#f5f2ec"></div>' +
+        '<div class="a mn" style="left:18px;top:16px;font-size:10px;color:#8d877e;letter-spacing:.08em">TYPEFACE 02</div>' +
+        '<div class="a mn" style="right:18px;top:16px;font-size:10px;color:#ff5a36;letter-spacing:.08em">SERIF</div>' +
+        '<div class="a pf" style="left:14px;top:22px;font-size:138px;line-height:150px;font-weight:500;letter-spacing:-0.03em;color:#1b1a18">Aa</div>' +
+        '<div class="a" style="left:18px;top:176px;width:204px;height:1px;background:#d9d3c8"></div>' +
+        '<div class="a pf" style="left:18px;top:188px;font-size:19px;font-weight:700;color:#1b1a18">Sorrel Display</div>' +
+        '<div class="a" style="left:18px;top:214px;font-size:11px;color:#8d877e;font-weight:500">Regular · Italic · Bold · Black</div>' +
+        '<div class="a pf" style="left:18px;top:240px;font-size:14.5px;line-height:19px;color:#3a3834;letter-spacing:.02em">ABCDEFGHIJKLM<br>NOPQRSTUVWXYZ<br>abcdefghijklm 0123456789</div>' +
+        '<div class="a" style="left:18px;top:298px;font-size:10.5px;color:#8d877e;font-weight:500">72 / 48 / 32 / 18 pt</div>';
+
+      // 3 phone screen
+      DES[3] = () => {
+        const u = uid();
+        const rows = [["route", "Pace", "5:00 /km"], ["mount", "Elevation", "218 m"], ["heart", "Heart rate", "148 bpm"]];
+        let h = '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#161513"></div>' +
+          '<div class="a b600" style="left:18px;top:12px;font-size:11px;color:#fff">9:41</div>' +
+          '<div class="a" style="right:16px;top:14px;width:22px;height:9px;border-radius:3px;border:1px solid rgba(255,255,255,.55)"><i class="a" style="left:1.5px;top:1.5px;width:14px;height:4px;border-radius:1px;background:#fff"></i></div>' +
+          '<div class="a" style="left:18px;top:36px;font-size:11px;color:#8d877e;font-weight:500">Thursday, Oct 23</div>' +
+          '<div class="a b700" style="left:18px;top:50px;font-size:30px;letter-spacing:-0.03em;color:#fff">12.4 <span style="font-size:15px;color:#8d877e;font-weight:600;letter-spacing:0">km</span></div>' +
+          '<div class="a" style="left:18px;top:90px;font-size:11px;color:#8d877e;font-weight:500">Morning run · 1:02:18</div>' +
+          '<svg class="a" style="left:142px;top:44px" width="84" height="84" viewBox="0 0 84 84"><circle cx="42" cy="42" r="32" fill="none" stroke="#2a2825" stroke-width="8"/><circle cx="42" cy="42" r="32" fill="none" stroke="#ff5a36" stroke-width="8" stroke-linecap="round" stroke-dasharray="145 201" transform="rotate(-90 42 42)"/></svg>' +
+          '<div class="a b700" style="left:142px;top:70px;width:84px;text-align:center;font-size:17px;color:#fff;letter-spacing:-0.02em">72%</div>' +
+          '<div class="a" style="left:142px;top:90px;width:84px;text-align:center;font-size:9.5px;color:#8d877e;font-weight:500">of weekly goal</div>';
+        rows.forEach((r, i) => {
+          h += '<div class="a" style="left:14px;top:' + (136 + i * 44) + 'px;width:212px;height:38px;border-radius:10px;background:#201e1b;display:flex;align-items:center;padding:0 12px;gap:10px">' +
+            '<span style="color:#ff5a36;display:flex">' + ic(r[0], 15, 1.8) + "</span>" +
+            '<span style="font-size:12px;color:#b9b3a9;font-weight:500">' + r[1] + '</span><span style="margin-left:auto;font-size:12.5px;color:#fff;font-weight:600">' + r[2] + "</span></div>";
+        });
+        h += '<svg class="a" style="left:14px;top:272px" width="212" height="22" viewBox="0 0 212 22"><path d="M0 16 C14 14 20 6 34 8 S52 18 66 12 S86 2 100 6 S124 16 140 10 S168 2 182 8 S204 12 212 6" fill="none" stroke="#ff5a36" stroke-width="1.6" stroke-linecap="round"/></svg>';
+        h += '<div class="a" style="left:0;top:296px;width:240px;height:24px;border-top:1px solid #2a2825;background:#161513"></div>';
+        [28, 84, 140, 196].forEach((x, i) => {
+          h += '<div class="a" style="left:' + (x - 4) + 'px;top:302px;width:16px;height:12px;border-radius:3px;background:' + (i === 0 ? "#ff5a36" : "#3a3733") + '"></div>';
+        });
+        return h;
+      };
+
+      // 4 quote
+      DES[4] = () =>
+        '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#1b1a18"></div>' +
+        '<div class="a pf" style="left:18px;top:14px;font-size:110px;line-height:110px;font-weight:700;color:#ff5a36">“</div>' +
+        '<div class="a b600" style="left:20px;top:118px;width:200px;font-size:27px;line-height:31px;letter-spacing:-0.025em;color:#f5f2ec">Make the first five seconds count.</div>' +
+        '<div class="a" style="left:20px;top:250px;width:200px;height:1px;background:#3a3834"></div>' +
+        '<div class="a av" style="left:20px;top:266px;width:30px;height:30px;font-size:11px;background:#ff5a36">MC</div>' +
+        '<div class="a b600" style="left:58px;top:266px;font-size:12px;color:#f5f2ec">Maya Chen</div>' +
+        '<div class="a" style="left:58px;top:283px;font-size:11px;color:#8d877e;font-weight:500">Creative brief · p. 3</div>';
+
+      // 5 product lamp
+      DES[5] = () => {
+        const u = uid();
+        return '<svg class="fx" width="240" height="320" viewBox="0 0 240 320"><defs>' +
+          '<linearGradient id="wl' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece7de"/><stop offset="1" stop-color="#ddd6ca"/></linearGradient>' +
+          '<linearGradient id="fl' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdc5b8"/><stop offset="1" stop-color="#b9b0a2"/></linearGradient>' +
+          '<linearGradient id="bs' + u + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a59d90"/><stop offset=".45" stop-color="#f4efe6"/><stop offset="1" stop-color="#9a9285"/></linearGradient>' +
+          '<radialGradient id="dm' + u + '" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#fffdf8"/><stop offset=".55" stop-color="#e6dfd2"/><stop offset="1" stop-color="#9d9588"/></radialGradient>' +
+          '<linearGradient id="cn' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcfbb" stop-opacity=".55"/><stop offset="1" stop-color="#ffcfbb" stop-opacity="0"/></linearGradient>' +
+          '<radialGradient id="ss' + u + '" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3a342d" stop-opacity=".5"/><stop offset="1" stop-color="#3a342d" stop-opacity="0"/></radialGradient></defs>' +
+          '<rect width="240" height="320" fill="url(#wl' + u + ')"/><rect y="226" width="240" height="94" fill="url(#fl' + u + ')"/><rect y="225" width="240" height="1.5" fill="#f3eee5" opacity=".7"/>' +
+          '<ellipse cx="124" cy="262" rx="70" ry="13" fill="url(#ss' + u + ')"/>' +
+          '<path d="M82 126 L158 126 L190 244 L50 244 Z" fill="url(#cn' + u + ')"/>' +
+          '<rect x="117" y="132" width="7" height="116" rx="3" fill="url(#bs' + u + ')"/>' +
+          '<ellipse cx="120.5" cy="262" rx="44" ry="9" fill="#8f877a"/><rect x="76.5" y="244" width="88" height="18" fill="url(#bs' + u + ')"/><ellipse cx="120.5" cy="244" rx="44" ry="9" fill="#ebe5da"/><ellipse cx="120.5" cy="243" rx="36" ry="6.5" fill="#f7f3ec" opacity=".8"/>' +
+          '<path d="M66 132 A54 54 0 0 1 174 132 Z" fill="url(#dm' + u + ')"/><ellipse cx="120" cy="132" rx="54" ry="8" fill="#ffdccd"/><ellipse cx="120" cy="132" rx="54" ry="8" fill="none" stroke="#f4efe6" stroke-width="1.2"/>' +
+          GRAIN(u, ".1") + "</svg>" +
+          '<div class="a b600" style="left:16px;top:16px;height:22px;padding:0 9px;border-radius:11px;background:rgba(251,250,247,.85);font-size:11px;display:flex;align-items:center;color:#3a3834">Product</div>' +
+          '<div class="a b600" style="left:16px;bottom:34px;font-size:14px;letter-spacing:-0.01em;color:#1b1a18">Arc table lamp</div>' +
+          '<div class="a" style="left:16px;bottom:15px;font-size:11px;color:#4a463f;font-weight:500">Matte bone · $240</div>';
+      };
+
+      // 6 article link
+      DES[6] = () =>
+        '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#fbfaf7"></div>' +
+        '<div class="a" style="left:0;top:0;width:240px;height:138px;background:#1b1a18;overflow:hidden">' +
+        '<div class="a" style="left:132px;top:-34px;width:150px;height:150px;border-radius:50%;background:#ff5a36"></div>' +
+        '<div class="a" style="left:150px;top:62px;width:70px;height:70px;border-radius:50%;background:#e9e4da"></div>' +
+        '<div class="a pf" style="left:18px;top:20px;font-size:31px;line-height:35px;color:#f5f2ec;font-weight:500;letter-spacing:-0.01em">Warm<br><i>neutrals</i></div></div>' +
+        '<div class="a" style="left:16px;top:152px;width:14px;height:14px;border-radius:4px;background:#ff5a36"></div>' +
+        '<div class="a" style="left:36px;top:151px;font-size:11px;color:#8d877e;font-weight:500">fieldjournal.co</div>' +
+        '<div class="a b700" style="left:16px;top:174px;width:208px;font-size:15.5px;line-height:19px;letter-spacing:-0.015em;color:#1b1a18">Why warm neutrals are replacing cool gray in product design</div>' +
+        '<div class="a" style="left:16px;top:230px;width:208px;font-size:11.5px;line-height:16px;color:#6f6a62">A look at eight shipped redesigns and what they changed in their surfaces, borders and accent colors.</div>' +
+        '<div class="a av" style="left:16px;top:284px;width:20px;height:20px;font-size:8px;background:#5c574f">SK</div>' +
+        '<div class="a" style="left:42px;top:286px;font-size:11px;color:#8d877e;font-weight:500">Sana Kobayashi · 7 min read</div>';
+
+      // 7 sticky note
+      DES[7] = () => {
+        const items = [["Cut hero to two lines", 1], ["Vermilion for primary CTA", 1], ["Ask Dana re: image licensing", 0], ["Book photographer, Oct 29", 0], ["Send palette to print vendor", 0]];
+        let h = '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#ffd8ca"></div>' +
+          '<div class="a" style="left:0;top:0;width:240px;height:320px;background:linear-gradient(160deg,rgba(255,255,255,.35),rgba(255,255,255,0) 55%)"></div>' +
+          '<div class="a b700" style="left:20px;top:20px;font-size:16px;letter-spacing:-0.015em;color:#1b1a18">Before Friday</div>' +
+          '<div class="a" style="left:20px;top:46px;font-size:11px;color:#7a4a3a;font-weight:500">Hero + launch assets</div>';
+        items.forEach((it, i) => {
+          const y = 82 + i * 38;
+          h += '<div class="a" style="left:20px;top:' + (y + 2) + 'px;width:15px;height:15px;border-radius:4px;border:1.6px solid #1b1a18;background:' + (it[1] ? "#1b1a18" : "transparent") + ';display:flex;align-items:center;justify-content:center;color:#ffd8ca">' + (it[1] ? ic("check", 10, 3.2) : "") + "</div>" +
+            '<div class="a b500" style="left:44px;top:' + y + 'px;width:176px;font-size:13px;line-height:17px;color:#1b1a18;' + (it[1] ? "text-decoration:line-through;opacity:.55" : "") + '">' + it[0] + "</div>";
+        });
+        h += '<div class="a av" style="left:20px;top:282px;width:22px;height:22px;font-size:8.5px;background:#ff5a36">MC</div>' +
+          '<div class="a" style="left:48px;top:285px;font-size:11px;color:#7a4a3a;font-weight:500">Maya Chen · 2d ago</div>' +
+          '<svg class="a" style="right:0;bottom:0" width="36" height="36" viewBox="0 0 36 36"><path d="M36 0 L36 36 L0 36 Z" fill="#ffffff" opacity=".4"/><path d="M0 36 L36 0 L36 36 Z" fill="#e9b7a5"/></svg>';
+        return h;
+      };
+
+      // 8 woven texture
+      DES[8] = () => {
+        const u = uid();
+        let s = '<svg class="fx" width="240" height="320" viewBox="0 0 240 320"><defs><linearGradient id="vg' + u + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient></defs><rect width="240" height="320" fill="#2c2a27"/>';
+        const n = 16, c = 15;
+        for (let r = 0; r < 22; r++) for (let q = 0; q < n; q++) {
+          const on = (r + q) % 2 === 0;
+          const cc = on ? ((r * 3 + q * 5) % 11 === 0 ? "#ff5a36" : "#d8d1c4") : ((r + q * 2) % 7 === 0 ? "#6b655d" : "#3b3834");
+          s += '<rect x="' + (q * c) + '" y="' + (r * 15 - 5) + '" width="' + (c - 1.2) + '" height="' + (c - 1.2) + '" rx="1.2" fill="' + cc + '"/>';
+        }
+        s += '<rect width="240" height="320" fill="url(#vg' + u + ')"/>' + GRAIN(u, ".22") + "</svg>" +
+          '<div class="a b600" style="left:14px;bottom:14px;height:24px;padding:0 10px;border-radius:12px;background:rgba(27,26,24,.82);color:#f5f2ec;font-size:11px;display:flex;align-items:center;gap:6px">' + ic("image", 12, 1.8) + "Texture 04 · linen weave</div>";
+        return s;
+      };
+
+      // 9 typographic poster
+      DES[9] = () =>
+        '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#ff5a36"></div>' +
+        '<div class="a mn" style="left:16px;top:16px;font-size:9.5px;color:#fbf1e6;letter-spacing:.1em">FESTIVAL OF LIGHT</div>' +
+        '<div class="a mn" style="right:16px;top:16px;font-size:9.5px;color:#fbf1e6;letter-spacing:.1em">Nº 26</div>' +
+        '<div class="a ab" style="left:12px;top:52px;font-size:62px;line-height:56px;letter-spacing:-0.03em;color:#fbf1e6">SOL<br>STICE<br><span style="color:#1b1a18">26</span></div>' +
+        '<div class="a" style="left:16px;top:252px;width:208px;height:1px;background:#fbf1e6;opacity:.6"></div>' +
+        '<div class="a mn b500" style="left:16px;top:264px;font-size:11px;line-height:15px;color:#fbf1e6;letter-spacing:.04em">OCT 24–26<br>LISBON, PT</div>' +
+        '<div class="a" style="right:16px;top:262px;width:34px;height:34px;border-radius:50%;background:#1b1a18;color:#fbf1e6;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></div>';
+
+      // 10 chart
+      DES[10] = () => {
+        const u = uid();
+        return '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#fbfaf7"></div>' +
+          '<div class="a b600" style="left:16px;top:16px;font-size:13px;letter-spacing:-0.01em">Saves per board</div>' +
+          '<div class="a" style="right:16px;top:17px;height:20px;padding:0 8px;border-radius:6px;background:#efebe4;font-size:10.5px;font-weight:500;color:#4a463f;display:flex;align-items:center">7 days</div>' +
+          '<div class="a b700" style="left:16px;top:54px;font-size:42px;letter-spacing:-0.04em;color:#1b1a18">+34%</div>' +
+          '<div class="a" style="left:16px;top:104px;font-size:11px;color:#8d877e;font-weight:500">vs. previous week · 2,418 saves</div>' +
+          '<svg class="a" style="left:16px;top:136px" width="208" height="130" viewBox="0 0 208 130"><defs><linearGradient id="ar' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a36" stop-opacity=".3"/><stop offset="1" stop-color="#ff5a36" stop-opacity="0"/></linearGradient></defs>' +
+          '<g stroke="#e9e4da" stroke-width="1"><line x1="0" x2="208" y1="10" y2="10"/><line x1="0" x2="208" y1="45" y2="45"/><line x1="0" x2="208" y1="80" y2="80"/><line x1="0" x2="208" y1="115" y2="115"/></g>' +
+          '<path d="M0 104 L35 98 L69 92 L104 78 L139 74 L173 66 L208 58" fill="none" stroke="#b8b1a5" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>' +
+          '<path d="M0 100 L35 84 L69 90 L104 58 L139 48 L173 28 L208 14 L208 115 L0 115 Z" fill="url(#ar' + u + ')"/>' +
+          '<path d="M0 100 L35 84 L69 90 L104 58 L139 48 L173 28 L208 14" fill="none" stroke="#ff5a36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '<circle cx="208" cy="14" r="4.6" fill="#fff" stroke="#ff5a36" stroke-width="2.4"/></svg>' +
+          '<div class="a" style="left:16px;top:270px;width:208px;display:flex;justify-content:space-between;font-size:9.5px;color:#9a948a;font-weight:500"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>' +
+          '<div class="a" style="left:16px;top:294px;display:flex;gap:14px;font-size:10.5px;color:#6f6a62;font-weight:500"><span style="display:flex;align-items:center;gap:5px"><i style="width:8px;height:8px;border-radius:50%;background:#ff5a36;display:block"></i>This week</span><span style="display:flex;align-items:center;gap:5px"><i style="width:8px;height:2px;background:#b8b1a5;display:block"></i>Previous</span></div>';
+      };
+
+      // 11 arches
+      DES[11] = () => {
+        const u = uid();
+        let s = '<svg class="fx" width="240" height="320" viewBox="0 0 240 320"><defs>' +
+          '<linearGradient id="bg' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe9df"/><stop offset="1" stop-color="#e2d9cb"/></linearGradient>' +
+          '<linearGradient id="wl' + u + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e4dccd"/><stop offset=".7" stop-color="#d4c9b6"/><stop offset="1" stop-color="#b9ac96"/></linearGradient>' +
+          '<linearGradient id="in' + u + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2d2823"/><stop offset="1" stop-color="#4b433a"/></linearGradient></defs>' +
+          '<rect width="240" height="320" fill="url(#bg' + u + ')"/><circle cx="192" cy="58" r="22" fill="#ff5a36"/>' +
+          '<rect x="22" y="96" width="196" height="190" fill="url(#wl' + u + ')"/><rect x="22" y="96" width="196" height="4" fill="#f4eee3"/>';
+        [38, 96, 154].forEach((x, i) => {
+          s += '<path d="M' + x + ' 286 V198 A21 21 0 0 1 ' + (x + 42) + ' 198 V286 Z" fill="url(#in' + u + ')"/>' +
+            '<path d="M' + (x + 14) + ' 286 V204 A8 8 0 0 1 ' + (x + 42) + ' 204 V286 Z" fill="#171310" opacity=".55"/>';
+        });
+        [38, 96, 154].forEach((x) => { s += '<path d="M' + (x - 5) + ' 198 A26 26 0 0 1 ' + (x + 47) + ' 198" fill="none" stroke="#f1eadd" stroke-width="2"/>'; });
+        s += '<rect x="0" y="286" width="240" height="34" fill="#b7ab97"/><rect x="0" y="286" width="240" height="2" fill="#efe8db" opacity=".7"/>' +
+          '<path d="M0 320 L0 300 L240 296 L240 320 Z" fill="#9d9179"/>' + GRAIN(u, ".12") + "</svg>" +
+          '<div class="a b600" style="left:16px;top:16px;font-size:12px;color:#3a3834;letter-spacing:-0.01em">Casa Alba, Valencia</div>' +
+          '<div class="a mn" style="left:16px;top:34px;font-size:9.5px;color:#7a746a;letter-spacing:.06em">ARCH. R. MORENO · 1962</div>';
+        return s;
+      };
+
+      // 12 materials
+      DES[12] = () => {
+        const u = uid();
+        const mats = [
+          ["Oak, oiled", "Matt 20 · FSC", "radial-gradient(circle at 34% 28%,#e8d3b3,#b88f5f 62%,#8a6840)", "wood"],
+          ["Linen, natural", "280 gsm · 150 cm", "radial-gradient(circle at 34% 28%,#f4efe4,#d8cfbc 62%,#b9ae98)", "linen"],
+          ["Basalt, honed", "30 × 30 mm tile", "radial-gradient(circle at 34% 28%,#6a655d,#3a3834 62%,#222120)", "stone"],
+        ];
+        let h = '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#fbfaf7"></div>' +
+          '<div class="a b600" style="left:16px;top:16px;font-size:14px;letter-spacing:-0.01em">Materials</div>' +
+          '<div class="a" style="right:16px;top:19px;font-size:11px;color:#9a948a;font-weight:500">3 samples</div>';
+        mats.forEach((m, i) => {
+          const y = 52 + i * 70;
+          h += '<div class="a" style="left:16px;top:' + y + 'px;width:208px;height:62px;border-radius:10px;border:1px solid #ebe6dd;background:#fff"></div>' +
+            '<div class="a" style="left:24px;top:' + (y + 8) + 'px;width:46px;height:46px;border-radius:50%;background:' + m[2] + ';box-shadow:0 3px 8px rgba(40,30,20,.22), inset 0 -2px 4px rgba(0,0,0,.12)"></div>' +
+            '<div class="a b600" style="left:80px;top:' + (y + 14) + 'px;font-size:13px;letter-spacing:-0.01em">' + m[0] + "</div>" +
+            '<div class="a" style="left:80px;top:' + (y + 33) + 'px;font-size:11px;color:#8d877e;font-weight:500">' + m[1] + "</div>";
+        });
+        ["Warm", "Tactile", "Low gloss"].forEach((t, i) => {
+          h += '<div class="a" style="left:' + (16 + [0, 52, 118][i]) + 'px;top:268px;height:24px;padding:0 10px;border-radius:12px;background:#efebe4;font-size:11px;font-weight:500;color:#4a463f;display:flex;align-items:center">' + t + "</div>";
+        });
+        h += '<div class="a" style="left:16px;top:298px;font-size:10.5px;color:#9a948a;font-weight:500">Pulled from Studio Ledger · 12 Oct</div>';
+        return h;
+      };
+
+      // 13 record sleeve
+      DES[13] = () =>
+        '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#e9e4da"></div>' +
+        '<svg class="fx" width="240" height="320" viewBox="0 0 240 320"><circle cx="120" cy="124" r="92" fill="#1b1a18"/><circle cx="120" cy="124" r="70" fill="none" stroke="#3a3834" stroke-width="1"/><circle cx="120" cy="124" r="52" fill="none" stroke="#3a3834" stroke-width="1"/>' +
+        '<path d="M120 32 A92 92 0 0 1 120 216 Z" fill="#ff5a36"/><circle cx="120" cy="124" r="30" fill="#e9e4da"/><circle cx="120" cy="124" r="4" fill="#1b1a18"/>' +
+        '<path d="M28 124 A92 92 0 0 0 120 216 L120 124 Z" fill="#cfc8bb"/><path d="M120 124 L120 216 A92 92 0 0 1 28 124 Z" fill="none"/></svg>' +
+        '<div class="a ab" style="left:16px;top:236px;font-size:34px;line-height:34px;letter-spacing:-0.02em;color:#1b1a18">LOW TIDE</div>' +
+        '<div class="a mn" style="left:16px;top:280px;font-size:10px;color:#4a463f;letter-spacing:.08em">SIDE B · 33⅓ RPM</div>' +
+        '<div class="a mn" style="right:16px;top:280px;font-size:10px;color:#4a463f;letter-spacing:.08em">LP-014</div>';
+
+      // 14 UI kit
+      DES[14] = () =>
+        '<div class="a" style="left:0;top:0;width:240px;height:320px;background:#fbfaf7"></div>' +
+        '<div class="a b600" style="left:16px;top:16px;font-size:12px;color:#8d877e">Components / Forms</div>' +
+        '<div class="a b600" style="left:16px;top:42px;width:98px;height:34px;border-radius:9px;background:#ff5a36;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(200,60,30,.35)">Continue</div>' +
+        '<div class="a b600" style="left:122px;top:42px;width:86px;height:34px;border-radius:9px;border:1px solid #ddd8cf;background:#fff;color:#1b1a18;font-size:13px;display:flex;align-items:center;justify-content:center">Cancel</div>' +
+        '<div class="a b600" style="left:16px;top:96px;font-size:11.5px;color:#4a463f">Email</div>' +
+        '<div class="a" style="left:16px;top:114px;width:208px;height:36px;border-radius:9px;border:1.5px solid #ff5a36;background:#fff;box-shadow:0 0 0 3px rgba(255,90,54,.16);padding:0 11px;font-size:12.5px;display:flex;align-items:center;color:#1b1a18">maya@northfield.studio</div>' +
+        '<div class="a" style="left:16px;top:158px;font-size:11px;color:#8d877e;font-weight:500">We’ll send board invites here.</div>' +
+        '<div class="a" style="left:16px;top:190px;width:36px;height:21px;border-radius:11px;background:#ff5a36"><i class="a" style="right:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25)"></i></div>' +
+        '<div class="a b500" style="left:62px;top:192px;font-size:12.5px;color:#1b1a18">Notify on new saves</div>' +
+        '<div class="a" style="left:16px;top:226px;width:36px;height:21px;border-radius:11px;background:#d9d3c8"><i class="a" style="left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25)"></i></div>' +
+        '<div class="a b500" style="left:62px;top:228px;font-size:12.5px;color:#1b1a18">Weekly digest</div>' +
+        '<div class="a" style="left:16px;top:270px;width:208px;height:4px;border-radius:2px;background:#e9e4da"><i class="a" style="left:0;top:0;width:128px;height:4px;border-radius:2px;background:#ff5a36"></i><i class="a" style="left:121px;top:-5px;width:14px;height:14px;border-radius:50%;background:#fff;border:1.5px solid #ff5a36"></i></div>' +
+        '<div class="a" style="left:16px;top:288px;font-size:11px;color:#8d877e;font-weight:500">Grid density</div><div class="a b600" style="right:16px;top:288px;font-size:11px;color:#1b1a18">60%</div>';
+
+      // order of designs in the board grid (also the book page order)
+      const D = [0, 1, 4, 5, 9, 3, 2, 8, 6, 13, 12, 10, 11, 7, 14];
+      const N = 15;
+
+      /* ---------- window ---------- */
+      const PEOPLE = { MC: "#ff5a36", LO: "#3a3834", PN: "#8d877e", DW: "#b3a995", SK: "#5c574f" };
+      const av = (k, s, f) => '<span class="av" style="width:' + s + "px;height:" + s + "px;font-size:" + f + "px;background:" + PEOPLE[k] + (k === "DW" ? ";color:#2a2825" : "") + '">' + k + "</span>";
+      const nav = (top, icon, label, extra, cls) => '<div class="nav ' + (cls || "") + '" style="top:' + top + 'px">' + ic(icon, 16, 1.7) + label + (extra || "") + "</div>";
+      const boardNav = (top, color, label, ct, sel) => '<div class="nav ' + (sel ? "sel" : "") + '" style="top:' + top + 'px"><i class="dot" style="background:' + color + '"></i>' + label + '<span class="ct">' + ct + "</span></div>";
+
+      function windowHTML() {
+        let h = "";
+        // sidebar
+        h += '<div id="side">';
+        h += '<i class="tlt" style="left:20px;background:#ff5f57"></i><i class="tlt" style="left:40px;background:#febc2e"></i><i class="tlt" style="left:60px;background:#28c840"></i>';
+        h += '<div class="ws"><span class="wsl">N</span>Northfield Studio<span style="margin-left:auto;color:#9a948a;display:flex">' + ic("chevD", 14, 2) + "</span></div>";
+        h += '<div class="sbox">' + ic("search", 15, 1.8) + 'Search<span class="kbd">⌘K</span></div>';
+        h += nav(140, "home", "Home") + nav(172, "inbox", "Inbox", '<span class="bd">3</span>') + nav(204, "star", "Favorites") + nav(236, "clock", "Recent");
+        h += '<div class="sec" style="top:288px"><span>Boards</span><span style="display:flex;color:#9a948a">' + ic("plus", 14, 2) + "</span></div>";
+        h += boardNav(312, "#ff5a36", "Autumn campaign", "15", true) + boardNav(344, "#1b1a18", "Brand refresh 2.0", "42") + boardNav(376, "#8d877e", "Packaging 2027", "28") + boardNav(408, "#cfc8bb", "Retail pop-up", "19") + boardNav(440, "#5c574f", "Type tests", "64") + boardNav(472, "#b3a995", "Archive", "206");
+        h += '<div class="sec" style="top:526px"><span>Team</span><span style="display:flex;color:#9a948a">' + ic("plus", 14, 2) + "</span></div>";
+        [["MC", "Maya Chen", "Creative lead"], ["LO", "Liam Ortiz", "Art director"], ["PN", "Priya Nair", "Motion"], ["DW", "Dana Whitfield", "Producer"]].forEach((p, i) => {
+          h += '<div class="nav" style="top:' + (550 + i * 36) + 'px;height:34px;gap:10px">' + av(p[0], 24, 9.5) + '<span style="display:flex;flex-direction:column;line-height:14px"><span style="font-size:13px;font-weight:500">' + p[1] + '</span><span style="font-size:11px;color:#9a948a;font-weight:400">' + p[2] + "</span></span></div>";
+        });
+        h += '<div class="a" style="left:16px;top:872px;width:200px;font-size:11.5px;color:#6f6a62;font-weight:500;display:flex;justify-content:space-between"><span>Storage</span><span>4.2 of 10 GB</span></div>';
+        h += '<div class="a" style="left:16px;top:894px;width:200px;height:5px;border-radius:3px;background:#e1dcd3"><i class="a" style="left:0;top:0;width:84px;height:5px;border-radius:3px;background:#1b1a18"></i></div>';
+        h += '<div class="a" style="left:16px;top:914px;width:200px;font-size:11.5px;color:#9a948a;font-weight:500">Pinwheel Team · 14 seats</div>';
+        h += "</div>";
+        // top bar
+        h += '<div id="topbar"><div class="crumb"><span style="display:flex;color:#7a746a">' + ic("board", 16, 1.7) + '</span>Boards<span style="color:#b9b3a9">/</span><b>Autumn campaign</b><span style="display:flex;margin-left:2px">' + ic("star", 14, 1.9, ' fill="#ff5a36" style="color:#ff5a36"') + "</span></div>";
+        const stack = (k, first) => av(k, 24, 9.5).replace('style="', 'style="' + (first ? "" : "margin-left:-6px;box-shadow:0 0 0 2px #fbfaf8;"));
+        h += '<div class="a" style="left:1152px;top:14px;height:24px;display:flex">' + stack("MC", true) + stack("LO") + stack("PN") + stack("DW") + "</div>";
+        h += '<div class="a" style="left:1236px;top:19px;font-size:12px;color:#9a948a;font-weight:500">+3</div>';
+        h += '<div id="share" class="btn">' + ic("share", 14, 1.9) + 'Share</div><div id="present" class="btn">' + ic("play", 12, 2.2, ' fill="currentColor"') + "Present</div>";
+        h += "</div>";
+        // main
+        h += '<div id="main">';
+        h += '<div class="ttl">Autumn campaign</div>';
+        h += '<div class="meta">15 items<span style="color:#cbc5bb">·</span>Updated 2 hours ago by Maya Chen</div>';
+        h += '<div class="seg"><span class="on">' + ic("grid", 15, 1.8) + "</span><span>" + ic("board", 15, 1.8) + "</span><span>" + ic("list", 15, 1.8) + "</span></div>";
+        const chips = [["All", 15, 1], ["Images", 5], ["Screens", 3], ["Type", 3], ["Color", 2], ["Links", 1], ["Notes", 1]];
+        let cx = 86;
+        const widths = [58, 84, 90, 70, 74, 70, 74];
+        chips.forEach((c, i) => {
+          h += '<div class="chip ' + (c[2] ? "on" : "") + '" style="position:absolute;left:' + cx + 'px;top:69px">' + c[0] + "<i>" + c[1] + "</i></div>";
+          cx += widths[i] + 8;
+        });
+        h += '<div class="sortb">' + ic("sort", 14, 1.8) + "Recently added</div>";
+        h += "</div>";
+        // inspector
+        h += '<div id="insp">';
+        h += '<div class="ih">Details</div><span class="a" style="right:18px;top:14px;color:#9a948a;display:flex">' + ic("x", 16, 1.8) + "</span>";
+        h += '<div class="it">White Sands at dawn</div>';
+        const rows = [
+          ["image", "Type", "Image · JPG"], ["user", "Added by", av("MC", 18, 7) + "Maya Chen"], ["cal", "Added", "Oct 14, 2026"],
+          ["ruler", "Size", "3200 × 4267 px"], ["link", "Source", '<span style="color:#ff5a36">fieldjournal.co/sands</span>'],
+        ];
+        rows.forEach((r, i) => { h += '<div class="row" style="top:' + (96 + i * 30) + 'px"><span class="k">' + ic(r[0], 14, 1.7) + r[1] + '</span><span class="v">' + r[2] + "</span></div>"; });
+        h += '<div class="row" style="top:252px"><span class="k">' + ic("tag", 14, 1.7) + 'Tags</span><span class="v" style="gap:6px"><span class="tag">warm</span><span class="tag">landscape</span><span class="tag">hero</span></span></div>';
+        h += '<div class="a b600" style="left:20px;top:300px;font-size:12px;color:#9a948a">Palette</div>';
+        ["#ff5a36", "#f2d4c4", "#b8a191", "#8a7464", "#4c3f37"].forEach((c, i) => { h += '<i class="a" style="left:' + (20 + i * 38) + 'px;top:322px;width:30px;height:30px;border-radius:8px;background:' + c + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)"></i>'; });
+        h += '<div class="ln" style="top:376px"></div>';
+        h += '<div class="a b600" style="left:20px;top:392px;font-size:12px;color:#9a948a">Notes</div>';
+        h += '<div class="nt" style="top:416px;height:92px">Use this warmth for the autumn hero. Pair with the serif specimen and keep the sun as the only vermilion in the frame.</div>';
+        h += '<div class="ln" style="top:530px"></div>';
+        h += '<div class="a b600" style="left:20px;top:546px;font-size:12px;color:#9a948a">Comments · 3</div>';
+        h += '<div class="cm" style="top:574px">' + av("LO", 24, 9.5) + '<div><b>Liam Ortiz</b><span class="t">3h</span><br>Love this. Can we crop tighter on the ridge line?</div></div>';
+        h += '<div class="cm" style="top:640px">' + av("PN", 24, 9.5) + '<div><b>Priya Nair</b><span class="t">1h</span><br>Palette pulled into the style guide.</div></div>';
+        h += '<div class="cm" style="top:694px">' + av("DW", 24, 9.5) + '<div><b>Dana Whitfield</b><span class="t">42m</span><br>Licensing cleared for web and print.</div></div>';
+        h += '<div class="cmi" style="top:846px">Add a comment…<span class="kbd" style="margin-left:auto">↵</span></div>';
+        h += "</div>";
+        return h;
+      }
+      document.getElementById("win").innerHTML = windowHTML();
+
+      /* ---------- cards ---------- */
+      const world = document.getElementById("world");
+      const cursorEl = document.getElementById("cursor");
+      const SB = 1.6;       // scale in the book
+      const GAP = 3.6;      // page spacing in z
+      const SPREAD = 9;     // page spacing in z at the burst
+      const SW = 0.76;          // scale in the grid
+      const PITCH_X = 182.4 + 16, PITCH_Y = 243.2 + 16;
+      const GX0 = 428, GY0 = 234;
+      const cards = [];
+      for (let g = 0; g < N; g++) {
+        const el = document.createElement("div");
+        el.className = "card";
+        el.setAttribute("data-layout-allow-overlap", ""); el.setAttribute("data-layout-ignore", "");
+        el.id = "c" + g;
+        el.innerHTML = '<div class="face fr">' + DES[D[g]]() + (g === 0 ? '<div class="ring"></div>' : "") + '<div class="sh"></div><div class="gut"></div></div>' +
+          '<div class="face bk">' + DES[D[(g + 7) % N]]() + '<div class="sh"></div><div class="gut"></div></div>' +
+          '<i class="edge er" style="background:' + (g % 2 ? "#d9d1c2" : "#f1ece2") + '"></i><i class="edge eb" style="background:' + (g % 2 ? "#cdc4b4" : "#e6dfd2") + '"></i>';
+        el.style.setProperty("--t", (GAP / SB).toFixed(3) + "px");
+        world.insertBefore(el, cursorEl);
+        cards.push(el);
+      }
+
+      /* ---------- decorations ---------- */
+      const DEC = [
+        { id: "d0", css: "width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#ff8a6b,#ff5a36 58%,#e8431f)", s: 150, dx: -330, dy: -70, z: 170, rz: 0, blur: 1.5 },
+        { id: "d1", css: "width:86px;height:86px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#ff8a6b,#ff5a36 58%,#e8431f)", s: 86, dx: 540, dy: 300, z: 330, rz: 0, blur: 5 },
+        { id: "d2", css: "width:230px;height:230px;border-radius:50%;background:#ffd3c4", s: 230, dx: 150, dy: -120, z: -420, rz: 0, blur: 3 },
+        { id: "d3", css: "width:170px;height:170px;border-radius:22px;background:#cfc8bb", s: 170, dx: -740, dy: -120, z: -300, rz: 14, blur: 3 },
+        { id: "d4", css: "width:92px;height:92px;border-radius:14px;background:#1b1a18", s: 92, dx: 640, dy: -430, z: -120, rz: -16, blur: 1 },
+        { id: "d5", css: "width:190px;height:190px;border-radius:50%;border:3px dotted #ff5a36", s: 190, dx: 800, dy: -40, z: 120, rz: 0, blur: 0 },
+        { id: "d6", css: "width:46px;height:46px;border-radius:50%;background:#1b1a18", s: 46, dx: -100, dy: 330, z: 380, rz: 0, blur: 7 },
+        { id: "d7", css: "width:230px;height:230px;border-radius:50%;border:2px solid rgba(27,26,24,.3)", s: 230, dx: -560, dy: 330, z: -220, rz: 0, blur: 3 },
+      ];
+      DEC.forEach((d) => {
+        const el = document.createElement("div");
+        el.className = "dc";
+        el.setAttribute("data-layout-allow-overlap", ""); el.setAttribute("data-layout-ignore", "");
+        el.id = d.id;
+        el.style.cssText = d.css + ";margin:" + -d.s / 2 + "px 0 0 " + -d.s / 2 + "px;";
+        world.insertBefore(el, cursorEl);
+      });
+
+      /* ---------- helpers ---------- */
+      // seeded PRNG (mulberry32)
+      let seed = 20261126;
+      const rnd = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+      const rad = (d) => (d * Math.PI) / 180;
+
+      // translate values that put the card CENTRE at (cx, cy, cz) for given rotations and scale
+      // (card origin is the left edge middle: the hinge)
+      function place(cx, cy, cz, rotY, rotZ, s) {
+        const a = 120 * s, ty = rad(rotY), tz = rad(rotZ);
+        return { x: cx - a * Math.cos(ty) * Math.cos(tz), y: cy - 160 - a * Math.cos(ty) * Math.sin(tz), z: cz + a * Math.sin(ty) };
+      }
+
+      /* ---------- timeline ---------- */
+      const tl = gsap.timeline({ paused: true });
+      const CX = 960, CY = 540;
+      const T_CLICK = 1.62;
+      const T_FLIP = 2.6;
+      const T_FAN = 4.78;     // the last pages stop in a fan here, the burst follows
+      const T_BURST = 4.95;
+
+      gsap.set("#world", { transformPerspective: 0, force3D: true });
+
+      // card start poses (grid)
+      const gridPose = [];
+      cards.forEach((el, g) => {
+        const col = g % 5, row = Math.floor(g / 5);
+        const left = GX0 + col * PITCH_X, top = GY0 + row * PITCH_Y;
+        gridPose[g] = { x: left, y: top + 160 * SW - 160, z: 2, cx: left + 120 * SW, cy: top + 160 * SW };
+        gsap.set(el, { x: gridPose[g].x, y: gridPose[g].y, z: 2, scale: SW, rotationX: 0, rotationY: 0, rotationZ: 0, force3D: true });
+      });
+      gsap.set("#cursor", { x: 1740, y: 300, z: 6 });
+      gsap.set(".dc", { x: CX, y: CY, z: 0, scale: 0, opacity: 0 });
+      gsap.set("#glyph", { transformOrigin: "50% 50%" });
+
+      // camera: slow push on the window
+      tl.fromTo("#world", { z: 0 }, { z: 70, duration: T_CLICK + 0.28, ease: "power1.out", immediateRender: false }, 0);
+
+      // film grain: tile offset chosen per frame index
+      for (let f = 0; f < 315; f += 3) {
+        const ox = (f * 97) % 256, oy = (f * 61 + 37 * (f % 5)) % 256;
+        tl.set("#grain", { backgroundPosition: ox + "px " + oy + "px" }, f / 30);
+      }
+
+      // cursor travels to Present, hovers, clicks
+      tl.set("#cursor", { opacity: 1 }, 0.3);
+      tl.to("#cursor", { x: 1712, y: 128, duration: 0.7, ease: "power3.inOut" }, 0.45);
+      tl.to("#cursor", { x: 1782, y: 92, duration: 0.45, ease: "power2.out" }, 1.15);
+      tl.to("#present", { backgroundColor: "#ff6a48", duration: 0.12, ease: "power1.out" }, 1.5);
+      // click: press and ripple
+      tl.to("#cursor", { scale: 0.88, duration: 0.08, ease: "power2.out", transformOrigin: "3px 2px" }, T_CLICK);
+      tl.to("#present", { scale: 0.96, backgroundColor: "#e8431f", duration: 0.08, ease: "power2.out" }, T_CLICK);
+      tl.fromTo("#rip", { opacity: 0.9, scale: 0.3 }, { opacity: 0, scale: 1.5, duration: 0.45, ease: "power2.out", immediateRender: false }, T_CLICK);
+      tl.to("#cursor", { scale: 1, duration: 0.2, ease: "back.out(2)" }, T_CLICK + 0.1);
+      tl.to("#present", { scale: 1, duration: 0.2, ease: "back.out(2)" }, T_CLICK + 0.1);
+      tl.to("#cursor", { opacity: 0, duration: 0.25, ease: "power1.out" }, T_CLICK + 0.3);
+
+      // window recedes while the cards leave
+      tl.to("#win", { z: -320, opacity: 0, duration: 0.8, ease: "power2.in" }, T_CLICK + 0.04);
+      tl.to(".ring", { opacity: 0, duration: 0.15, ease: "power1.out" }, T_CLICK);
+
+      // ---- gather into a closed book (spine at world x 960, y 540) ----
+      const PAN = -120 * SB * 1.1;
+      const bookZ = (g) => 6 + (N - 1 - g) * GAP;
+      const leftZ = (g) => 6 + g * GAP;
+      cards.forEach((el, g) => {
+        const d = Math.hypot(gridPose[g].cx - CX, gridPose[g].cy - CY);
+        const t0 = T_CLICK + (d / 900) * 0.14;
+        const w = (g % 2 ? 1 : -1) * (3 + (g % 4) * 1.6);
+        tl.to(el, { x: 960, y: CY - 160, z: bookZ(g), scale: SB, duration: 1.15, ease: EXPO }, t0);
+        tl.to(el, { rotationZ: w, duration: 0.38, ease: "power2.out" }, t0);
+        tl.to(el, { rotationZ: 0, duration: 0.7, ease: "power3.inOut" }, t0 + 0.38);
+      });
+
+      // camera orbit to show the book
+      tl.to("#world", { z: 150, rotationX: 8, rotationY: -26, duration: 1.5, ease: "power3.inOut" }, 1.9);
+      // camera pans so the closed card sits at screen centre, then back to the spine as the pages open
+      tl.to("#world", { x: PAN, duration: 0.9, ease: "power2.inOut" }, T_CLICK);
+      tl.to("#world", { x: 0, duration: 0.9, ease: "power2.inOut" }, 2.7);
+      // gutter shade at the spine while the book exists
+      tl.to(".gut", { opacity: 1, duration: 0.8, ease: "power1.out" }, T_CLICK + 0.4);
+      tl.to(".gut", { opacity: 0, duration: 0.25, ease: "power1.in" }, T_BURST - 0.05);
+
+      // ---- flipbook: pages turn about the spine, accelerating; the last six stop in a fan ----
+      const gaps = [0.20, 0.18, 0.16, 0.15, 0.13, 0.12, 0.11, 0.10, 0.09, 0.085, 0.08, 0.075, 0.07, 0.07];
+      const FAN_FROM = 9;
+      const FAN = [-168, -146, -124, -102, -80, -58];   // end angle of pages 9-14
+      // last six pages: front-loaded ease, 0.7 * out(1.6) + 0.3 * inOut(1.6), so their motion fills the gap while the first nine settle
+      const FANEASE = (t) => {
+        const o = 1 - Math.pow(1 - t, 1.6);
+        const io = t < 0.5 ? 0.5 * Math.pow(2 * t, 1.6) : 1 - 0.5 * Math.pow(2 * (1 - t), 1.6);
+        return 0.7 * o + 0.3 * io;
+      };
+      let tf = T_FLIP;
+      const flipEnds = [];
+      cards.forEach((el, g) => {
+        const fan = g >= FAN_FROM;
+        const dur = fan ? T_FAN - tf : 0.64 - 0.016 * g;
+        tl.to(el, { rotationY: fan ? FAN[g - FAN_FROM] : -180, z: fan ? 6 + g * SPREAD : leftZ(g), duration: dur, ease: fan ? FANEASE : "power2.inOut" }, tf);
+        tl.to("#c" + g + " .fr .sh", { opacity: 0.32, duration: dur * 0.5, ease: "none" }, tf);
+        tl.fromTo("#c" + g + " .bk .sh", { opacity: 0.32 }, { opacity: 0, duration: dur * 0.5, ease: "none", immediateRender: false }, tf + dur * 0.5);
+        tl.set("#c" + g + " .bk .sh", { opacity: 0.32 }, 0);
+        flipEnds[g] = tf + dur;
+        if (g < gaps.length) tf += gaps[g];
+      });
+      tl.fromTo("#world", { rotationY: -26 }, { rotationY: 20, duration: T_BURST - 3.4, ease: "none", immediateRender: false }, 3.4);
+      // slow push while the pages turn
+      tl.to("#world", { z: 260, duration: T_BURST - 0.1 - 3.4, ease: "power1.in" }, 3.4);
+
+      // anticipation
+      tl.to(cards, { scale: SB * 0.93, duration: 0.1, ease: "power2.in" }, T_BURST - 0.1);
+      tl.to("#world", { z: 200, duration: 0.1, ease: "power2.in" }, T_BURST - 0.1);
+      // landed pages fan apart in z so the planes do not cross when the burst starts
+      cards.forEach((el, g) => {
+        if (g >= FAN_FROM) return;
+        tl.to(el, { z: 6 + g * SPREAD, duration: 0.1, ease: "power2.in" }, T_BURST - 0.1);
+      });
+
+      // ---- burst into a 3D collage ----
+      // [dx, dy, z, rotX, rotY, rotZ, scale, dz(drift), blur]
+      const TGT = [
+        [-40, 330, 220, -5, 6, -9, 1.0, 120],
+        [-640, -250, 120, 8, 14, -9, 0.95, 90],
+        [-480, -310, -40, 5, 10, -6, 0.85, 70],
+        [-250, -330, -220, -6, -12, 6, 0.8, 60],
+        [620, -200, -90, -8, 18, 10, 0.9, 80],
+        [-820, 90, -260, 5, 22, 4, 0.85, 50],
+        [-430, 130, 190, -4, -10, -12, 1.1, 120],
+        [440, -130, -330, 4, 8, 3, 0.8, 40],
+        [380, 120, 90, 6, -16, 8, 0.95, 100],
+        [850, 150, 300, -5, -25, -7, 1.05, 160],
+        [-650, 390, 40, 7, 20, 7, 0.9, 80],
+        [-200, 420, 340, -6, 12, -4, 1.0, 170],
+        [250, 430, -150, 5, -14, -10, 0.85, 60],
+        [680, 410, 160, -4, 16, 6, 0.9, 110],
+        [90, -300, 260, 6, -20, -5, 1.0, 90],
+      ];
+      // depth of field: blur from distance to the focus plane (z ~ 80)
+      const dof = (zeff) => Math.max(0, Math.abs(zeff - 260) - 160) * 0.0095;
+      cards.forEach((el, g) => {
+        const t = TGT[g];
+        const delay = 0.03 * (g % 5) + rnd() * 0.04;
+        const rotYEnd = -360 + t[4];
+        const p = place(CX + t[0], CY + t[1], t[2], t[4], t[5], t[6]);
+        tl.to(el, { x: p.x, y: p.y, z: p.z, rotationX: t[3], rotationY: rotYEnd, rotationZ: t[5], scale: t[6], duration: 1.35, ease: EXPO }, T_BURST + delay);
+        // drift toward camera, slow and linear after the burst
+        const t1 = T_BURST + 1.25;
+        tl.to(el, { z: "+=" + t[7], x: "+=" + (t[0] > 0 ? 24 : -24), rotationZ: "+=" + (g % 2 ? 2.5 : -2.5), rotationY: "+=" + (g % 3 === 0 ? 4 : -3), duration: 10.5 - t1, ease: "none" }, t1);
+        // depth blur: motion blur during the burst, then DOF
+        const faces = "#c" + g + " .face";
+        tl.set(faces, { filter: "blur(0px)" }, T_BURST - 0.02);
+        tl.to(faces, { filter: "blur(3px)", duration: 0.12, ease: "power1.out" }, T_BURST);
+        tl.to(faces, { filter: "blur(" + dof(t[2] + 150).toFixed(2) + "px)", duration: 0.55, ease: "power2.out" }, T_BURST + delay + 0.16);
+        tl.to(faces, { filter: "blur(" + dof(t[2] + t[7] + 330).toFixed(2) + "px)", duration: 10.5 - t1, ease: "none" }, t1);
+      });
+      // flat shapes
+      DEC.forEach((d, i) => {
+        const el = "#" + d.id;
+        const delay = 0.05 + i * 0.015;
+        tl.set(el, { opacity: 1 }, T_BURST);
+        tl.to(el, { x: CX + d.dx, y: CY + d.dy, z: d.z, scale: 1, rotationZ: d.rz, duration: 1.3, ease: EXPO }, T_BURST + delay);
+        tl.to(el, { z: "+=" + (60 + i * 18), duration: 10.5 - (T_BURST + 1.25), ease: "none" }, T_BURST + 1.25);
+        tl.set(el, { filter: "blur(0px)" }, T_BURST - 0.02);
+        tl.to(el, { filter: "blur(" + d.blur + "px)", duration: 1.0, ease: "power2.out" }, T_BURST + delay + 0.1);
+      });
+
+      // camera: fast settle then a long push, never stops
+      tl.to("#world", { z: 150, rotationX: 0, rotationY: -4, duration: 1.5, ease: EXPO }, T_BURST);
+      tl.to("#world", { z: 330, rotationY: 5, rotationX: -2, duration: 10.5 - (T_BURST + 1.5), ease: "none" }, T_BURST + 1.5);
+
+      // ---- lockup ----
+      tl.to("#veil", { opacity: 1, duration: 0.9, ease: "power2.out" }, 7.7);
+      tl.fromTo("#glyph", { opacity: 0, scale: 0.4, rotation: -200 }, { opacity: 1, scale: 1, rotation: 0, duration: 1.1, ease: EXPO, immediateRender: false }, 8.0);
+      tl.fromTo("#word", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: EXPO, immediateRender: false }, 8.2);
+      tl.fromTo("#tag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7, ease: EXPO, immediateRender: false }, 8.4);
+      tl.to("#blades", { rotation: 8, svgOrigin: "32 32", duration: 2.2, ease: "none" }, 8.4);
+
+      tl.set({}, {}, 10.5);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

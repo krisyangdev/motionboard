@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #09090b;
+        --card: #111215;
+        --card2: #17181c;
+        --line: rgba(255, 255, 255, 0.08);
+        --ink: #ededf0;
+        --sub: #9b9ca4;
+        --mut: #64666e;
+        --acc: #c9f24b;
+        --acc-ink: #0b0d06;
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+        --d: 905;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg);
+        font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased;
+        font-variant-numeric: tabular-nums;
+      }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      svg { display: block; flex: none; }
+      .a { position: absolute; }
+
+      /* ---------- camera ---------- */
+      #glow { background: radial-gradient(ellipse 52% 60% at 50% 50%, rgba(201, 242, 75, 0.10) 0%, rgba(201, 242, 75, 0) 70%); }
+      #stage { perspective: calc(var(--d) * 1px); perspective-origin: 50% 50%; }
+      #world { position: absolute; left: 960px; top: 540px; width: 0; height: 0; transform-style: preserve-3d; }
+      #world > * { position: absolute; }
+      #wins, #rings, #slices { left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+
+      /* hall */
+      .wall { background-color: #0a0b0e; }
+      #floor, #ceil {
+        width: 2760px; height: 2800px; margin: -1400px 0 0 -1380px;
+        background:
+          repeating-linear-gradient(to bottom, rgba(255,255,255,0) 0 278px, rgba(255,255,255,0.12) 278px 280px),
+          repeating-linear-gradient(to right, rgba(255,255,255,0) 0 343px, rgba(255,255,255,0.075) 343px 345px),
+          linear-gradient(to bottom, #171a20 0%, #0b0c0f 70%);
+      }
+      #wl, #wr {
+        width: 2800px; height: 1552px; margin: -776px 0 0 -1400px;
+        background:
+          repeating-linear-gradient(to right, rgba(255,255,255,0) 0 278px, rgba(255,255,255,0.10) 278px 280px),
+          linear-gradient(to right, #08090b 0%, #14161b 100%);
+      }
+      .strip {
+        width: 6px; height: 2800px; margin: -1400px 0 0 -3px; border-radius: 3px;
+        background: var(--acc); box-shadow: 0 0 22px 4px rgba(201, 242, 75, 0.55);
+      }
+      .rg { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+      .rb { position: absolute; background: rgba(255, 255, 255, 0.20); }
+      .rb.h { width: 2756px; height: 2px; margin: -1px 0 0 -1378px; }
+      .rb.v { width: 2px; height: 1548px; margin: -774px 0 0 -1px; }
+      #endw { width: 2799px; height: 1575px; margin: -787px 0 0 -1399px; background: #0b0c0e; }
+      #dash { position: absolute; left: 74px; top: 42px; width: 1866px; height: 1050px; transform: scale(1.42); transform-origin: 0 0; }
+      #dimw { position: absolute; left: 0; top: 0; width: 2799px; height: 1575px; background: #09090b; opacity: 0.22; }
+      #dimL {
+        position: absolute; left: 0; top: 0; width: 2799px; height: 1575px; opacity: 0;
+        background: linear-gradient(90deg, rgba(9,9,11,0.985) 0%, rgba(9,9,11,0.97) 60%, rgba(9,9,11,0.72) 72%, rgba(9,9,11,0.55) 86%, rgba(9,9,11,0.50) 100%);
+      }
+
+      /* floating windows */
+      .wp { position: absolute; }
+      .wi {
+        position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 18px; overflow: hidden;
+        background: var(--card); box-shadow: 0 0 0 1px rgba(255,255,255,0.10), 0 40px 90px rgba(0,0,0,0.55);
+      }
+      .wk { position: absolute; left: 0; top: 0; width: 440px; transform: scale(1.18); transform-origin: 0 0; }
+
+      /* phone */
+      #phone { left: -205px; top: -432px; width: 410px; height: 864px; transform-style: preserve-3d; }
+      .sl { position: absolute; left: 0; top: 0; width: 410px; height: 864px; border-radius: 64px; background: #2d2e33; box-shadow: inset 0 0 0 2px #494a51; }
+      #glass {
+        position: absolute; left: 0; top: 0; width: 410px; height: 864px; border-radius: 64px; background: #000;
+        box-shadow: inset 0 0 0 2px #55565d, inset 0 0 0 4px #1b1c1f; transform: translateZ(8px);
+      }
+      #screen { position: absolute; left: 10px; top: 10px; width: 390px; height: 844px; border-radius: 54px; overflow: hidden; background: #0b0b0d; }
+      #shine { position: absolute; left: 0; top: 0; width: 410px; height: 864px; border-radius: 64px; background: linear-gradient(115deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 32%); pointer-events: none; }
+      .cp { position: absolute; transform: translateZ(170px); }
+      .ci {
+        display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 22px 0 16px; border-radius: 27px; white-space: nowrap;
+        background: rgba(24, 25, 29, 0.94); box-shadow: 0 0 0 1px rgba(255,255,255,0.14), 0 22px 50px rgba(0,0,0,0.5);
+        font-size: 22px; font-weight: 500; letter-spacing: -0.015em;
+      }
+      .ci b { font-weight: 600; }
+      .ci .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 4px rgba(201, 242, 75, 0.22); }
+      .ci .up { color: var(--acc); font-weight: 600; }
+
+      /* shared UI */
+      .row { display: flex; align-items: center; }
+      .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+      .hd { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 0; }
+      .hd .tt { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+      .hd .tt svg { color: var(--sub); }
+      .s { font-size: 11.5px; color: var(--sub); }
+      .m { color: var(--mut); }
+      .chip {
+        display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 6px; white-space: nowrap;
+        font-size: 11.5px; font-weight: 500; background: rgba(255,255,255,0.06); color: var(--sub);
+      }
+      .chip.up { background: rgba(201, 242, 75, 0.12); color: var(--acc); }
+      .btn {
+        display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px; border-radius: 8px; white-space: nowrap;
+        font-size: 12.5px; font-weight: 500; color: var(--ink); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
+      }
+      .btn.pri { background: var(--acc); color: var(--acc-ink); border-color: transparent; font-weight: 600; }
+      .kbd { font-size: 10.5px; color: var(--sub); padding: 1px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); }
+      .av {
+        display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; flex: none;
+        color: #fff; font-weight: 600; letter-spacing: 0;
+      }
+      .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+      .hr { height: 1px; background: var(--line); }
+
+      /* funnel */
+      .fstep { padding: 0 16px; }
+      .fbar { height: 30px; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 600; color: var(--acc-ink); }
+      .fdrop { font-size: 11px; color: var(--mut); padding-left: 2px; }
+
+      /* retention */
+      .rt { display: grid; padding: 12px 16px 0; row-gap: 4px; column-gap: 4px; font-size: 11.5px; }
+      .rt .h { color: var(--mut); font-weight: 500; text-align: center; height: 20px; }
+      .rt .c { height: 30px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-weight: 500; color: #f4ffd0; }
+      .rt .l { display: flex; align-items: center; height: 30px; color: var(--sub); }
+      .rt .u { display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; height: 30px; color: var(--mut); }
+
+      /* lists */
+      .li { display: flex; align-items: center; gap: 10px; padding: 0 16px; }
+      .li .nm { font-size: 13px; font-weight: 500; }
+      .li .ev { font-size: 11.5px; color: var(--sub); }
+      .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 3px rgba(201,242,75,0.2); }
+      .bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.06); overflow: hidden; }
+      .bar i { display: block; height: 100%; border-radius: 3px; background: var(--acc); }
+
+      /* dashboard */
+      #side { position: absolute; left: 0; top: 0; width: 232px; height: 1050px; background: #0c0d10; border-right: 1px solid var(--line); }
+      #main { position: absolute; left: 232px; top: 0; width: 1634px; height: 1050px; background: #0a0a0c; }
+      .nav { display: flex; align-items: center; gap: 10px; height: 34px; margin: 0 10px; padding: 0 10px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--sub); }
+      .nav.on { background: rgba(255,255,255,0.07); color: var(--ink); }
+      .nav .bd { margin-left: auto; min-width: 20px; height: 20px; border-radius: 10px; padding: 0 6px; font-size: 11px; font-weight: 600; background: var(--acc); color: var(--acc-ink); display: flex; align-items: center; justify-content: center; }
+      .sec { margin: 18px 20px 6px; font-size: 11.5px; font-weight: 500; color: var(--mut); }
+      .kpi { position: absolute; height: 120px; padding: 16px 18px; }
+      .kpi .lb { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--sub); font-weight: 500; }
+      .kpi .vl { margin-top: 10px; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; }
+      .kpi svg.sp { position: absolute; right: 18px; bottom: 18px; }
+
+      /* ---------- overlays ---------- */
+      #vig { background: radial-gradient(ellipse 80% 85% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%); pointer-events: none; }
+      #fade { background: #000; }
+      #lock { position: absolute; left: 170px; top: 0; width: 900px; height: 1080px; display: flex; flex-direction: column; justify-content: center; }
+      #mark { width: 88px; height: 88px; opacity: 0; }
+      #wm { margin-top: 34px; font-size: 156px; line-height: 150px; font-weight: 600; letter-spacing: -0.045em; opacity: 0; }
+      #tg { margin-top: 26px; font-size: 40px; line-height: 50px; font-weight: 500; letter-spacing: -0.02em; color: var(--sub); opacity: 0; }
+      #url {
+        margin-top: 44px; width: 292px; height: 64px; border-radius: 32px; display: flex; align-items: center; justify-content: center; gap: 10px;
+        font-size: 28px; font-weight: 600; color: var(--acc-ink); background: var(--acc); opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.5" data-width="1920" data-height="1080">
+      <div id="glow" class="full"></div>
+
+      <div id="stage" class="full">
+        <div id="world">
+          <!-- hall -->
+          <div id="floor" class="wall" data-layout-ignore style="transform: translate3d(0, 776px, -1400px) rotateX(90deg)"></div>
+          <div id="ceil" class="wall" data-layout-ignore style="transform: translate3d(0, -776px, -1400px) rotateX(90deg)"></div>
+          <div id="wl" class="wall" data-layout-ignore style="transform: translate3d(-1380px, 0, -1400px) rotateY(90deg)"></div>
+          <div id="wr" class="wall" data-layout-ignore style="transform: translate3d(1380px, 0, -1400px) rotateY(90deg)"></div>
+          <div class="strip st" data-layout-ignore style="transform: translate3d(-1380px, 776px, -1400px) rotateX(90deg)"></div>
+          <div class="strip st" data-layout-ignore style="transform: translate3d(1380px, 776px, -1400px) rotateX(90deg)"></div>
+          <div class="strip st" data-layout-ignore style="transform: translate3d(-1380px, -776px, -1400px) rotateX(90deg)"></div>
+          <div class="strip st" data-layout-ignore style="transform: translate3d(1380px, -776px, -1400px) rotateX(90deg)"></div>
+          <div id="rings"></div>
+          <div id="endw" style="transform: translate3d(0, 0, -2800px)">
+            <div id="dash" data-layout-ignore></div>
+            <div id="dimw"></div>
+            <div id="dimL"></div>
+          </div>
+
+          <!-- floating windows -->
+          <div id="wins" data-layout-ignore></div>
+
+          <!-- subject -->
+          <div id="phone">
+            <div id="slices"></div>
+            <div id="glass">
+              <div id="screen" data-layout-ignore></div>
+              <div id="shine"></div>
+            </div>
+            <div class="cp" data-layout-ignore style="left: 455px; top: 82px;">
+              <div class="ci" id="chipA"><span class="dot"></span><span><b>2,418</b> online now</span></div>
+            </div>
+            <div class="cp" data-layout-ignore style="left: -355px; top: 732px;">
+              <div class="ci" id="chipB"><span>Signups</span><span class="up">+6.1%</span><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#c9f24b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="vig" class="full"></div>
+
+      <div id="lock">
+        <svg id="mark" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#c9f24b"/><path d="M12.5 17 24 36.5 35.5 17" stroke="#0b0d06" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="24" cy="12.5" r="3.4" fill="#0b0d06"/></svg>
+        <div id="wm">Vantage</div>
+        <div id="tg">Live product analytics on every screen.</div>
+        <div id="url">vantage.app</div>
+      </div>
+
+      <div id="fade" class="full"></div>
+    </div>
+
+    <script>
+      /* ---------- helpers ---------- */
+      const ICON = {
+        activity: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+        dash: '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
+        filter: '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+        users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+        bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+        sliders: '<path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
+        search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+        down: '<path d="m6 9 6 6 6-6"/>',
+        cal: '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
+        share: '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/>',
+        zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+        globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+        repeat: '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+        layers: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+        flask: '<path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/>',
+        home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+        trend: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+        card: '<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>',
+        file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+        more: '<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+        info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+        up: '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
+        dn: '<path d="M7 7l10 10"/><path d="M17 7v10H7"/>'
+      };
+      const ic = (n, s, sw, st) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.6) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (st ? ' style="' + st + '"' : "") + ">" + ICON[n] + "</svg>";
+
+      function rng(seed) {
+        let a = seed >>> 0;
+        return function () {
+          a = (a + 0x6d2b79f5) >>> 0;
+          let t = a;
+          t = Math.imul(t ^ (t >>> 15), t | 1);
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      function series(seed, n, base, wob, trend, wave) {
+        const r = rng(seed);
+        const out = [];
+        let v = base;
+        for (let i = 0; i < n; i++) {
+          v += (r() - 0.46) * wob + trend;
+          out.push(v + Math.sin(i * (wave || 0.9)) * wob * 0.7);
+        }
+        return out;
+      }
+      function smooth(pts) {
+        let d = "M" + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
+        for (let i = 0; i < pts.length - 1; i++) {
+          const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+          const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+          const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+          d += " C" + c1x.toFixed(1) + " " + c1y.toFixed(1) + " " + c2x.toFixed(1) + " " + c2y.toFixed(1) + " " + p2[0].toFixed(1) + " " + p2[1].toFixed(1);
+        }
+        return d;
+      }
+      function toPts(vals, w, h, lo, hi, padT, padB) {
+        const n = vals.length;
+        return vals.map((v, i) => [(i / (n - 1)) * w, padT + (1 - (v - lo) / (hi - lo)) * (h - padT - padB)]);
+      }
+      let GID = 0;
+      function area(pts, h, col, id) {
+        const g = "g" + ++GID;
+        return '<defs><linearGradient id="' + g + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity="0.32"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
+          '<path ' + (id ? 'id="' + id + '" ' : "") + 'd="' + smooth(pts) + " L" + pts[pts.length - 1][0].toFixed(1) + " " + h + " L0 " + h + ' Z" fill="url(#' + g + ')"/>';
+      }
+      const fmt = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      const PEOPLE = {
+        maya: ["Maya Chen", "MC", "#9a5470"],
+        liam: ["Liam Ortiz", "LO", "#4f6fa8"],
+        priya: ["Priya Nair", "PN", "#7a62a8"],
+        sofia: ["Sofia Reyes", "SR", "#3f8a86"],
+        ravi: ["Ravi Patel", "RP", "#4f8a5e"],
+        dana: ["Dana Whitfield", "DW", "#a8774a"],
+        alex: ["Alex Rivera", "AR", "#555b66"],
+        noah: ["Noah Berg", "NB", "#8a7a43"]
+      };
+      const av = (k, s, f) => '<span class="av" style="width:' + s + "px;height:" + s + "px;font-size:" + f + "px;background:" + PEOPLE[k][2] + '">' + PEOPLE[k][1] + "</span>";
+
+      /* ---------- components ---------- */
+      function evRows(list, h) {
+        return list.map((e) => {
+          const p = PEOPLE[e[0]];
+          return '<div class="li" style="height:' + h + 'px">' + av(e[0], 28, 10.5) +
+            '<div style="flex:1;min-width:0"><div class="nm">' + p[0] + '</div><div class="ev mono">' + e[1] + '</div></div><div class="s m">' + e[2] + "</div></div>";
+        }).join("");
+      }
+      const EVT = [
+        ["maya", "checkout_completed", "4s"], ["liam", "plan_upgraded", "11s"], ["sofia", "report_exported", "18s"], ["ravi", "invite_sent", "26s"],
+        ["dana", "page_viewed /pricing", "33s"], ["noah", "signup_completed", "41s"], ["alex", "dashboard_shared", "52s"], ["priya", "funnel_created", "1m"]
+      ];
+      function liveCard(rows, h, rowH, newRow) {
+        return '<div class="hd"><div class="tt"><span class="pulse"></span>Live events</div><span class="chip">Last 5 min ' + ic("down", 12, 2) + "</span></div>" +
+          '<div class="s" style="padding:4px 16px 8px 32px">Streaming from web, iOS and Android</div><div class="hr"></div>' +
+          '<div style="overflow:hidden;height:' + (rows * rowH) + 'px">' +
+          (newRow ? '<div class="newrow" style="height:0;opacity:0;overflow:hidden;background:rgba(201,242,75,0.12)">' + evRows([["priya", "signup_completed", "now"]], rowH) + "</div>" : "") +
+          evRows(EVT.slice(0, rows), rowH) + "</div>";
+      }
+      function funnelCard(title, steps, blockH, foot, footDelta, compact) {
+        const top = steps[0][1];
+        let h = '<div class="hd"><div class="tt">' + ic("filter", 15) + title + '</div><span class="chip">Last 7 days ' + ic("down", 12, 2) + "</span></div>" +
+          (compact ? '<div style="height:10px"></div>' : '<div class="s" style="padding:4px 16px 12px 39px">Web and mobile, all countries</div>');
+        steps.forEach((s, i) => {
+          const pct = (s[1] / top) * 100;
+          h += '<div class="fstep" style="height:' + blockH + 'px">' +
+            '<div class="row" style="justify-content:space-between;margin-bottom:6px"><span style="font-size:12.5px;font-weight:500">' + s[0] + '</span><span style="font-size:12.5px;font-weight:600">' + fmt(s[1]) + "</span></div>" +
+            '<div class="fbar" style="' + (compact ? "height:24px;" : "") + 'width:' + Math.max(pct, 14).toFixed(1) + "%;background:rgba(201,242,75," + (0.95 - i * 0.2).toFixed(2) + ')">' + pct.toFixed(1) + "%</div>" +
+            (i < steps.length - 1 ? '<div class="fdrop" style="margin-top:5px">&minus;' + (100 - (steps[i + 1][1] / s[1]) * 100).toFixed(1) + "% drop-off</div>" : "") + "</div>";
+        });
+        h += '<div class="hr" style="margin:4px 0 0"></div><div class="row" style="justify-content:space-between;padding:12px 16px"><div><div class="s">' + foot[0] + '</div><div style="font-size:24px;font-weight:600;letter-spacing:-0.03em;margin-top:2px">' + foot[1] + '</div></div><span class="chip up">' + ic("up", 12, 2) + footDelta + "</span></div>";
+        return h;
+      }
+      function retCard(title, labels, users, seed, cols) {
+        const r = rng(seed);
+        const gc = "58px 56px repeat(" + cols + ", 1fr)";
+        let h = '<div class="hd"><div class="tt">' + ic("repeat", 15) + title + '</div><span class="chip">By signup date ' + ic("down", 12, 2) + "</span></div>";
+        h += '<div class="rt" style="grid-template-columns:' + gc + '"><div class="h" style="text-align:left">Cohort</div><div class="h" style="text-align:right;padding-right:10px">Users</div>';
+        for (let c = 0; c < cols; c++) h += '<div class="h">W' + c + "</div>";
+        for (let i = 0; i < labels.length; i++) {
+          h += '<div class="l">' + labels[i] + '</div><div class="u">' + fmt(users[i]) + "</div>";
+          let v = 100;
+          for (let c = 0; c < cols; c++) {
+            if (c > 0) v = Math.max(18, v * (0.56 + r() * 0.2) + (c > 2 ? 12 : 0) - c * 2);
+            if (c >= cols - i + 0 && i > 0 && c > cols - 1 - (i - 1)) { h += '<div class="c" style="background:transparent"></div>'; continue; }
+            h += '<div class="c" style="background:rgba(201,242,75,' + (0.14 + (v / 100) * 0.62).toFixed(2) + ');color:' + (v > 60 ? "#0b0d06" : "#e9f7b8") + '">' + Math.round(v) + "%</div>";
+          }
+        }
+        h += "</div>";
+        return h;
+      }
+      function errCard() {
+        const vals = series(53, 12, 60, 6, -2.4, 1.1);
+        const pts = toPts(vals, 408, 150, Math.min(...vals) - 8, Math.max(...vals) + 6, 6, 6);
+        const mo = ["Nov 18", "Nov 19", "Nov 20", "Nov 21", "Nov 22", "Nov 23", "Nov 24"];
+        let h = '<div class="hd"><div class="tt">' + ic("activity", 15) + 'Error rate</div><span class="chip">Last 7 days ' + ic("down", 12, 2) + "</span></div>" +
+          '<div class="row" style="padding:12px 16px 0;gap:10px"><span style="font-size:34px;font-weight:600;letter-spacing:-0.035em">0.42%</span><span class="chip up">' + ic("dn", 12, 2) + '0.08 pt</span></div>' +
+          '<div class="s" style="padding:2px 16px 8px">vs 0.50% the week before</div>' +
+          '<svg width="408" height="150" viewBox="0 0 408 150" style="margin:0 16px">';
+        for (let g = 0; g < 4; g++) h += '<line x1="0" x2="408" y1="' + (12 + g * 42) + '" y2="' + (12 + g * 42) + '" stroke="rgba(255,255,255,0.06)"/>';
+        h += area(pts, 150, "#c9f24b") + '<path d="' + smooth(pts) + '" fill="none" stroke="#c9f24b" stroke-width="2.2" stroke-linecap="round"/>' +
+          '<circle cx="' + pts[11][0] + '" cy="' + pts[11][1].toFixed(1) + '" r="4" fill="#c9f24b"/></svg>' +
+          '<div class="row s m" style="justify-content:space-between;padding:6px 16px 0">' + mo.map((m) => "<span>" + m + "</span>").join("") + "</div>" +
+          '<div class="hr" style="margin:14px 0 0"></div><div class="row" style="padding:12px 16px;gap:0">' +
+          [["Crashes", "128"], ["JS errors", "1,204"], ["API 4xx", "312"]].map((x) => '<div style="flex:1"><div class="s">' + x[0] + '</div><div style="font-size:15px;font-weight:600;margin-top:2px">' + x[1] + "</div></div>").join("") + "</div>";
+        return h;
+      }
+      function alertsCard() {
+        const rows = [["Signup conversion below 5%", "Funnel · every hour", 0], ["Checkout errors above 1%", "Event · every 5 min", 1], ["Active users down 20%", "Metric · daily", 0], ["API latency p95 above 800 ms", "Metric · every minute", 0], ["No iOS events for 10 min", "Source · realtime", 0]];
+        let h = '<div class="hd"><div class="tt">' + ic("bell", 15) + 'Alert rules</div><span class="chip">All rules ' + ic("down", 12, 2) + "</span></div>" +
+          '<div class="row s m" style="justify-content:space-between;padding:12px 16px 6px"><span>Rule</span><span>Status</span></div><div class="hr"></div>';
+        rows.forEach((r) => {
+          h += '<div class="row" style="height:56px;padding:0 16px;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05)"><div><div style="font-size:13px;font-weight:500">' + r[0] + '</div><div class="s mono" style="margin-top:3px">' + r[1] + '</div></div>' +
+            '<span class="chip' + (r[2] ? " up" : "") + '">' + (r[2] ? '<span class="pulse" style="width:6px;height:6px;box-shadow:none"></span>Firing' : "Healthy") + "</span></div>";
+        });
+        h += '<div class="row s" style="padding:14px 16px;gap:8px">' + ic("bell", 13) + "Notifying #growth in Slack</div>";
+        return h;
+      }
+      function expCard() {
+        const rows = [["New onboarding checklist", "Signup completion", "+4.2%", 96, 1], ["Annual plan banner", "Upgrade rate", "+1.8%", 81, 1], ["Shorter signup form", "Signup completion", "+2.9%", 74, 1], ["Dark pricing page", "Pricing to checkout", "&minus;0.6%", 38, 0]];
+        let h = '<div class="hd"><div class="tt">' + ic("flask", 15) + 'Experiments</div><span class="chip">Running ' + ic("down", 12, 2) + "</span></div>" +
+          '<div class="row s m" style="justify-content:space-between;padding:12px 16px 6px"><span>Experiment</span><span>Lift</span></div><div class="hr"></div>';
+        rows.forEach((r) => {
+          h += '<div style="height:92px;padding:14px 16px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><div class="row" style="justify-content:space-between"><div><div style="font-size:13px;font-weight:500">' + r[0] + '</div><div class="s" style="margin-top:3px">' + r[1] + '</div></div>' +
+            '<span class="chip' + (r[4] ? " up" : "") + '">' + r[2] + '</span></div><div class="row" style="margin-top:12px;gap:10px"><div class="bar" style="flex:1"><i style="width:' + r[3] + '%;opacity:' + (r[4] ? 0.95 : 0.4) + '"></i></div><span class="s" style="width:84px;text-align:right">' + r[3] + '% confident</span></div></div>';
+        });
+        return h;
+      }
+      function listCard(title, icon, chipTxt, rows, rowH, mono) {
+        const max = rows[0][1];
+        let h = '<div class="hd"><div class="tt">' + ic(icon, 15) + title + '</div><span class="chip">' + chipTxt + " " + ic("down", 12, 2) + "</span></div>" +
+          '<div class="row s m" style="justify-content:space-between;padding:12px 16px 6px"><span>' + (mono ? "Event" : "Page") + "</span><span>Views</span></div><div class=\"hr\"></div>";
+        rows.forEach((r) => {
+          h += '<div style="height:' + rowH + 'px;padding:9px 16px 0"><div class="row" style="justify-content:space-between;margin-bottom:7px"><span class="mono" style="font-size:12.5px">' + r[0] + '</span><span style="font-size:12.5px;font-weight:600">' + fmt(r[1]) + '</span></div><div class="bar"><i style="width:' + ((r[1] / max) * 100).toFixed(1) + '%;opacity:' + (0.95 - (r[1] < max * 0.3 ? 0.35 : 0)).toFixed(2) + '"></i></div></div>';
+        });
+        return h;
+      }
+      function sourcesCard() {
+        const seg = [["Direct", 38, "#c9f24b"], ["Search", 27, "#9cbb36"], ["Social", 18, "#6b8226"], ["Referral", 11, "#46571b"], ["Email", 6, "#2c3712"]];
+        const R = 50, C = 2 * Math.PI * R;
+        let off = 0, arcs = "";
+        seg.forEach((s) => {
+          const len = (s[1] / 100) * C;
+          arcs += '<circle cx="66" cy="66" r="' + R + '" fill="none" stroke="' + s[2] + '" stroke-width="16" stroke-dasharray="' + (len - 2).toFixed(1) + " " + (C - len + 2).toFixed(1) + '" stroke-dashoffset="' + (-off).toFixed(1) + '" transform="rotate(-90 66 66)"/>';
+          off += len;
+        });
+        let h = '<div class="hd"><div class="tt">' + ic("globe", 15) + 'Traffic sources</div><span class="chip">Last 30 days ' + ic("down", 12, 2) + "</span></div>" +
+          '<div class="row" style="padding:18px 16px 12px;gap:22px"><svg width="132" height="132" viewBox="0 0 132 132">' + arcs +
+          '<text x="66" y="64" text-anchor="middle" font-size="22" font-weight="600" fill="#ededf0" font-family="Inter">1.28M</text><text x="66" y="82" text-anchor="middle" font-size="11" fill="#9b9ca4" font-family="Inter">sessions</text></svg>' +
+          '<div style="flex:1">' + seg.map((s) => '<div class="row" style="height:24px;gap:8px"><span style="width:8px;height:8px;border-radius:2px;background:' + s[2] + '"></span><span style="font-size:12.5px;flex:1">' + s[0] + '</span><span style="font-size:12.5px;font-weight:600">' + s[1] + "%</span></div>").join("") + "</div></div>" +
+          '<div class="hr"></div>' +
+          [["google.com", "214,806", "12.1%"], ["news.ycombinator.com", "96,420", "9.4%"], ["linkedin.com", "58,117", "4.2%"], ["producthunt.com", "31,902", "2.8%"]].map((r) => '<div class="row" style="height:38px;padding:0 16px;justify-content:space-between"><span class="mono" style="font-size:12px">' + r[0] + '</span><span class="row" style="gap:12px"><span style="font-size:12.5px;font-weight:600">' + r[1] + '</span><span class="chip up" style="height:20px">' + r[2] + "</span></span></div>").join("");
+        return h;
+      }
+
+      /* ---------- floating windows ---------- */
+      const WIN = [
+        { w: 520, h: 590, x: -490, y: -156, z: -300, ry: 10, body: () => funnelCard("Checkout funnel", [["Cart viewed", 18420], ["Shipping added", 11306], ["Payment started", 8977], ["Order placed", 7412]], 84, ["Overall conversion", "40.2%"], "3.1 pt") },
+        { w: 520, h: 484, x: -973, y: 273, z: -1300, ry: 12, body: () => alertsCard() },
+        { w: 520, h: 540, x: 543, y: 174, z: -600, ry: -10, body: () => expCard() },
+        { w: 520, h: 484, x: 994, y: -286, z: -1700, ry: -12, body: () => errCard() },
+        { w: 520, h: 520, x: -1250, y: -560, z: -2400, ry: 14, body: () => listCard("Top events", "zap", "Views", [["page_viewed", 482106], ["session_start", 214602], ["button_clicked", 168330], ["checkout_started", 41226], ["plan_upgraded", 9418], ["invite_sent", 6104]], 52, true) },
+        { w: 520, h: 496, x: 1150, y: 420, z: -2000, ry: -14, body: () => sourcesCard() }
+      ];
+      (function () {
+        let html = "";
+        WIN.forEach((w, i) => {
+          html += '<div class="wp" style="width:' + w.w + "px;height:" + w.h + "px;margin:" + -w.h / 2 + "px 0 0 " + -w.w / 2 + "px;transform:translate3d(" + w.x + "px," + w.y + "px," + w.z + "px) rotateY(" + w.ry + 'deg)">' +
+            '<div class="wi" id="wi' + i + '"><div class="wk">' + w.body() + "</div></div></div>";
+        });
+        document.getElementById("wins").innerHTML = html;
+      })();
+
+      /* ---------- hall rings ---------- */
+      (function () {
+        let html = "";
+        for (let k = 1; k <= 9; k++) {
+          const z = -280 * k;
+          html += '<div class="rg" id="rg' + k + '"><div class="rb h" style="transform:translate3d(0,-773px,' + z + 'px)"></div><div class="rb h" style="transform:translate3d(0,773px,' + z + 'px)"></div>' +
+            '<div class="rb v" style="transform:translate3d(-1377px,0,' + z + 'px)"></div><div class="rb v" style="transform:translate3d(1377px,0,' + z + 'px)"></div></div>';
+        }
+        document.getElementById("rings").innerHTML = html;
+      })();
+
+      /* ---------- phone ---------- */
+      (function () {
+        let s = "";
+        for (let z = -8; z <= 6; z += 2) s += '<div class="sl" style="transform:translateZ(' + z + 'px)"></div>';
+        document.getElementById("slices").innerHTML = s;
+      })();
+
+      const hv = series(7, 29, 40, 3.2, 1.1, 0.75);
+      const hp = toPts(hv, 330, 118, Math.min(...hv) - 4, Math.max(...hv) + 5, 6, 6);
+      const phoneHTML =
+        '<div class="a" style="left:34px;top:19px;font-size:16.5px;font-weight:600">9:41</div>' +
+        '<div class="a" style="left:263px;top:21px"><svg width="86" height="14" viewBox="0 0 86 14"><g fill="#fff"><rect x="0" y="9" width="3.4" height="5" rx="1"/><rect x="5" y="6" width="3.4" height="8" rx="1"/><rect x="10" y="3" width="3.4" height="11" rx="1"/><rect x="15" y="0" width="3.4" height="14" rx="1"/></g>' +
+        '<g fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M27 5.2a9 9 0 0 1 14 0"/><path d="M29.6 8.4a5.2 5.2 0 0 1 8.8 0"/></g><circle cx="34" cy="11.6" r="1.6" fill="#fff"/>' +
+        '<rect x="50.5" y="0.5" width="26" height="13" rx="4" fill="none" stroke="#fff" stroke-opacity="0.5"/><rect x="52.5" y="2.5" width="19" height="9" rx="2.5" fill="#fff"/><rect x="78" y="4.5" width="2" height="5" rx="1" fill="#fff" fill-opacity="0.5"/></svg></div>' +
+        '<div class="a" style="left:133px;top:11px;width:124px;height:36px;border-radius:20px;background:#000"></div>' +
+        /* header */
+        '<div class="a row" style="left:20px;top:64px;width:350px;height:40px;justify-content:space-between"><div class="row" style="gap:10px">' + av("alex", 30, 11) +
+        '<span style="font-size:16px;font-weight:600">Acme Inc</span><span style="color:#9b9ca4">' + ic("down", 16, 2) + '</span></div><div class="row" style="gap:8px">' +
+        '<span class="row" style="width:38px;height:38px;border-radius:19px;background:#17181c;justify-content:center;color:#cfd0d6">' + ic("search", 18) + "</span>" +
+        '<span class="row" style="width:38px;height:38px;border-radius:19px;background:#17181c;justify-content:center;color:#cfd0d6;position:relative">' + ic("bell", 18) + '<i style="position:absolute;right:9px;top:9px;width:8px;height:8px;border-radius:4px;background:#c9f24b;border:2px solid #17181c"></i></span></div></div>' +
+        '<div class="a" style="left:20px;top:116px;font-size:32px;font-weight:700;letter-spacing:-0.035em">Overview</div>' +
+        '<div class="a row" style="left:20px;top:160px;gap:6px"><span class="pulse" style="width:7px;height:7px"></span><span style="font-size:13px;color:#9b9ca4">Live &middot; updated just now</span></div>' +
+        /* segmented */
+        '<div class="a row" style="left:20px;top:192px;width:350px;height:36px;border-radius:10px;background:#141518;padding:3px;gap:2px">' +
+        ["24h", "7d", "30d", "90d"].map((x, i) => '<span class="row" style="flex:1;height:30px;justify-content:center;border-radius:8px;font-size:13.5px;font-weight:600;' + (i === 1 ? "background:#26272c;color:#fff" : "color:#8b8c94") + '">' + x + "</span>").join("") + "</div>" +
+        /* hero card */
+        '<div class="a" style="left:20px;top:240px;width:350px;height:240px;border-radius:20px;background:#121316;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07)">' +
+        '<div class="a row" style="left:16px;top:14px;gap:6px;font-size:13.5px;color:#9b9ca4;font-weight:500">Active users<span style="color:#64666e">' + ic("info", 14) + "</span></div>" +
+        '<div class="a" id="pHero" style="left:16px;top:34px;font-size:42px;font-weight:700;letter-spacing:-0.04em">47,602</div>' +
+        '<div class="a row" style="left:216px;top:46px;gap:6px"><span class="chip up" style="height:24px;font-size:12.5px;font-weight:600">' + ic("up", 12, 2.2) + '<span id="pDelta">12.4%</span></span></div>' +
+        '<div class="a" style="left:16px;top:88px;width:318px;height:118px"><svg width="318" height="118" viewBox="0 0 330 118" preserveAspectRatio="none">' +
+        '<line x1="0" x2="330" y1="30" y2="30" stroke="rgba(255,255,255,0.06)"/><line x1="0" x2="330" y1="62" y2="62" stroke="rgba(255,255,255,0.06)"/><line x1="0" x2="330" y1="94" y2="94" stroke="rgba(255,255,255,0.06)"/>' +
+        '<g id="pArea">' + area(hp, 118, "#c9f24b") + '</g><path id="pLine" d="' + smooth(hp) + '" fill="none" stroke="#c9f24b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<g id="pDot"><circle cx="' + hp[28][0] + '" cy="' + hp[28][1].toFixed(1) + '" r="9" fill="#c9f24b" fill-opacity="0.2"/><circle cx="' + hp[28][0] + '" cy="' + hp[28][1].toFixed(1) + '" r="4.2" fill="#c9f24b"/></g></svg></div>' +
+        '<div class="a row s m" style="left:16px;top:214px;width:318px;justify-content:space-between;font-size:11.5px"><span>Nov 18</span><span>Nov 20</span><span>Nov 22</span><span>Nov 24</span></div></div>' +
+        /* kpis */
+        [["Signups", "8,412", "6.1%", true, 20, 492, "pSign"], ["Conversion", "6.8%", "0.4 pt", true, 199, 492], ["Sessions", "214.6k", "9.7%", true, 20, 566], ["Avg. session", "4m 12s", "2.1%", false, 199, 566]].map((k) =>
+          '<div class="a" style="left:' + k[4] + "px;top:" + k[5] + 'px;width:171px;height:66px;border-radius:16px;background:#121316;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07)">' +
+          '<div class="a" style="left:14px;top:9px;font-size:12px;color:#9b9ca4;font-weight:500">' + k[0] + "</div>" +
+          '<div class="a" ' + (k[6] ? 'id="' + k[6] + '" ' : "") + 'style="left:14px;top:27px;font-size:21px;font-weight:650;letter-spacing:-0.03em">' + k[1] + "</div>" +
+          '<div class="a row" style="right:12px;top:30px;font-size:11.5px;font-weight:600;color:' + (k[3] ? "#c9f24b" : "#9b9ca4") + ';gap:2px">' + ic(k[3] ? "up" : "dn", 11, 2.2) + k[2] + "</div></div>").join("") +
+        /* live now */
+        '<div class="a" style="left:20px;top:642px;width:350px;height:116px;border-radius:16px;background:#121316;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07);overflow:hidden">' +
+        '<div class="a row" style="left:14px;top:9px;width:322px;justify-content:space-between"><span class="row" style="gap:8px;font-size:13px;font-weight:600"><span class="pulse" style="width:7px;height:7px"></span>Live now</span><span style="font-size:12px;color:#9b9ca4"><b id="pOnline" style="color:#ededf0;font-weight:600">2,418</b> online</span></div>' +
+        '<div class="a" style="left:0;top:34px;width:350px;height:78px;overflow:hidden">' +
+        '<div class="newrow" id="pNew" style="height:0;opacity:0;overflow:hidden;background:rgba(201,242,75,0.12)">' + evRows([["priya", "signup_completed", "now"]], 38) + "</div>" +
+        evRows([EVT[0], EVT[1], EVT[2]], 38) + "</div></div>" +
+        /* tab bar */
+        '<div class="a" style="left:0;top:772px;width:390px;height:72px;background:rgba(14,14,16,0.96);border-top:1px solid rgba(255,255,255,0.08)"></div>' +
+        [["home", "Overview", 1], ["zap", "Events"], ["filter", "Funnels"], ["bell", "Alerts"], ["sliders", "Settings"]].map((t, i) =>
+          '<div class="a" style="left:' + (i * 78) + 'px;top:784px;width:78px;text-align:center;color:' + (t[2] ? "#c9f24b" : "#7c7d85") + '"><div style="display:flex;justify-content:center">' + ic(t[0], 23, 1.7) + '</div><div style="font-size:10.5px;font-weight:500;margin-top:4px">' + t[1] + "</div></div>").join("") +
+        '<div class="a" style="left:131px;top:828px;width:128px;height:5px;border-radius:3px;background:#fff;opacity:0.85"></div>';
+      document.getElementById("screen").innerHTML = phoneHTML;
+
+      /* ---------- web dashboard (end wall) ---------- */
+      (function () {
+        const nav = (ico, label, on, badge) => '<div class="nav' + (on ? " on" : "") + '">' + ic(ico, 16) + "<span>" + label + "</span>" + (badge ? '<span class="bd">' + badge + "</span>" : "") + "</div>";
+        const side =
+          '<div class="row" style="height:60px;padding:0 16px;gap:10px"><svg width="26" height="26" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#c9f24b"/><path d="M12.5 17 24 36.5 35.5 17" stroke="#0b0d06" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="24" cy="12.5" r="3.4" fill="#0b0d06"/></svg><span style="font-size:14.5px;font-weight:600">Acme Inc</span><span style="color:#64666e;margin-left:auto">' + ic("down", 15, 2) + "</span></div>" +
+          '<div class="row" style="margin:6px 10px 6px;height:34px;padding:0 10px;border-radius:8px;background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.07);gap:8px;color:#8b8c94;font-size:13px">' + ic("search", 15) + '<span>Search</span><span class="kbd" style="margin-left:auto">&#8984;K</span></div>' +
+          '<div class="sec">Analytics</div>' + nav("dash", "Overview", true) + nav("zap", "Events") + nav("filter", "Funnels") + nav("repeat", "Retention") + nav("users", "Sessions") +
+          '<div class="sec">Workspace</div>' + nav("layers", "Dashboards") + nav("bell", "Alerts", false, "3") + nav("flask", "Experiments") + nav("file", "Reports") + nav("sliders", "Settings") +
+          '<div class="row" style="position:absolute;left:0;bottom:0;width:232px;height:64px;padding:0 16px;gap:10px;border-top:1px solid rgba(255,255,255,0.08)">' + av("alex", 30, 11) + '<div><div style="font-size:13px;font-weight:600">Alex Rivera</div><div class="s">alex@acme.com</div></div></div>';
+        document.getElementById("dash").innerHTML = '<div id="side">' + side + '</div><div id="main"></div>';
+
+        const top =
+          '<div class="row" style="height:60px;padding:0 24px;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08)">' +
+          '<div class="row" style="gap:14px"><span style="font-size:19px;font-weight:600;letter-spacing:-0.02em">Overview</span>' +
+          '<span class="row" style="height:30px;padding:3px;border-radius:8px;background:rgba(255,255,255,0.05);gap:2px;font-size:12.5px;font-weight:500">' +
+          [["All", 1], ["Web"], ["iOS"], ["Android"]].map((x) => '<span class="row" style="height:24px;padding:0 10px;border-radius:6px;' + (x[1] ? "background:rgba(255,255,255,0.1);color:#ededf0" : "color:#8b8c94") + '">' + x[0] + "</span>").join("") + "</span></div>" +
+          '<div class="row" style="gap:8px"><span class="btn">' + ic("cal", 14) + 'Nov 1 &ndash; Nov 30, 2026 ' + ic("down", 13, 2) + '</span><span class="btn">Compare to previous period</span><span class="btn">' + ic("filter", 14) + 'Filters</span><span class="btn pri">' + ic("share", 14, 2) + "Share</span></div></div>";
+
+        const kp = (x, y, w, lab, ico, val, dl, up, seed, valId) => {
+          const v = series(seed, 20, 50, 5, up ? 1.6 : -0.2, 0.8);
+          const p = toPts(v, 120, 42, Math.min(...v) - 3, Math.max(...v) + 3, 3, 3);
+          return '<div class="card kpi" style="left:' + x + "px;top:" + y + "px;width:" + w + 'px"><div class="lb">' + ic(ico, 15) + lab + '</div><div class="vl" ' + (valId ? 'id="' + valId + '"' : "") + ">" + val + '</div><span class="chip ' + (up ? "up" : "") + '" style="position:absolute;left:18px;bottom:14px">' + ic(up ? "up" : "dn", 11, 2.2) + dl + '</span>' +
+            '<svg class="sp" width="120" height="42" viewBox="0 0 120 42"><path d="' + smooth(p) + '" fill="none" stroke="' + (up ? "#c9f24b" : "#8b8c94") + '" stroke-width="1.8" stroke-linecap="round"/></svg></div>';
+        };
+        const cw = 384;
+        let body = kp(24, 84, cw, "Active users", "users", "48,213", "12.4%", true, 3) + kp(24 + (cw + 16), 84, cw, "Monthly revenue", "card", "$182,430", "8.2%", true, 21) +
+          kp(24 + 2 * (cw + 16), 84, cw, "Conversion rate", "filter", "6.8%", "0.4 pt", true, 13) + kp(24 + 3 * (cw + 16), 84, cw, "Signups", "zap", "8,412", "6.1%", true, 9, "wSign");
+
+        /* main chart */
+        const cur = series(5, 30, 34, 3.2, 0.5, 0.65), prev = series(8, 30, 31, 3.0, 0.22, 0.7);
+        const lo = 20, hi = 58;
+        const cp = toPts(cur, 950, 270, lo, hi, 6, 6), pp = toPts(prev, 950, 270, lo, hi, 6, 6);
+        let ch = '<div class="card" style="position:absolute;left:24px;top:220px;width:1036px;height:386px"><div class="hd"><div class="tt">' + ic("activity", 15) + 'Active users</div><div class="row" style="gap:16px"><span class="row s" style="gap:6px"><i style="width:14px;height:3px;border-radius:2px;background:#c9f24b"></i>Nov 1 &ndash; Nov 30</span><span class="row s" style="gap:6px"><i style="width:14px;border-top:2px dashed #6c6e76"></i>Previous period</span><span class="chip">Daily ' + ic("down", 12, 2) + '</span></div></div>' +
+          '<div class="row" style="padding:10px 16px 0;gap:10px"><span style="font-size:28px;font-weight:600;letter-spacing:-0.035em">1.24M</span><span class="s">unique users this period</span><span class="chip up">' + ic("up", 11, 2.2) + '12.4%</span></div>' +
+          '<svg width="1004" height="290" viewBox="0 0 1004 290" style="margin:6px 16px 0;overflow:visible">';
+        [0, 1, 2, 3].forEach((g) => { const y = 6 + g * 86; ch += '<line x1="46" x2="1000" y1="' + y + '" y2="' + y + '" stroke="rgba(255,255,255,0.06)"/><text x="0" y="' + (y + 4) + '" font-size="11" fill="#64666e" font-family="Inter">' + (60 - g * 15) + "k</text>"; });
+        ch += '<g transform="translate(50 0)">' + '<path d="' + smooth(pp) + '" fill="none" stroke="#6c6e76" stroke-width="1.8" stroke-dasharray="5 5" stroke-linecap="round"/>' + area(cp, 270, "#c9f24b") + '<path d="' + smooth(cp) + '" fill="none" stroke="#c9f24b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '<line x1="' + cp[22][0] + '" x2="' + cp[22][0] + '" y1="0" y2="270" stroke="rgba(255,255,255,0.18)" stroke-dasharray="3 4"/><circle cx="' + cp[22][0] + '" cy="' + cp[22][1].toFixed(1) + '" r="5" fill="#c9f24b" stroke="#111215" stroke-width="2"/>' +
+          '<g transform="translate(' + (cp[22][0] - 70) + ' ' + (cp[22][1] - 66) + ')"><rect width="140" height="52" rx="8" fill="#1d1e23" stroke="rgba(255,255,255,0.12)"/><text x="12" y="21" font-size="11" fill="#9b9ca4" font-family="Inter">Wed, Nov 23</text><text x="12" y="40" font-size="14" font-weight="600" fill="#ededf0" font-family="Inter">46,902 users</text></g></g>' +
+          ["Nov 1", "Nov 5", "Nov 9", "Nov 13", "Nov 17", "Nov 21", "Nov 25", "Nov 30"].map((d, i) => '<text x="' + (50 + i * (950 / 7)) + '" y="286" font-size="11" fill="#64666e" text-anchor="middle" font-family="Inter">' + d + "</text>").join("") + "</svg></div>";
+        body += ch;
+        body += '<div class="card" style="position:absolute;left:1076px;top:220px;width:534px;height:386px;overflow:hidden">' + liveCard(7, 44, 44, true).replace("Streaming from web, iOS and Android", "Streaming from web, iOS and Android") + "</div>";
+        body += '<div class="card" style="position:absolute;left:24px;top:622px;width:500px;height:392px;overflow:hidden">' + funnelCard("Signup funnel", [["Visited site", 124806], ["Started signup", 31452], ["Verified email", 22978], ["Created workspace", 15640]], 70, ["Overall conversion", "12.5%"], "1.3 pt", true) + "</div>";
+        body += '<div class="card" style="position:absolute;left:540px;top:622px;width:552px;height:392px;overflow:hidden">' + retCard("Monthly retention", ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"], [6120, 6844, 7392, 8015, 8731, 9340], 29, 6) + "</div>";
+        body += '<div class="card" style="position:absolute;left:1108px;top:622px;width:502px;height:392px;overflow:hidden">' + listCard("Top pages", "file", "Views", [["/pricing", 18204], ["/", 16980], ["/docs/quickstart", 9412], ["/blog/launch-week", 6730], ["/signup", 5821], ["/integrations/slack", 3904]], 48, true) + "</div>";
+        document.getElementById("main").innerHTML = top + body;
+      })();
+    </script>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const EXPO = "expo.out";
+
+      /* cubic-bezier easing (deterministic Newton solve) */
+      function bez(x1, y1, x2, y2) {
+        const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+        const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+        const X = (t) => ((ax * t + bx) * t + cx) * t;
+        const Y = (t) => ((ay * t + by) * t + cy) * t;
+        const dX = (t) => (3 * ax * t + 2 * bx) * t + cx;
+        return function (p) {
+          if (p <= 0) return 0;
+          if (p >= 1) return 1;
+          let t = p;
+          for (let i = 0; i < 8; i++) {
+            const e = X(t) - p, d = dX(t);
+            if (Math.abs(e) < 1e-6 || Math.abs(d) < 1e-6) break;
+            t -= e / d;
+          }
+          return Y(t);
+        };
+      }
+      const camE = bez(0.55, 0.05, 0.5, 1);
+      const D_PRE = 905, D0 = 950, D1 = 7000, D2 = 9800;
+      const dollyEase = (p) => (D0 * Math.pow(D1 / D0, camE(p)) - D0) / (D1 - D0);
+      const tiltEase = bez(0.3, 0, 0.1, 1);
+
+      // black to picture
+      tl.to("#fade", { opacity: 0, duration: 0.9, ease: "power1.out" }, 0);
+
+      // hall: rings and strips light up from far to near
+      for (let k = 1; k <= 9; k++) tl.fromTo("#rg" + k + " .rb", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.1 + (9 - k) * 0.05);
+      tl.fromTo(".strip", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power2.out" }, 0.1);
+
+      // camera: short creep, then the dolly zoom (distance 950 -> 7000 while the subject plane stays 1:1), then a slow residual drift
+      tl.fromTo("#stage", { "--d": D_PRE }, { "--d": D0, duration: 1.0, ease: "none" }, 0);
+      tl.fromTo("#stage", { "--d": D0 }, { "--d": D1, duration: 4.8, ease: dollyEase, immediateRender: false }, 1.0);
+      tl.fromTo("#stage", { "--d": D1 }, { "--d": D2, duration: 4.7, ease: "power1.out", immediateRender: false }, 5.8);
+
+      // subject: rises in, tilt eases toward flat as the camera backs off
+      tl.fromTo("#phone", { y: 70, rotationY: -30 }, { y: 0, rotationY: -16, duration: 1.2, ease: EXPO }, 0.1);
+      tl.fromTo("#phone", { rotationY: -16 }, { rotationY: -9, duration: 4.5, ease: tiltEase, immediateRender: false }, 1.3);
+      tl.fromTo("#phone", { rotationY: -9 }, { rotationY: -4, duration: 4.7, ease: "power1.out", immediateRender: false }, 5.8);
+
+      // floating windows
+      const WORDER = [0, 2, 1, 3, 5, 4];
+      for (let i = 0; i < 6; i++) tl.fromTo("#wi" + WORDER[i], { y: 36, clipPath: "inset(-100px -100px 700px -100px)" }, { y: 0, clipPath: "inset(-100px -100px -100px -100px)", duration: 0.8, ease: EXPO }, 0.5 + i * 0.1);
+
+      // every window is gone by 2.7 s, before the wall behind the phone is readable: the four far ones start at 1.6 s, the two nearest at 2.2 and 2.3 s; each fades over 0.4 s with power2.out from the start of its short sideways slide (450px), so none crosses a hall wall while visible
+      const WEXIT = [[4, 1.6, -1], [1, 1.75, -1], [5, 1.9, 1], [3, 2.05, 1], [0, 2.2, -1], [2, 2.3, 1]];
+      WEXIT.forEach((w) => {
+        tl.to("#wi" + w[0], { x: w[2] * 450, duration: 0.6, ease: "power2.in" }, w[1]);
+        tl.to("#wi" + w[0], { opacity: 0, duration: 0.4, ease: "power2.out" }, w[1]);
+      });
+
+      // foreground chips (z +170): pop in, then shrink as the camera backs away and leave before the wall fills behind them
+      tl.fromTo("#chipA", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, 0.9);
+      tl.fromTo("#chipB", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, 1.1);
+      tl.to("#chipB", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.1);
+      tl.to("#chipA", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.3);
+
+      // phone screen: count-up and chart draw
+      const setTxt = (sel, t, v) => tl.set(sel, { innerHTML: v }, t);
+      for (let f = 0; f <= 36; f++) {
+        const p = f / 36, e = 1 - Math.pow(1 - p, 3);
+        setTxt("#pHero", 0.5 + f / 30, fmt(47602 + (48213 - 47602) * e));
+      }
+      tl.fromTo("#pLine", { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 1.3, ease: "power2.out" }, 0.5);
+      tl.fromTo("#pArea", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power1.out" }, 0.9);
+      tl.fromTo("#pDot", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 1.6);
+
+      // cause beat at 5.0 s: a signup lands on the phone and on the web dashboard in the same frame
+      tl.fromTo("#pNew", { height: 0, opacity: 0 }, { height: 38, opacity: 1, duration: 0.45, ease: EXPO }, 5.0);
+      tl.to("#pNew", { backgroundColor: "rgba(201,242,75,0)", duration: 1.2, ease: "power1.out" }, 5.4);
+      setTxt("#pSign", 5.0, "8,413");
+      setTxt("#pOnline", 5.0, "2,419");
+      setTxt("#wSign", 5.0, "8,413");
+      tl.fromTo("#dash .newrow", { height: 0, opacity: 0 }, { height: 44, opacity: 1, duration: 0.45, ease: EXPO }, 5.0);
+      tl.to("#dash .newrow", { backgroundColor: "rgba(201,242,75,0)", duration: 1.2, ease: "power1.out" }, 5.4);
+
+      // lockup: wall darkens, windows and chips leave, subject slides right, name settles on the left
+      tl.fromTo("#dimw", { opacity: 0.22 }, { opacity: 0.65, duration: 1.0, ease: "power2.out", immediateRender: false }, 6.2);
+      tl.fromTo("#dimL", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "power2.out" }, 6.2);
+            tl.fromTo("#phone", { x: 0 }, { x: 470, duration: 1.3, ease: EXPO, immediateRender: false }, 6.3);
+      tl.fromTo("#mark", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: EXPO }, 6.7);
+      tl.fromTo("#wm", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.9, ease: EXPO }, 6.8);
+      tl.fromTo("#tg", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: EXPO }, 7.05);
+      tl.fromTo("#url", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.7, ease: EXPO }, 7.3);
+
+      tl.set({}, {}, 10.5);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

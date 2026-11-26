@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Text Behind Object Effect",
+    "title": "Text Behind Object Effect: Example and Code Recipe",
+    "description": "A giant headline sits behind an app window and changes word by word as the window holds still. Make this text behind object effect with Claude Code.",
+    "howto": [
+      "Build two layers in one 3D world with 2600px perspective. Put the headline 420px behind the window and scale it 1.1615 to cancel the perspective shrink. Use Inter 650 at 340px with -0.045em spacing, and place the 1500x900px window so its top edge, at y 425px, covers about a quarter of the letter height.",
+      "Turn the whole world from rotateY -4deg to +4deg over 11s so the back headline shifts against the window. Swap the word at the window edge: the old word sinks 230px in 0.3s with power3.in, and once it is hidden the new word rises 230px in 0.9s with expo.out. Change the window content and push the camera to 1.10x on the same frame as the new word.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the layers, the two feature swaps and the closing wordmark. Render an MP4 with HyperFrames, or port the GSAP timeline to your landing page hero."
+    ],
+    "faq": [
+      [
+        "What is a text behind object effect?",
+        "It places a headline on a layer behind the main subject so the subject covers part of the letters. Here the subject is an app window, the headline keeps changing, and a slow camera turn shifts the two layers by about 60px against each other."
+      ],
+      [
+        "How do you keep the headline readable behind the window?",
+        "Cover only the bottom of the letters. In this film the window edge cuts about 51px of the letter height, roughly a quarter, and the words are short enough to stay inside the 1500px window width."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "文字在物体后面效果",
+    "title": "字后出物：文字在物体后面的示例与配方",
+    "description": "超大标题藏在软件窗口后面，窗口不动，标题逐词替换。用 Claude Code 或 Codex 按免费配方做出这个文字在物体后面的效果。",
+    "howto": [
+      "在同一个 3D 世界里做两层，透视 2600px。标题放在窗口后面 420px 处，放大 1.1615 倍抵消透视缩小，字用 Inter 650、340px、字距 -0.045em；窗口 1500×900px，上沿在 y 425px，盖住字高的约四分之一。",
+      "整个世界 11s 内从 rotateY -4° 转到 +4°，后层标题相对窗口产生位移。在窗口上沿换词：旧词用 power3.in 下沉 230px（0.3s），藏到窗口后面之后，新词用 expo.out 升起 230px（0.9s），同一帧换窗口内容并把相机推到 1.10 倍。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出前后两层、两次功能换词和收尾字标。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到落地页首屏。"
+    ],
+    "faq": [
+      [
+        "什么是文字在物体后面的效果？",
+        "把标题放在主体后面的图层，主体盖住一部分字。这里的主体是软件窗口，标题不断更换，镜头缓慢转动让前后两层相对位移约 60px。"
+      ],
+      [
+        "标题藏在窗口后面怎么还能读清？",
+        "只盖住字的底部。这支片子里窗口边缘盖住约 51px 的字高，大约四分之一，而且词都够短，宽度留在 1500px 的窗口以内。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

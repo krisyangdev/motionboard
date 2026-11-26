@@ -2,12 +2,12 @@
   "id": "ui-animation",
   "kind": "hub",
   "path": "/ui-animation/",
-  "updated": "2026-11-16",
+  "updated": "2026-11-26",
   "en": {
     "title": "UI Animation and Motion Graphics Examples",
-    "description": "Ten UI animation recipes from launch films: zoom to cursor, card flip, multiplayer cursors, focus hop and more. Built in code with HyperFrames.",
+    "description": "Thirteen UI animation recipes from launch films: zoom to cursor, card flip, infinite zoom, light beams and more. Built in code with HyperFrames.",
     "h1": "UI animation examples from launch films",
-    "lede": "UI animation shows an interface working: a cursor clicks, a card flips, a layout rearranges. These ten recipes are motion graphics examples from software launch films. Each is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with frame timing for every push, click and state change.",
+    "lede": "UI animation shows an interface working: a cursor clicks, a card flips, a layout rearranges. These thirteen recipes are motion graphics examples from software launch films. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with frame timing for every push, click and state change.",
     "blocks": [
       {
         "t": "films",
@@ -21,7 +21,10 @@
           "pile-up-and-clear",
           "wireframe-re-layout",
           "dock-arrival",
-          "confetti-success-animation"
+          "confetti-success-animation",
+          "infinite-zoom",
+          "light-beam-effect",
+          "scrolling-text-animation"
         ]
       },
       {
@@ -37,8 +40,12 @@
         "text": "Each recipe directs attention to one element at a time. Zoom to Cursor and 3D Tilted UI with Depth of Field move the camera to the active element, Focus Hop moves a highlight, and Control-Driven Change changes the page on the frame a control lands. For the scene changes between these interactions, see [transitions](/transitions/); for how the final shot reveals the product, see [product reveal](/product-reveal/)."
       },
       {
+        "t": "p",
+        "text": "Three more recipes put the interface under a moving camera or a moving line of text. Infinite Zoom Effect dives the camera through four nested UI screens and lands back on the first. Light Beam Effect has laptops throw trapezoid beams of light that each show an app screen. Scrolling Text Animation scrolls a long dictated line sideways faster and faster, then squeezes it into one short chat bubble."
+      },
+      {
         "t": "h2",
-        "text": "The 10 UI animation recipes"
+        "text": "The 13 UI animation recipes"
       },
       {
         "t": "ul",
@@ -52,7 +59,10 @@
           "[Pile-up and Clear](/recipes/pile-up-and-clear/): 22 emails and 8 notifications pile up with intervals shrinking from 0.62 s to 0.05 s, then clear in one frame to an Inbox Zero state held for about 2 s.",
           "[Wireframe Re-layout](/recipes/wireframe-re-layout/): Content fades to wireframes in 0.5 s, the wireframes re-flow into a new layout in 0.8 s, then each cell fills with new content 0.15 s apart.",
           "[Dock Arrival](/recipes/dock-arrival/): A magnified Dock opens a gap and a new icon grows into it in 0.5 s with one small spark, and a cursor click opens the window.",
-          "[Confetti Success Animation](/recipes/confetti-success-animation/): On the frame of a tap, lines, squares and dots radiate from the contact point; on the pay tap the icon pops from 0.6 to 1.1 scale in 0.28 s with an echo outline."
+          "[Confetti Success Animation](/recipes/confetti-success-animation/): On the frame of a tap, lines, squares and dots radiate from the contact point; on the pay tap the icon pops from 0.6 to 1.1 scale in 0.28 s with an echo outline.",
+          "[Infinite Zoom Effect](/recipes/infinite-zoom/): The camera dives through four nested UI screens and lands back on the first, so the shot loops.",
+          "[Light Beam Effect](/recipes/light-beam-effect/): Laptops throw trapezoid beams of light that reveal app screens, hand off to each other and carry a stat along one edge.",
+          "[Scrolling Text Animation](/recipes/scrolling-text-animation/): A long run-on line scrolls sideways faster and faster, then squeezes into one short chat bubble."
         ]
       },
       {
@@ -92,9 +102,9 @@
   },
   "zh": {
     "title": "UI 动画与动态图形示例",
-    "description": "10 个来自发布片的 UI 动画配方，包括推近到光标、卡片翻转、多人光标和焦点跳转等，用 HyperFrames 写代码做出。",
+    "description": "13 个来自发布片的 UI 动画配方，包括推近到光标、卡片翻转、无限缩放、光束等，用 HyperFrames 写代码做出。",
     "h1": "发布片里的 UI 动画示例",
-    "lede": "UI 动画展示界面在运行：光标点击、卡片翻转、布局重排。这 10 个配方是软件发布片里的动态图形示例。每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，并标出每次推近、点击和状态变化的帧时间。",
+    "lede": "UI 动画展示界面在运行：光标点击、卡片翻转、布局重排。这 13 个配方是软件发布片里的动态图形示例。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，并标出每次推近、点击和状态变化的帧时间。",
     "blocks": [
       {
         "t": "films",
@@ -108,7 +118,10 @@
           "pile-up-and-clear",
           "wireframe-re-layout",
           "dock-arrival",
-          "confetti-success-animation"
+          "confetti-success-animation",
+          "infinite-zoom",
+          "light-beam-effect",
+          "scrolling-text-animation"
         ]
       },
       {
@@ -124,8 +137,12 @@
         "text": "每个配方一次只把注意力引向一个元素。推近到光标和 3D 倾斜界面景深把镜头移到当前操作的元素上，焦点跳转移动高亮，控件驱动变化让页面在控件到位的同一帧变化。这些交互之间的场景切换见[转场](/transitions/)，最后一个镜头如何展示产品见[产品揭示](/product-reveal/)。"
       },
       {
+        "t": "p",
+        "text": "另有三个配方让界面处在运动的镜头或运动的文字之下。无限缩放效果让镜头依次穿入四层嵌套的界面画面，最后回到第一个画面。光束效果让笔记本投出梯形光束，每道光束里显示一个应用界面。滚动文字动画让一条很长的口述句子横向越滚越快，最后压缩成一个简短的聊天气泡。"
+      },
+      {
         "t": "h2",
-        "text": "10 个 UI 动画配方"
+        "text": "13 个 UI 动画配方"
       },
       {
         "t": "ul",
@@ -139,7 +156,10 @@
           "[堆积清空动画](/recipes/pile-up-and-clear/)：22 封邮件和 8 条通知堆积，间隔从 0.62 秒缩短到 0.05 秒，然后在一帧内清空，成为约 2 秒的零收件箱状态。",
           "[线框重排动画](/recipes/wireframe-re-layout/)：内容在 0.5 秒内退成线框，线框用 0.8 秒重排成新布局，各格再以 0.15 秒的间隔依次填入新内容。",
           "[Dock 图标动画](/recipes/dock-arrival/)：放大的 Dock 撑开空位，新图标用 0.5 秒长进去并冒出一次小火花，光标点击后开窗。",
-          "[撒花成功动画](/recipes/confetti-success-animation/)：点击那一帧，线条、方块和圆点从接触点向外扩散；付款点击时图标在 0.28 秒内从 0.6 倍弹到 1.1 倍，并扩散一圈同形描边。"
+          "[撒花成功动画](/recipes/confetti-success-animation/)：点击那一帧，线条、方块和圆点从接触点向外扩散；付款点击时图标在 0.28 秒内从 0.6 倍弹到 1.1 倍，并扩散一圈同形描边。",
+          "[无限缩放效果](/recipes/infinite-zoom/)：镜头依次穿入四层嵌套的界面画面，最后回到第一个画面，使镜头可以循环。",
+          "[光束效果](/recipes/light-beam-effect/)：笔记本投出梯形光束，光束里显示应用界面，彼此交接，并沿一条边带出一个数据。",
+          "[滚动文字动画](/recipes/scrolling-text-animation/)：一条很长的连写句子横向越滚越快，最后压缩成一个简短的聊天气泡。"
         ]
       },
       {

@@ -2,12 +2,12 @@
   "id": "product-reveal",
   "kind": "hub",
   "path": "/product-reveal/",
-  "updated": "2026-11-16",
+  "updated": "2026-11-26",
   "en": {
     "title": "Product Reveal Animation and Launch Video Examples",
-    "description": "Seven product reveal animation recipes from launch films: light reveal, macro pull-out, x-ray and more. Built in code with HyperFrames.",
+    "description": "Ten product reveal animation recipes from launch films: light reveal, macro pull-out, x-ray, fluted glass, dolly zoom and more, built with HyperFrames.",
     "h1": "Product reveal examples from launch films",
-    "lede": "A product reveal is the shot where a launch video first shows the product. These seven recipes cover light reveals, macro pull-outs, x-ray dissolves and accessory line-ups, taken from product launch videos. Each is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with camera and timing numbers for every move.",
+    "lede": "A product reveal is the shot where a launch video first shows the product. These ten recipes cover light reveals, macro pull-outs, x-ray dissolves, accessory line-ups, fluted glass, dolly zoom and light beams, taken from product launch videos. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with camera and timing numbers for every move.",
     "blocks": [
       {
         "t": "films",
@@ -18,7 +18,10 @@
           "x-ray-effect",
           "text-object-interleave",
           "dispense-line-up",
-          "outline-to-solid-reveal"
+          "outline-to-solid-reveal",
+          "fluted-glass-effect",
+          "dolly-zoom-effect",
+          "light-beam-effect"
         ]
       },
       {
@@ -34,8 +37,12 @@
         "text": "Several recipes end the reveal on a wordmark. Light Reveal brings the wordmark in at 8.78 s, and Outline to Solid Reveal follows the product shot with a short logo version. For logo endings in detail, see [logo animation](/logo-animation/). For the scene changes that follow a reveal, see [transitions](/transitions/)."
       },
       {
+        "t": "p",
+        "text": "Three more recipes reveal the product with the lens or with light. Fluted Glass Effect raises light streaks through ribbed glass on a laptop screen until they form a big word, then pushes in while the glass flattens and the title sharpens. Dolly Zoom Effect backs the camera away as the lens zooms in, so a phone holds its size and the hall behind it flattens into a dashboard. Light Beam Effect has laptops throw trapezoid beams of light that each reveal an app screen, hand off between laptops and carry a stat along one edge."
+      },
+      {
         "t": "h2",
-        "text": "The 7 product reveal recipes"
+        "text": "The 10 product reveal recipes"
       },
       {
         "t": "ul",
@@ -46,7 +53,10 @@
           "[X-Ray Effect](/recipes/x-ray-effect/): Macro shots of a chip and a board cross-dissolve to the outer shell on one camera position, then the camera pulls back to the whole device in 1.2 s.",
           "[Text–Object Interleave](/recipes/text-object-interleave/): The product lights up, sinks, and the wordmark rises from behind it over 1.8 s; later a device drops into a gap in a sentence in 0.5 s.",
           "[Dispense Line-up](/recipes/dispense-line-up/): Accessories slide out of the main object 0.15 s apart into a row, hold 1.1 s and retract in mirrored order while the caption appears word by word.",
-          "[Outline-to-Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in 1.5 s, a highlight sweeps across, and a slow push follows until 8.2 s."
+          "[Outline-to-Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in 1.5 s, a highlight sweeps across, and a slow push follows until 8.2 s.",
+          "[Fluted Glass Effect](/recipes/fluted-glass-effect/): Light streaks rise through ribbed glass on a laptop screen and form a big word; the camera pushes in, the glass flattens and the title sharpens.",
+          "[Dolly Zoom Effect](/recipes/dolly-zoom-effect/): The camera backs away as the lens zooms in: a phone holds its size and the hall behind it flattens into a dashboard.",
+          "[Light Beam Effect](/recipes/light-beam-effect/): Laptops throw trapezoid beams of light that reveal app screens, hand off to each other and carry a stat along one edge."
         ]
       },
       {
@@ -86,9 +96,9 @@
   },
   "zh": {
     "title": "产品揭示动画与发布视频示例",
-    "description": "7 个来自发布片的产品揭示动画配方，包括光线揭示、微距拉出、X 光透视等，用 HyperFrames 写代码做出，并与原片对照。",
+    "description": "10 个来自发布片的产品揭示动画配方，包括光线揭示、微距拉出、X 光透视、棱镜玻璃、希区柯克变焦等，用 HyperFrames 写代码做出。",
     "h1": "发布片里的产品揭示示例",
-    "lede": "产品揭示是发布视频第一次展示产品的镜头。这 7 个配方来自产品发布视频，覆盖光线揭示、微距拉出、X 光叠化和配件排列。每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，并标出每个运镜和动作的时间数据。",
+    "lede": "产品揭示是发布视频第一次展示产品的镜头。这 10 个配方来自产品发布视频，覆盖光线揭示、微距拉出、X 光叠化、配件排列、棱镜玻璃、希区柯克变焦和光束。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，并标出每个运镜和动作的时间数据。",
     "blocks": [
       {
         "t": "films",
@@ -99,7 +109,10 @@
           "x-ray-effect",
           "text-object-interleave",
           "dispense-line-up",
-          "outline-to-solid-reveal"
+          "outline-to-solid-reveal",
+          "fluted-glass-effect",
+          "dolly-zoom-effect",
+          "light-beam-effect"
         ]
       },
       {
@@ -115,8 +128,12 @@
         "text": "有几个配方以字标收尾揭示。光线揭示在 8.78 秒进入字标，描边转实心揭示在产品镜头之后接一个简短的 logo 版本。Logo 收尾的细节见 [Logo 动画](/logo-animation/)，揭示之后的场景切换见[转场](/transitions/)。"
       },
       {
+        "t": "p",
+        "text": "另有三个配方用镜头或光来揭示产品。棱镜玻璃效果让光带穿过笔记本屏幕上的棱纹玻璃，聚成一个大字，随后镜头推近，玻璃变平，标题变清晰。希区柯克变焦效果在镜头后退的同时把焦距推近，手机大小不变，身后的大厅被压平成一个仪表盘。光束效果让笔记本投出梯形光束，每道光束里显示一个应用界面，光束在笔记本之间交接，并沿一条边带出一个数据。"
+      },
+      {
         "t": "h2",
-        "text": "7 个产品揭示配方"
+        "text": "10 个产品揭示配方"
       },
       {
         "t": "ul",
@@ -127,7 +144,10 @@
           "[X 光透视效果](/recipes/x-ray-effect/)：芯片和主板的微距镜头在同一机位叠化成外壳，随后镜头用 1.2 秒拉远成整机。",
           "[文字穿插实物效果](/recipes/text-object-interleave/)：产品亮起后下沉，字标在 1.8 秒内从它后面升起；之后一台设备在 0.5 秒内落入句子中的空位。",
           "[配件依次滑出排列动画](/recipes/dispense-line-up/)：配件从主体里以 0.15 秒的间隔逐个滑出排成一行，停留 1.1 秒后按镜像顺序收回，文案逐词同步出现。",
-          "[描边到实体显形动画](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体用 1.5 秒淡入，一道高光扫过，之后缓慢推近到 8.2 秒。"
+          "[描边到实体显形动画](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体用 1.5 秒淡入，一道高光扫过，之后缓慢推近到 8.2 秒。",
+          "[棱镜玻璃效果](/recipes/fluted-glass-effect/)：光带穿过笔记本屏幕上的棱纹玻璃，聚成一个大字；镜头推近，玻璃变平，标题变清晰。",
+          "[希区柯克变焦效果](/recipes/dolly-zoom-effect/)：镜头后退的同时镜头焦距推近：手机大小不变，身后的大厅被压平成一个仪表盘。",
+          "[光束效果](/recipes/light-beam-effect/)：笔记本投出梯形光束，光束里显示应用界面，彼此交接，并沿一条边带出一个数据。"
         ]
       },
       {

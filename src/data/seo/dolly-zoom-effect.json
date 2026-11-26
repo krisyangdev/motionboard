@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Dolly Zoom Effect",
+    "title": "Dolly Zoom Effect: Example and Code Recipe",
+    "description": "The camera backs away as the lens zooms in: a phone holds its size and the hall behind flattens into a dashboard. Make it with Claude Code or Codex.",
+    "howto": [
+      "Put the subject on the z=0 plane of a CSS 3D world and animate only the stage perspective. From 1.0 to 5.8s it grows from 950px to 7000px, eased in log space with cubic-bezier(0.55,0.05,0.5,1), which narrows the vertical field of view from about 59° to about 9°. The phone stays 410×864px while everything behind it changes, and the wall keeps growing until 5.8s instead of settling early.",
+      "Build the background as depth cues: a hall 2760×1552 and 2800px long with four 6px light strips and 9 rings every 280px at 20% white, six dashboard windows at z=−300 to −2400, and a web dashboard wall at z=−2800 that is 2650px wide. As the camera backs away the dashboard grows from 671px to 1893px wide, and two chips at z=+170 shrink from about 1.22 at 1.0s to about 1.18 at 2.1s, when they start to fade. Slide the windows out between 1.6 and 2.7s, each fading over 0.4s as it slides 450px, with the two nearest starting at 2.2s and 2.3s, so the wall behind the phone is clear before it becomes readable.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the world, the phone screen and the dashboard from your product. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is the dolly zoom effect?",
+        "It is a camera move where the camera travels away from the subject while the lens zooms in by the same amount. The subject keeps its size in frame, and the perspective of the background stretches or flattens. It is also called the Vertigo effect."
+      ],
+      [
+        "How do you make a dolly zoom in HTML and CSS?",
+        "Place the subject at z=0 inside a preserve-3d world and give objects behind it negative z values. Then animate the perspective distance on the stage. Objects at z=0 do not change size, while objects behind them grow as the distance increases."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "希区柯克变焦效果",
+    "title": "希区柯克变焦：示例与代码配方",
+    "description": "镜头后退的同时焦距拉长，手机大小不变，背后的走廊压平成一面仪表盘墙。用 Claude Code 或 Codex 按免费配方做出这个滑动变焦效果。",
+    "howto": [
+      "把主体放在 CSS 3D 世界的 z=0 平面上，只对舞台的透视距离做动画。1.0 到 5.8s 里它从 950px 加大到 7000px，在对数空间按 cubic-bezier(0.55,0.05,0.5,1) 变化，纵向视场角从约 59° 收到约 9°。手机始终是 410×864px，只有它背后的空间在变，墙面一直长到 5.8s，不会提前停住。",
+      "背景用纵深线索搭：截面 2760×1552、长 2800px 的走廊，四条 6px 光带和每隔 280px 的 9 道白色 20% 细环，z=−300 到 −2400 的六个仪表盘浮窗，以及 z=−2800、宽 2650px 的网页端仪表盘墙。镜头后退时仪表盘从 671px 宽长到 1893px，z=+170 的两个气泡从约 1.22 缩到 2.1s 的约 1.18 后开始淡出。浮窗在 1.6 到 2.7s 之间向两侧滑出，每个滑 450px 的同时用 0.4s 淡出，最近的两个从 2.2s 和 2.3s 起，手机背后的墙面在能读清之前已经没有浮窗。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用你的产品做出这个世界、手机界面和仪表盘。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是希区柯克变焦？",
+        "镜头远离主体的同时，焦距按同样比例拉长。主体在画面里大小不变，背景的透视被拉伸或压平，也叫滑动变焦或 Vertigo 效果。"
+      ],
+      [
+        "怎么用 HTML 和 CSS 做滑动变焦？",
+        "把主体放在 preserve-3d 世界里的 z=0，背景物体取负的 z 值，然后对舞台的透视距离做动画。z=0 的物体大小不变，在它后面的物体随距离变大而变大。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

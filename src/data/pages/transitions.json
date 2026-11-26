@@ -2,12 +2,12 @@
   "id": "transitions",
   "kind": "hub",
   "path": "/transitions/",
-  "updated": "2026-11-16",
+  "updated": "2026-11-26",
   "en": {
     "title": "Transition Effects and Match Cuts Made with Code",
-    "description": "Eight transition recipes from launch films: match cut, morph, wipe, iris and more. Each is a 10-second film made with HyperFrames next to the original.",
+    "description": "Ten transition recipes from launch films: match cut, morph, wipe, iris, infinite zoom, flipbook and more. Each film is made with HyperFrames.",
     "h1": "Transition effects from launch films",
-    "lede": "A transition carries the viewer from one scene to the next in a launch film. These eight recipes cover the match cut, morph transition, wipe transition, iris transition and several others. Each is a 10-second 1920x1080 film built in code with HyperFrames and shown next to the original clip, with exact frame timing for every cut, sweep and dissolve.",
+    "lede": "A transition carries the viewer from one scene to the next in a launch film. These ten recipes cover the match cut, morph transition, wipe transition, iris transition, infinite zoom, flipbook animation and several others. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with exact frame timing for every cut, sweep and dissolve.",
     "blocks": [
       {
         "t": "films",
@@ -19,7 +19,9 @@
           "glass-droplet-split",
           "domino-wave",
           "locked-layout-reskin",
-          "x-ray-effect"
+          "x-ray-effect",
+          "infinite-zoom",
+          "flipbook-animation"
         ]
       },
       {
@@ -35,8 +37,12 @@
         "text": "A few recipes have no cut at all. Morph Transition turns one element into the next across the whole film, and X-ray Effect dissolves from the inner structure to the outer shell on one camera position. For motion inside a scene, see [UI animation](/ui-animation/); for the opening and ending shots, see [logo animation](/logo-animation/)."
       },
       {
+        "t": "p",
+        "text": "Two more recipes carry the viewer between scenes with camera and page motion. Infinite Zoom Effect dives the camera through four nested UI screens, each shown inside a card on the one before, and lands back on the first screen so the shot loops. Flipbook Animation collapses a moodboard into a book, flips it page by page, then bursts the pages into a 3D collage that drifts toward the camera."
+      },
+      {
         "t": "h2",
-        "text": "The 8 transition recipes"
+        "text": "The 10 transition recipes"
       },
       {
         "t": "ul",
@@ -48,7 +54,9 @@
           "[Glass Droplet Split](/recipes/glass-droplet-split/): A glass slab stretches into a droplet, the neck thins for 0.3 s and breaks at 2.41 s, and the remaining bead later gathers into the logo.",
           "[Domino Wave](/recipes/domino-wave/): A row of cubes flips 90 degrees one after another with a 0.07 to 0.10 s phase offset while the camera pans along the line.",
           "[Locked-Layout Reskin](/recipes/locked-layout-reskin/): The layout stays fixed while color and fonts hard-cut every 16, 8 and then 6 frames, landing on one skin at 8.4 s.",
-          "[X-Ray Effect](/recipes/x-ray-effect/): The inner structure and the outer shell cross-dissolve from the same camera position over about 0.7 s, then the camera pulls back to the whole device in 1.2 s."
+          "[X-Ray Effect](/recipes/x-ray-effect/): The inner structure and the outer shell cross-dissolve from the same camera position over about 0.7 s, then the camera pulls back to the whole device in 1.2 s.",
+          "[Infinite Zoom Effect](/recipes/infinite-zoom/): The camera dives through four nested UI screens and lands back on the first, so the shot loops.",
+          "[Flipbook Animation](/recipes/flipbook-animation/): A moodboard collapses into a book, flips page by page, then bursts into a 3D collage drifting toward the camera."
         ]
       },
       {
@@ -88,9 +96,9 @@
   },
   "zh": {
     "title": "转场效果与匹配剪辑示例",
-    "description": "8 个来自发布片的转场配方，包括匹配剪辑、形变、擦除和光圈转场。每个都是用 HyperFrames 做出的 10 秒短片，并与原片对照。",
+    "description": "10 个来自发布片的转场配方，包括匹配剪辑、形变、擦除、光圈、无限缩放和翻页。每个都是用 HyperFrames 做出的短片，并与原片对照。",
     "h1": "发布片里的转场效果示例",
-    "lede": "转场负责把观众从一个场景带到下一个场景。这 8 个配方覆盖匹配剪辑、形变转场、擦除转场、光圈转场等做法。每个都是用 HyperFrames 写代码做出的 10 秒 1920x1080 短片，旁边附上原片，每一次切换、横扫和叠化都标出了精确的帧时间。",
+    "lede": "转场负责把观众从一个场景带到下一个场景。这 10 个配方覆盖匹配剪辑、形变转场、擦除转场、光圈转场、无限缩放、翻页动画等做法。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，每一次切换、横扫和叠化都标出了精确的帧时间。",
     "blocks": [
       {
         "t": "films",
@@ -102,7 +110,9 @@
           "glass-droplet-split",
           "domino-wave",
           "locked-layout-reskin",
-          "x-ray-effect"
+          "x-ray-effect",
+          "infinite-zoom",
+          "flipbook-animation"
         ]
       },
       {
@@ -118,8 +128,12 @@
         "text": "还有几个配方完全没有切镜。形变转场让一个元素在整支片子里不断变成下一个元素，X 光透视效果在同一机位上从内部结构叠化到外壳。场景内部的动效见 [UI 动画](/ui-animation/)，开场和收尾镜头见 [Logo 动画](/logo-animation/)。"
       },
       {
+        "t": "p",
+        "text": "另有两个配方用镜头和页面的运动把观众带到下一个场景。无限缩放效果让镜头依次穿入四层嵌套的界面画面，每个画面都显示在上一个画面的卡片里，最后回到第一个画面，使镜头可以循环。翻页动画效果把情绪板收拢成一本书，逐页翻动，再让书页炸开成向镜头漂来的 3D 拼贴。"
+      },
+      {
         "t": "h2",
-        "text": "8 个转场配方"
+        "text": "10 个转场配方"
       },
       {
         "t": "ul",
@@ -131,7 +145,9 @@
           "[玻璃水滴分离动画](/recipes/glass-droplet-split/)：玻璃片拉长成水滴，颈部用 0.3 秒收细并在 2.41 秒断开，留下的圆珠之后收拢成 logo。",
           "[方块波浪翻转](/recipes/domino-wave/)：一排方块以 0.07 到 0.10 秒的相位差依次翻转 90 度，镜头沿队列平移。",
           "[固定版式换肤动画](/recipes/locked-layout-reskin/)：布局位置保持不变，配色和字体依次每 16 帧、8 帧、6 帧硬切一次，在 8.4 秒落定到一套皮肤。",
-          "[X 光透视效果](/recipes/x-ray-effect/)：内部结构和外壳在同一机位对位叠化，约 0.7 秒完成，随后镜头用 1.2 秒拉远成整机。"
+          "[X 光透视效果](/recipes/x-ray-effect/)：内部结构和外壳在同一机位对位叠化，约 0.7 秒完成，随后镜头用 1.2 秒拉远成整机。",
+          "[无限缩放效果](/recipes/infinite-zoom/)：镜头依次穿入四层嵌套的界面画面，最后回到第一个画面，使镜头可以循环。",
+          "[翻页动画效果](/recipes/flipbook-animation/)：情绪板收拢成一本书，逐页翻动，随后炸开成向镜头漂来的 3D 拼贴。"
         ]
       },
       {

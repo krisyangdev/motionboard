@@ -58,8 +58,8 @@ export const BRAND = {
     zh: '用 Claude Code 和 Codex 做宣传片动效',
   },
   line: {
-    en: 'A free HyperFrames skill and 38 shot recipes from Apple and Linear launch films, rebuilt in code. Copy one to your agent and make the same shot for your product.',
-    zh: '免费的 HyperFrames skill 和 38 个镜头配方，拆自苹果、Linear 宣传片，用代码复刻。复制一条给你的 Agent，给你的产品做同款镜头。',
+    en: 'A free HyperFrames skill and 48 shot recipes from Apple, Linear and Figma launch films, rebuilt in code. Copy one to your agent and make the same shot for your product.',
+    zh: '免费的 HyperFrames skill 和 48 个镜头配方，拆自苹果、Linear、Figma 等公司的宣传片，用代码复刻。复制一条给你的 Agent，给你的产品做同款镜头。',
   },
 }
 /** Absolute URL for a path on this site or an already absolute URL. */

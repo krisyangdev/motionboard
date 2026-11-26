@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --paper: #e9eaed;
+        --ink: #0d0f13;
+        --acc: #2346ff;
+        --guide: #7d838d;
+        --font-ui: "Inter", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+
+      /* ---------- depth of field: four copies of the same plane, blurred in screen space ---------- */
+      #dof { --ang: 178; --c: 570; --w: 150; }
+      .lay { overflow: hidden; }
+      .L1 { filter: blur(2.4px); }
+      .L2 { filter: blur(6px); }
+      .L3 { filter: blur(12px); }
+      .L0 {
+        -webkit-mask-image: linear-gradient(calc(var(--ang) * 1deg), transparent calc(var(--c) * 1px - var(--w) * 1px - 60px), #000 calc(var(--c) * 1px - var(--w) * 1px), #000 calc(var(--c) * 1px + var(--w) * 1px), transparent calc(var(--c) * 1px + var(--w) * 1px + 60px));
+        mask-image: linear-gradient(calc(var(--ang) * 1deg), transparent calc(var(--c) * 1px - var(--w) * 1px - 60px), #000 calc(var(--c) * 1px - var(--w) * 1px), #000 calc(var(--c) * 1px + var(--w) * 1px), transparent calc(var(--c) * 1px + var(--w) * 1px + 60px));
+      }
+      .L1 {
+        -webkit-mask-image: linear-gradient(calc(var(--ang) * 1deg), transparent calc(var(--c) * 1px - var(--w) * 1px - 170px), #000 calc(var(--c) * 1px - var(--w) * 1px - 100px), #000 calc(var(--c) * 1px + var(--w) * 1px + 100px), transparent calc(var(--c) * 1px + var(--w) * 1px + 170px));
+        mask-image: linear-gradient(calc(var(--ang) * 1deg), transparent calc(var(--c) * 1px - var(--w) * 1px - 170px), #000 calc(var(--c) * 1px - var(--w) * 1px - 100px), #000 calc(var(--c) * 1px + var(--w) * 1px + 100px), transparent calc(var(--c) * 1px + var(--w) * 1px + 170px));
+      }
+      .L2 {
+        -webkit-mask-image: linear-gradient(calc(var(--ang) * 1deg), transparent calc(var(--c) * 1px - var(--w) * 1px - 320px), #000 calc(var(--c) * 1px - var(--w) * 1px - 230px), #000 calc(var(--c) * 1px + var(--w) * 1px + 230px), transparent calc(var(--c) * 1px + var(--w) * 1px + 320px));
+        mask-image: linear-gradient(calc(var(--ang) * 1deg), transparent calc(var(--c) * 1px - var(--w) * 1px - 320px), #000 calc(var(--c) * 1px - var(--w) * 1px - 230px), #000 calc(var(--c) * 1px + var(--w) * 1px + 230px), transparent calc(var(--c) * 1px + var(--w) * 1px + 320px));
+      }
+      .stage { perspective: 1500px; perspective-origin: 960px 540px; }
+      .rot { transform-style: flat; }
+      .cam { position: absolute; left: 960px; top: 540px; width: 0; height: 0; }
+
+      /* ---------- the paper plane (cam coordinates, 1 unit = 2.8 px) ---------- */
+      .plane {
+        position: absolute; left: -6000px; top: -4400px; width: 12000px; height: 9000px;
+        background-color: #f3f4f6;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='r' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.11' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='0.7' diffuseConstant='1.05'%3E%3CfeDistantLight azimuth='225' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23r)'/%3E%3C/svg%3E"),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1024' height='1024'%3E%3Cfilter id='r' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='4' seed='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='3' diffuseConstant='1.05'%3E%3CfeDistantLight azimuth='215' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='1024' height='1024' filter='url(%23r)'/%3E%3C/svg%3E");
+        background-size: 256px 256px, 1024px 1024px;
+        background-blend-mode: multiply, multiply;
+      }
+      .plane svg { position: absolute; left: 0; top: 0; width: 12000px; height: 9000px; overflow: visible; }
+
+      .pl .t, .pl .f, .pl .gd { stroke-dasharray: 10000 20000; stroke-dashoffset: 10010; }
+      .pl .fd, .gs { opacity: 0; }
+      .gd { fill: none; stroke: var(--guide); stroke-width: 0.28; opacity: 0.8; }
+      .gs { fill: none; stroke: var(--guide); stroke-width: 0.28; }
+      .gl .t, .mk .t { fill: none; stroke: var(--ink); stroke-width: 0.7; }
+      .gl .f, .mk .f { fill: none; stroke: var(--ink); stroke-width: 16; stroke-linejoin: miter; stroke-miterlimit: 3; }
+      .mk .f { stroke-width: 13; }
+      .gl .fd { fill: var(--ink); }
+      .ac .t, .ac .f { stroke: var(--acc); }
+      .ac .fd { fill: var(--acc); }
+
+      /* ---------- flat shot ---------- */
+      #flat { opacity: 0; }
+      .paperF {
+        background-color: #f3f4f6;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='r' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.12' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='0.4' diffuseConstant='1.05'%3E%3CfeDistantLight azimuth='225' elevation='62'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23r)'/%3E%3C/svg%3E"),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='r' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='4' seed='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='3' diffuseConstant='1.08'%3E%3CfeDistantLight azimuth='215' elevation='62'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23r)'/%3E%3C/svg%3E");
+        background-size: 128px 128px, 512px 512px;
+        background-blend-mode: multiply, multiply;
+      }
+      #lockF { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; }
+      #lockF svg { display: block; overflow: visible; }
+      .fx { fill: none; stroke: var(--ink); stroke-width: 16; stroke-linejoin: miter; stroke-miterlimit: 3; }
+      .fxm { stroke-width: 13; }
+      .fxd { fill: var(--ink); }
+      .fxa { stroke: var(--acc); }
+      .fxda { fill: var(--acc); }
+
+      /* ---------- finishing layers ---------- */
+      #light { z-index: 4; pointer-events: none; background: radial-gradient(ellipse 85% 75% at 30% 28%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 70%), linear-gradient(to bottom, rgba(40, 44, 56, 0) 55%, rgba(40, 44, 56, 0.10) 100%); }
+      #grain { z-index: 5; pointer-events: none; opacity: 0.09; mix-blend-mode: multiply; background-size: 256px 256px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      #grainL { z-index: 5; pointer-events: none; opacity: 0.03; mix-blend-mode: screen; background-size: 256px 256px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      #vig { z-index: 6; pointer-events: none; background: radial-gradient(ellipse 80% 80% at 50% 48%, rgba(30, 34, 44, 0) 55%, rgba(30, 34, 44, 0.30) 100%); }
+
+      #txt { z-index: 3; }
+      .tx { position: absolute; left: 0; width: 1920px; text-align: center; font-size: 50px; line-height: 58px; font-weight: 500; letter-spacing: -0.012em; color: var(--ink); white-space: pre; }
+      .tx.ac { color: var(--acc); }
+      .ch { display: inline-block; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="11" data-width="1920" data-height="1080">
+      <div id="dof" class="clip full" data-start="0" data-duration="11" data-track-index="0" data-layout-allow-overlap>
+        <div class="lay full L3" data-layout-ignore><div class="stage full"><div class="rot full"><div class="cam"><div class="plane"></div></div></div></div></div>
+        <div class="lay full L2" data-layout-ignore><div class="stage full"><div class="rot full"><div class="cam"><div class="plane"></div></div></div></div></div>
+        <div class="lay full L1" data-layout-ignore><div class="stage full"><div class="rot full"><div class="cam"><div class="plane"></div></div></div></div></div>
+        <div class="lay full L0" data-layout-ignore><div class="stage full"><div class="rot full"><div class="cam"><div class="plane"></div></div></div></div></div>
+      </div>
+
+      <div id="flat" class="clip full" data-start="0" data-duration="11" data-track-index="1" data-layout-allow-overlap>
+        <div class="paperF full"></div>
+        <div id="lockF" data-layout-ignore></div>
+      </div>
+
+      <div id="txt" class="clip full" data-start="0" data-duration="11" data-track-index="2" data-layout-allow-overlap>
+        <div id="d1" class="tx" style="top:600px"></div>
+        <div id="d2" class="tx ac" style="top:680px"></div>
+      </div>
+
+      <div id="light" class="clip full" data-start="0" data-duration="11" data-track-index="3" data-layout-ignore></div>
+      <div id="grain" class="clip full" data-start="0" data-duration="11" data-track-index="4" data-layout-ignore></div>
+      <div id="grainL" class="clip full" data-start="0" data-duration="11" data-track-index="5" data-layout-ignore></div>
+      <div id="vig" class="clip full" data-start="0" data-duration="11" data-track-index="6" data-layout-ignore></div>
+    </div>
+
+    <script>
+      const EXPO = "expo.out";
+      const K = 2.8;                        // plane px per drawing unit
+      const S = 16, h = S / 2, R = 50 - h;  // pen weight, half weight, bowl radius (all in units, x-height = 100)
+      const N = 10000;                      // pathLength of every drawn stroke (GSAP rounds CSS lengths to whole numbers, so fractions need this scale)
+      const f2 = (n) => Math.round(n * 100) / 100;
+      const rad = (d) => (d * Math.PI) / 180;
+      const circ = (cx, cy, r) => "M" + (cx + r) + " " + cy + "A" + r + " " + r + " 0 1 0 " + (cx - r) + " " + cy + "A" + r + " " + r + " 0 1 0 " + (cx + r) + " " + cy;
+
+      /* ---------- Meridian lockup: ring mark, "meridian", "26" ---------- */
+      const BOWL = "M" + (100 - h) + " 50A" + R + " " + R + " 0 1 0 " + h + " 50A" + R + " " + R + " 0 1 0 " + (100 - h) + " 50";
+      const E_END = [f2(50 + R * Math.cos(rad(42))), f2(50 + R * Math.sin(rad(42)))];
+      const GLY = {
+        m: { w: 144, d: ["M" + h + " 100V0", "M" + h + " 40A32 32 0 0 1 " + (h + 64) + " 40V100", "M" + (h + 64) + " 40A32 32 0 0 1 " + (h + 128) + " 40V100"] },
+        e: { w: 100, d: ["M" + h + " 50H99.5", "M" + (100 - h) + " 50A" + R + " " + R + " 0 1 0 " + E_END[0] + " " + E_END[1]] },
+        r: { w: 60, d: ["M" + h + " 100V0", "M" + h + " 50A" + R + " " + R + " 0 0 1 " + (h + R) + " " + h + "H60"] },
+        i: { w: 16, d: ["M" + h + " 100V0"], dot: [h, -31, 10] },
+        d: { w: 100, d: [BOWL, "M" + (100 - h) + " 100V-46"] },
+        a: { w: 100, d: [BOWL, "M" + (100 - h) + " 100V0"] },
+        n: { w: 100, d: ["M" + h + " 100V0", "M" + h + " 50A" + R + " " + R + " 0 0 1 " + (100 - h) + " 50V100"] },
+        "2": { w: 100, d: ["M16 2A34 34 0 0 1 84 2C84 40 " + h + " 55 " + h + " " + (100 - h) + "H" + (100 - h)] },
+        "6": { w: 100, d: ["M" + h + " 50C" + h + " 5 28 -32 72 -32", BOWL] },
+      };
+      const WORD = [["m", 0], ["e", 0], ["r", 0], ["i", 0], ["d", 0], ["i", 0], ["a", 0], ["n", 0], ["2", 1], ["6", 1]];
+      const GAPS = [12, 12, 16, 12, 20, 12, 20, 56, 12];
+      const GX = [];
+      let cur = 190;
+      WORD.forEach((g, i) => { GX[i] = cur; cur += GLY[g[0]].w + (GAPS[i] || 0); });
+      const END_X = cur;                                        // right edge of the lockup in units
+      const CX = 73, CY = 27.5, RM = 66, RX = 30, A0 = 128;       // ring mark: centre, ring radius, meridian half width, pen start angle
+      const ringD = (() => {
+        const p = (a) => f2(CX + RM * Math.cos(rad(a))) + " " + f2(CY + RM * Math.sin(rad(a)));
+        return "M" + p(A0) + "A" + RM + " " + RM + " 0 1 1 " + p(A0 + 180) + "A" + RM + " " + RM + " 0 1 1 " + p(A0);
+      })();
+      const ellD = "M" + CX + " " + (CY - RM) + "A" + RX + " " + RM + " 0 1 1 " + CX + " " + (CY + RM) + "A" + RX + " " + RM + " 0 1 1 " + CX + " " + (CY - RM);
+
+      /* flat or drawing version of the lockup (same paths) */
+      function lockup(flat) {
+        let s = "";
+        const path = (d, a) => flat ? '<path class="fx' + (a ? " fxa" : "") + '" d="' + d + '"/>' : '<path class="t k0" d="' + d + '" pathLength="10000"/><path class="f k0" d="' + d + '" pathLength="10000"/>';
+        s += flat ? "" : '<g class="mk ell ac">' + path(ellD) + "</g>";
+        s += flat ? '<path class="fx fxm fxa" d="' + ellD + '"/>' : "";
+        s += flat ? '<path class="fx fxm" d="' + ringD + '"/>' : '<g class="mk ring">' + path(ringD) + "</g>";
+        WORD.forEach((g, i) => {
+          const gl = GLY[g[0]];
+          let inner = "";
+          gl.d.forEach((d, j) => { inner += flat ? '<path class="fx' + (g[1] ? " fxa" : "") + '" d="' + d + '"/>' : '<path class="t k' + j + '" d="' + d + '" pathLength="10000"/><path class="f k' + j + '" d="' + d + '" pathLength="10000"/>'; });
+          if (gl.dot) inner += flat ? '<circle class="fxd' + (g[1] ? " fxda" : "") + '" cx="' + gl.dot[0] + '" cy="' + gl.dot[1] + '" r="' + gl.dot[2] + '"/>' : '<circle class="t k' + gl.d.length + '" cx="' + gl.dot[0] + '" cy="' + gl.dot[1] + '" r="' + gl.dot[2] + '" pathLength="10000"/><circle class="fd" cx="' + gl.dot[0] + '" cy="' + gl.dot[1] + '" r="' + gl.dot[2] + '"/>';
+          s += '<g class="gl g' + i + (g[1] ? " ac" : "") + '" transform="translate(' + GX[i] + ' 0)">' + inner + "</g>";
+        });
+        return s;
+      }
+
+      /* ---------- construction guides: [path, start, duration, initial progress] ---------- */
+      const G = [];
+      const gd = (d, t0, dur, p0) => G.push({ d, t0, dur, p0: p0 || 0 });
+      // around the mark
+      gd("M-40 " + CY + "H200", 0, 1.1, 0.7);
+      gd("M" + CX + " -96V160", 0, 1.3, 0.7);
+      gd(circ(CX, CY, 74), 0, 1.4, 0.55);
+      gd(circ(CX, CY, 96), 0, 1.8, 0.45);
+      gd(circ(CX, CY, 128), 0.1, 2.0, 0.35);
+      gd("M-90 -70L250 120", 0, 1.8, 0.5);
+      gd("M-60 160L180 -90", 0.1, 1.8, 0.4);
+      gd("M-120 70L300 8", 0.3, 1.6, 0);
+      // rulings across the word
+      [[-46, 0.2], [0, 0.32], [100, 0.44], [146, 0.56]].forEach((r) => gd("M-300 " + r[0] + "H1500", r[1], 2.4, 0.1));
+      // glyph boxes and bowl circles, just ahead of each pen stroke
+      const PEN = [3.0, 3.22, 3.44, 3.62, 3.78, 3.98, 4.14, 4.34, 4.56, 4.78];
+      const PDUR = [0.55, 0.45, 0.4, 0.3, 0.5, 0.3, 0.5, 0.5, 0.5, 0.5];
+      WORD.forEach((g, i) => {
+        const x = GX[i], w = GLY[g[0]].w;
+        gd("M" + x + " -62V164", PEN[i] - 0.9, 0.7);
+        gd("M" + (x + w) + " -62V164", PEN[i] - 0.8, 0.7);
+        if ("eda6".indexOf(g[0]) >= 0) gd(circ(x + 50, 50, 50), PEN[i] - 0.9, 0.7);
+      });
+      // ruler ticks on the baseline and registration crosses
+      let ticks = "";
+      for (let x = -120; x <= 1420; x += 6) ticks += "M" + x + " 100v" + (x % 30 === 0 ? 9 : 4);
+      let regs = "";
+      GX.forEach((x) => { regs += "M" + (x - 5) + " 100h10M" + x + " 95v10"; });
+      const STATICS = [ticks, regs];
+
+      function planeSVG() {
+        let s = '<svg viewBox="-6000 -4400 12000 9000" xmlns="http://www.w3.org/2000/svg"><g transform="scale(' + K + ')">';
+        G.forEach((q, i) => { s += '<path class="gd gd' + i + '" d="' + q.d + '" pathLength="10000"/>'; });
+        STATICS.forEach((d, i) => { s += '<path class="gs gs' + i + '" d="' + d + '"/>'; });
+        s += '<g class="pl">' + lockup(false) + "</g></g></svg>";
+        return s;
+      }
+      const PLANE = planeSVG();
+      document.querySelectorAll(".plane").forEach((p) => { p.innerHTML = PLANE; });
+
+      /* flat lockup */
+      const FW = 1480, FS = FW / (END_X + 20);
+      const LW = (END_X + 20) * FS, LH = 230 * FS;
+      const lockF = document.getElementById("lockF");
+      lockF.style.width = LW + "px";
+      lockF.style.height = LH + "px";
+      lockF.style.left = 960 - LW / 2 + "px";
+      lockF.style.top = 520 - (27 + 64) * FS + "px";
+      lockF.innerHTML = '<svg width="' + LW + '" height="' + LH + '" viewBox="-10 -64 ' + (END_X + 20) + ' 230" xmlns="http://www.w3.org/2000/svg"><defs><filter id="ink" x="-3%" y="-6%" width="106%" height="112%"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="4" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="1.3" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#ink)">' + lockup(true) + "</g></svg>";
+
+      /* date and URL, one span per character */
+      const chars = (id, text) => { document.getElementById(id).innerHTML = text.split("").map((c) => '<span class="ch">' + (c === " " ? "&nbsp;" : c) + "</span>").join(""); };
+      chars("d1", "16 Dec 2026");
+      chars("d2", "meridian26.com");
+
+      /* ---------- timeline ---------- */
+      const tl = gsap.timeline({ paused: true });
+      function F(target, from, to, at) { tl.fromTo(target, from, Object.assign({ immediateRender: false }, to), at); }
+      const gl = (a) => Math.abs(1920 * Math.sin(rad(a))) + Math.abs(1080 * Math.cos(rad(a)));
+      const band = (a, off, w) => ({ "--ang": a, "--c": gl(a) / 2 + off, "--w": w });
+
+      gsap.set(".cam", { transformOrigin: "0px 0px" });
+      gsap.set(".rot", { transformOrigin: "960px 540px" });
+      gsap.set("#dof", band(178, 20, 150));
+      gsap.set("#lockF", { filter: "blur(0px)" });
+
+      // camera: frames are {t, target (cam px), zoom, tilt, roll}; one tween per pair of frames
+      const U = (ux, uy) => [ux * K, uy * K];
+      function cam(frames, ease) {
+        for (let i = 0; i < frames.length - 1; i++) {
+          const a = frames[i], b = frames[i + 1], d = b.t - a.t;
+          F(".cam", { x: -a.c[0] * a.z, y: -a.c[1] * a.z, scale: a.z }, { x: -b.c[0] * b.z, y: -b.c[1] * b.z, scale: b.z, duration: d, ease: ease }, a.t);
+          F(".rot", { rotationX: a.tilt, rotation: a.roll }, { rotationX: b.tilt, rotation: b.roll, duration: d, ease: ease }, a.t);
+        }
+      }
+      const ringPt = (a) => U(CX + RM * Math.cos(rad(a)), CY + RM * Math.sin(rad(a)));
+
+      // take 1 (0 - 1.9): extreme macro, camera aims 4 degrees of arc ahead of the pen tip so the tip stays mid-frame
+      cam([
+        { t: 0, c: ringPt(330), z: 5.2, tilt: 58, roll: -10 },
+        { t: 0.95, c: ringPt(373), z: 4.8, tilt: 56.5, roll: -8 },
+        { t: 1.9, c: ringPt(416), z: 4.4, tilt: 55, roll: -6 },
+      ], "none");
+      // take 2 (1.9 - 3.4): wider, ring closes and the meridian is drawn in blue
+      tl.set("#dof", band(177, 10, 190), 1.9);
+      cam([{ t: 1.9, c: U(78, 40), z: 2.5, tilt: 50, roll: 4 }, { t: 3.4, c: U(116, 36), z: 2.2, tilt: 47, roll: 1 }], "none");
+      // take 3 (3.4 - 4.7): letter macro, camera slides right with the pen, about 25 units left of the letter being drawn
+      tl.set("#dof", band(176, 30, 160), 3.4);
+      cam([
+        { t: 3.4, c: U(365, 50), z: 1.9, tilt: 55, roll: -4 },
+        { t: 3.64, c: U(463, 49), z: 1.87, tilt: 54.4, roll: -3.8 },
+        { t: 4.03, c: U(587, 47), z: 1.83, tilt: 53.6, roll: -3.3 },
+        { t: 4.39, c: U(735, 45), z: 1.79, tilt: 52.8, roll: -2.7 },
+        { t: 4.7, c: U(933, 42), z: 1.75, tilt: 52, roll: -2 },
+      ], "none");
+      // take 4 (4.7 - 5.8): pull back while the heavy pen fills every letter; the 6 ends about 280 px inside the right edge
+      tl.set("#dof", band(178, 0, 330), 4.7);
+      cam([{ t: 4.7, c: U(120, 40), z: 1.15, tilt: 52, roll: -2 }, { t: 5.8, c: U(900, 40), z: 0.78, tilt: 46, roll: 0 }], "power3.out");
+
+      // guides
+      G.forEach((q, i) => { F(".gd" + i, { strokeDashoffset: (1 - q.p0) * N }, { strokeDashoffset: 0, duration: q.dur, ease: "power2.out" }, q.t0); });
+      tl.set(".gs0", { opacity: 0.8 }, 0);
+      F(".gs1", { opacity: 0 }, { opacity: 0.9, duration: 0.8, ease: "power1.out" }, 1.0);
+
+      // thin pen: ring, meridian, then the letters
+      F(".ring .t", { strokeDashoffset: 0.45 * N }, { strokeDashoffset: 0.21 * N, duration: 1.9, ease: "none" }, 0);
+      tl.to(".ring .t", { strokeDashoffset: 0, duration: 0.7, ease: "none" }, 1.9);
+      F(".ell .t", { strokeDashoffset: N }, { strokeDashoffset: 0, duration: 0.9, ease: "power1.inOut" }, 2.3);
+      // strokes inside a character run one after another (half-overlapped) and all finish at start + total
+      const seq = (n, total) => { const dur = total / (1 + 0.5 * (n - 1)); return { dur, step: dur / 2 }; };
+      WORD.forEach((g, i) => {
+        const n = GLY[g[0]].d.length + (GLY[g[0]].dot ? 1 : 0), q = seq(n, PDUR[i]);
+        for (let j = 0; j < n; j++) F(".g" + i + " .t.k" + j, { strokeDashoffset: N }, { strokeDashoffset: 0, duration: q.dur, ease: "power1.inOut" }, PEN[i] + j * q.step);
+      });
+
+      // heavy pen: fills the skeleton
+      F(".ring .f", { strokeDashoffset: N }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 4.5);
+      F(".ell .f", { strokeDashoffset: N }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 4.58);
+      WORD.forEach((g, i) => {
+        const at = 4.66 + i * 0.075;
+        const n = GLY[g[0]].d.length, q = seq(n, 0.42);
+        for (let j = 0; j < n; j++) F(".g" + i + " .f.k" + j, { strokeDashoffset: N }, { strokeDashoffset: 0, duration: q.dur, ease: "power2.out" }, at + j * q.step);
+        if (GLY[g[0]].dot) F(".g" + i + " .fd", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.out" }, at + 0.28);
+      });
+
+      // slow residual push on the whole drawing
+      F("#dof", { scale: 1 }, { scale: 1.02, duration: 5.8, ease: "none" }, 0);
+
+      // hard cut to the flat lockup
+      tl.set("#dof", { opacity: 0 }, 5.8);
+      tl.set("#flat", { opacity: 1 }, 5.8);
+      F("#lockF", { scale: 1 }, { scale: 1.03, duration: 1.2, ease: "none" }, 5.8);
+
+      // rack focus: the lockup drops out of focus into the paper
+      tl.to("#lockF", { scale: 1.1, y: -90, filter: "blur(16px)", opacity: 0.18, duration: 0.9, ease: "power2.inOut" }, 7.0);
+      tl.to("#lockF", { scale: 1.14, duration: 3.1, ease: "none" }, 7.9);
+
+      // date, then URL, type on below the ghost lockup once the defocus has finished (7.9 s)
+      F("#d1 .ch", { opacity: 0, y: 8, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: EXPO, stagger: 0.035 }, 7.75);
+      F("#d2 .ch", { opacity: 0, y: 8, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: EXPO, stagger: 0.035 }, 8.15);
+
+      // film grain: jump the noise tile every frame
+      for (let f = 0; f < 330; f++) {
+        const pos = ((f * 97) % 256) + "px " + ((f * 61 + 37 * (f % 5)) % 256) + "px";
+        tl.set("#grain", { backgroundPosition: pos }, f / 30);
+        tl.set("#grainL", { backgroundPosition: ((f * 43 + 11) % 256) + "px " + ((f * 89) % 256) + "px" }, f / 30);
+      }
+
+      tl.set({}, {}, 11);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

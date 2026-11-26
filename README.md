@@ -2,7 +2,7 @@
 
 # Motionboard
 
-Make launch videos and motion graphics with Claude Code or Codex: a free HyperFrames skill with 38 shot recipes (match cut, logo reveal, kinetic typography, liquid glass effect, typing animation and more), each rebuilt in code from Apple and Linear launch films.
+Make launch videos and motion graphics with Claude Code or Codex: a free HyperFrames skill with 48 shot recipes (match cut, logo reveal, kinetic typography, liquid glass effect, typing animation and more), each rebuilt in code from Apple, Linear, Figma and other launch films.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](#install)
@@ -12,7 +12,7 @@ Make launch videos and motion graphics with Claude Code or Codex: a free HyperFr
 
 [![The Motionboard launch film, built from six recipes](assets/readme/film.gif)](https://motionboard.app)
 
-Ask your agent to "make a launch video for my product", "add a match cut between these two screens" or "animate our logo reveal", and it builds the shot in code and renders an MP4 (or ports the motion to your website). Motionboard breaks real launch films down into 38 shots. Each shot is recreated in code as a ~10 second [HyperFrames](https://github.com/heygen-com/hyperframes) film (HTML and GSAP rendered to video), and the website shows every original next to its recreation. The skill gives your agent all 38 recipes, so it can make one shot or plan and build a whole launch film for your product.
+Ask your agent to "make a launch video for my product", "add a match cut between these two screens" or "animate our logo reveal", and it builds the shot in code and renders an MP4 (or ports the motion to your website). Motionboard breaks real launch films down into 48 shots. Each shot is recreated in code as a ~10 second [HyperFrames](https://github.com/heygen-com/hyperframes) film (HTML and GSAP rendered to video), and the website shows every original next to its recreation. The skill gives your agent all 48 recipes, so it can make one shot or plan and build a whole launch film for your product.
 
 [![Motionboard launch film, made with the Motionboard skill](https://media.motionboard.app/launch-motionboard-motionboard.jpg)](https://media.motionboard.app/launch-motionboard-motionboard.mp4)
 
@@ -60,11 +60,11 @@ Each recipe page on [motionboard.app](https://motionboard.app) has a copy button
 
 ## Recipes
 
-38 recipes, grouped by where they sit in a launch film.
+48 recipes, grouped by where they sit in a launch film.
 
 <!-- recipes:start -->
 
-### Opening (7)
+### Opening (10)
 
 | Recipe | Shot |
 | --- | --- |
@@ -75,8 +75,11 @@ Each recipe page on [motionboard.app](https://motionboard.app) has a copy button
 | [Branching Growth](https://motionboard.app/recipes/branching-growth/) | A single dot branches layer by layer into a network, slow at first and then faster, or splits in doubling beats until it fills the frame. |
 | [Iris Transition](https://motionboard.app/recipes/iris-transition/) | A fixed circular window cuts rapidly between images, or revisits the same image, while its size jumps with the rhythm. |
 | [Line Boil Effect](https://motionboard.app/recipes/line-boil-effect/) | Hand-drawn outlines swap to a slightly different trace every few frames, and motion steps at a low frame rate with no tweening. |
+| [Text Behind Object Effect](https://motionboard.app/recipes/text-behind-object-effect/) | A giant headline sits behind a product window and the window covers its lower edge. The window holds still while each feature swaps the headline: the old word sinks behind it, the new word rises from behind it, and the app content changes on the same frame. |
+| [3D Ribbon Text Animation](https://motionboard.app/recipes/3d-ribbon-text-animation/) | A two-line title folds between its words into zig-zag 3D ribbons and multiplies into a field of rows, wide arrow bands sweep past the camera, the last band fills the frame and wipes to the product UI, and the film ends on the product wordmark. |
+| [One Word per Cut](https://motionboard.app/recipes/one-word-per-cut/) | One line is split into one word per shot. Each word sits at the center of the frame over a different product screen, file-name captions follow, then the full line lands on a cream card before the wordmark. |
 
-### Product reveal (7)
+### Product reveal (9)
 
 | Recipe | Shot |
 | --- | --- |
@@ -87,8 +90,10 @@ Each recipe page on [motionboard.app](https://motionboard.app) has a copy button
 | [Outline-to-Solid Reveal](https://motionboard.app/recipes/outline-to-solid-reveal/) | A wireframe or light-drawn outline appears first, then fills into a solid shape or material. |
 | [3D Tilted UI with Depth of Field](https://motionboard.app/recipes/3d-tilted-ui-depth-of-field/) | A UI plane tilted 10–15° and shot up close, with only the active row in focus and the rest blurred. |
 | [Dock Arrival](https://motionboard.app/recipes/dock-arrival/) | A magnified Dock opens a gap, a new icon grows into it with one small spark, and a cursor click opens the window. |
+| [Fluted Glass Effect](https://motionboard.app/recipes/fluted-glass-effect/) | A laptop screen is split into 28 vertical glass ribs. Light streaks rise through the ribs and settle into a big word. The camera then pushes into the screen, the word lifts out, the title rises in, the glass flattens and the blur clears into a lockup with only a few faint ribs left at the screen edges. |
+| [Dolly Zoom Effect](https://motionboard.app/recipes/dolly-zoom-effect/) | The camera backs away while the lens zooms in, so the phone holds its size in frame, the perspective behind it flattens, and the hall collapses into one wall of dashboard. |
 
-### Features (15)
+### Features (17)
 
 | Recipe | Shot |
 | --- | --- |
@@ -107,8 +112,10 @@ Each recipe page on [motionboard.app](https://motionboard.app) has a copy button
 | [Map Pin Drop Animation](https://motionboard.app/recipes/map-pin-animation/) | A pin drops onto a map with a bounce and bursts into fragments, the map zooms out to the whole country, and a route line draws to the next city. |
 | [Dot Matrix Animation](https://motionboard.app/recipes/dot-matrix-animation/) | A graphic is quantized onto a circular dot-matrix display, and every frame of its rotation or change snaps to the dot grid. |
 | [Confetti Success Animation](https://motionboard.app/recipes/confetti-success-animation/) | On the frame of a tap, payment, or confirmation, lines, squares, and dots radiate from the contact point, or an icon pops with a bounce and an echo outline expands. |
+| [Light Beam Effect](https://motionboard.app/recipes/light-beam-effect/) | Small laptops on black each throw a trapezoid beam of light with an app screen inside it. The beams swing, hand off, merge into one wide beam that carries a stat along its right edge, and the last laptop closes. |
+| [Scrolling Text Animation](https://motionboard.app/recipes/scrolling-text-animation/) | One dictated line scrolls sideways from slow to fast, the last m is held and zoomed into giant humps, then the whole line squeezes into a bar and blooms into a two-line message bubble while the camera pulls back to the chat window around it. |
 
-### Transitions (5)
+### Transitions (7)
 
 | Recipe | Shot |
 | --- | --- |
@@ -117,8 +124,10 @@ Each recipe page on [motionboard.app](https://motionboard.app) has a copy button
 | [Domino Wave](https://motionboard.app/recipes/domino-wave/) | A row of cubes flips 90 degrees one after another with a phase offset, while the camera pans along the line. |
 | [Match Cut Transition](https://motionboard.app/recipes/match-cut-transition/) | One object is replaced by another at the same anchor point, so the viewer's gaze never moves. |
 | [Wipe and Flash Transition](https://motionboard.app/recipes/wipe-flash-transition/) | A defocused foreground object sweeps across and covers the frame to cut scenes, or a central glow blows out to white before the next scene. |
+| [Infinite Zoom Effect](https://motionboard.app/recipes/infinite-zoom/) | The camera dives into one card, its preview fills the frame and becomes the next screen, and after four levels the shot lands on the first screen again, so it loops. |
+| [Flipbook Animation](https://motionboard.app/recipes/flipbook-animation/) | After a click, the 15 cards on a moodboard collapse into a book, the pages flip faster and faster, then burst into a 3D collage that drifts toward the camera and settles behind a wordmark. |
 
-### Ending (4)
+### Ending (5)
 
 | Recipe | Shot |
 | --- | --- |
@@ -126,6 +135,7 @@ Each recipe page on [motionboard.app](https://motionboard.app) has a copy button
 | [Converging Logo Reveal](https://motionboard.app/recipes/converge-logo-reveal/) | At the end, multiple elements gather and compress into a single icon or logo, always centered in the frame. |
 | [Logo Wordmark Reveal](https://motionboard.app/recipes/logo-wordmark-reveal/) | A logo mark sits centered, then the wordmark unfolds from behind it or outward from its center, optionally with a scramble-then-lock effect. |
 | [Chromatic Aberration Text Effect](https://motionboard.app/recipes/chromatic-aberration-text-effect/) | Some letters of a wordmark stretch horizontally with RGB ghosting, distort in steps, then snap back clean. |
+| [Line Drawing Logo Animation](https://motionboard.app/recipes/line-drawing-logo-animation/) | A low macro camera follows a plotter pen across paper: it draws a ring and a meridian, sketches each letter as a skeleton, a heavy pen fills them in, then the film cuts to the flat logo, which blurs while the date and URL type on below it. |
 
 <!-- recipes:end -->
 

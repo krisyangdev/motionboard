@@ -2,7 +2,7 @@
 
 # Motionboard
 
-用 Claude Code 或 Codex 做宣传片和动效：免费的 HyperFrames skill，38 个镜头配方（匹配剪辑转场、Logo 动画、动态文字排版、液态玻璃效果、打字机动画等），每个都拆自苹果、Linear 宣传片，用代码复刻。
+用 Claude Code 或 Codex 做宣传片和动效：免费的 HyperFrames skill，48 个镜头配方（匹配剪辑转场、Logo 动画、动态文字排版、液态玻璃效果、打字机动画等），每个都拆自苹果、Linear、Figma 等公司的宣传片，用代码复刻。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](#安装)
@@ -12,7 +12,7 @@
 
 [![Motionboard 宣传片，由六个配方拼成](assets/readme/film.gif)](https://motionboard.app/zh/)
 
-对 Agent 说「给我的产品做一支宣传片」「在这两个界面之间加一个匹配剪辑」或「给我们的 Logo 做个出场动画」，它会用代码做出镜头并渲染成 MP4，也可以把动效移植到你的网站。Motionboard 把真实的宣传片拆成 38 个镜头。每个镜头都用代码复刻成约 10 秒的 [HyperFrames](https://github.com/heygen-com/hyperframes) 短片（HTML 加 GSAP，渲染成视频），网站上每个配方都把原片和复刻并排放在一起。这个 skill 让你的 Agent 掌握全部 38 个配方，可以只做一个镜头，也可以为你的产品规划并做出完整的宣传片。
+对 Agent 说「给我的产品做一支宣传片」「在这两个界面之间加一个匹配剪辑」或「给我们的 Logo 做个出场动画」，它会用代码做出镜头并渲染成 MP4，也可以把动效移植到你的网站。Motionboard 把真实的宣传片拆成 48 个镜头。每个镜头都用代码复刻成约 10 秒的 [HyperFrames](https://github.com/heygen-com/hyperframes) 短片（HTML 加 GSAP，渲染成视频），网站上每个配方都把原片和复刻并排放在一起。这个 skill 让你的 Agent 掌握全部 48 个配方，可以只做一个镜头，也可以为你的产品规划并做出完整的宣传片。
 
 [![Motionboard 宣传片，用 Motionboard 技能做成](https://media.motionboard.app/launch-motionboard-motionboard.jpg)](https://media.motionboard.app/launch-motionboard-motionboard.mp4)
 
@@ -58,11 +58,11 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 
 ## 配方
 
-38 个配方，按它们在宣传片中的位置分组。
+48 个配方，按它们在宣传片中的位置分组。
 
 <!-- recipes:start -->
 
-### 开场 (7)
+### 开场 (10)
 
 | 配方 | 镜头 |
 | --- | --- |
@@ -73,8 +73,11 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | [分叉生长动画](https://motionboard.app/zh/recipes/branching-growth/) | 一个点逐层分叉长成网络，前慢后快；或一个点按翻倍节奏分裂铺满画面。 |
 | [圆形光圈转场](https://motionboard.app/zh/recipes/iris-transition/) | 固定圆形取景窗，窗里快切图像或重看同一张图，圆窗大小随节奏跳变。 |
 | [线条抖动效果](https://motionboard.app/zh/recipes/line-boil-effect/) | 手绘线条每 2–3 帧换一版描线，动作按低帧率逐帧，没有补间。 |
+| [文字在物体后面效果](https://motionboard.app/zh/recipes/text-behind-object-effect/) | 超大标题放在产品窗口后面，窗口盖住字的下沿；窗口稳稳不动，每介绍一个功能，标题词就从窗口后面沉下去、换成新词升起来，窗口里的内容在同一帧跟着变。 |
+| [3D 折带文字动画](https://motionboard.app/zh/recipes/3d-ribbon-text-animation/) | 两行标题在词与词之间折成锯齿状的 3D 折带，再复制成一整片，随后带箭头的宽色带从镜头旁扫过，最后一条色带铺满画面，擦出产品界面，界面里先拖 Rotate Y 手柄、再拖 Distance 滑块，最后停在 Planar 字标上。 |
+| [一词一切文字动画](https://motionboard.app/zh/recipes/one-word-per-cut/) | 一句话按一词一镜头拆开，词固定在画面正中，背后每次换一屏产品界面，随后接一组文件名字幕，整句落到米色卡片上，再出字标。 |
 
-### 产品亮相 (7)
+### 产品亮相 (9)
 
 | 配方 | 镜头 |
 | --- | --- |
@@ -85,8 +88,10 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | [描边到实体显形动画](https://motionboard.app/zh/recipes/outline-to-solid-reveal/) | 先出线框或光线勾出的轮廓，再填成实心或材质。 |
 | [3D 倾斜界面景深效果](https://motionboard.app/zh/recipes/3d-tilted-ui-depth-of-field/) | UI 平面倾斜 10–15° 贴近拍摄，只有当前操作行在焦内，其余行虚化。 |
 | [Dock 图标动画](https://motionboard.app/zh/recipes/dock-arrival/) | 放大的 Dock 撑开空位长出新图标，冒一次小火花，光标点击后开窗。 |
+| [棱镜玻璃效果](https://motionboard.app/zh/recipes/fluted-glass-effect/) | 笔记本屏幕被切成 28 条竖向棱镜，亮线从下往上穿过玻璃，收成大字；镜头推进屏幕后，字被抽走，字标升起，玻璃变平，字标从模糊变清晰，只在屏幕左右各留 3 条淡线。 |
+| [希区柯克变焦效果](https://motionboard.app/zh/recipes/dolly-zoom-effect/) | 镜头后退的同时焦距拉长，手机在画面里保持原大小，背景的透视被压平，走廊收成一整面仪表盘墙。 |
 
-### 功能展示 (15)
+### 功能展示 (17)
 
 | 配方 | 镜头 |
 | --- | --- |
@@ -105,8 +110,10 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | [地图标记动画](https://motionboard.app/zh/recipes/map-pin-animation/) | 定位钉回弹落下并爆出碎片，镜头拉远到全国，轨迹线划向下一座城市。 |
 | [点阵动画](https://motionboard.app/zh/recipes/dot-matrix-animation/) | 图形被量化到圆形点阵屏上，旋转或变化时每一帧都对齐到点阵。 |
 | [撒花成功动画](https://motionboard.app/zh/recipes/confetti-success-animation/) | 点击或付款那一帧，接触点外扩线条、方块、圆点，或图标回弹弹出并扩散同形描边。 |
+| [光束效果](https://motionboard.app/zh/recipes/light-beam-effect/) | 几台笔记本在黑场里各自向外投出一束梯形光，光束里是它的 App 界面，光束摆动、交接，最后收成一束宽光，参数文字沿右侧斜边展开，笔记本合上。 |
+| [滚动文字动画](https://motionboard.app/zh/recipes/scrolling-text-animation/) | 一整行口述文字从慢到快横向滚过画面，句尾的 m 被拖长并推近成巨大字形，整行随后压成一条竖线，展开成一个两行的短消息气泡，镜头拉远露出它所在的聊天窗口。 |
 
-### 转场 (5)
+### 转场 (7)
 
 | 配方 | 镜头 |
 | --- | --- |
@@ -115,8 +122,10 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | [方块波浪翻转](https://motionboard.app/zh/recipes/domino-wave/) | 一排方块按相位差依次翻转 90°，镜头沿队列平移。 |
 | [匹配剪辑转场](https://motionboard.app/zh/recipes/match-cut-transition/) | 在同一个锚点把一个东西换成另一个，视线位置不动。 |
 | [遮挡闪白转场](https://motionboard.app/zh/recipes/wipe-flash-transition/) | 场景内虚焦大物体横扫遮满画面切场，或中心光晕吹白后切场。 |
+| [无限缩放效果](https://motionboard.app/zh/recipes/infinite-zoom/) | 镜头钻进界面里的一张卡片，卡片里的预览铺满画面成为下一屏，连推四层后回到第一屏，首尾画面相同，可以循环播放。 |
+| [翻页动画效果](https://motionboard.app/zh/recipes/flipbook-animation/) | 点击按钮后，白板里的 15 张卡片收成一本书，逐页翻动并越翻越快，然后全部炸开成一幅朝镜头漂来的 3D 拼贴，最后落在字标上。 |
 
-### 结尾 (4)
+### 结尾 (5)
 
 | 配方 | 镜头 |
 | --- | --- |
@@ -124,6 +133,7 @@ ln -s ~/motionboard/skills/motionboard ~/.codex/skills/motionboard
 | [元素汇聚 Logo 动画](https://motionboard.app/zh/recipes/converge-logo-reveal/) | 片尾把多个元素收拢、压缩成一个图标或 logo，位置始终在画面中心。 |
 | [Logo 字标展开动画](https://motionboard.app/zh/recipes/logo-wordmark-reveal/) | logo 符号居中，字标从符号背后或中心向两侧展开，可带乱码定格。 |
 | [色散文字效果](https://motionboard.app/zh/recipes/chromatic-aberration-text-effect/) | 字标局部字母被横向拉长并分出 RGB 重影，阶跃式扭曲后回正。 |
+| [线条绘制 logo 动画](https://motionboard.app/zh/recipes/line-drawing-logo-animation/) | 低角度微距镜头在纸面上跟着绘图笔移动：先画圆环和经线，再画出每个字母的骨架，粗笔描实后硬切到正面标志，标志虚化，日期和网址逐字打出。 |
 
 <!-- recipes:end -->
 
