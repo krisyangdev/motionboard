@@ -35,3 +35,30 @@ The repo moved from `~/Documents/motion-lexicon-site` to `~/code/sites/motionboa
 - A recipe = `src/data/terms.json` entry (zh copy + `samples`) + `src/data/en.json` entry + `src/data/seo/<slug>.json` + `skills/motionboard/source/<video>/` + a `film/shots.json` slot + five media files (`<video>.mp4`, `-m.mp4`, `-s.mp4`, `.jpg`, `-m.jpg`, posters 960x540) + `orig-<youtubeId>-<startSec>.{mp4,jpg}` per sample. `npm run build` regenerates recipe md, README tables and llms.txt.
 - Original clip names collide when two recipes sample the same film at the same start second (`orig-TNhX1uR2vO8-0` serves light-reveal, text-object-interleave and text-behind-object-effect). Reuse the existing file; never re-encode it over the R2 copy.
 - Batch-1 working files (briefs, review sheets, merge script) were in the session scratchpad and are gone; the films' sources in `skills/motionboard/source/` are the record.
+
+## Plan to 100: where batch 1 stopped (2026-11-26)
+- Plan: `~/Library/Application Support/Claude/side-session-notes/local_582a33d3-16af-453e-b9c7-f939718a155c/mb-plan-100.md` (5 batches, one minor release each, v8.0.0 at 100). Batch 1 (#49–58) shipped as v7.1.0 (95e6407). Rui stopped the work after batch 1 (「做完第一批停下来」); start batch 2 only when Rui or the lead says so.
+- Batch kit (copies of the scratchpad files, which are gone): `~/Library/Application Support/Claude/side-session-notes/local_b345c0d6-e7e0-4bab-8a09-d8143b50b9a1/mb-batch-kit/`:
+  - `BRIEF.md`: the film builder brief for Sonnet subagents, with the hyperframes check rules learned in batch 1 at the end.
+  - `COPY.md` + `FORMAT-example.json`: the copy brief. Each subagent writes `<slug>.json` as {terms, en, seo, shot}; terms needs every key, en1 included.
+  - `merge.py`: merges those JSONs into terms.json, en.json, seo/ and shots.json. It is idempotent and keeps the repo's JSON formatting. Fix its two path constants before use.
+  - `sheet.sh <folder> "<times>" <tag>`: rsyncs a source to winlinux and runs check + snapshot, then pulls contact sheets.
+  - `dl.sh` / `dl2.sh`: yt-dlp downloads of the original moments.
+- winlinux `~/mb/p100/`:
+  - `sheet.sh` + `cj.py`: check summary and contact sheets.
+  - `render.sh <folder> <poster s>`: renders, then `enc.sh` (CRF env, default 20; -m CRF+3, -s CRF+7) writes the five media files to `out/`. Grainy films need `CRF=27`.
+  - `orig/out/`: encoded original clips. `orig/raw/`: raw downloads already fetched for batches 2–3 (`<ytid>-<startSec-1>.mp4`).
+- Batch-1 lessons:
+  - Review every film from contact sheets before rendering. Builders usually needed 1–3 rounds, mostly for framing, text size (headlines 72px+, captions 26px+), a lockup hold of at least 2.2 s, and cold-seek `fromTo` errors.
+  - `text_occluded` and contrast errors on blurred or flare layers are false positives.
+- Batch 2 needs, in order:
+  1. Read the batch-2 rows in mb-plan-100.md.
+  2. Download and encode the originals (check `orig/raw/` first).
+  3. Brief one builder per film, review the sheets, then render.
+  4. Collect copy JSONs and run `merge.py`.
+  5. Add hub links and bump the counts (58→68) the way 95e6407 did.
+  6. Ship: `scripts/upload-media.sh <files>`, `npm test`, design-check, commit, push, `npm run deploy`, `gh release create v7.2.0`.
+  7. Check live: 200, both sitemaps, playback at 1440 and 390.
+  8. Run PSI on 2 new pages, then report to the lead.
+  - The Netflix-style page uses `"link": true` on its sample, so no clip is self-hosted.
+- `npm run dev` returned 500 for every page on 2026-11-26 ("Failed to load url /src/site.config.ts", Cloudflare runner), old pages too. `npm run build && npm run preview` (port 4173) works for local checks.
