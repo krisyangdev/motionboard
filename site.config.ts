@@ -35,8 +35,10 @@ export const SITE = {
    * Quality gate knobs (src/core/seo/quality.ts). `hubMinMembers`: indexable members a hub needs to be indexable
    * (default 6). The demo has one tool and two guides, so it lowers it; a real site leaves the line out.
    * `maxNoindexShare`: the build fails when more than this share of a collection's items is noindex (default 0.2).
+   * `allowTraining`: false makes robots.txt disallow the model-training crawlers (GPTBot, ClaudeBot, Google-Extended);
+   * search and AI-search crawlers stay allowed either way (default true).
    */
-  seo: { hubMinMembers: 1, maxNoindexShare: 0.2 },
+  seo: { hubMinMembers: 1, maxNoindexShare: 0.2, allowTraining: true },
   /** Layer 1: sign-up, credits, payments, the app and /admin. Off = content-only site. */
   accounts: { enabled: true, signupCredits: 20 },
   social: { twitterCard: 'summary_large_image', twitter: '' },

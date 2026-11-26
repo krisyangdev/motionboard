@@ -35,4 +35,8 @@ public/robots.txt
 public/_redirects
 public/_headers
 public/llms.txt
-public/sitemap-video.xml
+public/sitemap*.xml
+public/feed.xml
+
+# IndexNow deploy cache (scripts/indexnow.mjs)
+.indexnow-sent.json
