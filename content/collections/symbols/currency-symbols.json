@@ -1,0 +1,102 @@
+{
+  "slug": "currency-symbols",
+  "category": [
+    "practical"
+  ],
+  "tags": [
+    "unicode",
+    "money",
+    "typing"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "related": [
+    "math-symbols",
+    "check-mark-symbols",
+    "arrow-symbols"
+  ],
+  "data": {
+    "symbols": [
+      "$",
+      "€",
+      "£",
+      "¥",
+      "₹",
+      "₩",
+      "₽",
+      "₺",
+      "฿",
+      "₫",
+      "₪",
+      "₴",
+      "₦",
+      "₱",
+      "¢",
+      "₡"
+    ]
+  },
+  "en": {
+    "keyword": "currency symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Currency symbols",
+    "title": "Currency Symbols: Copy and Paste Money Signs ($ € £ ¥ ₹)",
+    "description": "Copy and paste 16 currency symbols: dollar $, euro €, pound £, yen ¥, rupee ₹, won ₩ and more. Tap a tile to copy, and read how each sign is placed in a price.",
+    "lede": "Sixteen money signs, from the dollar to the won. Tap a tile to copy it, then use it in a price list, an invoice or a spreadsheet.",
+    "body": [
+      {
+        "h2": "The signs people look for",
+        "body": "The dollar $, euro €, pound £ and yen ¥ cover most price tags. The rupee ₹, won ₩, ruble ₽ and lira ₺ were added to Unicode as their countries set an official sign, so very old fonts may lack them. The baht ฿ and dong ₫ follow the same pattern. The cent ¢ and the colón ₡ are rarer but still in use."
+      },
+      {
+        "h2": "Shared signs and placement",
+        "body": "A sign does not always name one currency. $ is used by the US, Canada, Australia and others, and ¥ is the yen in Japan and the yuan in China, so a price list should add the currency code such as USD or JPY. Placement differs too: English puts the sign before the number, while French and German usually put € after it."
+      }
+    ],
+    "faq": [
+      [
+        "Is ¥ the yen or the yuan?",
+        "Both. The same sign is used for the Japanese yen (JPY) and the Chinese yuan (CNY). Write the three-letter code next to a price when the currency could be unclear."
+      ],
+      [
+        "Where does the euro sign go?",
+        "It depends on the language. English writes €5, while French and German usually write 5 €. Follow the convention of the readers you write for."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "货币符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "货币符号",
+    "title": "货币符号：复制粘贴货币符号（$ € £ ¥ ₹）",
+    "description": "一键复制 16 个货币符号：美元 $、欧元 €、英镑 £、日元 ¥、卢比 ₹、韩元 ₩ 等。点击方块即可复制，并看一看价格里符号的位置。",
+    "lede": "十六个货币符号，从美元到韩元。点击方块复制，再用在价目表、发票或电子表格里。",
+    "body": [
+      {
+        "h2": "最常被搜索的符号",
+        "body": "美元 $、欧元 €、英镑 £ 和日元 ¥ 覆盖了大部分价签。卢比 ₹、韩元 ₩、卢布 ₽ 和里拉 ₺ 是在各国确定官方符号之后才加入 Unicode 的，所以很旧的字体可能没有。泰铢 ฿ 和越南盾 ₫ 也属于同类。美分 ¢ 和科朗 ₡ 比较少见，但仍在使用。"
+      },
+      {
+        "h2": "共用的符号与位置",
+        "body": "一个符号不一定只对应一种货币。$ 被美国、加拿大、澳大利亚等国使用，¥ 在日本是日元，在中国是人民币，所以价目表最好再写上 USD 或 JPY 这样的货币代码。位置也不同：英语把符号放在数字前，法语和德语通常把 € 放在数字后。"
+      }
+    ],
+    "faq": [
+      [
+        "¥ 是日元还是人民币？",
+        "两者都是。日元（JPY）和人民币（CNY）用的是同一个符号。币种可能不清楚时，在价格旁边写上三个字母的代码。"
+      ],
+      [
+        "欧元符号放在哪里？",
+        "取决于语言。英语写 €5，法语和德语通常写 5 €。按你的读者的习惯来写。"
+      ]
+    ]
+  }
+}

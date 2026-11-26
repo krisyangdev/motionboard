@@ -1,0 +1,104 @@
+{
+  "slug": "heart-symbols",
+  "category": [
+    "decorative"
+  ],
+  "tags": [
+    "unicode",
+    "love",
+    "profile"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "media": {
+    "kind": "image",
+    "src": "/symbols/heart-symbols.svg",
+    "width": 640,
+    "height": 360
+  },
+  "ogImage": "/og.png",
+  "data": {
+    "symbols": [
+      "♡",
+      "♥",
+      "❤",
+      "❣",
+      "❥",
+      "❦",
+      "❧",
+      "☙",
+      "❢",
+      "❡",
+      "💕",
+      "💖",
+      "💗",
+      "💘"
+    ]
+  },
+  "en": {
+    "keyword": "heart symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Heart symbols",
+    "title": "Heart Symbols: Copy and Paste Text Hearts (♡ ♥ ❤)",
+    "description": "Copy and paste 14 heart symbols, from the thin outline ♡ to the solid ♥ and the pink emoji 💖. Tap a tile to copy, and see which hearts work in bios and chats.",
+    "lede": "Tap a heart to copy it, then paste it into a bio, caption or message. The set runs from the thin outline ♡ to the heavy ❤ and the colored emoji 💖.",
+    "body": [
+      {
+        "h2": "Which heart should you pick?",
+        "body": "The outline heart ♡ and the solid heart ♥ are plain text characters, so they take the color and size of the text around them. The heavy heart ❤ is text too, but many phones draw it as a red emoji. The pink hearts at the end of the list are always emoji and keep their own colors. Choose a text heart when you want it to match your font, and an emoji when you want color."
+      },
+      {
+        "h2": "Where text hearts work",
+        "body": "Hearts from the Dingbats and Miscellaneous Symbols blocks show up in nearly every modern app, including Instagram bios, Discord names and Google Docs. Decorated hearts such as ❥ and ❧ come from older font sets, so a few devices show an empty box instead. If you see a box, switch to ♥."
+      }
+    ],
+    "alt": "Three hearts drawn side by side: an outline heart, a solid heart and a double heart",
+    "faq": [
+      [
+        "Why does ❤ turn red on my phone?",
+        "Phones draw the heavy heart as an emoji unless text style is requested. Add the invisible variation selector U+FE0E after it to ask for the plain text version, or use ♥, which always stays text."
+      ],
+      [
+        "Can I use these hearts in a username?",
+        "Most sites accept ♡ and ♥ in display names, but many block symbols in the handle itself. Check the field's rules before you rely on one."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "爱心符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "爱心符号",
+    "title": "爱心符号：复制粘贴文字爱心（♡ ♥ ❤）",
+    "description": "一键复制 14 个爱心符号，从细线条的 ♡ 到实心的 ♥ 和粉色表情 💖。点击方块即可复制，并说明哪些爱心适合用在简介和聊天里。",
+    "lede": "点一下爱心就能复制，粘贴到简介、配文或消息里。这一组从细线条的 ♡ 到粗重的 ❤，再到彩色的表情 💖。",
+    "body": [
+      {
+        "h2": "该选哪一种爱心？",
+        "body": "空心的 ♡ 和实心的 ♥ 是普通文字字符，会跟随周围文字的颜色和大小。粗重的 ❤ 也是文字，但很多手机会把它画成红色表情。列表末尾的粉色爱心始终是表情，自带颜色。想让爱心和字体保持一致，就选文字爱心；想要颜色，就选表情。"
+      },
+      {
+        "h2": "文字爱心在哪些地方可用",
+        "body": "来自装饰符号区和杂项符号区的爱心，几乎在所有现代应用里都能显示，包括 Instagram 简介、Discord 昵称和 Google 文档。像 ❥ 和 ❧ 这样的装饰爱心来自较老的字体，个别设备会显示成空方框，遇到方框时换成 ♥ 即可。"
+      }
+    ],
+    "alt": "并排的三个爱心：空心爱心、实心爱心和双层爱心",
+    "faq": [
+      [
+        "为什么 ❤ 在手机上会变红？",
+        "没有指定文字样式时，手机会把粗重爱心画成表情。在它后面加上不可见的变体选择符 U+FE0E 就能要求显示文字版本，也可以直接用始终保持文字样式的 ♥。"
+      ],
+      [
+        "这些爱心能用在用户名里吗？",
+        "多数网站允许在昵称里使用 ♡ 和 ♥，但很多网站不允许账号名本身带符号。依赖某个符号之前，先看一下输入框的规则。"
+      ]
+    ]
+  }
+}

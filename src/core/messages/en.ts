@@ -30,6 +30,7 @@ const en = {
     sources: 'Sources',
     checked: 'checked',
     related: 'Related',
+    categories: 'Categories',
     by: 'By',
     pagination: 'Pagination',
     previous: 'Previous',

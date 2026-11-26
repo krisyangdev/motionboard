@@ -1,0 +1,110 @@
+{
+  "slug": "arrow-symbols",
+  "category": [
+    "practical"
+  ],
+  "tags": [
+    "unicode",
+    "direction",
+    "typing"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "media": {
+    "kind": "image",
+    "src": "/symbols/arrow-symbols.svg",
+    "width": 640,
+    "height": 360
+  },
+  "ogImage": "/og.png",
+  "data": {
+    "symbols": [
+      "←",
+      "↑",
+      "→",
+      "↓",
+      "↔",
+      "↕",
+      "↖",
+      "↗",
+      "↘",
+      "↙",
+      "⇐",
+      "⇑",
+      "⇒",
+      "⇓",
+      "⇔",
+      "↩",
+      "↪",
+      "➜",
+      "➔",
+      "➤"
+    ]
+  },
+  "en": {
+    "keyword": "arrow symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Arrow symbols",
+    "title": "Arrow Symbols: Copy and Paste Arrows (→ ← ↑ ↓ ⇒)",
+    "description": "Copy and paste 20 arrow symbols: single ←↑→↓, double ⇒⇔, diagonal ↗ and return ↩ arrows. Tap a tile to copy, then paste into docs, slides, comments or chat.",
+    "lede": "Twenty arrows for notes, slides and code comments. Tap a tile to copy it, then paste it where you need a direction or a step.",
+    "body": [
+      {
+        "h2": "Single, double and diagonal arrows",
+        "body": "The thin arrows ← ↑ → ↓ point the way in lists and flow notes. The double arrows ⇐ ⇒ ⇔ read as logic: ⇒ means implies, and ⇔ means if and only if. The diagonal arrows ↗ ↘ show rising and falling values in a status line. The return arrows ↩ and ↪ mark a reply or a jump back."
+      },
+      {
+        "h2": "Typing arrows without a copy button",
+        "body": "On a Mac, an arrow is a Character Viewer search away, and Windows users can hold Alt and type 26 for →. In code and commit messages, plain ASCII like -> is safer, because a symbol can break a parser or a terminal font. Reserve the symbols for text that humans read."
+      }
+    ],
+    "alt": "Six blue arrows pointing right, up, in both directions, diagonally up and down",
+    "faq": [
+      [
+        "Which arrow should I use for a next step?",
+        "Use → for a plain step in a list, and ➜ when the arrow should stand out as a button or a heading marker. Both look the same at small sizes in most fonts."
+      ],
+      [
+        "Are arrows safe to paste into a spreadsheet?",
+        "Yes. A cell treats them as ordinary text, but a formula only accepts ASCII operators, so keep arrows in labels and notes, not in calculations."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "箭头符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "箭头符号",
+    "title": "箭头符号：复制粘贴箭头（→ ← ↑ ↓ ⇒）",
+    "description": "一键复制 20 个箭头符号：单线 ←↑→↓、双线 ⇒⇔、斜向 ↗ 和返回 ↩ 箭头。点击方块即可复制，用在文档、幻灯片、代码注释或聊天里。",
+    "lede": "二十个箭头，用于笔记、幻灯片和代码注释。点击方块复制，再粘贴到需要表示方向或步骤的地方。",
+    "body": [
+      {
+        "h2": "单线、双线和斜向箭头",
+        "body": "细线箭头 ← ↑ → ↓ 在列表和流程笔记里指明方向。双线箭头 ⇐ ⇒ ⇔ 常用于逻辑：⇒ 表示推出，⇔ 表示当且仅当。斜向的 ↗ ↘ 可以在状态行里表示上升和下降。返回箭头 ↩ 和 ↪ 则标记回复或跳回。"
+      },
+      {
+        "h2": "没有复制按钮时怎样输入箭头",
+        "body": "在 Mac 上，用字符检视器搜索就能找到箭头；Windows 用户可以按住 Alt 键输入 26 得到 →。在代码和提交信息里，建议用普通的 ASCII 写法 ->，因为符号可能让解析器或终端字体出问题。符号只留给给人看的文字。"
+      }
+    ],
+    "alt": "六个蓝色箭头，分别指向右、上、双向、斜上和下",
+    "faq": [
+      [
+        "表示下一步该用哪个箭头？",
+        "列表里的普通步骤用 →；想让箭头像按钮或标题标记那样醒目时，用 ➜。在大多数字体里，小字号下两者看起来一样。"
+      ],
+      [
+        "箭头可以粘贴到电子表格里吗？",
+        "可以。单元格会把它当作普通文字，但公式只接受 ASCII 运算符，所以箭头只放在标签和备注里，不要放进计算。"
+      ]
+    ]
+  }
+}

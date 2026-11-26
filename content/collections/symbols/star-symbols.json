@@ -1,0 +1,106 @@
+{
+  "slug": "star-symbols",
+  "category": [
+    "decorative"
+  ],
+  "tags": [
+    "unicode",
+    "rating",
+    "profile"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "media": {
+    "kind": "image",
+    "src": "/symbols/star-symbols.svg",
+    "width": 640,
+    "height": 360
+  },
+  "ogImage": "/og.png",
+  "data": {
+    "symbols": [
+      "★",
+      "☆",
+      "✦",
+      "✧",
+      "✩",
+      "✪",
+      "✫",
+      "✬",
+      "✭",
+      "✮",
+      "✯",
+      "✰",
+      "✶",
+      "✷",
+      "⭐",
+      "🌟"
+    ]
+  },
+  "en": {
+    "keyword": "star symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Star symbols",
+    "title": "Star Symbols: Copy and Paste Stars (★ ☆ ✦ ✪)",
+    "description": "Copy and paste 16 star symbols: solid ★, outline ☆, four-point sparkles ✦ and circled ✪. Handy for ratings, dividers and profile decoration. Tap a tile to copy.",
+    "lede": "Solid, outline, sparkling and circled stars in one place. Tap a tile to copy the star, then paste it into a review, a heading or a bio.",
+    "body": [
+      {
+        "h2": "Rating stars in plain text",
+        "body": "The solid ★ and the outline ☆ were made as a pair, which is why a text rating looks right: ★★★★☆ reads as four out of five. Use both characters from the same font so the widths match. Because they are text, the stars take the color of the line, which keeps a rating readable in dark mode."
+      },
+      {
+        "h2": "Sparkles, pointed stars and badges",
+        "body": "The four-point ✦ and ✧ are popular for headings and chat names because they look light next to letters. The circled ✪ and the rayed ✯ fit badges and rank labels. The yellow ⭐ and 🌟 at the end are emoji, so they ignore the text color and are drawn by the phone."
+      }
+    ],
+    "alt": "Three stars side by side: an outline star, a solid star and a four-pointed sparkle",
+    "faq": [
+      [
+        "How do I write a 4 out of 5 rating with text?",
+        "Paste ★ four times and ☆ once, with no spaces: ★★★★☆. Keep the same font for the whole row, since the two characters can come from different fonts and look uneven."
+      ],
+      [
+        "Do the stars change color?",
+        "Text stars such as ★ follow the text color around them. Emoji stars like ⭐ are fixed yellow, so use a text star when the color has to match your design."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "星星符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "星星符号",
+    "title": "星星符号：复制粘贴星星（★ ☆ ✦ ✪）",
+    "description": "一键复制 16 个星星符号：实心 ★、空心 ☆、四角闪光 ✦ 和带圈的 ✪。适合评分、分隔线和个人资料装饰。点击方块即可复制。",
+    "lede": "实心、空心、闪光和带圈的星星都在这里，点一下复制，再粘贴到评价、标题或简介里。",
+    "body": [
+      {
+        "h2": "纯文字评分星星",
+        "body": "实心的 ★ 和空心的 ☆ 本来就是成对设计的，所以用文字写评分很顺眼：★★★★☆ 就是五分里的四分。两个字符要用同一种字体，宽度才一致。因为是文字，星星会随这一行的颜色变化，在深色模式下评分依然清晰。"
+      },
+      {
+        "h2": "闪光、尖角星和徽章",
+        "body": "四角的 ✦ 和 ✧ 在标题和聊天昵称里很常见，和文字并排时显得轻盈。带圈的 ✪ 和带放射线的 ✯ 适合做徽章和等级标签。末尾的黄色 ⭐ 和 🌟 是表情，不受文字颜色影响，由手机自己绘制。"
+      }
+    ],
+    "alt": "并排的三颗星：空心星、实心星和四角闪光星",
+    "faq": [
+      [
+        "怎样用文字写四星评分？",
+        "连续粘贴四个 ★ 再加一个 ☆，中间不要空格：★★★★☆。整行用同一种字体，因为两个字符可能来自不同字体，看起来会不齐。"
+      ],
+      [
+        "星星的颜色可以改吗？",
+        "★ 这类文字星星会跟随周围文字的颜色，而 ⭐ 这类表情星星固定是黄色。要让颜色和设计一致，就用文字星星。"
+      ]
+    ]
+  }
+}

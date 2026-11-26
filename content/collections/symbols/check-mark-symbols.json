@@ -1,0 +1,92 @@
+{
+  "slug": "check-mark-symbols",
+  "category": [
+    "practical"
+  ],
+  "tags": [
+    "unicode",
+    "forms",
+    "typing"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "data": {
+    "symbols": [
+      "✓",
+      "✔",
+      "✅",
+      "☑",
+      "✗",
+      "✘",
+      "❌",
+      "☒",
+      "❎",
+      "☐",
+      "⊗"
+    ]
+  },
+  "en": {
+    "keyword": "check mark symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Check mark symbols",
+    "title": "Check Mark Symbols: Copy and Paste ✓ ✔ ✅ ☑ ✗ ✘",
+    "description": "Copy and paste 11 check mark and cross symbols: thin ✓, heavy ✔, boxed ☑ and ☒, and the emoji ✅ and ❌. Tap a tile to copy it for lists, tables and to-do notes.",
+    "lede": "Ticks, crosses and empty boxes for to-do lists, comparison tables and plain text forms. Tap a tile to copy it.",
+    "body": [
+      {
+        "h2": "Checklists in plain text",
+        "body": "An empty box ☐ with a ticked box ☑ makes a to-do list that works in any editor, including a text file or an email. Use ☒ for a box that was ruled out. Because all three are text, they line up with the words after them, which emoji do not always do. Copy the whole set once and keep it in your notes."
+      },
+      {
+        "h2": "Yes and no marks in tables",
+        "body": "The thin ✓ and ✗ suit feature tables because they stay quiet next to numbers. The heavy ✔ and ✘ read better at small sizes. The emoji ✅ and ❌ add green and red, so they are good in a chat, and a poor choice where color has to be consistent. The ⊗ sign is a math symbol for the tensor product, not a mark for no."
+      }
+    ],
+    "faq": [
+      [
+        "What is the difference between ✓ and ✔?",
+        "Both mean yes. ✓ is the light version and ✔ is the heavy one, so the heavy tick is easier to see on a small screen."
+      ],
+      [
+        "Can screen readers read these marks?",
+        "Most read them aloud as check mark or ballot box, though the wording changes between readers. In a table, add the words yes and no next to the marks, so nobody depends on the symbol alone."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "对勾符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "对勾符号",
+    "title": "对勾符号：复制粘贴对勾和叉号（✓ ✔ ✅ ☑ ✗ ✘）",
+    "description": "一键复制 11 个对勾和叉号符号：细线 ✓、粗线 ✔、方框 ☑ 和 ☒，以及表情 ✅ 和 ❌。点击方块即可复制，用在清单、表格和待办里。",
+    "lede": "对勾、叉号和空方框，适合待办清单、对比表格和纯文本表单。点击方块即可复制。",
+    "body": [
+      {
+        "h2": "纯文字清单",
+        "body": "空方框 ☐ 加上打勾的方框 ☑，就是一份在任何编辑器里都能用的待办清单，文本文件和邮件里也一样。被排除的选项用 ☒ 表示。这三个都是文字，能和后面的词对齐，表情就不一定做得到。把整组复制一次，存在自己的笔记里就行。"
+      },
+      {
+        "h2": "表格里的是与否",
+        "body": "细线的 ✓ 和 ✗ 放在数字旁边很低调，适合功能对比表。粗线的 ✔ 和 ✘ 在小字号下更清楚。表情 ✅ 和 ❌ 自带绿色和红色，聊天里很好用，但在需要统一颜色的地方不合适。⊗ 是数学里表示张量积的符号，不能当作否的标记。"
+      }
+    ],
+    "faq": [
+      [
+        "✓ 和 ✔ 有什么区别？",
+        "两者都表示是。✓ 是细的，✔ 是粗的，所以粗对勾在小屏幕上更容易看见。"
+      ],
+      [
+        "读屏软件能读出这些符号吗？",
+        "大多数会读成对勾或选票框，不过不同软件的说法不一样。在表格里，最好在符号旁边写上是和否，不要只靠符号。"
+      ]
+    ]
+  }
+}

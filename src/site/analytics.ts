@@ -9,6 +9,8 @@ export function pageType(defaultLangPath: string): string {
   if (path.startsWith('/tools/')) return 'tool'
   if (path === '/guides/') return 'guides_hub'
   if (path.startsWith('/guides/')) return 'guide'
+  if (path === '/symbols/') return 'symbols_hub'
+  if (path.startsWith('/symbols/')) return 'symbol'
   if (path === '/privacy/' || path === '/terms/') return 'legal'
   return 'other'
 }

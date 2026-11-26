@@ -2,7 +2,7 @@ import type { Locale } from '../../site.config.ts'
 
 type Feature = { title: string; body: string }
 
-export const messages: Record<Locale, { hero: { title: string; lede: string; tools: string; guides: string }; features: Feature[] }> = {
+export const messages: Record<Locale, { hero: { title: string; lede: string; tools: string; guides: string }; features: Feature[]; symbols: { copy: string; copied: string } }> = {
   en: {
     hero: {
       title: 'A fast, bilingual site starter',
@@ -18,6 +18,7 @@ export const messages: Record<Locale, { hero: { title: string; lede: string; too
       { title: 'coss ui', body: 'Accessible Base UI components styled with Tailwind, copied into the repository so you own them.' },
       { title: 'Cloudflare Workers', body: 'One config file and one deploy command put the site on static hosting around the world.' },
     ],
+    symbols: { copy: 'Copy', copied: 'Copied' },
   },
   zh: {
     hero: {
@@ -34,5 +35,6 @@ export const messages: Record<Locale, { hero: { title: string; lede: string; too
       { title: 'coss ui', body: '基于 Base UI 的无障碍组件，用 Tailwind 设置样式，代码复制进仓库，由你自己掌控。' },
       { title: 'Cloudflare Workers', body: '一个配置文件、一条部署命令，就把站点放到全球的静态托管上。' },
     ],
+    symbols: { copy: '复制', copied: '已复制' },
   },
 }

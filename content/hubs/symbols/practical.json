@@ -1,0 +1,30 @@
+{
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "practical symbols",
+    "demand": {
+      "source": "none",
+      "note": "Hub of the symbols collection; it targets the category term and needs no separate demand check.",
+      "checked": "2026-11-26"
+    },
+    "name": "Practical",
+    "title": "Practical Symbols: Arrows, Math, Currency and Check Marks",
+    "description": "Practical text symbols to copy and paste: arrows, math signs, currency signs and check marks for documents, slides, spreadsheets, to-do lists and plain notes.",
+    "lede": "Symbols for documents, tables and lists, one family per page.",
+    "intro": "These sets do a job in a document. Arrows show direction and steps, math signs write comparisons and sums, currency signs price things, and check marks build lists and tables. Each page explains how the symbols are used and what to watch for, such as a currency sign that serves more than one country, or a character that a spreadsheet formula will not accept. Pick the family you need and copy from it."
+  },
+  "zh": {
+    "keyword": "实用符号",
+    "demand": {
+      "source": "none",
+      "note": "Hub of the symbols collection; it targets the category term and needs no separate demand check.",
+      "checked": "2026-11-26"
+    },
+    "name": "实用",
+    "title": "实用符号：箭头、数学、货币和对勾符号",
+    "description": "可复制粘贴的实用文字符号：箭头、数学符号、货币符号和对勾，用于文档、幻灯片、电子表格、待办清单和纯文本笔记。",
+    "lede": "用于文档、表格和清单的符号，每页一类。",
+    "intro": "这些符号在文档里承担具体的作用。箭头表示方向和步骤，数学符号用来写比较和求和，货币符号用来标价，对勾用来做清单和表格。每个页面都会说明符号的用法和需要留意的地方，比如一个货币符号可能被多个国家共用，或者某个字符不能放进电子表格公式。挑一类需要的符号，从中复制即可。"
+  }
+}

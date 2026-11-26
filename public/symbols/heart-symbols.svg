@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-label="Three heart shapes: outlined, solid and double">
+<rect width="640" height="360" rx="24" fill="#fff1f3"/>
+<g transform="translate(160 180) scale(1.7)" fill="none" stroke="#e11d48" stroke-width="5" stroke-linejoin="round"><path d="M0 34 C-58 -12 -58 -52 -28 -52 C-12 -52 0 -40 0 -28 C0 -40 12 -52 28 -52 C58 -52 58 -12 0 34Z"/></g>
+<g transform="translate(320 180) scale(1.7)" fill="#e11d48"><path d="M0 34 C-58 -12 -58 -52 -28 -52 C-12 -52 0 -40 0 -28 C0 -40 12 -52 28 -52 C58 -52 58 -12 0 34Z"/></g>
+<g transform="translate(480 180) scale(1.7)" fill="#fda4af" stroke="#e11d48" stroke-width="5" stroke-linejoin="round"><path d="M0 34 C-58 -12 -58 -52 -28 -52 C-12 -52 0 -40 0 -28 C0 -40 12 -52 28 -52 C58 -52 58 -12 0 34Z"/><g transform="scale(.55) translate(0 -2)" fill="#e11d48" stroke="none"><path d="M0 34 C-58 -12 -58 -52 -28 -52 C-12 -52 0 -40 0 -28 C0 -40 12 -52 28 -52 C58 -52 58 -12 0 34Z"/></g></g>
+</svg>

@@ -1,0 +1,30 @@
+{
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "copy and paste symbols",
+    "demand": {
+      "source": "none",
+      "note": "Hub of the symbols collection; it targets the category term and needs no separate demand check.",
+      "checked": "2026-11-26"
+    },
+    "name": "Symbols",
+    "title": "Copy and Paste Symbols: Hearts, Arrows, Math and More",
+    "description": "Copy and paste text symbols with one tap: hearts, stars, flowers, arrows, math signs, currency signs and check marks, each with notes on where it works.",
+    "lede": "Tap a symbol to copy it, then paste it into any app.",
+    "intro": "Every page in this collection holds one family of Unicode symbols: the characters, their code points and notes on where they display well. Decorative sets such as hearts, stars and flowers are for profiles, captions and dividers. Practical sets such as arrows, math signs, currency signs and check marks are for documents, slides, tables and lists. Open a category below, or pick a family and copy what you need."
+  },
+  "zh": {
+    "keyword": "复制粘贴符号",
+    "demand": {
+      "source": "none",
+      "note": "Hub of the symbols collection; it targets the category term and needs no separate demand check.",
+      "checked": "2026-11-26"
+    },
+    "name": "符号",
+    "title": "复制粘贴符号：爱心、箭头、数学符号等",
+    "description": "一键复制文字符号：爱心、星星、花朵、箭头、数学符号、货币符号和对勾，每一类都有单独的页面，并说明在哪些地方可以正常显示。",
+    "lede": "点击符号即可复制，再粘贴到任何应用里。",
+    "intro": "这个合集的每个页面都收录一类 Unicode 符号：给出字符本身、码位，以及在哪些地方显示效果好的说明。爱心、星星和花朵这样的装饰符号适合个人简介、配文和分隔线。箭头、数学符号、货币符号和对勾这样的实用符号适合文档、幻灯片、表格和清单。可以先打开下面的分类，也可以直接挑一类，复制需要的符号。"
+  }
+}

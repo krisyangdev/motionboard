@@ -101,3 +101,87 @@ describe('quality gate in the registry', () => {
     for (const p of sitePages().filter((p) => p.type === 'hub')) expect(pageLocales(p), p.path).not.toContain('es')
   })
 })
+
+describe('collection items in the registry (template demo content: the symbols collection)', () => {
+  it('lists every item page with its collection, a 4-level breadcrumb and the kind of its main media', async () => {
+    const { sitePages, pageLocales } = await load(['en', 'zh'])
+    const items = sitePages().filter((p) => p.type === 'item')
+    expect(items.map((p) => p.path).sort()).toHaveLength(8)
+    for (const p of items) {
+      expect(p.collection, p.path).toBe('symbols')
+      expect(p.path, p.path).toMatch(/^\/symbols\/[a-z-]+\/$/)
+      for (const l of pageLocales(p)) {
+        const trail = p.breadcrumb?.[L(l)] ?? []
+        expect(trail.map((c) => c.path), p.path).toEqual(['/', '/symbols/', expect.stringMatching(/^\/symbols\/(decorative|practical)\/$/), p.path])
+      }
+    }
+    expect(items.filter((p) => p.media === 'image').map((p) => p.path).sort()).toEqual(['/symbols/arrow-symbols/', '/symbols/heart-symbols/', '/symbols/star-symbols/'])
+  })
+
+  it('has exactly one deliberately thin item per language, and it is noindex with its reasons', async () => {
+    const { sitePages, indexableLocales } = await load(['en', 'zh'])
+    const items = sitePages().filter((p) => p.type === 'item')
+    const noindex = items.filter((p) => !p.indexable || p.noindex)
+    expect(noindex.map((p) => p.path)).toEqual(['/symbols/music-note-symbols/'])
+    const thin = noindex[0]
+    expect(Object.keys(thin.noindex ?? {})).toEqual(['en', 'zh'])
+    expect(thin.noindex?.[L('en')]?.join('\n')).toMatch(/item text.*at least 80/)
+    expect(thin.noindex?.[L('zh')]?.join('\n')).toMatch(/item text.*at least 150/)
+    expect(thin.indexable).toBe(false)
+    expect(indexableLocales(thin)).toEqual([])
+    for (const p of items.filter((p) => p !== thin)) expect(indexableLocales(p), p.path).toEqual(['en', 'zh'])
+  })
+
+  it('counts only the indexable items in the hubs: the thin one is a member of no hub list', async () => {
+    const { contentIndex } = await load(['en', 'zh'])
+    const index = contentIndex()
+    expect(index.collections.symbols.items).toHaveLength(8)
+    expect(index.pages['/symbols/music-note-symbols/']).toEqual({ locales: ['en', 'zh'], noindex: ['en', 'zh'] })
+    expect(index.pages['/symbols/heart-symbols/']).toEqual({ locales: ['en', 'zh'], noindex: [] })
+    expect(index.hubs['symbols/decorative']).toEqual({ en: 'Decorative', zh: '装饰' })
+  })
+
+  it('gives every item 3 to 8 related items from its own language and never the thin one', async () => {
+    const { contentIndex } = await load(['en', 'zh'])
+    for (const i of contentIndex().collections.symbols.items) {
+      for (const l of i.locales) {
+        const related = i.related[L(l)] ?? []
+        expect(related.length, `${i.slug} ${l}`).toBeGreaterThanOrEqual(3)
+        expect(related.length, `${i.slug} ${l}`).toBeLessThanOrEqual(8)
+        expect(related, `${i.slug} ${l}`).not.toContain(i.slug)
+        if (i.slug !== 'music-note-symbols') expect(related, `${i.slug} ${l}`).not.toContain('music-note-symbols')
+      }
+    }
+  })
+
+  it('uses an explicit related list when the item has one', async () => {
+    const { contentIndex } = await load(['en', 'zh'])
+    const currency = contentIndex().collections.symbols.items.find((i) => i.slug === 'currency-symbols')
+    expect(currency?.related[L('en')]).toEqual(['math-symbols', 'check-mark-symbols', 'arrow-symbols'])
+  })
+
+  it('creates no page in a third language the items have no text for', async () => {
+    const { sitePages, pageLocales } = await load(['en', 'zh', 'es'])
+    for (const p of sitePages().filter((p) => p.type === 'item')) expect(pageLocales(p), p.path).toEqual(['en', 'zh'])
+  })
+
+  it('builds the category hubs under the collection hub, with the pages they have members for', async () => {
+    const { sitePages } = await load(['en', 'zh'])
+    const hub = sitePages().find((p) => p.path === '/symbols/decorative/')
+    expect(hub?.breadcrumb?.[L('en')]?.map((c) => c.name)).toEqual(['Home', 'Symbols', 'Decorative'])
+    expect(hub?.lastmod).toBe('2026-11-26')
+  })
+})
+
+describe('noindex share of a collection', () => {
+  it('fails the build naming the collection and the noindex items when the share is above seo.maxNoindexShare', async () => {
+    const { sitePages } = await load(['en', 'zh'])
+    expect(() => sitePages()).not.toThrow()
+    await mockSite(['en', 'zh'], { seo: { hubMinMembers: 1, maxNoindexShare: 0.1 } })
+    const strict = await import('./pages')
+    expect(() => strict.sitePages()).toThrow(/collection "symbols" \(en\): 1 of 8 items are noindex \(12\.5%\), more than seo\.maxNoindexShare 0\.1[\s\S]*\/symbols\/music-note-symbols\/: item text/)
+    expect(strict.noindexShareErrors()).toHaveLength(2)
+    expect(strict.sitePages({ skipShareCheck: true }).length).toBeGreaterThan(0)
+  })
+})
+

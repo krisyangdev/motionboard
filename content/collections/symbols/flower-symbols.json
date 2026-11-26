@@ -1,0 +1,97 @@
+{
+  "slug": "flower-symbols",
+  "category": [
+    "decorative"
+  ],
+  "tags": [
+    "unicode",
+    "nature",
+    "decor"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "data": {
+    "symbols": [
+      "✿",
+      "❀",
+      "❁",
+      "❃",
+      "❋",
+      "✾",
+      "✽",
+      "❄",
+      "❅",
+      "❆",
+      "☘",
+      "🌸",
+      "🌼",
+      "🌻",
+      "🌷",
+      "🌹"
+    ]
+  },
+  "en": {
+    "keyword": "flower symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Flower symbols",
+    "title": "Flower Symbols: Copy and Paste Floral Text Art (✿ ❀ ❁)",
+    "description": "Copy and paste 16 flower symbols, from the plain ✿ and ❀ to snowflakes ❄, a shamrock ☘ and emoji blossoms. Tap a tile to copy, then use it in a divider.",
+    "lede": "Flowers, snowflakes and blossoms to copy. Most are plain text, so they match your font, and the last five are emoji with their own colors.",
+    "body": [
+      {
+        "h2": "Flowers as dividers and bullets",
+        "body": "A short run such as ✿ ❀ ✿ makes a divider that works in a profile, a caption or a plain text email. Because the flowers are text, you can set one as a list bullet and keep the same color as the line. The five-petal ✿ and the eight-petal ✾ differ at small sizes, so test them in the app you will post in."
+      },
+      {
+        "h2": "Snowflakes, clover and emoji blossoms",
+        "body": "The snowflakes ❄ ❅ ❆ and the shamrock ☘ suit seasonal posts, from winter greetings to a March update. The emoji blossoms 🌸 🌼 🌻 🌷 🌹 are drawn by the phone in full color, which makes them the right pick for a greeting card and the wrong one for a text-only field."
+      }
+    ],
+    "faq": [
+      [
+        "Which flower looks best as a line divider?",
+        "✿ and ❀ repeat well because they are similar in height. Put a space between them so that each flower stays clear on a narrow phone screen."
+      ],
+      [
+        "Why does ☘ look different on my laptop?",
+        "Each system font draws it in its own way, and some fonts have no shamrock at all. When it shows as a box, swap in ✿ or an emoji flower."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "花朵符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "花朵符号",
+    "title": "花朵符号：复制粘贴花朵文字图案（✿ ❀ ❁）",
+    "description": "一键复制 16 个花朵符号，从简单的 ✿ 和 ❀ 到雪花 ❄、三叶草 ☘ 和表情花朵。点击方块即可复制，用在分隔线或昵称里。",
+    "lede": "可以复制的花朵、雪花和花束符号。多数是普通文字，会和字体保持一致，最后五个是自带颜色的表情。",
+    "body": [
+      {
+        "h2": "用花朵做分隔线和项目符号",
+        "body": "像 ✿ ❀ ✿ 这样的一小串，可以做成个人简介、配文或纯文本邮件里的分隔线。花朵是文字，所以也能当作列表的项目符号，并且和这一行保持同样的颜色。五瓣的 ✿ 和八瓣的 ✾ 在小字号下差别明显，发布前最好在实际使用的应用里试一下。"
+      },
+      {
+        "h2": "雪花、三叶草和表情花朵",
+        "body": "雪花 ❄ ❅ ❆ 和三叶草 ☘ 适合应季的内容，从冬日问候到三月的更新通知。表情花朵 🌸 🌼 🌻 🌷 🌹 由手机以全彩绘制，适合做贺卡，但不适合只能输入文字的输入框。"
+      }
+    ],
+    "faq": [
+      [
+        "哪种花朵最适合做分隔线？",
+        "✿ 和 ❀ 高度相近，重复排列很整齐。中间加一个空格，在窄屏手机上每朵花也能看得清楚。"
+      ],
+      [
+        "为什么 ☘ 在电脑上看起来不一样？",
+        "每种系统字体的画法都不同，有些字体根本没有三叶草。显示成方框时，换成 ✿ 或表情花朵就行。"
+      ]
+    ]
+  }
+}

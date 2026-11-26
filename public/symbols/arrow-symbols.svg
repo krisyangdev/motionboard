@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-label="Arrows pointing right, up, in both directions and diagonally">
+<rect width="640" height="360" rx="24" fill="#eff6ff"/>
+<path d="M70 110 L250 110 M227.2 122.5 L250 110 L227.2 97.5" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M340 160 L340 60 M352.5 82.8 L340 60 L327.5 82.8" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M420 110 L580 110 M557.2 122.5 L580 110 L557.2 97.5 M442.8 97.5 L420 110 L442.8 122.5" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M90 300 L200 200 M191.5 224.6 L200 200 L174.7 206.1" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M300 230 L300 310 M287.5 287.2 L300 310 L312.5 287.2" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M420 300 L580 230 M564.1 250.6 L580 230 L554.1 227.7" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

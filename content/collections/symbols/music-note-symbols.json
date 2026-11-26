@@ -1,0 +1,55 @@
+{
+  "slug": "music-note-symbols",
+  "category": [
+    "decorative"
+  ],
+  "tags": [
+    "music"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "data": {
+    "symbols": [
+      "♩",
+      "♪",
+      "♫",
+      "♬"
+    ]
+  },
+  "en": {
+    "keyword": "music note symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Music note symbols",
+    "title": "Music Note Symbols: Copy and Paste Notes (♩ ♪ ♫ ♬)",
+    "description": "Copy and paste 4 music note symbols: the quarter note ♩, the eighth note ♪ and the beamed notes ♫ and ♬. Tap a tile to copy a note into a caption or a message.",
+    "lede": "Four music notes to copy and paste.",
+    "body": [
+      {
+        "h2": "Using the notes",
+        "body": "Paste ♪ or ♫ into a caption to mark a song or a playlist."
+      }
+    ]
+  },
+  "zh": {
+    "keyword": "音符符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "音符符号",
+    "title": "音符符号：复制粘贴音符（♩ ♪ ♫ ♬）",
+    "description": "一键复制 4 个音符符号：四分音符 ♩、八分音符 ♪ 以及连杠音符 ♫ 和 ♬。点击方块即可复制，粘贴到配文或消息里。",
+    "lede": "四个可以复制粘贴的音符。",
+    "body": [
+      {
+        "h2": "怎么使用音符",
+        "body": "把 ♪ 或 ♫ 粘贴到配文里，可以标记一首歌或一份歌单。"
+      }
+    ]
+  }
+}

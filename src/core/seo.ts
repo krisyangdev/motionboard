@@ -127,6 +127,19 @@ export const videoLd = (v: {
   url: pageUrl(v.locale, v.path),
 })
 
+/** The image is the page's main content (an item page). We are the creator; `license` is a URL, set only when we own the image. */
+export const imageObjectLd = (i: { name: string; caption: string; contentUrl: string; license?: string; locale: Locale; path: string }) => ({
+  '@type': 'ImageObject',
+  name: i.name,
+  caption: i.caption,
+  contentUrl: absolute(i.contentUrl),
+  creditText: SITE.name,
+  creator: orgRef(),
+  inLanguage: HTML_LANG[i.locale],
+  url: pageUrl(i.locale, i.path),
+  ...(i.license ? { license: i.license, acquireLicensePage: i.license } : {}),
+})
+
 export const webApplicationLd = (a: { name: string; description: string; locale: Locale; path: string; category?: string }) => ({
   '@type': 'WebApplication',
   name: a.name,

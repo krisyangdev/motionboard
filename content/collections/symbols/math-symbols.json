@@ -1,0 +1,100 @@
+{
+  "slug": "math-symbols",
+  "category": [
+    "practical"
+  ],
+  "tags": [
+    "unicode",
+    "school",
+    "typing"
+  ],
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "data": {
+    "symbols": [
+      "±",
+      "×",
+      "÷",
+      "≠",
+      "≈",
+      "≤",
+      "≥",
+      "∞",
+      "√",
+      "∑",
+      "∏",
+      "∫",
+      "∂",
+      "π",
+      "∆",
+      "∈",
+      "∉",
+      "∪",
+      "∩"
+    ]
+  },
+  "en": {
+    "keyword": "math symbols",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "Math symbols",
+    "title": "Math Symbols: Copy and Paste Math Signs (± ≠ ≈ ≤ ∞ √)",
+    "description": "Copy and paste 19 math symbols: plus-minus ±, not equal ≠, approximately ≈, infinity ∞, root √, sum ∑ and set signs ∈ ∪ ∩. Tap a tile to copy it.",
+    "lede": "The math signs that a keyboard hides, ready to copy: comparison marks, roots, sums and set symbols.",
+    "body": [
+      {
+        "h2": "Comparison and approximation",
+        "body": "Four signs cover most homework and reports. ≠ says two values differ, ≈ says they are close, and ≤ and ≥ draw a limit that may be reached. The plus-minus sign ± fits a tolerance such as 5 ± 0.2 mm. Use the real × and ÷ rather than x and a slash when a figure will be printed, since they cannot be mistaken for letters."
+      },
+      {
+        "h2": "Calculus, sums and sets",
+        "body": "∑ adds a series, ∏ multiplies it, ∫ is the integral and ∂ the partial derivative. ∈ and ∉ say whether an element belongs to a set, and ∪ and ∩ join or overlap two sets. π and ∆ are Greek letters that mathematicians treat as symbols, so they sit here too. Equation editors give better layout for long formulas, but these characters are fine inline."
+      }
+    ],
+    "faq": [
+      [
+        "Is × the same as the letter x?",
+        "No. × is a separate character, so a search for x will not find it. Use × in printed results and x in code."
+      ],
+      [
+        "Will these symbols work inside an Excel formula?",
+        "No. A formula only understands ASCII operators such as * and /. Keep the symbols for cell labels and notes, and write the calculation with the keyboard signs."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "数学符号",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "name": "数学符号",
+    "title": "数学符号：复制粘贴数学符号（± ≠ ≈ ≤ ∞ √）",
+    "description": "一键复制 19 个数学符号：正负号 ±、不等于 ≠、约等于 ≈、无穷 ∞、根号 √、求和 ∑ 和集合符号 ∈ ∪ ∩。点击方块即可复制。",
+    "lede": "键盘上找不到的数学符号，复制即用：比较符号、根号、求和和集合符号。",
+    "body": [
+      {
+        "h2": "比较与近似",
+        "body": "四个符号能应付大部分作业和报告。≠ 表示两个值不同，≈ 表示接近，≤ 和 ≥ 表示可以取到的界限。正负号 ± 适合写公差，比如 5 ± 0.2 毫米。打印出来的数字要用真正的 × 和 ÷，而不是字母 x 和斜杠，这样不会和字母混淆。"
+      },
+      {
+        "h2": "微积分、求和与集合",
+        "body": "∑ 表示对一列数求和，∏ 表示连乘，∫ 是积分，∂ 是偏导数。∈ 和 ∉ 表示元素是否属于某个集合，∪ 和 ∩ 表示两个集合的并集和交集。π 和 ∆ 本是希腊字母，数学里当作符号使用，所以也放在这里。长公式用公式编辑器排版更好，行内使用这些字符就够了。"
+      }
+    ],
+    "faq": [
+      [
+        "× 和字母 x 是同一个字符吗？",
+        "不是。× 是单独的字符，搜索 x 找不到它。印刷的结果里用 ×，代码里用 x。"
+      ],
+      [
+        "这些符号能用在 Excel 公式里吗？",
+        "不能。公式只认 * 和 / 这样的 ASCII 运算符。符号只放在单元格的标签和备注里，计算本身用键盘上的符号来写。"
+      ]
+    ]
+  }
+}

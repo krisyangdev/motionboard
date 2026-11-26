@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-label="Three stars: outlined, solid and four-pointed">
+<rect width="640" height="360" rx="24" fill="#fffbeb"/>
+<polygon points="160.0,90.0 183.5,152.6 250.4,155.6 198.0,197.4 215.8,261.9 160.0,225.0 104.2,261.9 122.0,197.4 69.6,155.6 136.5,152.6" fill="none" stroke="#d97706" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="320.0,90.0 343.5,152.6 410.4,155.6 358.0,197.4 375.8,261.9 320.0,225.0 264.2,261.9 282.0,197.4 229.6,155.6 296.5,152.6" fill="#f59e0b" stroke="#d97706" stroke-width="7" stroke-linejoin="round"/>
+<path d="M480 85 C490 150 510 170 575 185 C510 200 490 220 480 285 C470 220 450 200 385 185 C450 170 470 150 480 85Z" fill="#f59e0b" stroke="#d97706" stroke-width="7" stroke-linejoin="round"/>
+</svg>

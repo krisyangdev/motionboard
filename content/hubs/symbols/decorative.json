@@ -1,0 +1,30 @@
+{
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "decorative symbols",
+    "demand": {
+      "source": "none",
+      "note": "Hub of the symbols collection; it targets the category term and needs no separate demand check.",
+      "checked": "2026-11-26"
+    },
+    "name": "Decorative",
+    "title": "Decorative Symbols: Hearts, Stars and Flowers to Copy",
+    "description": "Decorative text symbols to copy and paste: hearts, stars, flowers and music notes for bios, captions, dividers and names, with notes on where they render.",
+    "lede": "Symbols that add a little style to a bio, a caption or a divider.",
+    "intro": "These sets are for decoration: they make a short text feel finished without an image. Hearts and stars suit bios and reviews, flowers work as dividers and bullets, and music notes mark a playlist or a song. Most characters here are plain text and follow the color of the line, while a few are emoji with their own colors, so check the notes on each page before you use one in a field that allows text only."
+  },
+  "zh": {
+    "keyword": "装饰符号",
+    "demand": {
+      "source": "none",
+      "note": "Hub of the symbols collection; it targets the category term and needs no separate demand check.",
+      "checked": "2026-11-26"
+    },
+    "name": "装饰",
+    "title": "装饰符号：可复制的爱心、星星和花朵",
+    "description": "可复制粘贴的装饰性文字符号：爱心、星星、花朵和音符，用于个人简介、配文、分隔线和聊天昵称，并说明哪些符号在各处都能正常显示。",
+    "lede": "给简介、配文或分隔线增添一点风格的符号。",
+    "intro": "这些符号用来装饰：不用图片，也能让一小段文字显得完整。爱心和星星适合简介和评价，花朵可以当分隔线和项目符号，音符用来标记歌单或歌曲。这里的字符大多是普通文字，会跟随这一行的颜色，少数是自带颜色的表情，在只允许输入文字的输入框里使用之前，先看一下各页面上的说明。"
+  }
+}

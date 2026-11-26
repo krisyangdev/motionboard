@@ -61,10 +61,10 @@ describe('content schemas', () => {
   })
   it('accept a hub with `none` demand and check its intro, page size and FAQ length', () => {
     const hubText = { ...text, keyword: 'free online tools', title: 'Free online tools for text', demand: { ...demand, source: 'none' }, intro: 'What is in the set.' }
-    const hub = { collection: 'tools', published: '2026-11-26', updated: '2026-11-26', en: hubText }
+    const hub = { published: '2026-11-26', updated: '2026-11-26', en: hubText }
     expect(() => parseContent(hubFileSchema(['en']), hub, 'h.json')).not.toThrow()
     expect(message(() => parseContent(hubFileSchema(['en']), { ...hub, pageSize: 61 }, 'h.json'))).toContain('pageSize')
-    expect(message(() => parseContent(hubFileSchema(['en']), { ...hub, collection: 'items' }, 'h.json'))).toContain('collection')
+    expect(() => parseContent(hubFileSchema(['en']), { ...hub, en: { ...hubText, name: 'Tools' } }, 'h.json')).not.toThrow()
     expect(message(() => parseContent(hubFileSchema(['en']), { ...hub, en: { ...hubText, faq: Array.from({ length: 6 }, (_, i) => [`q${i}`, 'a']) } }, 'h.json'))).toContain('en.faq')
   })
   it('accept an about page without a keyword and a legal page with noindex', () => {
