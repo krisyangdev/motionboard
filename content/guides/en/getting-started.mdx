@@ -1,0 +1,49 @@
+---
+title: Start a new site from the template
+description: "Clone the template, set site.config.ts, add the template as a remote to merge updates later, then run, test, build and deploy your site."
+date: "2026-11-26"
+---
+
+Every site we build starts from the same template, so a new site takes minutes instead of days. This guide covers the first hour: create the repository, make it yours, and ship it.
+
+## Clone the template
+
+Copy the template into a new folder and install the dependencies.
+
+```bash
+git clone https://github.com/krisyangdev/site-template.git my-site
+cd my-site
+npm install
+```
+
+## Set your site config
+
+Open `site.config.ts`. It is the one file that holds everything specific to your site: the name, domain, languages, default title and description, contact email and analytics settings. Change those values and nothing else in the shared code needs touching.
+
+Then replace the example content. Tool pages live in `content/tools/`, guides in `content/guides/`, and the legal pages in `content/legal/`. Site-specific code goes in `src/site/`.
+
+## Keep receiving template updates
+
+Point your repository at the template as a second remote. When the template improves, you merge the change instead of copying files by hand.
+
+```bash
+git remote rename origin template
+git remote add origin git@github.com:you/my-site.git
+git fetch template
+git merge template/main
+```
+
+Shared code lives in `src/core/` and `scripts/`. Keep your edits in `src/site/`, `content/` and `site.config.ts` and merges stay clean.
+
+## Run, test, build, deploy
+
+Start the dev server, check your work, and publish.
+
+```bash
+npm run dev       # local server with hot reload
+npm test          # unit tests and content checks
+npm run build     # prerender every page to static HTML
+npm run deploy    # build and publish to Cloudflare
+```
+
+Once it is live, see the [tools page](/tools/) for how a finished page looks, and replace it with your own.
