@@ -3,7 +3,8 @@ import { and, eq, gt } from 'drizzle-orm'
 import { db, schema } from '../db'
 import { createId, nowIso } from '../server/ids'
 import { HttpError } from '../server/http'
-import { hashPassword, randomToken, sha256Hex, verifyPassword } from './crypto'
+import { hashPassword, verifyPassword } from '../auth/hash'
+import { randomToken, sha256Hex } from './crypto'
 
 const COOKIE = 'asid'
 const SESSION_SECONDS = 14 * 24 * 60 * 60
@@ -59,7 +60,7 @@ export async function loginAdmin(input: { email: string; password: string }): Pr
   const email = normalizeEmail(input.email)
   const [row] = await db().select().from(schema.adminUsers).where(eq(schema.adminUsers.email, email)).limit(1)
   // Hash even when the admin does not exist, so response time does not reveal which emails are admins.
-  const ok = await verifyPassword(input.password, row?.passwordSalt ?? 'unknown-admin', row?.passwordHash ?? '')
+  const ok = await verifyPassword({ hash: row?.passwordHash ?? '', password: input.password })
   if (!row || row.status !== 'active' || !ok) throw new HttpError(401, 'Invalid email or password', 'invalid_credentials')
 
   const token = randomToken(32)
@@ -82,20 +83,20 @@ export async function logoutAdmin(request: Request, admin: AdminIdentity): Promi
 /** Creates the admin, or resets the password and role of an existing one (all its sessions are revoked). */
 export async function provisionAdmin(input: { email: string; password: string; role: AdminRole }): Promise<{ admin: AdminIdentity; created: boolean }> {
   const email = normalizeEmail(input.email)
-  const { hash, salt } = await hashPassword(input.password)
+  const hash = await hashPassword(input.password)
   const [existing] = await db().select({ id: schema.adminUsers.id }).from(schema.adminUsers).where(eq(schema.adminUsers.email, email)).limit(1)
   if (existing) {
     await db().batch([
       db()
         .update(schema.adminUsers)
-        .set({ passwordHash: hash, passwordSalt: salt, role: input.role, status: 'active', updatedAt: nowIso() })
+        .set({ passwordHash: hash, role: input.role, status: 'active', updatedAt: nowIso() })
         .where(eq(schema.adminUsers.id, existing.id)),
       db().delete(schema.adminSessions).where(eq(schema.adminSessions.adminUserId, existing.id)),
     ])
     return { admin: { id: existing.id, email, role: input.role }, created: false }
   }
   const id = createId('adm')
-  await db().insert(schema.adminUsers).values({ id, email, passwordHash: hash, passwordSalt: salt, role: input.role })
+  await db().insert(schema.adminUsers).values({ id, email, passwordHash: hash, role: input.role })
   return { admin: { id, email, role: input.role }, created: true }
 }
 
