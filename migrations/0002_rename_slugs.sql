@@ -1,4 +1,4 @@
--- Recipe slugs were renamed to common effect names (src/data/renamed.json).
+-- Recipe slugs were renamed to common effect names (content/renamed.json).
 UPDATE stats SET slug = 'match-cut-transition' WHERE slug = 'match-cut';
 UPDATE likes SET slug = 'match-cut-transition' WHERE slug = 'match-cut';
 UPDATE stats SET slug = 'typing-animation' WHERE slug = 'rhythmic-typing';

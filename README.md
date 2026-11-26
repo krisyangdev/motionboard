@@ -160,9 +160,9 @@ npm run build      # generate recipe files, prerender every page, write sitemap.
 npm run deploy     # build, then cf deploy
 ```
 
-`scripts/recipes.mjs` runs before each dev and build. It writes the agent-facing recipe files for the website (`public/r/`) and for the skill (`skills/motionboard/recipes/`) from `src/data/`, and copies `skills/motionboard/source/` to `public/source/`.
+`scripts/site/recipes.mjs` runs before each dev and build. It writes the agent-facing recipe files for the website (`public/r/`) and for the skill (`skills/motionboard/recipes/`) from `content/recipes/`, and copies `skills/motionboard/source/` to `public/source/`.
 
-Films and posters are served from R2 at https://media.motionboard.app. Keep source files in `media/` (not tracked) and upload with `scripts/upload-media.sh [file ...]`. Copy, like and wish counts live in D1; apply the schema locally once with `npx wrangler d1 migrations apply DB --local`.
+Films and posters are served from R2 at https://media.motionboard.app. Keep source files in `media/` (not tracked) and upload with `scripts/site/upload-media.sh [file ...]`. Copy, like and wish counts live in D1; apply the schema locally once with `npx wrangler d1 migrations apply DB --local`.
 
 ## License
 

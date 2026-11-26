@@ -17,9 +17,9 @@ dist-ssr
 !.dev.vars.example
 
 
-# films and posters live in R2 (scripts/upload-media.sh)
+# films and posters live in R2 (scripts/site/upload-media.sh)
 media/
-# copied from skills/motionboard/source by scripts/recipes.mjs
+# copied from skills/motionboard/source by scripts/site/recipes.mjs
 public/source
 public/r/
 public/llms.txt

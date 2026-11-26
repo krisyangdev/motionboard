@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Upload films and posters in media/ to the R2 bucket behind the media host (MEDIA_URL in src/site.config.ts).
-# Usage: scripts/upload-media.sh [file ...]   (no arguments uploads everything in media/)
+# Upload films and posters in media/ to the R2 bucket behind the media host (MEDIA_URL in src/site/config.ts).
+# Usage: scripts/site/upload-media.sh [file ...]   (no arguments uploads everything in media/)
 # A cache rule keeps media at the edge for 30 days and in browsers for 7, so uploaded files are purged
 # from the edge afterwards; browsers that already hold a replaced file keep it until it expires.
 set -euo pipefail
-cd "$(dirname "$0")/../media"
+cd "$(dirname "$0")/../../media"
 BUCKET=motionboard-media
 cd ..
-MEDIA_URL=$(node --input-type=module -e "import('./src/site.config.ts').then(m => console.log(m.MEDIA_URL))")
-ZONE=$(node --input-type=module -e "import('./src/site.config.ts').then(m => console.log(m.SITE.domain))")
+MEDIA_URL=$(node --input-type=module -e "import('./src/site/config.ts').then(m => console.log(m.MEDIA_URL))")
+ZONE=$(node --input-type=module -e "import('./src/site/config.ts').then(m => console.log(m.SITE.domain))")
 cd media
 
 files=("$@")

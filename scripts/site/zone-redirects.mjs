@@ -4,11 +4,11 @@
 // left out of the rule, so _redirects answers them in one hop. Runs in `npm run deploy` after the build.
 import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
-import { SITE } from '../src/site.config.ts'
+import { SITE } from '../../src/site/config.ts'
 
 const RULE = 'add trailing slash to page paths'
-// Every page path without a trailing slash that public/_redirects (written by scripts/recipes.mjs) answers.
-const oldPaths = readFileSync(new URL('../public/_redirects', import.meta.url), 'utf8')
+// Every page path without a trailing slash that public/_redirects (written by scripts/generate.mjs from content/renamed.json and src/site/pages.ts) answers.
+const oldPaths = readFileSync(new URL('../../public/_redirects', import.meta.url), 'utf8')
   .split('\n')
   .map((line) => line.split(' ')[0])
   .filter((from) => from && !from.endsWith('/') && !from.includes('.'))

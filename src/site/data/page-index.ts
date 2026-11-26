@@ -1,5 +1,5 @@
 // The hub and guide pages, as a small list every page can import (footer links, sitemap in
-// vite.config.ts). The long copy is src/data/pages/<id>.json, loaded per page by pages.ts.
+// vite.config.ts). The long copy is content/pages/<id>.json, loaded per page by pages.ts.
 // Kept free of import.meta.glob so vite.config.ts can load it in Node.
 export type PageKind = 'hub' | 'guide'
 

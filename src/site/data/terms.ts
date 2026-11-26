@@ -24,7 +24,7 @@ export type RecipeText = {
   says: string[]
   /** [other recipe's slug, how they differ] */
   vs: [string, string][]
-  /** search copy of the recipe page (src/data/seo/<slug>.json) */
+  /** search copy of the recipe page (content/recipes/seo/<slug>.json) */
   seo: { title: string; description: string; howto: string[]; faq: [string, string][] }
 }
 
