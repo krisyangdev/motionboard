@@ -46,3 +46,26 @@ describe('sitePages with a third language that has no content', () => {
     for (const t of contentIndex().tools) expect(t.locales).not.toContain('es')
   })
 })
+
+describe('sitePages registry fields', () => {
+  it('gives every page a type, a breadcrumb that starts at home and ends at itself, and a lastmod', async () => {
+    const { sitePages, pageLocales } = await load(['en', 'zh'])
+    for (const p of sitePages().filter((p) => p.path !== '/')) {
+      expect(p.type, p.path).toBeTruthy()
+      expect(p.lastmod, p.path).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      expect(p.indexable, p.path).toBe(true)
+      for (const l of pageLocales(p)) {
+        const trail = p.breadcrumb?.[L(l)]
+        expect(trail?.[0], p.path).toMatchObject({ path: '/' })
+        expect(trail?.at(-1)?.path, p.path).toBe(p.path)
+      }
+    }
+    const home = sitePages().find((p) => p.path === '/')
+    expect(home).toMatchObject({ type: 'home', indexable: true })
+    expect(home?.breadcrumb).toBeUndefined()
+  })
+  it('carries the keyword of tool and guide pages per language', async () => {
+    const { sitePages } = await load(['en', 'zh'])
+    for (const p of sitePages().filter((p) => p.type === 'tool' || p.type === 'guide')) expect(p.keyword?.[L('en')], p.path).toBeTruthy()
+  })
+})

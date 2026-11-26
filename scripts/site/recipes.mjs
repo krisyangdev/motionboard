@@ -13,6 +13,9 @@
 // Two variants of the same recipe text, switched by `skill` in recipeMd(): web and skill.
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync, existsSync, cpSync } from 'node:fs'
 import { join, dirname } from 'node:path'
+import { execFileSync } from 'node:child_process'
+import coreEn from '../../src/core/messages/en.ts'
+import coreZh from '../../src/core/messages/zh.ts'
 import { fileURLToPath } from 'node:url'
 import { GITHUB_URL, MEDIA_URL, SITE, SITE_URL, SKILL_INSTALL } from '../../src/site/config.ts'
 
@@ -359,19 +362,46 @@ const redirects = Object.entries(renamed)
   .map(([from, to]) => `/r/${from.split('/')[2]}.md /r/${to.split('/')[2]}.md 301`)
 writeFileSync(join(GEN_DIR, 'redirects.txt'), `${redirects.join('\n')}\n`)
 
-// Pages for the sitemap: the home page is the template's; recipes, hubs and guides are listed here.
+// Pages for the sitemap: the home page is the template's; recipes, hubs and guides are listed here, with the
+// registry fields the template needs (type, lastmod = last commit of the source file, breadcrumb per language).
+const HOME = { en: coreEn.page.home, zh: coreZh.page.home }
+const lastmod = (...files) => {
+  const dates = files.map((f) => execFileSync('git', ['log', '-1', '--format=%cs', '--', f], { cwd: ROOT, encoding: 'utf8' }).trim()).filter(Boolean)
+  return dates.sort().at(-1) || new Date().toISOString().slice(0, 10)
+}
+const crumbs = (path, name) => ({
+  en: [{ name: HOME.en, path: '/' }, { name: name.en, path }],
+  zh: [{ name: HOME.zh, path: '/' }, { name: name.zh, path }],
+})
 const pages = [
-  ...order.map((t) => ({
-    path: `/recipes/${t.slug}/`,
-    title: { en: seo[t.slug].en.title, zh: seo[t.slug].zh.title },
-    description: { en: seo[t.slug].en.description, zh: seo[t.slug].zh.description },
-  })),
+  ...order.map((t) => {
+    const path = `/recipes/${t.slug}/`
+    return {
+      path,
+      type: 'item',
+      title: { en: seo[t.slug].en.title, zh: seo[t.slug].zh.title },
+      description: { en: seo[t.slug].en.description, zh: seo[t.slug].zh.description },
+      // The effect names were picked from search data (task 1), so the name is the page's keyword.
+      keyword: { en: seo[t.slug].en.name, zh: seo[t.slug].zh.name },
+      lastmod: lastmod(`content/recipes/seo/${t.slug}.json`),
+      breadcrumb: crumbs(path, { en: seo[t.slug].en.name, zh: seo[t.slug].zh.name }),
+    }
+  }),
   ...readdirSync(join(ROOT, 'content/pages'))
     .filter((f) => f.endsWith('.json'))
     .sort()
     .map((f) => {
       const page = readJson(`content/pages/${f}`)
-      return { path: page.path, title: { en: page.en.title, zh: page.zh.title }, description: { en: page.en.description, zh: page.zh.description } }
+      return {
+        path: page.path,
+        type: page.path.startsWith('/guides/') ? 'guide' : 'hub',
+        title: { en: page.en.title, zh: page.zh.title },
+        description: { en: page.en.description, zh: page.zh.description },
+        // Hub and guide h1s were written for their search term (task 1).
+        keyword: { en: page.en.h1 || page.en.title, zh: page.zh.h1 || page.zh.title },
+        lastmod: page.updated || lastmod(`content/pages/${f}`),
+        breadcrumb: crumbs(page.path, { en: page.en.h1 || page.en.title, zh: page.zh.h1 || page.zh.title }),
+      }
     }),
 ]
 writeFileSync(join(GEN_DIR, 'pages.json'), JSON.stringify(pages))

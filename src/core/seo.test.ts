@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { SITE, SITE_URL } from '../../site.config.ts'
 import { DEFAULT_LOCALE, HTML_LANG, LOCALES, PREFIXED_LOCALES, pageUrl } from './i18n'
 import { mockSite } from './test-site'
-import { absolute, articleLd, breadcrumbLd, faqLd, organizationLd, seoHead, softwareAppLd, videoLd, websiteLd } from './seo'
+import * as seoModule from './seo'
+import { absolute, articleLd, breadcrumbLd, ORG_ID, organizationLd, seoHead, videoLd, webApplicationLd, websiteLd } from './seo'
 
 const other = PREFIXED_LOCALES[0]
 const base = { title: 'Merge PDFs', description: 'Combine PDF files in your browser.', path: '/tools/merge/', locale: DEFAULT_LOCALE }
@@ -58,6 +59,18 @@ describe('seoHead', () => {
   it('emits no script without JSON-LD', () => {
     expect(seoHead(base).scripts).toEqual([])
   })
+  it('writes the breadcrumb trail as a BreadcrumbList node in the same @graph', () => {
+    const crumbs = [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Merge', path: base.path }]
+    const head = seoHead({ ...base, locale: other, breadcrumb: crumbs, jsonLd: [articleLd({ headline: 'h', description: 'd', locale: other, path: base.path, datePublished: '2026-01-01', dateModified: '2026-02-01' })] })
+    const graph = JSON.parse(head.scripts[0].children)['@graph']
+    expect(graph.map((n: { '@type': string }) => n['@type'])).toEqual(['Article', 'BreadcrumbList'])
+    expect(graph[1].itemListElement.map((i: { name: string; item: string }) => [i.name, i.item])).toEqual(crumbs.map((c) => [c.name, pageUrl(other, c.path)]))
+  })
+  it('never emits FAQPage', () => {
+    expect('faqLd' in seoModule).toBe(false)
+    const head = seoHead({ ...base, jsonLd: [websiteLd(DEFAULT_LOCALE), organizationLd(), webApplicationLd({ name: 'n', description: 'd', locale: DEFAULT_LOCALE, path: base.path })], breadcrumb: [{ name: 'Home', path: '/' }] })
+    expect(head.scripts[0].children).not.toContain('FAQPage')
+  })
 })
 
 describe('seoHead in a third language', () => {
@@ -79,26 +92,41 @@ describe('absolute', () => {
 })
 
 describe('JSON-LD helpers', () => {
-  it('breadcrumbLd starts at home and numbers items from 1', () => {
-    const b = breadcrumbLd(other, [['Tools', '/tools/'], ['Merge', '/tools/merge/']])
+  it('breadcrumbLd numbers the trail from 1 and links each item in the page language', () => {
+    const b = breadcrumbLd(other, [{ name: 'Home', path: '/' }, { name: 'Tools', path: '/tools/' }, { name: 'Merge', path: '/tools/merge/' }])
     expect(b['@type']).toBe('BreadcrumbList')
     expect(b.itemListElement.map((i) => i.position)).toEqual([1, 2, 3])
-    expect(b.itemListElement[0]).toMatchObject({ name: SITE.name, item: pageUrl(other, '/') })
+    expect(b.itemListElement[0]).toMatchObject({ name: 'Home', item: pageUrl(other, '/') })
     expect(b.itemListElement[2].item).toBe(pageUrl(other, '/tools/merge/'))
-  })
-  it('faqLd builds Question and Answer nodes', () => {
-    const f = faqLd([['Is it free?', 'Yes.']])
-    expect(f['@type']).toBe('FAQPage')
-    expect(f.mainEntity[0]).toEqual({ '@type': 'Question', name: 'Is it free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes.' } })
   })
   it('videoLd formats the duration as ISO 8601 and absolutises URLs', () => {
     const v = videoLd({ name: 'n', description: 'd', thumbnailUrl: '/t.jpg', contentUrl: 'https://v.test/a.mp4', uploadDate: '2026-01-01', duration: 95, locale: DEFAULT_LOCALE, path: '/tools/merge/' })
     expect(v).toMatchObject({ '@type': 'VideoObject', duration: 'PT95S', thumbnailUrl: `${SITE_URL}/t.jpg`, contentUrl: 'https://v.test/a.mp4' })
   })
-  it('softwareAppLd, articleLd and websiteLd carry type, language and URL', () => {
-    expect(softwareAppLd({ name: 'n', description: 'd', locale: other, path: '/tools/merge/' })).toMatchObject({ '@type': 'SoftwareApplication', url: pageUrl(other, '/tools/merge/') })
-    const a = articleLd({ headline: 'h', description: 'd', locale: DEFAULT_LOCALE, path: '/guides/a/', datePublished: '2026-01-01' })
-    expect(a).toMatchObject({ '@type': 'Article', dateModified: '2026-01-01', url: pageUrl(DEFAULT_LOCALE, '/guides/a/') })
-    expect(websiteLd(DEFAULT_LOCALE)).toMatchObject({ '@type': 'WebSite', description: SITE.description[DEFAULT_LOCALE] })
+  it('webApplicationLd carries type, language, price and URL', () => {
+    expect(webApplicationLd({ name: 'n', description: 'd', locale: other, path: '/tools/merge/' })).toMatchObject({
+      '@type': 'WebApplication',
+      operatingSystem: 'Web',
+      inLanguage: HTML_LANG[other],
+      url: pageUrl(other, '/tools/merge/'),
+      offers: { price: '0' },
+    })
+  })
+  it('articleLd writes both dates with a time zone and points author and publisher at the Organization', () => {
+    const a = articleLd({ headline: 'h', description: 'd', locale: DEFAULT_LOCALE, path: '/guides/a/', datePublished: '2026-01-01', dateModified: '2026-03-02' })
+    expect(a).toMatchObject({
+      '@type': 'Article',
+      datePublished: '2026-01-01T00:00:00+00:00',
+      dateModified: '2026-03-02T00:00:00+00:00',
+      url: pageUrl(DEFAULT_LOCALE, '/guides/a/'),
+      image: absolute(SITE.ogImage),
+      author: { '@id': ORG_ID },
+      publisher: { '@id': ORG_ID },
+    })
+  })
+  it('organizationLd carries the shared @id and websiteLd points at it', () => {
+    expect(ORG_ID).toBe(`${SITE_URL}/about/#org`)
+    expect(organizationLd()).toMatchObject({ '@type': 'Organization', '@id': ORG_ID })
+    expect(websiteLd(DEFAULT_LOCALE)).toMatchObject({ '@type': 'WebSite', description: SITE.description[DEFAULT_LOCALE], publisher: { '@id': ORG_ID } })
   })
 })

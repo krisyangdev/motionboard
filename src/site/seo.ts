@@ -1,13 +1,12 @@
 // Head data of Motionboard's page types, on the template's seoHead() and JSON-LD helpers.
 import { notFound } from '@tanstack/react-router'
 import { HTML_LANG, pageUrl, type Locale } from '@/core/i18n'
-import { breadcrumbLd, faqLd, seoHead, videoLd, websiteLd } from '@/core/seo'
-import { plain } from '@/site/components/page/inline'
+import { coreMessages } from '@/core/messages'
+import { breadcrumbLd, organizationLd, seoHead, videoLd, websiteLd } from '@/core/seo'
 import type { PageData } from '@/site/components/page/load'
 import { SITE, SITE_URL, MEDIA_URL } from '@/site/config'
 import type { Block } from '@/site/data/content'
 import { HERO_FILM } from '@/site/data/hero'
-import { PAGES } from '@/site/data/pages'
 import { bySlug, loadText, media, recipePath, termName, type RecipeText, type Term } from '@/site/data/terms'
 import { messages } from '@/site/messages'
 
@@ -24,7 +23,7 @@ export const homeHead = (locale: Locale) =>
     locale,
     type: 'website',
     image: HERO_FILM.cover,
-    jsonLd: [websiteLd(locale)],
+    jsonLd: [websiteLd(locale), organizationLd()],
   })
 
 export const savedHead = (locale: Locale) =>
@@ -42,7 +41,7 @@ export function recipeHead(locale: Locale, t: Term, text: RecipeText) {
   const name = termName(t, locale)
   const image = media(t, 'jpg')
   const video = media(t, 'mp4')
-  const { title, description, faq } = text.seo
+  const { title, description } = text.seo
   return seoHead({
     title,
     description,
@@ -52,8 +51,7 @@ export function recipeHead(locale: Locale, t: Term, text: RecipeText) {
     video,
     jsonLd: [
       videoLd({ name, description, thumbnailUrl: image, contentUrl: video, uploadDate: FILM_UPLOAD_DATE, duration: t.dur, locale, path }),
-      faqLd(faq),
-      breadcrumbLd(locale, [[name, path]]),
+      breadcrumbLd(locale, [{ name: coreMessages[locale].page.home, path: '/' }, { name, path }]),
     ],
   })
 }
@@ -62,13 +60,11 @@ const films = (blocks: Block[]) => [...new Set(blocks.flatMap((b) => (b.t === 'f
 const ORG = { '@type': 'Organization', name: SITE.name, url: SITE_URL }
 
 /** Hub pages (a list of films) and guides. */
-export function contentHead(locale: Locale, { id, kind, path, updated, copy }: PageData) {
+export function contentHead(locale: Locale, { kind, path, updated, copy }: PageData) {
   const url = pageUrl(locale, path)
   const slugs = films(copy.blocks)
   const showcase = copy.blocks.find((b): b is Extract<Block, { t: 'showcase' }> => b.t === 'showcase')
   const image = slugs.length ? media(bySlug[slugs[0]], 'jpg') : showcase ? `${MEDIA_URL}/${showcase.films[0].video}.jpg` : HERO_FILM.cover
-  const label = PAGES.find((p) => p.id === id)!.label[locale]
-  const faq = copy.blocks.flatMap((b) => (b.t === 'faq' ? b.items : []))
   const main =
     kind === 'hub'
       ? {
@@ -108,6 +104,6 @@ export function contentHead(locale: Locale, { id, kind, path, updated, copy }: P
     locale,
     type: 'article',
     image,
-    jsonLd: [main, breadcrumbLd(locale, [[label, path]]), ...(faq.length ? [faqLd(faq.map(([q, a]) => [plain(q), plain(a)] as [string, string]))] : [])],
+    jsonLd: [main, breadcrumbLd(locale, [{ name: coreMessages[locale].page.home, path: '/' }, { name: copy.h1, path }])],
   })
 }

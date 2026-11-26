@@ -1,15 +1,20 @@
 // Template for MDX pages (guides and legal).
 import type React from 'react'
 import { use, useMemo, type ComponentType } from 'react'
-import { loadDoc, loadedDoc, type Collection, type DocFrontmatter } from '@/core/content/docs'
+import { docPath, isGuide, loadDoc, loadedDoc, type Collection, type DocFrontmatter } from '@/core/content/docs'
+import { pageH1 } from '@/core/content/h1'
 import { formatDate, type Locale } from '@/core/i18n'
 import { coreMessages } from '@/core/messages'
-import { articleLd, breadcrumbLd, seoHead } from '@/core/seo'
-import { Breadcrumb, LCP, PathLink } from './HubPage'
+import { articleLd, seoHead } from '@/core/seo'
+import { Breadcrumb, LCP, PathLink, trail } from './HubPage'
+
+/** The breadcrumb of a doc page: shown by the page and written to its JSON-LD. */
+const docCrumbs = (fm: DocFrontmatter, locale: Locale, path: string, collection: Collection) =>
+  trail(locale, ...(collection === 'guides' ? [{ name: coreMessages[locale].page.guides, path: '/guides/' }] : []), { name: fm.title, path })
 
 /** `locales`: every language the page exists in (for hreflang). */
 export function docHead(fm: DocFrontmatter, locale: Locale, locales: readonly Locale[], path: string, collection: Collection) {
-  const guide = collection === 'guides'
+  const guide = isGuide(fm)
   return seoHead({
     title: fm.title,
     description: fm.description,
@@ -17,12 +22,9 @@ export function docHead(fm: DocFrontmatter, locale: Locale, locales: readonly Lo
     locale,
     locales,
     type: guide ? 'article' : 'website',
-    jsonLd: guide
-      ? [
-          articleLd({ headline: fm.title, description: fm.description, locale, path, datePublished: fm.date, dateModified: fm.updated }),
-          breadcrumbLd(locale, [[coreMessages[locale].page.guides, '/guides/'], [fm.title, path]]),
-        ]
-      : undefined,
+    image: guide ? fm.ogImage : undefined,
+    breadcrumb: docCrumbs(fm, locale, path, collection),
+    jsonLd: guide ? [articleLd({ headline: pageH1(fm), description: fm.description, locale, path, datePublished: fm.published, dateModified: fm.updated, image: fm.ogImage })] : undefined,
   })
 }
 
@@ -47,15 +49,15 @@ export function DocPage({ collection, slug, fm, locale }: { collection: Collecti
   // Loaded by the route loader on the server; the browser loads it itself while hydrating.
   const doc = loadedDoc(collection, locale, slug) ?? use(loadDoc(collection, locale, slug))
   const components = useMemo(() => mdxComponents(locale), [locale])
-  const crumb = collection === 'guides' ? [{ label: l.guides, path: '/guides/' }, { label: fm.title }] : [{ label: fm.title }]
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <Breadcrumb items={crumb} />
+      <Breadcrumb crumbs={docCrumbs(fm, locale, docPath(collection, slug), collection)} />
       <h1 {...LCP} className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        {fm.title}
+        {pageH1(fm)}
       </h1>
+      {isGuide(fm) && <p className="mt-3 text-lg text-muted-foreground">{fm.lede}</p>}
       <p className="mt-3 text-sm text-muted-foreground">
-        {fm.updated ? l.updated : l.published} <time dateTime={fm.updated ?? fm.date}>{formatDate(locale, fm.updated ?? fm.date)}</time>
+        {l.updated} <time dateTime={fm.updated}>{formatDate(locale, fm.updated)}</time>
       </p>
       <article className="prose mt-8">{doc && <doc.Component components={components} />}</article>
     </main>

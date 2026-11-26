@@ -17,11 +17,19 @@ export type SeoPage = {
   image?: string
   /** Absolute video URL for og:video. */
   video?: string
-  /** JSON-LD nodes, wrapped in one @graph. Use the helpers below. */
+  /**
+   * The page's breadcrumb trail, home first. It becomes the BreadcrumbList node; pass the same array to the
+   * visible <Breadcrumb> so the two cannot differ.
+   */
+  breadcrumb?: Crumb[]
+  /** JSON-LD nodes, wrapped in one @graph with the breadcrumb. Use the helpers below. Never FAQPage: the FAQ stays visible content only. */
   jsonLd?: object[]
   /** noindex pages get no canonical or hreflang links and stay out of the sitemap. */
   noindex?: boolean
 }
+
+/** One step of a breadcrumb trail: the name shown, and the default-language path it links to. */
+export type Crumb = { name: string; path: string }
 
 /** Absolute URL for a path on this site, or an already absolute URL. */
 export const absolute = (url: string) => (url.startsWith('/') ? `${SITE_URL}${url}` : url)
@@ -30,6 +38,7 @@ export function seoHead(p: SeoPage) {
   const title = p.title.includes(SITE.name) ? p.title : `${p.title} · ${SITE.name}`
   const url = pageUrl(p.locale, p.path)
   const image = absolute(p.image ?? SITE.ogImage)
+  const graph = [...(p.jsonLd ?? []), ...(p.breadcrumb?.length ? [breadcrumbLd(p.locale, p.breadcrumb)] : [])]
   const meta: Record<string, string>[] = [
     { title },
     { name: 'description', content: p.description },
@@ -54,13 +63,18 @@ export function seoHead(p: SeoPage) {
           { rel: 'canonical', href: url },
           ...alternateUrls(p.path, p.locales ?? LOCALES).map((a) => ({ rel: 'alternate', hrefLang: a.lang, href: a.href })),
         ],
-    scripts: p.jsonLd?.length
-      ? [{ type: 'application/ld+json', children: JSON.stringify({ '@context': 'https://schema.org', '@graph': p.jsonLd }) }]
-      : [],
+    scripts: graph.length ? [{ type: 'application/ld+json', children: JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }) }] : [],
   }
 }
 
 // JSON-LD helpers. Each returns one node for SeoPage.jsonLd.
+
+/** Id of the site's Organization node. The home and about pages define it; other nodes point at it. */
+export const ORG_ID = `${SITE_URL}/about/#org`
+const orgRef = () => ({ '@type': 'Organization', '@id': ORG_ID, name: SITE.name })
+
+/** `YYYY-MM-DD` as an ISO 8601 date with a time zone. */
+const isoDate = (d: string) => `${d}T00:00:00+00:00`
 
 export const websiteLd = (locale: Locale) => ({
   '@type': 'WebSite',
@@ -68,30 +82,27 @@ export const websiteLd = (locale: Locale) => ({
   url: pageUrl(locale, '/'),
   inLanguage: HTML_LANG[locale],
   description: SITE.description[locale],
+  publisher: { '@id': ORG_ID },
 })
 
 export const organizationLd = () => ({
   '@type': 'Organization',
+  '@id': ORG_ID,
   name: SITE.name,
   url: SITE_URL,
   email: SITE.email,
   logo: absolute('/favicon.svg'),
 })
 
-/** Breadcrumb from the home page; `items` are [name, default-language path] after home. */
-export const breadcrumbLd = (locale: Locale, items: [name: string, path: string][]) => ({
+/** BreadcrumbList from a trail (home first). seoHead writes it from SeoPage.breadcrumb. */
+export const breadcrumbLd = (locale: Locale, crumbs: Crumb[]) => ({
   '@type': 'BreadcrumbList',
-  itemListElement: [[SITE.name, '/'] as [string, string], ...items].map(([name, path], i) => ({
+  itemListElement: crumbs.map((c, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    name,
-    item: pageUrl(locale, path),
+    name: c.name,
+    item: pageUrl(locale, c.path),
   })),
-})
-
-export const faqLd = (faq: [question: string, answer: string][]) => ({
-  '@type': 'FAQPage',
-  mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
 })
 
 export const videoLd = (v: {
@@ -116,23 +127,36 @@ export const videoLd = (v: {
   url: pageUrl(v.locale, v.path),
 })
 
-export const softwareAppLd = (a: { name: string; description: string; locale: Locale; path: string; category?: string }) => ({
-  '@type': 'SoftwareApplication',
+export const webApplicationLd = (a: { name: string; description: string; locale: Locale; path: string; category?: string }) => ({
+  '@type': 'WebApplication',
   name: a.name,
   description: a.description,
-  applicationCategory: a.category ?? 'MultimediaApplication',
+  applicationCategory: a.category ?? 'UtilitiesApplication',
   operatingSystem: 'Web',
+  inLanguage: HTML_LANG[a.locale],
   url: pageUrl(a.locale, a.path),
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 })
 
-export const articleLd = (a: { headline: string; description: string; locale: Locale; path: string; datePublished: string; dateModified?: string }) => ({
+/** `datePublished` and `dateModified` are the page's `published` and `updated` (YYYY-MM-DD), the same values the page shows. */
+export const articleLd = (a: {
+  headline: string
+  description: string
+  locale: Locale
+  path: string
+  datePublished: string
+  dateModified: string
+  /** Defaults to SITE.ogImage. */
+  image?: string
+}) => ({
   '@type': 'Article',
   headline: a.headline,
   description: a.description,
   inLanguage: HTML_LANG[a.locale],
   url: pageUrl(a.locale, a.path),
-  datePublished: a.datePublished,
-  dateModified: a.dateModified ?? a.datePublished,
-  author: { '@type': 'Organization', name: SITE.name },
+  image: absolute(a.image ?? SITE.ogImage),
+  datePublished: isoDate(a.datePublished),
+  dateModified: isoDate(a.dateModified),
+  author: orgRef(),
+  publisher: orgRef(),
 })

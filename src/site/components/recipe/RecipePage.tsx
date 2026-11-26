@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { buttonVariants } from '@/core/ui/button'
 import { CopyAction, LikeButton, SaveButton, WishButton } from '@/site/components/actions'
 import { TileGrid } from '@/site/components/TileGrid'
@@ -81,14 +82,18 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   return (
     <main className="wrap min-h-[70vh] pt-2" ref={root}>
       <div className="mx-auto flex min-h-13 max-w-[var(--site-width)] items-center justify-between gap-3">
-        <nav className="flex min-h-11 min-w-0 items-center gap-2 text-muted-foreground text-[0.8125rem]" aria-label={s.recipe.breadcrumb}>
-          <HomeLink hash="recipes" className="inline-flex min-h-11 items-center hover:text-foreground">
-            {s.nav.recipes}
-          </HomeLink>
-          <span aria-hidden="true">/</span>
-          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-foreground" aria-current="page">
-            {s.positions[t.pos]}
-          </span>
+        <nav className="flex min-h-11 min-w-0 items-center gap-2 text-muted-foreground text-[0.8125rem]" aria-label={coreMessages[locale].page.breadcrumb}>
+          <ol className="flex min-w-0 items-center gap-2">
+            <li className="flex items-center">
+              <HomeLink className="inline-flex min-h-11 items-center hover:text-foreground">{coreMessages[locale].page.home}</HomeLink>
+            </li>
+            <li className="flex min-w-0 items-center gap-2">
+              <span aria-hidden="true">/</span>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-foreground" aria-current="page">
+                {termName(t, locale)}
+              </span>
+            </li>
+          </ol>
         </nav>
         <div className="flex shrink-0 gap-2">
           <RecipeLink slug={prev.slug} className={buttonVariants({ variant: 'outline', size: 'icon-lg' })} aria-label={s.recipe.prev(termName(prev, locale))}>

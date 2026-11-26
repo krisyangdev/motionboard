@@ -2,9 +2,13 @@
 import type { ComponentType } from 'react'
 import index from 'virtual:content-index'
 import { LOCALES, type Locale } from '../i18n'
+import type { DocIndexEntry } from '../pages'
+import type { DocFrontmatter, GuideFrontmatter } from './schema'
 
 export type Collection = 'guides' | 'legal'
-export type DocFrontmatter = { title: string; description: string; date: string; updated?: string }
+export type { DocFrontmatter, GuideFrontmatter }
+
+export const isGuide = (fm: DocFrontmatter): fm is GuideFrontmatter => 'kind' in fm
 export type DocComponent = ComponentType<{ components?: Record<string, ComponentType<any>> }>
 export type Doc = { Component: DocComponent; frontmatter: DocFrontmatter }
 
@@ -43,7 +47,7 @@ export function loadDoc(collection: Collection, locale: Locale, slug: string): P
 export const loadedDoc = (collection: Collection, locale: Locale, slug: string) => loaded.get(fileOf(collection, locale, slug))
 
 /** Docs of a collection in one language, newest first. */
-export function docList(collection: Collection, locale: Locale): (DocFrontmatter & { slug: string })[] {
+export function docList(collection: Collection, locale: Locale): DocIndexEntry[] {
   return index.docs[collection][locale]
 }
 

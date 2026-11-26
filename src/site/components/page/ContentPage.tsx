@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { cn } from '@/core/lib/utils'
 import { Faq } from '@/site/components/Faq'
 import { CommandBox } from '@/site/components/home/SkillInstall'
@@ -10,7 +11,6 @@ import { PAGE_STRINGS } from '@/site/components/page/strings'
 import { MEDIA_URL, SKILL_INSTALL } from '@/site/config'
 import type { Block, ShowcaseFilm } from '@/site/data/content'
 import { HERO, HERO_FILM } from '@/site/data/hero'
-import { PAGES } from '@/site/data/pages'
 import { bySlug, termName } from '@/site/data/terms'
 import { HomeLink, RecipeLink } from '@/site/lib/links'
 import { useStrings } from '@/site/lib/strings'
@@ -208,26 +208,24 @@ function BlockView({ block: b }: { block: Block }) {
 // Hub pages (films grouped by what people search for) and guides.
 export function ContentPage({ data }: { data: PageData }) {
   const locale = useLocale()
-  const s = useStrings()
   const t = PAGE_STRINGS[locale]
-  const { id, kind, updated, copy } = data
-  const label = PAGES.find((p) => p.id === id)!.label[locale]
+  const { kind, updated, copy } = data
 
   return (
     <main className="wrap min-h-[70vh] pt-2">
       <div className="flex min-h-13 items-center justify-between gap-3">
-        <nav className="flex min-h-11 min-w-0 items-center gap-2 text-muted-foreground text-[0.8125rem]" aria-label={s.recipe.breadcrumb}>
-          {kind === 'hub' ? (
-            <HomeLink hash="recipes" className="inline-flex min-h-11 items-center hover:text-foreground">
-              {s.nav.recipes}
-            </HomeLink>
-          ) : (
-            <span>{t.guides}</span>
-          )}
-          <span aria-hidden="true">/</span>
-          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-foreground" aria-current="page">
-            {label}
-          </span>
+        <nav className="flex min-h-11 min-w-0 items-center gap-2 text-muted-foreground text-[0.8125rem]" aria-label={coreMessages[locale].page.breadcrumb}>
+          <ol className="flex min-w-0 items-center gap-2">
+            <li className="flex items-center">
+              <HomeLink className="inline-flex min-h-11 items-center hover:text-foreground">{coreMessages[locale].page.home}</HomeLink>
+            </li>
+            <li className="flex min-w-0 items-center gap-2">
+              <span aria-hidden="true">/</span>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-foreground" aria-current="page">
+                {copy.h1}
+              </span>
+            </li>
+          </ol>
         </nav>
       </div>
       <header className="mt-5 sm:mt-7">
