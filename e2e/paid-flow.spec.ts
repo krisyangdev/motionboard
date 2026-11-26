@@ -4,7 +4,8 @@
 // a failing generation is refunded → admin signs in and adjusts credits (audited).
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test'
 
-const BOOTSTRAP = 'dev-bootstrap-token' // .dev.vars.example
+// Local: the .dev.vars.example value. Against the live demo: E2E_BASE_URL=… E2E_BOOTSTRAP_TOKEN=… npm run e2e
+const BOOTSTRAP = process.env.E2E_BOOTSTRAP_TOKEN || 'dev-bootstrap-token'
 const email = `e2e-${Date.now()}@example.com`
 const password = 'correct-horse-battery'
 
@@ -15,7 +16,7 @@ async function balance(request: APIRequestContext) {
 }
 
 async function latestEmailLink(request: APIRequestContext, to: string) {
-  const res = await request.get('/api/mock/emails')
+  const res = await request.get('/api/mock/emails', { headers: { 'x-bootstrap-token': BOOTSTRAP } })
   const { items } = (await res.json()) as { items: { to: string; text: string }[] }
   const mail = items.filter((m) => m.to === to).at(-1)
   expect(mail, `no email to ${to}`).toBeTruthy()
@@ -84,7 +85,7 @@ test('sign up, buy credits, generate, refund, admin adjust', async ({ page }) =>
 
   // Admin: bootstrap, sign in, adjust the user's credits.
   const adminEmail = 'admin@example.com'
-  const adminPassword = 'admin-password-123'
+  const adminPassword = `e2e-${crypto.randomUUID()}` // fresh per run, so no known admin password is left behind on the live demo
   const boot = await page.request.post('/api/admin/bootstrap', {
     headers: { 'x-bootstrap-token': BOOTSTRAP },
     data: { email: adminEmail, password: adminPassword },

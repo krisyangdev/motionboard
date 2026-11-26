@@ -8,9 +8,9 @@ export default defineConfig({
   timeout: 90_000,
   workers: 1,
   reporter: 'list',
-  use: { baseURL: 'http://127.0.0.1:3000', trace: 'retain-on-failure' },
+  use: { baseURL: process.env.E2E_BASE_URL || 'http://127.0.0.1:3000', trace: 'retain-on-failure' },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-  webServer: {
+  webServer: process.env.E2E_BASE_URL ? undefined : {
     command: 'npm run db:migrate:local && npm run build && npm run preview',
     url: 'http://127.0.0.1:3000/',
     timeout: 180_000,

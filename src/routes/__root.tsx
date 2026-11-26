@@ -42,7 +42,9 @@ function RootDocument({ children }: { children: ReactNode }) {
   // /admin is an internal tool: no site chrome, no page analytics.
   const admin = useLocation({ select: (l) => l.pathname.startsWith('/admin') })
   // Set once React has hydrated; end-to-end tests wait for it before interacting.
-  useEffect(() => document.documentElement.setAttribute('data-hydrated', ''), [])
+  useEffect(() => {
+    document.documentElement.setAttribute('data-hydrated', '')
+  }, [])
   return (
     <html lang={HTML_LANG[locale]} suppressHydrationWarning>
       <head>
