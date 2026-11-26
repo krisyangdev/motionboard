@@ -1,7 +1,7 @@
 // Browser-side API helper and the shared queries of the account pages.
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { localizePath } from '@/core/i18n'
+import { localizePath, type Locale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
 
 export class ApiError extends Error {
@@ -32,7 +32,7 @@ export async function api<T>(path: string, init: ApiInit = {}): Promise<T> {
 
 export type Config = { google: boolean; turnstileSiteKey: string | null; mockPayments: boolean }
 export type Me = {
-  user: { id: string; email: string; name: string; emailVerified: boolean; locale: 'en' | 'zh' }
+  user: { id: string; email: string; name: string; emailVerified: boolean; locale: Locale }
   balance: { available: number; frozen: number }
 }
 export type Job = {

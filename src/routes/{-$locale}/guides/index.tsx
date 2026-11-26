@@ -1,33 +1,38 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound } from '@tanstack/react-router'
+import { hubLocales } from '@/core/content/exists'
 import { docList } from '@/core/content/docs'
 import { paramLocale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { breadcrumbLd, seoHead } from '@/core/seo'
-import { HubPage, labels } from '@/core/pages/HubPage'
-
-const copy = {
-  en: { title: 'Guides', description: 'Step-by-step guides and practical notes, written for people who want the task done.', lede: 'Step-by-step guides and practical notes.' },
-  zh: { title: '指南', description: '一步一步的操作指南和实用笔记，写给想把事情做完的人。', lede: '一步一步的操作指南和实用笔记。' },
-}
+import { HubPage } from '@/core/pages/HubPage'
 
 export const Route = createFileRoute('/{-$locale}/guides/')({
-  loader: ({ params }) => docList('guides', paramLocale(params.locale)).map((d) => ({ title: d.title, description: d.description, href: `/guides/${d.slug}/` })),
-  head: ({ params }) => {
+  loader: ({ params }) => {
+    const entries = docList('guides', paramLocale(params.locale)).map((d) => ({ title: d.title, description: d.description, href: `/guides/${d.slug}/` }))
+    // The hub exists only in languages that have at least one guide.
+    if (!entries.length) throw notFound()
+    return { entries, locales: hubLocales('guides') }
+  },
+  head: ({ params, loaderData }) => {
+    if (!loaderData) return {}
     const locale = paramLocale(params.locale)
+    const m = coreMessages[locale]
     return seoHead({
-      title: copy[locale].title,
-      description: copy[locale].description,
+      title: m.hubs.guides.title,
+      description: m.hubs.guides.description,
       path: '/guides/',
       locale,
+      locales: loaderData.locales,
       type: 'website',
-      jsonLd: [breadcrumbLd(locale, [[labels[locale].guides, '/guides/']])],
+      jsonLd: [breadcrumbLd(locale, [[m.page.guides, '/guides/']])],
     })
   },
   component: Guides,
 })
 
 function Guides() {
-  const entries = Route.useLoaderData()
-  const locale = useLocale()
-  return <HubPage crumb={labels[locale].guides} entries={entries} lede={copy[locale].lede} title={copy[locale].title} />
+  const { entries } = Route.useLoaderData()
+  const m = coreMessages[useLocale()]
+  return <HubPage crumb={m.page.guides} entries={entries} lede={m.hubs.guides.lede} title={m.hubs.guides.title} />
 }

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '@/core/app/AppShell'
 import { AuthCard, authErrorMessage, linkClass, Notice, TextField } from '@/core/app/AuthForm'
-import { messages } from '@/core/app/messages'
 import { authClient } from '@/core/auth/client'
 import { paramLocale } from '@/core/i18n'
-import { useLocale, useMessages } from '@/core/locale'
+import { useCoreMessages, useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { PathLink } from '@/core/pages/HubPage'
 import { seoHead } from '@/core/seo'
 import { Button, buttonVariants } from '@/core/ui/button'
@@ -19,7 +19,7 @@ export const Route = createFileRoute('/{-$locale}/reset-password')({
   }),
   head: ({ params }) => {
     const locale = paramLocale(params.locale)
-    return seoHead({ ...messages[locale].seo.reset, path: '/reset-password/', locale, type: 'website', noindex: true })
+    return seoHead({ ...coreMessages[locale].app.seo.reset, path: '/reset-password/', locale, type: 'website', noindex: true })
   },
   component: () => (
     <AppShell>
@@ -29,7 +29,7 @@ export const Route = createFileRoute('/{-$locale}/reset-password')({
 })
 
 function ResetPassword() {
-  const m = useMessages(messages)
+  const m = useCoreMessages().app
   const locale = useLocale()
   const { token, error: linkError } = Route.useSearch()
   const [password, setPassword] = useState('')

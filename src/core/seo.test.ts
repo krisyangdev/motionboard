@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { SITE, SITE_URL } from '../../site.config.ts'
-import { DEFAULT_LOCALE, LOCALES, PREFIXED_LOCALES, pageUrl } from './i18n'
+import { DEFAULT_LOCALE, HTML_LANG, LOCALES, PREFIXED_LOCALES, pageUrl } from './i18n'
+import { mockSite } from './test-site'
 import { absolute, articleLd, breadcrumbLd, faqLd, organizationLd, seoHead, softwareAppLd, videoLd, websiteLd } from './seo'
 
 const other = PREFIXED_LOCALES[0]
@@ -29,6 +30,13 @@ describe('seoHead', () => {
     expect(alts).toHaveLength(LOCALES.length + 1)
     expect(alts.find((l) => 'hrefLang' in l && l.hrefLang === 'x-default')?.href).toBe(pageUrl(DEFAULT_LOCALE, base.path))
   })
+  it('writes hreflang only for the languages the page exists in', () => {
+    const only = seoHead({ ...base, locales: [DEFAULT_LOCALE] }).links.filter((l) => l.rel === 'alternate')
+    expect(only.map((l) => ('hrefLang' in l ? l.hrefLang : ''))).toEqual([HTML_LANG[DEFAULT_LOCALE], 'x-default'])
+    const inOther = seoHead({ ...base, locale: other, locales: [other] })
+    expect(inOther.links.find((l) => 'hrefLang' in l && l.hrefLang === 'x-default')?.href).toBe(pageUrl(other, base.path))
+    expect(inOther.links.find((l) => l.rel === 'canonical')?.href).toBe(pageUrl(other, base.path))
+  })
   it('uses the default og image, made absolute', () => {
     expect(metaOf(seoHead(base), 'property', 'og:image')).toBe(absolute(SITE.ogImage))
     expect(metaOf(seoHead({ ...base, image: 'https://cdn.example.com/a.png' }), 'property', 'og:image')).toBe('https://cdn.example.com/a.png')
@@ -49,6 +57,17 @@ describe('seoHead', () => {
   })
   it('emits no script without JSON-LD', () => {
     expect(seoHead(base).scripts).toEqual([])
+  })
+})
+
+describe('seoHead in a third language', () => {
+  it('uses the og locale and hreflang of the registry and only the listed languages', async () => {
+    await mockSite(['en', 'zh', 'es'])
+    const seo = await import('./seo')
+    const head = seo.seoHead({ ...base, locale: 'es' as never, locales: ['en', 'es'] as never })
+    expect(metaOf(head, 'property', 'og:locale')).toBe('es_ES')
+    expect(head.links.filter((l) => l.rel === 'alternate').map((l) => ('hrefLang' in l ? l.hrefLang : ''))).toEqual(['en', 'es', 'x-default'])
+    expect(head.links.find((l) => l.rel === 'canonical')?.href).toBe(`${SITE_URL}/es/tools/merge/`)
   })
 })
 

@@ -4,8 +4,9 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
-import { HTML_LANG, LOCALES, PREFIXED_LOCALES } from '../src/core/i18n.ts'
-import { isPrivatePath } from '../src/core/pages.ts'
+import { DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, stripLocale } from '../src/core/i18n.ts'
+import { isPrivatePath, pageLocales, sitePages } from '../src/core/pages.ts'
+import { sitemapExclude } from '../src/site/pages.ts'
 
 const root = new URL('..', import.meta.url).pathname
 // Optional first argument: another assets directory (used to try the checks on a hand-made site).
@@ -59,12 +60,25 @@ check('sitemap not empty', [locs.length], (n) => (n > 0 ? '' : 'no <loc> found')
 check('sitemap locs on site origin', locs, (l) => (l.startsWith(`${SITE_URL}/`) ? '' : `${l} is not under ${SITE_URL}`))
 check('sitemap locs prerendered', locs, (l) => (pageExists(stripOrigin(l)) ? '' : `no page for ${l}`))
 
-// 2. hreflang alternates in the sitemap: one per language plus x-default, all themselves in the sitemap
-const wantLangs = [...LOCALES.map((l) => HTML_LANG[l]), 'x-default'].sort().join(',')
+// A page exists only in the languages it has content for (no fallback), so its hreflang set is those languages plus x-default.
+const pages = sitePages()
+const pageOfPath = (path) => pages.find((p) => p.path === stripLocale(path))
+const wantLangsOf = (page) => [...pageLocales(page).map((l) => HTML_LANG[l]), 'x-default'].sort().join(',')
+
+// 2a. every page is listed in every language it exists in, and nothing else is listed
+const excludedPaths = new Set(sitemapExclude.flatMap((p) => LOCALES.map((l) => localizePath(l, p))))
+const expectedLocs = pages.flatMap((p) => pageLocales(p).map((l) => `${SITE_URL}${localizePath(l, p.path)}`)).filter((u) => !excludedPaths.has(stripOrigin(u)))
+check('sitemap lists every page in its languages', [...new Set([...expectedLocs, ...locs])], (l) =>
+  locSet.has(l) && expectedLocs.includes(l) ? '' : locSet.has(l) ? `${l} is listed but is not a page in that language` : `${l} is a page but is not in the sitemap`)
+
+// 2b. hreflang alternates in the sitemap: one per language the page exists in plus x-default, all themselves in the sitemap
 check('sitemap alternates', urlBlocks, (b) => {
   const links = tags('xhtml:link', b)
   const loc = locOf(b)
-  if (links.length !== LOCALES.length + 1) return `${loc}: ${links.length} alternates, want ${LOCALES.length + 1}`
+  const page = pageOfPath(stripOrigin(loc))
+  if (!page) return `${loc}: not a page of the site (sitePages())`
+  const wantLangs = wantLangsOf(page)
+  if (links.length !== pageLocales(page).length + 1) return `${loc}: ${links.length} alternates, want ${pageLocales(page).length + 1}`
   const langs = links.map((h) => attr(h, 'hreflang')).sort().join(',')
   if (langs !== wantLangs) return `${loc}: hreflang set ${langs}, want ${wantLangs}`
   const hrefs = links.map((h) => attr(h, 'href'))
@@ -95,9 +109,13 @@ check('page head', sitemapPages, ({ path, html }) => {
   const lang = html.match(/<html[^>]*\blang="([^"]*)"/)?.[1]
   const want = HTML_LANG[localeOfPath(path)]
   if (lang !== want) errs.push(`lang ${lang}, want ${want}`)
+  const dir = html.match(/<html[^>]*\bdir="([^"]*)"/)?.[1]
+  if (dir !== DIR[localeOfPath(path)]) errs.push(`dir ${dir}, want ${DIR[localeOfPath(path)]}`)
+  const page = pageOfPath(path)
   const alts = tags('link', html).filter((t) => attr(t, 'rel') === 'alternate' && attr(t, 'hreflang'))
-  if (alts.length !== LOCALES.length + 1) errs.push(`${alts.length} hreflang links, want ${LOCALES.length + 1}`)
-  else if (alts.map((t) => attr(t, 'hreflang')).sort().join(',') !== wantLangs) errs.push('hreflang set differs from the configured languages')
+  if (!page) errs.push('not a page of the site (sitePages())')
+  else if (alts.length !== pageLocales(page).length + 1) errs.push(`${alts.length} hreflang links, want ${pageLocales(page).length + 1}`)
+  else if (alts.map((t) => attr(t, 'hreflang')).sort().join(',') !== wantLangsOf(page)) errs.push('hreflang set differs from the languages the page exists in')
   for (const m of all(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g, html)) {
     try {
       JSON.parse(decode(m[1]))

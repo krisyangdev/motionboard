@@ -1,5 +1,5 @@
 import { localizePath } from '@/core/i18n'
-import { useCoreMessages, useShellLocale } from '@/core/messages'
+import { useCoreMessages, useShellLocale } from '@/core/locale'
 import { buttonVariants } from '@/core/ui/button'
 
 export function NotFound() {

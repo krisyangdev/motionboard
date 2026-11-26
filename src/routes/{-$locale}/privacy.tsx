@@ -1,19 +1,20 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { docPath, loadDoc } from '@/core/content/docs'
+import { docLocales, docPath, loadDoc } from '@/core/content/docs'
 import { paramLocale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
 import { DocPage, docHead } from '@/core/pages/DocPage'
 
 export const Route = createFileRoute('/{-$locale}/privacy')({
   loader: async ({ params }) => {
+    // The page exists only in languages that have its file: 404 otherwise, never another language's text.
     const doc = await loadDoc('legal', paramLocale(params.locale), 'privacy')
     if (!doc) throw notFound()
-    return doc.frontmatter
+    return { fm: doc.frontmatter, locales: docLocales('legal', 'privacy') }
   },
-  head: ({ loaderData, params }) => (loaderData ? docHead(loaderData, paramLocale(params.locale), docPath('legal', 'privacy'), 'legal') : {}),
-  component: Privacy,
+  head: ({ loaderData, params }) => (loaderData ? docHead(loaderData.fm, paramLocale(params.locale), loaderData.locales, docPath('legal', 'privacy'), 'legal') : {}),
+  component: Uprivacy,
 })
 
-function Privacy() {
-  return <DocPage collection="legal" fm={Route.useLoaderData()} locale={useLocale()} slug="privacy" />
+function Uprivacy() {
+  return <DocPage collection="legal" fm={Route.useLoaderData().fm} locale={useLocale()} slug="privacy" />
 }

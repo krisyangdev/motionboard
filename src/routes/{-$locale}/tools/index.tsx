@@ -1,38 +1,42 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound } from '@tanstack/react-router'
+import { hubLocales } from '@/core/content/exists'
 import { loadTool, toolNames } from '@/core/content/tools'
 import { paramLocale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { seoHead, breadcrumbLd } from '@/core/seo'
-import { HubPage, labels } from '@/core/pages/HubPage'
-
-const copy = {
-  en: { title: 'Free online tools', description: 'Free browser tools that run on your device: no sign-up, nothing to install, nothing uploaded.', lede: 'Free browser tools that run on your device. No sign-up, nothing to install.' },
-  zh: { title: '免费在线工具', description: '在浏览器里直接使用的免费工具：无需注册，无需安装，内容不会上传。', lede: '在浏览器里直接使用的免费工具，无需注册，无需安装。' },
-}
+import { HubPage } from '@/core/pages/HubPage'
 
 export const Route = createFileRoute('/{-$locale}/tools/')({
   loader: async ({ params }) => {
     const locale = paramLocale(params.locale)
-    const pages = await Promise.all(toolNames().map((t) => loadTool(t.slug)))
+    const names = toolNames(locale)
+    // The hub exists only in languages that have at least one tool.
+    if (!names.length) throw notFound()
+    const pages = await Promise.all(names.map((t) => loadTool(t.slug, locale)))
     // Only the fields the list shows go into the page payload.
-    return pages.flatMap((p) => (p ? [{ title: p.name[locale], description: p[locale].description, href: `/tools/${p.slug}/` }] : []))
+    const entries = pages.flatMap((p) => (p ? [{ title: p.name, description: p.text.description, href: `/tools/${p.slug}/` }] : []))
+    return { entries, locales: hubLocales('tools') }
   },
-  head: ({ params }) => {
+  head: ({ params, loaderData }) => {
+    if (!loaderData) return {}
     const locale = paramLocale(params.locale)
+    const m = coreMessages[locale]
     return seoHead({
-      title: copy[locale].title,
-      description: copy[locale].description,
+      title: m.hubs.tools.title,
+      description: m.hubs.tools.description,
       path: '/tools/',
       locale,
+      locales: loaderData.locales,
       type: 'website',
-      jsonLd: [breadcrumbLd(locale, [[labels[locale].tools, '/tools/']])],
+      jsonLd: [breadcrumbLd(locale, [[m.page.tools, '/tools/']])],
     })
   },
   component: Tools,
 })
 
 function Tools() {
-  const entries = Route.useLoaderData()
-  const locale = useLocale()
-  return <HubPage crumb={labels[locale].tools} entries={entries} lede={copy[locale].lede} title={copy[locale].title} />
+  const { entries } = Route.useLoaderData()
+  const m = coreMessages[useLocale()]
+  return <HubPage crumb={m.page.tools} entries={entries} lede={m.hubs.tools.lede} title={m.hubs.tools.title} />
 }

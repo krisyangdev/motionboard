@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '@/core/app/AppShell'
 import { AuthCard, authErrorMessage, linkClass, Notice, safeNext, TextField } from '@/core/app/AuthForm'
 import { useConfig } from '@/core/app/api'
-import { messages } from '@/core/app/messages'
 import { authClient } from '@/core/auth/client'
 import { localizePath, paramLocale } from '@/core/i18n'
-import { useLocale, useMessages } from '@/core/locale'
+import { useCoreMessages, useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { PathLink } from '@/core/pages/HubPage'
 import { seoHead } from '@/core/seo'
 import { Button } from '@/core/ui/button'
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/{-$locale}/login')({
   validateSearch: (s: Record<string, unknown>) => ({ next: typeof s.next === 'string' ? s.next : undefined }),
   head: ({ params }) => {
     const locale = paramLocale(params.locale)
-    return seoHead({ ...messages[locale].seo.login, path: '/login/', locale, type: 'website', noindex: true })
+    return seoHead({ ...coreMessages[locale].app.seo.login, path: '/login/', locale, type: 'website', noindex: true })
   },
   component: () => (
     <AppShell>
@@ -26,7 +26,7 @@ export const Route = createFileRoute('/{-$locale}/login')({
 })
 
 function Login() {
-  const m = useMessages(messages)
+  const m = useCoreMessages().app
   const locale = useLocale()
   const { next } = Route.useSearch()
   const config = useConfig()

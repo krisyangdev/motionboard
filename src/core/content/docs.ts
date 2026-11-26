@@ -1,7 +1,7 @@
 // MDX pages: content/guides/<lang>/<slug>.mdx and content/legal/<lang>/<slug>.mdx.
 import type { ComponentType } from 'react'
 import index from 'virtual:content-index'
-import type { Locale } from '../i18n'
+import { LOCALES, type Locale } from '../i18n'
 
 export type Collection = 'guides' | 'legal'
 export type DocFrontmatter = { title: string; description: string; date: string; updated?: string }
@@ -46,3 +46,7 @@ export const loadedDoc = (collection: Collection, locale: Locale, slug: string) 
 export function docList(collection: Collection, locale: Locale): (DocFrontmatter & { slug: string })[] {
   return index.docs[collection][locale]
 }
+
+/** Languages a doc exists in (the languages that have its file). */
+export const docLocales = (collection: Collection, slug: string): Locale[] =>
+  LOCALES.filter((l) => index.docs[collection][l].some((d) => d.slug === slug))

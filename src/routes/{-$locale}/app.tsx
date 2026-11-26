@@ -4,10 +4,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AppShell } from '@/core/app/AppShell'
 import { Notice } from '@/core/app/AuthForm'
 import { ApiError, api, useConfig, useRequireMe, type Job } from '@/core/app/api'
-import { messages } from '@/core/app/messages'
 import { Turnstile } from '@/core/app/Turnstile'
 import { paramLocale } from '@/core/i18n'
-import { useLocale, useMessages } from '@/core/locale'
+import { useCoreMessages, useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { PathLink } from '@/core/pages/HubPage'
 import { seoHead } from '@/core/seo'
 import { Badge } from '@/core/ui/badge'
@@ -22,7 +22,7 @@ const KIND = 'demo-image'
 export const Route = createFileRoute('/{-$locale}/app')({
   head: ({ params }) => {
     const locale = paramLocale(params.locale)
-    return seoHead({ ...messages[locale].seo.app, path: '/app/', locale, type: 'website', noindex: true })
+    return seoHead({ ...coreMessages[locale].app.seo.app, path: '/app/', locale, type: 'website', noindex: true })
   },
   component: () => (
     <AppShell>
@@ -34,7 +34,7 @@ export const Route = createFileRoute('/{-$locale}/app')({
 const done = (s: Job['status'] | undefined) => s === 'succeeded' || s === 'failed'
 
 function App() {
-  const m = useMessages(messages)
+  const m = useCoreMessages().app
   const locale = useLocale()
   const qc = useQueryClient()
   const me = useRequireMe()

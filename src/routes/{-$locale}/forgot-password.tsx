@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '@/core/app/AppShell'
 import { AuthCard, authErrorMessage, linkClass, Notice, TextField } from '@/core/app/AuthForm'
-import { messages } from '@/core/app/messages'
 import { authClient } from '@/core/auth/client'
 import { localizePath, paramLocale } from '@/core/i18n'
-import { useLocale, useMessages } from '@/core/locale'
+import { useCoreMessages, useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { PathLink } from '@/core/pages/HubPage'
 import { seoHead } from '@/core/seo'
 import { Button } from '@/core/ui/button'
@@ -14,7 +14,7 @@ import { Form } from '@/core/ui/form'
 export const Route = createFileRoute('/{-$locale}/forgot-password')({
   head: ({ params }) => {
     const locale = paramLocale(params.locale)
-    return seoHead({ ...messages[locale].seo.forgot, path: '/forgot-password/', locale, type: 'website', noindex: true })
+    return seoHead({ ...coreMessages[locale].app.seo.forgot, path: '/forgot-password/', locale, type: 'website', noindex: true })
   },
   component: () => (
     <AppShell>
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/{-$locale}/forgot-password')({
 })
 
 function ForgotPassword() {
-  const m = useMessages(messages)
+  const m = useCoreMessages().app
   const locale = useLocale()
   const [email, setEmail] = useState('')
   const [busy, setBusy] = useState(false)

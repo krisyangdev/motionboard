@@ -4,10 +4,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AppShell } from '@/core/app/AppShell'
 import { Notice } from '@/core/app/AuthForm'
 import { api, useRequireMe } from '@/core/app/api'
-import { messages } from '@/core/app/messages'
 import { authClient } from '@/core/auth/client'
-import { localizePath, paramLocale, type Locale } from '@/core/i18n'
-import { useLocale, useMessages } from '@/core/locale'
+import { formatDate, formatNumber, localizePath, paramLocale, type Locale } from '@/core/i18n'
+import { useCoreMessages, useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 import { PathLink } from '@/core/pages/HubPage'
 import { seoHead } from '@/core/seo'
 import { plans } from '@/site/plans'
@@ -21,7 +21,7 @@ export const Route = createFileRoute('/{-$locale}/account')({
   validateSearch: (s: Record<string, unknown>) => ({ checkout: s.checkout === 'success' || s.checkout === 'failed' ? s.checkout : undefined }),
   head: ({ params }) => {
     const locale = paramLocale(params.locale)
-    return seoHead({ ...messages[locale].seo.account, path: '/account/', locale, type: 'website', noindex: true })
+    return seoHead({ ...coreMessages[locale].app.seo.account, path: '/account/', locale, type: 'website', noindex: true })
   },
   component: () => (
     <AppShell>
@@ -33,15 +33,14 @@ export const Route = createFileRoute('/{-$locale}/account')({
 type Order = { id: string; planCode: string; credits: number; amountMinor: number; currency: string; status: string; createdAt: string }
 type Tx = { id: string; availableDelta: number; frozenDelta: number; type: string; sourceType: string; sourceId: string; availableAfter: number; createdAt: string }
 
-const intl = (l: Locale) => (l === 'zh' ? 'zh-CN' : 'en-US')
-const money = (l: Locale, minor: number, currency: string) => new Intl.NumberFormat(intl(l), { style: 'currency', currency }).format(minor / 100)
-const when = (l: Locale, iso: string) => new Date(iso).toLocaleString(intl(l), { dateStyle: 'medium', timeStyle: 'short' })
-const signed = (n: number) => (n > 0 ? `+${n}` : String(n))
+const money = (l: Locale, minor: number, currency: string) => formatNumber(l, minor / 100, { style: 'currency', currency })
+const when = (l: Locale, iso: string) => formatDate(l, iso, { dateStyle: 'medium', timeStyle: 'short' })
+const signed = (l: Locale, n: number) => formatNumber(l, n, { signDisplay: 'exceptZero' })
 
 const sectionTitle = 'mb-3 font-semibold text-lg tracking-tight'
 
 function Account() {
-  const m = useMessages(messages)
+  const m = useCoreMessages().app
   const locale = useLocale()
   const { checkout } = Route.useSearch()
   const qc = useQueryClient()
@@ -115,11 +114,11 @@ function Account() {
           <div className="flex gap-8">
             <div>
               <p className="text-muted-foreground text-sm">{m.account.available}</p>
-              <p className="font-semibold text-4xl tabular-nums tracking-tight">{balance.available}</p>
+              <p className="font-semibold text-4xl tabular-nums tracking-tight">{formatNumber(locale, balance.available)}</p>
             </div>
             <div>
               <p className="text-muted-foreground text-sm">{m.account.held}</p>
-              <p className="font-semibold text-4xl text-muted-foreground tabular-nums tracking-tight">{balance.frozen}</p>
+              <p className="font-semibold text-4xl text-muted-foreground tabular-nums tracking-tight">{formatNumber(locale, balance.frozen)}</p>
             </div>
           </div>
           <PathLink className={buttonVariants()} locale={locale} path="/app/">
@@ -177,7 +176,7 @@ function Account() {
                     <TableRow key={o.id}>
                       <TableCell className="whitespace-nowrap">{when(locale, o.createdAt)}</TableCell>
                       <TableCell className="whitespace-nowrap">
-                        {plans.find((p) => p.code === o.planCode)?.name[locale] ?? o.planCode} · {o.credits}
+                        {plans.find((p) => p.code === o.planCode)?.name[locale] ?? o.planCode} · {formatNumber(locale, o.credits)}
                       </TableCell>
                       <TableCell className="whitespace-nowrap tabular-nums">{money(locale, o.amountMinor, o.currency)}</TableCell>
                       <TableCell>
@@ -215,8 +214,8 @@ function Account() {
                     <TableRow key={t.id}>
                       <TableCell className="whitespace-nowrap">{when(locale, t.createdAt)}</TableCell>
                       <TableCell className="whitespace-nowrap">{m.account.txTypes[t.sourceType] ?? m.account.txTypes[t.type] ?? t.type}</TableCell>
-                      <TableCell className="text-right tabular-nums">{signed(t.availableDelta)}</TableCell>
-                      <TableCell className="text-right tabular-nums">{t.availableAfter}</TableCell>
+                      <TableCell className="text-right tabular-nums">{signed(locale, t.availableDelta)}</TableCell>
+                      <TableCell className="text-right tabular-nums">{formatNumber(locale, t.availableAfter)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

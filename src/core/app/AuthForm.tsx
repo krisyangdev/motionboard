@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { Alert, AlertDescription } from '@/core/ui/alert'
 import { Field, FieldLabel } from '@/core/ui/field'
 import { Input, type InputProps } from '@/core/ui/input'
-import type { messages } from './messages'
+import type { CoreMessages } from '@/core/messages'
 
 export const linkClass = 'text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground'
 
@@ -37,7 +37,7 @@ export function Notice({ variant, children }: { variant: 'error' | 'success' | '
 type AuthError = { code?: string; status?: number } | null | undefined
 
 /** Text for an error returned by the Better Auth client. */
-export function authErrorMessage(m: (typeof messages)['en'], error: AuthError): string {
+export function authErrorMessage(m: CoreMessages['app'], error: AuthError): string {
   if (!error) return m.common.error
   if (error.status === 429) return m.authErrors.rateLimited
   const code = error.code ?? ''

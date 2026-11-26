@@ -1,7 +1,7 @@
 // The one SEO head function: page data in, meta / canonical / hreflang / Open Graph / JSON-LD out.
 // Every route's head() goes through seoHead(); the sitemap (src/core/pages.ts) uses the same paths.
 import { SITE, SITE_URL } from '../../site.config.ts'
-import { alternateUrls, HTML_LANG, OG_LOCALE, pageUrl, type Locale } from './i18n'
+import { alternateUrls, HTML_LANG, LOCALES, OG_LOCALE, pageUrl, type Locale } from './i18n'
 
 export type SeoPage = {
   /** <title>; the site name is appended unless the title already contains it. */
@@ -10,6 +10,8 @@ export type SeoPage = {
   /** Default-language path, leading and trailing slash. */
   path: string
   locale: Locale
+  /** Languages the page exists in (default: every language); hreflang links are written for these only. */
+  locales?: readonly Locale[]
   type?: 'website' | 'article'
   /** Open Graph image: absolute URL or a path on this site. Defaults to SITE.ogImage. */
   image?: string
@@ -50,7 +52,7 @@ export function seoHead(p: SeoPage) {
       ? []
       : [
           { rel: 'canonical', href: url },
-          ...alternateUrls(p.path).map((a) => ({ rel: 'alternate', hrefLang: a.lang, href: a.href })),
+          ...alternateUrls(p.path, p.locales ?? LOCALES).map((a) => ({ rel: 'alternate', hrefLang: a.lang, href: a.href })),
         ],
     scripts: p.jsonLd?.length
       ? [{ type: 'application/ld+json', children: JSON.stringify({ '@context': 'https://schema.org', '@graph': p.jsonLd }) }]

@@ -21,7 +21,7 @@ export const user = sqliteTable('user', {
   role: text('role').notNull().default('user'),
   /** Set by @dodopayments/better-auth when the Dodo customer is created. */
   dodoCustomerId: text('dodo_customer_id'),
-  /** Page language at signup ('en' | 'zh'), for emails. */
+  /** Page language at signup (one of SITE.languages), for emails. */
   locale: text('locale'),
   createdAt: authTime('created_at').notNull(),
   updatedAt: authTime('updated_at').notNull(),

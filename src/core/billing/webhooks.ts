@@ -9,7 +9,7 @@ import { grant } from '../credits/ledger'
 import { db, schema } from '../db'
 import { sendEmail } from '../email/send'
 import { receipt } from '../email/templates'
-import { isLocale, type Locale } from '../i18n'
+import { DEFAULT_LOCALE, formatNumber, isLocale, type Locale } from '../i18n'
 import { createId, nowIso } from '../server/ids'
 import { trackServer } from '../server/track'
 
@@ -148,7 +148,7 @@ async function fulfill(order: Order, data: Data) {
   if (paid.length === 0) return // already paid (redelivery) or refunded
 
   const meta = JSON.parse(order.metadataJson ?? '{}') as { lang?: string }
-  const lang: Locale = isLocale(meta.lang) ? meta.lang : 'en'
+  const lang: Locale = isLocale(meta.lang) ? meta.lang : DEFAULT_LOCALE
   trackServer('payment_success', order.userId, {
     plan: order.planCode,
     amount: order.amountMinor / 100,
@@ -165,8 +165,8 @@ async function sendReceipt(order: Order, planName: string) {
   try {
     const user = await db().query.user.findFirst({ where: eq(schema.user.id, order.userId) })
     if (!user) return
-    const locale: Locale = isLocale(user.locale) ? user.locale : 'en'
-    const amount = new Intl.NumberFormat(locale, { style: 'currency', currency: order.currency }).format(order.amountMinor / 100)
+    const locale: Locale = isLocale(user.locale) ? user.locale : DEFAULT_LOCALE
+    const amount = formatNumber(locale, order.amountMinor / 100, { style: 'currency', currency: order.currency })
     await sendEmail({ to: user.email, ...receipt(locale, { plan: planName, credits: order.credits, amount }) })
   } catch (error) {
     console.warn('[email] receipt failed', error instanceof Error ? error.message : String(error))

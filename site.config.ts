@@ -9,10 +9,11 @@ export const SITE = {
   domain: 'template.krisyang.dev',
   /** Cloudflare Worker name. */
   worker: 'site-template',
-  /** First entry is the default language, served at the root; the others live under /<lang>/. */
+  /** Language codes from src/core/locale-data.ts. The default language is served at the root; the others live under /<code>/. */
   languages: ['en', 'zh'],
+  /** One of `languages`. */
   defaultLang: 'en',
-  /** Home page <title> and meta description, per language. */
+  /** Home page <title> and meta description: one entry for every language in `languages`. */
   title: { en: 'Site Template: React, TanStack and coss ui on Cloudflare', zh: '站点模板：React、TanStack 和 coss ui，跑在 Cloudflare 上' },
   description: {
     en: 'The starter every site is built from: prerendered pages, English and Chinese, SEO checks, analytics and fast first paint on Cloudflare Workers.',
