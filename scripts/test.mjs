@@ -166,8 +166,9 @@ check('internal links', [...links], ([href, from]) => {
 
 // 6b. values repeated in cloudflare.config.ts (it cannot import site.config.ts, see the comment there)
 const cfConfig = readFileSync(join(root, 'cloudflare.config.ts'), 'utf8')
-check('cloudflare.config.ts matches site.config.ts', [`name: '${SITE.worker}'`, `domains: ['${SITE.domain}']`], (s) =>
-  cfConfig.includes(s) ? '' : `cloudflare.config.ts lacks ${s}`)
+const esc = (v) => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+check('cloudflare.config.ts matches site.config.ts', [[`name: ${SITE.worker}`, `name:\\s*['"]${esc(SITE.worker)}['"]`], [`domains: [${SITE.domain}]`, `domains:\\s*\\[\\s*['"]${esc(SITE.domain)}['"]`]], ([label, re]) =>
+  new RegExp(re).test(cfConfig) ? '' : `cloudflare.config.ts lacks ${label}`)
 
 // 7. robots.txt
 const robots = has('robots.txt') ? read('robots.txt') : ''
