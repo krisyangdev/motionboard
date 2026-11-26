@@ -1,7 +1,9 @@
-// Scheduled cleanup (every 10 minutes): settle stale credit holds and delete expired rows.
+// Scheduled cleanup (every 10 minutes): settle stale credit holds and delete expired rows and old mock emails.
+// Workers Free: every query here uses an index (schema.ts) and writes only rows that change.
 import { and, eq, lt } from 'drizzle-orm'
 import { commit, refund } from '../credits/ledger'
 import { db } from '../db'
+import { pruneMockEmails } from '../email/send'
 import { adminSessions, creditReservations, jobs, rateLimits } from '../db/schema'
 import { nowIso } from '../server/ids'
 import { captureServerException } from '../server/track'
@@ -45,8 +47,9 @@ export async function handleCron(): Promise<void> {
 
   const limits = await db().delete(rateLimits).where(lt(rateLimits.resetAt, Date.now())).run()
   const sessions = await db().delete(adminSessions).where(lt(adminSessions.expiresAt, nowIso())).run()
+  const mockEmails = await pruneMockEmails()
 
   console.log(
-    `cron: refunded ${refunded}, committed ${committed}, timed out ${timedOut}, rate limits deleted ${limits.meta.changes}, admin sessions deleted ${sessions.meta.changes}`,
+    `cron: refunded ${refunded}, committed ${committed}, timed out ${timedOut}, rate limits deleted ${limits.meta.changes}, admin sessions deleted ${sessions.meta.changes}, mock emails deleted ${mockEmails}`,
   )
 }
