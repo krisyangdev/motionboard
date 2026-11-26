@@ -13,7 +13,12 @@
     "lighthouse": "node scripts/lighthouse.mjs",
     "generate": "node scripts/generate.mjs",
     "deploy": "npm run build && cf deploy && node scripts/indexnow.mjs",
-    "indexnow": "node scripts/indexnow.mjs"
+    "indexnow": "node scripts/indexnow.mjs",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "cf d1 migrations apply 28ab46c0-0d3e-4fbb-8b5e-8c79a83d7ce8 --local",
+    "db:migrate:remote": "cf d1 migrations apply 28ab46c0-0d3e-4fbb-8b5e-8c79a83d7ce8",
+    "e2e": "playwright test",
+    "cf-typegen": "cf workers types"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

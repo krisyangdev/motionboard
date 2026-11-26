@@ -30,15 +30,17 @@ export const SITE = {
   indexNowKey: '',
   /** Write public/llms.txt from the page list (worth it only for sites coding agents read). */
   llmsTxt: true,
+  /** Layer 1: sign-up, credits, payments, the app and /admin. Off = content-only site. */
+  accounts: { enabled: true, signupCredits: 20 },
   social: { twitterCard: 'summary_large_image', twitter: '' },
   /** Extra origins allowed by the Content-Security-Policy, per directive. */
   csp: {
-    script: [] as string[],
+    script: ['https://challenges.cloudflare.com'] as string[],
     connect: [] as string[],
     img: ['https:'] as string[],
     media: [] as string[],
-    frame: [] as string[],
-    form: [] as string[],
+    frame: ['https://challenges.cloudflare.com'] as string[],
+    form: ['https://checkout.dodopayments.com', 'https://test.checkout.dodopayments.com'] as string[],
   },
 } as const
 

@@ -1,0 +1,17 @@
+# Copy to .dev.vars for `npm run dev`. Never commit .dev.vars.
+BETTER_AUTH_URL=http://127.0.0.1:3000
+BETTER_AUTH_SECRET=dev-secret-change-me-32-characters-long
+ADMIN_BOOTSTRAP_TOKEN=dev-bootstrap-token
+MOCK_PAYMENTS=true
+MOCK_EMAIL=true
+MOCK_GENERATION=true
+# Real services (leave empty to use the mocks above)
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+DODO_PAYMENTS_API_KEY=
+DODO_PAYMENTS_WEBHOOK_SECRET=
+DODO_PAYMENTS_ENVIRONMENT=test_mode
+RESEND_API_KEY=
+EMAIL_FROM=
+TURNSTILE_SECRET_KEY=
+POSTHOG_KEY=
