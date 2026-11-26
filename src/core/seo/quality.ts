@@ -34,7 +34,7 @@ export const wordCount = (text: string): number => (text.match(CJK_CHAR)?.length
 
 /** The limit of a pair for a text's script. */
 const pick = (pair: readonly [number, number], text: string) => pair[isCjk(text) ? 1 : 0]
-const words = (what: string, have: number, want: number) => `${what}: ${have} words, at least ${want}`
+const words = (what: string, have: number, want: number) => `${what}: ${have} words, at least ${want} (each CJK character counts as a word)`
 
 /** Visible text of an MDX body: code, imports, tags and markdown syntax removed, link labels kept. */
 export function plainText(mdx: string): string {
