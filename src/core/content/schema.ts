@@ -26,8 +26,14 @@ export const faqSchema = z.array(z.tuple([z.string().min(1), z.string().min(1)])
 // Length rules count UTF-16 units, like scripts/test.mjs. A text with any CJK character uses the CJK limits.
 const CJK = /[぀-ヿ㐀-鿿]/
 export const isCjk = (s: string) => CJK.test(s)
-/** Title length limit without the brand. */
-export const titleMax = (title: string) => (isCjk(title) ? 32 : 60)
+/**
+ * Display width: CJK characters and full-width punctuation count 2, everything else 1. Search results cut
+ * titles by pixel width, so a mixed title like "Claude 能做视频吗？" is measured by width, not characters.
+ */
+const WIDE = /[\u1100-\u115f\u2e80-\u303f\u3040-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe30-\ufe4f\uff00-\uff60\uffe0-\uffe6]/
+export const textWidth = (s: string) => [...s].reduce((w, c) => w + (WIDE.test(c) ? 2 : 1), 0)
+/** Title width limit without the brand (see textWidth). */
+export const TITLE_MAX_WIDTH = 60
 /** Meta description length range. */
 export const descriptionRange = (description: string): [min: number, max: number] => (isCjk(description) ? [50, 90] : [120, 160])
 
@@ -35,8 +41,8 @@ type Ctx = z.core.$RefinementCtx
 const issue = (ctx: Ctx, path: (string | number)[], message: string) => ctx.addIssue({ code: 'custom', path, message })
 
 function checkText(t: { title: string; description: string; keyword?: string; h1?: string }, ctx: Ctx) {
-  const max = titleMax(t.title)
-  if (t.title.length > max) issue(ctx, ['title'], `${t.title.length} characters, at most ${max} (without the site name)`)
+  const width = textWidth(t.title)
+  if (width > TITLE_MAX_WIDTH) issue(ctx, ['title'], `width ${width}, at most ${TITLE_MAX_WIDTH} (CJK counts 2; without the site name)`)
   const [min, top] = descriptionRange(t.description)
   if (t.description.length < min || t.description.length > top) issue(ctx, ['description'], `${t.description.length} characters, want ${min} to ${top}`)
   if (t.keyword) {
