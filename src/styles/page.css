@@ -8,7 +8,7 @@
 .pg-meta { margin: 16px 0 0; }
 
 /* Text stays in a readable column; films, tables and the launch film use more of the page. */
-.pg-body { margin-top: 48px; }
+.pg-body { margin-top: 48px; overflow-wrap: break-word; }
 .pg-body > * { max-width: 720px; margin: 0; }
 .pg-body > * + * { margin-top: 18px; }
 .pg-body > .pg-med { max-width: 960px; }
