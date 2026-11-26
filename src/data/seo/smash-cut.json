@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Smash Cut",
+    "title": "Smash Cut: Example and Code Recipe",
+    "description": "A loud crowd scene hard-cuts in one frame to silent black, a line types in and a sensor rises out of the dark. Make it with Claude Code or Codex.",
+    "howto": [
+      "Draw the loud half on one canvas that is redrawn every frame from timeline time, and make it as busy as you can for 3.5s: a 14-row crowd of near-black silhouettes jumping at 1.9–3.3Hz, 8 beams sweeping ±0.78 rad from lamps at y = 470, soft bokeh in front and behind, 9 strobes, and a handheld camera that pushes from 1.08x to 1.63x with a shake that grows from 0.7 to 2.0 times. Vary every figure's width, height, head size and spacing from a seeded random generator so the rows do not tile. Then hard-cut on frame 105 (3.5s): the scene layer ends and the next layer is pure black, with no fade, and any sound stops on the same frame.",
+      "Hold silent black for 0.45s, then fade the words in one at a time: The, most, accurate at 3.95s, 4.15s and 4.35s, a 1s pause, then heart, rate, sensing. at 5.35s, 5.55s and 5.8s. Each word takes 0.45s with power2.out, rising 5px with blur 6px→0, in Inter 500 at 72px on two centred lines at y = 445 and 635. Reserve every word's space from the start so the lines never reflow. Light four 26px green LEDs between the lines at 6.2s and pulse them at 6.8s and 7.35s while the sensor plate rises to 40% opacity over 1.3s, then shrink the sensor into a 210px mark at 7.6s and unfold the wordmark from 8.05s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the crowd, the black cut, the typed line and the sensor lockup for your own product, with the accent color #34e27a changed to your brand color. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a smash cut in a product film?",
+        "A smash cut jumps from one scene to a very different one in a single frame, with no fade or dissolve. In a launch film it usually goes from a loud, busy image to silence and black, and the size of the contrast is what makes the next line land."
+      ],
+      [
+        "Where should the cut land?",
+        "Land it on a whole frame and end the loud scene on its busiest moment: here a strobe fires 2 frames before the cut at 3.5s and the heart-rate counter reads 200. Hold black for about 0.45s before the first word, so the viewer notices the silence before they read."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "Smash Cut 硬切",
+    "title": "Smash Cut 硬切：示例与代码配方",
+    "description": "嘈杂的人群画面在一帧里硬切到静默的黑场，一行字逐词打出，传感器从黑里浮出。用 Claude Code 或 Codex 按免费配方做出这个硬切。",
+    "howto": [
+      "用一块每帧按时间重画的 canvas 画前半段，3.5s 里尽量塞满运动：14 排近黑剪影的人群按 1.9–3.3Hz 起跳，8 束光从 y = 470 的灯座在 ±0.78 弧度内来回扫，前后各有柔焦光斑，9 次频闪，手持镜头从 1.08 倍推到 1.63 倍，抖动幅度从 0.7 倍加到 2.0 倍。每个人影的身宽、身高、头大小和间距都用带种子的随机数变化，排与排才不会像重复贴图。然后在第 105 帧（3.5s）硬切：场景层结束，下一层是纯黑，没有淡出，有声音的话在同一帧停掉。",
+      "黑场静默 0.45s，再逐词淡入：The、most、accurate 在 3.95s、4.15s、4.35s，停 1s，然后 heart、rate、sensing. 在 5.35s、5.55s、5.8s。每个词用 0.45s，缓动 power2.out，同时上移 5px、模糊 6px→0，字体 Inter 500 72px，两行居中，行中心 y = 445 和 635。每个词的位置从头预留，两行字不会重排。6.2s 在两行字之间亮起 4 个 26px 的绿色 LED，6.8s 和 7.35s 各脉动一次，同时传感器底板用 1.3s 浮到 40% 不透明度，7.6s 把传感器缩成 210px 的标志，8.05s 起展开字标。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会为你自己的产品做出人群、黑场硬切、逐词打字和传感器收尾，并把强调色 #34e27a 换成你的品牌色。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "产品片里的 smash cut 是什么？",
+        "Smash cut 是在一帧里从一个场景直接跳到完全不同的另一个场景，没有淡出和叠化。发布片里常见的用法是从很响很忙的画面切到静默和黑场，落差越大，后面那一行字越有分量。"
+      ],
+      [
+        "切点应该落在哪里？",
+        "切点落在整帧上，前面的场景在最忙的时刻结束：这支片子在 3.5s 的切点前 2 帧打一次频闪，心率数字读到 200。切后保持约 0.45s 的黑场再出第一个词，让观众先注意到静默，再开始读字。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

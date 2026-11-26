@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Count Up Animation",
+    "title": "Count Up Animation: Example and Code Recipe",
+    "description": "A big stat rolls up digit by digit, then the same count drives a dashboard sparkline. Make this count up animation with Claude Code or Codex.",
+    "howto": [
+      "Build each digit as a column that holds a strip 0-9-0, with a window 0.6em wide and 0.85em high and tabular numerals, so the layout never moves. Drive one value with a proxy tween: the big number counts 1 to 11 from 0.35s over 2.1s with power4.out at 480px. A column rests on a whole digit and rolls only through the last 40% of each unit it passes; a higher column turns only while every lower column rolls 9 to 0. Add a vertical blur of at most 1.2% of the font size during fast rolls only.",
+      "Repeat the move on a dashboard. At 2.95s the Tally dashboard rises over 1.0s. The hero card counts $100 to $803 from 3.35s over 2.2s with power4.out, and a 252x150px sparkline draws from the same progress, so the line is as long as the count is far along. Two small cards count 0 to 9 and 0 to 4, and a pip lights each time the count passes a whole number. At 5.8s a closing card counts 90.00% to 99.99% over 1.6s with power3.out while 90 ticks light left to right.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the odometer, the three stat cards and the dashboard from your product. Draw the four-bar mark with its accent slash from 7.75s and rise the word Tally from a mask at 8.0s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a count up animation?",
+        "A count up animation shows a number rising from a start value to an end value over a second or two. Product films use it for stats such as speed gains, revenue or uptime, so the viewer sees the size of the change as well as the final figure."
+      ],
+      [
+        "How do you stop the digits from shaking the layout while they count?",
+        "Use tabular numerals and give every digit a fixed-width column, or build an odometer where each digit is a vertical strip that rolls inside a window one cell high. Here the window is 0.6em wide and 0.85em high, so a new leading digit or a changing last digit moves nothing else."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "数字滚动动画",
+    "title": "数字滚动动画：示例与代码配方",
+    "description": "一个很大的数字一位一位滚到目标值，同一个计数再带动仪表盘里的折线。用 Claude Code 或 Codex 按免费配方做出这个数字滚动动画。",
+    "howto": [
+      "每一位数字是一列竖条，内容 0–9–0，窗口宽 0.6em、高 0.85em，使用等宽数字，所以版面不会移动。用一个代理补间驱动数值：大数字 480px，从 0.35s 起用 2.1s 以 power4.out 从 1 滚到 11。每列平时停在整数字上，只在每个单位的最后 40% 里滚过；高位只在低位 9→0 滚动时才进位。纵向模糊只在快速滚动时出现，最多是字号的 1.2%。",
+      "同样的手法放进仪表盘。2.95s Tally 仪表盘用 1.0s 升起，主卡从 3.35s 起用 2.2s 以 power4.out 从 $100 滚到 $803，252x150px 的折线用同一个进度画出，数字滚到哪里，线就画到哪里。两张小卡分别从 0 滚到 9 和从 0 滚到 4，计数每越过一个整数点亮一个小方块。5.8s 终卡用 1.6s 以 power3.out 把 90.00% 滚到 99.99%，90 根刻度条从左到右点亮。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用你的产品做出滚动数字、三张统计卡和仪表盘。7.75s 起画出四根竖线和强调色斜线的字标，8.0s 字标文字 Tally 从遮罩下升起。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "什么是数字滚动动画？",
+        "数字滚动动画让一个数字用一两秒从起始值涨到目标值。产品片里常用它展示提速倍数、金额或稳定性，观众既看到变化的幅度，也看到最后的数字。"
+      ],
+      [
+        "数字滚动时怎么让版面不抖？",
+        "使用等宽数字，并给每一位固定宽度的列，或者做成里程表：每一位是一条竖向滚动的数字带，窗口只有一格高。这里窗口宽 0.6em、高 0.85em，所以新增的最高位和变化的末位都不会挤动其他元素。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

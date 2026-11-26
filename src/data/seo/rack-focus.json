@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Rack Focus",
+    "title": "Rack Focus: Example and Code Recipe",
+    "description": "A rack focus between planes: a foreground card softens as a laptop sharpens, then a second card and a headline. Make it with Claude Code or Codex.",
+    "howto": [
+      "Give every plane a depth and drive the film with one focus distance: foreground cards 0, laptop 0.8, headline 1.5. Interpolate the focus with power2.inOut, 2.5–3.4s to the laptop (0.9s), 4.9–5.8s back to the cards (0.9s) and 7.1–8.1s to the headline (1.0s). Each frame, blur a plane by its distance to the focus: 40px per unit in front of it up to 24px, 28px per unit behind it up to 22px. Scale a defocused foreground card up 5% for focus breathing and add a linear parallax drift of 10–60px so the planes read as layers.",
+      "Keep each rack to two planes. The 700x448px insight card (scaled 1.2x, left of centre) is sharp for the first 2.5s while the laptop behind it is blurred, then drifts 380px left over 3.0–4.4s after the first pull. The approval card (520x338px, scaled 1.2x) slides in from the right at 4.6–5.6s and takes focus back at 5.8s. The headline fades in at 7.5–8.3s only for the last pull, while the laptop drops to 45% opacity. Give each hold something to read: a count from 12.9 to 14.2, a new transaction row at 3.75s, an Approve press at 6.2s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the cards, the laptop dashboard and the focus math. Start the lockup at 9.3s with the mint mark, the word Corsa and a tagline racking from 14px blur to sharp. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a rack focus in a product film?",
+        "A rack focus changes which plane of the scene is sharp during a shot. The camera stays still while one subject softens and another sharpens, which moves the viewer's attention from, for example, a notification card in front to the product behind it."
+      ],
+      [
+        "How do you make the focus pull look like a real lens?",
+        "Drive every plane from one shared focus distance and blur each plane by its distance to it, so the blur on one plane falls while the other rises on the same frame and curve. Add 5% scale growth on a defocused foreground plane for focus breathing, ease with power2.inOut over 0.9s and cap the foreground blur at 24px."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "拉焦效果",
+    "title": "拉焦（焦点转移）：示例与代码配方",
+    "description": "镜头不动，焦点在前景卡片、笔记本和标题之间转移：一个平面变虚，另一个同时变清楚。用 Claude Code 或 Codex 按免费配方做出这个拉焦效果。",
+    "howto": [
+      "给每个平面一个深度，用一个焦点距离驱动全片：前景卡片 0，笔记本 0.8，标题 1.5。焦点用 power2.inOut 插值：2.5–3.4s 到笔记本（0.9s），4.9–5.8s 回到卡片（0.9s），7.1–8.1s 到标题（1.0s）。每一帧按平面和焦点的距离算虚化：在焦点之前每单位 40px，上限 24px；在焦点之后每单位 28px，上限 22px。虚化的前景卡片放大 5% 作为对焦呼吸，再加 10–60px 的线性视差漂移，让几个平面像分层的实物。",
+      "每次拉焦只保留两个平面。700x448px 的洞察卡（放大 1.2 倍，偏左）前 2.5s 清晰，后面的笔记本是虚的；第 1 次拉焦之后，它 3.0–4.4s 向左漂出 380px。审批卡（520x338px，放大 1.2 倍）4.6–5.6s 从右侧滑入，5.8s 重新拿回焦点。标题 7.5–8.3s 淡入，只服务最后一次拉焦，同时笔记本降到 45% 不透明度。每段保持都要有东西可看：数字从 12.9 滚到 14.2，3.75s 插入一行新交易，6.2s 按下 Approve。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出卡片、笔记本仪表盘和焦点计算。9.3s 开始字标：薄荷绿方块、Corsa 文字和一行标语，从 14px 虚化拉到清晰。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "产品片里的拉焦是什么？",
+        "拉焦是在一个镜头里改变画面中哪个平面是清晰的。机位不动，一个主体变虚，另一个变清楚，把观众的注意力从前景的通知卡片转到后面的产品上。"
+      ],
+      [
+        "怎样让拉焦看起来像真实镜头？",
+        "用一个共享的焦点距离驱动所有平面，按每个平面和焦点的距离算虚化，这样一个平面的虚化下降和另一个平面的虚化上升在同一帧、同一条曲线上发生。虚化的前景平面放大 5% 模拟对焦呼吸，用 power2.inOut 缓动、每次 0.9s，前景虚化上限 24px。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

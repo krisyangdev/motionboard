@@ -1,12 +1,12 @@
 ---
 name: motionboard
 license: MIT
-description: Make product launch videos, promo videos and motion graphics in code with HyperFrames (HTML + GSAP rendered to MP4), from 48 shot recipes taken from Apple, Linear, Figma and other launch films. Use when the user asks to make a launch video, product video, promo or app trailer, including from just a product URL or repo in one command; asks for a specific effect such as a match cut transition, logo reveal or logo animation, text scramble, kinetic typography, typing / typewriter animation, word-by-word text highlight, morph transition, wipe or iris transition, liquid glass effect, chromatic aberration / RGB split, line boil, dot matrix animation, confetti success animation, card flip, zoom-to-cursor, multiplayer cursors, 3D tilted UI with depth of field or a product light reveal; wants Apple-style or Linear-style motion as a video or as a hero animation on a website; or asks whether Claude Code or Codex can make videos. Also applies to requests in Chinese such as 做宣传片, 产品发布视频, 做个转场, Logo 动画, 苹果风动效, 复刻某个镜头.
+description: Make product launch videos, promo videos and motion graphics in code with HyperFrames (HTML + GSAP rendered to MP4), from 58 shot recipes taken from Apple, Linear, Figma and other launch films. Use when the user asks to make a launch video, product video, promo or app trailer, including from just a product URL or repo in one command; asks for a specific effect such as a match cut transition, logo reveal or logo animation, text scramble, kinetic typography, typing / typewriter animation, word-by-word text highlight, morph transition, wipe or iris transition, liquid glass effect, chromatic aberration / RGB split, line boil, dot matrix animation, confetti success animation, card flip, zoom-to-cursor, multiplayer cursors, 3D tilted UI with depth of field or a product light reveal; wants Apple-style or Linear-style motion as a video or as a hero animation on a website; or asks whether Claude Code or Codex can make videos. Also applies to requests in Chinese such as 做宣传片, 产品发布视频, 做个转场, Logo 动画, 苹果风动效, 复刻某个镜头.
 ---
 
 # Motionboard
 
-Motionboard is shot language broken down from real Apple, Linear, Figma and Google launch films. Each shot is recreated in code as a ~10s HyperFrames film (HTML + GSAP rendered to video). This skill holds 48 recipes and their runnable source projects. You make one shot, plan and build a whole launch film, or turn a product URL or repo into a launch film in one command.
+Motionboard is shot language broken down from real Apple, Linear, Figma and Google launch films. Each shot is recreated in code as a ~10s HyperFrames film (HTML + GSAP rendered to video). This skill holds 58 recipes and their runnable source projects. You make one shot, plan and build a whole launch film, or turn a product URL or repo into a launch film in one command.
 
 Reply in the user's language. The files here are in English.
 

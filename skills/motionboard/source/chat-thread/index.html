@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #f4effb;
+        --ink: #1d1a2e;
+        --sub: #5c5876;
+        --mut: #8a86a3;
+        --line: #ece9f6;
+        --accent: #6a4cf6;
+        --tint: rgba(106, 76, 246, 0.1);
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+        --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .a { position: absolute; }
+      svg { display: block; }
+
+      /* ---------- backdrop ---------- */
+      #bg { overflow: hidden; background: #f4effb; }
+      .blob { position: absolute; border-radius: 50%; }
+      #b1 { left: -320px; top: -280px; width: 1300px; height: 1060px; background: radial-gradient(closest-side, #ffd1c9 0%, rgba(255, 209, 201, 0) 100%); }
+      #b2 { left: 1000px; top: -320px; width: 1200px; height: 1060px; background: radial-gradient(closest-side, #c9d6ff 0%, rgba(201, 214, 255, 0) 100%); }
+      #b3 { left: 1000px; top: 480px; width: 1300px; height: 960px; background: radial-gradient(closest-side, #f8c4e8 0%, rgba(248, 196, 232, 0) 100%); }
+      #b4 { left: -340px; top: 520px; width: 1200px; height: 900px; background: radial-gradient(closest-side, #cdeeff 0%, rgba(205, 238, 255, 0) 100%); }
+      #b5 { left: 460px; top: 180px; width: 1000px; height: 760px; background: radial-gradient(closest-side, #e2d6ff 0%, rgba(226, 214, 255, 0) 100%); }
+
+      /* ---------- window ---------- */
+      #stage { z-index: 4; }
+      #cam { position: absolute; left: 0; top: 0; width: 1500px; height: 840px; }
+      #win { position: absolute; left: 0; top: 0; width: 1500px; height: 840px; }
+      #wbg { left: 0; top: 0; width: 1500px; height: 840px; border-radius: 26px; background: #fff; overflow: hidden; }
+      #wsh { left: 0; top: 0; width: 1500px; height: 840px; border-radius: 26px; background: #fff;
+        box-shadow: 0 0 0 1px rgba(60, 40, 130, 0.08), 0 4px 10px rgba(60, 40, 130, 0.06), 0 30px 70px rgba(80, 55, 170, 0.18), 0 80px 160px rgba(80, 55, 170, 0.14); }
+      /* white surface that continues the chat panel past the window edges while the camera is tight */
+      #bleed { left: -1200px; top: -700px; width: 3400px; height: 2400px; background: #fff; overflow: hidden; }
+      #bleed .bg1 { position: absolute; border-radius: 50%; }
+
+      /* chat panel */
+      #chat { left: 0; top: 0; width: 560px; height: 840px; background: #fff; }
+      #chd { left: 0; top: 0; width: 560px; height: 64px; }
+      .mk { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #7a5cff, #5a3de8); position: absolute; }
+      .mk i { position: absolute; width: 7px; height: 7px; border-radius: 2px; background: #fff; }
+      #pname { left: 64px; top: 17px; font-size: 18px; line-height: 30px; font-weight: 650; letter-spacing: -0.015em; display: flex; align-items: center; gap: 6px; color: var(--ink); }
+      #chi { right: 22px; top: 20px; display: flex; gap: 20px; color: var(--sub); }
+      #thread { left: 0; top: 64px; width: 560px; height: 596px; overflow: hidden;
+        -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16px, #000 calc(100% - 12px), transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0, #000 16px, #000 calc(100% - 12px), transparent 100%); }
+      #tin { left: 0; top: 0; width: 560px; height: 900px; }
+      #wel { left: 28px; top: 24px; width: 504px; font-size: 21px; line-height: 30px; color: var(--sub); font-weight: 400; }
+      #ub { left: 112px; top: 120px; width: 420px; padding: 16px 22px; border-radius: 24px 24px 8px 24px; background: linear-gradient(135deg, #7656fa, #6243f0); color: #fff;
+        font-size: 21px; line-height: 30px; font-weight: 500; letter-spacing: -0.005em; box-shadow: 0 10px 24px rgba(106, 76, 246, 0.25); }
+      #thk { left: 28px; top: 238px; height: 32px; width: 300px; }
+      #thk .sp { position: absolute; left: 0; top: 4px; color: var(--accent); }
+      #think { position: absolute; left: 32px; top: 0; font-size: 21px; line-height: 32px; font-weight: 550; letter-spacing: -0.005em; white-space: nowrap;
+        background-image: linear-gradient(100deg, #8d8aa6 33%, #6a4cf6 43%, #3a21c8 50%, #6a4cf6 57%, #8d8aa6 67%); background-size: 300% 100%; background-position: 100% 0%;
+        -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+      #thought { position: absolute; left: 0; top: 0; height: 32px; display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 500; color: var(--mut); white-space: nowrap; opacity: 0; }
+      .tc { left: 28px; width: 504px; height: 64px; border-radius: 18px; background: #fff; border: 1.5px solid #e8e4f5; box-shadow: 0 6px 18px rgba(90, 70, 170, 0.07); }
+      .tc .ti { position: absolute; left: 12px; top: 10px; width: 40px; height: 40px; border-radius: 12px; background: var(--tint); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+      .tc .tt { position: absolute; left: 66px; top: 9px; font-size: 19px; line-height: 24px; font-weight: 620; letter-spacing: -0.01em; white-space: nowrap; }
+      .tc .ts { position: absolute; left: 66px; top: 33px; font-size: 14.5px; line-height: 20px; color: var(--mut); font-family: var(--mono); white-space: nowrap; }
+      .tc .st { position: absolute; right: 16px; top: 17px; width: 28px; height: 28px; }
+      .tc .st .spn { position: absolute; left: 0; top: 0; }
+      .tc .st .ok { position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; }
+      .cn { left: 61px; width: 2px; height: 52px; background: linear-gradient(180deg, #a995fb, #cfc4fc); border-radius: 1px; transform-origin: 50% 0%; }
+      #rep { left: 28px; top: 568px; width: 504px; font-size: 21px; line-height: 31px; color: var(--ink); font-weight: 400; letter-spacing: -0.003em; }
+      .tk { position: relative; display: inline-block; opacity: 0; }
+      .tk .o { position: absolute; left: 0; top: 0; white-space: nowrap; background-image: linear-gradient(90deg, var(--accent), #e55fbe); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+      .cr { display: inline-block; width: 0; height: 24px; position: relative; vertical-align: -4px; opacity: 0; }
+      .cr::after { content: ""; position: absolute; left: 1px; top: 0; width: 3px; height: 24px; border-radius: 2px; background: var(--accent); }
+
+      /* composer */
+      #cfade { left: 0; top: 628px; width: 560px; height: 40px; background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff); pointer-events: none; }
+      #comp { left: 24px; top: 664px; width: 512px; height: 148px; border-radius: 26px; background: #fff; border: 1.5px solid #e4e0f3; box-shadow: 0 12px 32px rgba(90, 70, 170, 0.11); }
+      #ph { left: 22px; top: 18px; font-size: 21px; line-height: 30px; color: #a29fba; white-space: nowrap; }
+      #typed { left: 22px; top: 18px; width: 468px; font-size: 21px; line-height: 30px; color: var(--ink); white-space: pre-wrap; font-weight: 450; }
+      #typed .ch { display: none; }
+      #tcar { display: inline-block; width: 0; height: 26px; position: relative; vertical-align: -5px; opacity: 0; }
+      #tcar::after { content: ""; position: absolute; left: 1px; top: 0; width: 2.5px; height: 26px; border-radius: 2px; background: var(--accent); }
+      #plus { left: 16px; top: 90px; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid #e4e0f3; color: var(--sub); display: flex; align-items: center; justify-content: center; }
+      #plan { left: 68px; top: 93px; height: 36px; padding: 0 14px 0 11px; border-radius: 18px; background: #f5f3fb; color: var(--sub); font-size: 15.5px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+      #send { left: 454px; top: 88px; width: 46px; height: 46px; border-radius: 50%; background: #dedaf0; color: #fff; display: flex; align-items: center; justify-content: center; }
+      #ring { left: 454px; top: 88px; width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; }
+
+      /* preview */
+      #pv { left: 560px; top: 0; width: 940px; height: 840px; background: #f4f2fc; border-left: 1px solid var(--line); }
+      #brow { left: 20px; top: 20px; width: 900px; height: 800px; border-radius: 20px; background: #fff; border: 1px solid #e6e3f2; box-shadow: 0 10px 30px rgba(90, 70, 170, 0.08); overflow: hidden; }
+      #bglow { left: 20px; top: 20px; width: 900px; height: 800px; border-radius: 20px; box-shadow: 0 0 0 3px rgba(106, 76, 246, 0.5), 0 0 40px 6px rgba(106, 76, 246, 0.22); opacity: 0; }
+      #bbar { left: 0; top: 0; width: 900px; height: 56px; border-bottom: 1px solid var(--line); background: #fff; }
+      .dot { top: 22px; width: 12px; height: 12px; border-radius: 50%; background: #e8e5f2; }
+      #url { left: 130px; top: 11px; width: 540px; height: 34px; border-radius: 17px; background: #f3f2f8; font-size: 15px; color: var(--sub); display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500; }
+      #pub { right: 20px; top: 10px; height: 36px; padding: 0 18px; border-radius: 11px; background: var(--accent); color: #fff; font-size: 15px; font-weight: 600; display: flex; align-items: center; }
+      #prog { left: 0; top: 54px; width: 900px; height: 3px; background: linear-gradient(90deg, #8f78ff, #e55fbe); transform-origin: 0 50%; opacity: 0; }
+      #pe { left: 0; top: 57px; width: 900px; height: 743px; background-image: radial-gradient(circle, #e7e3f6 1.6px, transparent 1.8px); background-size: 24px 24px; background-position: 12px 12px; }
+      #pe .pi { position: absolute; left: 664px; top: 300px; width: 72px; height: 72px; border-radius: 22px; background: var(--tint); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+      #pe .pt { position: absolute; left: 250px; top: 390px; width: 900px; text-align: center; font-size: 19px; font-weight: 500; color: var(--mut); }
+      #dash { left: 0; top: 57px; width: 900px; height: 743px; }
+      #dtitle { left: 36px; top: 24px; font-size: 32px; line-height: 40px; font-weight: 700; letter-spacing: -0.03em; }
+      #dmonth { left: 168px; top: 29px; height: 30px; padding: 0 12px; border-radius: 15px; background: #f3f1fa; color: var(--sub); font-size: 14px; font-weight: 600; line-height: 30px; }
+      #dnew { right: 34px; top: 20px; height: 46px; padding: 0 20px 0 16px; border-radius: 13px; background: var(--accent); color: #fff; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 18px rgba(106, 76, 246, 0.28); }
+      .sc { top: 90px; width: 266px; height: 106px; border-radius: 18px; background: #fff; border: 1.5px solid #ebe8f6; }
+      .sc .l { position: absolute; left: 20px; top: 16px; font-size: 15px; line-height: 20px; color: var(--sub); font-weight: 500; }
+      .sc .v { position: absolute; left: 20px; top: 38px; font-size: 34px; line-height: 40px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+      .sc .d { position: absolute; left: 20px; top: 79px; font-size: 13.5px; line-height: 18px; font-weight: 600; color: var(--accent); }
+      .sc .d.w { color: #c8452b; }
+      .sc .d.n { color: var(--mut); font-weight: 500; }
+      .cd { background: #fff; border: 1.5px solid #ebe8f6; border-radius: 18px; }
+      .cd .h { position: absolute; left: 22px; top: 18px; font-size: 17px; line-height: 24px; font-weight: 650; letter-spacing: -0.01em; }
+      #chart { left: 36px; top: 210px; width: 540px; height: 268px; }
+      #chart .lg { position: absolute; right: 22px; top: 21px; font-size: 13px; color: var(--mut); font-weight: 500; }
+      .gl { position: absolute; left: 22px; width: 496px; height: 1px; background: #f0eef8; }
+      .bar { position: absolute; width: 38px; bottom: 48px; border-radius: 9px 9px 5px 5px; background: #ddd5ff; transform-origin: 50% 100%; }
+      .bar.hi { background: linear-gradient(180deg, #8d75ff, #6a4cf6); }
+      .ml { position: absolute; bottom: 20px; width: 38px; text-align: center; font-size: 13px; color: var(--mut); font-weight: 500; }
+      #btag { position: absolute; height: 26px; padding: 0 10px; border-radius: 9px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; line-height: 26px; white-space: nowrap; opacity: 0; }
+      #over { left: 592px; top: 210px; width: 274px; height: 268px; }
+      .oi { position: absolute; left: 20px; width: 234px; height: 50px; }
+      .oi .n { position: absolute; left: 0; top: 4px; font-size: 15.5px; line-height: 20px; font-weight: 600; white-space: nowrap; }
+      .oi .m { position: absolute; left: 0; top: 26px; font-size: 13px; line-height: 18px; color: var(--mut); white-space: nowrap; }
+      .oi .am { position: absolute; right: 0; top: 4px; font-size: 15.5px; line-height: 20px; font-weight: 650; font-variant-numeric: tabular-nums; }
+      #rem { left: 20px; top: 212px; width: 234px; height: 38px; border-radius: 11px; background: var(--tint); color: var(--accent); font-size: 14.5px; font-weight: 650; display: flex; align-items: center; justify-content: center; gap: 7px; }
+      #tbl { left: 36px; top: 494px; width: 830px; height: 222px; }
+      .th { position: absolute; top: 52px; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; font-weight: 650; color: var(--mut); text-transform: uppercase; }
+      .tr { position: absolute; left: 0; width: 830px; height: 44px; border-top: 1px solid #f1eff8; }
+      .tr span { position: absolute; top: 12px; font-size: 15.5px; line-height: 20px; white-space: nowrap; }
+      .c1 { left: 22px; font-family: var(--mono); font-size: 14.5px !important; color: var(--sub); }
+      .c2 { left: 150px; font-weight: 600; }
+      .c3 { left: 400px; color: var(--sub); }
+      .c4 { left: 560px; font-weight: 650; font-variant-numeric: tabular-nums; }
+      .tr .pill { left: auto; right: 22px; top: 8px; height: 28px; padding: 0 12px; border-radius: 14px; font-size: 13.5px; font-weight: 650; line-height: 28px; }
+      .pill.p { background: var(--tint); color: var(--accent); }
+      .pill.o { background: #fdeae6; color: #c8452b; }
+      .pill.s { background: #edf0f5; color: #55607a; }
+
+      /* ---------- lockup ---------- */
+      #end { z-index: 8; }
+      #lock { left: 0; top: 0; width: 1920px; height: 1080px; display: flex; align-items: center; justify-content: center; gap: 46px; }
+      #lmk { position: relative; width: 156px; height: 156px; border-radius: 40px; background: linear-gradient(135deg, #7a5cff, #5a3de8); box-shadow: 0 26px 54px rgba(106, 76, 246, 0.32); flex: none; }
+      #lmk i { position: absolute; width: 38px; height: 38px; border-radius: 11px; background: #fff; }
+      #lcol { position: relative; }
+      #lwm { font-size: 176px; line-height: 210px; font-weight: 700; letter-spacing: -0.055em; color: var(--ink); white-space: nowrap; }
+      #lsub { margin-top: -4px; margin-left: 6px; font-size: 34px; line-height: 44px; font-weight: 500; letter-spacing: -0.015em; color: var(--sub); white-space: nowrap; }
+
+      /* ---------- finish ---------- */
+      #fx { z-index: 9; pointer-events: none; background: radial-gradient(ellipse 80% 85% at 50% 48%, rgba(120, 90, 200, 0) 55%, rgba(120, 90, 200, 0.16) 100%); }
+      #grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: 0.06; mix-blend-mode: multiply; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.5" data-width="1920" data-height="1080">
+      <div id="bg" class="layer clip" data-start="0" data-duration="10.5" data-track-index="0" data-layout-allow-overlap data-layout-allow-overflow>
+        <div id="b1" class="blob"></div><div id="b2" class="blob"></div><div id="b3" class="blob"></div><div id="b4" class="blob"></div><div id="b5" class="blob"></div>
+      </div>
+
+      <div id="stage" class="layer clip" data-start="0" data-duration="8.7" data-track-index="1" data-layout-allow-overlap data-layout-allow-overflow>
+        <div id="cam" data-layout-allow-overlap data-layout-allow-overflow>
+          <div id="win" data-layout-allow-overlap data-layout-allow-overflow>
+            <div id="bleed" class="a" data-layout-allow-overlap data-layout-allow-overflow>
+              <div class="bg1" style="left:580px;top:1100px;width:1000px;height:1000px;background:radial-gradient(closest-side, rgba(255,205,195,0.6), rgba(255,205,195,0))"></div>
+              <div class="bg1" style="left:1520px;top:300px;width:1000px;height:1000px;background:radial-gradient(closest-side, rgba(201,214,255,0.7), rgba(201,214,255,0))"></div>
+              <div class="bg1" style="left:1560px;top:1100px;width:1000px;height:1000px;background:radial-gradient(closest-side, rgba(248,196,232,0.55), rgba(248,196,232,0))"></div>
+            </div>
+            <div id="wsh" class="a"></div>
+            <div id="wbg" class="a" data-layout-allow-overlap>
+              <div id="chat" class="a" data-layout-allow-overlap>
+                <div id="chd" class="a"></div>
+                <div id="thread" class="a" data-layout-allow-overlap data-layout-allow-overflow><div id="tin" class="a" data-layout-allow-overlap data-layout-allow-overflow></div></div>
+                <div id="cfade" class="a"></div>
+                <div id="comp" class="a" data-layout-allow-overlap></div>
+              </div>
+              <div id="pv" class="a" data-layout-allow-overlap>
+                <div id="brow" class="a" data-layout-allow-overlap></div>
+                <div id="bglow" class="a"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="end" class="layer clip" data-start="8.3" data-duration="2.2" data-track-index="2" data-layout-allow-overlap>
+        <div id="lock" class="a" data-layout-allow-overlap>
+          <div id="lmk"><i style="left:35px;top:35px"></i><i style="left:83px;top:35px"></i><i style="left:35px;top:83px"></i><i style="left:83px;top:83px"></i></div>
+          <div id="lcol"><div id="lwm">Mosaic</div><div id="lsub">Describe it. Watch it build.</div></div>
+        </div>
+      </div>
+
+      <div id="fx" class="layer clip" data-start="0" data-duration="10.5" data-track-index="3" data-layout-ignore>
+        <svg id="grain" width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true"><filter id="gn" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" stitchTiles="stitch" /><feColorMatrix type="saturate" values="0" /></filter><rect width="1920" height="1080" filter="url(#gn)" /></svg>
+      </div>
+    </div>
+
+    <script>
+      /* ---------- icons (lucide-style) ---------- */
+      const ICON = {
+        spark: '<path d="M11 3c.6 4.8 2.2 6.4 7 7-4.8.6-6.4 2.2-7 7-.6-4.8-2.2-6.4-7-7 4.8-.6 6.4-2.2 7-7Z"/><path d="M19 15c.3 2.4 1.1 3.2 3.5 3.5-2.4.3-3.2 1.1-3.5 3.5-.3-2.4-1.1-3.2-3.5-3.5 2.4-.3 3.2-1.1 3.5-3.5Z"/>',
+        up: '<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>',
+        plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+        check: '<path d="M20 6 9 17l-5-5"/>',
+        file: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 13H8"/><path d="M16 17H8"/>',
+        table: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/>',
+        layout: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+        lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+        history: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',
+        down: '<path d="m6 9 6 6 6-6"/>',
+        right: '<path d="m9 6 6 6-6 6"/>',
+        more: '<circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/>',
+        mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+        layers: '<path d="m12 2 10 5-10 5L2 7Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/>'
+      };
+      const ic = (n, s, sw, st) =>
+        '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.7) +
+        '" stroke-linecap="round" stroke-linejoin="round"' + (st ? ' style="' + st + '"' : "") + ">" + ICON[n] + "</svg>";
+      const $ = (id) => document.getElementById(id);
+
+      /* ---------- chat header ---------- */
+      $("chd").innerHTML =
+        '<div class="mk" style="left:24px;top:17px"><i style="left:6px;top:6px"></i><i style="left:17px;top:6px;opacity:.55"></i><i style="left:6px;top:17px;opacity:.55"></i><i style="left:17px;top:17px"></i></div>' +
+        '<div id="pname" class="a">Invoice Studio<span style="color:var(--mut);display:flex">' + ic("down", 18, 1.8) + "</span></div>" +
+        '<div id="chi" class="a">' + ic("history", 22) + ic("more", 22) + "</div>";
+
+      /* ---------- thread ---------- */
+      const CARDS = [
+        ["file", "Read schema.ts", "src/db/schema.ts · 84 lines", 306],
+        ["table", "Create table invoices", "8 columns · 2 indexes", 398],
+        ["layout", "Generate dashboard", "Dashboard.tsx · 4 components", 490]
+      ];
+      const REPLY = "Your invoicing dashboard is live. It tracks monthly revenue, flags 3 overdue invoices and sends reminders in one click.";
+      const words = REPLY.split(" ");
+      let rh = "";
+      words.forEach((w, i) => {
+        rh += '<span class="tk" id="tk' + i + '"><span class="b">' + w + '</span><span class="o" id="to' + i + '">' + w + '</span></span><span class="cr" id="cr' + i + '"></span> ';
+      });
+      let tin =
+        '<div id="wel" class="a">Hi, I’m Mosaic. Describe the app you want and I’ll build it piece by piece.</div>' +
+        '<div id="ub" class="a">Make an invoicing dashboard for my freelance studio</div>' +
+        '<div id="thk" class="a"><span class="sp" id="thsp">' + ic("spark", 22, 1.8) + '</span><div id="think">Thinking…</div>' +
+        '<div id="thought"><span style="color:var(--mut);display:flex">' + ic("spark", 20, 1.7) + '</span>Thought for 2s<span style="display:flex;margin-left:-4px">' + ic("right", 18, 1.8) + "</span></div></div>";
+      CARDS.forEach((c, i) => {
+        if (i < 2) tin += '<div class="a cn" id="cn' + i + '" style="top:' + (c[3] + 52) + 'px;height:' + (CARDS[i + 1][3] - c[3] - 40) + 'px"></div>';
+      });
+      CARDS.forEach((c, i) => {
+        tin += '<div class="a tc" id="tc' + i + '" style="top:' + c[3] + 'px"><span class="ti">' + ic(c[0], 22, 1.8) + '</span><div class="tt">' + c[1] + '</div><div class="ts">' + c[2] + '</div>' +
+          '<div class="st"><span class="spn" id="sp' + i + '"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10.5" stroke="#e6e1fa" stroke-width="3"/><path d="M14 3.5a10.5 10.5 0 0 1 10.5 10.5" stroke="#6a4cf6" stroke-width="3" stroke-linecap="round"/></svg></span>' +
+          '<span class="ok" id="ok' + i + '">' + ic("check", 16, 3) + "</span></div></div>";
+      });
+      tin += '<div id="rep" class="a">' + rh + "</div>";
+      $("tin").innerHTML = tin;
+
+      /* ---------- composer ---------- */
+      const MSG = "Make an invoicing dashboard for my freelance studio";
+      let ch = "";
+      for (let i = 0; i < MSG.length; i++) ch += '<span class="ch" id="ch' + i + '">' + MSG[i] + "</span>";
+      $("comp").innerHTML =
+        '<div id="ph" class="a">Ask Mosaic…</div>' +
+        '<div id="typed" class="a">' + ch + '<span id="tcar"></span></div>' +
+        '<div id="plus" class="a">' + ic("plus", 22, 1.8) + "</div>" +
+        '<div id="plan" class="a">' + ic("layers", 18, 1.8) + "Plan</div>" +
+        '<div id="ring" class="a"></div>' +
+        '<div id="send" class="a">' + ic("up", 22, 2.4) + "</div>";
+
+      /* ---------- preview ---------- */
+      const MONTHS = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
+      const VALS = [21.4, 26.9, 24.1, 31.8, 35.2, 38.6, 42.9, 48.2];
+      let bars = '<div class="gl" style="top:80px"></div><div class="gl" style="top:127px"></div><div class="gl" style="top:174px"></div>';
+      VALS.forEach((v, i) => {
+        const h = Math.round((v / 50) * 140), x = 34 + i * 62;
+        bars += '<div class="bar' + (i === 7 ? " hi" : "") + '" id="bar' + i + '" style="left:' + x + "px;height:" + h + 'px"></div><div class="ml" style="left:' + x + 'px">' + MONTHS[i] + "</div>";
+      });
+      bars += '<div id="btag" style="left:' + (34 + 7 * 62 - 13) + 'px;top:' + (268 - 48 - 140 - 34) + 'px">$48.2k</div>';
+      const OVER = [["Halcyon Labs", "INV-1047 · 12 days late", "$1,450"], ["Fernbank Co.", "INV-1039 · 8 days late", "$1,100"], ["Oyster & Pine", "INV-1043 · 3 days late", "$690"]];
+      let ov = '<div class="h">Overdue</div>';
+      OVER.forEach((o, i) => {
+        ov += '<div class="oi" id="oi' + i + '" style="top:' + (56 + i * 50) + 'px"><div class="n">' + o[0] + '</div><div class="m">' + o[1] + '</div><div class="am">' + o[2] + "</div></div>";
+      });
+      ov += '<div id="rem" class="a">' + ic("mail", 17, 1.9) + "Send reminders</div>";
+      const ROWS = [
+        ["INV-1048", "Northwind Studio", "Nov 28", "$4,200", "Paid", "p"],
+        ["INV-1047", "Halcyon Labs", "Nov 11", "$1,450", "Overdue", "o"],
+        ["INV-1046", "Fernbank Co.", "Dec 02", "$1,900", "Sent", "s"]
+      ];
+      let tb = '<div class="h">Recent invoices</div><div class="th" style="left:22px">Invoice</div><div class="th" style="left:150px">Client</div><div class="th" style="left:400px">Due</div><div class="th" style="left:560px">Amount</div><div class="th" style="right:22px">Status</div>';
+      ROWS.forEach((r, i) => {
+        tb += '<div class="tr" id="tr' + i + '" style="top:' + (76 + i * 44) + 'px"><span class="c1">' + r[0] + '</span><span class="c2">' + r[1] + '</span><span class="c3">' + r[2] + '</span><span class="c4">' + r[3] + '</span><span class="pill ' + r[5] + '">' + r[4] + "</span></div>";
+      });
+      $("brow").innerHTML =
+        '<div id="bbar" class="a"><span class="a dot" style="left:20px"></span><span class="a dot" style="left:40px"></span><span class="a dot" style="left:60px"></span>' +
+        '<div id="url" class="a"><span style="display:flex;color:var(--mut)">' + ic("lock", 15, 2) + "</span>invoice-studio.mosaic.app</div>" +
+        '<div id="pub" class="a">Publish</div></div><div id="prog" class="a"></div>' +
+        '<div id="pe" class="a"><div class="pi">' + ic("layout", 34, 1.6) + '</div><div class="pt">Nothing to preview yet</div></div>' +
+        '<div id="dash" class="a" data-layout-allow-overlap>' +
+        '<div id="dtitle" class="a">Invoices</div><div id="dmonth" class="a">November 2026</div>' +
+        '<div id="dnew" class="a">' + ic("plus", 19, 2.2) + "New invoice</div>" +
+        '<div class="a sc" id="sc0" style="left:36px"><div class="l">Revenue</div><div class="v" id="v0">$0</div><div class="d">↑ 12.4% vs October</div></div>' +
+        '<div class="a sc" id="sc1" style="left:318px"><div class="l">Outstanding</div><div class="v" id="v1">$0</div><div class="d n">7 invoices</div></div>' +
+        '<div class="a sc" id="sc2" style="left:600px"><div class="l">Overdue</div><div class="v" id="v2">$0</div><div class="d w">3 invoices</div></div>' +
+        '<div class="a cd" id="chart"><div class="h">Monthly revenue</div><div class="lg">Last 8 months</div>' + bars + "</div>" +
+        '<div class="a cd" id="over">' + ov + "</div>" +
+        '<div class="a cd" id="tbl">' + tb + "</div></div>";
+
+      /* ---------- timeline ---------- */
+      // Rule used throughout: one baseline tl.set(el, startVars, 0) (or at the reveal time), then .to() tweens with explicit end values.
+      const tl = gsap.timeline({ paused: true });
+      const EXPO = "expo.out";
+      let seed = 11;
+      const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+      const blink = (sel, t0, t1, per) => {
+        let on = true;
+        for (let t = t0; t < t1; t += per / 2) { tl.set(sel, { opacity: on ? 1 : 0 }, t); on = !on; }
+      };
+
+      /* backdrop drift */
+      [["#b1", 90, 60], ["#b2", -110, 70], ["#b3", -80, -70], ["#b4", 100, -50], ["#b5", 60, 40]].forEach((b) => {
+        tl.to(b[0], { x: b[1], y: b[2], duration: 10.5, ease: "sine.inOut" }, 0);
+      });
+
+      /* camera: tight on the chat column (composer, bubble, thinking, tool cards), then an expo.inOut pull-back to the whole window */
+      // camAt: window point (fx, fy) lands on screen point (sx, sy) at scale s
+      const camAt = (s, fx, fy, sx, sy) => ({ x: (sx === undefined ? 960 : sx) - s * fx, y: (sy === undefined ? 540 : sy) - s * fy, scale: s });
+      // targets are content points in window coordinates: composer centre (280, 738); bubble + Thinking centre (300, 259); tool-card stack centre (280, 494)
+      const CAM0 = camAt(1.75, 280, 738, 960, 600);
+      tl.set("#cam", Object.assign({ transformOrigin: "0px 0px" }, CAM0), 0);
+      tl.to("#cam", Object.assign({ duration: 2.3, ease: "sine.inOut" }, camAt(1.78, 280, 738, 960, 600)), 0);      // typing: composer centred
+      tl.to("#cam", Object.assign({ duration: 1.3, ease: "power2.inOut" }, camAt(1.8, 300, 259, 960, 520)), 2.3);   // follow the bubble up to bubble + Thinking
+      tl.to("#cam", Object.assign({ duration: 2.3, ease: "sine.inOut" }, camAt(1.85, 280, 494, 960, 540)), 3.6);    // tool-card stack
+      tl.to("#cam", Object.assign({ duration: 1.15, ease: "expo.inOut" }, camAt(1.16, 712, 432, 960, 540)), 5.9);   // pull back
+      tl.to("#cam", Object.assign({ duration: 1.5, ease: "sine.out" }, camAt(1.2, 712, 432, 960, 540)), 7.05);      // wide drift on the dashboard
+
+      gsap.set("#win", { transformOrigin: "750px 420px", transformPerspective: 2600 });
+      tl.set("#win", { rotationY: -3, rotationX: 1.2, opacity: 0, y: 40 }, 0);
+      tl.to("#win", { opacity: 1, y: 0, duration: 1.0, ease: EXPO }, 0);
+      tl.to("#win", { rotationY: -2, rotationX: 0.8, duration: 5.9, ease: "sine.inOut" }, 0);
+      tl.to("#win", { rotationY: -0.6, rotationX: 0.3, duration: 1.15, ease: "expo.inOut" }, 5.9);
+
+      /* initial states */
+      gsap.set(["#ub", "#thk", ".tc", "#rep", ".cn", "#dash", "#bglow", "#prog"], { opacity: 0 });
+      gsap.set(".cn", { scaleY: 0 });
+      gsap.set(".tk", { opacity: 0 });
+      gsap.set(".tc .st .spn", { transformOrigin: "50% 50%" });
+      gsap.set("#thought", { opacity: 0 });
+
+      /* typing */
+      const N = MSG.length;
+      let tprev = 0;
+      for (let i = 0; i < N; i++) {
+        let t = 0.7 + 1.25 * Math.pow((i + 1) / N, 0.92) + (rnd() - 0.5) * 0.01;
+        if (t <= tprev) t = tprev + 0.004;
+        tprev = t;
+        tl.set("#ch" + i, { display: "inline" }, t);
+      }
+      blink("#tcar", 0.25, 0.7, 0.5);
+      tl.set("#tcar", { opacity: 1 }, 0.7);
+      blink("#tcar", 1.98, 2.1, 0.4);
+      tl.set("#tcar", { opacity: 0 }, 2.12);
+      tl.set("#ph", { opacity: 0 }, 0.7);
+      tl.to("#send", { backgroundColor: "#6a4cf6", duration: 0.25, ease: "power2.out" }, 0.72);
+
+      /* send press, composer clears, bubble springs up from the composer */
+      const TS = 2.1;
+      tl.to("#send", { scale: 0.84, duration: 0.09, ease: "power2.in" }, TS);
+      tl.to("#send", { scale: 1, duration: 0.4, ease: "back.out(2.4)" }, TS + 0.09);
+      tl.set("#ring", { opacity: 0.55, scale: 1 }, TS + 0.04);
+      tl.to("#ring", { opacity: 0, scale: 1.9, duration: 0.5, ease: "power2.out" }, TS + 0.05);
+      tl.set("#typed", { opacity: 0 }, TS + 0.12);
+      tl.to("#send", { backgroundColor: "#dedaf0", duration: 0.3, ease: "power2.out" }, TS + 0.35);
+      tl.to("#ph", { opacity: 1, duration: 0.4, ease: "power2.out" }, TS + 0.55);
+
+      tl.set("#ub", { opacity: 0, y: 470, x: -40, scale: 0.9, transformOrigin: "100% 100%" }, 0);
+      tl.to("#ub", { opacity: 1, duration: 0.22, ease: "power1.out" }, TS + 0.1);
+      tl.to("#ub", { y: 0, x: 0, scale: 1, duration: 0.85, ease: "back.out(1.25)" }, TS + 0.1);
+
+      /* thinking */
+      const TT = 2.85;
+      tl.set("#thk", { opacity: 0, y: 12 }, 0);
+      tl.to("#thk", { opacity: 1, y: 0, duration: 0.45, ease: EXPO }, TT);
+      tl.set("#thsp", { scale: 0.6, rotation: -30 }, 0);
+      tl.to("#thsp", { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, TT);
+      tl.set("#think", { backgroundPosition: "100% 0%" }, 0);
+      tl.to("#think", { backgroundPosition: "0% 0%", duration: 1.1, ease: "power1.inOut" }, TT + 0.05);
+      tl.to("#think", { opacity: 0, duration: 0.12, ease: "power1.in" }, 4.0);
+      tl.to("#thsp", { opacity: 0, duration: 0.12, ease: "power1.in" }, 4.0);
+      tl.set("#thought", { opacity: 0, y: 6 }, 0);
+      tl.to("#thought", { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 4.0);
+
+      /* tool cards */
+      const CT = [4.0, 4.7, 5.35], CK = [4.62, 5.22, 5.95];
+      CT.forEach((t, i) => {
+        tl.set("#tc" + i, { opacity: 0, y: 20, scale: 0.97 }, 0);
+        tl.to("#tc" + i, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: EXPO }, t);
+        tl.set("#sp" + i, { rotation: 0 }, 0);
+        tl.to("#sp" + i, { rotation: 720, duration: CK[i] - t, ease: "none" }, t);
+        tl.set("#sp" + i, { opacity: 0 }, CK[i]);
+        tl.set("#ok" + i, { opacity: 0, scale: 0.4 }, 0);
+        tl.to("#ok" + i, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.6)" }, CK[i]);
+        if (i < 2) {
+          tl.set("#cn" + i, { opacity: 1, scaleY: 0 }, 0);
+          tl.to("#cn" + i, { scaleY: 1, duration: 0.3, ease: "power2.inOut" }, t + 0.45 + (i === 0 ? 0.1 : 0.0));
+        }
+      });
+
+      /* thread scrolls up to make room for the reply */
+      tl.to("#tin", { y: -84, duration: 0.8, ease: EXPO }, 5.8);
+
+      /* reply streams token by token */
+      const RS = 6.0, RG = 0.085;
+      tl.set("#rep", { opacity: 1 }, 0);
+      words.forEach((w, i) => {
+        const t = RS + i * RG + (rnd() - 0.5) * 0.02;
+        tl.set("#tk" + i, { opacity: 0, y: 6 }, 0);
+        tl.to("#tk" + i, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, t);
+        tl.to("#to" + i, { opacity: 0, duration: 0.5, ease: "power1.inOut" }, t + 0.18);
+        tl.set("#cr" + i, { opacity: 1 }, t);
+        if (i < words.length - 1) tl.set("#cr" + i, { opacity: 0 }, RS + (i + 1) * RG - 0.001);
+      });
+      const RE = RS + (words.length - 1) * RG;
+      for (let t = RE + 0.3, on = false; t < RE + 1.0; t += 0.28, on = !on) tl.set("#cr" + (words.length - 1), { opacity: on ? 1 : 0 }, t);
+      tl.set("#cr" + (words.length - 1), { opacity: 0 }, RE + 1.0);
+
+      /* preview: progress, then the dashboard builds */
+      tl.set("#prog", { opacity: 1, scaleX: 0 }, 4.0);
+      tl.to("#prog", { scaleX: 1, duration: 2.0, ease: "power1.inOut" }, 4.01);
+      tl.to("#prog", { opacity: 0, duration: 0.4, ease: "power1.in" }, 6.15);
+      tl.to("#pe", { opacity: 0, duration: 0.3, ease: "power2.out" }, 5.95);
+      tl.set("#dash", { opacity: 1 }, 5.95);
+      tl.to("#bglow", { opacity: 1, duration: 0.25, ease: "power2.out" }, 5.95);
+      tl.to("#bglow", { opacity: 0, duration: 0.8, ease: "power1.inOut" }, 6.3);
+
+      const rise = (sel, t, y, d) => {
+        tl.set(sel, { opacity: 0, y: y || 22 }, 0);
+        tl.to(sel, { opacity: 1, y: 0, duration: d || 0.65, ease: EXPO }, t);
+      };
+      rise("#dtitle", 6.0); rise("#dmonth", 6.05); rise("#dnew", 6.1);
+      ["#sc0", "#sc1", "#sc2"].forEach((s, i) => rise(s, 6.18 + i * 0.1, 26));
+      const counts = [["v0", 48200], ["v1", 12850], ["v2", 3240]];
+      counts.forEach((c, i) => {
+        const o = { v: 0 };
+        tl.to(o, { v: c[1], duration: 1.1, ease: "power2.out", onUpdate: () => { $(c[0]).textContent = "$" + Math.round(o.v).toLocaleString("en-US"); } }, 6.3 + i * 0.1);
+      });
+      rise("#chart", 6.45, 26); rise("#over", 6.6, 26); rise("#tbl", 6.8, 26);
+      for (let i = 0; i < 8; i++) {
+        tl.set("#bar" + i, { scaleY: 0 }, 0);
+        tl.to("#bar" + i, { scaleY: 1, duration: 0.8, ease: EXPO }, 6.6 + i * 0.06);
+      }
+      tl.set("#btag", { opacity: 0, y: 8, scale: 0.8 }, 0);
+      tl.to("#btag", { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(2)" }, 7.15);
+      for (let i = 0; i < 3; i++) { rise("#oi" + i, 6.75 + i * 0.08, 14, 0.55); rise("#tr" + i, 6.95 + i * 0.08, 14, 0.55); }
+      rise("#rem", 7.05, 10, 0.55);
+
+      /* out and lockup */
+      tl.to("#cam", { opacity: 0, duration: 0.35, ease: "power2.in" }, 8.2);
+      tl.set("#lmk i", { scale: 0, opacity: 0 }, 0);
+      tl.set("#lcol", { opacity: 0, y: 30 }, 0);
+      tl.set("#lmk", { scale: 0.85, opacity: 0 }, 0);
+      tl.to("#lmk", { scale: 1, opacity: 1, duration: 0.7, ease: EXPO }, 8.45);
+      ["0", "1", "3", "2"].forEach((k, j) => {
+        tl.to("#lmk i:nth-child(" + (+k + 1) + ")", { scale: 1, opacity: j === 1 || j === 3 ? 0.55 : 1, duration: 0.5, ease: "back.out(2.2)" }, 8.5 + j * 0.07);
+      });
+      tl.to("#lcol", { opacity: 1, y: 0, duration: 0.9, ease: EXPO }, 8.6);
+      tl.to("#lcol", { y: -6, duration: 10.5 - 9.5, ease: "none" }, 9.5);
+
+      tl.set({}, {}, 10.5);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

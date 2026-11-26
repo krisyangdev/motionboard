@@ -16,7 +16,7 @@ export function Compare({ term, source }: { term: Term; source: Source }) {
               <span className="clip-t">{source.title}</span>
               <span className="clip-at mono">{source.range}</span>
             </span>
-            <span className="clip-go">{recipe.watchOnX}</span>
+            <span className="clip-go">{source.youtube ? recipe.watchOnYouTube : recipe.watchOnX}</span>
           </a>
         )}
         <figcaption className="cmp-cap mono">

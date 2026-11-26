@@ -1,6 +1,6 @@
 # Motionboard: notes for agents
 
-motionboard.app: 48 launch-film shot recipes and a free HyperFrames skill for Claude Code and Codex. Status, next steps and log: `~/code/home/projects/motionboard.md`. Shared site rules: `~/code/home/lines/sites.md`. Design: `DESIGN.md`.
+motionboard.app: 58 launch-film shot recipes and a free HyperFrames skill for Claude Code and Codex. Status, next steps and log: `~/code/home/projects/motionboard.md`. Shared site rules: `~/code/home/lines/sites.md`. Design: `DESIGN.md`.
 
 ## Commands
 - `npm run dev`: local dev server (http://127.0.0.1:3000).

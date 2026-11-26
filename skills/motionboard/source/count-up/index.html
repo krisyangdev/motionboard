@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --base: #09090b;
+        --accent: #bdf34f;
+        --ink: #f4f4f5;
+        --mut: #8e8e98;
+        --soft: #c4c4cd;
+        --panel: #111115;
+        --line: rgba(255, 255, 255, 0.08);
+        --font-ui: "Inter", -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+        --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--base); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--base); font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+
+      /* ---------- background ---------- */
+      .glow { position: absolute; opacity: 0; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(189,243,79,0.20) 0%, rgba(189,243,79,0.07) 45%, rgba(189,243,79,0) 72%); }
+      #glow1 { left: 360px; top: 300px; width: 1200px; height: 800px; }
+      .gridbg {
+        position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: 0.9;
+        background-image: linear-gradient(rgba(255,255,255,0.032) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.032) 1px, transparent 1px);
+        background-size: 120px 120px; background-position: 0 0;
+        -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 0%, transparent 100%); mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 0%, transparent 100%);
+      }
+      #fx { pointer-events: none; z-index: 5; }
+      #fx .vig { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: radial-gradient(ellipse 85% 78% at 50% 48%, rgba(0,0,0,0) 54%, rgba(0,0,0,0.6) 100%); }
+      #fx .grain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; opacity: 0.07; mix-blend-mode: overlay; }
+
+      /* ---------- odometer ---------- */
+      .od { display: flex; height: 0.85em; line-height: 0.85em; font-weight: 800; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; color: var(--ink); white-space: nowrap; }
+      .cw {
+        position: relative; display: block; flex: 0 0 auto; width: 0.6em; height: 0.85em;
+        -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 0.02em, #000 calc(100% - 0.02em), transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0, #000 0.02em, #000 calc(100% - 0.02em), transparent 100%);
+      }
+      .col { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; }
+      .strip { display: block; width: 100%; will-change: transform; }
+      .strip b { display: block; height: 0.85em; line-height: 0.85em; text-align: center; font-weight: inherit; }
+      .lit { display: block; flex: 0 0 auto; height: 0.85em; line-height: 0.85em; text-align: center; color: var(--accent); }
+
+      /* ---------- scene A: hero stat ---------- */
+      .kick-a { position: absolute; left: 0; top: 232px; width: 1920px; text-align: center; font-size: 34px; font-weight: 600; letter-spacing: 0.34em; padding-left: 0.34em; color: var(--soft); text-transform: uppercase; }
+      #numA { position: absolute; left: 0; top: 306px; width: 1920px; justify-content: center; font-size: 480px; }
+      .lbl-a { position: absolute; left: 0; top: 716px; width: 1920px; text-align: center; font-size: 64px; font-weight: 500; letter-spacing: -0.01em; color: var(--soft); }
+      .rule { position: absolute; top: 509px; width: 300px; height: 2px; background: rgba(255,255,255,0.18); }
+      .rule i { position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 16px rgba(189,243,79,0.7); }
+      #ruleL { left: 150px; transform-origin: 100% 50%; }
+      #ruleL i { left: -5px; }
+      #ruleR { left: 1470px; transform-origin: 0% 50%; }
+      #ruleR i { right: -5px; }
+
+      /* ---------- scene B: dashboard ---------- */
+      #dash {
+        position: absolute; left: 150px; top: 100px; width: 1620px; height: 880px; border-radius: 22px; overflow: hidden; background: #0d0d10;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.09), 0 60px 140px rgba(0,0,0,0.7), 0 0 120px rgba(189,243,79,0.05);
+      }
+      .sb { position: absolute; left: 0; top: 0; width: 240px; height: 880px; background: #0a0a0d; border-right: 1px solid var(--line); }
+      .brand { position: absolute; left: 26px; top: 26px; display: flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
+      .org { position: absolute; left: 18px; top: 82px; width: 204px; height: 44px; border-radius: 10px; background: #131318; border: 1px solid var(--line); display: flex; align-items: center; padding: 0 12px; gap: 10px; font-size: 15px; font-weight: 500; color: var(--soft); }
+      .org i { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg, #34343d, #1e1e25); display: block; }
+      .org em { margin-left: auto; font-style: normal; color: var(--mut); font-size: 12px; }
+      .nav { position: absolute; left: 18px; top: 152px; width: 204px; }
+      .ni { display: flex; align-items: center; gap: 12px; height: 42px; padding: 0 12px; border-radius: 9px; font-size: 16px; font-weight: 500; color: var(--mut); margin-bottom: 4px; }
+      .ni svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+      .ni.on { background: #17171d; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+      .ni.on svg { color: var(--accent); }
+      .ni b { margin-left: auto; font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: #17171d; color: var(--mut); font-variant-numeric: tabular-nums; }
+      .usr { position: absolute; left: 18px; bottom: 20px; width: 204px; height: 56px; display: flex; align-items: center; gap: 11px; padding: 0 10px; border-top: 1px solid var(--line); padding-top: 0; font-size: 14px; font-weight: 600; }
+      .usr i { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #bdf34f, #5f8f1e); display: block; flex: 0 0 auto; }
+      .usr span { display: block; font-size: 12px; font-weight: 500; color: var(--mut); margin-top: 2px; }
+
+      .mn { position: absolute; left: 240px; top: 0; width: 1380px; height: 880px; background: #0d0d10; }
+      .tb { position: absolute; left: 0; top: 0; width: 1380px; height: 64px; border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 28px; }
+      .tb h3 { font-size: 20px; font-weight: 650; letter-spacing: -0.01em; }
+      .tb .crumb { margin-left: 14px; font-size: 14px; color: var(--mut); }
+      .seg { margin-left: auto; display: flex; background: #131318; border: 1px solid var(--line); border-radius: 9px; padding: 3px; gap: 2px; }
+      .seg span { font-size: 14px; font-weight: 600; padding: 5px 14px; border-radius: 7px; color: var(--mut); }
+      .seg span.on { background: #23232b; color: var(--ink); }
+      .srch { margin-left: 14px; width: 250px; height: 36px; border-radius: 9px; background: #131318; border: 1px solid var(--line); display: flex; align-items: center; padding: 0 12px; font-size: 14px; color: var(--mut); }
+      .srch em { margin-left: auto; font-style: normal; font-size: 12px; padding: 2px 6px; border-radius: 5px; background: #1c1c22; }
+      .av { margin-left: 14px; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #bdf34f, #5f8f1e); }
+      .area { position: absolute; left: 28px; top: 92px; width: 1324px; height: 760px; }
+      .card { position: absolute; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+      .ck { position: absolute; left: 28px; top: 26px; font-size: 14px; font-weight: 600; letter-spacing: 0.16em; color: var(--mut); text-transform: uppercase; }
+      .cl { position: absolute; left: 28px; font-size: 17px; font-weight: 500; color: var(--mut); }
+      .chip { position: absolute; right: 24px; top: 20px; height: 28px; padding: 0 11px; border-radius: 999px; display: flex; align-items: center; font-size: 14px; font-weight: 650; color: var(--accent); background: rgba(189,243,79,0.12); font-variant-numeric: tabular-nums; }
+      #hero { left: 0; top: 0; width: 710px; height: 320px; }
+      #numH { position: absolute; left: 20px; top: 69px; font-size: 172px; }
+      #hero .cl { top: 254px; }
+      #spk { position: absolute; left: 448px; top: 88px; width: 252px; height: 150px; overflow: visible; }
+      .spkx { position: absolute; left: 448px; top: 252px; width: 252px; display: flex; justify-content: space-between; font-size: 13px; color: var(--mut); font-variant-numeric: tabular-nums; }
+      .sm { top: 0; width: 285px; height: 320px; }
+      #sm1 { left: 732px; } #sm2 { left: 1039px; }
+      .sm .od { position: absolute; left: 22px; top: 80px; font-size: 132px; }
+      .sm .cl { top: 214px; }
+      .pips { position: absolute; left: 28px; top: 268px; width: 229px; display: flex; justify-content: space-between; }
+      .pips i { display: block; width: 12px; height: 12px; border-radius: 4px; background: var(--accent); opacity: 0.16; }
+      #chart { left: 0; top: 342px; width: 710px; height: 418px; }
+      .ct { position: absolute; left: 28px; top: 24px; font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+      .lg { position: absolute; right: 28px; top: 27px; display: flex; gap: 18px; font-size: 14px; color: var(--mut); }
+      .lg span { display: flex; align-items: center; gap: 7px; }
+      .lg i { width: 10px; height: 10px; border-radius: 3px; display: block; }
+      .plot { position: absolute; left: 70px; top: 92px; width: 612px; height: 270px; }
+      .gl { position: absolute; left: 0; width: 612px; height: 1px; background: rgba(255,255,255,0.06); }
+      .gy { position: absolute; left: -44px; width: 36px; text-align: right; font-size: 13px; color: var(--mut); font-variant-numeric: tabular-nums; transform: translateY(-50%); }
+      .bar { position: absolute; bottom: 0; width: 16px; transform-origin: 50% 100%; border-radius: 4px 4px 0 0; overflow: hidden; }
+      .bar i { position: absolute; left: 0; width: 100%; display: block; }
+      .bar .c { bottom: 0; background: rgba(189,243,79,0.30); }
+      .bar .p { background: rgba(189,243,79,0.82); }
+      .gx { position: absolute; top: 280px; font-size: 13px; color: var(--mut); transform: translateX(-50%); font-variant-numeric: tabular-nums; }
+      #peak { position: absolute; height: 30px; padding: 0 11px; border-radius: 8px; display: flex; align-items: center; font-size: 14px; font-weight: 650; background: #f4f4f5; color: #09090b; white-space: nowrap; font-variant-numeric: tabular-nums; }
+      #peakl { position: absolute; width: 1px; background: rgba(244,244,245,0.5); }
+      #list { left: 732px; top: 342px; width: 592px; height: 418px; }
+      .ra { position: absolute; right: 28px; top: 28px; font-size: 14px; color: var(--mut); }
+      .row { position: absolute; left: 0; width: 592px; height: 64px; border-top: 1px solid var(--line); }
+      .row .dt { position: absolute; left: 28px; top: 27px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+      .row .dt.run { background: transparent; box-shadow: 0 0 0 2px var(--accent); }
+      .row .t1 { position: absolute; left: 54px; top: 12px; font-size: 16px; font-weight: 650; letter-spacing: -0.005em; }
+      .row .t1 span { color: var(--mut); font-weight: 500; }
+      .row .t2 { position: absolute; left: 54px; top: 35px; font-size: 14px; color: var(--mut); }
+      .row .du { position: absolute; right: 28px; top: 12px; font-size: 16px; font-weight: 650; font-variant-numeric: tabular-nums; }
+      .row .ag { position: absolute; right: 28px; top: 35px; font-size: 14px; color: var(--mut); }
+
+      /* ---------- scene C: final stat ---------- */
+      #cardC { position: absolute; left: 300px; top: 190px; width: 1320px; height: 700px; border-radius: 30px; background: linear-gradient(180deg, #131318 0%, #0e0e12 100%); border: 1px solid var(--line); box-shadow: 0 50px 120px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06); overflow: hidden; }
+      #cardC .hair { position: absolute; left: 0; top: 0; width: 1320px; height: 2px; background: linear-gradient(90deg, rgba(189,243,79,0) 0%, rgba(189,243,79,0.85) 50%, rgba(189,243,79,0) 100%); opacity: 0.7; }
+      .kick-c { position: absolute; left: 0; top: 64px; width: 1320px; text-align: center; font-size: 24px; font-weight: 600; letter-spacing: 0.28em; padding-left: 0.28em; color: var(--soft); text-transform: uppercase; }
+      #numC { position: absolute; left: 0; top: 134px; width: 1320px; justify-content: center; font-size: 300px; }
+      .lbl-c { position: absolute; left: 0; top: 432px; width: 1320px; text-align: center; font-size: 46px; font-weight: 500; letter-spacing: -0.01em; color: var(--soft); }
+      .ticks { position: absolute; left: 80px; top: 548px; width: 1160px; height: 48px; display: flex; justify-content: space-between; }
+      .ticks i { display: block; width: 8px; height: 48px; border-radius: 3px; background: var(--accent); opacity: 0.1; }
+      .tmeta { position: absolute; left: 80px; top: 614px; width: 1160px; display: flex; justify-content: space-between; font-size: 15px; color: var(--mut); font-variant-numeric: tabular-nums; }
+
+      /* ---------- lockup ---------- */
+      .mk { position: relative; display: block; width: 1em; height: 1em; flex: 0 0 auto; }
+      .mk b { position: absolute; top: 13%; height: 74%; width: 9.5%; border-radius: 999px; background: var(--ink); transform-origin: 50% 100%; }
+      .mk svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
+      .mk line { stroke: var(--accent); stroke-width: 8; stroke-linecap: round; }
+      #lk { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .lrow { display: flex; align-items: center; gap: 40px; }
+      #lmk { font-size: 150px; }
+      .wmask { overflow: hidden; height: 190px; padding: 0 6px; }
+      #wm { display: block; font-size: 150px; line-height: 190px; font-weight: 700; letter-spacing: -0.045em; color: var(--ink); }
+      #tag { margin-top: 26px; font-size: 36px; font-weight: 500; letter-spacing: -0.005em; color: var(--mut); }
+      #tag b { font-weight: 500; color: var(--soft); }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="fdefs"></defs></svg>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+
+      <div id="bg" class="clip full" data-start="0" data-duration="10" data-track-index="0" data-layout-allow-overlap>
+        <div class="gridbg"></div>
+        <div class="glow" id="glow1"></div>
+      </div>
+
+      <div id="sceneA" class="clip full" data-start="0" data-duration="3.6" data-track-index="1" data-layout-allow-overlap>
+        <div id="aIn" class="full">
+          <div class="rule" id="ruleL"><i></i></div>
+          <div class="rule" id="ruleR"><i></i></div>
+          <div class="kick-a" id="kickA">Up to</div>
+          <div id="numA"></div>
+          <div class="lbl-a" id="lblA">faster builds</div>
+        </div>
+      </div>
+
+      <div id="sceneB" class="clip full" data-start="2.9" data-duration="3.3" data-track-index="2" data-layout-allow-overlap>
+        <div id="dashWrap" class="full">
+          <div id="dash">
+            <div class="sb">
+              <div class="brand"><span class="mk" style="font-size:28px"><b style="left:12%"></b><b style="left:33.3%"></b><b style="left:54.6%"></b><b style="left:76%"></b><svg viewBox="0 0 100 100"><line x1="3" y1="72" x2="97" y2="28"/></svg></span>Tally</div>
+              <div class="org"><i></i>acme-platform<em>&#9662;</em></div>
+              <div class="nav" id="nav"></div>
+              <div class="usr"><i></i><div>Mara Chen<span>Team plan</span></div></div>
+            </div>
+            <div class="mn">
+              <div class="tb"><h3>Overview</h3><span class="crumb">acme-platform / all pipelines</span>
+                <div class="seg"><span class="on">24h</span><span>7d</span><span>30d</span></div>
+                <div class="srch">Search builds<em>&#8984;K</em></div><div class="av"></div></div>
+              <div class="area" id="area">
+                <div class="card" id="hero">
+                  <div class="ck">Cost saved today</div>
+                  <div class="chip" id="chipH">&#8593; 18.4%</div>
+                  <div id="numH"></div>
+                  <div class="cl">vs. $681 yesterday</div>
+                  <svg id="spk" viewBox="0 0 252 150">
+                    <defs>
+                      <linearGradient id="spg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bdf34f" stop-opacity="0.32"/><stop offset="1" stop-color="#bdf34f" stop-opacity="0"/></linearGradient>
+                      <clipPath id="spc"><rect id="spcr" x="0" y="-20" width="0" height="200"/></clipPath>
+                    </defs>
+                    <line x1="0" y1="149" x2="252" y2="149" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    <path id="spa" fill="url(#spg)" clip-path="url(#spc)" d=""/>
+                    <path id="spl" fill="none" stroke="#bdf34f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d=""/>
+                    <circle id="spd1" r="11" fill="#bdf34f" opacity="0.18"/>
+                    <circle id="spd" r="5" fill="#f4f4f5"/>
+                  </svg>
+                  <div class="spkx"><span>00:00</span><span>now</span></div>
+                </div>
+                <div class="card sm" id="sm1"><div class="ck">Active builds</div><div id="numS1"></div><div class="cl">in progress</div><div class="pips" id="pips1"></div></div>
+                <div class="card sm" id="sm2"><div class="ck">Queued</div><div id="numS2"></div><div class="cl">avg wait 6s</div><div class="pips" id="pips2"></div></div>
+                <div class="card" id="chart">
+                  <div class="ct">Builds per hour</div>
+                  <div class="lg"><span><i style="background:rgba(189,243,79,0.82)"></i>Fresh</span><span><i style="background:rgba(189,243,79,0.30)"></i>Cached</span></div>
+                  <div class="plot" id="plot"></div>
+                </div>
+                <div class="card" id="list">
+                  <div class="ct">Recent builds</div><div class="ra">View all &#8594;</div>
+                  <div id="rows"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sceneC" class="clip full" data-start="5.7" data-duration="2.5" data-track-index="3" data-layout-allow-overlap>
+        <div id="cardC">
+          <div class="hair"></div>
+          <div class="kick-c" id="kickC">Uptime &middot; last 90 days</div>
+          <div id="numC"></div>
+          <div class="lbl-c" id="lblC">across 2.4M builds</div>
+          <div class="ticks" id="ticks"></div>
+          <div class="tmeta"><span>Aug 28</span><span>Today</span></div>
+        </div>
+      </div>
+
+      <div id="lock" class="clip full" data-start="7.6" data-duration="2.4" data-track-index="4" data-layout-allow-overlap>
+        <div id="lk" class="full"><div class="lrow">
+          <span class="mk" id="lmk"><b style="left:12%"></b><b style="left:33.3%"></b><b style="left:54.6%"></b><b style="left:76%"></b><svg viewBox="0 0 100 100"><line id="slash" x1="3" y1="72" x2="97" y2="28" stroke-dasharray="110" stroke-dashoffset="110"/></svg></span>
+          <div class="wmask"><span id="wm">Tally</span></div>
+        </div>
+        <div id="tag">Builds that finish <b>before the coffee does.</b></div>
+        </div>
+      </div>
+
+      <div id="fx" class="clip full" data-start="0" data-duration="10" data-track-index="5" data-layout-ignore>
+        <div class="vig"></div>
+        <svg class="grain" viewBox="0 0 1920 1080" preserveAspectRatio="none"><filter id="nz"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1920" height="1080" filter="url(#nz)"/></svg>
+      </div>
+    </div>
+
+    <script>
+      const EXPO = "expo.out";
+
+      function mulberry(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+
+      /* ---------- rolling odometer: each digit is a vertical strip 0-9-0, driven by one value ---------- */
+      const LITW = { "$": 0.6, ".": 0.3, "%": 0.9, "×": 0.74 };
+      const fdefs = document.getElementById("fdefs");
+      let fid = 0;
+      // a column rests on a whole digit and rolls only in the last 40% of each unit it passes; a higher column turns only while every lower column rolls 9 -> 0
+      function posOf(k, v) {
+        const p10 = Math.pow(10, k);
+        const fl = Math.floor(v / p10 + 1e-9);
+        const f = v - fl * p10 - (p10 - 1);
+        let c = clamp((f - 0.6) / 0.4, 0, 1);
+        c = c * c * (3 - 2 * c);
+        return fl + (f > 0 ? c : 0);
+      }
+      function makeOdo(host, tokens, size, lead) {
+        const nd = tokens.filter((t) => t === "d").length;
+        let place = nd, html = "";
+        const cols = [];
+        tokens.forEach((t) => {
+          if (t === "d") {
+            place--;
+            const id = "bf" + fid++;
+            fdefs.insertAdjacentHTML("beforeend", '<filter id="' + id + '" x="0" y="-30%" width="100%" height="160%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="0 0"/></filter>');
+            html += '<span class="cw"><span class="col" style="filter:url(#' + id + ')"><span class="strip" data-layout-allow-overflow>' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((d) => "<b>" + d + "</b>").join("") + "</span></span></span>";
+            cols.push({ k: place, id });
+          } else {
+            html += '<span class="lit" style="width:' + LITW[t] + 'em">' + t + "</span>";
+          }
+        });
+        host.classList.add("od");
+        host.innerHTML = html;
+        const cw = host.querySelectorAll(".cw");
+        const st = host.querySelectorAll(".strip");
+        const bl = cols.map((c) => fdefs.querySelector("#" + c.id + " feGaussianBlur"));
+        return function set(v, dvdt) {
+          cols.forEach((c, i) => {
+            const p = posOf(c.k, v);
+            st[i].style.transform = "translate3d(0," + (-(((p % 10) + 10) % 10) / 11 * 100).toFixed(4) + "%,0)";
+            const d = 0.01;
+            const dp = (posOf(c.k, v + d) - posOf(c.k, v - d)) / (2 * d);
+            let s = Math.min(size * 0.012, Math.abs(dp * dvdt) * size * 0.0007);
+            if (s < size * 0.004) s = 0;
+            bl[i].setAttribute("stdDeviation", "0 " + s.toFixed(2));
+            cw[i].style.opacity = lead && c.k > 0 ? clamp((v / Math.pow(10, c.k) - 0.55) / 0.45, 0, 1).toFixed(3) : "1";
+          });
+        };
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      function F(target, from, to, at) {
+        tl.fromTo(target, from, Object.assign({ immediateRender: false }, to), at);
+      }
+      // proxy tween: value, blur and any linked drawing come from one eased progress
+      function count(set, from, to, at, dur, easeName, extra) {
+        const E = gsap.parseEase(easeName);
+        const o = { u: 0 };
+        const upd = () => {
+          const u = o.u, a = Math.max(0, u - 0.004), b = Math.min(1, u + 0.004);
+          const p = E(u), dp = (E(b) - E(a)) / (b - a);
+          set(from + (to - from) * p, ((to - from) * dp) / dur);
+          if (extra) extra(p, from + (to - from) * p);
+        };
+        upd();
+        tl.fromTo(o, { u: 0 }, { u: 1, duration: dur, ease: "none", immediateRender: false, onUpdate: upd }, at);
+      }
+
+      /* ---------- scene A: hero stat ---------- */
+      const setA = makeOdo(document.getElementById("numA"), ["d", "d", "×"], 480, true);
+
+      /* ---------- scene B: dashboard ---------- */
+      const ICON = {
+        overview: '<rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5"/><rect x="11" y="11" width="6" height="6" rx="1.5"/>',
+        pipelines: '<circle cx="4.5" cy="5" r="2"/><circle cx="4.5" cy="15" r="2"/><circle cx="15.5" cy="10" r="2"/><path d="M6.5 5h3a3 3 0 0 1 3 3v.5M6.5 15h3a3 3 0 0 0 3-3v-.5"/>',
+        builds: '<path d="M6 4.5v11l9-5.5z"/>',
+        cache: '<ellipse cx="10" cy="5" rx="6" ry="2.5"/><path d="M4 5v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5M4 10v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5"/>',
+        runners: '<rect x="4" y="4" width="12" height="12" rx="2"/><path d="M8 1.5V4M12 1.5V4M8 16v2.5M12 16v2.5M1.5 8H4M1.5 12H4M16 8h2.5M16 12h2.5"/>',
+        secrets: '<rect x="4" y="9" width="12" height="8" rx="2"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/>',
+        billing: '<rect x="2.5" y="4.5" width="15" height="11" rx="2"/><path d="M2.5 8.5h15"/>',
+      };
+      document.getElementById("nav").innerHTML = [
+        ["overview", "Overview", "", 1], ["pipelines", "Pipelines", "24", 0], ["builds", "Builds", "", 0], ["cache", "Cache", "", 0],
+        ["runners", "Runners", "12", 0], ["secrets", "Secrets", "", 0], ["billing", "Billing", "", 0],
+      ].map((n) => '<div class="ni' + (n[3] ? " on" : "") + '"><svg viewBox="0 0 20 20">' + ICON[n[0]] + "</svg>" + n[1] + (n[2] ? "<b>" + n[2] + "</b>" : "") + "</div>").join("");
+
+      const setH = makeOdo(document.getElementById("numH"), ["$", "d", "d", "d"], 172, false);
+      const setS1 = makeOdo(document.getElementById("numS1"), ["d"], 132, false);
+      const setS2 = makeOdo(document.getElementById("numS2"), ["d"], 132, false);
+
+      // pips
+      ["pips1", "pips2"].forEach((id) => { document.getElementById(id).innerHTML = "<i></i>".repeat(12); });
+      const pips1 = document.querySelectorAll("#pips1 i"), pips2 = document.querySelectorAll("#pips2 i");
+      const lightPips = (els) => (v) => els.forEach((e, i) => { e.style.opacity = v >= i + 0.999 ? "1" : "0.16"; });
+      const lp1 = lightPips(pips1), lp2 = lightPips(pips2);
+
+      // sparkline: one eased progress draws the line, the area and the tip dot
+      const rs = mulberry(23);
+      const SP = [];
+      for (let i = 0; i < 26; i++) {
+        const t = i / 25;
+        SP.push(clamp(Math.pow(t, 1.25) * 0.9 + (rs() - 0.5) * 0.09 + (i > 0 ? 0.02 : 0), 0, 1));
+      }
+      for (let i = 1; i < SP.length; i++) SP[i] = Math.max(SP[i], SP[i - 1] - 0.015);
+      const sx = (i) => (i / 25) * 252, sy = (v) => 142 - v * 126;
+      let d = "M" + sx(0) + " " + sy(SP[0]);
+      for (let i = 0; i < SP.length - 1; i++) {
+        const p0 = SP[Math.max(0, i - 1)], p1 = SP[i], p2 = SP[i + 1], p3 = SP[Math.min(SP.length - 1, i + 2)];
+        const x0 = sx(Math.max(0, i - 1)), x1 = sx(i), x2 = sx(i + 1), x3 = sx(Math.min(SP.length - 1, i + 2));
+        d += " C" + (x1 + (x2 - x0) / 6).toFixed(2) + " " + (sy(p1) + (sy(p2) - sy(p0)) / 6).toFixed(2) + " " + (x2 - (x3 - x1) / 6).toFixed(2) + " " + (sy(p2) - (sy(p3) - sy(p1)) / 6).toFixed(2) + " " + x2.toFixed(2) + " " + sy(p2).toFixed(2);
+      }
+      const spl = document.getElementById("spl"), spa = document.getElementById("spa");
+      spl.setAttribute("d", d);
+      spa.setAttribute("d", d + " L252 150 L0 150 Z");
+      const SPL = spl.getTotalLength();
+      spl.style.strokeDasharray = SPL;
+      const spcr = document.getElementById("spcr"), spd = document.getElementById("spd"), spd1 = document.getElementById("spd1");
+      function drawSpark(p) {
+        spl.style.strokeDashoffset = (SPL * (1 - p)).toFixed(2);
+        const pt = spl.getPointAtLength(SPL * p);
+        spcr.setAttribute("width", pt.x.toFixed(2));
+        spd.setAttribute("cx", pt.x.toFixed(2)); spd.setAttribute("cy", pt.y.toFixed(2));
+        spd1.setAttribute("cx", pt.x.toFixed(2)); spd1.setAttribute("cy", pt.y.toFixed(2));
+      }
+      drawSpark(0);
+
+      // bar chart
+      const rb = mulberry(61);
+      const PL = document.getElementById("plot");
+      const MAXV = 700, PH = 270;
+      const GRID = [0, 200, 400, 600];
+      let ph = "";
+      GRID.forEach((g) => {
+        const y = PH - (g / MAXV) * PH;
+        ph += '<div class="gl" style="top:' + y.toFixed(1) + 'px"></div><div class="gy" style="top:' + y.toFixed(1) + 'px">' + g + "</div>";
+      });
+      const BV = [];
+      let peakI = 0;
+      for (let h = 0; h < 24; h++) {
+        const v = 96 + 500 * Math.exp(-Math.pow((h - 13.5) / 4.8, 2)) + (rb() - 0.5) * 52;
+        BV.push(v);
+        if (v > BV[peakI]) peakI = h;
+      }
+      BV.forEach((v, h) => {
+        const hh = (v / MAXV) * PH, cf = 0.32 + rb() * 0.12;
+        const left = h * 25.5 + 4.75;
+        ph += '<div class="bar" id="bar' + h + '" data-layout-allow-overflow style="left:' + left.toFixed(2) + "px;height:" + hh.toFixed(1) + 'px"><i class="c" style="height:' + (cf * 100).toFixed(1) + '%"></i><i class="p" style="top:0;height:' + ((1 - cf) * 100).toFixed(1) + "%" + (h === peakI ? ";background:#bdf34f" : "") + '"></i></div>';
+      });
+      ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"].forEach((l, i) => {
+        ph += '<div class="gx" style="left:' + (i * 4 * 25.5 + 12.75).toFixed(1) + 'px">' + l + "</div>";
+      });
+      const pkx = peakI * 25.5 + 12.75, pky = PH - (BV[peakI] / MAXV) * PH;
+      ph += '<div id="peakl" style="left:' + pkx.toFixed(1) + "px;top:" + (pky - 40).toFixed(1) + 'px;height:34px"></div>';
+      ph += '<div id="peak" style="left:' + (pkx - 70).toFixed(1) + "px;top:" + (pky - 72).toFixed(1) + 'px">13:00 &middot; ' + Math.round(BV[peakI]) + " builds</div>";
+      PL.innerHTML = ph;
+
+      // recent builds
+      const ROWS = [
+        ["api-gateway", "main", "fix: retry on 502 from registry", "38s", "2m ago", 0],
+        ["web-app", "pr-4812", "feat: streaming search results", "52s", "4m ago", 0],
+        ["worker", "main", "chore: bump node to 22.11", "14s", "running", 1],
+        ["docs", "pr-4809", "docs: add cache guide", "21s", "9m ago", 0],
+        ["billing", "main", "fix: round invoice totals", "1m 04s", "12m ago", 0],
+      ];
+      document.getElementById("rows").innerHTML = ROWS.map((r, i) =>
+        '<div class="row" id="row' + i + '" style="top:' + (74 + i * 64) + 'px"><div class="dt' + (r[5] ? " run" : "") + '"></div><div class="t1">' + r[0] + " <span>&middot; " + r[1] + '</span></div><div class="t2">' + r[2] + '</div><div class="du">' + r[3] + '</div><div class="ag">' + r[4] + "</div></div>"
+      ).join("");
+
+      /* ---------- scene C: final stat ---------- */
+      const setC = makeOdo(document.getElementById("numC"), ["d", "d", ".", "d", "d", "%"], 300, false);
+      document.getElementById("ticks").innerHTML = "<i></i>".repeat(90);
+      const ticks = document.querySelectorAll("#ticks i");
+      function litTicks(p) {
+        ticks.forEach((e, i) => { e.style.opacity = (0.1 + 0.9 * clamp(p * 90 - i + 1, 0, 1) * (i === 89 ? 1 : 0.62 + 0.38 * (i / 89))).toFixed(3); });
+      }
+      litTicks(0);
+
+      /* ---------- initial states ---------- */
+      gsap.set("#kickA", { opacity: 0 });
+      gsap.set("#numA", { opacity: 0 });
+      gsap.set("#lblA", { opacity: 0 });
+      gsap.set("#ruleL, #ruleR", { scaleX: 0 });
+      gsap.set("#dash", { opacity: 0, y: 90, scale: 0.95 });
+      gsap.set("#cardC", { opacity: 0, y: 80, scale: 0.96 });
+      gsap.set("#glow1", { opacity: 0 });
+      gsap.set("#peak, #peakl, #chipH", { opacity: 0 });
+      gsap.set("#kickC, #lblC", { opacity: 0 });
+      gsap.set("#tag", { opacity: 0 });
+      gsap.set("#wm", { yPercent: 105 });
+      gsap.set("#lmk b", { scaleY: 0 });
+
+      /* ---------- A: 1x -> 11x ---------- */
+      tl.to("#glow1", { opacity: 0.75, duration: 1.3, ease: "power2.out" }, 0.1);
+      F("#kickA", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, ease: EXPO }, 0.12);
+      F("#numA", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out" }, 0.22);
+      count(setA, 1, 11, 0.35, 2.1, "power4.out");
+      F("#ruleL", { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: EXPO }, 1.05);
+      F("#ruleR", { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: EXPO }, 1.05);
+      F("#lblA", { opacity: 0, y: 34, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.1, ease: EXPO }, 1.3);
+      tl.to("#glow1", { opacity: 1, duration: 0.5, ease: "power2.out" }, 1.45);
+      tl.to("#glow1", { opacity: 0.6, duration: 1.0, ease: "power2.inOut" }, 1.95);
+      F("#aIn", { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }, { opacity: 0, y: -56, scale: 1.07, filter: "blur(8px)", duration: 0.55, ease: "power2.in" }, 3.0);
+
+      /* ---------- B: dashboard ---------- */
+      tl.to("#dash", { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: EXPO }, 2.95);
+      gsap.set("#dashWrap", { transformOrigin: "773px 352px" });
+      tl.fromTo("#dashWrap", { scale: 1 }, { scale: 1.1, duration: 2.9, ease: "sine.inOut", immediateRender: false }, 3.0);
+      count(setH, 100, 803, 3.35, 2.2, "power4.out", (p) => drawSpark(p));
+      count(setS1, 0, 9, 3.5, 1.5, "power4.out", (p, v) => lp1(v));
+      count(setS2, 0, 4, 3.62, 1.3, "power4.out", (p, v) => lp2(v));
+      F("#chipH", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.7, ease: EXPO }, 4.3);
+      F("#hero", { boxShadow: "0 0 0 0 rgba(189,243,79,0)", borderColor: "rgba(255,255,255,0.08)" }, { boxShadow: "0 0 60px 0 rgba(189,243,79,0.10)", borderColor: "rgba(189,243,79,0.5)", duration: 0.8, ease: "power2.out" }, 4.2);
+      for (let h = 0; h < 24; h++) {
+        F("#bar" + h, { scaleY: 0 }, { scaleY: 1, duration: 1.1, ease: EXPO }, 3.45 + h * 0.022 + (h === peakI ? 0 : 0));
+      }
+      F("#peakl", { opacity: 0, scaleY: 0, transformOrigin: "50% 100%" }, { opacity: 1, scaleY: 1, duration: 0.5, ease: EXPO }, 4.25);
+      F("#peak", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: EXPO }, 4.35);
+      for (let i = 0; i < ROWS.length; i++) {
+        F("#row" + i, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.7, ease: EXPO }, 3.7 + i * 0.07);
+      }
+      tl.to("#dash", { opacity: 0, y: -50, scale: 1.05, duration: 0.55, ease: "power2.in" }, 5.62);
+      tl.to("#glow1", { opacity: 0.4, duration: 0.8, ease: "power2.inOut" }, 3.0);
+
+      /* ---------- C: final stat ---------- */
+      tl.to("#cardC", { opacity: 1, y: 0, scale: 1, duration: 0.95, ease: EXPO }, 5.8);
+      F("#kickC", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: EXPO }, 5.95);
+      count(setC, 9000, 9999, 6.0, 1.6, "power3.out", (p) => litTicks(p));
+      F("#lblC", { opacity: 0, y: 26, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: EXPO }, 6.55);
+      tl.to("#glow1", { opacity: 0.8, duration: 0.8, ease: "power2.out" }, 6.0);
+      tl.to("#cardC", { opacity: 0, y: -44, scale: 1.04, duration: 0.5, ease: "power2.in" }, 7.5);
+
+      /* ---------- lockup ---------- */
+      F("#lmk b", { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: EXPO, stagger: 0.08 }, 7.75);
+      F("#slash", { strokeDashoffset: 110 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.out" }, 8.1);
+      F("#wm", { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: EXPO }, 8.0);
+      F("#tag", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.9, ease: EXPO }, 8.5);
+      tl.to("#glow1", { opacity: 0.5, duration: 1.2, ease: "power2.inOut" }, 8.2);
+
+      tl.set({}, {}, 10);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

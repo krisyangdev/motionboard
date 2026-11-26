@@ -5,9 +5,9 @@
   "updated": "2026-11-26",
   "en": {
     "title": "Product Reveal Animation and Launch Video Examples",
-    "description": "Ten product reveal animation recipes from launch films: light reveal, macro pull-out, x-ray, fluted glass, dolly zoom and more, built with HyperFrames.",
+    "description": "Fourteen product reveal animation recipes from launch films: light reveal, macro pull-out, x-ray, lens flare, exploded view and more, built with HyperFrames.",
     "h1": "Product reveal examples from launch films",
-    "lede": "A product reveal is the shot where a launch video first shows the product. These ten recipes cover light reveals, macro pull-outs, x-ray dissolves, accessory line-ups, fluted glass, dolly zoom and light beams, taken from product launch videos. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with camera and timing numbers for every move.",
+    "lede": "A product reveal is the shot where a launch video first shows the product. These fourteen recipes cover light reveals, macro pull-outs, x-ray dissolves, accessory line-ups, fluted glass, dolly zoom, light beams, lens flare, count-up numbers, rack focus and exploded views, taken from product launch videos. Each film runs 10 to 12 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with camera and timing numbers for every move.",
     "blocks": [
       {
         "t": "films",
@@ -21,7 +21,11 @@
           "outline-to-solid-reveal",
           "fluted-glass-effect",
           "dolly-zoom-effect",
-          "light-beam-effect"
+          "light-beam-effect",
+          "lens-flare-effect",
+          "count-up-animation",
+          "rack-focus",
+          "exploded-view-animation"
         ]
       },
       {
@@ -41,8 +45,12 @@
         "text": "Three more recipes reveal the product with the lens or with light. Fluted Glass Effect raises light streaks through ribbed glass on a laptop screen until they form a big word, then pushes in while the glass flattens and the title sharpens. Dolly Zoom Effect backs the camera away as the lens zooms in, so a phone holds its size and the hall behind it flattens into a dashboard. Light Beam Effect has laptops throw trapezoid beams of light that each reveal an app screen, hand off between laptops and carry a stat along one edge."
       },
       {
+        "t": "p",
+        "text": "Four more recipes reveal the product with a flare, a number, a focus pull or a teardown. Lens Flare Effect sweeps a long blue streak with a chain of ghost rings across a smartwatch on black, then raises the title. Count Up Animation rolls a huge number up digit by digit and repeats the move in a dashboard card with a line drawing in step. Rack Focus pulls focus from a foreground insight card to the laptop dashboard behind it, then onto the headline. Exploded View Animation spreads a phone's seven layers apart with callouts, dives the camera onto the logic board, then closes the stack and lands on the lockup."
+      },
+      {
         "t": "h2",
-        "text": "The 10 product reveal recipes"
+        "text": "The 14 product reveal recipes"
       },
       {
         "t": "ul",
@@ -56,7 +64,11 @@
           "[Outline-to-Solid Reveal](/recipes/outline-to-solid-reveal/): A light point draws the outline over 3 s, the solid body fades in 1.5 s, a highlight sweeps across, and a slow push follows until 8.2 s.",
           "[Fluted Glass Effect](/recipes/fluted-glass-effect/): Light streaks rise through ribbed glass on a laptop screen and form a big word; the camera pushes in, the glass flattens and the title sharpens.",
           "[Dolly Zoom Effect](/recipes/dolly-zoom-effect/): The camera backs away as the lens zooms in: a phone holds its size and the hall behind it flattens into a dashboard.",
-          "[Light Beam Effect](/recipes/light-beam-effect/): Laptops throw trapezoid beams of light that reveal app screens, hand off to each other and carry a stat along one edge."
+          "[Light Beam Effect](/recipes/light-beam-effect/): Laptops throw trapezoid beams of light that reveal app screens, hand off to each other and carry a stat along one edge.",
+          "[Lens Flare Effect](/recipes/lens-flare-effect/): A long blue flare with chromatic ghost rings sweeps across a smartwatch on black, then the title rises and a smaller flare crosses it.",
+          "[Count Up Animation](/recipes/count-up-animation/): A huge number rolls up digit by digit, fast at first and slowing onto its target, then the same move runs in a dashboard card with a line drawing in step.",
+          "[Rack Focus](/recipes/rack-focus/): Focus pulls from a foreground card to the laptop behind it, a second card slides in and takes focus back, and a last pull lands on the headline.",
+          "[Exploded View Animation](/recipes/exploded-view-animation/): A phone's seven layers spread apart with callouts, the camera dives onto the logic board, then the stack closes and lands on the lockup."
         ]
       },
       {
@@ -96,9 +108,9 @@
   },
   "zh": {
     "title": "产品揭示动画与发布视频示例",
-    "description": "10 个来自发布片的产品揭示动画配方，包括光线揭示、微距拉出、X 光透视、棱镜玻璃、希区柯克变焦等，用 HyperFrames 写代码做出。",
+    "description": "14 个来自发布片的产品揭示动画配方，包括光线揭示、微距拉出、X 光透视、棱镜玻璃、镜头光晕、爆炸图等，用 HyperFrames 写代码做出。",
     "h1": "发布片里的产品揭示示例",
-    "lede": "产品揭示是发布视频第一次展示产品的镜头。这 10 个配方来自产品发布视频，覆盖光线揭示、微距拉出、X 光叠化、配件排列、棱镜玻璃、希区柯克变焦和光束。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，并标出每个运镜和动作的时间数据。",
+    "lede": "产品揭示是发布视频第一次展示产品的镜头。这 14 个配方来自产品发布视频，覆盖光线揭示、微距拉出、X 光叠化、配件排列、棱镜玻璃、希区柯克变焦、光束、镜头光晕、数字滚动、拉焦和爆炸图。每个都是用 HyperFrames 写代码做出的 10 到 12 秒 1920x1080 短片，旁边附上原片，并标出每个运镜和动作的时间数据。",
     "blocks": [
       {
         "t": "films",
@@ -112,7 +124,11 @@
           "outline-to-solid-reveal",
           "fluted-glass-effect",
           "dolly-zoom-effect",
-          "light-beam-effect"
+          "light-beam-effect",
+          "lens-flare-effect",
+          "count-up-animation",
+          "rack-focus",
+          "exploded-view-animation"
         ]
       },
       {
@@ -132,8 +148,12 @@
         "text": "另有三个配方用镜头或光来揭示产品。棱镜玻璃效果让光带穿过笔记本屏幕上的棱纹玻璃，聚成一个大字，随后镜头推近，玻璃变平，标题变清晰。希区柯克变焦效果在镜头后退的同时把焦距推近，手机大小不变，身后的大厅被压平成一个仪表盘。光束效果让笔记本投出梯形光束，每道光束里显示一个应用界面，光束在笔记本之间交接，并沿一条边带出一个数据。"
       },
       {
+        "t": "p",
+        "text": "另有四个配方用光晕、数字、拉焦或拆解来揭示产品。镜头光晕效果让一道细长的蓝色光晕带着一串鬼影圆环扫过黑场里的智能手表，随后标题升起。数字滚动动画让一个很大的数字一位一位向上滚，再把同一个手法放进仪表盘卡片，折线随数字同步画出。拉焦让焦点从前景的洞察卡片拉到后面笔记本上的仪表盘，再拉到标题。爆炸图动画把手机的七层结构分开并配上标注，镜头扎向逻辑板，随后叠层合拢，落在字标上。"
+      },
+      {
         "t": "h2",
-        "text": "10 个产品揭示配方"
+        "text": "14 个产品揭示配方"
       },
       {
         "t": "ul",
@@ -147,7 +167,11 @@
           "[描边到实体显形动画](/recipes/outline-to-solid-reveal/)：光点用 3 秒勾出轮廓，实心主体用 1.5 秒淡入，一道高光扫过，之后缓慢推近到 8.2 秒。",
           "[棱镜玻璃效果](/recipes/fluted-glass-effect/)：光带穿过笔记本屏幕上的棱纹玻璃，聚成一个大字；镜头推近，玻璃变平，标题变清晰。",
           "[希区柯克变焦效果](/recipes/dolly-zoom-effect/)：镜头后退的同时镜头焦距推近：手机大小不变，身后的大厅被压平成一个仪表盘。",
-          "[光束效果](/recipes/light-beam-effect/)：笔记本投出梯形光束，光束里显示应用界面，彼此交接，并沿一条边带出一个数据。"
+          "[光束效果](/recipes/light-beam-effect/)：笔记本投出梯形光束，光束里显示应用界面，彼此交接，并沿一条边带出一个数据。",
+          "[镜头光晕效果](/recipes/lens-flare-effect/)：一道细长的蓝色光晕带着色散鬼影圆环扫过黑场里的智能手表，随后标题升起，一道更小的光晕从它上面掠过。",
+          "[数字滚动动画](/recipes/count-up-animation/)：一个很大的数字一位一位向上滚，开头很快，最后慢慢落在目标数上，随后同一个手法出现在仪表盘卡片里，折线随数字同步画出。",
+          "[拉焦（焦点转移）](/recipes/rack-focus/)：焦点从前景卡片拉到后面的笔记本，第二张卡片滑入并把焦点拉回前景，最后一次拉焦落在标题上。",
+          "[爆炸图动画](/recipes/exploded-view-animation/)：手机的七层结构分开并配上标注，镜头扎向逻辑板，随后叠层合拢，落在字标上。"
         ]
       },
       {

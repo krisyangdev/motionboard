@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #09090b;
+        --ink: #f4f4f6;
+        --dim: #8a8a96;
+        --accent: #ffb15c;
+        --font-ui: "Inter", -apple-system, "Helvetica Neue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .ic { flex: none; display: block; }
+
+      /* ---------- product UI context (dimmed, blurred) ---------- */
+      #ui { z-index: 1; opacity: 0; }
+      #uiwin {
+        --pn: #121217; --pn2: #17171d; --ln: #26262d; --tx: #ececf1; --tx2: #a3a3ae; --tx3: #6f6f7a; --ac: #ffb15c; --acbg: rgba(255, 177, 92, 0.16);
+        position: absolute; left: 110px; top: 60px; width: 1700px; height: 960px; border-radius: 14px; overflow: hidden;
+        background: #0d0d11; font-size: 13px; color: var(--tx2); font-variant-numeric: tabular-nums;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.09);
+        filter: blur(9px); transform-origin: 960px 480px;
+      }
+      .sb { position: absolute; left: 0; top: 0; width: 250px; height: 960px; padding-top: 16px; background: #0d0d11; border-right: 1px solid var(--ln); }
+      .lights { display: flex; gap: 8px; padding: 0 16px 18px; }
+      .lights i { display: block; width: 12px; height: 12px; border-radius: 50%; background: #2c2c34; }
+      .ws { display: flex; align-items: center; gap: 9px; height: 32px; padding: 0 16px; font-size: 14px; font-weight: 650; color: var(--tx); margin-bottom: 10px; }
+      .wsi { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(135deg, #ffc57e, #ff8f3d); display: flex; align-items: center; justify-content: center; }
+      .si { display: flex; align-items: center; gap: 9px; height: 30px; margin: 0 8px; padding: 0 10px; border-radius: 7px; font-size: 13.5px; font-weight: 500; color: var(--tx2); white-space: nowrap; }
+      .si .ic { color: var(--tx3); }
+      .si.on { background: rgba(255, 255, 255, 0.07); color: var(--tx); }
+      .si b { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--tx3); }
+      .sh { margin: 18px 18px 6px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--tx3); }
+      .sfoot { position: absolute; left: 0; bottom: 0; width: 250px; height: 60px; border-top: 1px solid var(--ln); display: flex; align-items: center; gap: 10px; padding: 0 16px; font-size: 13px; font-weight: 600; color: var(--tx); }
+      .sfoot span { display: block; font-size: 11.5px; font-weight: 500; color: var(--tx3); }
+      .av { width: 28px; height: 28px; border-radius: 50%; background: #5f7be8; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+      .mn { position: absolute; left: 250px; top: 0; width: 1090px; height: 960px; background: var(--pn); overflow: hidden; }
+      .mh { height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-bottom: 1px solid var(--ln); font-size: 13.5px; font-weight: 500; color: var(--tx3); white-space: nowrap; }
+      .mh b { color: var(--tx); font-weight: 600; }
+      .chip { height: 26px; padding: 0 10px; display: flex; align-items: center; gap: 6px; border: 1px solid var(--ln); border-radius: 7px; font-size: 12.5px; font-weight: 500; color: var(--tx2); background: var(--pn2); }
+      .btn { height: 30px; padding: 0 14px; display: flex; align-items: center; border-radius: 7px; font-size: 13px; font-weight: 650; color: #1a1209; background: var(--ac); }
+      .grow { flex: 1; }
+      #doc { position: absolute; left: 150px; top: 80px; width: 790px; }
+      #doc h1 { font-size: 52px; line-height: 60px; font-weight: 750; letter-spacing: -0.03em; color: var(--tx); margin-bottom: 14px; }
+      #doc .meta { font-size: 13.5px; color: var(--tx3); margin-bottom: 34px; display: flex; gap: 14px; align-items: center; }
+      #doc h2 { font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.015em; color: var(--tx); margin: 34px 0 12px; }
+      #doc p, #doc li { font-size: 18px; line-height: 30px; color: #bdbdc7; margin-bottom: 18px; }
+      #doc ul { list-style: none; }
+      #doc li { position: relative; padding-left: 22px; margin-bottom: 8px; }
+      #doc li::before { content: ""; position: absolute; left: 4px; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--tx3); }
+      .sg { background: var(--acbg); border-bottom: 2px solid var(--ac); color: #f1e3d2; }
+      .rp { position: absolute; left: 1340px; top: 0; width: 360px; height: 960px; background: #0f0f14; border-left: 1px solid var(--ln); padding: 20px 20px; overflow: hidden; }
+      .rh { font-size: 12px; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: var(--tx3); margin-bottom: 14px; }
+      .score { display: flex; align-items: center; gap: 18px; padding: 16px; border: 1px solid var(--ln); border-radius: 12px; background: var(--pn2); margin-bottom: 18px; }
+      .score .n { font-size: 38px; font-weight: 750; color: var(--tx); letter-spacing: -0.03em; line-height: 1; }
+      .score .t { font-size: 13px; line-height: 19px; color: var(--tx2); }
+      .kv { display: flex; align-items: center; height: 34px; border-bottom: 1px solid var(--ln); font-size: 13.5px; }
+      .kv b { margin-left: auto; font-weight: 600; color: var(--tx); }
+      .sc { border: 1px solid var(--ln); background: var(--pn2); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+      .sc .a { font-size: 12px; font-weight: 650; color: var(--ac); margin-bottom: 6px; }
+      .sc .b { font-size: 13.5px; line-height: 20px; color: var(--tx2); }
+      .sc .b s { color: var(--tx3); }
+      .sc .b em { font-style: normal; color: var(--tx); font-weight: 600; }
+      .sc .r { display: flex; gap: 8px; margin-top: 10px; font-size: 12px; font-weight: 600; }
+      .sc .r span { padding: 3px 9px; border-radius: 6px; border: 1px solid var(--ln); color: var(--tx2); }
+      .sc .r span.y { background: var(--acbg); border-color: transparent; color: var(--ac); }
+
+      #veil { z-index: 2; pointer-events: none; background: radial-gradient(ellipse 1350px 620px at 50% 50%, rgba(9, 9, 11, 0.8) 0%, rgba(9, 9, 11, 0.6) 55%, rgba(9, 9, 11, 0.12) 100%); }
+
+      /* ---------- text lines ---------- */
+      #stage { z-index: 3; transform-origin: 960px 540px; }
+      .line { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .row { display: flex; justify-content: center; white-space: nowrap; }
+      .w { display: inline-block; margin: 0 0.13em; font-weight: 700; letter-spacing: -0.035em; line-height: 1.04; color: var(--ink); padding-bottom: 0.06em; }
+      .w.dim { color: var(--dim); }
+      .w.ac { color: var(--accent); }
+      .u { display: inline-block; }
+      .u0 { opacity: 0; }
+
+      #glow { z-index: 2; opacity: 0; background: radial-gradient(ellipse 900px 380px at 50% 46%, rgba(255, 177, 92, 0.2) 0%, rgba(255, 177, 92, 0) 100%); }
+
+      /* ---------- lockup ---------- */
+      #lock { z-index: 3; transform-origin: 960px 720px; }
+      #lockrow { position: absolute; left: 0; top: 656px; width: 1920px; height: 128px; display: flex; align-items: center; justify-content: center; gap: 26px; }
+      #mark { width: 108px; height: 108px; }
+      #wm { display: flex; font-size: 96px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--ink); padding-bottom: 8px; }
+      #wm .lt { display: block; opacity: 0; }
+
+      #fx { z-index: 5; pointer-events: none; }
+      #vig { background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.55) 100%); }
+      #grain { position: absolute; left: -240px; top: -240px; width: 2400px; height: 1560px; opacity: 0.09; background-size: 300px 300px; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.5" data-width="1920" data-height="1080">
+      <div id="ui" class="clip full" data-start="0" data-duration="10.5" data-track-index="0">
+        <div id="uiwin" data-layout-allow-overlap data-layout-ignore></div>
+      </div>
+      <div id="glow" class="clip full" data-start="0" data-duration="10.5" data-track-index="1"></div>
+      <div id="veil" class="clip full" data-start="0" data-duration="10.5" data-track-index="2"></div>
+      <div id="stage" class="clip full" data-start="0" data-duration="10.5" data-track-index="3" data-layout-allow-overlap data-layout-ignore></div>
+      <div id="lock" class="clip full" data-start="8.7" data-duration="1.8" data-track-index="4">
+        <div id="lockrow" data-layout-allow-overlap>
+          <svg id="mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="gm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc98a" /><stop offset="1" stop-color="#ff8c38" /></linearGradient></defs>
+            <rect width="100" height="100" rx="24" fill="url(#gm)" />
+            <path d="M69 34 A 24 24 0 1 0 69 66" fill="none" stroke="#1a1209" stroke-width="10.5" stroke-linecap="round" />
+            <rect x="53" y="46.5" width="17" height="7" rx="3.5" fill="#1a1209" />
+          </svg>
+          <div id="wm"></div>
+        </div>
+      </div>
+      <div id="fx" class="clip full" data-start="0" data-duration="10.5" data-track-index="5">
+        <div id="vig" class="full"></div>
+        <div id="grain"></div>
+      </div>
+    </div>
+
+    <script>
+      const EXPO = "expo.out";
+      const tl = gsap.timeline({ paused: true });
+      function mulberry32(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+      const rnd = mulberry32(2611);
+
+      /* ---------- icons ---------- */
+      const IC = {
+        search: '<circle cx="7" cy="7" r="4.25"/><path d="M10.2 10.2l3 3"/>',
+        file: '<path d="M4 2.5h5l3 3v8H4z"/><path d="M9 2.5v3h3"/>',
+        folder: '<path d="M2.5 4.5h4l1.5 1.5h5.5v6.5h-11z"/>',
+        plus: '<path d="M8 3.5v9M3.5 8h9"/>',
+        spark: '<path d="M8 2.5l1.3 3.7 3.7 1.3-3.7 1.3L8 12.5 6.7 8.8 3 7.5l3.7-1.3z"/>',
+        clock: '<circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.2l2 1.3"/>',
+        share: '<path d="M8 10V3M5.5 5.5L8 3l2.5 2.5M4 9v3.5h8V9"/>',
+        star: '<path d="M8 2.5l1.7 3.6 3.8.5-2.8 2.7.7 3.8L8 11.2l-3.4 1.9.7-3.8L2.5 6.6l3.8-.5z"/>',
+        check: '<path d="M3.5 8.5l3 3 6-6.5"/>',
+      };
+      const ic = (n, s) => '<svg class="ic" width="' + (s || 15) + '" height="' + (s || 15) + '" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + IC[n] + "</svg>";
+
+      /* ---------- product UI: Clearline editor ---------- */
+      (function () {
+        const sb =
+          '<div class="sb"><div class="lights"><i></i><i></i><i></i></div>' +
+          '<div class="ws"><span class="wsi"><svg width="12" height="12" viewBox="0 0 100 100"><path d="M69 34 A 24 24 0 1 0 69 66" fill="none" stroke="#1a1209" stroke-width="13" stroke-linecap="round"/></svg></span>Clearline</div>' +
+          '<div class="si">' + ic("search") + 'Search<b>⌘K</b></div>' +
+          '<div class="si">' + ic("spark") + 'Ask Clearline</div>' +
+          '<div class="si">' + ic("clock") + 'Recent</div>' +
+          '<div class="sh">Drafts</div>' +
+          '<div class="si on">' + ic("file") + 'Launch announcement<b>4</b></div>' +
+          '<div class="si">' + ic("file") + 'Q4 investor memo</div>' +
+          '<div class="si">' + ic("file") + 'Onboarding email v3</div>' +
+          '<div class="si">' + ic("file") + 'Changelog 4.2</div>' +
+          '<div class="si">' + ic("file") + 'Podcast outline</div>' +
+          '<div class="sh">Folders</div>' +
+          '<div class="si">' + ic("folder") + 'Marketing<b>24</b></div>' +
+          '<div class="si">' + ic("folder") + 'Product<b>18</b></div>' +
+          '<div class="si">' + ic("folder") + 'Personal<b>9</b></div>' +
+          '<div class="si">' + ic("star") + 'Starred<b>6</b></div>' +
+          '<div class="sfoot"><div class="av">MC</div><div>Maya Chen<span>Pro workspace</span></div></div></div>';
+        const doc =
+          '<div id="doc"><h1>Introducing Clearline 2.0</h1>' +
+          '<div class="meta"><span>Draft 4</span><span>·</span><span>Edited 2 minutes ago</span><span>·</span><span>842 words</span></div>' +
+          "<p>Most writing tools wait until you are finished. Clearline works while you think, turning half-formed notes into sentences you would be glad to send. Start anywhere: a voice memo, a messy outline, a single line you cannot stop circling.</p>" +
+          '<p><span class="sg">In order to</span> keep your voice, every suggestion arrives as a change you can accept, edit or ignore. Nothing is rewritten behind your back, and <span class="sg">the original is always one keystroke away</span>.</p>' +
+          "<h2>What is new in 2.0</h2>" +
+          "<ul><li>Focus mode rewrites one paragraph at a time and explains each change.</li><li>Tone presets for launch posts, investor updates and support replies.</li><li>Shared style guides that follow your team across every document.</li><li>Offline drafts that sync the moment you reconnect.</li></ul>" +
+          '<h2>Availability</h2><p>Clearline 2.0 is available today on Mac, Windows and the web. Existing workspaces upgrade automatically, and every plan includes Focus mode for the first thirty days.</p>' +
+          "<p>Teams can import their existing style guide from a document, a spreadsheet or a link, and Clearline will apply it to every draft from the first sentence.</p></div>";
+        const mn =
+          '<div class="mn"><div class="mh">Drafts<span>/</span><b>Launch announcement</b><div class="grow"></div><div class="chip">Tone · Direct</div><div class="chip">' + ic("clock", 13) + 'Saved 2s ago</div><div class="btn">Share</div></div>' + doc + "</div>";
+        const rp =
+          '<div class="rp"><div class="rh">Clarity</div>' +
+          '<div class="score"><div class="n">92</div><div class="t">Clear and direct.<br>Readers finish this in 4 min.</div></div>' +
+          '<div class="kv">Readability<b>Grade 7</b></div><div class="kv">Tone<b>Direct, warm</b></div><div class="kv">Length<b>842 words</b></div><div class="kv" style="margin-bottom:22px">Passive voice<b>3%</b></div>' +
+          '<div class="rh">Suggestions · 6</div>' +
+          '<div class="sc"><div class="a">Shorten</div><div class="b"><s>In order to</s> <em>To</em> keep your voice, every suggestion arrives as a change.</div><div class="r"><span class="y">Accept</span><span>Ignore</span></div></div>' +
+          '<div class="sc"><div class="a">Split long sentence</div><div class="b">Paragraph 1, sentence 2 runs 31 words. Try ending after “send”.</div><div class="r"><span class="y">Accept</span><span>Ignore</span></div></div>' +
+          '<div class="sc"><div class="a">Repeated word</div><div class="b">“every” appears three times in two sentences.</div><div class="r"><span class="y">Accept</span><span>Ignore</span></div></div>' +
+          '<div class="sc"><div class="a">Stronger verb</div><div class="b"><s>arrives as</s> <em>shows up as</em> a change you can accept.</div><div class="r"><span class="y">Accept</span><span>Ignore</span></div></div></div>';
+        document.getElementById("uiwin").innerHTML = sb + mn + rp;
+      })();
+
+      /* ---------- text lines ---------- */
+      /* word prefix: ~ dim, * accent. letters: split each word into letter units (hero lines) */
+      const LINES = [
+        { id: "l1", size: 150, rows: [["Every", "idea"], ["starts", "~blurry."]], letters: true, tin: 0.45, wg: 0.28, lg: 0.035, dur: 1.1, tout: 2.95, og: 0.1 },
+        { id: "l2", size: 168, rows: [["Say", "it", "~rough."]], letters: false, tin: 3.55, wg: 0.2, dur: 0.95, tout: 5.15, og: 0.1 },
+        { id: "l3", size: 150, rows: [["We", "bring", "it"], ["into", "focus."]], letters: false, tin: 5.7, wg: 0.17, dur: 0.9, tout: 7.0, og: 0.08 },
+        { id: "l4", size: 184, rows: [["Write", "*clearly."]], letters: true, tin: 7.55, wg: 0.3, lg: 0.04, dur: 1.15, blur: 60 },
+      ];
+      const stage = document.getElementById("stage");
+      LINES.forEach((L) => {
+        const el = document.createElement("div");
+        el.className = "line"; el.id = L.id; el.setAttribute("data-layout-allow-overlap", "");
+        el.style.fontSize = L.size + "px";
+        el.innerHTML = L.rows.map((r) => '<div class="row">' + r.map((w) => {
+          const cls = w[0] === "~" ? " dim" : w[0] === "*" ? " ac" : "";
+          const txt = w.replace(/^[~*]/, "");
+          const inner = L.letters ? txt.split("").map((c) => '<span class="u u0">' + c + "</span>").join("") : txt;
+          return '<span class="w' + cls + (L.letters ? "" : " u u0") + '">' + inner + "</span>";
+        }).join("") + "</div>").join("");
+        stage.appendChild(el);
+      });
+
+      function blurIn(u, t, dur, bl) {
+        const dx = (rnd() - 0.5) * 18, dy = 12 + rnd() * 14;
+        tl.set(u, { opacity: 0, filter: "blur(" + bl + "px)", scale: 1.12, x: dx, y: dy }, 0);
+        tl.to(u, { filter: "blur(0px)", scale: 1, x: 0, y: 0, duration: dur, ease: "power3.out" }, t);
+        tl.to(u, { opacity: 1, duration: dur * 0.5, ease: "power1.out" }, t);
+      }
+      function blurOut(w, t) {
+        const dx = (rnd() - 0.5) * 14;
+        tl.to(w, { filter: "blur(46px)", scale: 1.07, x: dx, y: -14, duration: 0.7, ease: "power2.in" }, t);
+        tl.to(w, { opacity: 0, duration: 0.5, ease: "power1.in" }, t + 0.12);
+      }
+      LINES.forEach((L) => {
+        const words = [...document.querySelectorAll("#" + L.id + " .w")];
+        words.forEach((w, i) => {
+          if (L.letters) tl.set(w, { opacity: 1, filter: "blur(0px)", scale: 1, x: 0, y: 0 }, 0);
+          if (L.letters) [...w.querySelectorAll(".u")].forEach((u, j) => blurIn(u, L.tin + i * L.wg + j * L.lg, L.dur, L.blur || 52));
+          else blurIn(w, L.tin + i * L.wg, L.dur, L.blur || 52);
+          if (L.tout) blurOut(w, L.tout + i * L.og);
+        });
+      });
+
+      /* ---------- product UI context: blurred, brought into focus with line three, then dimmed for the close ---------- */
+      tl.set("#ui", { opacity: 0 }, 0);
+      tl.set("#uiwin", { filter: "blur(9px)", scale: 1.07 }, 0);
+      tl.set("#doc", { y: 0 }, 0);
+      tl.to("#ui", { opacity: 0.6, duration: 1.2, ease: "power2.out" }, 0);
+      tl.to("#ui", { opacity: 0.13, duration: 1.1, ease: "power2.inOut" }, 7.5);
+      tl.to("#uiwin", { filter: "blur(0px)", duration: 1.3, ease: "power2.inOut" }, 5.6);
+      tl.to("#uiwin", { scale: 1, duration: 8, ease: "none" }, 0);
+      tl.to("#doc", { y: -140, duration: 8, ease: "none" }, 0);
+
+      /* ---------- tagline glow, slow push, lockup ---------- */
+      tl.set("#glow", { opacity: 0, y: 0 }, 0);
+      tl.set("#stage", { scale: 1 }, 0);
+      tl.set("#l4", { y: 0 }, 0);
+      tl.set("#lock", { scale: 1 }, 0);
+      tl.to("#glow", { opacity: 1, duration: 1.4, ease: "power2.out" }, 7.55);
+      tl.to("#stage", { scale: 1.045, duration: 10.5, ease: "none" }, 0);
+      tl.to("#l4", { y: -104, duration: 0.95, ease: EXPO }, 8.7);
+      tl.to("#glow", { y: -60, duration: 0.95, ease: EXPO }, 8.7);
+
+      document.getElementById("wm").innerHTML = "Clearline".split("").map((c) => '<span class="lt">' + c + "</span>").join("");
+      tl.set("#mark", { opacity: 0, scale: 0.8, filter: "blur(24px)" }, 0);
+      tl.set("#wm .lt", { opacity: 0, x: -24, filter: "blur(22px)" }, 0);
+      tl.to("#mark", { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.9, ease: EXPO }, 8.75);
+      tl.to("#wm .lt", { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.9, ease: EXPO, stagger: 0.045 }, 8.85);
+      tl.to("#lock", { scale: 1.035, duration: 1.8, ease: "none" }, 8.7);
+
+      /* ---------- film grain: seeded offsets, 12 fps ---------- */
+      const rg = mulberry32(99);
+      for (let t = 0; t < 10.5; t += 1 / 12) tl.set("#grain", { x: Math.round(rg() * 200), y: Math.round(rg() * 200) }, Math.round(t * 30) / 30);
+
+      tl.set({}, {}, 10.5);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

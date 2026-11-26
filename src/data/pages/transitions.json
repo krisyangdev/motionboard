@@ -5,9 +5,9 @@
   "updated": "2026-11-26",
   "en": {
     "title": "Transition Effects and Match Cuts Made with Code",
-    "description": "Ten transition recipes from launch films: match cut, morph, wipe, iris, infinite zoom, flipbook and more. Each film is made with HyperFrames.",
+    "description": "Fifteen transition recipes from launch films: match cut, morph, wipe, iris, ripple, light leak, smash cut and more. Each film is made with HyperFrames.",
     "h1": "Transition effects from launch films",
-    "lede": "A transition carries the viewer from one scene to the next in a launch film. These ten recipes cover the match cut, morph transition, wipe transition, iris transition, infinite zoom, flipbook animation and several others. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with exact frame timing for every cut, sweep and dissolve.",
+    "lede": "A transition carries the viewer from one scene to the next in a launch film. These fifteen recipes cover the match cut, morph transition, wipe transition, iris transition, infinite zoom, flipbook animation, ripple effect, light leak, rack focus, smash cut and several others. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with exact frame timing for every cut, sweep and dissolve.",
     "blocks": [
       {
         "t": "films",
@@ -21,7 +21,12 @@
           "locked-layout-reskin",
           "x-ray-effect",
           "infinite-zoom",
-          "flipbook-animation"
+          "flipbook-animation",
+          "blur-text-animation",
+          "ripple-effect",
+          "light-leak-transition",
+          "rack-focus",
+          "smash-cut"
         ]
       },
       {
@@ -41,8 +46,12 @@
         "text": "Two more recipes carry the viewer between scenes with camera and page motion. Infinite Zoom Effect dives the camera through four nested UI screens, each shown inside a card on the one before, and lands back on the first screen so the shot loops. Flipbook Animation collapses a moodboard into a book, flips it page by page, then bursts the pages into a 3D collage that drifts toward the camera."
       },
       {
+        "t": "p",
+        "text": "Five more recipes change the scene with focus, light or a hard cut. Blur Text Animation blurs one line away word by word as the next arrives, and the blurred app behind it sharpens on the line about focus. Ripple Effect expands concentric rings from a headline, and each ring reveals the next scene. Light Leak Transition drifts a warm glow in until the cut frame is nearly white and develops the next screen out of the overexposure. Rack Focus pulls focus from a foreground card to the laptop behind it and then onto the headline. Smash Cut hard-cuts from a loud crowd scene to pure black in one frame, then types a line in."
+      },
+      {
         "t": "h2",
-        "text": "The 10 transition recipes"
+        "text": "The 15 transition recipes"
       },
       {
         "t": "ul",
@@ -56,7 +65,12 @@
           "[Locked-Layout Reskin](/recipes/locked-layout-reskin/): The layout stays fixed while color and fonts hard-cut every 16, 8 and then 6 frames, landing on one skin at 8.4 s.",
           "[X-Ray Effect](/recipes/x-ray-effect/): The inner structure and the outer shell cross-dissolve from the same camera position over about 0.7 s, then the camera pulls back to the whole device in 1.2 s.",
           "[Infinite Zoom Effect](/recipes/infinite-zoom/): The camera dives through four nested UI screens and lands back on the first, so the shot loops.",
-          "[Flipbook Animation](/recipes/flipbook-animation/): A moodboard collapses into a book, flips page by page, then bursts into a 3D collage drifting toward the camera."
+          "[Flipbook Animation](/recipes/flipbook-animation/): A moodboard collapses into a book, flips page by page, then bursts into a 3D collage drifting toward the camera.",
+          "[Blur Text Animation](/recipes/blur-text-animation/): Large words on black come into focus one by one while a line blurs away as the next arrives, and the blurred app behind it sharpens on the line about focus.",
+          "[Ripple Effect](/recipes/ripple-effect/): A headline sits inside a glowing ring, then concentric rings expand from the centre and each one reveals the next scene, landing on the product.",
+          "[Light Leak Transition](/recipes/light-leak-transition/): A soft orange and magenta glow drifts in and peaks near white on the cut frame, and the next screen develops out of the overexposure.",
+          "[Rack Focus](/recipes/rack-focus/): Focus pulls from a foreground card to the laptop behind it, a second card slides in and takes focus back, and a last pull lands on the headline.",
+          "[Smash Cut](/recipes/smash-cut/): A loud crowd scene hard-cuts in one frame to pure black, a white line types in word by word, and green LEDs light as the sensor shrinks into the mark."
         ]
       },
       {
@@ -96,9 +110,9 @@
   },
   "zh": {
     "title": "转场效果与匹配剪辑示例",
-    "description": "10 个来自发布片的转场配方，包括匹配剪辑、形变、擦除、光圈、无限缩放和翻页。每个都是用 HyperFrames 做出的短片，并与原片对照。",
+    "description": "15 个来自发布片的转场配方，包括匹配剪辑、形变、擦除、光圈、波纹、漏光、Smash Cut 硬切等。每个都是用 HyperFrames 做出的短片，并与原片对照。",
     "h1": "发布片里的转场效果示例",
-    "lede": "转场负责把观众从一个场景带到下一个场景。这 10 个配方覆盖匹配剪辑、形变转场、擦除转场、光圈转场、无限缩放、翻页动画等做法。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，每一次切换、横扫和叠化都标出了精确的帧时间。",
+    "lede": "转场负责把观众从一个场景带到下一个场景。这 15 个配方覆盖匹配剪辑、形变转场、擦除转场、光圈转场、无限缩放、翻页动画、波纹效果、漏光、拉焦、Smash Cut 硬切等做法。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，每一次切换、横扫和叠化都标出了精确的帧时间。",
     "blocks": [
       {
         "t": "films",
@@ -112,7 +126,12 @@
           "locked-layout-reskin",
           "x-ray-effect",
           "infinite-zoom",
-          "flipbook-animation"
+          "flipbook-animation",
+          "blur-text-animation",
+          "ripple-effect",
+          "light-leak-transition",
+          "rack-focus",
+          "smash-cut"
         ]
       },
       {
@@ -132,8 +151,12 @@
         "text": "另有两个配方用镜头和页面的运动把观众带到下一个场景。无限缩放效果让镜头依次穿入四层嵌套的界面画面，每个画面都显示在上一个画面的卡片里，最后回到第一个画面，使镜头可以循环。翻页动画效果把情绪板收拢成一本书，逐页翻动，再让书页炸开成向镜头漂来的 3D 拼贴。"
       },
       {
+        "t": "p",
+        "text": "另有五个配方用对焦、光线或硬切来换场。模糊文字动画让一行文字逐词虚化散去，下一行接着出现，背后虚化的应用界面随着「对焦」一句变清楚。波纹效果让同心环从标题向外展开，每个圈里露出下一个场景。漏光转场让一团暖色柔光飘进来，在切点那一帧亮到近乎纯白，下一个界面从过曝里显影出来。拉焦让焦点从前景卡片拉到后面的笔记本，再拉到标题。Smash Cut 硬切在一帧里从嘈杂的人群画面切到纯黑，再逐词打出一行字。"
+      },
+      {
         "t": "h2",
-        "text": "10 个转场配方"
+        "text": "15 个转场配方"
       },
       {
         "t": "ul",
@@ -147,7 +170,12 @@
           "[固定版式换肤动画](/recipes/locked-layout-reskin/)：布局位置保持不变，配色和字体依次每 16 帧、8 帧、6 帧硬切一次，在 8.4 秒落定到一套皮肤。",
           "[X 光透视效果](/recipes/x-ray-effect/)：内部结构和外壳在同一机位对位叠化，约 0.7 秒完成，随后镜头用 1.2 秒拉远成整机。",
           "[无限缩放效果](/recipes/infinite-zoom/)：镜头依次穿入四层嵌套的界面画面，最后回到第一个画面，使镜头可以循环。",
-          "[翻页动画效果](/recipes/flipbook-animation/)：情绪板收拢成一本书，逐页翻动，随后炸开成向镜头漂来的 3D 拼贴。"
+          "[翻页动画效果](/recipes/flipbook-animation/)：情绪板收拢成一本书，逐页翻动，随后炸开成向镜头漂来的 3D 拼贴。",
+          "[模糊文字动画](/recipes/blur-text-animation/)：黑场上的大字逐词从模糊里变清楚，一行文字虚化散去时下一行接着出现，背后虚化的应用界面随着「对焦」一句变清楚。",
+          "[波纹效果](/recipes/ripple-effect/)：标题停在一个发光的环里，接着一圈圈同心环从中心向外展开，每个圈里露出下一个场景，最后落在产品上。",
+          "[漏光转场](/recipes/light-leak-transition/)：一团橙色和洋红的柔光飘进来，在切点那一帧亮到近乎纯白，下一个界面从过曝里显影出来。",
+          "[拉焦（焦点转移）](/recipes/rack-focus/)：焦点从前景卡片拉到后面的笔记本，第二张卡片滑入并把焦点拉回前景，最后一次拉焦落在标题上。",
+          "[Smash Cut 硬切](/recipes/smash-cut/)：嘈杂的人群画面在一帧里硬切到纯黑，一行白字逐词打出来，绿色 LED 亮起，传感器缩成标志。"
         ]
       },
       {

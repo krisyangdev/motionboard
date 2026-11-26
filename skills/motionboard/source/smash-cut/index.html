@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --accent: #34e27a;
+        --ink: #f4f4f5;
+        --font-ui: "Inter", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      #cv { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
+
+      /* ---------- black stage: text, sensor, lockup ---------- */
+      #sc2 { background: #000; overflow: hidden; }
+      #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+      #sens { position: absolute; left: 560px; top: 140px; width: 800px; height: 800px; transform-origin: 400px 400px; }
+      #push { position: absolute; left: 0; top: 0; width: 800px; height: 800px; transform-origin: 400px 400px; }
+      #amb { position: absolute; left: -300px; top: -300px; width: 1400px; height: 1400px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(52, 226, 122, 0.34) 0%, rgba(52, 226, 122, 0.12) 22%, rgba(52, 226, 122, 0) 50%); opacity: 0; }
+      #plate { position: absolute; left: 0; top: 0; width: 800px; height: 800px; opacity: 0; }
+      #leds { position: absolute; left: 0; top: 0; width: 800px; height: 800px; opacity: 0; }
+      .led { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: #d4ffd9; box-shadow: 0 0 22px 8px rgba(70, 255, 130, 0.85), 0 0 90px 34px rgba(40, 220, 90, 0.38); }
+      .ln { position: absolute; left: 0; width: 1920px; height: 96px; line-height: 96px; text-align: center; font-size: 72px; font-weight: 500; letter-spacing: -0.02em; color: rgba(244, 244, 245, 0.95); white-space: nowrap; }
+      .ln .w { display: inline-block; opacity: 0; }
+      #line1 { top: 397px; }
+      #line2 { top: 587px; }
+      #lockrow { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: flex; align-items: center; justify-content: center; gap: 46px; }
+      #slot { width: 210px; height: 210px; flex: none; }
+      #wm { font-size: 176px; line-height: 200px; font-weight: 600; letter-spacing: -0.04em; color: var(--ink); white-space: nowrap; padding-bottom: 12px; }
+      #wm .lt { display: inline-block; opacity: 0; }
+      #tag { position: absolute; left: 0; top: 704px; width: 1920px; text-align: center; font-size: 32px; font-weight: 400; letter-spacing: -0.005em; color: #7f8c85; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="11" data-width="1920" data-height="1080">
+      <div id="sc1" class="full clip" data-start="0" data-duration="3.5" data-track-index="0">
+        <canvas id="cv" width="1920" height="1080" data-layout-ignore data-layout-allow-overlap></canvas>
+      </div>
+
+      <div id="sc2" class="full clip" data-start="3.5" data-duration="7.5" data-track-index="0">
+        <div id="stage" data-layout-allow-overlap>
+          <div id="sens" data-layout-allow-overlap>
+            <div id="amb" data-layout-ignore></div>
+            <div id="push" data-layout-allow-overlap>
+              <svg id="plate" viewBox="0 0 800 800" width="800" height="800" data-layout-ignore>
+                <defs>
+                  <linearGradient id="gRim" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#d6d9df" />
+                    <stop offset="0.45" stop-color="#4b4e56" />
+                    <stop offset="1" stop-color="#17181b" />
+                  </linearGradient>
+                  <radialGradient id="gDisc" cx="0.5" cy="0.42" r="0.62">
+                    <stop offset="0" stop-color="#202226" />
+                    <stop offset="1" stop-color="#0a0b0d" />
+                  </radialGradient>
+                  <linearGradient id="gPd" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#16291c" />
+                    <stop offset="1" stop-color="#0a120d" />
+                  </linearGradient>
+                </defs>
+                <circle cx="400" cy="400" r="388" fill="url(#gRim)" />
+                <circle cx="400" cy="400" r="366" fill="#0a0b0d" />
+                <circle cx="400" cy="400" r="366" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="2" />
+                <g id="ticks"></g>
+                <circle cx="400" cy="400" r="236" fill="none" stroke="#2a2c32" stroke-width="3" />
+                <circle cx="400" cy="400" r="176" fill="url(#gDisc)" stroke="#3d4047" stroke-width="3" />
+                <circle cx="400" cy="400" r="158" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2" />
+                <rect x="271" y="364" width="34" height="72" rx="10" fill="url(#gPd)" stroke="#26332a" stroke-width="2" />
+                <rect x="495" y="364" width="34" height="72" rx="10" fill="url(#gPd)" stroke="#26332a" stroke-width="2" />
+                <text x="400" y="748" text-anchor="middle" font-family="Inter, sans-serif" font-size="17" font-weight="600" letter-spacing="5" fill="#3b3e45">PULSE  ·  OPTICAL SENSOR  ·  GEN 2</text>
+              </svg>
+              <div id="leds" data-layout-ignore>
+                <div class="led" style="left: 359px; top: 359px"></div>
+                <div class="led" style="left: 413px; top: 359px"></div>
+                <div class="led" style="left: 359px; top: 413px"></div>
+                <div class="led" style="left: 413px; top: 413px"></div>
+              </div>
+            </div>
+          </div>
+          <div id="line1" class="ln" data-layout-allow-overlap><span class="w">The</span> <span class="w">most</span> <span class="w">accurate</span></div>
+          <div id="line2" class="ln" data-layout-allow-overlap><span class="w">heart</span> <span class="w">rate</span> <span class="w">sensing.</span></div>
+          <div id="lockrow" data-layout-allow-overlap><div id="slot"></div><div id="wm"></div></div>
+          <div id="tag">Accurate to every beat.</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const EXPO = "expo.out";
+      const P3 = "power3.out";
+
+      function mulberry(a) {
+        return function () {
+          a |= 0; a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      function hs(n) { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+
+      /* ---------- sensor ticks (radial ceramic pattern) ---------- */
+      (function () {
+        const g = document.getElementById("ticks");
+        let s = "";
+        for (let i = 0; i < 72; i++) {
+          const a = (i / 72) * Math.PI * 2;
+          const r1 = i % 2 ? 262 : 252, r2 = i % 2 ? 338 : 346;
+          const c = Math.cos(a), sn = Math.sin(a);
+          s += '<line x1="' + (400 + c * r1).toFixed(2) + '" y1="' + (400 + sn * r1).toFixed(2) + '" x2="' + (400 + c * r2).toFixed(2) + '" y2="' + (400 + sn * r2).toFixed(2) + '" stroke="' + (i % 2 ? "#202227" : "#2e3036") + '" stroke-width="' + (i % 2 ? 8 : 6) + '" stroke-linecap="round" />';
+        }
+        g.innerHTML = s;
+      })();
+
+      /* ---------- wordmark letters ---------- */
+      (function () {
+        const wm = document.getElementById("wm");
+        "Pulse".split("").forEach((ch) => { const s = document.createElement("span"); s.className = "lt"; s.textContent = ch; wm.appendChild(s); });
+      })();
+
+      /* ---------- scene A: the loud crowd (canvas, redrawn from timeline time) ---------- */
+      const W = 1920, H = 1080, CUT = 3.5;
+      const cv = document.getElementById("cv");
+      const ctx = cv.getContext("2d");
+
+      const NR = 14;
+      const LAMPS = [
+        { x: 120, col: [200, 220, 255] }, { x: 365, col: [60, 240, 130] }, { x: 610, col: [200, 220, 255] }, { x: 855, col: [200, 220, 255] },
+        { x: 1100, col: [60, 240, 130] }, { x: 1345, col: [255, 190, 110] }, { x: 1590, col: [200, 220, 255] }, { x: 1835, col: [60, 240, 130] },
+      ];
+      LAMPS.forEach((l, i) => { l.sp = 1.9 + (i % 3) * 0.8; l.ph = i * 1.7; l.w = 0.05 + (i % 2) * 0.025; });
+      const rr = mulberry(11);
+      const ROWS = [];
+      for (let r = 0; r < NR; r++) {
+        const d = r / (NR - 1);
+        const y0 = 450 + 750 * Math.pow(d, 1.2);
+        const s = 10 + 120 * d * d;
+        const step = s * 0.78;
+        const row = { d: d, fg: r >= NR - 2, fig: [] };
+        for (let x = -240 + rr() * step * 1.5; x < W + 240; x += step * (0.6 + rr() * 0.75)) {
+          if (rr() < 0.07) continue;
+          const sz = s * (0.8 + rr() * 0.4);
+          const m = rr();
+          row.fig.push({
+            x: x + (rr() - 0.5) * s * 0.6,
+            y: y0 + (rr() - 0.5) * s * 0.5,
+            s: sz,
+            hw: 0.82 + rr() * 0.4,
+            hh: 0.85 + rr() * 0.35,
+            hr: 0.78 + rr() * 0.5,
+            nk: 0.9 + rr() * 0.22,
+            ph: rr() * 6.28,
+            f: 1.9 + rr() * 1.4,
+            ap: rr() * 6.28,
+            al: 0.8 + rr() * 0.45,
+            asp: 0.25 + rr() * 0.4,
+            mode: m < 0.22 ? 0 : m < 0.6 ? 1 : m < 0.74 ? 2 : m < 0.88 ? 3 : 4,
+            stick: rr() < 0.1 ? (rr() < 0.6 ? 0 : 1) : -1,
+            pt: rr() * 6.28,
+          });
+        }
+        ROWS.push(row);
+      }
+      const STICK = ["rgba(90,255,150,", "rgba(255,255,255,"];
+      const BOKEH = [];
+      for (let i = 0; i < 40; i++) {
+        const q = rr();
+        BOKEH.push({ x: rr() * W, y: 120 + rr() * 420, r: 14 + rr() * 40, ph: rr() * 6.28, sp: 0.8 + rr() * 2, c: q < 0.35 ? [90, 255, 160] : q < 0.5 ? [255, 200, 120] : [210, 225, 255], a: 0.1 + rr() * 0.16 });
+      }
+      const FBOKEH = [];
+      for (let i = 0; i < 12; i++) {
+        const q = rr();
+        FBOKEH.push({ x: rr() * W, y: 80 + rr() * 900, r: 70 + rr() * 110, ph: rr() * 6.28, sp: 0.6 + rr() * 1.4, c: q < 0.4 ? [90, 255, 160] : q < 0.55 ? [255, 200, 120] : [210, 225, 255], a: 0.07 + rr() * 0.1 });
+      }
+      const FLASH = [0.4, 0.9, 1.35, 1.8, 2.2, 2.55, 2.9, 3.15, 3.44];
+      const fgc = document.createElement("canvas");
+      fgc.width = W; fgc.height = H;
+      const fgx = fgc.getContext("2d");
+
+      function ecg(u) {
+        const gs = (c, w, a) => a * Math.exp(-((u - c) * (u - c)) / (2 * w * w));
+        return gs(0.12, 0.03, 0.16) - gs(0.27, 0.008, 0.14) + gs(0.3, 0.011, 1) - gs(0.335, 0.01, 0.28) + gs(0.56, 0.05, 0.3);
+      }
+
+      function camera(g, t, extra) {
+        const p = Math.min(1, Math.max(0, t / CUT));
+        const push = 1.08 + 0.55 * Math.pow(p, 2.4);
+        const amp = 0.7 + 1.3 * p;
+        const sx = (Math.sin(t * 47) * 9 + Math.sin(t * 83 + 1.3) * 6) * amp;
+        const sy = (Math.sin(t * 53 + 0.7) * 8 + Math.sin(t * 97 + 2.1) * 5) * amp;
+        const rot = Math.sin(t * 31) * 0.006 * amp;
+        const sc = push + (push - 1) * extra;
+        g.translate(960, 700); g.rotate(rot); g.scale(sc, sc); g.translate(-960 + sx * (1 + extra), -700 + sy * (1 + extra));
+      }
+
+      function lampPulse(l, t) { return 0.75 + 0.25 * Math.sin(t * 17 + l.ph * 2); }
+
+      function backdrop(g, t) {
+        const sky = g.createLinearGradient(0, -200, 0, 1000);
+        sky.addColorStop(0, "#03040a"); sky.addColorStop(0.5, "#0a1424"); sky.addColorStop(0.75, "#0d1a2c"); sky.addColorStop(1, "#05070b");
+        g.fillStyle = sky; g.fillRect(-300, -300, W + 600, H + 600);
+        g.globalCompositeOperation = "lighter";
+        // soft back bokeh
+        BOKEH.forEach((b) => {
+          const x = b.x + Math.sin(t * b.sp + b.ph) * 26;
+          const a = b.a * (0.6 + 0.4 * Math.sin(t * 9 + b.ph * 3));
+          const gr = g.createRadialGradient(x, b.y, 0, x, b.y, b.r);
+          gr.addColorStop(0, "rgba(" + b.c + "," + (a * 0.55).toFixed(3) + ")");
+          gr.addColorStop(0.8, "rgba(" + b.c + "," + a.toFixed(3) + ")");
+          gr.addColorStop(1, "rgba(" + b.c + ",0)");
+          g.fillStyle = gr; g.beginPath(); g.arc(x, b.y, b.r, 0, 6.2832); g.fill();
+        });
+        // beams fanning up from behind the crowd
+        LAMPS.forEach((l) => {
+          const th = -Math.PI / 2 + Math.sin(t * l.sp + l.ph) * 0.78;
+          const L = 1600, by = 470;
+          const c = l.col;
+          const gr = g.createLinearGradient(l.x, by, l.x + Math.cos(th) * L, by + Math.sin(th) * L);
+          gr.addColorStop(0, "rgba(" + c + ",0.7)"); gr.addColorStop(0.5, "rgba(" + c + ",0.22)"); gr.addColorStop(1, "rgba(" + c + ",0)");
+          g.fillStyle = gr;
+          [1, 0.62, 0.32].forEach((k) => {
+            const w = l.w * k;
+            g.globalAlpha = 0.34;
+            g.beginPath(); g.moveTo(l.x, by);
+            g.lineTo(l.x + Math.cos(th - w) * L, by + Math.sin(th - w) * L);
+            g.lineTo(l.x + Math.cos(th + w) * L, by + Math.sin(th + w) * L);
+            g.closePath(); g.fill();
+          });
+          g.globalAlpha = 1;
+          const pu = lampPulse(l, t);
+          const lg = g.createRadialGradient(l.x, by, 0, l.x, by, 380);
+          lg.addColorStop(0, "rgba(" + c + "," + (0.55 * pu).toFixed(2) + ")"); lg.addColorStop(0.35, "rgba(" + c + "," + (0.18 * pu).toFixed(2) + ")"); lg.addColorStop(1, "rgba(" + c + ",0)");
+          g.fillStyle = lg; g.beginPath(); g.arc(l.x, by, 380, 0, 6.2832); g.fill();
+        });
+        // drifting haze
+        for (let i = 0; i < 6; i++) {
+          const hx = 320 * i + Math.sin(t * 0.9 + i * 2) * 140, hy = 520 + Math.sin(t * 0.7 + i) * 60;
+          const gr = g.createRadialGradient(hx, hy, 0, hx, hy, 460);
+          gr.addColorStop(0, "rgba(110,150,200,0.13)"); gr.addColorStop(1, "rgba(110,150,200,0)");
+          g.fillStyle = gr; g.beginPath(); g.ellipse(hx, hy, 460, 220, 0, 0, 6.2832); g.fill();
+        }
+        g.globalCompositeOperation = "source-over";
+        // haze band behind the far rows
+        const hz = g.createLinearGradient(0, 380, 0, 860);
+        hz.addColorStop(0, "rgba(40,62,92,0)"); hz.addColorStop(0.5, "rgba(40,62,92,0.34)"); hz.addColorStop(1, "rgba(40,62,92,0)");
+        g.fillStyle = hz; g.fillRect(-300, 380, W + 600, 480);
+      }
+
+      function drawRow(g, row, t, rimK) {
+        const d = row.d;
+        const k = Math.pow(d, 0.7);
+        const fr = Math.round(26 - 20 * k), fg2 = Math.round(36 - 28 * k), fb = Math.round(52 - 40 * k);
+        const col = "rgb(" + fr + "," + fg2 + "," + fb + ")";
+        g.fillStyle = col; g.strokeStyle = col; g.lineCap = "round";
+        const arms = [];
+        g.beginPath();
+        row.fig.forEach((p) => {
+          const s = p.s;
+          const jump = Math.abs(Math.sin(Math.PI * p.f * t + p.ph)) * s * 0.38;
+          const yy = p.y - jump;
+          p.yy = yy;
+          const bw = s * 0.38 * p.hw, bh = s * 0.5 * p.hh, hr = s * 0.25 * p.hr, hy = yy - s * 0.66 * p.nk * p.hh;
+          p.hy = hy; p.bw = bw; p.bh = bh; p.hrr = hr;
+          g.moveTo(p.x + bw, yy); g.ellipse(p.x, yy, bw, bh, 0, 0, 6.2832);
+          g.moveTo(p.x + hr, hy); g.arc(p.x, hy, hr, 0, 6.2832);
+        });
+        g.fill();
+        row.fig.forEach((p) => {
+          p.tip = null; p.phone = null;
+          if (p.mode === 0) return;
+          const s = p.s, yy = p.yy;
+          const sw = Math.sin(t * 10 + p.ap) * s * p.asp;
+          const L = s * 1.05 * p.al;
+          g.lineWidth = Math.max(2, s * 0.15);
+          g.beginPath();
+          const tips = [];
+          if (p.mode === 1 || p.mode === 2) {
+            const tx = p.x - s * 0.44 * p.hw + sw, ty = yy - L;
+            g.moveTo(p.x - s * 0.3 * p.hw, yy - s * 0.2); g.lineTo(tx, ty); tips.push([tx, ty]);
+          }
+          if (p.mode === 1 || p.mode === 3) {
+            const tx = p.x + s * 0.44 * p.hw - sw * 0.8, ty = yy - L * 0.92;
+            g.moveTo(p.x + s * 0.3 * p.hw, yy - s * 0.2); g.lineTo(tx, ty); tips.push([tx, ty]);
+          }
+          if (p.mode === 4) {
+            const tx = p.x + s * 0.3 * p.hw + Math.sin(t * 3 + p.ap) * s * 0.06, ty = yy - L * 0.95;
+            g.moveTo(p.x + s * 0.25 * p.hw, yy - s * 0.2); g.lineTo(tx, ty); p.phone = [tx, ty - s * 0.12];
+            g.moveTo(p.x - s * 0.3 * p.hw, yy - s * 0.15); g.lineTo(p.x - s * 0.5 * p.hw, yy + s * 0.15);
+          }
+          g.stroke();
+          p.tip = p.stick >= 0 && tips.length ? tips : null;
+        });
+        // rim light from the beams behind
+        row.fig.forEach((p) => {
+          let wsum = 0, cr = 0, cg = 0, cb = 0;
+          LAMPS.forEach((l) => {
+            const dx = (p.x - l.x) / 300;
+            const w = Math.exp(-dx * dx) * lampPulse(l, t);
+            wsum += w; cr += w * l.col[0]; cg += w * l.col[1]; cb += w * l.col[2];
+          });
+          if (wsum < 0.08) return;
+          const a = Math.min(1, wsum) * rimK * (0.45 + 0.55 * d);
+          g.strokeStyle = "rgba(" + Math.round(cr / wsum) + "," + Math.round(cg / wsum) + "," + Math.round(cb / wsum) + "," + a.toFixed(3) + ")";
+          g.lineWidth = Math.max(1.2, p.s * 0.045);
+          const s = p.s, yy = p.yy;
+          g.beginPath();
+          g.arc(p.x, p.hy, p.hrr, Math.PI * 1.05, Math.PI * 1.95);
+          g.moveTo(p.x - p.bw * 0.97, yy - s * 0.12); g.ellipse(p.x, yy, p.bw, p.bh, 0, Math.PI * 1.08, Math.PI * 1.92);
+          g.stroke();
+        });
+      }
+
+      function scene(g, t) {
+        backdrop(g, t);
+        ROWS.forEach((row) => { if (!row.fg) drawRow(g, row, t, 0.9); });
+        // veil of haze over the mid crowd
+        const vz = g.createLinearGradient(0, 560, 0, 980);
+        vz.addColorStop(0, "rgba(50,76,110,0)"); vz.addColorStop(0.5, "rgba(50,76,110,0.14)"); vz.addColorStop(1, "rgba(50,76,110,0)");
+        g.fillStyle = vz; g.fillRect(-300, 560, W + 600, 420);
+        // glow sticks and camera sparkles
+        g.globalCompositeOperation = "lighter";
+        ROWS.forEach((row, ri) => {
+          if (row.fg) return;
+          row.fig.forEach((p, i) => {
+            if (p.tip) {
+              const c = STICK[p.stick], r = Math.max(2.5, p.s * 0.1);
+              p.tip.forEach((tp) => {
+                g.fillStyle = c + "0.2)"; g.beginPath(); g.arc(tp[0], tp[1], r * 3.4, 0, 6.2832); g.fill();
+                g.fillStyle = c + "0.95)"; g.beginPath(); g.arc(tp[0], tp[1], r, 0, 6.2832); g.fill();
+              });
+            }
+            if (p.phone) {
+              const fl = 0.75 + 0.25 * Math.sin(t * 13 + p.pt);
+              const pw = Math.max(3, p.s * 0.2), ph = pw * 1.7;
+              g.fillStyle = "rgba(170,205,255," + (0.16 * fl).toFixed(3) + ")";
+              g.beginPath(); g.arc(p.phone[0], p.phone[1], pw * 2.6, 0, 6.2832); g.fill();
+              g.fillStyle = "rgba(205,228,255," + (0.9 * fl).toFixed(3) + ")";
+              g.fillRect(p.phone[0] - pw / 2, p.phone[1] - ph / 2, pw, ph);
+            }
+            const k = Math.floor(t * 14);
+            if (ri > 2 && hs(ri * 311 + i * 7 + k * 13.7) < 0.011) {
+              const r = 5 + p.s * 0.16, cx = p.x, cy = p.yy - p.s * 0.9;
+              g.fillStyle = "rgba(255,255,255,0.3)"; g.beginPath(); g.arc(cx, cy, r * 2.2, 0, 6.2832); g.fill();
+              g.fillStyle = "rgba(255,255,255,0.95)"; g.beginPath(); g.arc(cx, cy, r * 0.5, 0, 6.2832); g.fill();
+              g.strokeStyle = "rgba(255,255,255,0.55)"; g.lineWidth = 1.5;
+              g.beginPath(); g.moveTo(cx - r * 3.2, cy); g.lineTo(cx + r * 3.2, cy); g.moveTo(cx, cy - r * 3.2); g.lineTo(cx, cy + r * 3.2); g.stroke();
+            }
+          });
+        });
+        g.globalCompositeOperation = "source-over";
+      }
+
+      function hud(g, t) {
+        const x = 84, y = 72, w = 560, h = 214;
+        g.fillStyle = "rgba(4,6,8,0.62)";
+        g.beginPath(); g.roundRect(x, y, w, h, 24); g.fill();
+        g.strokeStyle = "rgba(255,255,255,0.14)"; g.lineWidth = 1.5; g.stroke();
+        const blink = Math.sin(t * 14) > 0;
+        g.fillStyle = blink ? "#34e27a" : "rgba(52,226,122,0.35)";
+        g.beginPath(); g.arc(x + 36, y + 40, 8, 0, 6.2832); g.fill();
+        g.fillStyle = "rgba(244,244,245,0.85)";
+        g.font = "600 22px Inter, sans-serif"; g.textBaseline = "alphabetic"; g.textAlign = "left";
+        g.fillText("PULSE  ·  LIVE  ·  LAP 12", x + 58, y + 48);
+        const p = t / CUT;
+        const bpm = Math.round(126 + 74 * p * p * (3 - 2 * p) + 3 * Math.sin(t * 22));
+        g.fillStyle = "#f4f4f5";
+        g.font = "700 84px Inter, sans-serif";
+        g.fillText(String(bpm), x + 34, y + 134);
+        const tw = g.measureText(String(bpm)).width;
+        g.fillStyle = "#34e27a";
+        g.font = "600 26px Inter, sans-serif";
+        g.fillText("BPM", x + 34 + tw + 14, y + 134);
+        g.fillStyle = "rgba(244,244,245,0.6)";
+        g.font = "500 22px Inter, sans-serif";
+        g.textAlign = "right";
+        g.fillText("Zone 5", x + w - 32, y + 134);
+        g.textAlign = "left";
+        // ecg
+        const ex = x + 34, ew = w - 68, ey = y + 190;
+        g.strokeStyle = "#34e27a"; g.lineWidth = 3; g.lineJoin = "round";
+        g.beginPath();
+        const per = 0.34, speed = 300;
+        for (let px = 0; px <= ew; px += 3) {
+          const tt = t - (ew - px) / speed;
+          let u = (tt / per) % 1; if (u < 0) u += 1;
+          const yv = ey - ecg(u) * 36;
+          if (px === 0) g.moveTo(ex + px, yv); else g.lineTo(ex + px, yv);
+        }
+        g.stroke();
+      }
+
+      function draw(t) {
+        const g = ctx;
+        g.setTransform(1, 0, 0, 1, 0, 0);
+        g.globalCompositeOperation = "source-over";
+        g.globalAlpha = 1;
+        g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
+        g.save();
+        camera(g, t, 0);
+        scene(g, t);
+        g.restore();
+        // blurred foreground silhouettes, closer to the lens
+        fgx.setTransform(1, 0, 0, 1, 0, 0);
+        fgx.clearRect(0, 0, W, H);
+        fgx.save();
+        camera(fgx, t, 0.5);
+        ROWS.forEach((row) => { if (row.fg) drawRow(fgx, row, t, 0.5); });
+        fgx.restore();
+        g.save();
+        g.filter = "blur(12px)";
+        g.drawImage(fgc, 0, 0);
+        g.restore();
+        // big soft bokeh in front of the lens
+        g.globalCompositeOperation = "lighter";
+        FBOKEH.forEach((b) => {
+          const x = b.x + Math.sin(t * b.sp + b.ph) * 50, y = b.y + Math.cos(t * b.sp * 0.8 + b.ph) * 30;
+          const a = b.a * (0.65 + 0.35 * Math.sin(t * 11 + b.ph * 2));
+          const gr = g.createRadialGradient(x, y, 0, x, y, b.r);
+          gr.addColorStop(0, "rgba(" + b.c + "," + (a * 0.5).toFixed(3) + ")");
+          gr.addColorStop(0.82, "rgba(" + b.c + "," + a.toFixed(3) + ")");
+          gr.addColorStop(1, "rgba(" + b.c + ",0)");
+          g.fillStyle = gr; g.beginPath(); g.arc(x, y, b.r, 0, 6.2832); g.fill();
+        });
+        g.globalCompositeOperation = "source-over";
+        // strobe
+        let fa = 0;
+        FLASH.forEach((ft) => { if (t >= ft) fa = Math.max(fa, 1 - (t - ft) / 0.11); });
+        if (fa > 0) { g.fillStyle = "rgba(235,242,255," + (fa * 0.42).toFixed(3) + ")"; g.fillRect(0, 0, W, H); }
+        // vignette
+        const vg = g.createRadialGradient(960, 540, 420, 960, 540, 1150);
+        vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.62)");
+        g.fillStyle = vg; g.fillRect(0, 0, W, H);
+        hud(g, t);
+      }
+
+      /* ---------- timeline ---------- */
+      const tl = gsap.timeline({ paused: true });
+
+      draw(0);
+      const clock = { t: 0 };
+      tl.fromTo(clock, { t: 0 }, { t: CUT, duration: CUT, ease: "none", immediateRender: false, onUpdate: function () { draw(clock.t); } }, 0);
+
+      /* ---------- black: two centred lines, every word's space reserved ---------- */
+      tl.set(".w", { opacity: 0, y: 5, filter: "blur(6px)" }, 0);
+      const WORD_AT = [["#line1", 1, 3.95], ["#line1", 2, 4.15], ["#line1", 3, 4.35], ["#line2", 1, 5.35], ["#line2", 2, 5.55], ["#line2", 3, 5.8]];
+      WORD_AT.forEach((w) => {
+        tl.to(w[0] + " .w:nth-child(" + w[1] + ")", { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, w[2]);
+      });
+      tl.to(".ln", { opacity: 0, duration: 0.45, ease: "power2.in" }, 7.4);
+
+      /* ---------- sensor: LEDs first (between the lines), then the plate rises out of the dark ---------- */
+      tl.set("#leds", { opacity: 0 }, 0);
+      tl.set("#amb", { opacity: 0, scale: 1 }, 0);
+      tl.set("#plate", { opacity: 0 }, 0);
+      tl.set("#push", { scale: 0.94 }, 0);
+      tl.set(".led", { scale: 1 }, 0);
+      tl.set("#sens", { x: 0, y: 0, scale: 1 }, 0);
+      tl.set("#stage", { scale: 1 }, 0);
+      tl.set("#wm .lt", { opacity: 0, x: -60, filter: "blur(10px)" }, 0);
+      tl.set("#tag", { opacity: 0, y: 10 }, 0);
+
+      tl.to("#leds", { opacity: 1, duration: 0.5, ease: EXPO }, 6.2);
+      tl.to("#amb", { opacity: 0.8, duration: 1.4, ease: "power2.out" }, 6.2);
+      tl.to("#plate", { opacity: 0.4, duration: 1.3, ease: "power2.inOut" }, 6.7);
+      tl.to("#push", { scale: 1.02, duration: 1.8, ease: "none" }, 6.2);
+      [6.8, 7.35].forEach((at) => {
+        tl.to(".led", { scale: 1.3, duration: 0.1, ease: "power2.out" }, at);
+        tl.to(".led", { scale: 1, duration: 0.3, ease: "power2.inOut" }, at + 0.1);
+        tl.to("#amb", { scale: 1.06, duration: 0.1, ease: "power2.out" }, at);
+        tl.to("#amb", { scale: 1, duration: 0.3, ease: "power2.inOut" }, at + 0.1);
+      });
+
+      /* ---------- lockup: the sensor shrinks into the mark, wordmark unfolds ---------- */
+      const sr = document.getElementById("sens").getBoundingClientRect();
+      const kr = document.getElementById("slot").getBoundingClientRect();
+      const measured = kr.width > 0 && sr.width > 0;
+      const dx = measured ? kr.left + kr.width / 2 - (sr.left + sr.width / 2) : -240;
+      const dy = measured ? kr.top + kr.height / 2 - (sr.top + sr.height / 2) : 0;
+      const sc = 210 / 776;
+      tl.to("#sens", { x: dx, y: dy, scale: sc, duration: 0.95, ease: "power3.inOut" }, 7.6);
+      tl.to("#plate", { opacity: 1, duration: 0.9, ease: "power2.out" }, 7.6);
+      tl.to("#wm .lt", { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.9, ease: EXPO, stagger: 0.05 }, 8.05);
+      tl.to("#tag", { opacity: 1, y: 0, duration: 0.4, ease: EXPO }, 8.4);
+      tl.to("#stage", { scale: 1.035, duration: 3.4, ease: "none" }, 7.6);
+
+      tl.set({}, {}, 11);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

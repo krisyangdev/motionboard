@@ -11,7 +11,8 @@ export type Category = 'A' | 'B' | 'C' | 'D' | 'E'
 /** Where the shot sits in a promo film */
 export type Position = 'open' | 'reveal' | 'feature' | 'bridge' | 'close'
 
-export type Sample = { t: string; id: string; at: string; s?: number; u?: string }
+/** link: only link to the original (no self-hosted clip) */
+export type Sample = { t: string; id: string; at: string; s?: number; u?: string; link?: boolean }
 
 /** Long copy for one recipe in one locale */
 export type RecipeText = {
@@ -116,7 +117,7 @@ export function sources(t: Term, locale: Locale): Source[] {
         note: '',
         href: `https://www.youtube.com/watch?v=${s.id}&t=${start}s`,
         youtube: { id: s.id, start, end },
-        clip: {
+        clip: s.link ? null : {
           src: `${MEDIA_URL}/orig-${s.id}-${start}.mp4`,
           poster: `${MEDIA_URL}/orig-${s.id}-${start}.jpg`,
         },

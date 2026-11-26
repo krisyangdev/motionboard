@@ -5,9 +5,9 @@
   "updated": "2026-11-26",
   "en": {
     "title": "UI Animation and Motion Graphics Examples",
-    "description": "Thirteen UI animation recipes from launch films: zoom to cursor, card flip, infinite zoom, light beams and more. Built in code with HyperFrames.",
+    "description": "Fourteen UI animation recipes from launch films: zoom to cursor, card flip, infinite zoom, light beams, chat and more. Built in code with HyperFrames.",
     "h1": "UI animation examples from launch films",
-    "lede": "UI animation shows an interface working: a cursor clicks, a card flips, a layout rearranges. These thirteen recipes are motion graphics examples from software launch films. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with frame timing for every push, click and state change.",
+    "lede": "UI animation shows an interface working: a cursor clicks, a card flips, a layout rearranges. These fourteen recipes are motion graphics examples from software launch films. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with frame timing for every push, click and state change.",
     "blocks": [
       {
         "t": "films",
@@ -24,7 +24,8 @@
           "confetti-success-animation",
           "infinite-zoom",
           "light-beam-effect",
-          "scrolling-text-animation"
+          "scrolling-text-animation",
+          "chat-animation"
         ]
       },
       {
@@ -44,8 +45,12 @@
         "text": "Three more recipes put the interface under a moving camera or a moving line of text. Infinite Zoom Effect dives the camera through four nested UI screens and lands back on the first. Light Beam Effect has laptops throw trapezoid beams of light that each show an app screen. Scrolling Text Animation scrolls a long dictated line sideways faster and faster, then squeezes it into one short chat bubble."
       },
       {
+        "t": "p",
+        "text": "One more recipe shows an AI product working. Chat Animation types a prompt into an AI builder's chat, shows the assistant thinking, runs three tool steps as cards, and builds the app in a preview pane."
+      },
+      {
         "t": "h2",
-        "text": "The 13 UI animation recipes"
+        "text": "The 14 UI animation recipes"
       },
       {
         "t": "ul",
@@ -62,7 +67,8 @@
           "[Confetti Success Animation](/recipes/confetti-success-animation/): On the frame of a tap, lines, squares and dots radiate from the contact point; on the pay tap the icon pops from 0.6 to 1.1 scale in 0.28 s with an echo outline.",
           "[Infinite Zoom Effect](/recipes/infinite-zoom/): The camera dives through four nested UI screens and lands back on the first, so the shot loops.",
           "[Light Beam Effect](/recipes/light-beam-effect/): Laptops throw trapezoid beams of light that reveal app screens, hand off to each other and carry a stat along one edge.",
-          "[Scrolling Text Animation](/recipes/scrolling-text-animation/): A long run-on line scrolls sideways faster and faster, then squeezes into one short chat bubble."
+          "[Scrolling Text Animation](/recipes/scrolling-text-animation/): A long run-on line scrolls sideways faster and faster, then squeezes into one short chat bubble.",
+          "[Chat Animation](/recipes/chat-animation/): A prompt is typed into an AI builder's chat, the assistant thinks, runs three tool steps as cards, and the app builds in a preview pane."
         ]
       },
       {
@@ -102,9 +108,9 @@
   },
   "zh": {
     "title": "UI 动画与动态图形示例",
-    "description": "13 个来自发布片的 UI 动画配方，包括推近到光标、卡片翻转、无限缩放、光束等，用 HyperFrames 写代码做出。",
+    "description": "14 个来自发布片的 UI 动画配方，包括推近到光标、卡片翻转、无限缩放、光束、聊天对话等，用 HyperFrames 写代码做出。",
     "h1": "发布片里的 UI 动画示例",
-    "lede": "UI 动画展示界面在运行：光标点击、卡片翻转、布局重排。这 13 个配方是软件发布片里的动态图形示例。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，并标出每次推近、点击和状态变化的帧时间。",
+    "lede": "UI 动画展示界面在运行：光标点击、卡片翻转、布局重排。这 14 个配方是软件发布片里的动态图形示例。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，并标出每次推近、点击和状态变化的帧时间。",
     "blocks": [
       {
         "t": "films",
@@ -121,7 +127,8 @@
           "confetti-success-animation",
           "infinite-zoom",
           "light-beam-effect",
-          "scrolling-text-animation"
+          "scrolling-text-animation",
+          "chat-animation"
         ]
       },
       {
@@ -141,8 +148,12 @@
         "text": "另有三个配方让界面处在运动的镜头或运动的文字之下。无限缩放效果让镜头依次穿入四层嵌套的界面画面，最后回到第一个画面。光束效果让笔记本投出梯形光束，每道光束里显示一个应用界面。滚动文字动画让一条很长的口述句子横向越滚越快，最后压缩成一个简短的聊天气泡。"
       },
       {
+        "t": "p",
+        "text": "另有一个配方展示 AI 产品的工作过程。聊天对话动画在 AI 搭建工具的聊天框里打出一条提示词，助手开始思考，用三张卡片依次展示三个工具步骤，应用在预览窗格里搭建出来。"
+      },
+      {
         "t": "h2",
-        "text": "13 个 UI 动画配方"
+        "text": "14 个 UI 动画配方"
       },
       {
         "t": "ul",
@@ -159,7 +170,8 @@
           "[撒花成功动画](/recipes/confetti-success-animation/)：点击那一帧，线条、方块和圆点从接触点向外扩散；付款点击时图标在 0.28 秒内从 0.6 倍弹到 1.1 倍，并扩散一圈同形描边。",
           "[无限缩放效果](/recipes/infinite-zoom/)：镜头依次穿入四层嵌套的界面画面，最后回到第一个画面，使镜头可以循环。",
           "[光束效果](/recipes/light-beam-effect/)：笔记本投出梯形光束，光束里显示应用界面，彼此交接，并沿一条边带出一个数据。",
-          "[滚动文字动画](/recipes/scrolling-text-animation/)：一条很长的连写句子横向越滚越快，最后压缩成一个简短的聊天气泡。"
+          "[滚动文字动画](/recipes/scrolling-text-animation/)：一条很长的连写句子横向越滚越快，最后压缩成一个简短的聊天气泡。",
+          "[聊天对话动画](/recipes/chat-animation/)：在 AI 搭建工具的聊天框里打出一条提示词，助手思考后用三张卡片展示三个工具步骤，应用在预览窗格里搭建出来。"
         ]
       },
       {

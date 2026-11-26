@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --base: #04050a;
+        --ink: #f2f5fa;
+        --muted: #7f8aa0;
+        --accent: #4da3ff;
+        --font-ui: "Inter", -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--base); }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--base);
+        font-family: var(--font-ui); color: var(--ink); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+      }
+      .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      svg { display: block; flex: none; }
+
+      /* ---------- backdrop ---------- */
+      #bg {
+        z-index: 0;
+        background:
+          radial-gradient(ellipse 760px 600px at 50% 53%, rgba(38, 66, 130, 0.30) 0%, rgba(14, 24, 52, 0.12) 55%, rgba(0, 0, 0, 0) 78%),
+          radial-gradient(ellipse 1500px 260px at 50% 50%, rgba(30, 55, 120, 0.10) 0%, rgba(0, 0, 0, 0) 100%),
+          #04050a;
+      }
+
+      /* ---------- watch ---------- */
+      #wscene { z-index: 1; overflow: hidden; }
+      #wcam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+      #watch { position: absolute; left: 720px; top: 245px; width: 480px; height: 590px; }
+
+      .band { position: absolute; background: repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, rgba(0,0,0,0) 1px 5px), linear-gradient(90deg, #0b0d11, #181b22 50%, #0b0d11); box-shadow: inset 1.5px 0 0 rgba(140,175,255,0.24), inset -1.5px 0 0 rgba(140,175,255,0.12); }
+      .band::before { content: ""; position: absolute; top: 0; bottom: 0; left: 20px; right: 20px; border-left: 2px dashed rgba(80,140,255,0.30); border-right: 2px dashed rgba(80,140,255,0.30); }
+      .band.top { left: 70px; top: -245px; width: 340px; height: 320px; -webkit-mask-image: linear-gradient(to top, #000 52%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to top, #000 52%, rgba(0,0,0,0) 100%); }
+      .band.bot { left: 60px; top: 515px; width: 360px; height: 340px; -webkit-mask-image: linear-gradient(to bottom, #000 52%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, #000 52%, rgba(0,0,0,0) 100%); }
+
+      .crown {
+        position: absolute; left: 474px; top: 150px; width: 22px; height: 92px; border-radius: 6px 9px 9px 6px;
+        background: repeating-linear-gradient(0deg, rgba(0,0,0,0.55) 0 2px, rgba(0,0,0,0) 2px 5px), linear-gradient(90deg, #12141a 0%, #3a404c 45%, #1a1d24 100%);
+        box-shadow: inset 0 1px 0 rgba(170,200,255,0.35), 0 0 0 1px #000;
+      }
+      .sidebtn { position: absolute; left: 474px; top: 280px; width: 12px; height: 64px; border-radius: 4px 6px 6px 4px; background: linear-gradient(90deg, #12141a, #2d323c 60%, #181b21); box-shadow: inset 0 1px 0 rgba(170,200,255,0.25), 0 0 0 1px #000; }
+
+      .case {
+        position: absolute; left: 0; top: 0; width: 480px; height: 590px; border-radius: 132px;
+        background: linear-gradient(148deg, #2b303a 0%, #161920 38%, #0b0c10 68%, #1c2028 100%);
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.05), inset 0 3px 0 rgba(170,200,255,0.22), inset 0 -3px 0 rgba(0,0,0,0.6), 0 0 0 1.5px #000, 0 50px 140px rgba(0,0,0,0.85);
+      }
+      .disp {
+        position: absolute; left: 20px; top: 20px; width: 440px; height: 550px; border-radius: 112px; overflow: hidden; background: #000;
+        box-shadow: inset 0 0 0 3px #05060a;
+      }
+      .disp::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(20,34,66,0.65) 0%, rgba(2,4,10,0) 70%); }
+
+      .rim {
+        position: absolute; inset: 0; border-radius: 132px; padding: 3px; overflow: hidden; pointer-events: none;
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+        mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      }
+      .rs { position: absolute; top: 0; bottom: 0; left: 0; width: 700px; opacity: 0; background: linear-gradient(90deg, rgba(120,170,255,0) 0%, rgba(150,200,255,0.55) 30%, rgba(235,245,255,1) 50%, rgba(150,200,255,0.55) 70%, rgba(120,170,255,0) 100%); }
+
+      /* ---------- watch face ---------- */
+      .dt { position: absolute; font-weight: 600; white-space: nowrap; }
+      #fdate { left: 34px; top: 30px; font-size: 21px; letter-spacing: 0.08em; color: #7fb2ff; }
+      #ftemp { right: 36px; top: 28px; font-size: 22px; color: #d3e2ff; display: flex; align-items: center; gap: 7px; }
+      #ftime { left: 28px; top: 64px; font-size: 124px; line-height: 128px; letter-spacing: -0.05em; color: #f4f7fc; }
+      #fap { left: 352px; top: 86px; font-size: 21px; letter-spacing: 0.08em; color: #8e9bb4; }
+      #fsec { left: 352px; top: 116px; font-size: 40px; line-height: 40px; letter-spacing: -0.02em; color: #4da3ff; }
+      #frule { position: absolute; left: 30px; right: 30px; top: 205px; height: 1px; background: rgba(120,160,255,0.16); }
+      #rings { position: absolute; left: 22px; top: 224px; width: 182px; height: 182px; }
+      .st { position: absolute; left: 222px; white-space: nowrap; }
+      .st b { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: 0.14em; }
+      .st span { display: block; margin-top: 3px; font-size: 27px; font-weight: 600; letter-spacing: -0.02em; color: #f2f5fa; }
+      .st span i { font-style: normal; font-size: 14px; font-weight: 600; color: #7f8aa0; margin-left: 4px; letter-spacing: 0.04em; }
+      .tile { position: absolute; top: 416px; height: 108px; border-radius: 22px; background: linear-gradient(180deg, #0f1a2e 0%, #0a1020 100%); box-shadow: inset 0 0 0 1px rgba(110,160,255,0.14); }
+      .tile .lb { position: absolute; left: 16px; top: 13px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; color: #7f8aa0; }
+      .tile .vl { position: absolute; left: 16px; font-weight: 600; letter-spacing: -0.03em; color: #f4f7fc; white-space: nowrap; }
+      .tile .vl i { font-style: normal; font-size: 14px; font-weight: 600; color: #7f8aa0; letter-spacing: 0.06em; margin-left: 6px; }
+      #t1 { left: 24px; width: 190px; } #t2 { left: 224px; width: 94px; } #t3 { left: 328px; width: 88px; }
+
+      .glass { position: absolute; inset: 0; background: linear-gradient(125deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.025) 24%, rgba(255,255,255,0) 42%), linear-gradient(0deg, rgba(120,160,255,0.05) 0%, rgba(0,0,0,0) 30%); pointer-events: none; }
+      #sheen { position: absolute; left: 0; top: -60px; width: 220px; height: 700px; opacity: 0; pointer-events: none; background: linear-gradient(90deg, rgba(190,220,255,0) 0%, rgba(190,220,255,0.30) 50%, rgba(190,220,255,0) 100%); transform: translateX(-400px) skewX(-18deg); }
+
+      /* ---------- title ---------- */
+      #title { z-index: 2; }
+      #tin { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      #eyebrow { position: absolute; left: 0; top: 372px; width: 1920px; text-align: center; font-size: 26px; font-weight: 600; letter-spacing: 0.5em; padding-left: 0.5em; color: #5f86c9; }
+      .ttl { position: absolute; left: 0; top: 424px; width: 1920px; height: 190px; display: flex; justify-content: center; gap: 46px; }
+      .w {
+        display: inline-block; font-weight: 700; font-size: 176px; line-height: 190px; letter-spacing: -0.045em; padding: 0 0.05em;
+        color: transparent; -webkit-background-clip: text; background-clip: text; --sx: -2000px; --hi: 0;
+        background-image: linear-gradient(90deg, rgba(225,240,255,0) 0%, rgba(225,240,255,var(--hi)) 50%, rgba(225,240,255,0) 100%), linear-gradient(180deg, #c3cddd 0%, #6a7589 100%);
+        background-size: 760px 100%, 100% 100%; background-repeat: no-repeat; background-position: var(--sx) 0, 0 0;
+      }
+
+      /* ---------- lockup ---------- */
+      #lock { z-index: 2; }
+      #mk { position: absolute; left: 764px; top: 492px; width: 96px; height: 96px; filter: drop-shadow(0 0 14px rgba(77,163,255,0.55)); }
+      #wm { position: absolute; left: 884px; top: 478px; font-size: 112px; line-height: 124px; font-weight: 600; letter-spacing: -0.035em; color: #f2f5fa; white-space: nowrap; }
+      #tag { position: absolute; left: 0; top: 650px; width: 1920px; text-align: center; font-size: 26px; font-weight: 500; letter-spacing: 0.34em; padding-left: 0.34em; text-transform: uppercase; color: var(--muted); }
+
+      /* ---------- light and finish ---------- */
+      #fx { z-index: 3; mix-blend-mode: screen; pointer-events: none; }
+      #fx canvas { display: block; width: 1920px; height: 1080px; background: #000; }
+      #grain {
+        z-index: 4; pointer-events: none; opacity: 0.07; background-size: 256px 256px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      #vig { z-index: 5; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 52%, rgba(0,0,0,0.6) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+      <div id="bg" class="clip full" data-start="0" data-duration="10" data-track-index="0" data-layout-allow-overlap></div>
+
+      <div id="wscene" class="clip full" data-start="0" data-duration="5.4" data-track-index="1" data-layout-allow-overlap>
+        <div id="wcam">
+          <div id="watch">
+            <div class="band top"></div>
+            <div class="band bot"></div>
+            <div class="crown"></div>
+            <div class="sidebtn"></div>
+            <div class="case">
+              <div class="disp">
+                <div id="fdate" class="dt">WED 26</div>
+                <div id="ftemp" class="dt">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7fb2ff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                  18°
+                </div>
+                <div id="ftime" class="dt">10:09</div>
+                <div id="fap" class="dt">AM</div>
+                <div id="fsec" class="dt">42</div>
+                <div id="frule"></div>
+                <svg id="rings" viewBox="0 0 182 182" fill="none" stroke-linecap="round">
+                  <g stroke-width="19">
+                    <circle cx="91" cy="91" r="80" stroke="#4da3ff" stroke-opacity="0.18"/>
+                    <circle cx="91" cy="91" r="58" stroke="#38e1ff" stroke-opacity="0.18"/>
+                    <circle cx="91" cy="91" r="36" stroke="#8d82ff" stroke-opacity="0.18"/>
+                  </g>
+                  <g stroke-width="19" transform="rotate(-90 91 91)">
+                    <circle id="r1" cx="91" cy="91" r="80" stroke="#4da3ff"/>
+                    <circle id="r2" cx="91" cy="91" r="58" stroke="#38e1ff"/>
+                    <circle id="r3" cx="91" cy="91" r="36" stroke="#8d82ff"/>
+                  </g>
+                </svg>
+                <div class="st dt" style="top:226px"><b style="color:#4da3ff">MOVE</b><span>486/600<i>CAL</i></span></div>
+                <div class="st dt" style="top:288px"><b style="color:#38e1ff">EXERCISE</b><span>31/30<i>MIN</i></span></div>
+                <div class="st dt" style="top:350px"><b style="color:#8d82ff">STAND</b><span>9/12<i>HR</i></span></div>
+                <div id="t1" class="tile">
+                  <div class="lb">HEART RATE</div>
+                  <div class="vl" style="top:30px;font-size:42px;line-height:44px">72<i>BPM</i></div>
+                  <svg style="position:absolute;left:12px;top:76px" width="166" height="26" viewBox="0 0 166 26" fill="none" stroke="#4da3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M0 14 L22 14 L28 5 L34 22 L40 2 L47 16 L64 14 L78 10 L92 14 L112 14 L118 7 L124 19 L130 14 L166 14"/></svg>
+                </div>
+                <div id="t2" class="tile">
+                  <div class="lb" style="left:0;width:94px;text-align:center">BATT</div>
+                  <svg style="position:absolute;left:19px;top:32px" width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-linecap="round" stroke-width="6"><circle cx="28" cy="28" r="23" stroke="#38e1ff" stroke-opacity="0.2"/><circle cx="28" cy="28" r="23" stroke="#38e1ff" stroke-dasharray="145" stroke-dashoffset="20" transform="rotate(-90 28 28)"/></svg>
+                  <div class="vl" style="left:0;width:94px;text-align:center;top:49px;font-size:17px;line-height:20px;letter-spacing:-0.01em">86%</div>
+                </div>
+                <div id="t3" class="tile">
+                  <div class="lb">STEPS</div>
+                  <div class="vl" style="top:34px;font-size:32px;line-height:34px">8.4k</div>
+                  <div style="position:absolute;left:16px;top:82px;width:56px;height:5px;border-radius:3px;background:rgba(141,130,255,0.22)"><div style="width:70%;height:5px;border-radius:3px;background:#8d82ff"></div></div>
+                </div>
+                <div class="glass"></div>
+                <div id="sheen"></div>
+              </div>
+              <div class="rim"><div id="rsA" class="rs"></div><div id="rsB" class="rs"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="title" class="clip full" data-start="4.9" data-duration="3.0" data-track-index="2" data-layout-allow-overlap>
+        <div id="tin">
+          <div id="eyebrow">INTRODUCING</div>
+          <div class="ttl"><span class="w" id="w1">Aster</span><span class="w" id="w2">Series 2</span></div>
+        </div>
+      </div>
+
+      <div id="lock" class="clip full" data-start="7.5" data-duration="2.5" data-track-index="3" data-layout-allow-overlap>
+        <svg id="mk" viewBox="0 0 96 96" fill="none" stroke-linecap="round">
+          <circle id="mkr" cx="48" cy="48" r="40" stroke="#c9dcff" stroke-width="5" stroke-dasharray="251.3 400" stroke-dashoffset="251.3" transform="rotate(-90 48 48)"/>
+          <g id="mkx" stroke="#4da3ff" stroke-width="6.5">
+            <path d="M48 24 V72"/><path d="M27.2 36 L68.8 60"/><path d="M27.2 60 L68.8 36"/>
+          </g>
+        </svg>
+        <div id="wm">Aster</div>
+        <div id="tag">Time, in depth.</div>
+      </div>
+
+      <div id="fx" class="clip full" data-start="0" data-duration="10" data-track-index="4" data-layout-allow-overlap><canvas id="cv" width="1920" height="1080"></canvas></div>
+      <div id="grain" class="clip full" data-start="0" data-duration="10" data-track-index="5"></div>
+      <div id="vig" class="clip full" data-start="0" data-duration="10" data-track-index="6"></div>
+    </div>
+
+    <script>
+      const EXPO = "expo.out";
+      const DUR = 10;
+
+      /* ---------- helpers ---------- */
+      const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+      const sm = (a, b, x) => { const u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); };
+      const lerp = (a, b, u) => a + (b - a) * u;
+      const rgba = (c, a) => "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + clamp(a, 0, 1).toFixed(3) + ")";
+      // eased travel: slow through the middle of the frame, quick at the ends
+      const travel = (p) => p + 0.11 * Math.sin(2 * Math.PI * p);
+
+      const cv = document.getElementById("cv");
+      const ctx = cv.getContext("2d");
+      const $ = (id) => document.getElementById(id);
+      const dom = {
+        rsA: $("rsA"), rsB: $("rsB"), sheen: $("sheen"), sec: $("fsec"),
+        r1: $("r1"), r2: $("r2"), r3: $("r3"), w1: $("w1"), w2: $("w2"),
+      };
+
+      /* ---------- light sources, all pure functions of time ---------- */
+      const A0 = 1.25, A1 = 5.0;   // flare over the watch
+      const B0 = 5.95, B1 = 7.4;   // smaller flare over the title
+      const C0 = 8.4;              // pulse on the lockup mark
+
+      function srcA(t) {
+        const p = (t - A0) / (A1 - A0);
+        if (p <= 0 || p >= 1) return null;
+        const e = travel(p);
+        const q = 1 - p;
+        return {
+          x: lerp(-420, 2340, e),
+          y: q * q * 200 + 2 * p * q * 620 + p * p * 330,
+          I: sm(0, 0.14, p) * (1 - sm(0.86, 1, p)),
+        };
+      }
+      function srcB(t) {
+        const p = (t - B0) / (B1 - B0);
+        if (p <= 0 || p >= 1) return null;
+        const e = travel(p);
+        return {
+          x: lerp(2200, -300, e),
+          y: lerp(505, 548, p),
+          I: 0.85 * sm(0, 0.16, p) * (1 - sm(0.84, 1, p)),
+        };
+      }
+      function srcC(t) {
+        const s = t - C0;
+        if (s <= 0 || s > 2.0) return null;
+        return { x: 812, y: 540, I: Math.min(1, s / 0.1) * Math.exp(-s / 0.5) };
+      }
+
+      /* ---------- flare drawing ---------- */
+      function radial(x, y, r0, r1, stops) {
+        const g = ctx.createRadialGradient(x, y, r0, x, y, r1);
+        for (const s of stops) g.addColorStop(s[0], s[1]);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(x, y, r1, 0, Math.PI * 2); ctx.fill();
+      }
+      // elliptical glow: half-length L, half-height h
+      function streak(x, y, L, h, col, a) {
+        if (a < 0.003) return;
+        ctx.save();
+        ctx.translate(x, y); ctx.scale(L, h);
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+        g.addColorStop(0, rgba(col, a));
+        g.addColorStop(0.07, rgba(col, a * 0.78));
+        g.addColorStop(0.28, rgba(col, a * 0.3));
+        g.addColorStop(0.62, rgba(col, a * 0.07));
+        g.addColorStop(1, rgba(col, 0));
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(0, 0, 1, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      }
+
+      // g is the position along the line source -> frame centre: 1 is the source, 0 the centre, negative is the far side
+      const GHOSTS = [
+        { g: -0.30, r: 58,  type: "ring", a: 0.60, c: [90, 150, 255] },
+        { g: -0.55, r: 24,  type: "disc", a: 0.75, c: [120, 190, 255] },
+        { g: -0.84, r: 118, type: "hex",  a: 0.34, c: [70, 130, 255] },
+        { g: -1.12, r: 76,  type: "ring", a: 0.70, c: [80, 160, 255] },
+        { g: -1.50, r: 205, type: "big",  a: 0.44, c: [45, 110, 235] },
+        { g: 0.40,  r: 34,  type: "ring", a: 0.55, c: [110, 175, 255] },
+        { g: 0.70,  r: 15,  type: "disc", a: 0.85, c: [160, 215, 255] },
+        { g: -1.95, r: 46,  type: "ring", a: 0.40, c: [100, 140, 255] },
+      ];
+      const FRINGE = [[255, 95, 175, 0.955], [60, 235, 225, 1.0], [85, 120, 255, 1.05]];
+
+      function ringG(x, y, r, c, a) {
+        radial(x, y, r * 0.55, r, [[0, rgba(c, 0)], [0.5, rgba(c, a * 0.22)], [0.88, rgba(c, a)], [1, rgba(c, 0)]]);
+      }
+      function drawGhost(S, gh, I, sc, ang, gf) {
+        const x = 960 + gh.g * (S.x - 960), y = 540 + gh.g * (S.y - 540);
+        const r = gh.r * sc, a = gh.a * I * gf;
+        if (a < 0.003 || x < -r * 1.3 || x > 1920 + r * 1.3 || y < -r * 1.3 || y > 1080 + r * 1.3) return;
+        if (gh.type === "ring") {
+          for (const f of FRINGE) ringG(x, y, r * f[3], f.slice(0, 3), a * 0.42);
+          ringG(x, y, r, gh.c, a * 0.5);
+        } else if (gh.type === "disc") {
+          radial(x, y, 0, r, [[0, rgba(gh.c, a * 0.55)], [0.72, rgba(gh.c, a * 0.7)], [0.93, rgba(gh.c, a)], [1, rgba(gh.c, 0)]]);
+        } else if (gh.type === "hex") {
+          ctx.save();
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const th = ang + Math.PI / 6 + (i * Math.PI) / 3;
+            const px = x + r * Math.cos(th), py = y + r * Math.sin(th);
+            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+          ctx.closePath(); ctx.clip();
+          radial(x, y, 0, r * 1.05, [[0, rgba(gh.c, a * 0.18)], [0.7, rgba(gh.c, a * 0.45)], [1, rgba(gh.c, a * 0.85)]]);
+          ctx.restore();
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const th = ang + Math.PI / 6 + (i * Math.PI) / 3;
+            const px = x + r * Math.cos(th), py = y + r * Math.sin(th);
+            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.lineWidth = 2.5; ctx.strokeStyle = rgba([150, 195, 255], a * 0.8); ctx.stroke();
+        } else if (gh.type === "big") {
+          ctx.save();
+          ctx.translate(x, y); ctx.rotate(ang); ctx.scale(1, 0.84);
+          radial(0, 0, 0, r, [[0, rgba(gh.c, a * 0.45)], [0.7, rgba(gh.c, a * 0.62)], [0.9, rgba([90, 150, 255], a)], [1, rgba(gh.c, 0)]]);
+          ctx.restore();
+        }
+      }
+
+      function drawFlare(S, I, o) {
+        if (I < 0.003) return;
+        const sc = o.sc, dx = S.x - 960, dy = S.y - 540, d = Math.hypot(dx, dy), ang = Math.atan2(dy, dx);
+        ctx.globalCompositeOperation = "lighter";
+
+        // veiling glare: lifts the whole frame, strongest with the source near the centre
+        const v = I * Math.exp(-(d * d) / (640 * 640)) * o.veil;
+        if (v > 0.003) {
+          ctx.fillStyle = rgba([40, 80, 190], 0.1 * v); ctx.fillRect(0, 0, 1920, 1080);
+          radial(S.x, S.y, 0, 1250, [[0, rgba([110, 160, 255], 0.22 * v)], [0.4, rgba([70, 120, 240], 0.09 * v)], [1, rgba([60, 100, 230], 0)]]);
+        }
+        // bloom
+        radial(S.x, S.y, 0, 460 * sc, [[0, rgba([150, 195, 255], 0.42 * I)], [0.35, rgba([80, 140, 255], 0.16 * I)], [1, rgba([60, 110, 255], 0)]]);
+        // anamorphic streak: a wide glow, a thin blue line, a white hairline
+        const len = o.len * sc;
+        streak(S.x, S.y, 1250 * len, 34 * sc, [70, 130, 255], 0.30 * I);
+        streak(S.x, S.y, 1000 * len, 9 * sc, [130, 190, 255], 0.75 * I);
+        streak(S.x, S.y, 780 * len, 2.6 * sc, [235, 245, 255], 0.95 * I);
+        // faint mirrored streak on the far side of the centre
+        if (o.ghosts) {
+          streak(960 - 0.72 * dx, 540 - 0.72 * dy, 700 * len, 5 * sc, [90, 150, 255], 0.24 * I * sm(0.1, 0.5, d / 960));
+        }
+        // hot core
+        radial(S.x, S.y, 0, 95 * sc * o.core, [[0, rgba([255, 255, 255], I)], [0.12, rgba([225, 238, 255], 0.9 * I)], [0.35, rgba([140, 190, 255], 0.4 * I)], [1, rgba([80, 130, 255], 0)]]);
+        // ghosts, recomputed from the source every frame
+        if (o.ghosts) {
+          const gf = sm(0.04, 0.4, d / 960);
+          for (const i of o.ghosts) drawGhost(S, GHOSTS[i], I, sc, ang, gf);
+        }
+      }
+
+      /* ---------- frame ---------- */
+      const RING = [[dom.r1, 80, 0.81], [dom.r2, 58, 1.0], [dom.r3, 36, 0.75]];
+
+      function render(t) {
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = "#000"; ctx.fillRect(0, 0, 1920, 1080);
+        const A = srcA(t), B = srcB(t), Cc = srcC(t);
+        if (A) drawFlare(A, A.I, { sc: 1, veil: 1, len: 1, core: 1, ghosts: [0, 1, 2, 3, 4, 5, 6, 7] });
+        if (B) drawFlare(B, B.I, { sc: 0.62, veil: 0.35, len: 1, core: 1, ghosts: [0, 3, 5, 6, 4] });
+        if (Cc) drawFlare(Cc, Cc.I, { sc: 0.55, veil: 0, len: 1, core: 0.45, ghosts: null });
+
+        // rim light on the case: an intro pass, then the flare source
+        const pi = clamp((t - 0.3) / 1.2, 0, 1);
+        const ix = lerp(-200, 1250, travel(pi) * 0.9 + pi * 0.1);
+        const iInt = sm(0.25, 0.7, t) * (1 - sm(1.25, 1.7, t));
+        dom.rsA.style.transform = "translateX(" + (ix - 720 - 350).toFixed(1) + "px)";
+        dom.rsA.style.opacity = (iInt * 0.9).toFixed(3);
+        dom.rsB.style.transform = "translateX(" + ((A ? A.x : 0) - 720 - 350).toFixed(1) + "px)";
+        dom.rsB.style.opacity = A ? (A.I * 0.95).toFixed(3) : "0";
+
+        // glass sheen follows the source
+        dom.sheen.style.transform = "translateX(" + ((A ? A.x : -600) - 740 - 110).toFixed(1) + "px) skewX(-18deg)";
+        dom.sheen.style.opacity = A ? (A.I * 0.9).toFixed(3) : "0";
+
+        // activity rings fill, seconds tick
+        const rp = 1 - Math.pow(1 - sm(0.7, 2.5, t), 3);
+        for (const r of RING) {
+          const c = 2 * Math.PI * r[1];
+          r[0].style.strokeDasharray = c.toFixed(2) + " " + (2 * c).toFixed(2);
+          r[0].style.strokeDashoffset = (c * (1 - r[2] * rp)).toFixed(2);
+        }
+        dom.sec.textContent = String(42 + Math.floor(t)).padStart(2, "0");
+
+        // title takes the light of flare B
+        for (const w of [dom.w1, dom.w2]) {
+          w.style.setProperty("--hi", B ? Math.min(1, B.I * 1.1).toFixed(3) : "0");
+          if (B) w.style.setProperty("--sx", (B.x - w.offsetLeft - 380).toFixed(1) + "px");
+        }
+      }
+
+      /* ---------- timeline ---------- */
+      const tl = gsap.timeline({ paused: true });
+      render(0);
+      tl.to({ v: 0 }, { v: 1, duration: DUR, ease: "none", onUpdate: () => render(tl.time()) }, 0);
+      window.addEventListener("hf-seek", (e) => render(e.detail.time));
+
+      // 0 - 1.3 the watch comes out of the dark
+      tl.fromTo("#watch", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.1, ease: "power2.out", immediateRender: true }, 0);
+      tl.fromTo("#wcam", { scale: 1.04 }, { scale: 1.1, duration: 4.55, ease: "none", immediateRender: true }, 0);
+      tl.from("#fdate, #ftemp", { opacity: 0, y: 10, duration: 0.7, stagger: 0.08, ease: EXPO }, 0.45);
+      tl.from("#ftime, #fap, #fsec", { opacity: 0, y: 16, duration: 0.8, stagger: 0.06, ease: EXPO }, 0.55);
+      tl.from("#rings, .st", { opacity: 0, duration: 0.8, stagger: 0.07, ease: "power2.out" }, 0.7);
+      tl.from(".tile", { opacity: 0, y: 14, duration: 0.8, stagger: 0.1, ease: EXPO }, 0.85);
+
+      // 1.25 - 5.0 flare A sweeps across the watch (drawn in render)
+
+      // 4.55 - 5.25 the watch leaves
+      tl.to("#wcam", { scale: 1.22, opacity: 0, filter: "blur(10px)", duration: 0.7, ease: "power2.in" }, 4.55);
+
+      // 4.9 - 7.9 title
+      tl.fromTo("#tin", { scale: 1 }, { scale: 1.03, duration: 3.0, ease: "none", immediateRender: false }, 4.9);
+      tl.from("#eyebrow", { opacity: 0, y: 14, duration: 0.9, ease: EXPO }, 5.0);
+      tl.from("#w1, #w2", { opacity: 0, y: 70, filter: "blur(16px)", duration: 1.2, stagger: 0.14, ease: EXPO }, 5.05);
+      // 5.95 - 7.4 flare B crosses the title (drawn in render)
+      tl.to("#tin", { opacity: 0, y: -22, filter: "blur(8px)", duration: 0.45, ease: "power2.in" }, 7.4);
+
+      // 7.5 - 10 lockup
+      tl.to("#mkr", { strokeDashoffset: 0, duration: 0.8, ease: "power3.inOut" }, 7.85);
+      tl.fromTo("#mkx", { opacity: 0, scale: 0.4, rotation: -70, transformOrigin: "48px 48px" }, { opacity: 1, scale: 1, rotation: 0, duration: 1.0, ease: EXPO, immediateRender: true }, 8.0);
+      tl.fromTo("#wm", { opacity: 0, x: -28, clipPath: "inset(0 100% 0 0)" }, { opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: EXPO, immediateRender: true }, 8.25);
+      tl.fromTo("#tag", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: EXPO, immediateRender: true }, 8.75);
+      // 8.4 flare C pulses through the mark (drawn in render)
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

@@ -8,7 +8,7 @@
     {
       "name": "motionboard",
       "source": "./",
-      "description": "Make launch videos and motion graphics with Claude Code or Codex: 48 shot recipes (match cut, logo reveal, kinetic typography, liquid glass and more) rebuilt in HyperFrames (HTML + GSAP rendered to MP4) from Apple, Linear, Figma and other launch films.",
+      "description": "Make launch videos and motion graphics with Claude Code or Codex: 58 shot recipes (match cut, logo reveal, kinetic typography, liquid glass and more) rebuilt in HyperFrames (HTML + GSAP rendered to MP4) from Apple, Linear, Figma and other launch films.",
       "homepage": "https://motionboard.app",
       "license": "MIT",
       "skills": [

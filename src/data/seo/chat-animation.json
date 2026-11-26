@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Chat Animation",
+    "title": "Chat Animation: Example and Code Recipe",
+    "description": "A prompt typed into a chat, the AI thinking, tool steps ticking off and an app building beside it. Make it with Claude Code or Codex.",
+    "howto": [
+      "Build the chat as one panel of a 1500x840px window (chat 560px, preview 940px) and keep the camera tight on it at 1.75–1.85x for the first 5.9s, so 21px text reads at about 38px. Type the 51-character prompt into the composer from 0.7 to 1.95s, then press Send at 2.1s: the button squashes to 0.84 and bounces back with back.out(2.4), and the 420px user bubble springs in from the composer's position over 0.85s with back.out(1.25). Thinking… appears at 2.85s with a 1.1s highlight sweep and turns into a collapsed Thought for 2s row at 4.0s.",
+      "Show the work as tool steps. Three 504x64px cards appear at 4.0s, 4.7s and 5.35s with expo.out; each spinner turns two full rotations and becomes a purple tick at 4.62s, 5.22s and 5.95s. A 3px progress bar fills the blank preview from 4.0 to 6.0s. On the frame the last tick lands (5.95s) the preview swaps to the dashboard and the camera pulls back from 5.9 to 7.05s with expo.inOut, down to 1.16x. The reply streams 19 words 0.085s apart from 6.0s, each fading in over 0.3s, while the dashboard builds in parts until 7.8s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the chat, the tool cards and a dashboard from your product. Replace the prompt, the three tool-step titles and the preview with your own, then fade the window at 8.2s and bring in the lockup at 8.45s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a chat animation in a product film?",
+        "A chat animation shows a conversation with an AI inside the product: a prompt is typed and sent, the assistant thinks, runs steps and answers, and the result appears beside it. Here the result is an invoicing dashboard that builds in the preview while the reply streams."
+      ],
+      [
+        "How do you make an AI reply look like it is streaming?",
+        "Fade each word in on its own tween. In this film the 19 words appear 0.085s apart, each over 0.3s with a 6px rise, so the reply takes about 1.5s. A caret follows the newest word, and a purple-to-pink copy of each word fades out over 0.5s starting 0.18s after it appears, so fresh words look newly generated."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "聊天对话动画",
+    "title": "聊天对话动画：示例与代码配方",
+    "description": "输入提示词、AI 思考、工具步骤逐个打钩，旁边的预览同时做出应用。用 Claude Code 或 Codex 按免费配方做出这个聊天对话动画。",
+    "howto": [
+      "把对话做成 1500x840px 窗口里的一栏（对话栏 560px，预览区 940px），前 5.9s 镜头一直贴着它，放大 1.75–1.85 倍，21px 的文字读起来约 38px。0.7 到 1.95s 在输入框里打出 51 个字符的提示词，2.1s 按下发送：按钮缩到 0.84 再用 back.out(2.4) 回弹，420px 宽的用户气泡用 0.85s 从输入框的位置弹进线程，缓动 back.out(1.25)。2.85s 出现 Thinking…，一道高光用 1.1s 扫过，4.0s 换成折叠的 Thought for 2s。",
+      "把工作过程做成工具步骤。三张 504x64px 的卡片在 4.0s、4.7s、5.35s 用 expo.out 出现，每个转圈转两整圈，在 4.62s、5.22s、5.95s 变成紫色对勾；预览区顶部一条 3px 的进度条 4.0 到 6.0s 走满。最后一个对勾落下的同一帧（5.95s），预览区换成仪表盘，镜头 5.9 到 7.05s 用 expo.inOut 拉远到 1.16 倍。回复 6.0s 起逐词流出，19 个词间隔 0.085s，每个词淡入 0.3s，仪表盘同时分件长出，到 7.8s 结束。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用你的产品做出对话栏、工具卡和仪表盘。把提示词、三个工具步骤的标题和预览换成你自己的，8.2s 窗口淡出，8.45s 字标出现。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "产品片里的聊天对话动画是什么？",
+        "聊天对话动画在产品里演示和 AI 的一次对话：输入并发送提示词，助手思考、执行步骤、给出回答，结果出现在旁边。这支片子里的结果是一个发票仪表盘，回复逐词流出的同时它在预览区里做出来。"
+      ],
+      [
+        "怎么让 AI 回复看起来像在流式输出？",
+        "每个词单独做一段淡入。这支片子里 19 个词间隔 0.085s 出现，每个淡入 0.3s 并上移 6px，整段回复约 1.5s。光标跟在最新的词后面，每个词还叠一份紫到粉渐变的副本，在出现 0.18s 后用 0.5s 淡出，新词看起来像刚生成的。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

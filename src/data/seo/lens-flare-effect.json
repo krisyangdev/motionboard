@@ -1,0 +1,50 @@
+{
+  "en": {
+    "name": "Lens Flare Effect",
+    "title": "Lens Flare Effect: Example and Code Recipe",
+    "description": "A thin anamorphic flare sweeps across a smartwatch and its title, with ghosts that move opposite the light. Make it with Claude Code or Codex.",
+    "howto": [
+      "Compute the whole flare from one source point S, every frame, from the timeline time. Flare A moves from x -420px to 2340px between 1.25s and 5.0s, with y on a curve from 200px through 442px to 330px, and travel p + 0.11·sin(2πp) so it is slowest above the subject. Draw a core of 95px radius, three streak layers with half-lengths 1250/1000/780px and half-heights 34/9/2.6px, and a bloom of 460px radius, all with additive blending.",
+      "Place the ghosts on the line through S and the frame centre: position = centre + g × (S − centre), with g values from -1.95 to +0.70, so they move opposite the source. Use rings with three chromatic fringes at radius ratios 0.955/1.0/1.05, discs, one hexagon of 118px radius and one large disc of 205px radius. Fade the ghosts with smoothstep(0.04, 0.4, d/960) and raise a veiling glare of exp(−d²/640²) as the source nears the centre. At 5.95s a second flare scaled to 0.62 crosses the title from right to left until 7.4s.",
+      "Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the watch face, the canvas flare and the title. Draw the mark at 7.85s, wipe in the word Aster at 8.25s and flash a short flare on the mark at 8.4s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+    ],
+    "faq": [
+      [
+        "What is a lens flare effect?",
+        "A lens flare is light that scatters inside a camera lens when a bright source is in or near the frame. It appears as a streak, a hot core, a veil of haze and a chain of ghost discs and rings. Product films add it to give a shot the look of real optics."
+      ],
+      [
+        "How do you make a lens flare in HTML and canvas?",
+        "Draw it on a canvas with additive blending and compute every part from one source point each frame. Put the ghosts at centre + g × (source − centre), so they move opposite the source, and fade them as the source nears the centre. Redraw the canvas from the timeline time so the render is deterministic."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "name": "镜头光晕效果",
+    "title": "镜头光晕效果：示例与代码配方",
+    "description": "一道细长的变形镜头光晕扫过智能手表和标题，鬼影与光源反向移动。用 Claude Code 或 Codex 按免费配方做出这个镜头光晕效果。",
+    "howto": [
+      "整个光晕每帧由时间算出，只依赖一个光源点 S。光晕 A 在 1.25s 到 5.0s 之间从 x −420px 走到 2340px，y 沿曲线从 200px 经 442px 到 330px，行进量用 p + 0.11·sin(2πp)，在主体上方最慢。画半径 95px 的核心、三层半长 1250/1000/780px、半高 34/9/2.6px 的条纹和半径 460px 的泛光，全部用叠加混合。",
+      "鬼影放在 S 与画面中心的连线上：位置 = 中心 + g × (S − 中心)，g 取 −1.95 到 +0.70，所以它们与光源反向移动。用带三层色散边的环（半径比 0.955/1.0/1.05）、圆盘、一个半径 118px 的六边形和一个半径 205px 的大圆盘。鬼影按 smoothstep(0.04, 0.4, d/960) 淡出，光源靠近中心时加一层强度为 exp(−d²/640²) 的遮光雾。5.95s 第二道光晕缩到 0.62 倍，从右向左扫过标题，到 7.4s 结束。",
+      "点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出表盘、canvas 光晕和标题。7.85s 画出标记，8.25s 擦出字标 Aster，8.4s 在标记上闪一道短光晕。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+    ],
+    "faq": [
+      [
+        "镜头光晕是什么？",
+        "镜头光晕是明亮光源在画面内或画面附近时，光在镜头内部散射形成的效果，表现为一条条纹、一个高热核心、一层雾和一串鬼影圆盘与圆环。产品片加上它，是为了让镜头有真实光学的质感。"
+      ],
+      [
+        "怎么用 HTML 和 canvas 做镜头光晕？",
+        "在 canvas 上用叠加混合绘制，每帧由一个光源点算出所有部分。鬼影放在 中心 + g × (光源 − 中心) 的位置，所以与光源反向移动，光源靠近中心时让它们淡出。用时间线的时间重画 canvas，渲染结果就是确定的。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

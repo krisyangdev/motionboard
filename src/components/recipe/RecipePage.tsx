@@ -93,7 +93,16 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
       </div>
 
       <div className="rc-compare" ref={compare}>
-        {selected ? <Compare term={t} source={selected} /> : <Player term={t} />}
+        {selected ? (
+          <Compare term={t} source={selected} />
+        ) : (
+          <figure className="cmp-fig">
+            <Player term={t} />
+            <figcaption className="cmp-cap mono">
+              <span className="cmp-cap-t">{s.recipe.recreationOnly}</span>
+            </figcaption>
+          </figure>
+        )}
       </div>
 
       <div className="rc-col">

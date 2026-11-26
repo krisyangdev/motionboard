@@ -5,9 +5,9 @@
   "updated": "2026-11-26",
   "en": {
     "title": "Text Animation and Kinetic Typography Examples",
-    "description": "Eleven text animation recipes from launch films: kinetic typography, typing, text behind an object, scrolling text and more. Built with HyperFrames.",
+    "description": "Fourteen text animation recipes from launch films: kinetic typography, typing, text behind an object, blur text, count up and more. Built with HyperFrames.",
     "h1": "Text animation examples from launch films",
-    "lede": "Text animation moves words and letters on screen to carry a message in a launch film. These eleven recipes cover kinetic typography, typing animation, the typewriter effect, word-by-word highlight, text that interacts with objects, text behind an object, folded 3D ribbons, scrolling text and one word per cut. Each film runs 10 to 11 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with timing per word, letter and character.",
+    "lede": "Text animation moves words and letters on screen to carry a message in a launch film. These fourteen recipes cover kinetic typography, typing animation, the typewriter effect, word-by-word highlight, text that interacts with objects, text behind an object, folded 3D ribbons, scrolling text, one word per cut, blur text, a Star Wars style text crawl and count-up numbers. Each film runs 10 to 12 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with timing per word, letter and character.",
     "blocks": [
       {
         "t": "films",
@@ -22,7 +22,10 @@
           "text-behind-object-effect",
           "3d-ribbon-text-animation",
           "scrolling-text-animation",
-          "one-word-per-cut"
+          "one-word-per-cut",
+          "blur-text-animation",
+          "star-wars-text-crawl",
+          "count-up-animation"
         ]
       },
       {
@@ -42,8 +45,12 @@
         "text": "Four more recipes build the shot around the text. Text Behind Object Effect puts a giant headline behind an app window, and the headline changes word by word while the window holds still. 3D Ribbon Text Animation folds a two-line title into zig-zag ribbons, multiplies them into rows and wipes to the product interface. Scrolling Text Animation scrolls a long line sideways faster and faster, then squeezes it into one short chat bubble. One Word per Cut lands a sentence one word per cut, each word centered over a different product screen."
       },
       {
+        "t": "p",
+        "text": "Three more recipes animate text through focus, depth and counting. Blur Text Animation brings large words on black into focus one by one, blurs a line away word by word as the next arrives, and ends with the tagline resolving over the product mark. Star Wars Style Text Crawl is a Star Wars style crawl: a block of text recedes up a tilted plane over a starfield, then the stars rise and a lockup appears. Count Up Animation rolls a huge number up digit by digit, fast at first and slowing onto its target, then repeats the move in a dashboard card with a line drawing in step."
+      },
+      {
         "t": "h2",
-        "text": "The 11 text animation recipes"
+        "text": "The 14 text animation recipes"
       },
       {
         "t": "ul",
@@ -58,7 +65,10 @@
           "[Text Behind Object Effect](/recipes/text-behind-object-effect/): A giant headline sits behind an app window and changes word by word while the window holds still.",
           "[3D Ribbon Text Animation](/recipes/3d-ribbon-text-animation/): A two-line title folds into zig-zag 3D ribbons and multiplies into rows, then arrow bands sweep past and wipe to the product interface.",
           "[Scrolling Text Animation](/recipes/scrolling-text-animation/): A long run-on line scrolls sideways faster and faster, then squeezes into one short chat bubble.",
-          "[One Word per Cut](/recipes/one-word-per-cut/): A sentence lands one word per cut, each word centered over a different product screen."
+          "[One Word per Cut](/recipes/one-word-per-cut/): A sentence lands one word per cut, each word centered over a different product screen.",
+          "[Blur Text Animation](/recipes/blur-text-animation/): Large words on black come into focus one by one, a line blurs away word by word as the next arrives, and the tagline resolves over the product mark.",
+          "[Star Wars Style Text Crawl](/recipes/star-wars-text-crawl/): A Star Wars style crawl: a block of text with a kicker and a title recedes up a tilted plane over a starfield, then the stars rise and a lockup appears.",
+          "[Count Up Animation](/recipes/count-up-animation/): A huge number rolls up digit by digit, fast at first and slowing onto its target, then the same move runs in a dashboard card with a line drawing in step."
         ]
       },
       {
@@ -98,9 +108,9 @@
   },
   "zh": {
     "title": "文字动画与动态文字排版示例",
-    "description": "11 个来自发布片的文字动画配方，包括动态文字排版、打字动画、文字在物体后面、滚动文字等，用 HyperFrames 写代码做出，并与原片对照。",
+    "description": "14 个来自发布片的文字动画配方，包括动态文字排版、打字动画、文字在物体后面、模糊文字、数字滚动等，用 HyperFrames 写代码做出，并与原片对照。",
     "h1": "发布片里的文字动画示例",
-    "lede": "文字动画让文字和字母在画面上运动，用来传达发布片里的信息。这 11 个配方覆盖动态文字排版（kinetic typography）、打字动画、打字机效果、逐词高亮、文字与物体的互动、文字在物体后面、3D 折带文字、滚动文字和一词一切。每个都是用 HyperFrames 写代码做出的 10 到 11 秒 1920x1080 短片，旁边附上原片，并标出每个词、字母和字符的时间。",
+    "lede": "文字动画让文字和字母在画面上运动，用来传达发布片里的信息。这 14 个配方覆盖动态文字排版（kinetic typography）、打字动画、打字机效果、逐词高亮、文字与物体的互动、文字在物体后面、3D 折带文字、滚动文字、一词一切、模糊文字、星战风格字幕滚动和数字滚动。每个都是用 HyperFrames 写代码做出的 10 到 12 秒 1920x1080 短片，旁边附上原片，并标出每个词、字母和字符的时间。",
     "blocks": [
       {
         "t": "films",
@@ -115,7 +125,10 @@
           "text-behind-object-effect",
           "3d-ribbon-text-animation",
           "scrolling-text-animation",
-          "one-word-per-cut"
+          "one-word-per-cut",
+          "blur-text-animation",
+          "star-wars-text-crawl",
+          "count-up-animation"
         ]
       },
       {
@@ -135,8 +148,12 @@
         "text": "另有四个配方围绕文字来搭镜头。文字在物体后面效果把巨大的标题放在应用窗口后面，窗口保持不动，标题逐词替换。3D 折带文字动画把两行标题折成锯齿状的折带，增殖成多排，再擦除切到产品界面。滚动文字动画让一条长句子横向越滚越快，最后压缩成一个简短的聊天气泡。一词一切文字动画让一句话每次切镜出现一个词，每个词都居中叠在不同的产品界面上。"
       },
       {
+        "t": "p",
+        "text": "另有三个配方用对焦、纵深和计数来做文字动画。模糊文字动画让黑场上的大字逐词从模糊里变清楚，一行文字逐词虚化散去，下一行接着出现，最后标语在产品标志上方变清楚。星战风格字幕滚动是星战风格的字幕滚动：一块文字沿倾斜平面在星空上向远处退去，字幕滚完后星星上升，出现标识。数字滚动动画让一个很大的数字一位一位向上滚，开头很快，最后慢慢落在目标数上，随后同一个手法出现在仪表盘卡片里，折线随数字同步画出。"
+      },
+      {
         "t": "h2",
-        "text": "11 个文字动画配方"
+        "text": "14 个文字动画配方"
       },
       {
         "t": "ul",
@@ -151,7 +168,10 @@
           "[文字在物体后面效果](/recipes/text-behind-object-effect/)：巨大的标题位于应用窗口后面，窗口保持不动，标题逐词替换。",
           "[3D 折带文字动画](/recipes/3d-ribbon-text-animation/)：两行标题折成锯齿状的 3D 折带并增殖成多排，随后箭头色带扫过，擦除切到产品界面。",
           "[滚动文字动画](/recipes/scrolling-text-animation/)：一条很长的连写句子横向越滚越快，最后压缩成一个简短的聊天气泡。",
-          "[一词一切文字动画](/recipes/one-word-per-cut/)：一句话每次切镜出现一个词，每个词都居中叠在不同的产品界面上。"
+          "[一词一切文字动画](/recipes/one-word-per-cut/)：一句话每次切镜出现一个词，每个词都居中叠在不同的产品界面上。",
+          "[模糊文字动画](/recipes/blur-text-animation/)：黑场上的大字逐词从模糊里变清楚，一行文字逐词虚化散去，下一行接着出现，最后标语在产品标志上方变清楚。",
+          "[星战风格字幕滚动](/recipes/star-wars-text-crawl/)：星战风格的字幕滚动：带小标和标题的一块文字沿倾斜平面在星空上向远处退去，字幕滚完后星星上升，出现标识。",
+          "[数字滚动动画](/recipes/count-up-animation/)：一个很大的数字一位一位向上滚，开头很快，最后慢慢落在目标数上，随后同一个手法出现在仪表盘卡片里，折线随数字同步画出。"
         ]
       },
       {
