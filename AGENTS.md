@@ -30,3 +30,8 @@ The repo moved from `~/Documents/motion-lexicon-site` to `~/code/sites/motionboa
 - Skill `film/join.mjs` snaps cuts to the beat of the bundled tracks (tempo table at the top of the file) and mixes per-shot `sfx` cues (render clock) from `film/sfx/` (CC0). Film sources and v3 joins: winlinux `~/mb/film-test/motionboard-v2/<product>/launch-film/` (`film-v3.json`), Mac copies in `marketing/film-test/` (git-excluded). Web encodes: winlinux `~/mb/showcase/enc.sh <src> <base> [poster s]`.
 - Media with `media="(max-width: 767px)"` sources also trips the design-check `load failed: ...-m.mp4` false positive on any page, not only home.
 - Long unbroken links in zh body text overflow at 390 px; `.pg-body` has `overflow-wrap: break-word`.
+
+## Adding recipes (task 11, 2026-11-26)
+- A recipe = `src/data/terms.json` entry (zh copy + `samples`) + `src/data/en.json` entry + `src/data/seo/<slug>.json` + `skills/motionboard/source/<video>/` + a `film/shots.json` slot + five media files (`<video>.mp4`, `-m.mp4`, `-s.mp4`, `.jpg`, `-m.jpg`, posters 960x540) + `orig-<youtubeId>-<startSec>.{mp4,jpg}` per sample. `npm run build` regenerates recipe md, README tables and llms.txt.
+- Original clip names collide when two recipes sample the same film at the same start second (`orig-TNhX1uR2vO8-0` serves light-reveal, text-object-interleave and text-behind-object-effect). Reuse the existing file; never re-encode it over the R2 copy.
+- Batch-1 working files (briefs, review sheets, merge script) were in the session scratchpad and are gone; the films' sources in `skills/motionboard/source/` are the record.
