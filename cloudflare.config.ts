@@ -9,7 +9,7 @@ export default defineConfig({
 		name: "motionboard",
 		compatibilityDate: "2026-10-23",
 		compatibilityFlags: ["nodejs_compat"],
-		entrypoint: "@tanstack/react-start/server-entry",
+		entrypoint: "./src/server.ts",
 		observability: { enabled: true },
 		domains: ["motionboard.app"],
 		env: {
