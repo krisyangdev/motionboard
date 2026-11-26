@@ -9,6 +9,9 @@ export const existingLocales = (path: string): readonly Locale[] => index.pages[
 /** Whether a default-language path exists in a language. A path that is not a site page is assumed to exist: the site owns it. */
 export const pageExists = (l: Locale, path: string): boolean => existingLocales(path).includes(l)
 
+/** Whether a registered site page exists in a language. Unlike pageExists, a path missing from the registry is false: use it for template pages a site may not have (about, privacy, terms). */
+export const isSitePage = (l: Locale, path: string): boolean => index.pages[path]?.locales.includes(l) ?? false
+
 /**
  * What seoHead needs for a site page in a language: whether it is noindex there, and the languages for its
  * hreflang set (the ones that exist and are indexable).
