@@ -24,9 +24,9 @@ const terms = json('content/recipes/terms.json')
 const pageFiles = readdirSync(join(root, 'content/pages')).filter((f) => f.endsWith('.json'))
 const prefixes = ['', '/zh']
 
-// 1. page counts: home + every recipe + every hub and guide, in both languages
+// 1. page counts: home + about + every recipe + every hub and guide, in both languages
 const locs = all(/<loc>\s*([^<]+?)\s*<\/loc>/g, read('sitemap.xml')).map((m) => m[1])
-const want = 2 * (1 + terms.length + pageFiles.length)
+const want = 2 * (2 + terms.length + pageFiles.length)
 check('sitemap count', [locs.length], (n) => (n === want ? '' : `expected ${want} URLs, found ${n}`))
 check('sitemap has no helper pages', locs, (l) => (/\/saved\/|#|\.md$/.test(l) ? `${l} should stay out of the sitemap` : ''))
 
