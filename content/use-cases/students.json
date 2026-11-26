@@ -1,0 +1,165 @@
+{
+  "slug": "students",
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "word counter for students",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "title": "Word Counter for Students: Hit Essay Word Limits",
+    "description": "A word counter for students who write to a word limit: check essays as you write, see why totals differ between tools, and keep references out of the count.",
+    "h1": "Word counter for students",
+    "lede": "Essays, reports and applications come with a word limit. Paste your draft, watch the count as you cut, and submit with a margin instead of guessing.",
+    "audience": "Students",
+    "problems": [
+      {
+        "title": "The limit is hard",
+        "body": "Assignments set a minimum or a maximum in words, and a few words over or under can cost marks. You need a number you can check as you write, not after you submit."
+      },
+      {
+        "title": "Tools disagree",
+        "body": "Word processors, learning platforms and the checker your teacher uses can differ by a few words, because each has its own rules for hyphens and numbers. Knowing why helps you leave a margin."
+      },
+      {
+        "title": "The reference list inflates the total",
+        "body": "Many courses leave the bibliography or long quotations out of the limit, so you need the count for the body text alone, not for the whole file."
+      }
+    ],
+    "workflow": [
+      {
+        "title": "Read the rule in the brief",
+        "body": "Find out whether the limit includes headings, quotations, footnotes and the reference list, and whether it is a hard cap or a target with some tolerance."
+      },
+      {
+        "title": "Paste the body text only",
+        "body": "Copy the part that counts into the word counter. Leave out the title page and the bibliography unless the brief says they count."
+      },
+      {
+        "title": "Cut with the number in view",
+        "body": "Trim the weakest sentences and watch the count drop. Use the characters without spaces when a form counts letters instead of words."
+      },
+      {
+        "title": "Leave a margin and recheck",
+        "body": "Stay a few words inside the limit, because the submission system may count differently, and check the final text once more after you format it."
+      }
+    ],
+    "examples": [
+      {
+        "name": "Word counter",
+        "path": "/tools/word-counter/",
+        "caption": "Paste the body of your essay without the reference list and watch the word count change as you cut. Characters without spaces help when a form counts letters, and reading time helps when you are writing a talk."
+      },
+      {
+        "name": "Math symbols",
+        "path": "/symbols/math-symbols/",
+        "caption": "Copy plus-minus, not-equal, square root and other signs into a lab report or problem set without hunting through menus. Each symbol is plain text, so it pastes into most editors and documents."
+      },
+      {
+        "name": "Check mark symbols",
+        "path": "/symbols/check-mark-symbols/",
+        "caption": "Copy a tick or a cross for a revision checklist or a study planner, so you can mark off topics in a plain-text note or a shared document without installing anything or opening another app."
+      }
+    ],
+    "cta": {
+      "name": "Open the word counter",
+      "path": "/tools/word-counter/"
+    },
+    "faq": [
+      [
+        "Does the reference list count towards my word limit?",
+        "It depends on the course. Many leave the bibliography out, but some include it. Read the assignment brief or ask your teacher, then paste only the part that counts."
+      ],
+      [
+        "Why does my submission system show a different number?",
+        "Each tool has its own rules for hyphens, numbers and symbols, so totals can differ by a few words. Stay a few words inside the limit to be safe."
+      ],
+      [
+        "Is my essay uploaded when I use the counter?",
+        "No. The counting happens in your browser tab, and nothing you type is sent to a server or saved."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "学生字数统计工具",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "title": "学生字数统计工具：控制作业字数",
+    "description": "写作业要控制字数的学生适用的字数统计工具：边写边核对作文字数，了解不同工具的总数为什么不同，并把参考文献排除在计数之外。",
+    "h1": "学生字数统计工具",
+    "lede": "作文、报告和申请材料都有字数限制。把草稿粘贴进来，一边删减一边看数字，留出余量再提交，而不是凭感觉估计。",
+    "audience": "学生",
+    "problems": [
+      {
+        "title": "限制是硬性的",
+        "body": "作业会规定最少或最多多少字，多几个字或少几个字都可能扣分。你需要的是写作过程中就能核对的数字，而不是提交之后才发现。"
+      },
+      {
+        "title": "各个工具数得不一样",
+        "body": "文字处理软件、学习平台和老师使用的检查工具，可能相差几个词，因为每个工具对连字符和数字都有自己的规则。知道原因，就知道该留多少余量。"
+      },
+      {
+        "title": "参考文献会抬高总数",
+        "body": "许多课程不把参考文献或大段引文算进字数限制，所以你需要的是正文本身的字数，而不是整个文件的字数。"
+      }
+    ],
+    "workflow": [
+      {
+        "title": "先读清楚作业要求",
+        "body": "弄清楚限制是否包含标题、引文、脚注和参考文献，以及它是严格的上限，还是允许一定浮动的目标字数。"
+      },
+      {
+        "title": "只粘贴正文",
+        "body": "把需要计数的部分复制到字数统计工具里。除非要求里说明要算，否则不要放封面和参考文献。"
+      },
+      {
+        "title": "边删边看数字",
+        "body": "删掉最弱的句子，看着字数下降。表单按字母数量计算时，就看不含空格的字符数。"
+      },
+      {
+        "title": "留出余量，再核对一遍",
+        "body": "让字数比限制少几个词，因为提交系统的计数方式可能不同；排版完成后，再核对一次最终的文字。"
+      }
+    ],
+    "examples": [
+      {
+        "name": "字数统计",
+        "path": "/tools/word-counter/",
+        "caption": "把作文正文粘贴进来，不要放参考文献，一边删减一边看字数变化。表单按字母计数时可以看不含空格的字符数，准备演讲稿时可以看阅读时间。"
+      },
+      {
+        "name": "数学符号",
+        "path": "/symbols/math-symbols/",
+        "caption": "把正负号、不等号、根号等符号复制到实验报告或习题里，不用在菜单中四处寻找。每个符号都是纯文本，可以粘贴到大多数编辑器和文档里。"
+      },
+      {
+        "name": "对勾符号",
+        "path": "/symbols/check-mark-symbols/",
+        "caption": "为复习清单或学习计划复制一个对勾或叉号，这样在纯文本笔记或共享文档里就能划掉已经复习完的主题，不需要安装任何东西，也不用打开别的应用。"
+      }
+    ],
+    "cta": {
+      "name": "打开字数统计",
+      "path": "/tools/word-counter/"
+    },
+    "faq": [
+      [
+        "参考文献算进字数限制吗？",
+        "这取决于课程。许多课程不算参考文献，但也有的要算。请看作业要求或询问老师，然后只粘贴需要计数的部分。"
+      ],
+      [
+        "为什么提交系统显示的数字不一样？",
+        "每个工具对连字符、数字和符号都有自己的规则，所以总数可能差几个词。让字数比限制少几个词会更稳妥。"
+      ],
+      [
+        "使用这个工具时，我的作文会被上传吗？",
+        "不会。统计在你的浏览器标签页里完成，你输入的内容不会发送到服务器，也不会被保存。"
+      ]
+    ]
+  }
+}

@@ -3,6 +3,7 @@
 // Exits 1 when a collection has more noindex items than `seo.maxNoindexShare` allows (the build fails on the same rule).
 import { LOCALES } from '../src/core/i18n.ts'
 import { hubPagination, indexableLocales, noindexShareErrors, pageLocales, sitePages } from '../src/core/pages.ts'
+import { stalePages } from '../src/core/seo/freshness.ts'
 
 const pages = sitePages({ skipShareCheck: true })
 const groupOf = (p) => (p.collection ? `${p.type}: ${p.collection}` : p.type)
@@ -32,7 +33,13 @@ if (paged.length) {
   console.log('\npaginated hub pages (prerendered, never in the sitemap)')
   for (const p of paged) console.log(`  ${p.path}: ${p.locales.join(', ')}${p.noindex.length ? ` (noindex in ${p.noindex.join(', ')})` : ''}`)
 }
-console.log(`\n${pages.length} pages, ${noindexTotal} page-language pairs noindex`)
+// Pages with third-party facts or prices (comparison, alternatives) older than 180 days and guides older than 365: check the facts, prices and sources, edit what changed, then `npm run stamp`. A stale page is a warning, not a failure.
+const stale = stalePages(pages, new Date().toISOString().slice(0, 10))
+if (stale.length) {
+  console.log('\nstale pages (check the facts, prices and sources, edit what changed, then npm run stamp)')
+  for (const s of stale) console.log(`  ${s.path}: ${s.type}, updated ${s.updated}, ${s.days} days ago, limit ${s.limit}`)
+}
+console.log(`\n${pages.length} pages, ${noindexTotal} page-language pairs noindex${stale.length ? `, ${stale.length} stale` : ''}`)
 
 const errors = noindexShareErrors()
 if (errors.length) {

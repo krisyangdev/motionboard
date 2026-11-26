@@ -14,3 +14,16 @@ export function PathLink({ path, locale, className, children }: { path: string; 
     </Link>
   )
 }
+
+/** A link from content data: a path on this site (starts with "/") becomes a router link in the current language, anything else an external link. */
+export function SiteLink({ href, locale, className, children }: { href: string; locale: Locale; className?: string; children: ReactNode }) {
+  return href.startsWith('/') ? (
+    <PathLink className={className} locale={locale} path={href}>
+      {children}
+    </PathLink>
+  ) : (
+    <a className={className} href={href} rel="noopener" target="_blank">
+      {children}
+    </a>
+  )
+}

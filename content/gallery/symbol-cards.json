@@ -1,0 +1,355 @@
+{
+  "slug": "symbol-cards",
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "symbol card examples",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "title": "Symbol Card Examples: Six Designs to Copy",
+    "description": "Six symbol card examples built from copy-and-paste text symbols: stars, hearts, arrows, check marks, math signs and flowers, each linked to its full set.",
+    "h1": "Symbol card examples",
+    "lede": "Six simple cards that show how text symbols look when you group them by theme.",
+    "intro": "A symbol card puts a few related characters side by side so you can see which ones fit together before you copy them. Each card below is a small illustration of one set from the symbols collection: the stars, hearts, arrows, check marks, math signs and flowers that people ask for most. Use them as a starting point for a poster, a note or a checklist. Every card links to the full set, where each symbol can be copied with one tap and comes with notes on where it works.",
+    "entries": [
+      {
+        "media": {
+          "kind": "image",
+          "src": "/symbols/star-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "Three stars: outlined, solid and four-pointed",
+        "title": "Star set",
+        "caption": "An outlined star, a solid star and a four-pointed sparkle in warm yellow, the combination people reach for when they rate something or mark a favourite item in plain text.",
+        "facts": [
+          [
+            "Shapes",
+            "Outlined, solid and four-pointed"
+          ],
+          [
+            "Good for",
+            "Ratings and highlights"
+          ]
+        ],
+        "link": {
+          "name": "Star symbols to copy",
+          "path": "/symbols/star-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/symbols/heart-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "Three heart shapes: outlined, solid and double",
+        "title": "Heart set",
+        "caption": "An outlined heart, a solid heart and a double heart in pink and red. Hearts are the most copied decoration for bios, captions and messages, and a group shows the range of tone available.",
+        "facts": [
+          [
+            "Shapes",
+            "Outlined, solid and double"
+          ],
+          [
+            "Good for",
+            "Bios and messages"
+          ]
+        ],
+        "link": {
+          "name": "Heart symbols to copy",
+          "path": "/symbols/heart-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/symbols/arrow-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "Arrows pointing right, up, in both directions and diagonally",
+        "title": "Arrow set",
+        "caption": "Arrows that point right, up, both ways and diagonally, shown in blue on a pale background. They suit steps in a process, menus and short directions where a drawn diagram would be too heavy.",
+        "facts": [
+          [
+            "Shapes",
+            "Right, up, two-way and diagonal"
+          ],
+          [
+            "Good for",
+            "Steps and directions"
+          ]
+        ],
+        "link": {
+          "name": "Arrow symbols to copy",
+          "path": "/symbols/arrow-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/gallery/check-mark-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "Three checkboxes: a ticked box, a crossed box and an empty box",
+        "title": "Check mark set",
+        "caption": "A ticked box, a crossed box and an empty box in green, red and grey. This trio covers the whole life of a to-do item, from open to done to rejected, in a plain text list.",
+        "facts": [
+          [
+            "Shapes",
+            "Ticked, crossed and empty box"
+          ],
+          [
+            "Good for",
+            "To-do lists and tables"
+          ]
+        ],
+        "link": {
+          "name": "Check mark symbols to copy",
+          "path": "/symbols/check-mark-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/gallery/math-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "Four math signs: plus, minus, multiplication and division",
+        "title": "Math set",
+        "caption": "The four basic operators drawn in purple: plus, minus, multiplication and division. Keyboards hide the last two, which is why students and writers copy them into reports and problem sets.",
+        "facts": [
+          [
+            "Shapes",
+            "Plus, minus, times and divide"
+          ],
+          [
+            "Good for",
+            "Reports and problem sets"
+          ]
+        ],
+        "link": {
+          "name": "Math symbols to copy",
+          "path": "/symbols/math-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/gallery/flower-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "Three flowers with round petals and a snowflake",
+        "title": "Flower set",
+        "caption": "Two round-petalled flowers with yellow centres beside a blue snowflake. Floral characters decorate headings and dividers, and the group shows how a seasonal mix can sit in the same line.",
+        "facts": [
+          [
+            "Shapes",
+            "Two flowers and a snowflake"
+          ],
+          [
+            "Good for",
+            "Headings and dividers"
+          ]
+        ],
+        "link": {
+          "name": "Flower symbols to copy",
+          "path": "/symbols/flower-symbols/"
+        }
+      }
+    ],
+    "faq": [
+      [
+        "Are these cards the real symbols?",
+        "No. They are small illustrations of each set. The real symbols are plain text characters on the linked pages, where you can copy them."
+      ],
+      [
+        "Can I use the images?",
+        "They are drawings made for this demo site. Replace them with your own images when you build a site from the template."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "符号卡片示例",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "title": "符号卡片示例：六种可以直接复制的设计",
+    "description": "用可复制粘贴的文字符号做成的六张符号卡片：星星、爱心、箭头、对勾、数学符号和花朵，每一张都链接到完整的符号合集。",
+    "h1": "符号卡片示例",
+    "lede": "六张简单的卡片，展示文字符号按主题放在一起是什么样子。",
+    "intro": "符号卡片把几个相关的字符并排放在一起，让你在复制之前先看看哪些搭配起来合适。下面每一张卡片都是符号合集中某一组的小插图：人们最常找的星星、爱心、箭头、对勾、数学符号和花朵。你可以把它们当作海报、笔记或清单的起点。每张卡片都链接到完整的合集，在那里可以一键复制每个符号，还附有它适用场合的说明。这些卡片只是示意，方便你在动手之前先比较一下不同主题的风格，再决定要用哪一组。",
+    "entries": [
+      {
+        "media": {
+          "kind": "image",
+          "src": "/symbols/star-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "三颗星星：空心、实心和四角星",
+        "title": "星星组",
+        "caption": "一颗空心星、一颗实心星和一颗四角星，用暖黄色表示。给事物打分、或在纯文本里标出最喜欢的条目时，人们常用的就是这一组。",
+        "facts": [
+          [
+            "形状",
+            "空心、实心和四角"
+          ],
+          [
+            "适合",
+            "评分和重点标记"
+          ]
+        ],
+        "link": {
+          "name": "可复制的星星符号",
+          "path": "/symbols/star-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/symbols/heart-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "三个爱心：空心、实心和双心",
+        "title": "爱心组",
+        "caption": "一颗空心爱心、一颗实心爱心和一对双心，用粉色和红色表示。爱心是个人简介、配文和消息里最常被复制的装饰，一组放在一起能看出语气上的不同选择。",
+        "facts": [
+          [
+            "形状",
+            "空心、实心和双心"
+          ],
+          [
+            "适合",
+            "简介和消息"
+          ]
+        ],
+        "link": {
+          "name": "可复制的爱心符号",
+          "path": "/symbols/heart-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/symbols/arrow-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "箭头分别指向右、上、双向和斜向",
+        "title": "箭头组",
+        "caption": "指向右、上、双向和斜向的箭头，在浅色背景上用蓝色表示。它们适合表示流程里的步骤、菜单和简短的指引，用画图来表示的话会显得太重。",
+        "facts": [
+          [
+            "形状",
+            "向右、向上、双向和斜向"
+          ],
+          [
+            "适合",
+            "步骤和方向"
+          ]
+        ],
+        "link": {
+          "name": "可复制的箭头符号",
+          "path": "/symbols/arrow-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/gallery/check-mark-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "三个方框：打了对勾、打了叉和空白",
+        "title": "对勾组",
+        "caption": "一个打了对勾的方框、一个打了叉的方框和一个空方框，分别用绿色、红色和灰色表示。这三个符号覆盖了待办事项从未完成到完成再到被否决的全过程，在纯文本清单里就能用。",
+        "facts": [
+          [
+            "形状",
+            "对勾、叉号和空方框"
+          ],
+          [
+            "适合",
+            "待办清单和表格"
+          ]
+        ],
+        "link": {
+          "name": "可复制的对勾符号",
+          "path": "/symbols/check-mark-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/gallery/math-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "四个数学符号：加号、减号、乘号和除号",
+        "title": "数学组",
+        "caption": "用紫色画出的四个基本运算符号：加、减、乘、除。键盘上找不到后两个，所以学生和写作者常把它们复制到报告和习题里。",
+        "facts": [
+          [
+            "形状",
+            "加、减、乘、除"
+          ],
+          [
+            "适合",
+            "报告和习题"
+          ]
+        ],
+        "link": {
+          "name": "可复制的数学符号",
+          "path": "/symbols/math-symbols/"
+        }
+      },
+      {
+        "media": {
+          "kind": "image",
+          "src": "/gallery/flower-symbols.svg",
+          "width": 640,
+          "height": 360
+        },
+        "alt": "两朵圆形花瓣的花和一片雪花",
+        "title": "花朵组",
+        "caption": "两朵黄色花心的圆瓣花，旁边是一片蓝色的雪花。花朵字符常用来装饰标题和分隔线，这一组展示了季节性的搭配怎样放进同一行里。",
+        "facts": [
+          [
+            "形状",
+            "两朵花和一片雪花"
+          ],
+          [
+            "适合",
+            "标题和分隔线"
+          ]
+        ],
+        "link": {
+          "name": "可复制的花朵符号",
+          "path": "/symbols/flower-symbols/"
+        }
+      }
+    ],
+    "faq": [
+      [
+        "这些卡片上的就是真正的符号吗？",
+        "不是。它们只是每一组符号的小插图。真正的符号是链接页面上的纯文本字符，可以在那里复制。"
+      ],
+      [
+        "这些图片可以使用吗？",
+        "它们是为这个演示站点画的插图。用模板建站时，请换成你自己的图片。"
+      ]
+    ]
+  }
+}

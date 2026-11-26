@@ -286,6 +286,199 @@ export type ItemFile = {
   related?: string[]
 } & Partial<Record<Locale, ItemText>>
 
+// Comparison, alternatives, glossary, use-case, gallery and changelog pages (spec §1.5 to §1.9). Same rules as the types
+// above: a schema error stops the build with the file and field; content below the minimums of src/core/seo/quality.ts is built
+// but noindex. None of them has `related`: their links are the ones in their own fields and in the copy.
+
+/** A third-party source of the facts a page states, with the day it was checked. */
+export const sourceSchema = z.strictObject({ label: z.string().min(1), url: z.url(), checked: dateSchema })
+export const sourcesSchema = z.array(sourceSchema)
+
+/** A product the page is about: `url` is its site (absolute) or, for our own product, a path on this site. */
+export const productUrlSchema = z.string().refine((u) => /^\/(?!\/)/.test(u) || /^https:\/\/\S+$/.test(u), 'must be an https URL, or a path on this site starting with /')
+export const RELATIONS = ['ours', 'third-party'] as const
+
+/** A link to a page of this site (default-language path) or elsewhere, with its label. */
+export const pathLinkSchema = z.strictObject({ name: z.string().min(1), path: z.string().regex(/^\/(?!\/).*\/$/, 'must be a default-language path with a leading and trailing slash, like /tools/word-counter/') })
+
+const datedFields = { published: dateSchema, updated: dateSchema, ogImage: sharedFields.ogImage }
+
+// Comparison: content/compare/<lang>/<a>-vs-<b>.mdx at /compare/<a>-vs-<b>/. The body is MDX: one H2 per decision factor, then "When to pick a" and "When to pick b".
+export const compareSchema = z
+  .strictObject({
+    ...textFields,
+    ...datedFields,
+    /** The two products: `a` and `b` of the table are the first and the second. */
+    products: z.array(z.strictObject({ name: z.string().min(1), url: productUrlSchema, relation: z.enum(RELATIONS) })).length(2),
+    /** Two or three sentences, shown under the H1 as the short answer. */
+    verdict: z.string().min(1),
+    /** One row per decision factor; `chooseIf` says when this factor should decide. */
+    table: z.array(z.strictObject({ factor: z.string().min(1), a: z.string().min(1), b: z.string().min(1), chooseIf: z.string().min(1) })),
+    /** Prices of the two products on `asOf`; only what a source states. */
+    pricing: z.strictObject({ asOf: dateSchema, a: z.string().min(1), b: z.string().min(1) }).optional(),
+    sources: sourcesSchema,
+  })
+  .superRefine((fm, ctx) => {
+    checkText(fm, ctx)
+    checkDemand(fm, ctx)
+    checkDates(fm, ctx)
+  })
+
+// Alternatives: content/alternatives/<product>.json at /alternatives/<product>/, one text block per language.
+export const altEntrySchema = z.strictObject({
+  name: z.string().min(1),
+  url: productUrlSchema,
+  bestFor: z.string().min(1),
+  /** Only what a source states; otherwise say it was not checked. */
+  price: z.string().min(1),
+  relation: z.enum(RELATIONS),
+  notes: z.string().min(1),
+})
+
+export const alternativesTextSchema = z
+  .strictObject({
+    ...textFields,
+    /** The product the visitor is leaving. */
+    product: z.string().min(1),
+    /** How the entries were judged. */
+    criteria: z.string().min(1),
+    entries: z.array(altEntrySchema),
+    sections: z.array(sectionSchema).max(3).optional(),
+    sources: sourcesSchema,
+    faq: faqSchema.max(6).optional(),
+  })
+  .superRefine((t, ctx) => {
+    checkText(t, ctx)
+    checkDemand(t, ctx)
+  })
+
+export const alternativesFileSchema = (locales: readonly string[]) =>
+  z.object({ slug: slugSchema, ...datedFields, ...Object.fromEntries(locales.map((l) => [l, alternativesTextSchema.optional()])) }).superRefine(checkDates)
+
+// Glossary term: content/glossary/<lang>/<slug>.mdx at /glossary/<slug>/. The body is MDX: how it works, an example, common confusions.
+export const glossarySchema = z
+  .strictObject({
+    ...textFields,
+    ...datedFields,
+    /** 40 to 60 words, self-contained, starts "<Term> is ...": the quotable answer. */
+    definition: z.string().min(1),
+    /** A text or code sample. */
+    example: z.strictObject({ text: z.string().min(1), caption: z.string().min(1) }),
+    /** Other terms or pages to read next (at least 3). */
+    seeAlso: z.array(pathLinkSchema),
+    /** Tools or items that do it (at least 1): "Try it: ...". */
+    useIt: z.array(pathLinkSchema),
+  })
+  .superRefine((fm, ctx) => {
+    checkText(fm, ctx)
+    checkDemand(fm, ctx)
+    checkDates(fm, ctx)
+  })
+
+// Use case: content/use-cases/<slug>.json at /for/<slug>/, one text block per language.
+const titledBody = z.strictObject({ title: z.string().min(1), body: z.string().min(1) })
+
+export const useCaseTextSchema = z
+  .strictObject({
+    ...textFields,
+    audience: z.string().min(1),
+    /** Exactly three, specific to this audience. */
+    problems: z.array(titledBody).length(3),
+    /** The steps of the audience's workflow. */
+    workflow: z.array(titledBody).min(3).max(6),
+    /** Tools or items to start with (at least 3), each with a caption that says what it does for this audience. */
+    examples: z.array(z.strictObject({ name: z.string().min(1), path: pathLinkSchema.shape.path, caption: z.string().min(1) })),
+    cta: pathLinkSchema,
+    faq: faqSchema.min(3).max(6),
+  })
+  .superRefine((t, ctx) => {
+    checkText(t, ctx)
+    checkDemand(t, ctx)
+  })
+
+export const useCaseFileSchema = (locales: readonly string[]) =>
+  z.object({ slug: slugSchema, ...datedFields, ...Object.fromEntries(locales.map((l) => [l, useCaseTextSchema.optional()])) }).superRefine(checkDates)
+
+// Gallery: content/gallery/<slug>.json at /gallery/<slug>/, one text block per language. An entry has no URL of its own.
+export const galleryEntrySchema = z.strictObject({
+  media: mediaSchema,
+  /** Describes the media (at most 125 characters). */
+  alt: z.string().min(1).max(125),
+  title: z.string().min(1),
+  caption: z.string().min(1),
+  facts: z.array(z.tuple([z.string().min(1), z.string().min(1)])).optional(),
+  link: pathLinkSchema.optional(),
+})
+
+export const galleryTextSchema = z
+  .strictObject({
+    ...textFields,
+    intro: z.string().min(1),
+    entries: z.array(galleryEntrySchema),
+    faq: faqSchema.max(5).optional(),
+  })
+  .superRefine((t, ctx) => {
+    checkText(t, ctx)
+    checkDemand(t, ctx)
+  })
+
+export const galleryFileSchema = (locales: readonly string[]) =>
+  z.object({ slug: slugSchema, ...datedFields, ...Object.fromEntries(locales.map((l) => [l, galleryTextSchema.optional()])) }).superRefine(checkDates)
+
+// Changelog: content/changelog/changelog.json at /changelog/, newest entry first. No separate blog (spec §1.9).
+export const changelogEntrySchema = z.strictObject({
+  date: dateSchema,
+  /** ASCII kebab-case; the entry's anchor is `<date>-<slug>`. */
+  slug: slugSchema,
+  title: z.string().min(1),
+  items: z.array(z.string().min(1)).min(1),
+})
+
+const { faq: _noFaq, ...changelogFields } = textFields
+
+export const changelogTextSchema = z
+  .strictObject({
+    ...changelogFields,
+    entries: z.array(changelogEntrySchema).min(1),
+  })
+  .superRefine((t, ctx) => {
+    checkText(t, ctx)
+    const ids = new Set<string>()
+    t.entries.forEach((e, i) => {
+      const id = `${e.date}-${e.slug}`
+      if (ids.has(id)) issue(ctx, ['entries', i], `"${id}" is used by another entry`)
+      ids.add(id)
+      if (i > 0 && e.date > t.entries[i - 1].date) issue(ctx, ['entries', i, 'date'], `${e.date} is newer than the entry before it; list the newest entry first`)
+    })
+  })
+
+export const changelogFileSchema = (locales: readonly string[]) =>
+  z
+    .object({ published: dateSchema, updated: dateSchema, ogImage: sharedFields.ogImage, ...Object.fromEntries(locales.map((l) => [l, changelogTextSchema.optional()])) })
+    .superRefine((f, ctx) => {
+      checkDates(f, ctx)
+      for (const l of locales) {
+        const newest = (f as Record<string, { entries: { date: string }[] } | undefined>)[l]?.entries[0]?.date
+        if (newest && newest > f.updated) issue(ctx, ['updated'], `${f.updated} is before the newest ${l} entry (${newest}); run npm run stamp or set updated to the newest entry date`)
+      }
+    })
+
+export type Source = z.infer<typeof sourceSchema>
+export type PathLink = z.infer<typeof pathLinkSchema>
+export type CompareFrontmatter = z.infer<typeof compareSchema>
+export type GlossaryFrontmatter = z.infer<typeof glossarySchema>
+export type AltEntry = z.infer<typeof altEntrySchema>
+export type AlternativesText = z.infer<typeof alternativesTextSchema>
+export type AlternativesFile = { slug: string; published: string; updated: string; ogImage?: string } & Partial<Record<Locale, AlternativesText>>
+export type UseCaseText = z.infer<typeof useCaseTextSchema>
+export type UseCaseFile = { slug: string; published: string; updated: string; ogImage?: string } & Partial<Record<Locale, UseCaseText>>
+export type GalleryEntry = z.infer<typeof galleryEntrySchema>
+export type GalleryText = z.infer<typeof galleryTextSchema>
+export type GalleryFile = { slug: string; published: string; updated: string; ogImage?: string } & Partial<Record<Locale, GalleryText>>
+export type ChangelogEntry = z.infer<typeof changelogEntrySchema>
+export type ChangelogText = z.infer<typeof changelogTextSchema>
+export type ChangelogFile = { published: string; updated: string; ogImage?: string } & Partial<Record<Locale, ChangelogText>>
+
 export type GuideFrontmatter = z.infer<typeof guideSchema>
 export type LegalFrontmatter = z.infer<typeof legalSchema>
 export type AboutFrontmatter = z.infer<typeof aboutSchema>

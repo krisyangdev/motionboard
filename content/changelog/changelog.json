@@ -1,0 +1,86 @@
+{
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "site template changelog",
+    "demand": {
+      "source": "none",
+      "note": "The changelog targets no search term; it records what changed.",
+      "checked": "2026-11-26"
+    },
+    "title": "Site Template Changelog: What's New",
+    "description": "What changed in Site Template, newest first: new page types, sitemaps split by type, the feed and the freshness checks, with one dated entry for each change.",
+    "h1": "Site Template changelog",
+    "lede": "What changed in the template and its demo site, newest first.",
+    "entries": [
+      {
+        "date": "2026-11-26",
+        "slug": "more-page-types",
+        "title": "More page types",
+        "items": [
+          "Added comparison, alternatives, glossary, use-case and gallery pages, each with its own minimums and checks.",
+          "Added this changelog and its RSS feed at /changelog/rss.xml; the entries also appear in /feed.xml."
+        ]
+      },
+      {
+        "date": "2026-11-26",
+        "slug": "sitemaps-and-feed",
+        "title": "Sitemaps, feed and freshness",
+        "items": [
+          "Split the sitemap into one file per page type, so Search Console shows the indexed share of each type.",
+          "Added /feed.xml and the stamp script, which sets the updated date only when a page's content changed."
+        ]
+      },
+      {
+        "date": "2026-11-26",
+        "slug": "item-pages",
+        "title": "Item pages and quality gates",
+        "items": [
+          "Added collection item pages, with a quality gate that keeps thin items noindex and out of the sitemap.",
+          "Added hub pages with pagination and the seo-report command."
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "keyword": "站点模板更新日志",
+    "demand": {
+      "source": "none",
+      "note": "The changelog targets no search term; it records what changed.",
+      "checked": "2026-11-26"
+    },
+    "title": "站点模板更新日志：最近有什么变化",
+    "description": "站点模板的变化记录，最新的在最前：新的页面类型、按类型拆分的 sitemap、订阅源和更新日期检查，每次变化都有带日期的条目。",
+    "h1": "站点模板更新日志",
+    "lede": "模板和演示站点的变化记录，最新的在最前。",
+    "entries": [
+      {
+        "date": "2026-11-26",
+        "slug": "more-page-types",
+        "title": "更多页面类型",
+        "items": [
+          "新增对比、替代品、术语、使用场景和作品集页面，每种都有各自的最低要求和检查。",
+          "新增这个更新日志和它的 RSS 订阅源 /changelog/rss.xml；这些条目也会出现在 /feed.xml 里。"
+        ]
+      },
+      {
+        "date": "2026-11-26",
+        "slug": "sitemaps-and-feed",
+        "title": "Sitemap、订阅源和更新日期",
+        "items": [
+          "把 sitemap 按页面类型拆成多个文件，这样 Search Console 能看到每种类型的收录比例。",
+          "新增 /feed.xml 和 stamp 脚本，只有页面内容真的变了，才会更新“更新于”的日期。"
+        ]
+      },
+      {
+        "date": "2026-11-26",
+        "slug": "item-pages",
+        "title": "条目页面和质量检查",
+        "items": [
+          "新增集合条目页面，并加入质量检查：内容单薄的条目会设为 noindex，不进入 sitemap。",
+          "新增带分页的汇总页和 seo-report 命令。"
+        ]
+      }
+    ]
+  }
+}

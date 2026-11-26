@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-label="Four math signs: plus, minus, multiplication and division">
+<rect width="640" height="360" rx="24" fill="#f5f3ff"/>
+<g stroke="#7c3aed" stroke-width="16" stroke-linecap="round" fill="none">
+<line x1="115" y1="180" x2="205" y2="180"/>
+<line x1="160" y1="135" x2="160" y2="225"/>
+<line x1="270" y1="180" x2="360" y2="180"/>
+<line x1="405" y1="135" x2="465" y2="225"/>
+<line x1="465" y1="135" x2="405" y2="225"/>
+</g>
+<g stroke="#7c3aed" stroke-width="16" stroke-linecap="round" fill="#7c3aed">
+<line x1="500" y1="180" x2="580" y2="180"/>
+<circle cx="540" cy="140" r="9"/>
+<circle cx="540" cy="220" r="9"/>
+</g>
+</svg>

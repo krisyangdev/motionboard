@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { contentFiles, hashContent, matchesSlug, readHashes, setUpdated, stamp, stampStatus } from './stamp.ts'
+import { contentFiles, hashContent, matchesSlug, readHashes, setUpdated, STAMP_DIRS, stamp, stampStatus } from './stamp.ts'
 
 const json = (o: object) => `${JSON.stringify(o, null, 2)}\n`
 const mdx = (updated: string, body: string, title = 'A guide') => `---\ntitle: ${title}\nupdated: "${updated}"\nkind: guide\n---\n\n${body}\n`
@@ -116,3 +116,14 @@ describe('stamp', () => {
     expect(Object.keys(readHashes(root))).toEqual(['content/tools/word-counter.json'])
   })
 })
+
+describe('STAMP_DIRS', () => {
+  it('covers the content folder of every page type', () => {
+    for (const dir of ['tools', 'guides', 'legal', 'about', 'hubs', 'collections', 'compare', 'alternatives', 'glossary', 'use-cases', 'gallery', 'changelog']) expect(STAMP_DIRS).toContain(dir)
+  })
+  it('bumps the top-level updated of the changelog file', () => {
+    const text = `${JSON.stringify({ published: '2026-01-01', updated: '2026-01-01', en: { entries: [{ date: '2026-01-01', slug: 'a' }] } }, null, 2)}\n`
+    expect(setUpdated('content/changelog/changelog.json', text, '2026-11-27')).toContain('"updated": "2026-11-27"')
+  })
+})
+

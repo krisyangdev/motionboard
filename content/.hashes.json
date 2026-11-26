@@ -1,6 +1,8 @@
 {
   "content/about/en/about.mdx": "739084da4f1efc11",
   "content/about/zh/about.mdx": "8ea40baee588cba8",
+  "content/alternatives/microsoft-word.json": "70f76986543fbfdf",
+  "content/changelog/changelog.json": "4a92947dfe6f115e",
   "content/collections/symbols/arrow-symbols.json": "b1d0259753698257",
   "content/collections/symbols/check-mark-symbols.json": "7f4a6a56109c1bf0",
   "content/collections/symbols/currency-symbols.json": "c2ed208cb7fc52f2",
@@ -9,9 +11,14 @@
   "content/collections/symbols/math-symbols.json": "754ca67cda9b4432",
   "content/collections/symbols/music-note-symbols.json": "8f7b83af60a5386d",
   "content/collections/symbols/star-symbols.json": "8d30ff4363dc0027",
-  "content/guides/en/case-converter.mdx": "d6c242aad3810eef",
+  "content/compare/en/word-counter-vs-google-docs.mdx": "452c6c75c417adb4",
+  "content/compare/zh/word-counter-vs-google-docs.mdx": "65c992c6f7f126ff",
+  "content/gallery/symbol-cards.json": "462ef55bf3943b15",
+  "content/glossary/en/word-count.mdx": "4fa1f523e3abed1c",
+  "content/glossary/zh/word-count.mdx": "1f11d9f9ed75d3ba",
+  "content/guides/en/case-converter.mdx": "ed04ccd1571fa671",
   "content/guides/en/getting-started.mdx": "171cde4020001954",
-  "content/guides/zh/case-converter.mdx": "f5ad1b7df0706444",
+  "content/guides/zh/case-converter.mdx": "d65faff5135365d0",
   "content/guides/zh/getting-started.mdx": "1b227942ef1022d5",
   "content/hubs/guides.json": "97325e9ee2c45c44",
   "content/hubs/symbols.json": "2003c63243c2016c",
@@ -22,5 +29,6 @@
   "content/legal/en/terms.mdx": "9b56227777e2580a",
   "content/legal/zh/privacy.mdx": "6d9e02d19527d0b5",
   "content/legal/zh/terms.mdx": "5e66c5c5ee1b0f7a",
-  "content/tools/word-counter.json": "c104932f9a22b650"
+  "content/tools/word-counter.json": "c104932f9a22b650",
+  "content/use-cases/students.json": "b34fe93ec92f0143"
 }

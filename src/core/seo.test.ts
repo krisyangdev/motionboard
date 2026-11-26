@@ -3,7 +3,7 @@ import { SITE, SITE_URL } from '../../site.config.ts'
 import { DEFAULT_LOCALE, HTML_LANG, LOCALES, PREFIXED_LOCALES, pageUrl } from './i18n'
 import { mockSite } from './test-site'
 import * as seoModule from './seo'
-import { absolute, articleLd, breadcrumbLd, imageObjectLd, ORG_ID, organizationLd, seoHead, videoLd, webApplicationLd, websiteLd } from './seo'
+import { absolute, articleLd, breadcrumbLd, definedTermLd, imageObjectLd, ORG_ID, organizationLd, seoHead, videoLd, webApplicationLd, websiteLd } from './seo'
 
 const other = PREFIXED_LOCALES[0]
 const base = { title: 'Merge PDFs', description: 'Combine PDF files in your browser.', path: '/tools/merge/', locale: DEFAULT_LOCALE }
@@ -146,5 +146,16 @@ describe('JSON-LD helpers', () => {
     expect(ORG_ID).toBe(`${SITE_URL}/about/#org`)
     expect(organizationLd()).toMatchObject({ '@type': 'Organization', '@id': ORG_ID })
     expect(websiteLd(DEFAULT_LOCALE)).toMatchObject({ '@type': 'WebSite', description: SITE.description[DEFAULT_LOCALE], publisher: { '@id': ORG_ID } })
+  })
+})
+
+describe('definedTermLd', () => {
+  const term = { name: 'Word count', description: 'A word count is the number of words in a text.', locale: DEFAULT_LOCALE, path: '/glossary/word-count/', setName: 'Glossary' }
+  it('describes the term with its definition and points at the glossary index when it exists', () => {
+    const ld = definedTermLd({ ...term, setUrl: `${SITE_URL}/glossary/` })
+    expect(ld).toMatchObject({ '@type': 'DefinedTerm', name: 'Word count', description: term.description, url: `${SITE_URL}/glossary/word-count/`, inDefinedTermSet: `${SITE_URL}/glossary/` })
+  })
+  it('names the set instead of a URL when the index page does not exist', () => {
+    expect(definedTermLd(term).inDefinedTermSet).toEqual({ '@type': 'DefinedTermSet', name: 'Glossary' })
   })
 })

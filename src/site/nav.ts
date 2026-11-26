@@ -15,6 +15,7 @@ export const footerNav: NavItem[] = [
   { label: { en: 'Tools', zh: '工具' }, path: '/tools/' },
   { label: { en: 'Guides', zh: '指南' }, path: '/guides/' },
   { label: { en: 'Symbols', zh: '符号' }, path: '/symbols/' },
+  { label: { en: 'Changelog', zh: '更新日志' }, path: '/changelog/' },
 ]
 
 /** Optional line under the copyright; empty strings show nothing. */

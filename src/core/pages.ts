@@ -4,40 +4,69 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE } from '../../site.config.ts'
-import { LOCALES, localizePath, missingCoreMessages, stripLocale, type Locale } from './i18n.ts'
+import { DEFAULT_LOCALE, LOCALES, localizePath, missingCoreMessages, stripLocale, type Locale } from './i18n.ts'
 import type { CoreMessages } from './messages/en.ts'
+import type { ZodType } from 'zod'
 import {
   aboutSchema,
+  alternativesFileSchema,
+  changelogFileSchema,
+  compareSchema,
+  galleryFileSchema,
+  glossarySchema,
   guideSchema,
   hubFileSchema,
   legalSchema,
   parseContent,
   slugSchema,
   toolFileSchema,
+  useCaseFileSchema,
   type AboutFrontmatter,
+  type AlternativesFile,
+  type AlternativesText,
+  type ChangelogFile,
+  type CompareFrontmatter,
+  type GalleryFile,
+  type GalleryText,
+  type GlossaryFrontmatter,
   type GuideFrontmatter,
   type HubFile,
   type ItemFile,
   type LegalFrontmatter,
   type ToolFile,
+  type UseCaseFile,
+  type UseCaseText,
 } from './content/schema.ts'
 import { readItems, validateCollections, type Collection as ItemCollection } from './content/collections.ts'
 import { pageH1 } from './content/h1.ts'
-import { categoryHubId, HUB_PAGE_SIZE, hubPageCount, hubPagePath, itemPath } from './content/hubs.ts'
+import { categoryHubId, CHANGELOG_PAGE_SIZE, CHANGELOG_PATH, HUB_PAGE_SIZE, hubPageCount, hubPagePath, itemPath, typedPath } from './content/hubs.ts'
 import { selectRelated } from './content/related.ts'
 import {
   aboutVerdict,
+  alternativesText,
+  alternativesVerdict,
+  changelogVerdict,
+  compareText,
+  compareVerdict,
   DEFAULT_HUB_MIN_MEMBERS,
   duplicateReason,
+  galleryText,
+  galleryVerdict,
+  glossaryText,
+  glossaryVerdict,
   guideVerdict,
   hubVerdict,
   itemText,
   itemVerdict,
   legalVerdict,
+  MIN,
   nearDuplicates,
   noindexShareError,
   relatedReason,
   toolVerdict,
+  useCaseText,
+  useCaseVerdict,
+  USE_CASE_NEAR_DUPLICATE_JACCARD,
   type Verdict,
 } from './seo/quality.ts'
 import type { Crumb } from './seo.ts'
@@ -100,6 +129,8 @@ export type SitePage = {
   collection?: string
   /** Kind of the main media of an item page: it decides the JSON-LD (ImageObject or VideoObject). */
   media?: 'image' | 'video'
+  /** Comparison and alternatives pages with one of our products next to third-party ones: the page carries the disclosure line (`data-disclosure`). */
+  ours?: boolean
 }
 
 /** A page a site adds in src/site/pages.ts; the template fills in `indexable` and `reasons` (`noindex` is optional). */
@@ -185,9 +216,10 @@ function readTools(): Map<string, ToolFile> {
   )
 }
 
-type Collection = 'guides' | 'legal' | 'about'
-const docSchemas = { guides: guideSchema, legal: legalSchema, about: aboutSchema }
-type DocOf = { guides: GuideFrontmatter; legal: LegalFrontmatter; about: AboutFrontmatter }
+/** Folders of MDX pages in content/: content/<collection>/<lang>/<slug>.mdx. */
+type Collection = 'guides' | 'legal' | 'about' | 'compare' | 'glossary'
+const docSchemas = { guides: guideSchema, legal: legalSchema, about: aboutSchema, compare: compareSchema, glossary: glossarySchema }
+type DocOf = { guides: GuideFrontmatter; legal: LegalFrontmatter; about: AboutFrontmatter; compare: CompareFrontmatter; glossary: GlossaryFrontmatter }
 
 /** Validated frontmatter and the MDX body of content/<collection>/<lang>/<slug>.mdx. */
 function readDoc<C extends Collection>(collection: C, l: Locale, slug: string): { fm: DocOf[C]; body: string } {
@@ -197,6 +229,38 @@ function readDoc<C extends Collection>(collection: C, l: Locale, slug: string): 
   return { fm: parseContent(docSchemas[collection], data, file) as DocOf[C], body }
 }
 const docExists = (collection: Collection, l: Locale, slug: string) => existsSync(abs('content', collection, l, `${slug}.mdx`))
+
+/** Every MDX page of a collection by slug, with the languages that have it. */
+function readDocs<C extends Collection>(collection: C) {
+  const names = [...new Set(LOCALES.flatMap((l) => slugs(`content/${collection}/${l}`, '.mdx')))].sort()
+  return new Map(names.map((slug) => [slug, perLocale((l) => (docExists(collection, l, slug) ? readDoc(collection, l, slug) : undefined))] as const))
+}
+
+const readJsonFile = (file: string): unknown => {
+  try {
+    return JSON.parse(readFileSync(abs(file), 'utf8'))
+  } catch (e) {
+    throw new Error(`${file}: invalid JSON: ${(e as Error).message}`)
+  }
+}
+
+/** Every file of content/<dir>/*.json, validated, by slug (alternatives, use cases, galleries). */
+function readJsonDir<T extends { slug: string }>(dir: string, schema: ZodType): Map<string, T> {
+  return new Map(
+    slugs(`content/${dir}`, '.json').map((slug) => {
+      const file = `content/${dir}/${slug}.json`
+      const page = parseContent(schema, readJsonFile(file), file) as T
+      if (page.slug !== slug) throw new Error(`${file}: slug "${page.slug}" must equal the file name "${slug}"`)
+      return [slug, page] as const
+    }),
+  )
+}
+
+/** content/changelog/changelog.json, or undefined when the site has no changelog. */
+function readChangelogFile(): ChangelogFile | undefined {
+  const file = 'content/changelog/changelog.json'
+  return existsSync(abs(file)) ? (parseContent(changelogFileSchema(LOCALES), readJsonFile(file), file) as ChangelogFile) : undefined
+}
 
 /** Every hub file, validated, by hub id: content/hubs/<id>.json (tools, guides, a collection) and content/hubs/<collection>/<category>.json. */
 function readHubs(validIds: readonly string[]): Map<string, HubFile> {
@@ -272,6 +336,8 @@ function assertUniqueTexts(pages: SitePage[]) {
 type SeoKnobs = { seo?: { hubMinMembers?: number; maxNoindexShare?: number } }
 /** `seo.hubMinMembers` of site.config.ts, else the spec's 6: indexable members a hub needs to be indexable. */
 const hubMinMembers = (): number => (SITE as SeoKnobs).seo?.hubMinMembers ?? DEFAULT_HUB_MIN_MEMBERS
+/** Indexable members a hub needs: `seo.hubMinMembers` for every hub when the site sets it, else 6 (the glossary index 8). */
+const hubMinFor = (hubId: string): number => (SITE as SeoKnobs).seo?.hubMinMembers ?? (hubId === 'glossary' ? MIN.hub.glossary : DEFAULT_HUB_MIN_MEMBERS)
 /** `seo.maxNoindexShare` of site.config.ts, else 0.2: the share of a collection's items that may be noindex before the build fails. */
 const maxNoindexShare = (): number => (SITE as SeoKnobs).seo?.maxNoindexShare ?? 0.2
 
@@ -327,6 +393,34 @@ function buildCollection(c: ItemCollection): BuiltCollection {
   return { collection: c, items }
 }
 
+type Gated<T> = Map<string, Partial<Record<Locale, T>>>
+
+/**
+ * The gates of a group of hand-written pages (compare, alternatives, glossary, use case, gallery), per language: the
+ * verdict of each page, then near-duplicates across the pages of the group (the later `published` fails, the earlier
+ * keeps its place). Returns the noindex reasons per page and language; a page with none is absent from its record.
+ */
+export function gateGroup<T>(
+  group: Gated<T>,
+  path: (slug: string) => string,
+  check: { verdict: (t: T) => Verdict; text: (t: T) => string; published: (slug: string, l: Locale) => string; threshold?: number },
+): Map<string, Partial<Record<Locale, string[]>>> {
+  const threshold = check.threshold
+  const out = new Map<string, Partial<Record<Locale, string[]>>>([...group.keys()].map((slug) => [slug, {}]))
+  for (const l of LOCALES) {
+    const here = [...group].flatMap(([slug, v]) => (v[l] ? [{ slug, t: v[l] as T }] : []))
+    const reasons = new Map(here.map(({ slug, t }) => [slug, [...check.verdict(t).reasons]]))
+    const oldestFirst = [...here].sort((a, b) => check.published(a.slug, l).localeCompare(check.published(b.slug, l)) || a.slug.localeCompare(b.slug))
+    const duplicates = nearDuplicates(oldestFirst.map(({ slug, t }) => ({ id: path(slug), text: check.text(t) })), threshold)
+    for (const { slug } of here) {
+      const d = duplicates.get(path(slug))
+      if (d) reasons.get(slug)!.push(duplicateReason(d, threshold))
+      if (reasons.get(slug)!.length) out.get(slug)![l] = reasons.get(slug)!
+    }
+  }
+  return out
+}
+
 type Built = {
   pages: SitePage[]
   paged: PagedHub[]
@@ -356,13 +450,46 @@ function build(): Built {
   const toolLocales = (tool: ToolFile) => LOCALES.filter((l) => tool[l]?.title)
   const guideSlugs = [...new Set(LOCALES.flatMap((l) => slugs(`content/guides/${l}`, '.mdx')))].sort()
   const guides = new Map(guideSlugs.map((slug) => [slug, perLocale((l) => (docExists('guides', l, slug) ? readDoc('guides', l, slug) : undefined))]))
+  const compares = readDocs('compare')
+  const glossaries = readDocs('glossary')
+  const alternatives = readJsonDir<AlternativesFile>('alternatives', alternativesFileSchema(LOCALES))
+  const useCases = readJsonDir<UseCaseFile>('use-cases', useCaseFileSchema(LOCALES))
+  const galleries = readJsonDir<GalleryFile>('gallery', galleryFileSchema(LOCALES))
+  const changelog = readChangelogFile()
   validateCollections(collections)
   const built = collections.map(buildCollection)
-  const hubIds = ['tools', 'guides', ...collections.flatMap((c) => [c.id, ...c.categories.map((cat) => categoryHubId(c.id, cat))])]
+  const hubIds = ['tools', 'guides', 'compare', 'glossary', ...collections.flatMap((c) => [c.id, ...c.categories.map((cat) => categoryHubId(c.id, cat))])]
   const hubs = readHubs(hubIds)
 
   // Members of each hub per language: all that exist, and the ones the quality gate lets into the index.
   const toolGate = new Map([...tools].map(([slug, t]) => [slug, noindexOf(toolLocales(t), (l) => toolVerdict(t[l]!))]))
+  const compareGate = gateGroup(compares, (s) => typedPath('compare', s), {
+    verdict: (d) => compareVerdict(d.fm, d.body),
+    text: (d) => compareText(d.fm, d.body),
+    published: (s, l) => compares.get(s)![l]!.fm.published,
+  })
+  const glossaryGate = gateGroup(glossaries, (s) => typedPath('glossary', s), {
+    verdict: (d) => glossaryVerdict(d.fm, d.body),
+    text: (d) => glossaryText(d.fm, d.body),
+    published: (s, l) => glossaries.get(s)![l]!.fm.published,
+  })
+  const perFile = <T,>(files: Map<string, { slug: string } & Partial<Record<Locale, T>>>): Gated<T> => new Map([...files].map(([slug, f]) => [slug, perLocale((l) => f[l])]))
+  const alternativesGate = gateGroup(perFile<AlternativesText>(alternatives), (s) => typedPath('alternatives', s), {
+    verdict: alternativesVerdict,
+    text: alternativesText,
+    published: (s) => alternatives.get(s)!.published,
+  })
+  const useCaseGate = gateGroup(perFile<UseCaseText>(useCases), (s) => typedPath('use-case', s), {
+    verdict: useCaseVerdict,
+    text: useCaseText,
+    published: (s) => useCases.get(s)!.published,
+    threshold: USE_CASE_NEAR_DUPLICATE_JACCARD,
+  })
+  const galleryGate = gateGroup(perFile<GalleryText>(galleries), (s) => typedPath('gallery', s), {
+    verdict: galleryVerdict,
+    text: galleryText,
+    published: (s) => galleries.get(s)!.published,
+  })
   const guideGate = new Map([...guides].map(([slug, g]) => [slug, noindexOf(LOCALES.filter((l) => g[l]), (l) => guideVerdict(g[l]!.fm, g[l]!.body))]))
   // The items of a collection hub, or of a category hub (`<collection>/<category>`).
   const hubItems = (hubId: string, l: Locale) => {
@@ -372,12 +499,14 @@ function build(): Built {
   const members = (hubId: string, l: Locale) => {
     if (hubId === 'tools') return { all: [...tools].filter(([, t]) => t[l]?.title).length, indexable: [...tools].filter(([slug, t]) => t[l]?.title && !toolGate.get(slug)![l]).length }
     if (hubId === 'guides') return { all: [...guides].filter(([, g]) => g[l]).length, indexable: [...guides].filter(([slug, g]) => g[l] && !guideGate.get(slug)![l]).length }
+    if (hubId === 'compare') return { all: [...compares].filter(([, c]) => c[l]).length, indexable: [...compares].filter(([slug, c]) => c[l] && !compareGate.get(slug)![l]).length }
+    if (hubId === 'glossary') return { all: [...glossaries].filter(([, g]) => g[l]).length, indexable: [...glossaries].filter(([slug, g]) => g[l] && !glossaryGate.get(slug)![l]).length }
     const items = hubItems(hubId, l)
     return { all: items.length, indexable: items.filter((i) => !i.noindex[l]).length }
   }
   const hubLocales = (hubId: string) => LOCALES.filter((l) => hubs.get(hubId)?.[l]?.title && members(hubId, l).all > 0)
   const hubName = (hubId: string, l: Locale): string => {
-    if (hubId === 'tools' || hubId === 'guides') return messages[l].page[hubId]
+    if (hubId === 'tools' || hubId === 'guides' || hubId === 'compare' || hubId === 'glossary') return messages[l].page[hubId]
     const text = hubs.get(hubId)![l]!
     return text.name ?? pageH1(text)
   }
@@ -388,6 +517,8 @@ function build(): Built {
   const hubMemberDates = (hubId: string): (string | undefined)[] => {
     if (hubId === 'tools') return [...tools.values()].map((t) => t.updated)
     if (hubId === 'guides') return [...guides.values()].flatMap((g) => LOCALES.map((l) => g[l]?.fm.updated))
+    if (hubId === 'compare') return [...compares.values()].flatMap((c) => LOCALES.map((l) => c[l]?.fm.updated))
+    if (hubId === 'glossary') return [...glossaries.values()].flatMap((g) => LOCALES.map((l) => g[l]?.fm.updated))
     return LOCALES.flatMap((l) => hubItems(hubId, l).map((i) => i.file.updated))
   }
 
@@ -397,7 +528,7 @@ function build(): Built {
     const locales = hubLocales(hubId)
     if (!locales.length) continue
     const text = (l: Locale) => hub[l]!
-    const noindex = noindexOf(locales, (l) => hubVerdict(text(l), members(hubId, l).indexable, hubMinMembers()))
+    const noindex = noindexOf(locales, (l) => hubVerdict(text(l), members(hubId, l).indexable, hubMinFor(hubId)))
     pages.push({
       path: hubPath,
       type: 'hub',
@@ -446,6 +577,107 @@ function build(): Built {
       breadcrumb: crumbs(LOCALES.filter((l) => g[l]), (l) => trail(l, ...hubCrumb('guides', l), { name: g[l]!.fm.title, path })),
       noindex: guideGate.get(slug),
     })
+  }
+
+  for (const [slug, c] of compares) {
+    const path = typedPath('compare', slug)
+    if (!slug.includes('-vs-')) throw new Error(`content/compare/<lang>/${slug}.mdx: the slug must be <a>-vs-<b> (the page is /compare/<a>-vs-<b>/)`)
+    pages.push({
+      path,
+      type: 'compare',
+      title: perLocale((l) => c[l]?.fm.title),
+      description: perLocale((l) => c[l]?.fm.description),
+      keyword: perLocale((l) => c[l]?.fm.keyword),
+      lastmod: newest(LOCALES.map((l) => c[l]?.fm.updated)),
+      ours: LOCALES.some((l) => (c[l]?.fm.products ?? []).some((p) => p.relation === 'ours') && (c[l]?.fm.products ?? []).some((p) => p.relation === 'third-party')),
+      breadcrumb: crumbs(LOCALES.filter((l) => c[l]), (l) => trail(l, ...hubCrumb('compare', l), { name: pageH1(c[l]!.fm), path })),
+      noindex: compareGate.get(slug),
+    })
+  }
+
+  for (const [slug, a] of alternatives) {
+    const path = typedPath('alternatives', slug)
+    const here = LOCALES.filter((l) => a[l])
+    pages.push({
+      path,
+      type: 'alternatives',
+      title: perLocale((l) => a[l]?.title),
+      description: perLocale((l) => a[l]?.description),
+      keyword: perLocale((l) => a[l]?.keyword),
+      lastmod: a.updated,
+      ours: here.some((l) => a[l]!.entries.some((e) => e.relation === 'ours') && a[l]!.entries.some((e) => e.relation === 'third-party')),
+      breadcrumb: crumbs(here, (l) => trail(l, { name: pageH1(a[l]!), path })),
+      noindex: alternativesGate.get(slug),
+    })
+  }
+
+  for (const [slug, g] of glossaries) {
+    const path = typedPath('glossary', slug)
+    pages.push({
+      path,
+      type: 'glossary',
+      title: perLocale((l) => g[l]?.fm.title),
+      description: perLocale((l) => g[l]?.fm.description),
+      keyword: perLocale((l) => g[l]?.fm.keyword),
+      lastmod: newest(LOCALES.map((l) => g[l]?.fm.updated)),
+      breadcrumb: crumbs(LOCALES.filter((l) => g[l]), (l) => trail(l, ...hubCrumb('glossary', l), { name: pageH1(g[l]!.fm), path })),
+      noindex: glossaryGate.get(slug),
+    })
+  }
+
+  for (const [slug, u] of useCases) {
+    const path = typedPath('use-case', slug)
+    const here = LOCALES.filter((l) => u[l])
+    pages.push({
+      path,
+      type: 'use-case',
+      title: perLocale((l) => u[l]?.title),
+      description: perLocale((l) => u[l]?.description),
+      keyword: perLocale((l) => u[l]?.keyword),
+      lastmod: u.updated,
+      breadcrumb: crumbs(here, (l) => trail(l, { name: pageH1(u[l]!), path })),
+      noindex: useCaseGate.get(slug),
+    })
+  }
+
+  for (const [slug, g] of galleries) {
+    const path = typedPath('gallery', slug)
+    const here = LOCALES.filter((l) => g[l])
+    pages.push({
+      path,
+      type: 'gallery',
+      title: perLocale((l) => g[l]?.title),
+      description: perLocale((l) => g[l]?.description),
+      keyword: perLocale((l) => g[l]?.keyword),
+      lastmod: g.updated,
+      breadcrumb: crumbs(here, (l) => trail(l, { name: pageH1(g[l]!), path })),
+      noindex: galleryGate.get(slug),
+    })
+  }
+
+  // The changelog is one page; entries beyond CHANGELOG_PAGE_SIZE continue at /changelog/page/<n>/ (like a hub's pages).
+  if (changelog) {
+    const here = LOCALES.filter((l) => changelog[l])
+    const noindex = noindexOf(here, (l) => changelogVerdict(changelog[l]!))
+    pages.push({
+      path: CHANGELOG_PATH,
+      type: 'changelog',
+      title: perLocale((l) => changelog[l]?.title),
+      description: perLocale((l) => changelog[l]?.description),
+      keyword: perLocale((l) => changelog[l]?.keyword),
+      lastmod: changelog.updated,
+      breadcrumb: crumbs(here, (l) => trail(l, { name: pageH1(changelog[l]!), path: CHANGELOG_PATH })),
+      noindex,
+    })
+    for (const l of here) {
+      for (let n = 2; n <= hubPageCount(changelog[l]!.entries.length, CHANGELOG_PAGE_SIZE); n++) {
+        const path = hubPagePath(CHANGELOG_PATH, n)
+        const entry = paged.get(path) ?? { path, hub: CHANGELOG_PATH, n, locales: [], noindex: [] }
+        entry.locales.push(l)
+        if (noindex[l]) entry.noindex.push(l)
+        paged.set(path, entry)
+      }
+    }
   }
 
   for (const { collection: c, items } of built) {
@@ -562,6 +794,13 @@ export const readVideos = (): Video[] => [
   ...extraVideos,
 ]
 
+/** An entry of the changelog for the feeds: `id` is the anchor on the page, `page` the page it is on. */
+export type ChangelogFeedEntry = { id: string; date: string; title: string; items: string[]; page: number }
+
+/** The entries of the changelog in the default language, newest first; none when the site has no changelog. */
+export const changelogEntries = (): ChangelogFeedEntry[] =>
+  (readChangelogFile()?.[DEFAULT_LOCALE]?.entries ?? []).map((e, i) => ({ id: `${e.date}-${e.slug}`, date: e.date, title: e.title, items: e.items, page: Math.floor(i / CHANGELOG_PAGE_SIZE) + 1 }))
+
 export type DocIndexEntry = { slug: string; title: string; description: string; published: string; updated: string }
 
 /** A collection item in the content index: what cards and related lists need. */
@@ -601,7 +840,7 @@ export function contentIndex(): ContentIndex {
     return locales.length ? [{ slug, name, description, locales }] : []
   })
   const docs = {} as ContentIndex['docs']
-  for (const collection of ['guides', 'legal', 'about'] as const) {
+  for (const collection of ['guides', 'legal', 'about', 'compare', 'glossary'] as const) {
     docs[collection] = {} as ContentIndex['docs']['guides']
     for (const l of LOCALES) {
       docs[collection][l] = slugs(`content/${collection}/${l}`, '.mdx')

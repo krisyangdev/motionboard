@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import type { GuideFrontmatter, HubText, ItemText, ToolText } from '../content/schema'
+import type { AlternativesText, ChangelogText, CompareFrontmatter, GalleryText, GlossaryFrontmatter, GuideFrontmatter, HubText, ItemText, ToolText, UseCaseText } from '../content/schema'
 import {
   aboutVerdict,
+  alternativesVerdict,
+  changelogVerdict,
+  compareVerdict,
+  galleryVerdict,
+  glossaryVerdict,
+  useCaseVerdict,
+  USE_CASE_NEAR_DUPLICATE_JACCARD,
   duplicateReason,
   evidenceCount,
   guideVerdict,
@@ -227,3 +234,153 @@ describe('noindexShareError', () => {
     expect(e).not.toContain('/symbols/29/')
   })
 })
+
+const row = (i: number) => ({ factor: `Factor ${i}`, a: 'a', b: 'b', chooseIf: 'c' })
+const source = (i: number) => ({ label: `S${i}`, url: `https://example.com/${i}`, checked: '2026-11-26' })
+const compare: CompareFrontmatter = {
+  keyword: 'a vs b',
+  demand,
+  title: 'A vs B',
+  description: 'x',
+  lede: words(30),
+  published: '2026-11-26',
+  updated: '2026-11-26',
+  products: [{ name: 'A', url: '/a/', relation: 'ours' }, { name: 'B', url: 'https://example.com/', relation: 'third-party' }],
+  verdict: words(40),
+  table: [1, 2, 3, 4, 5, 6].map(row),
+  sources: [1, 2, 3].map(source),
+}
+
+describe('compareVerdict', () => {
+  it('passes 700 words, 6 table rows and 3 sources', () => {
+    expect(compareVerdict(compare, words(640))).toEqual({ indexable: true, reasons: [] })
+  })
+  it('lists the text, the rows and the sources that fall short', () => {
+    const v = compareVerdict({ ...compare, table: [row(1)], sources: [source(1)] }, words(100))
+    expect(v.reasons.join('\n')).toMatch(/page text.*at least 700/)
+    expect(v.reasons).toContain('table: 1 rows, at least 6')
+    expect(v.reasons).toContain('sources: 1, at least 3')
+  })
+  it('uses the CJK minimum for CJK titles', () => {
+    expect(compareVerdict({ ...compare, title: '对比' }, cjk(500)).reasons[0]).toMatch(/at least 1260/)
+  })
+})
+
+const entry = (i: number, n = 45) => ({ name: `Tool ${i}`, url: 'https://example.com/', bestFor: 'quick checks', price: 'Not checked', relation: 'third-party' as const, notes: words(n) })
+const alternatives: AlternativesText = {
+  keyword: 'x alternatives',
+  demand,
+  title: '5 X Alternatives',
+  description: 'x',
+  lede: words(20),
+  product: 'X',
+  criteria: words(40),
+  entries: [1, 2, 3, 4, 5].map((i) => entry(i, 110)),
+  sources: [1, 2, 3].map(source),
+}
+
+describe('alternativesVerdict', () => {
+  it('passes 5 entries of 40 words, 600 words and 3 sources', () => {
+    expect(alternativesVerdict(alternatives)).toEqual({ indexable: true, reasons: [] })
+  })
+  it('names the entry whose notes are too short, and the other missing minimums', () => {
+    const v = alternativesVerdict({ ...alternatives, entries: [entry(1), entry(2, 10), entry(3)], sources: [source(1)] })
+    expect(v.reasons).toContain('entries: 3, at least 5')
+    expect(v.reasons.join('\n')).toMatch(/entry "Tool 2": notes have 10 words, at least 40/)
+    expect(v.reasons.join('\n')).not.toMatch(/entry "Tool 1"/)
+    expect(v.reasons.join('\n')).toMatch(/page text.*at least 600/)
+    expect(v.reasons).toContain('sources: 1, at least 3')
+  })
+})
+
+const glossary: GlossaryFrontmatter = {
+  keyword: 'dithering',
+  demand,
+  title: 'What is dithering?',
+  description: 'x',
+  lede: 'Lede.',
+  published: '2026-11-26',
+  updated: '2026-11-26',
+  definition: words(50),
+  example: { text: 'x', caption: 'y' },
+  seeAlso: [1, 2, 3].map((i) => ({ name: `Term ${i}`, path: `/glossary/t${i}/` })),
+  useIt: [{ name: 'Tool', path: '/tools/t/' }],
+}
+
+describe('glossaryVerdict', () => {
+  it('passes a 40 to 60 word definition, 200 words, 3 see-also links and a tool', () => {
+    expect(glossaryVerdict(glossary, words(160))).toEqual({ indexable: true, reasons: [] })
+  })
+  it('checks the definition length, the text, the links and the tool', () => {
+    const v = glossaryVerdict({ ...glossary, definition: words(70), seeAlso: [], useIt: [] }, words(10))
+    expect(v.reasons).toContain('definition: 70 words, want 40 to 60 (each CJK character counts as a word)')
+    expect(v.reasons.join('\n')).toMatch(/definition and body: 80 words, at least 200/)
+    expect(v.reasons).toContain('seeAlso: 0 links, at least 3')
+    expect(v.reasons.join('\n')).toMatch(/useIt: 0 links, at least 1/)
+    expect(glossaryVerdict({ ...glossary, definition: words(39) }, words(200)).reasons[0]).toMatch(/definition: 39 words/)
+  })
+  it('uses the CJK ranges', () => {
+    const zh = { ...glossary, title: '什么是抖动', definition: cjk(90) }
+    expect(glossaryVerdict(zh, cjk(300))).toEqual({ indexable: true, reasons: [] })
+    expect(glossaryVerdict({ ...zh, definition: cjk(50) }, cjk(300)).reasons[0]).toMatch(/definition: 50 words, want 72 to 108/)
+  })
+})
+
+const useCase: UseCaseText = {
+  keyword: 'x for students',
+  demand,
+  title: 'X for students',
+  description: 'x',
+  lede: words(20),
+  audience: 'Students',
+  problems: [1, 2, 3].map((i) => ({ title: `P${i}`, body: words(40) })),
+  workflow: [1, 2, 3].map((i) => ({ title: `S${i}`, body: words(40) })),
+  examples: [1, 2, 3].map((i) => ({ name: `E${i}`, path: `/tools/e${i}/`, caption: words(25) })),
+  cta: { name: 'Go', path: '/tools/t/' },
+  faq: [1, 2, 3].map((i): [string, string] => [`Q${i}?`, words(20)]),
+}
+
+describe('useCaseVerdict', () => {
+  it('passes 400 words and 3 examples with captions of 20 words', () => {
+    expect(useCaseVerdict(useCase)).toEqual({ indexable: true, reasons: [] })
+  })
+  it('names the example whose caption is too short', () => {
+    const v = useCaseVerdict({ ...useCase, examples: [{ ...useCase.examples[0], caption: words(5) }, ...useCase.examples.slice(1, 2)] })
+    expect(v.reasons).toContain('examples: 2, at least 3')
+    expect(v.reasons.join('\n')).toMatch(/example "E1": caption has 5 words, at least 20/)
+  })
+  it('is compared at a stricter near-duplicate threshold than other types', () => {
+    expect(USE_CASE_NEAR_DUPLICATE_JACCARD).toBe(0.4)
+  })
+})
+
+const gallery: GalleryText = {
+  keyword: 'k',
+  demand,
+  title: 'Gallery',
+  description: 'x',
+  lede: 'Lede.',
+  intro: words(85),
+  entries: [1, 2, 3, 4, 5, 6].map((i) => ({ media: { kind: 'image' as const, src: `/g${i}.png`, width: 10, height: 10 }, alt: `Image ${i}`, title: `Entry ${i}`, caption: words(16) })),
+}
+
+describe('galleryVerdict', () => {
+  it('passes an 80 word intro and 6 entries with captions of 15 words', () => {
+    expect(galleryVerdict(gallery)).toEqual({ indexable: true, reasons: [] })
+  })
+  it('lists the intro, the entry count and the short captions', () => {
+    const v = galleryVerdict({ ...gallery, intro: words(20), entries: [{ ...gallery.entries[0], caption: words(4) }] })
+    expect(v.reasons.join('\n')).toMatch(/intro: 20 words, at least 80/)
+    expect(v.reasons).toContain('entries: 1, at least 6')
+    expect(v.reasons.join('\n')).toMatch(/entry "Entry 1": caption has 4 words, at least 15/)
+  })
+})
+
+describe('changelogVerdict', () => {
+  const log: ChangelogText = { keyword: 'k', demand, title: 'Changelog k', description: 'x', lede: 'x', entries: [{ date: '2026-11-26', slug: 'a', title: 'A', items: ['x'] }] }
+  it('needs one entry', () => {
+    expect(changelogVerdict(log).indexable).toBe(true)
+    expect(changelogVerdict({ ...log, entries: [] }).reasons).toEqual(['entries: 0, at least 1'])
+  })
+})
+

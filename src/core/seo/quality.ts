@@ -2,7 +2,21 @@
 // A page below the minimum content of its type is still built and linkable, but noindex and out of the
 // sitemap, with the reasons listed here (shown by `npm run seo-report`). Pure functions on content, Node only:
 // pages.ts calls them while it builds the registry, and the results travel to the app through the content index.
-import { isCjk, type AboutFrontmatter, type GuideFrontmatter, type HubText, type ItemText, type LegalFrontmatter, type ToolText } from '../content/schema.ts'
+import {
+  isCjk,
+  type AboutFrontmatter,
+  type AlternativesText,
+  type ChangelogText,
+  type CompareFrontmatter,
+  type GalleryText,
+  type GlossaryFrontmatter,
+  type GuideFrontmatter,
+  type HubText,
+  type ItemText,
+  type LegalFrontmatter,
+  type ToolText,
+  type UseCaseText,
+} from '../content/schema.ts'
 
 export type Verdict = { indexable: boolean; reasons: string[] }
 
@@ -10,14 +24,22 @@ export type Verdict = { indexable: boolean; reasons: string[] }
 export const MIN = {
   tool: { words: [250, 450], steps: [3, 4], faq: 4, examples: 1 },
   guide: { words: [600, 1100], h2: 2, links: 3, evidence: 1 },
-  hub: { members: 6, intro: [50, 90] },
+  hub: { members: 6, glossary: 8, intro: [50, 90] },
   about: { words: [150, 280] },
   legal: { words: [100, 180] },
   item: { words: [80, 150], dataEntries: 10, related: 3 },
+  compare: { words: [700, 1260], tableRows: 6, sources: 3 },
+  alternatives: { entries: 5, entryWords: [40, 72], words: [600, 1080], sources: 3 },
+  glossary: { words: [200, 360], definition: [40, 60], definitionCjk: [72, 108], seeAlso: 3, useIt: 1 },
+  useCase: { words: [400, 720], examples: 3, exampleWords: [20, 36] },
+  gallery: { entries: 6, intro: [80, 144], caption: [15, 27] },
+  changelog: { entries: 1 },
 } as const
 
 /** Items of one collection and language whose texts share more than this Jaccard similarity of shingles are near-duplicates. */
 export const NEAR_DUPLICATE_JACCARD = 0.6
+/** Use-case pages are compared at a stricter threshold: the same text with the audience swapped is a doorway page. */
+export const USE_CASE_NEAR_DUPLICATE_JACCARD = 0.4
 /** Shingle size: words for Latin text, characters for CJK text. */
 export const SHINGLE_SIZE = { words: 5, chars: 4 } as const
 
@@ -113,6 +135,97 @@ export function legalVerdict(fm: LegalFrontmatter, body: string): Verdict {
   return verdict(reasons)
 }
 
+// Comparison, alternatives, glossary, use case, gallery and changelog. Like the other hand-written types, a page below its
+// minimums is built and linkable but noindex, with these reasons. Near-duplicates are decided across pages (pages.ts).
+
+/** Page-specific prose of a comparison: lede, short answer, table cells, body and FAQ. */
+export const compareText = (fm: CompareFrontmatter, body: string): string =>
+  [fm.lede, fm.verdict, ...fm.table.flatMap((r) => [r.factor, r.a, r.b, r.chooseIf]), plainText(body), ...(fm.faq ?? []).flat()].join('\n')
+
+export function compareVerdict(fm: CompareFrontmatter, body: string): Verdict {
+  const reasons: string[] = []
+  const min = pick(MIN.compare.words, fm.title)
+  const have = wordCount(compareText(fm, body))
+  if (have < min) reasons.push(words('page text (lede, short answer, table, body, FAQ)', have, min))
+  if (fm.table.length < MIN.compare.tableRows) reasons.push(`table: ${fm.table.length} rows, at least ${MIN.compare.tableRows}`)
+  if (fm.sources.length < MIN.compare.sources) reasons.push(`sources: ${fm.sources.length}, at least ${MIN.compare.sources}`)
+  return verdict(reasons)
+}
+
+/** Page-specific prose of an alternatives page: lede, criteria, entries, sections and FAQ. */
+export const alternativesText = (t: AlternativesText): string =>
+  [t.lede, t.criteria, ...t.entries.flatMap((e) => [e.name, e.bestFor, e.notes]), ...(t.sections ?? []).flatMap((s) => [s.h2, s.body]), ...(t.faq ?? []).flat()].join('\n')
+
+export function alternativesVerdict(t: AlternativesText): Verdict {
+  const reasons: string[] = []
+  if (t.entries.length < MIN.alternatives.entries) reasons.push(`entries: ${t.entries.length}, at least ${MIN.alternatives.entries}`)
+  const entryMin = pick(MIN.alternatives.entryWords, t.title)
+  for (const e of t.entries) {
+    const n = wordCount(e.notes)
+    if (n < entryMin) reasons.push(`entry "${e.name}": notes have ${n} words, at least ${entryMin} (each CJK character counts as a word)`)
+  }
+  const min = pick(MIN.alternatives.words, t.title)
+  const have = wordCount(alternativesText(t))
+  if (have < min) reasons.push(words('page text (lede, criteria, entries, sections, FAQ)', have, min))
+  if (t.sources.length < MIN.alternatives.sources) reasons.push(`sources: ${t.sources.length}, at least ${MIN.alternatives.sources}`)
+  return verdict(reasons)
+}
+
+/** Definition and body of a glossary term: the text the minimum counts. */
+export const glossaryText = (fm: GlossaryFrontmatter, body: string): string => `${fm.definition}\n${plainText(body)}`
+
+export function glossaryVerdict(fm: GlossaryFrontmatter, body: string): Verdict {
+  const reasons: string[] = []
+  const [defMin, defMax] = isCjk(fm.definition) ? MIN.glossary.definitionCjk : MIN.glossary.definition
+  const defWords = wordCount(fm.definition)
+  if (defWords < defMin || defWords > defMax) reasons.push(`definition: ${defWords} words, want ${defMin} to ${defMax} (each CJK character counts as a word)`)
+  const min = pick(MIN.glossary.words, fm.title)
+  const have = wordCount(glossaryText(fm, body))
+  if (have < min) reasons.push(words('definition and body', have, min))
+  if (fm.seeAlso.length < MIN.glossary.seeAlso) reasons.push(`seeAlso: ${fm.seeAlso.length} links, at least ${MIN.glossary.seeAlso}`)
+  if (fm.useIt.length < MIN.glossary.useIt) reasons.push(`useIt: ${fm.useIt.length} links, at least ${MIN.glossary.useIt} (a tool or item)`)
+  return verdict(reasons)
+}
+
+/** Page-specific prose of a use-case page: lede, problems, workflow, example captions and FAQ. */
+export const useCaseText = (t: UseCaseText): string =>
+  [t.lede, ...t.problems.flatMap((p) => [p.title, p.body]), ...t.workflow.flatMap((s) => [s.title, s.body]), ...t.examples.flatMap((e) => [e.name, e.caption]), ...t.faq.flat()].join('\n')
+
+export function useCaseVerdict(t: UseCaseText): Verdict {
+  const reasons: string[] = []
+  const min = pick(MIN.useCase.words, t.title)
+  const have = wordCount(useCaseText(t))
+  if (have < min) reasons.push(words('page text (lede, problems, workflow, examples, FAQ)', have, min))
+  if (t.examples.length < MIN.useCase.examples) reasons.push(`examples: ${t.examples.length}, at least ${MIN.useCase.examples}`)
+  const capMin = pick(MIN.useCase.exampleWords, t.title)
+  for (const e of t.examples) {
+    const n = wordCount(e.caption)
+    if (n < capMin) reasons.push(`example "${e.name}": caption has ${n} words, at least ${capMin} (each CJK character counts as a word)`)
+  }
+  return verdict(reasons)
+}
+
+/** Text of a gallery page that the near-duplicate check compares: intro, titles, captions and FAQ. */
+export const galleryText = (t: GalleryText): string => [t.intro, ...t.entries.flatMap((e) => [e.title, e.caption]), ...(t.faq ?? []).flat()].join('\n')
+
+export function galleryVerdict(t: GalleryText): Verdict {
+  const reasons: string[] = []
+  const introMin = pick(MIN.gallery.intro, t.title)
+  const intro = wordCount(t.intro)
+  if (intro < introMin) reasons.push(words('intro', intro, introMin))
+  if (t.entries.length < MIN.gallery.entries) reasons.push(`entries: ${t.entries.length}, at least ${MIN.gallery.entries}`)
+  const capMin = pick(MIN.gallery.caption, t.title)
+  for (const e of t.entries) {
+    const n = wordCount(e.caption)
+    if (n < capMin) reasons.push(`entry "${e.title}": caption has ${n} words, at least ${capMin} (each CJK character counts as a word)`)
+  }
+  return verdict(reasons)
+}
+
+export function changelogVerdict(t: ChangelogText): Verdict {
+  return verdict(t.entries.length < MIN.changelog.entries ? [`entries: ${t.entries.length}, at least ${MIN.changelog.entries}`] : [])
+}
+
 // Programmatic items (collections). A failing item is not a build error: it renders noindex and is listed by seo-report.
 
 /** Item-specific prose: lede, body blocks, FAQ and the text the collection takes from its `data`. Template strings are not part of it. */
@@ -189,7 +302,7 @@ export function nearDuplicates(entries: readonly { id: string; text: string }[],
   return found
 }
 
-export const duplicateReason = (d: Duplicate): string => `near-duplicate of ${d.of} (similarity ${d.similarity.toFixed(2)}, at most ${NEAR_DUPLICATE_JACCARD})`
+export const duplicateReason = (d: Duplicate, threshold: number = NEAR_DUPLICATE_JACCARD): string => `near-duplicate of ${d.of} (similarity ${d.similarity.toFixed(2)}, at most ${threshold})`
 
 /**
  * The build error for a collection (in one language) whose noindex share is above `max`, naming the collection and the

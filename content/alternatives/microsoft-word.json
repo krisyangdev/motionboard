@@ -1,0 +1,219 @@
+{
+  "slug": "microsoft-word",
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "microsoft word alternatives",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "title": "5 Microsoft Word Alternatives for Counting Words",
+    "description": "Five ways to count words without Microsoft Word: an online counter, Google Docs, LibreOffice Writer, Obsidian and the wc command, and what each one shows.",
+    "h1": "Microsoft Word alternatives for counting words",
+    "lede": "You do not need Microsoft Word just to count words. These five options cover quick checks on pasted text, documents, notes and scripts.",
+    "product": "Microsoft Word",
+    "criteria": "We looked at what each option counts, how fast you get a number from text you already have, and what you need before you start. Facts come from each product's own help pages, listed under Sources with the date we checked them. Prices were not checked, so the price column says so instead of guessing.",
+    "entries": [
+      {
+        "name": "Word counter",
+        "url": "/tools/word-counter/",
+        "bestFor": "Quick counts of text pasted from anywhere, with reading time",
+        "price": "Free",
+        "relation": "ours",
+        "notes": "Paste or type text and the numbers update on every keystroke: words, characters with and without spaces, and reading time. It runs in your browser and nothing you enter is uploaded, so there is nothing to install and no account to create. It reads plain text only, and it splits hyphenated terms such as well-known into two words, so its total can differ slightly from a word processor."
+      },
+      {
+        "name": "Google Docs",
+        "url": "https://docs.google.com/",
+        "bestFor": "Counting inside a document you are already writing",
+        "price": "Not checked",
+        "relation": "third-party",
+        "notes": "Google Docs has a Word count dialog under the Tools menu that shows words, characters and pages, and an option to display the count while you type, including characters without spaces. It counts the document you have open, so it is the natural choice when your text already lives in a Docs file, and less convenient for a snippet from somewhere else."
+      },
+      {
+        "name": "LibreOffice Writer",
+        "url": "https://www.libreoffice.org/",
+        "bestFor": "An offline word processor with a detailed count",
+        "price": "Not checked",
+        "relation": "third-party",
+        "notes": "Writer opens a Word Count dialog from the Tools menu, or from the Review menu in the tabbed interface, that shows words and characters with and without spaces for the selection and for the whole document. It updates as you type and also appears in the status bar. Writer counts a hyphenated word whose hyphen is always visible, such as plug-in, as a single word."
+      },
+      {
+        "name": "Obsidian",
+        "url": "https://obsidian.md/",
+        "bestFor": "Notes with a running count in the status bar",
+        "price": "Not checked",
+        "relation": "third-party",
+        "notes": "The Word count core plugin of Obsidian tallies the words and characters of the note you have open. On desktop the count appears in the status bar, and on mobile at the top of the right sidebar. It fits when your writing already lives in Obsidian notes, but its help page does not say whether it counts only a selection, so check that before relying on it for a partial count."
+      },
+      {
+        "name": "wc command",
+        "url": "https://man7.org/linux/man-pages/man1/wc.1.html",
+        "bestFor": "Scripts and plain-text files on the command line",
+        "price": "Not checked",
+        "relation": "third-party",
+        "notes": "The wc command prints newline, word and byte counts for each file you give it, plus a total line when there are several files. Options pick one number: -w for words, -m for characters, -c for bytes and -l for lines. It suits scripts, build pipelines and large plain-text files, but it has no reading time and no interface, so it is a poor fit for a pasted snippet."
+      }
+    ],
+    "sections": [
+      {
+        "h2": "Which one should you pick?",
+        "body": "Pick by where the text is. If it is a snippet from an email or a web page, the Word counter is the shortest path. If it is a document you are writing, use the count built into that editor: Google Docs or LibreOffice Writer. If your notes live in Obsidian, turn on its Word count plugin. If the text is a file on disk or the count belongs in a script, use wc."
+      },
+      {
+        "h2": "Why the numbers differ",
+        "body": "A word is not a fixed unit. Writer counts plug-in as one word, and the Word counter splits well-known into two. Spaces, dashes and numbers get different treatment in every tool. For a limit that matters, count in the tool that will judge the text, or leave a margin of a few words. The glossary explains the idea behind a word count."
+      }
+    ],
+    "sources": [
+      {
+        "label": "Google Docs Help: word count",
+        "url": "https://support.google.com/docs/answer/39003",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "LibreOffice Writer Help: Word Count dialog",
+        "url": "https://help.libreoffice.org/latest/en-US/text/swriter/01/06040000.html",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "LibreOffice Writer Help: counting words",
+        "url": "https://help.libreoffice.org/latest/en-US/text/swriter/guide/words_count.html",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "Obsidian Help: Word count",
+        "url": "https://obsidian.md/help/plugins/word-count",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "wc(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/wc.1.html",
+        "checked": "2026-11-26"
+      }
+    ],
+    "faq": [
+      [
+        "Can I count words without installing anything?",
+        "Yes. The Word counter on this site runs in your browser tab, and Google Docs runs in a browser as well. LibreOffice Writer and Obsidian are programs you install, and wc comes with Unix-like systems."
+      ],
+      [
+        "Which option is best for a single pasted paragraph?",
+        "The Word counter. You paste the text and read the numbers, with no document to create first."
+      ],
+      [
+        "Why do I get a different total in each tool?",
+        "Each tool has its own rules for what counts as a word, for example how it treats hyphens. Pick the tool that will judge the text, or leave a margin of a few words."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "Microsoft Word 替代品",
+    "demand": {
+      "source": "serp-check",
+      "note": "Template demo: placeholder, replace with a real check of this term.",
+      "checked": "2026-11-26"
+    },
+    "title": "5 个 Microsoft Word 替代品：用来统计字数",
+    "description": "不开 Microsoft Word 也能统计字数的五种办法：在线字数统计、Google 文档、LibreOffice Writer、Obsidian 和 wc 命令。",
+    "h1": "统计字数的 Microsoft Word 替代品",
+    "lede": "只是为了统计字数，并不需要打开 Microsoft Word。下面五种办法覆盖了粘贴文字的快速核对、文档、笔记和脚本。",
+    "product": "Microsoft Word",
+    "criteria": "我们看了每种办法统计什么、拿到手头文字的数字有多快，以及开始前需要准备什么。事实依据各产品自己的帮助页，列在“来源”里，并注明核对日期。价格没有核对，所以价格一栏如实写明，而不是猜一个。",
+    "entries": [
+      {
+        "name": "字数统计",
+        "url": "/tools/word-counter/",
+        "bestFor": "快速统计来自任何地方的粘贴文字，还能看阅读时间",
+        "price": "免费",
+        "relation": "ours",
+        "notes": "粘贴或输入文字，数字会在每次输入后更新：字数、含空格和不含空格的字符数，以及阅读时间。它在浏览器里运行，你输入的内容不会上传，所以不用安装，也不用注册账号。它只读取纯文本，并且会把 well-known 这样的连字符词拆成两个词，因此总数可能和文字处理软件略有差别。"
+      },
+      {
+        "name": "Google 文档",
+        "url": "https://docs.google.com/",
+        "bestFor": "在你正在写的文档里直接统计",
+        "price": "未核查",
+        "relation": "third-party",
+        "notes": "Google 文档在“工具”菜单里有“字数统计”对话框，显示字数、字符数和页数，还有一个选项可以在输入时显示计数，其中包括不含空格的字符数。它统计的是你打开的那份文档，所以文字本来就在 Google 文档里时最顺手，而对来自别处的一小段文字就不那么方便。"
+      },
+      {
+        "name": "LibreOffice Writer",
+        "url": "https://www.libreoffice.org/",
+        "bestFor": "可以离线使用、统计更详细的文字处理软件",
+        "price": "未核查",
+        "relation": "third-party",
+        "notes": "Writer 可以从“工具”菜单打开字数统计对话框，在标签页界面里则在“审阅”菜单中。对话框分别显示所选内容和整篇文档的字数、含空格与不含空格的字符数。它会在你输入时更新，状态栏里也能看到。Writer 会把连字符始终可见的词，例如 plug-in，算成一个词。"
+      },
+      {
+        "name": "Obsidian",
+        "url": "https://obsidian.md/",
+        "bestFor": "笔记里的状态栏实时计数",
+        "price": "未核查",
+        "relation": "third-party",
+        "notes": "Obsidian 的“字数统计”核心插件会统计你当前打开的笔记的字数和字符数。在桌面版里，计数显示在状态栏中，在手机版里则显示在右侧边栏的顶部。如果你的文字本来就写在 Obsidian 笔记里，它很合适；但帮助页没有说明它能否只统计选中的部分，需要局部计数时请先自己确认。"
+      },
+      {
+        "name": "wc 命令",
+        "url": "https://man7.org/linux/man-pages/man1/wc.1.html",
+        "bestFor": "在命令行里处理脚本和纯文本文件",
+        "price": "未核查",
+        "relation": "third-party",
+        "notes": "wc 命令会为你给出的每个文件输出换行数、词数和字节数，给出多个文件时还会多一行总计。选项可以只取一个数字：-w 是词数，-m 是字符数，-c 是字节数，-l 是行数。它适合脚本、构建流程和很大的纯文本文件，但没有阅读时间，也没有界面，不适合处理粘贴的一小段文字。"
+      }
+    ],
+    "sections": [
+      {
+        "h2": "该选哪一个？",
+        "body": "按文字所在的位置来选。如果只是邮件或网页里的一段文字，字数统计工具是最短的路径。如果是你正在写的文档，就用那个编辑器自带的统计：Google 文档或 LibreOffice Writer。如果笔记都在 Obsidian 里，就打开它的字数统计插件。如果文字是磁盘上的文件，或者计数要放进脚本，就用 wc。"
+      },
+      {
+        "h2": "为什么数字会不一样",
+        "body": "“词”不是固定的单位。Writer 把 plug-in 算成一个词，而字数统计工具会把 well-known 拆成两个。空格、破折号和数字在每个工具里的处理方式也各不相同。对于要紧的字数限制，请用最终评判文字的那个工具来数，或者留出几个词的余量。术语表里解释了字数统计背后的想法。"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Google 文档帮助：字数统计",
+        "url": "https://support.google.com/docs/answer/39003",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "LibreOffice Writer 帮助：字数统计对话框",
+        "url": "https://help.libreoffice.org/latest/en-US/text/swriter/01/06040000.html",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "LibreOffice Writer 帮助：统计字数",
+        "url": "https://help.libreoffice.org/latest/en-US/text/swriter/guide/words_count.html",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "Obsidian 帮助：字数统计",
+        "url": "https://obsidian.md/help/plugins/word-count",
+        "checked": "2026-11-26"
+      },
+      {
+        "label": "wc(1) 手册页",
+        "url": "https://man7.org/linux/man-pages/man1/wc.1.html",
+        "checked": "2026-11-26"
+      }
+    ],
+    "faq": [
+      [
+        "不安装任何东西也能统计字数吗？",
+        "可以。本站的字数统计在浏览器标签页里运行，Google 文档也是在浏览器里使用。LibreOffice Writer 和 Obsidian 是需要安装的程序，wc 则随类 Unix 系统自带。"
+      ],
+      [
+        "只有一段粘贴的文字，哪个最合适？",
+        "字数统计工具。把文字粘贴进去就能看到数字，不用先新建一份文档。"
+      ],
+      [
+        "为什么每个工具给出的总数不一样？",
+        "每个工具对什么算一个词都有自己的规则，例如怎样处理连字符。请选最终评判文字的那个工具，或者留出几个词的余量。"
+      ]
+    ]
+  }
+}
