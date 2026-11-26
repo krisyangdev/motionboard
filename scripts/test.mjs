@@ -5,7 +5,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, stripLocale } from '../src/core/i18n.ts'
-import { titleMax } from '../src/core/content/schema.ts'
+import { TITLE_MAX_WIDTH, textWidth } from '../src/core/content/schema.ts'
 import { isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
 import { sitemapExclude } from '../src/site/pages.ts'
 
@@ -155,7 +155,7 @@ check('og:image is an absolute URL', sitemapPages, ({ path, html }) =>
 // Title length without the site name: 60 characters, 32 when CJK (the same limits as the content schema).
 check('title length', sitemapPages, ({ path, html }) => {
   const t = unbranded(titleOf(html))
-  return t.length <= titleMax(t) ? '' : `${path}: title is ${t.length} characters (${t}), at most ${titleMax(t)} without the site name`
+  return textWidth(t) <= TITLE_MAX_WIDTH ? '' : `${path}: title width is ${textWidth(t)} (${t}), at most ${TITLE_MAX_WIDTH} without the site name (CJK counts 2)`
 })
 
 // The first loop of 'page head' already rejects two pages with one title; descriptions get the same rule per language.
