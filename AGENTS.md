@@ -24,3 +24,9 @@ motionboard.app: 38 launch-film shot recipes and a free HyperFrames skill for Cl
 
 ## Handoff (2026-11-16)
 The repo moved from `~/Documents/motion-lexicon-site` to `~/code/sites/motionboard`. The task-3 audit table, with what passed, what was fixed and what waits on Rui: `~/Library/Application Support/Claude/side-session-notes/local_b345c0d6-e7e0-4bab-8a09-d8143b50b9a1/mb-task3-audit.md`. Open item: aligning with the shared design system (light theme, 17px body and the related size changes) waits on Rui.
+
+## Launch-film showcase and film tools (task 10, 2026-11-26)
+- `/guides/launch-video-examples/` is a guide page built from the `showcase` block (`src/data/content.ts`, rendered by `ShowFilm` in `src/components/page/ContentPage.tsx`, styles `.pg-show`/`.pg-film` in `src/styles/page.css`). Films are `launch-<product>-<tool>{.mp4,-m.mp4,.jpg}` on R2; `scripts/video-sitemap.mjs` lists the films whose name ends in `-motionboard`.
+- Skill `film/join.mjs` snaps cuts to the beat of the bundled tracks (tempo table at the top of the file) and mixes per-shot `sfx` cues (render clock) from `film/sfx/` (CC0). Film sources and v3 joins: winlinux `~/mb/film-test/motionboard-v2/<product>/launch-film/` (`film-v3.json`), Mac copies in `marketing/film-test/` (git-excluded). Web encodes: winlinux `~/mb/showcase/enc.sh <src> <base> [poster s]`.
+- Media with `media="(max-width: 767px)"` sources also trips the design-check `load failed: ...-m.mp4` false positive on any page, not only home.
+- Long unbroken links in zh body text overflow at 390 px; `.pg-body` has `overflow-wrap: break-word`.
