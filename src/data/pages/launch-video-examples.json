@@ -23,7 +23,7 @@
             "tool": "Motionboard skill",
             "href": "https://github.com/krisyangdev/motionboard",
             "video": "launch-shotframes-motionboard",
-            "dur": 26.5,
+            "dur": 26.0,
             "facts": [
               [
                 "Input",
@@ -43,11 +43,11 @@
               ],
               [
                 "Length",
-                "26.5 s"
+                "26.0 s"
               ],
               [
                 "After the run",
-                "PLACEHOLDER"
+                "Second pass: shot 4 rebuilt (bag, cup, window, tote), sound effects added, cuts moved onto the music’s beat. 1 extra render."
               ]
             ]
           },
@@ -119,7 +119,7 @@
             "tool": "Motionboard skill",
             "href": "https://github.com/krisyangdev/motionboard",
             "video": "launch-fancyfonts-motionboard",
-            "dur": 28.4,
+            "dur": 28.0,
             "facts": [
               [
                 "Input",
@@ -139,11 +139,11 @@
               ],
               [
                 "Length",
-                "28.4 s"
+                "28.0 s"
               ],
               [
                 "After the run",
-                "PLACEHOLDER"
+                "Second pass: shot 1 re-laid so the member list reads, sound effects added, cuts moved onto the music’s beat. 1 extra render."
               ]
             ]
           },
@@ -215,7 +215,7 @@
             "tool": "Motionboard skill",
             "href": "https://github.com/krisyangdev/motionboard",
             "video": "launch-motionboard-motionboard",
-            "dur": 27.3,
+            "dur": 27.6,
             "facts": [
               [
                 "Input",
@@ -235,11 +235,11 @@
               ],
               [
                 "Length",
-                "27.3 s"
+                "27.6 s"
               ],
               [
                 "After the run",
-                "PLACEHOLDER"
+                "Second pass: shots 2 and 3 reframed so the storyboard reads and the two windows differ, sound effects added, cuts moved onto the music’s beat. 2 extra renders."
               ]
             ]
           },
@@ -308,7 +308,7 @@
       {
         "t": "ul",
         "items": [
-          "Length: the brag films run 20.0 to 23.0 s, the Motionboard skill films 26.5 to 28.4 s and the HyperFrames films 30.0 s.",
+          "Length: the brag films run 20.0 to 23.0 s, the Motionboard skill films 26.0 to 28.0 s and the HyperFrames films 30.0 s.",
           "Sound: the Motionboard skill and brag films carry music and sound effects. The HyperFrames films have sound effects only, because its music catalog needs sign-in.",
           "Wall time: brag took about 12 to 15 minutes per film, the Motionboard skill about 20 to 55 minutes and the HyperFrames skill about 30 minutes for the one run that was measured.",
           "Renders: the Motionboard skill renders each shot on its own, so it used 5 renders per film. The HyperFrames skill used 1 or 2 and brag 1 or 2."
@@ -414,7 +414,7 @@
             "tool": "Motionboard skill",
             "href": "https://github.com/krisyangdev/motionboard",
             "video": "launch-shotframes-motionboard",
-            "dur": 26.5,
+            "dur": 26.0,
             "facts": [
               [
                 "输入",
@@ -434,11 +434,11 @@
               ],
               [
                 "时长",
-                "26.5 秒"
+                "26.0 秒"
               ],
               [
                 "跑完后",
-                "PLACEHOLDER"
+                "第二遍：重做第 4 个镜头（咖啡袋、杯子、橱窗、帆布袋），加音效，剪辑点对齐音乐节拍。多渲染 1 次。"
               ]
             ]
           },
@@ -510,7 +510,7 @@
             "tool": "Motionboard skill",
             "href": "https://github.com/krisyangdev/motionboard",
             "video": "launch-fancyfonts-motionboard",
-            "dur": 28.4,
+            "dur": 28.0,
             "facts": [
               [
                 "输入",
@@ -530,11 +530,11 @@
               ],
               [
                 "时长",
-                "28.4 秒"
+                "28.0 秒"
               ],
               [
                 "跑完后",
-                "PLACEHOLDER"
+                "第二遍：重排第 1 个镜头，让成员列表看得清，加音效，剪辑点对齐音乐节拍。多渲染 1 次。"
               ]
             ]
           },
@@ -606,7 +606,7 @@
             "tool": "Motionboard skill",
             "href": "https://github.com/krisyangdev/motionboard",
             "video": "launch-motionboard-motionboard",
-            "dur": 27.3,
+            "dur": 27.6,
             "facts": [
               [
                 "输入",
@@ -626,11 +626,11 @@
               ],
               [
                 "时长",
-                "27.3 秒"
+                "27.6 秒"
               ],
               [
                 "跑完后",
-                "PLACEHOLDER"
+                "第二遍：调整第 2、3 个镜头的取景，让分镜文字看得清、两个窗口不再雷同，加音效，剪辑点对齐音乐节拍。多渲染 2 次。"
               ]
             ]
           },
@@ -699,7 +699,7 @@
       {
         "t": "ul",
         "items": [
-          "时长：brag 的影片 20.0 到 23.0 秒，Motionboard 技能的影片 26.5 到 28.4 秒，HyperFrames 的影片 30.0 秒。",
+          "时长：brag 的影片 20.0 到 23.0 秒，Motionboard 技能的影片 26.0 到 28.0 秒，HyperFrames 的影片 30.0 秒。",
           "声音：Motionboard 技能和 brag 的影片有音乐和音效。HyperFrames 的影片只有音效，因为它的音乐库需要登录。",
           "耗时：brag 每支约 12 到 15 分钟，Motionboard 技能约 20 到 55 分钟，HyperFrames 技能只测到一次，约 30 分钟。",
           "渲染次数：Motionboard 技能按镜头逐个渲染，每支影片 5 次。HyperFrames 技能 1 到 2 次，brag 1 到 2 次。"
