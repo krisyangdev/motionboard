@@ -1,6 +1,14 @@
 import { appEnv } from '../server/env'
 
+/** Largest object the template writes. R2 bills storage and operations above its free tier even on Workers Free. */
+export const MAX_OBJECT_BYTES = 10 * 1024 * 1024
+
+const byteLength = (body: ArrayBuffer | string) => (typeof body === 'string' ? new TextEncoder().encode(body).byteLength : body.byteLength)
+
+/** Writes one object; throws (nothing written) when it is larger than MAX_OBJECT_BYTES. */
 export async function putObject(key: string, body: ArrayBuffer | string, contentType: string) {
+  const size = byteLength(body)
+  if (size > MAX_OBJECT_BYTES) throw new Error(`R2 object ${key} is ${size} bytes, more than MAX_OBJECT_BYTES (${MAX_OBJECT_BYTES})`)
   await appEnv().BUCKET.put(key, body, { httpMetadata: { contentType } })
 }
 

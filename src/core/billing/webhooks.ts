@@ -3,7 +3,7 @@
 // (unique provider_event_id), a repeat of a finished event is acknowledged without doing anything,
 // and a failure is rethrown so Dodo retries. Credits are granted through the idempotent ledger.
 import type { WebhookPayload } from '@dodopayments/core/schemas'
-import { and, eq, inArray } from 'drizzle-orm'
+import { and, eq, inArray, isNull, ne, or, sql } from 'drizzle-orm'
 import { planByCode } from '../../site/plans'
 import { grant } from '../credits/ledger'
 import { db, schema } from '../db'
@@ -67,12 +67,22 @@ export async function handleDodoWebhook(payload: WebhookPayload): Promise<void> 
         break
       case 'payment.failed':
       case 'payment.cancelled':
-        // A paid or refunded order never goes back to failed.
+        // A paid or refunded order never goes back to failed; an order already failed with this payment id is left alone (no rewrite of the same row).
         if (order) {
+          const t = schema.paymentOrders
+          const newPaymentId = paymentId ?? order.providerPaymentId
           await d
-            .update(schema.paymentOrders)
-            .set({ status: 'failed', providerPaymentId: paymentId ?? order.providerPaymentId, updatedAt: nowIso() })
-            .where(and(eq(schema.paymentOrders.id, order.id), inArray(schema.paymentOrders.status, ['created', 'checkout_started', 'failed'])))
+            .update(t)
+            .set({ status: 'failed', providerPaymentId: newPaymentId, updatedAt: nowIso() })
+            .where(
+              and(
+                eq(t.id, order.id),
+                or(
+                  inArray(t.status, ['created', 'checkout_started']),
+                  and(eq(t.status, 'failed'), newPaymentId ? or(isNull(t.providerPaymentId), ne(t.providerPaymentId, newPaymentId)) : sql`0`),
+                ),
+              ),
+            )
         }
         break
       case 'refund.succeeded':
