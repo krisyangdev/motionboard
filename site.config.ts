@@ -31,6 +31,11 @@ export const SITE = {
   indexNowKey: '',
   /** Write public/llms.txt from the page list (worth it only for sites coding agents read). */
   llmsTxt: true,
+  /**
+   * Quality gate knobs (src/core/seo/quality.ts). `hubMinMembers`: indexable members a hub needs to be indexable
+   * (default 6). The demo has one tool and two guides, so it lowers it; a real site leaves the line out.
+   */
+  seo: { hubMinMembers: 1 },
   /** Layer 1: sign-up, credits, payments, the app and /admin. Off = content-only site. */
   accounts: { enabled: true, signupCredits: 20 },
   social: { twitterCard: 'summary_large_image', twitter: '' },

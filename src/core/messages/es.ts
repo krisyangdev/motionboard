@@ -7,7 +7,7 @@ export default {
   language: 'Idioma',
   signIn: 'Iniciar sesión',
   notFound: { title: 'Página no encontrada', body: 'Esta página no existe o se ha movido.', back: 'Volver al inicio' },
-  footer: { privacy: 'Privacidad', terms: 'Términos', contact: 'Contacto' },
+  footer: { about: 'Acerca de', privacy: 'Privacidad', terms: 'Términos', contact: 'Contacto' },
 
   page: {
     breadcrumb: 'Ruta de navegación',
@@ -19,19 +19,18 @@ export default {
     howTo: 'Cómo se usa',
     faq: 'Preguntas frecuentes',
     moreTools: 'Más herramientas',
-  },
-
-  hubs: {
-    tools: {
-      title: 'Herramientas en línea gratuitas',
-      description: 'Herramientas gratuitas que se ejecutan en tu dispositivo: sin registro, sin instalar nada y sin subir tus datos.',
-      lede: 'Herramientas gratuitas que se ejecutan en tu dispositivo. Sin registro y sin instalar nada.',
-    },
-    guides: {
-      title: 'Guías',
-      description: 'Guías paso a paso y notas prácticas, escritas para quien quiere resolver la tarea.',
-      lede: 'Guías paso a paso y notas prácticas.',
-    },
+    examples: 'Ejemplos',
+    exampleInput: 'Entrada',
+    exampleOutput: 'Resultado',
+    limits: 'Límites y privacidad',
+    sources: 'Fuentes',
+    checked: 'comprobado',
+    related: 'Relacionado',
+    by: 'Por',
+    pagination: 'Paginación',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    pageN: (n: number) => `Página ${n}`,
   },
 
   app: {

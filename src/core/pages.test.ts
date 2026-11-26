@@ -53,7 +53,9 @@ describe('sitePages registry fields', () => {
     for (const p of sitePages().filter((p) => p.path !== '/')) {
       expect(p.type, p.path).toBeTruthy()
       expect(p.lastmod, p.path).toMatch(/^\d{4}-\d{2}-\d{2}$/)
-      expect(p.indexable, p.path).toBe(true)
+      // `reasons` and `noindex` are set together, and a page with no noindex language is indexable.
+      expect(p.reasons !== undefined, p.path).toBe(p.noindex !== undefined)
+      if (!p.noindex) expect(p.indexable, p.path).toBe(true)
       for (const l of pageLocales(p)) {
         const trail = p.breadcrumb?.[L(l)]
         expect(trail?.[0], p.path).toMatchObject({ path: '/' })
@@ -67,5 +69,35 @@ describe('sitePages registry fields', () => {
   it('carries the keyword of tool and guide pages per language', async () => {
     const { sitePages } = await load(['en', 'zh'])
     for (const p of sitePages().filter((p) => p.type === 'tool' || p.type === 'guide')) expect(p.keyword?.[L('en')], p.path).toBeTruthy()
+  })
+})
+
+describe('quality gate in the registry', () => {
+  it('indexableLocales leaves out the languages a page is noindex in', async () => {
+    const { indexableLocales } = await load(['en', 'zh'])
+    const page = { title: { en: 'A', zh: 'B' } as Record<string, string>, noindex: { zh: ['thin'] } as Record<string, string[]> }
+    expect(indexableLocales(page)).toEqual(['en'])
+    expect(indexableLocales({ title: page.title })).toEqual(['en', 'zh'])
+  })
+  it('marks a page indexable false only when every language is noindex, and prefixes the reasons with the language', async () => {
+    const { sitePages } = await load(['en', 'zh'])
+    for (const p of sitePages().filter((p) => p.noindex)) {
+      expect(p.reasons?.length, p.path).toBeGreaterThan(0)
+      for (const r of p.reasons ?? []) expect(r, p.path).toMatch(/^(en|zh): /)
+    }
+  })
+  it('describes the pages 2 and up of a paginated hub by hub, number and languages', async () => {
+    const { hubPagination, sitePages } = await load(['en', 'zh'])
+    const hubs = sitePages().filter((p) => p.type === 'hub')
+    for (const p of hubPagination()) {
+      expect(p.n, p.path).toBeGreaterThanOrEqual(2)
+      expect(p.path, p.path).toBe(`${p.hub}page/${p.n}/`)
+      expect(hubs.map((h) => h.path), p.path).toContain(p.hub)
+      expect(p.locales.length, p.path).toBeGreaterThan(0)
+    }
+  })
+  it('keeps hubs out of existence in languages without a member, and has no hub for the content-less third language', async () => {
+    const { sitePages, pageLocales } = await load(['en', 'zh', 'es'])
+    for (const p of sitePages().filter((p) => p.type === 'hub')) expect(pageLocales(p), p.path).not.toContain('es')
   })
 })

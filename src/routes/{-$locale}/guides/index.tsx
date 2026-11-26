@@ -1,39 +1,13 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
-import { hubLocales } from '@/core/content/exists'
-import { docList } from '@/core/content/docs'
+import { createFileRoute } from '@tanstack/react-router'
 import { paramLocale } from '@/core/i18n'
-import { useLocale } from '@/core/locale'
-import { coreMessages } from '@/core/messages'
-import { seoHead } from '@/core/seo'
-import { HubPage, trail } from '@/core/pages/HubPage'
+import { HubPage, hubHead, loadHub } from '@/core/pages/HubPage'
 
 export const Route = createFileRoute('/{-$locale}/guides/')({
-  loader: ({ params }) => {
-    const entries = docList('guides', paramLocale(params.locale)).map((d) => ({ title: d.title, description: d.description, href: `/guides/${d.slug}/` }))
-    // The hub exists only in languages that have at least one guide.
-    if (!entries.length) throw notFound()
-    return { entries, locales: hubLocales('guides') }
-  },
-  head: ({ params, loaderData }) => {
-    if (!loaderData) return {}
-    const locale = paramLocale(params.locale)
-    const m = coreMessages[locale]
-    return seoHead({
-      title: m.hubs.guides.title,
-      description: m.hubs.guides.description,
-      path: '/guides/',
-      locale,
-      locales: loaderData.locales,
-      type: 'website',
-      breadcrumb: trail(locale, { name: m.page.guides, path: '/guides/' }),
-    })
-  },
-  component: Guides,
+  loader: ({ params }) => loadHub('guides', params.locale, 1),
+  head: ({ loaderData, params }) => (loaderData ? hubHead(loaderData, paramLocale(params.locale)) : {}),
+  component: Hub,
 })
 
-function Guides() {
-  const { entries } = Route.useLoaderData()
-  const locale = useLocale()
-  const m = coreMessages[locale]
-  return <HubPage crumbs={trail(locale, { name: m.page.guides, path: '/guides/' })} entries={entries} lede={m.hubs.guides.lede} title={m.hubs.guides.title} />
+function Hub() {
+  return <HubPage data={Route.useLoaderData()} />
 }

@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { LOCALES, DEFAULT_LOCALE, localeMeta, localizePath, pageUrl } from '../src/core/i18n.ts'
-import { ROBOTS_DISALLOW, pageLocales, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
+import { ROBOTS_DISALLOW, indexableLocales, pageLocales, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
 import { headersFile } from '../src/core/headers.ts'
 import { extraHeaders, extraRedirects, llmsTxt } from '../src/site/pages.ts'
 
@@ -21,10 +21,15 @@ export function generate() {
   const out = (name, text) => writeFileSync(join(PUBLIC, name), text)
   const videos = readVideos()
   const pages = sitePages()
-  // Languages a default-language path exists in; a path that is not a site page counts as existing everywhere.
+  // Languages a default-language path exists in (for redirects); a path that is not a site page counts as existing everywhere.
   const localesOf = (path) => {
     const page = pages.find((p) => p.path === path)
     return page ? pageLocales(page) : LOCALES
+  }
+  // Same, for pages that go into the index (llms.txt, video sitemap): the languages the quality gate lets in.
+  const indexableLocalesOf = (path) => {
+    const page = pages.find((p) => p.path === path)
+    return page ? indexableLocales(page) : LOCALES
   }
 
   out(
@@ -56,10 +61,10 @@ export function generate() {
 
   if (SITE.llmsTxt && llmsTxt) out('llms.txt', llmsTxt)
   else if (SITE.llmsTxt) {
-    // One section per language, listing the pages that exist in it (the section title names the language when there are several).
+    // One section per language, listing the indexable pages that exist in it, legal pages left out (the section title names the language when there are several).
     const sections = LOCALES.map((l) => {
       const lines = pages
-        .filter((p) => pageLocales(p).includes(l))
+        .filter((p) => p.type !== 'legal' && indexableLocales(p).includes(l))
         .map((p) => {
           const desc = p.description[l]
           return `- [${p.title[l]}](${pageUrl(l, p.path)})${desc ? `: ${desc}` : ''}`
@@ -76,7 +81,7 @@ export function generate() {
     const byPath = new Map()
     for (const v of videos) byPath.set(v.path, [...(byPath.get(v.path) ?? []), v])
     const urls = [...byPath].flatMap(([path, list]) =>
-      localesOf(path).flatMap((l) => {
+      indexableLocalesOf(path).flatMap((l) => {
         const shown = list.filter((v) => text(v.title, l) && text(v.description, l))
         if (!shown.length) return []
         return [

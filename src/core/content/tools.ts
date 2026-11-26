@@ -7,10 +7,11 @@ import type { ToolFile, ToolText } from './schema'
 /** A tool in one language. */
 export type Tool = {
   slug: string
-  tool: string | null
+  tool: string
   published: string
   updated: string
   ogImage?: string
+  related?: string[]
   name: string
   text: ToolText
   /** Every language the tool exists in. */
@@ -26,9 +27,5 @@ export async function loadTool(slug: string, locale: Locale): Promise<Tool | und
   const file = await files[`/content/tools/${slug}.json`]?.()
   const text = file?.[locale]
   if (!file || !text) return undefined
-  return { slug, tool: file.tool, published: file.published, updated: file.updated, ogImage: file.ogImage, name: entry.name[locale] ?? text.title, text, locales: entry.locales }
+  return { slug, tool: file.tool, published: file.published, updated: file.updated, ogImage: file.ogImage, related: file.related, name: entry.name[locale] ?? text.title, text, locales: entry.locales }
 }
-
-/** Every tool that exists in a language, with its name there, sorted by slug. */
-export const toolNames = (locale: Locale): { slug: string; name: string }[] =>
-  index.tools.filter((t) => t.locales.includes(locale)).map((t) => ({ slug: t.slug, name: t.name[locale] ?? t.slug }))

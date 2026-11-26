@@ -1,19 +1,28 @@
 // Template for a JSON-driven tool page (content/tools/<slug>.json).
+// Order: breadcrumb, h1, lede, the tool, examples, how-to steps, sections, limits, FAQ, more tools.
 import { Suspense } from 'react'
 import { ClientOnly } from '@tanstack/react-router'
-import { ChevronDownIcon } from 'lucide-react'
+import { pageExists, seoState } from '@/core/content/exists'
+import { pageH1 } from '@/core/content/h1'
+import type { Entry } from '@/core/content/members'
 import type { Tool } from '@/core/content/tools'
 import { formatDate, type Locale } from '@/core/i18n'
 import { coreMessages } from '@/core/messages'
-import { pageH1 } from '@/core/content/h1'
-import { articleLd, seoHead, webApplicationLd } from '@/core/seo'
+import { seoHead, webApplicationLd } from '@/core/seo'
+import { Breadcrumb, trail } from '@/core/ui/page/Breadcrumb'
+import { Examples } from '@/core/ui/page/Examples'
+import { FaqList } from '@/core/ui/page/FaqList'
+import { LCP } from '@/core/ui/page/link'
+import { RelatedGrid } from '@/core/ui/page/RelatedGrid'
+import { StepsList } from '@/core/ui/page/StepsList'
+import { slots } from '@/site/slots'
 import { tools } from '@/site/tools'
-import { Breadcrumb, CardGrid, LCP, trail } from './HubPage'
 
 export const toolPath = (slug: string) => `/tools/${slug}/`
 
-/** The breadcrumb of a tool page: shown by the page and written to its JSON-LD. */
-const toolCrumbs = (page: Tool, locale: Locale) => trail(locale, { name: coreMessages[locale].page.tools, path: '/tools/' }, { name: page.name, path: toolPath(page.slug) })
+/** The breadcrumb of a tool page: shown by the page and written to its JSON-LD (the Tools level only where the hub exists). */
+const toolCrumbs = (page: Tool, locale: Locale) =>
+  trail(locale, ...(pageExists(locale, '/tools/') ? [{ name: coreMessages[locale].page.tools, path: '/tools/' }] : []), { name: page.name, path: toolPath(page.slug) })
 
 export function toolHead(page: Tool, locale: Locale) {
   const t = page.text
@@ -23,14 +32,10 @@ export function toolHead(page: Tool, locale: Locale) {
     description: t.description,
     path,
     locale,
-    locales: page.locales,
+    ...seoState(path, locale),
     image: page.ogImage,
     breadcrumb: toolCrumbs(page, locale),
-    jsonLd: [
-      page.tool
-        ? webApplicationLd({ name: page.name, description: t.description, locale, path })
-        : articleLd({ headline: pageH1(t), description: t.description, locale, path, datePublished: page.published, dateModified: page.updated, image: page.ogImage }),
-    ],
+    jsonLd: [webApplicationLd({ name: page.name, description: t.description, locale, path })],
   })
 }
 
@@ -38,11 +43,13 @@ export function toolHead(page: Tool, locale: Locale) {
 // Widgets render only in the browser, after hydration.
 const SLOT = 'min-h-[24rem] rounded-2xl border bg-card p-4'
 const WidgetFallback = () => <div aria-hidden className="min-h-[22rem] rounded-lg bg-muted" />
+const H2 = 'text-xl font-semibold tracking-tight'
 
-export function ToolPage({ page, locale, siblings }: { page: Tool; locale: Locale; siblings: { slug: string; name: string }[] }) {
+export function ToolPage({ page, locale, siblings }: { page: Tool; locale: Locale; siblings: Entry[] }) {
   const t = page.text
   const l = coreMessages[locale].page
-  const Widget = page.tool ? tools[page.tool] : undefined
+  const Widget = tools[page.tool]
+  const ctx = { type: 'tool', slug: page.slug, locale } as const
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
       <Breadcrumb crumbs={toolCrumbs(page, locale)} />
@@ -50,6 +57,7 @@ export function ToolPage({ page, locale, siblings }: { page: Tool; locale: Local
         {pageH1(t)}
       </h1>
       <p className="mt-3 text-lg text-muted-foreground">{t.lede}</p>
+      {slots.afterLede?.(ctx)}
 
       {Widget && (
         <div className={`mt-8 ${SLOT}`}>
@@ -61,47 +69,48 @@ export function ToolPage({ page, locale, siblings }: { page: Tool; locale: Local
         </div>
       )}
 
+      {t.examples && t.examples.length > 0 && (
+        <section className="mt-12">
+          <h2 className={H2}>{l.examples}</h2>
+          <Examples examples={t.examples} locale={locale} />
+        </section>
+      )}
+
       {t.steps && t.steps.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-xl font-semibold tracking-tight">{l.howTo}</h2>
-          <ol className="mt-4 space-y-4">
-            {t.steps.map((s, i) => (
-              <li className="flex gap-3" key={s.title}>
-                <span aria-hidden className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-medium">
-                  {i + 1}
-                </span>
-                <div>
-                  <h3 className="font-medium">{s.title}</h3>
-                  <p className="mt-1 text-muted-foreground">{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <h2 className={H2}>{l.howTo}</h2>
+          <StepsList steps={t.steps} />
+        </section>
+      )}
+
+      {t.sections?.map((s) => (
+        <section className="mt-12" key={s.h2}>
+          <h2 className={H2}>{s.h2}</h2>
+          <p className="mt-3 text-muted-foreground">{s.body}</p>
+        </section>
+      ))}
+
+      {t.limits && (
+        <section className="mt-12">
+          <h2 className={H2}>{l.limits}</h2>
+          <p className="mt-3 text-muted-foreground">{t.limits}</p>
         </section>
       )}
 
       {t.faq && t.faq.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-xl font-semibold tracking-tight">{l.faq}</h2>
-          <div className="mt-2">
-            {t.faq.map(([q, a]) => (
-              <details className="group border-b last:border-b-0" key={q}>
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-md py-4 text-left font-medium outline-none focus-visible:ring-[3px] focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
-                  {q}
-                  <ChevronDownIcon aria-hidden className="pointer-events-none mt-1 size-4 shrink-0 opacity-80 transition-transform duration-200 ease-in-out group-open:rotate-180" />
-                </summary>
-                <p className="pb-4 text-muted-foreground">{a}</p>
-              </details>
-            ))}
-          </div>
+          <h2 className={H2}>{l.faq}</h2>
+          <FaqList items={t.faq} openFirst />
         </section>
       )}
 
+      {slots.afterContent?.(ctx)}
+
       {siblings.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-xl font-semibold tracking-tight">{l.moreTools}</h2>
+          <h2 className={H2}>{l.moreTools}</h2>
           <div className="mt-4">
-            <CardGrid entries={siblings.slice(0, 6).map((s) => ({ title: s.name, href: toolPath(s.slug) }))} locale={locale} />
+            <RelatedGrid card={slots.card} entries={siblings.slice(0, 6)} locale={locale} />
           </div>
         </section>
       )}

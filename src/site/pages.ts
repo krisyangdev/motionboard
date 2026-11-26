@@ -3,7 +3,7 @@
 import type { ExtraPage, Video } from '../core/pages.ts'
 
 /**
- * Pages beyond the template's own (home, tools, guides, legal come from content/). Each is prerendered in every language it lists and goes in the sitemap and llms.txt.
+ * Pages beyond the template's own (home, tools, guides, hubs, about, legal come from content/). Each is prerendered in every language it lists and goes in the sitemap and llms.txt.
  * Give each a `type`, a `keyword` per language when it targets a search term, `lastmod`, and the `breadcrumb` it shows (home first).
  */
 export const extraPages: ExtraPage[] = []
@@ -20,5 +20,5 @@ export const extraHeaders: Record<string, Record<string, string>> = {}
 /** Replaces the generated llms.txt when set. */
 export const llmsTxt: string | undefined = undefined
 
-/** Default-language paths that are prerendered but kept out of the sitemap (with and without trailing slash, every language). */
+/** Default-language paths that are prerendered but kept out of the sitemap (every language): noindex like a page the quality gate rejects. */
 export const sitemapExclude: string[] = []

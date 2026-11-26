@@ -11,6 +11,10 @@ lede: "Clone the template, set site.config.ts and ship a new site in about an ho
 
 Every site we build starts from the same template, so a new site takes minutes instead of days. This guide covers the first hour: create the repository, make it yours, and ship it.
 
+## Before you start
+
+You need Node 22, npm and a Git client. To publish, you also need a Cloudflare account, because the site is served by one Cloudflare Worker. Nothing else has to be installed: the database, queue and payment pieces run on mocks until you switch them on.
+
 ## Clone the template
 
 Copy the template into a new folder and install the dependencies.
@@ -26,6 +30,26 @@ npm install
 Open `site.config.ts`. It is the one file that holds everything specific to your site: the name, domain, languages, default title and description, contact email and analytics settings. Change those values and nothing else in the shared code needs touching.
 
 Then replace the example content. Tool pages live in `content/tools/`, guides in `content/guides/`, and the legal pages in `content/legal/`. Site-specific code goes in `src/site/`.
+
+<Evidence caption="Where each kind of page lives in the repository, and the address it gets.">
+
+| Page | Source file | Address |
+| --- | --- | --- |
+| Tool | `content/tools/word-counter.json` | `/tools/word-counter/` |
+| Guide | `content/guides/en/case-converter.mdx` | `/guides/case-converter/` |
+| Hub | `content/hubs/tools.json` | `/tools/` |
+| About | `content/about/en/about.mdx` | `/about/` |
+| Privacy | `content/legal/en/privacy.mdx` | `/privacy/` |
+
+</Evidence>
+
+A page exists in a language only when that language has its own file or block. Add a Chinese block to a tool, or a file under `content/guides/zh/`, and the page appears at `/zh/`. Leave it out and there is no page, so no half-translated text reaches search results.
+
+## Add your first page
+
+Copy `content/tools/word-counter.json` to a new file, change the slug and the text, and point the `tool` field at your own widget in `src/site/tools/`. Every page records the search term it targets in `keyword` and where you checked the demand for that term in `demand`. Write the title and the first paragraph around that term, because that is the phrase a visitor typed before landing on the page.
+
+Keep each page honest about what it does. A page that only explains how to do something elsewhere is a guide, not a tool, and the build treats the two differently: a tool needs a working widget, three or four steps, an example and at least four questions, while a guide needs real length, a few links to your tools and one piece of first-hand evidence such as a table or a screenshot.
 
 ## Keep receiving template updates
 
@@ -51,4 +75,12 @@ npm run build     # prerender every page to static HTML
 npm run deploy    # build and publish to Cloudflare
 ```
 
-Once it is live, see the [tools page](/tools/) for how a finished page looks, and replace it with your own.
+## Publish and verify
+
+After the first deploy, open the live address and check three things: the home page loads fast on a phone, the language switcher lands on the same page in the other language, and `/sitemap.xml` lists the pages you expect. Submit the sitemap in Search Console and Bing Webmaster Tools once, and later changes are picked up from there.
+
+## Check what search engines will see
+
+Run `npm run seo-report` after you add pages. It lists each page type with how many pages are indexable and why any page is kept out of the index, for example a guide with fewer than 600 words or a tool without a worked example. Fix the reasons it prints, then run `npm test` again.
+
+Once it is live, see the [tools page](/tools/) for how a finished page looks, try the [word counter](/tools/word-counter/) as an example of a working tool, and read how to [change text case](/guides/case-converter/) for an example of a tutorial. The [about page](/about/) shows the disclosure every site needs.

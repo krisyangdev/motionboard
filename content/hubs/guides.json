@@ -1,0 +1,24 @@
+{
+  "collection": "guides",
+  "pageSize": 1,
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "step-by-step guides",
+    "demand": { "source": "none", "note": "Hub of the guides collection; it targets the category term and needs no separate demand check.", "checked": "2026-11-26" },
+    "title": "Step-by-step guides for practical tasks",
+    "description": "Step-by-step guides and practical notes, written for people who want the task done: set up a site, convert text between case styles and more.",
+    "h1": "Step-by-step guides",
+    "lede": "Step-by-step guides and practical notes.",
+    "intro": "Each guide answers one question and shows the steps in the order you do them, with a table or an example you can check against your own work. Guides link to the tools that make a step faster. This demo hub shows one guide per page so the pagination links are visible; a real site keeps up to sixty members on the first page."
+  },
+  "zh": {
+    "keyword": "操作指南",
+    "demand": { "source": "none", "note": "Hub of the guides collection; it targets the category term and needs no separate demand check.", "checked": "2026-11-26" },
+    "title": "操作指南：一步一步把事情做完",
+    "description": "一步一步的操作指南和实用笔记，写给想把事情做完的人：搭建站点、在各种大小写写法之间转换文字，以及更多内容。",
+    "h1": "操作指南",
+    "lede": "一步一步的操作指南和实用笔记。",
+    "intro": "每篇指南回答一个问题，按你实际操作的顺序列出步骤，并附上表格或示例，方便你对照自己的结果。指南里会链接到能让某一步更快的工具。这个演示用的汇总页每页只放一篇指南，目的是让分页链接可见；真实站点的第一页最多放六十个条目。"
+  }
+}

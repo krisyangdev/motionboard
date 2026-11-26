@@ -4,6 +4,7 @@
 // imports. Nothing in the app imports the schemas themselves, so zod stays out of the browser bundles.
 import { z } from 'zod'
 import type { Locale } from '../i18n.ts'
+import { HUB_PAGE_SIZE } from './hubs.ts'
 
 export const dateSchema = z
   .string()
@@ -86,8 +87,21 @@ const sharedFields = {
 
 // Tool pages: content/tools/<slug>.json, shared fields at the top, one text block per language.
 
+/** One before/after pair (or a fact) of a tool page, with a caption. */
+export const exampleSchema = z.strictObject({ input: z.string().min(1), output: z.string().min(1), caption: z.string().min(1) })
+/** A prose block under its own H2. */
+export const sectionSchema = z.strictObject({ h2: z.string().min(1), body: z.string().min(1) })
+
 export const toolTextSchema = z
-  .strictObject({ ...textFields, steps: z.array(z.strictObject({ title: z.string().min(1), body: z.string().min(1) })).optional() })
+  .strictObject({
+    ...textFields,
+    steps: z.array(z.strictObject({ title: z.string().min(1), body: z.string().min(1) })).optional(),
+    examples: z.array(exampleSchema).optional(),
+    /** What the tool cannot do, file size and format limits, privacy. Stated truthfully. */
+    limits: z.string().min(1).optional(),
+    /** One to three prose blocks: use cases, when to use which option. */
+    sections: z.array(sectionSchema).max(3).optional(),
+  })
   .superRefine((t, ctx) => {
     checkText(t, ctx)
     checkDemand(t, ctx)
@@ -95,8 +109,8 @@ export const toolTextSchema = z
 
 const toolShape = {
   slug: slugSchema,
-  /** Id of a widget in src/site/tools/index.ts, or null for a text-only page. */
-  tool: z.string().min(1).nullable(),
+  /** Id of a widget in src/site/tools/index.ts. A page without a working tool is a guide. */
+  tool: z.string().min(1),
   /** Short name used in breadcrumbs and lists, per language; defaults to the title. */
   name: z.record(z.string(), z.string().min(1)).optional(),
   ...sharedFields,
@@ -127,15 +141,71 @@ export const guideSchema = z
 
 // Legal pages: content/legal/<lang>/<slug>.mdx. They target no keyword.
 
-export const legalSchema = z.strictObject({ title: z.string().min(1), description: z.string().min(1), published: dateSchema, updated: dateSchema }).superRefine((fm, ctx) => {
-  checkText(fm, ctx)
-  checkDates(fm, ctx)
-})
+export const legalSchema = z
+  .strictObject({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    published: dateSchema,
+    updated: dateSchema,
+    /** Keeps the page out of the sitemap and search results (the only way a legal page is noindex besides being empty). */
+    noindex: z.boolean().optional(),
+  })
+  .superRefine((fm, ctx) => {
+    checkText(fm, ctx)
+    checkDates(fm, ctx)
+  })
+
+// About page: content/about/<lang>/about.mdx. Targets no keyword; the FAQ is site-wide (licence, privacy, pricing).
+
+export const aboutSchema = z
+  .strictObject({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    lede: z.string().min(1),
+    faq: faqSchema.optional(),
+    published: dateSchema,
+    updated: dateSchema,
+  })
+  .superRefine((fm, ctx) => {
+    checkText(fm, ctx)
+    checkDates(fm, ctx)
+  })
+
+// Hub pages: content/hubs/<collection>.json, the page at /<collection>/ that lists the collection's members.
+
+export const HUB_COLLECTIONS = ['tools', 'guides'] as const
+export type HubCollection = (typeof HUB_COLLECTIONS)[number]
+
+export const hubTextSchema = z
+  .strictObject({
+    ...textFields,
+    /** What is in the set and how to choose. Shown on page 1. */
+    intro: z.string().min(1),
+    sections: z.array(sectionSchema).max(3).optional(),
+    faq: faqSchema.max(5).optional(),
+  })
+  .superRefine(checkText)
+
+const hubShape = {
+  collection: z.enum(HUB_COLLECTIONS),
+  /** Members per page (default and maximum 60). */
+  pageSize: z.number().int().min(1).max(HUB_PAGE_SIZE).optional(),
+  published: dateSchema,
+  updated: dateSchema,
+}
+
+/** Schema of a hub file for these languages. A language block is optional: no block, no hub in that language. */
+export const hubFileSchema = (locales: readonly string[]) =>
+  z.object({ ...hubShape, ...Object.fromEntries(locales.map((l) => [l, hubTextSchema.optional()])) }).superRefine(checkDates)
+
+export type HubText = z.infer<typeof hubTextSchema>
+export type HubFile = z.infer<z.ZodObject<typeof hubShape>> & Partial<Record<Locale, HubText>>
 
 export type GuideFrontmatter = z.infer<typeof guideSchema>
 export type LegalFrontmatter = z.infer<typeof legalSchema>
+export type AboutFrontmatter = z.infer<typeof aboutSchema>
 /** Frontmatter of any MDX page. */
-export type DocFrontmatter = GuideFrontmatter | LegalFrontmatter
+export type DocFrontmatter = GuideFrontmatter | LegalFrontmatter | AboutFrontmatter
 
 /** Validates `data` and returns it typed. On failure throws one error with the file and every failing field. */
 export function parseContent<S extends z.ZodType>(schema: S, data: unknown, file: string): z.infer<S> {

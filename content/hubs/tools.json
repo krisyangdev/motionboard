@@ -1,0 +1,23 @@
+{
+  "collection": "tools",
+  "published": "2026-11-26",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "free online tools",
+    "demand": { "source": "none", "note": "Hub of the tools collection; it targets the category term and needs no separate demand check.", "checked": "2026-11-26" },
+    "title": "Free online tools that run in your browser",
+    "description": "Free browser tools that run on your device: no sign-up, nothing to install and nothing uploaded. Start with the word counter and see what else is here.",
+    "h1": "Free online tools",
+    "lede": "Free browser tools that run on your device. No sign-up, nothing to install.",
+    "intro": "Every tool on this site does one job and does it in your browser tab, so the text or files you work with stay on your device. Each page explains the steps, shows an example, and lists what the tool cannot do. Start with the word counter if you need character limits or reading time, and open a guide when you want the steps for a task that needs another program."
+  },
+  "zh": {
+    "keyword": "免费在线工具",
+    "demand": { "source": "none", "note": "Hub of the tools collection; it targets the category term and needs no separate demand check.", "checked": "2026-11-26" },
+    "title": "免费在线工具：在浏览器里直接使用",
+    "description": "在浏览器里直接使用的免费工具：无需注册，无需安装，内容不会上传。可以先从字数统计开始，再看看这里还有什么。",
+    "h1": "免费在线工具",
+    "lede": "在浏览器里直接使用的免费工具，无需注册，无需安装。",
+    "intro": "这个站点上的每个工具只做一件事，并且在你的浏览器标签页里完成，所以你处理的文字和文件都留在自己的设备上。每个工具页面都会说明操作步骤、给出示例，并写清这个工具做不到什么。需要核对字符限制或阅读时间，可以先用字数统计；如果任务需要用到别的软件，可以打开指南查看具体步骤。"
+  }
+}

@@ -1,0 +1,63 @@
+---
+title: How to change text case in Word, Docs and VS Code
+description: "Learn when to use sentence case, title case, camelCase, snake_case and kebab-case, and how to convert text between them in Word, Google Docs and VS Code."
+published: "2026-11-26"
+updated: "2026-11-26"
+kind: tutorial
+keyword: "change text case"
+h1: "How to change text case"
+demand: {"source": "serp-check", "note": "Template demo: placeholder, replace with a real check of this term.", "checked": "2026-11-26"}
+lede: "Select the text and use Shift+F3 in Word, Format then Text then Capitalization in Google Docs, or the Transform commands in VS Code. Pick the style first, because each one has a job."
+faq: [["What is the difference between sentence case and title case?", "Sentence case capitalises only the first word and proper nouns, like a normal sentence. Title case capitalises most words, usually skipping short articles and prepositions such as a, the and of."], ["Which case should I use in URLs?", "Use lowercase kebab-case, such as my-page-title. Search engines treat hyphens as word separators, and lowercase avoids duplicate pages on servers that treat paths as case sensitive."], ["Why does converting to title case sometimes look wrong?", "Style guides disagree on which small words stay lowercase, and software cannot know your proper nouns or brand spellings. Treat the output as a first pass and check it against the style guide you follow."]]
+---
+
+Changing the case of a block of text takes a few seconds once you know where the command lives. The harder part is choosing the style, because the same words look right in one place and wrong in another. This guide covers the five styles you will meet most often, then shows how to convert text in the three editors most people already have open.
+
+## Pick the style for the job
+
+Each style exists for a reason, and mixing them looks careless.
+
+- **Sentence case** capitalises the first word and proper nouns. Use it for body text and for most headings on the web, because it reads like speech.
+- **Title Case** capitalises most words. Use it for formal titles, book names and some newspaper headlines, and check the style guide you follow.
+- **camelCase** joins words with no separator and capitalises every word after the first. It is the usual choice for variables and functions in JavaScript and Java.
+- **snake_case** joins words with underscores in lowercase. Python, Ruby and many database columns use it.
+- **kebab-case** joins words with hyphens in lowercase. Use it for URLs and file names, because search engines read a hyphen as a space.
+
+<Evidence caption="The same three words written in each style. Copy the pattern, not the words.">
+
+| Style | Result | Where it belongs |
+| --- | --- | --- |
+| Sentence case | The quick brown fox | Body text, headings |
+| Title Case | The Quick Brown Fox | Formal titles |
+| camelCase | theQuickBrownFox | JavaScript and Java names |
+| snake_case | the_quick_brown_fox | Python names, database columns |
+| kebab-case | the-quick-brown-fox | URLs, file names |
+| UPPER_SNAKE_CASE | THE_QUICK_BROWN_FOX | Constants |
+
+</Evidence>
+
+## Change case in a word processor
+
+In Microsoft Word, select the text and press Shift+F3. Each press cycles through lowercase, UPPERCASE and Capitalize Each Word. The Change Case button on the Home tab offers the same choices plus sentence case and toggle case.
+
+In Google Docs, select the text and open Format, then Text, then Capitalization. You can choose lowercase, UPPERCASE or Title Case. Docs has no sentence case command, so retype the first letter by hand after a bulk change.
+
+Word processors only handle the three plain styles. For camelCase, snake_case and kebab-case you need a code editor.
+
+## Change case in a code editor
+
+In VS Code, select the text, open the command palette with Ctrl+Shift+P (Cmd+Shift+P on a Mac) and type Transform. The built-in commands convert to uppercase, lowercase and title case. Extensions in the marketplace add camelCase, snake_case and kebab-case, and some let you cycle through them with one shortcut.
+
+If you convert many names at once, use find and replace with regular expressions instead. Replace each underscore followed by a letter with the capital letter to move from snake_case to camelCase, and run the reverse to go back.
+
+## Check names and acronyms
+
+Automatic conversion cannot tell NASA from a word that happens to be capitalised. Lowercasing the whole text turns acronyms into ordinary words, and title case may capitalise a small word the style guide wants lowercase. Read the result once from start to finish and restore names such as iPhone, NASA and eBay by hand.
+
+Keep a short list of the brand and product spellings you use often, and paste from it after converting. It takes less time than hunting for each one.
+
+## Count the result
+
+Case changes rarely change length, but trimming a title or description to fit a limit often follows a case change. Paste the text into the [word counter](/tools/word-counter/) to check characters against a limit such as 60 for a page title. For the first-hour setup of a whole site, see [start a new site from the template](/guides/getting-started/), and browse all the [free tools](/tools/) when you need another quick job done in the browser.
+
+Page titles, headings and file names all follow the conventions above. If you publish on the web, how a page is written and checked is described on the [about page](/about/).

@@ -9,7 +9,7 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
 import { SITE_URL } from './site.config.ts'
 import { LOCALES, localizePath, alternateUrls } from './src/core/i18n.ts'
-import { contentIndex, pageLocales, sitePages } from './src/core/pages.ts'
+import { contentIndex, hubPagination, indexableLocales, pageLocales, sitePages } from './src/core/pages.ts'
 import { sitemapExclude } from './src/site/pages.ts'
 import { generate } from './scripts/generate.mjs'
 
@@ -23,23 +23,28 @@ const contentIndexPlugin = (): Plugin => ({
 
 const prebuild = (): Plugin => ({ name: 'prebuild', buildStart: () => generate(), configureServer: () => generate() })
 
-// One entry per page and language it exists in (no fallback: a missing translation is no page). The hreflang
-// alternates list only those languages, plus x-default.
+// One entry per page and language it exists in (no fallback: a missing translation is no page). A language the
+// quality gate keeps out of the index (or a site's `sitemapExclude`) is prerendered with `sitemap.exclude`. The
+// hreflang alternates list only the indexable languages, plus x-default. Pages 2 and up of a paginated hub are
+// prerendered and out of the sitemap.
 const sitemapPages = sitePages()
-const pages = sitemapPages.flatMap((p) => {
-  const locales = pageLocales(p)
-  const alternateRefs = alternateUrls(p.path, locales).map((a) => ({ hreflang: a.lang, href: a.href }))
-  return locales.map((l) => ({ path: localizePath(l, p.path), sitemap: { alternateRefs } }))
-})
+const pages = [
+  ...sitemapPages.flatMap((p) => {
+    const indexable = indexableLocales(p)
+    const alternateRefs = alternateUrls(p.path, indexable).map((a) => ({ hreflang: a.lang, href: a.href }))
+    return pageLocales(p).map((l) => ({ path: localizePath(l, p.path), sitemap: indexable.includes(l) ? { alternateRefs } : { exclude: true } }))
+  }),
+  ...hubPagination().flatMap((p) => p.locales.map((l) => ({ path: localizePath(l, p.path), sitemap: { exclude: true } }))),
+]
 
-// Pages the crawler finds through links but that are not search pages (a site's `sitemapExclude`), with and without the trailing slash.
-// A path that is also a site page is excluded only in the languages it exists in.
+// Paths in a site's `sitemapExclude` are also prerendered without the trailing slash; one that is not a site
+// page is prerendered in every language, with and without it.
 const excluded = sitemapExclude
   .flatMap((p) => {
     const page = sitemapPages.find((s) => s.path === p)
-    return (page ? pageLocales(page) : LOCALES).map((l) => localizePath(l, p))
+    const paths = (page ? pageLocales(page) : LOCALES).map((l) => localizePath(l, p))
+    return (page ? [] : paths).concat(paths.filter((x) => x.length > 1 && x.endsWith('/')).map((x) => x.slice(0, -1)))
   })
-  .flatMap((p) => (p.length > 1 && p.endsWith('/') ? [p, p.slice(0, -1)] : [p]))
   .map((path) => ({ path, sitemap: { exclude: true } }))
 
 export default defineConfig({

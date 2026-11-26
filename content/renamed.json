@@ -1,3 +1,4 @@
 {
-  "/old-tools/": "/tools/"
+  "/old-tools/": "/tools/",
+  "/tools/case-converter/": "/guides/case-converter/"
 }
