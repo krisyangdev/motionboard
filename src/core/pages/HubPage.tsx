@@ -1,20 +1,12 @@
-// List page template, plus the small pieces the other page templates share (breadcrumb, card grid, link, labels).
+// List page template, plus the small pieces the other page templates share (breadcrumb, card grid, link).
 import type { ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
 import { localizePath, type Locale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
+import { coreMessages } from '@/core/messages'
 
 /** Spread onto the h1 so the browser reports it as the LCP candidate (not in React's intrinsic types). */
 export const LCP = { elementtiming: 'lcp' }
-
-export const labels = {
-  en: { home: 'Home', tools: 'Tools', guides: 'Guides', updated: 'Updated', published: 'Published', howTo: 'How to use', faq: 'Frequently asked questions', moreTools: 'More tools' },
-  zh: { home: '首页', tools: '工具', guides: '指南', updated: '更新于', published: '发布于', howTo: '使用方法', faq: '常见问题', moreTools: '更多工具' },
-} satisfies Record<Locale, Record<string, string>>
-
-/** YYYY-MM-DD as a long date, fixed to UTC so server and browser print the same text. */
-export const formatDate = (date: string, locale: Locale) =>
-  new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`))
 
 /** Client-side link to a default-language path; the current language is applied here. */
 export function PathLink({ path, locale, className, children }: { path: string; locale: Locale; className?: string; children: ReactNode }) {
@@ -28,10 +20,11 @@ export function PathLink({ path, locale, className, children }: { path: string; 
 
 export function Breadcrumb({ items }: { items: { label: string; path?: string }[] }) {
   const locale = useLocale()
+  const page = coreMessages[locale].page
   return (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label={page.breadcrumb}>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-        {[{ label: labels[locale].home, path: '/' }, ...items].map((item, i, all) => (
+        {[{ label: page.home, path: '/' }, ...items].map((item, i, all) => (
           <li className="flex items-center gap-2" key={item.label}>
             {i > 0 && <span aria-hidden>›</span>}
             {item.path && i < all.length - 1 ? (

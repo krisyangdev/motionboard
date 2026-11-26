@@ -1,11 +1,13 @@
 import { useLocation } from '@tanstack/react-router'
 import { cn } from '@/core/lib/utils'
+import { pageExists } from '@/core/content/exists'
 import { localizePath, stripLocale } from '@/core/i18n'
-import { useCoreMessages, useShellLocale } from '@/core/messages'
+import { useCoreMessages, useShellLocale } from '@/core/locale'
 import { buttonVariants } from '@/core/ui/button'
 import { SITE } from '../../../site.config.ts'
 import { BrandMark } from '@/site/brand'
 import { nav } from '@/site/nav'
+import { AccountLink } from './AccountLink'
 import { LanguageSwitch } from './LanguageSwitch'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -40,7 +42,7 @@ export function Header() {
           className="order-last -mx-4 w-full overflow-x-auto px-4 [scrollbar-width:none] sm:order-none sm:mx-0 sm:w-auto sm:flex-1 sm:px-0"
         >
           <ul className="flex gap-1">
-            {nav.map((item) => (
+            {nav.filter((item) => !item.path || pageExists(l, item.path.split('#')[0])).map((item) => (
               <li key={item.label[l]}>
                 <a
                   href={item.href ?? localizePath(l, item.path ?? '/')}
@@ -57,6 +59,7 @@ export function Header() {
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <LanguageSwitch />
+          {SITE.accounts.enabled && <AccountLink />}
           <ThemeToggle />
         </div>
       </div>

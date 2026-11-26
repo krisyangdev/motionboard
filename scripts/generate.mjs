@@ -5,8 +5,8 @@ import { writeFileSync, rmSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE, SITE_URL } from '../site.config.ts'
-import { LOCALES, DEFAULT_LOCALE, HTML_LANG, localizePath, pageUrl } from '../src/core/i18n.ts'
-import { sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
+import { LOCALES, DEFAULT_LOCALE, localeMeta, localizePath, pageUrl } from '../src/core/i18n.ts'
+import { ROBOTS_DISALLOW, pageLocales, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
 import { headersFile } from '../src/core/headers.ts'
 import { extraHeaders, extraRedirects, llmsTxt } from '../src/site/pages.ts'
 
@@ -20,15 +20,19 @@ export function generate() {
   mkdirSync(PUBLIC, { recursive: true })
   const out = (name, text) => writeFileSync(join(PUBLIC, name), text)
   const videos = readVideos()
+  const pages = sitePages()
+  // Languages a default-language path exists in; a path that is not a site page counts as existing everywhere.
+  const localesOf = (path) => {
+    const page = pages.find((p) => p.path === path)
+    return page ? pageLocales(page) : LOCALES
+  }
 
   out(
     'robots.txt',
     [
       'User-agent: *',
       'Allow: /',
-      'Disallow: /api/',
-      'Disallow: /admin/',
-      'Disallow: /account/',
+      ...ROBOTS_DISALLOW.map((p) => `Disallow: ${p}`),
       '',
       `Sitemap: ${SITE_URL}/sitemap.xml`,
       ...(videos.length ? [`Sitemap: ${SITE_URL}/sitemap-video.xml`] : []),
@@ -36,10 +40,10 @@ export function generate() {
     ].join('\n'),
   )
 
-  // Renames apply to every language; both the slash and the no-slash form of the old path redirect.
+  // Renames apply to every language the new page exists in; both the slash and the no-slash form of the old path redirect.
   const redirects = []
   for (const [from, to] of Object.entries(readRenamed())) {
-    for (const l of LOCALES) {
+    for (const l of localesOf(to)) {
       const f = localizePath(l, from)
       redirects.push(`${f} ${localizePath(l, to)} 301`)
       if (f.length > 1 && f.endsWith('/')) redirects.push(`${f.slice(0, -1)} ${localizePath(l, to)} 301`)
@@ -52,25 +56,33 @@ export function generate() {
 
   if (SITE.llmsTxt && llmsTxt) out('llms.txt', llmsTxt)
   else if (SITE.llmsTxt) {
-    const lines = sitePages().map((p) => {
-      const title = p.title[DEFAULT_LOCALE] || p.path
-      const desc = p.description[DEFAULT_LOCALE]
-      return `- [${title}](${pageUrl(DEFAULT_LOCALE, p.path)})${desc ? `: ${desc}` : ''}`
+    // One section per language, listing the pages that exist in it (the section title names the language when there are several).
+    const sections = LOCALES.map((l) => {
+      const lines = pages
+        .filter((p) => pageLocales(p).includes(l))
+        .map((p) => {
+          const desc = p.description[l]
+          return `- [${p.title[l]}](${pageUrl(l, p.path)})${desc ? `: ${desc}` : ''}`
+        })
+      return `## Pages${LOCALES.length > 1 ? ` (${localeMeta(l).name})` : ''}\n\n${lines.join('\n')}`
     })
-    out('llms.txt', `# ${SITE.name}\n\n> ${SITE.description[DEFAULT_LOCALE]}\n\n## Pages\n\n${lines.join('\n')}\n`)
+    out('llms.txt', `# ${SITE.name}\n\n> ${SITE.description[DEFAULT_LOCALE]}\n\n${sections.join('\n\n')}\n`)
   } else rmSync(join(PUBLIC, 'llms.txt'), { force: true })
 
   if (videos.length) {
-    // One <url> per page and language; several videos on the same page share it. Titles and
-    // descriptions may be per language.
-    const text = (v, l) => (typeof v === 'string' ? v : (v[l] ?? v[DEFAULT_LOCALE]))
+    // One <url> per page and language the page exists in; several videos on the same page share it. Titles and
+    // descriptions may be per language; a video with no text in a language is left out of that language's entry.
+    const text = (v, l) => (typeof v === 'string' ? v : v[l])
     const byPath = new Map()
     for (const v of videos) byPath.set(v.path, [...(byPath.get(v.path) ?? []), v])
     const urls = [...byPath].flatMap(([path, list]) =>
-      LOCALES.map(
-        (l) => `  <url>
+      localesOf(path).flatMap((l) => {
+        const shown = list.filter((v) => text(v.title, l) && text(v.description, l))
+        if (!shown.length) return []
+        return [
+          `  <url>
     <loc>${esc(pageUrl(l, path))}</loc>
-${list
+${shown
   .map(
     (v) => `    <video:video>
       <video:thumbnail_loc>${esc(abs(v.thumbnail))}</video:thumbnail_loc>
@@ -83,7 +95,8 @@ ${list
   )
   .join('\n')}
   </url>`,
-      ),
+        ]
+      }),
     )
     out(
       'sitemap-video.xml',
@@ -95,7 +108,7 @@ ${urls.join('\n')}
     )
   } else rmSync(join(PUBLIC, 'sitemap-video.xml'), { force: true })
 
-  console.log(`generate: ${sitePages().length} pages, ${redirects.length} redirects, ${videos.length} videos`)
+  console.log(`generate: ${pages.length} pages, ${redirects.length} redirects, ${videos.length} videos`)
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) generate()

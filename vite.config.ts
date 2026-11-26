@@ -9,7 +9,7 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
 import { SITE_URL } from './site.config.ts'
 import { LOCALES, localizePath, alternateUrls } from './src/core/i18n.ts'
-import { contentIndex, sitePages } from './src/core/pages.ts'
+import { contentIndex, pageLocales, sitePages } from './src/core/pages.ts'
 import { sitemapExclude } from './src/site/pages.ts'
 import { generate } from './scripts/generate.mjs'
 
@@ -23,16 +23,22 @@ const contentIndexPlugin = (): Plugin => ({
 
 const prebuild = (): Plugin => ({ name: 'prebuild', buildStart: () => generate(), configureServer: () => generate() })
 
-const pages = sitePages().flatMap((p) =>
-  LOCALES.map((l) => ({
-    path: localizePath(l, p.path),
-    sitemap: { alternateRefs: alternateUrls(p.path).map((a) => ({ hreflang: a.lang, href: a.href })) },
-  })),
-)
+// One entry per page and language it exists in (no fallback: a missing translation is no page). The hreflang
+// alternates list only those languages, plus x-default.
+const sitemapPages = sitePages()
+const pages = sitemapPages.flatMap((p) => {
+  const locales = pageLocales(p)
+  const alternateRefs = alternateUrls(p.path, locales).map((a) => ({ hreflang: a.lang, href: a.href }))
+  return locales.map((l) => ({ path: localizePath(l, p.path), sitemap: { alternateRefs } }))
+})
 
 // Pages the crawler finds through links but that are not search pages (a site's `sitemapExclude`), with and without the trailing slash.
+// A path that is also a site page is excluded only in the languages it exists in.
 const excluded = sitemapExclude
-  .flatMap((p) => LOCALES.map((l) => localizePath(l, p)))
+  .flatMap((p) => {
+    const page = sitemapPages.find((s) => s.path === p)
+    return (page ? pageLocales(page) : LOCALES).map((l) => localizePath(l, p))
+  })
   .flatMap((p) => (p.length > 1 && p.endsWith('/') ? [p, p.slice(0, -1)] : [p]))
   .map((path) => ({ path, sitemap: { exclude: true } }))
 
@@ -45,7 +51,17 @@ export default defineConfig({
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
     tanstackStart({
-      prerender: { enabled: true, crawlLinks: true, failOnError: true, filter: ({ path }) => !path.includes('#') && !/\.\w+\/?$/.test(path) },
+      // The page list (sitePages + sitemapExclude) is the single source for prerender and the sitemap: no link
+      // crawling and no automatic static-route discovery, so private routes (admin, account, app) are never
+      // prerendered or listed. Paths with a file extension or a '#' are static files or anchors, not pages.
+      // scripts/test.mjs checks that every internal link points at a listed page or a private path.
+      prerender: {
+        enabled: true,
+        crawlLinks: false,
+        autoStaticPathsDiscovery: false,
+        failOnError: true,
+        filter: ({ path }) => !path.includes('#') && !/\.\w+\/?$/.test(path),
+      },
       pages: [...pages, ...excluded],
       sitemap: { enabled: true, host: SITE_URL },
     }),

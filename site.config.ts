@@ -9,8 +9,9 @@ export const SITE = {
   domain: 'motionboard.app',
   /** Cloudflare Worker name. */
   worker: 'motionboard',
-  /** First entry is the default language, served at the root; the others live under /<lang>/. */
+  /** Language codes from src/core/locale-data.ts. The default language is served at the root; the others live under /<code>/. */
   languages: ['en', 'zh'],
+  /** One of `languages`. */
   defaultLang: 'en',
   /** Home page <title> and meta description, per language. */
   title: { en: 'Launch-Film Motion Graphics with Claude Code & Codex', zh: '用 Claude Code 和 Codex 做宣传片动效' },
@@ -30,10 +31,12 @@ export const SITE = {
   indexNowKey: '2635d416ece22f80c26589dcc5be6170',
   /** Write public/llms.txt from the page list (worth it only for sites coding agents read). */
   llmsTxt: true,
+  /** Layer 1: sign-up, credits, payments, the app and /admin. Off = content-only site. */
+  accounts: { enabled: false, signupCredits: 0 },
   social: { twitterCard: 'summary_large_image', twitter: '' },
   /** Extra origins allowed by the Content-Security-Policy, per directive. */
   csp: {
-    script: [] as string[],
+    script: ['https://challenges.cloudflare.com'] as string[],
     connect: [] as string[],
     img: ['https:'] as string[],
     media: ['https://media.motionboard.app'] as string[], // films and posters on MEDIA_URL (src/site/config.ts)

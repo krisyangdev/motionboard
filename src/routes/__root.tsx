@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react'
-import { createRootRoute } from '@tanstack/react-router'
+import { useEffect, type ReactNode } from 'react'
+import { createRootRoute, useLocation } from '@tanstack/react-router'
 import { Analytics } from '@/core/Analytics'
-import { HTML_LANG } from '@/core/i18n'
-import { useShellLocale } from '@/core/messages'
+import { DEFAULT_LOCALE, DIR, HTML_LANG } from '@/core/i18n'
+import { useShellLocale } from '@/core/locale'
 import { Head, Scripts } from '@/core/Scripts'
 import { Footer } from '@/core/shell/Footer'
 import { Header } from '@/core/shell/Header'
@@ -23,8 +23,8 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       // head() keeps one meta per name, so the light theme-color is written in RootDocument.
       { name: 'theme-color', content: '#161616', media: '(prefers-color-scheme: dark)' },
-      { title: SITE.title.en },
-      { name: 'description', content: SITE.description.en },
+      { title: SITE.title[DEFAULT_LOCALE] },
+      { name: 'description', content: SITE.description[DEFAULT_LOCALE] },
     ],
     links: [
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
@@ -39,20 +39,26 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: ReactNode }) {
   const locale = useShellLocale()
+  // /admin is an internal tool: no site chrome, no page analytics.
+  const admin = useLocation({ select: (l) => l.pathname.startsWith('/admin') })
+  // Set once React has hydrated; end-to-end tests wait for it before interacting.
+  useEffect(() => {
+    document.documentElement.setAttribute('data-hydrated', '')
+  }, [])
   return (
-    <html lang={HTML_LANG[locale]} suppressHydrationWarning>
+    <html lang={HTML_LANG[locale]} dir={DIR[locale]} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <Head />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Header />
+        {!admin && <Header />}
         <div id="main" className="flex-1">
           {children}
         </div>
-        <Footer />
-        <Analytics />
+        {!admin && <Footer />}
+        {!admin && <Analytics />}
         <Scripts />
       </body>
     </html>

@@ -1,5 +1,5 @@
 import { Moon, Sun } from 'lucide-react'
-import { useCoreMessages } from '@/core/messages'
+import { useCoreMessages } from '@/core/locale'
 import { setTheme } from '@/core/theme'
 import { Button } from '@/core/ui/button'
 

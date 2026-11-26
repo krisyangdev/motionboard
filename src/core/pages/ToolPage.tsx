@@ -2,28 +2,29 @@
 import { Suspense } from 'react'
 import { ClientOnly } from '@tanstack/react-router'
 import { ChevronDownIcon } from 'lucide-react'
-import type { ToolPage as ToolPageData } from '@/core/content/tools'
-import type { Locale } from '@/core/i18n'
+import type { Tool } from '@/core/content/tools'
+import { formatDate, type Locale } from '@/core/i18n'
+import { coreMessages } from '@/core/messages'
 import { articleLd, breadcrumbLd, faqLd, seoHead, softwareAppLd } from '@/core/seo'
 import { tools } from '@/site/tools'
-import { Breadcrumb, CardGrid, formatDate, labels, LCP } from './HubPage'
+import { Breadcrumb, CardGrid, LCP } from './HubPage'
 
 export const toolPath = (slug: string) => `/tools/${slug}/`
 
-export function toolHead(page: ToolPageData, locale: Locale) {
-  const t = page[locale]
-  const name = page.name[locale]
+export function toolHead(page: Tool, locale: Locale) {
+  const t = page.text
   const path = toolPath(page.slug)
   return seoHead({
     title: t.title,
     description: t.description,
     path,
     locale,
+    locales: page.locales,
     jsonLd: [
       page.tool
-        ? softwareAppLd({ name, description: t.description, locale, path, category: 'WebApplication' })
+        ? softwareAppLd({ name: page.name, description: t.description, locale, path, category: 'WebApplication' })
         : articleLd({ headline: t.h1, description: t.description, locale, path, datePublished: page.updated }),
-      breadcrumbLd(locale, [[labels[locale].tools, '/tools/'], [name, path]]),
+      breadcrumbLd(locale, [[coreMessages[locale].page.tools, '/tools/'], [page.name, path]]),
       ...(t.faq?.length ? [faqLd(t.faq)] : []),
     ],
   })
@@ -34,13 +35,13 @@ export function toolHead(page: ToolPageData, locale: Locale) {
 const SLOT = 'min-h-[24rem] rounded-2xl border bg-card p-4'
 const WidgetFallback = () => <div aria-hidden className="min-h-[22rem] rounded-lg bg-muted" />
 
-export function ToolPage({ page, locale, siblings }: { page: ToolPageData; locale: Locale; siblings: { slug: string; name: Record<Locale, string> }[] }) {
-  const t = page[locale]
-  const l = labels[locale]
+export function ToolPage({ page, locale, siblings }: { page: Tool; locale: Locale; siblings: { slug: string; name: string }[] }) {
+  const t = page.text
+  const l = coreMessages[locale].page
   const Widget = page.tool ? tools[page.tool] : undefined
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <Breadcrumb items={[{ label: l.tools, path: '/tools/' }, { label: page.name[locale] }]} />
+      <Breadcrumb items={[{ label: l.tools, path: '/tools/' }, { label: page.name }]} />
       <h1 {...LCP} className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
         {t.h1}
       </h1>
@@ -96,13 +97,13 @@ export function ToolPage({ page, locale, siblings }: { page: ToolPageData; local
         <section className="mt-12">
           <h2 className="text-xl font-semibold tracking-tight">{l.moreTools}</h2>
           <div className="mt-4">
-            <CardGrid entries={siblings.slice(0, 6).map((s) => ({ title: s.name[locale], href: toolPath(s.slug) }))} locale={locale} />
+            <CardGrid entries={siblings.slice(0, 6).map((s) => ({ title: s.name, href: toolPath(s.slug) }))} locale={locale} />
           </div>
         </section>
       )}
 
       <p className="mt-12 text-sm text-muted-foreground">
-        {l.updated} <time dateTime={page.updated}>{formatDate(page.updated, locale)}</time>
+        {l.updated} <time dateTime={page.updated}>{formatDate(locale, page.updated)}</time>
       </p>
     </main>
   )
