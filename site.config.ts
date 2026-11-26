@@ -14,7 +14,7 @@ export const SITE = {
   /** One of `languages`. */
   defaultLang: 'en',
   /** Home page <title> and meta description: one entry for every language in `languages`. */
-  title: { en: 'Site Template: React, TanStack and coss ui on Cloudflare', zh: '站点模板：React、TanStack 和 coss ui，跑在 Cloudflare 上' },
+  title: { en: 'Site Template: React, TanStack and coss ui on Cloudflare', zh: '站点模板：React、TanStack 和 coss ui' },
   description: {
     en: 'The starter every site is built from: prerendered pages, English and Chinese, SEO checks, analytics and fast first paint on Cloudflare Workers.',
     zh: '每个站点的起点：预渲染页面、中英双语、SEO 检查、统计和快速首屏，部署在 Cloudflare Workers 上。',

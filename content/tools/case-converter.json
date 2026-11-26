@@ -1,9 +1,12 @@
 {
   "slug": "case-converter",
   "tool": null,
+  "published": "2026-11-26",
   "updated": "2026-11-26",
   "name": { "en": "Case converter", "zh": "大小写转换" },
   "en": {
+    "keyword": "case converter",
+    "demand": {"source": "serp-check", "note": "Template demo: placeholder, replace with a real check of this term.", "checked": "2026-11-26"},
     "title": "Case Converter: text case styles and how to switch them",
     "description": "Learn when to use sentence case, title case, camelCase, snake_case and kebab-case, and how to convert text between them in common editors.",
     "h1": "Case converter",
@@ -21,6 +24,8 @@
     ]
   },
   "zh": {
+    "keyword": "大小写转换",
+    "demand": {"source": "serp-check", "note": "Template demo: placeholder, replace with a real check of this term.", "checked": "2026-11-26"},
     "title": "大小写转换：常见写法的用途和转换方法",
     "description": "了解句首大写、标题大写、camelCase、snake_case 和 kebab-case 各自适用的场景，以及在常用编辑器里怎样互相转换。",
     "h1": "大小写转换",

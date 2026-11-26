@@ -1,9 +1,12 @@
 // What the template's sitemap, llms.txt, _redirects, _headers and video sitemap generation takes from
 // this site. Node only (imported by vite.config.ts and scripts/), so no `@/` aliases and no React.
-import type { SitePage, Video } from '../core/pages.ts'
+import type { ExtraPage, Video } from '../core/pages.ts'
 
-/** Pages beyond the template's own (home, tools, guides, legal come from content/). Each is prerendered in every language it lists and goes in the sitemap and llms.txt. */
-export const extraPages: SitePage[] = []
+/**
+ * Pages beyond the template's own (home, tools, guides, legal come from content/). Each is prerendered in every language it lists and goes in the sitemap and llms.txt.
+ * Give each a `type`, a `keyword` per language when it targets a search term, `lastmod`, and the `breadcrumb` it shows (home first).
+ */
+export const extraPages: ExtraPage[] = []
 
 /** Videos for the video sitemap beyond content/videos.json. */
 export const extraVideos: Video[] = []

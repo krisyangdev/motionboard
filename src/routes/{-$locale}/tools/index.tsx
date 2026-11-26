@@ -4,8 +4,8 @@ import { loadTool, toolNames } from '@/core/content/tools'
 import { paramLocale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
-import { seoHead, breadcrumbLd } from '@/core/seo'
-import { HubPage } from '@/core/pages/HubPage'
+import { seoHead } from '@/core/seo'
+import { HubPage, trail } from '@/core/pages/HubPage'
 
 export const Route = createFileRoute('/{-$locale}/tools/')({
   loader: async ({ params }) => {
@@ -29,7 +29,7 @@ export const Route = createFileRoute('/{-$locale}/tools/')({
       locale,
       locales: loaderData.locales,
       type: 'website',
-      jsonLd: [breadcrumbLd(locale, [[m.page.tools, '/tools/']])],
+      breadcrumb: trail(locale, { name: m.page.tools, path: '/tools/' }),
     })
   },
   component: Tools,
@@ -37,6 +37,7 @@ export const Route = createFileRoute('/{-$locale}/tools/')({
 
 function Tools() {
   const { entries } = Route.useLoaderData()
-  const m = coreMessages[useLocale()]
-  return <HubPage crumb={m.page.tools} entries={entries} lede={m.hubs.tools.lede} title={m.hubs.tools.title} />
+  const locale = useLocale()
+  const m = coreMessages[locale]
+  return <HubPage crumbs={trail(locale, { name: m.page.tools, path: '/tools/' })} entries={entries} lede={m.hubs.tools.lede} title={m.hubs.tools.title} />
 }

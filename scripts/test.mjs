@@ -5,7 +5,8 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, stripLocale } from '../src/core/i18n.ts'
-import { isPrivatePath, pageLocales, sitePages } from '../src/core/pages.ts'
+import { titleMax } from '../src/core/content/schema.ts'
+import { isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
 import { sitemapExclude } from '../src/site/pages.ts'
 
 const root = new URL('..', import.meta.url).pathname
@@ -123,10 +124,110 @@ check('page head', sitemapPages, ({ path, html }) => {
       errs.push('invalid JSON-LD')
     }
   }
-  if (!attr(metas.find((t) => attr(t, 'property') === 'og:image') ?? '', 'content')) errs.push('missing og:image')
   const robots = attr(metas.find((t) => attr(t, 'name') === 'robots') ?? '', 'content') ?? ''
   if (/noindex/i.test(robots)) errs.push('noindex page is listed in the sitemap')
   return errs.length ? `${path}: ${errs.join('; ')}` : ''
+})
+
+// 3b. head checks that need the page type, the keyword or the JSON-LD (registry data from sitePages())
+const ldTypes = (v) => (Array.isArray(v) ? v.flatMap(ldTypes) : v && typeof v === 'object' ? [...[v['@type']].flat().filter(Boolean), ...Object.values(v).flatMap(ldTypes)] : [])
+const ldNodes = (v) => (Array.isArray(v) ? v.flatMap(ldNodes) : v && typeof v === 'object' ? [v, ...ldNodes(v['@graph'] ?? [])] : [])
+const ldOf = (html) =>
+  all(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g, html).flatMap((m) => {
+    try {
+      return [JSON.parse(decode(m[1]))]
+    } catch {
+      return [] // reported as invalid JSON-LD by the page head check
+    }
+  })
+const titleOf = (html) => decode((html.match(/<title[^>]*>([\s\S]*?)<\/title>/)?.[1] ?? '').trim())
+const unbranded = (t) => (t.endsWith(` \u00b7 ${SITE.name}`) ? t.slice(0, -` \u00b7 ${SITE.name}`.length) : t)
+const metaContent = (html, key, value) => attr(tags('meta', html).find((t) => attr(t, key) === value) ?? '', 'content')
+
+check('exactly one h1', sitemapPages, ({ path, html }) => {
+  const n = all(/<h1[\s>]/g, html).length
+  return n === 1 ? '' : `${path}: ${n} <h1> elements, want 1`
+})
+
+check('og:image is an absolute URL', sitemapPages, ({ path, html }) =>
+  /^https?:\/\//.test(metaContent(html, 'property', 'og:image') ?? '') ? '' : `${path}: og:image missing or not an absolute URL`)
+
+// Title length without the site name: 60 characters, 32 when CJK (the same limits as the content schema).
+check('title length', sitemapPages, ({ path, html }) => {
+  const t = unbranded(titleOf(html))
+  return t.length <= titleMax(t) ? '' : `${path}: title is ${t.length} characters (${t}), at most ${titleMax(t)} without the site name`
+})
+
+// The first loop of 'page head' already rejects two pages with one title; descriptions get the same rule per language.
+const descriptions = new Map()
+check('description unique per language', sitemapPages, ({ path, html }) => {
+  const key = `${localeOfPath(path)}|${metaContent(html, 'name', 'description') ?? ''}`
+  const first = descriptions.get(key)
+  if (first) return `${path}: same description as ${first}`
+  descriptions.set(key, path)
+  return ''
+})
+
+check('canonical is the page itself', prerendered.filter((p) => !p.is404), ({ path, html }) => {
+  const canon = tags('link', html).filter((t) => attr(t, 'rel') === 'canonical').map((t) => attr(t, 'href'))
+  return canon.every((c) => c === `${SITE_URL}${path}`) ? '' : `${path}: canonical ${canon.join(', ')} is not the page's own URL`
+})
+
+// FAQ stays visible content: no FAQPage in JSON-LD or microdata on any page.
+check('no FAQPage markup', prerendered, ({ path, html }) =>
+  ldOf(html).flatMap(ldTypes).includes('FAQPage') || /itemtype="[^"]*FAQPage/i.test(html) ? `${path}: FAQPage markup` : '')
+
+// JSON-LD types a page must carry, by page type (any one of each group). BreadcrumbList is checked below against the visible trail.
+const LD_REQUIRED = {
+  home: [['WebSite'], ['Organization']],
+  tool: [['WebApplication', 'Article']],
+  guide: [['Article']],
+  compare: [['Article']],
+  alternatives: [['Article']],
+  glossary: [['DefinedTerm']],
+  about: [['Organization']],
+}
+check('JSON-LD types per page type', sitemapPages, ({ path, html }) => {
+  const page = pageOfPath(path)
+  if (!page) return ''
+  const types = new Set(ldOf(html).flatMap(ldTypes))
+  const missing = (LD_REQUIRED[page.type] ?? []).filter((any) => !any.some((t) => types.has(t))).map((any) => any.join(' or '))
+  return missing.length ? `${path}: ${page.type} page lacks JSON-LD ${missing.join(', ')}` : ''
+})
+
+// The visible breadcrumb, the BreadcrumbList and the registry trail (sitePages()) are the same list.
+check('breadcrumb: visible = JSON-LD = registry', sitemapPages, ({ path, html }) => {
+  const page = pageOfPath(path)
+  const l = localeOfPath(path)
+  if (!page) return ''
+  const trail = page.breadcrumb?.[l]
+  const lists = ldOf(html).flatMap(ldNodes).filter((n) => [n['@type']].flat().includes('BreadcrumbList'))
+  const label = messagesOf(l).page.breadcrumb
+  const nav = all(/<nav\b[^>]*\baria-label="([^"]*)"[^>]*>([\s\S]*?)<\/nav>/g, html).find((m) => decode(m[1]) === label)
+  if (!trail) return lists.length || nav ? `${path}: has a breadcrumb but the registry lists none (sitePages())` : ''
+  if (lists.length !== 1) return `${path}: ${lists.length} BreadcrumbList nodes, want 1`
+  if (!nav) return `${path}: no visible breadcrumb (<nav aria-label="${label}">)`
+  const visible = all(/<li\b[^>]*>([\s\S]*?)<\/li>/g, nav[2]).map((m) => ({
+    name: decode(m[1].replace(/<span[^>]*aria-hidden[^>]*>[\s\S]*?<\/span>/g, '').replace(/<[^>]+>/g, '')).trim(),
+    href: m[1].match(/<a\b[^>]*\bhref="([^"]*)"/)?.[1],
+  }))
+  const ld = (lists[0].itemListElement ?? []).map((i) => ({ name: i.name, path: stripOrigin(i.item ?? '') }))
+  const want = trail.map((c, i) => ({ name: c.name, path: i === trail.length - 1 ? path : localizePath(l, c.path) }))
+  const show = (items) => items.map((i) => `${i.name} ${i.path ?? i.href ?? '(current)'}`).join(' > ')
+  const sameAsWant = (items, pathOf) => items.length === want.length && items.every((it, i) => it.name === want[i].name && (i === want.length - 1 ? pathOf(it) === undefined || pathOf(it) === path : pathOf(it) === want[i].path))
+  if (!sameAsWant(visible, (it) => it.href)) return `${path}: visible breadcrumb [${show(visible)}] differs from the registry [${show(want)}]`
+  if (!sameAsWant(ld, (it) => it.path)) return `${path}: JSON-LD breadcrumb [${show(ld)}] differs from the registry [${show(want)}]`
+  return ''
+})
+
+// A year in a title is for guide and compare pages and must be the year of the page's `updated` (= lastmod).
+check('year in title = updated year', sitemapPages, ({ path, html }) => {
+  const years = unbranded(titleOf(html)).match(/\b(?:19|20)\d{2}\b/g)
+  if (!years) return ''
+  const page = pageOfPath(path)
+  if (!page || !['guide', 'compare'].includes(page.type)) return `${path}: a year in the title is allowed only on guide and compare pages`
+  const updated = page.lastmod?.slice(0, 4)
+  return years.every((y) => y === updated) ? '' : `${path}: title year ${years.join(', ')} differs from the updated year ${updated}`
 })
 
 // 4. prerendered pages outside the sitemap must not be indexable

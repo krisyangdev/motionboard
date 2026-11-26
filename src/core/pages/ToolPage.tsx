@@ -5,11 +5,15 @@ import { ChevronDownIcon } from 'lucide-react'
 import type { Tool } from '@/core/content/tools'
 import { formatDate, type Locale } from '@/core/i18n'
 import { coreMessages } from '@/core/messages'
-import { articleLd, breadcrumbLd, faqLd, seoHead, softwareAppLd } from '@/core/seo'
+import { pageH1 } from '@/core/content/h1'
+import { articleLd, seoHead, webApplicationLd } from '@/core/seo'
 import { tools } from '@/site/tools'
-import { Breadcrumb, CardGrid, LCP } from './HubPage'
+import { Breadcrumb, CardGrid, LCP, trail } from './HubPage'
 
 export const toolPath = (slug: string) => `/tools/${slug}/`
+
+/** The breadcrumb of a tool page: shown by the page and written to its JSON-LD. */
+const toolCrumbs = (page: Tool, locale: Locale) => trail(locale, { name: coreMessages[locale].page.tools, path: '/tools/' }, { name: page.name, path: toolPath(page.slug) })
 
 export function toolHead(page: Tool, locale: Locale) {
   const t = page.text
@@ -20,12 +24,12 @@ export function toolHead(page: Tool, locale: Locale) {
     path,
     locale,
     locales: page.locales,
+    image: page.ogImage,
+    breadcrumb: toolCrumbs(page, locale),
     jsonLd: [
       page.tool
-        ? softwareAppLd({ name: page.name, description: t.description, locale, path, category: 'WebApplication' })
-        : articleLd({ headline: t.h1, description: t.description, locale, path, datePublished: page.updated }),
-      breadcrumbLd(locale, [[coreMessages[locale].page.tools, '/tools/'], [page.name, path]]),
-      ...(t.faq?.length ? [faqLd(t.faq)] : []),
+        ? webApplicationLd({ name: page.name, description: t.description, locale, path })
+        : articleLd({ headline: pageH1(t), description: t.description, locale, path, datePublished: page.published, dateModified: page.updated, image: page.ogImage }),
     ],
   })
 }
@@ -41,9 +45,9 @@ export function ToolPage({ page, locale, siblings }: { page: Tool; locale: Local
   const Widget = page.tool ? tools[page.tool] : undefined
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <Breadcrumb items={[{ label: l.tools, path: '/tools/' }, { label: page.name }]} />
+      <Breadcrumb crumbs={toolCrumbs(page, locale)} />
       <h1 {...LCP} className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        {t.h1}
+        {pageH1(t)}
       </h1>
       <p className="mt-3 text-lg text-muted-foreground">{t.lede}</p>
 

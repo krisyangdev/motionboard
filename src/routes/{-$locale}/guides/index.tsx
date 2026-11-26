@@ -4,8 +4,8 @@ import { docList } from '@/core/content/docs'
 import { paramLocale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
-import { breadcrumbLd, seoHead } from '@/core/seo'
-import { HubPage } from '@/core/pages/HubPage'
+import { seoHead } from '@/core/seo'
+import { HubPage, trail } from '@/core/pages/HubPage'
 
 export const Route = createFileRoute('/{-$locale}/guides/')({
   loader: ({ params }) => {
@@ -25,7 +25,7 @@ export const Route = createFileRoute('/{-$locale}/guides/')({
       locale,
       locales: loaderData.locales,
       type: 'website',
-      jsonLd: [breadcrumbLd(locale, [[m.page.guides, '/guides/']])],
+      breadcrumb: trail(locale, { name: m.page.guides, path: '/guides/' }),
     })
   },
   component: Guides,
@@ -33,6 +33,7 @@ export const Route = createFileRoute('/{-$locale}/guides/')({
 
 function Guides() {
   const { entries } = Route.useLoaderData()
-  const m = coreMessages[useLocale()]
-  return <HubPage crumb={m.page.guides} entries={entries} lede={m.hubs.guides.lede} title={m.hubs.guides.title} />
+  const locale = useLocale()
+  const m = coreMessages[locale]
+  return <HubPage crumbs={trail(locale, { name: m.page.guides, path: '/guides/' })} entries={entries} lede={m.hubs.guides.lede} title={m.hubs.guides.title} />
 }

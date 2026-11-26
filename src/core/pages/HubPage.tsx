@@ -4,6 +4,7 @@ import { Link } from '@tanstack/react-router'
 import { localizePath, type Locale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
+import type { Crumb } from '@/core/seo'
 
 /** Spread onto the h1 so the browser reports it as the LCP candidate (not in React's intrinsic types). */
 export const LCP = { elementtiming: 'lcp' }
@@ -18,21 +19,24 @@ export function PathLink({ path, locale, className, children }: { path: string; 
   )
 }
 
-export function Breadcrumb({ items }: { items: { label: string; path?: string }[] }) {
+/** Breadcrumb trail of a page in a language: home, then `items`, the page itself last. The same array goes to seoHead's `breadcrumb`. */
+export const trail = (locale: Locale, ...items: Crumb[]): Crumb[] => [{ name: coreMessages[locale].page.home, path: '/' }, ...items]
+
+/** The visible breadcrumb; `crumbs` is the whole trail from `trail()`, home first and the current page last (not a link). */
+export function Breadcrumb({ crumbs }: { crumbs: Crumb[] }) {
   const locale = useLocale()
-  const page = coreMessages[locale].page
   return (
-    <nav aria-label={page.breadcrumb}>
+    <nav aria-label={coreMessages[locale].page.breadcrumb}>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-        {[{ label: page.home, path: '/' }, ...items].map((item, i, all) => (
-          <li className="flex items-center gap-2" key={item.label}>
+        {crumbs.map((c, i) => (
+          <li className="flex items-center gap-2" key={c.path}>
             {i > 0 && <span aria-hidden>›</span>}
-            {item.path && i < all.length - 1 ? (
-              <PathLink className="hover:text-foreground hover:underline" locale={locale} path={item.path}>
-                {item.label}
+            {i < crumbs.length - 1 ? (
+              <PathLink className="hover:text-foreground hover:underline" locale={locale} path={c.path}>
+                {c.name}
               </PathLink>
             ) : (
-              <span aria-current={i === all.length - 1 ? 'page' : undefined}>{item.label}</span>
+              <span aria-current="page">{c.name}</span>
             )}
           </li>
         ))}
@@ -62,11 +66,11 @@ export function CardGrid({ entries, locale }: { entries: HubEntry[]; locale: Loc
   )
 }
 
-export function HubPage({ title, lede, entries, crumb }: { title: string; lede: ReactNode; entries: HubEntry[]; crumb: string }) {
+export function HubPage({ title, lede, entries, crumbs }: { title: string; lede: ReactNode; entries: HubEntry[]; crumbs: Crumb[] }) {
   const locale = useLocale()
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <Breadcrumb items={[{ label: crumb }]} />
+      <Breadcrumb crumbs={crumbs} />
       <h1 {...LCP} className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
         {title}
       </h1>

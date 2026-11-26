@@ -1,9 +1,12 @@
 {
   "slug": "word-counter",
   "tool": "word-counter",
+  "published": "2026-11-26",
   "updated": "2026-11-26",
   "name": { "en": "Word counter", "zh": "字数统计" },
   "en": {
+    "keyword": "word counter",
+    "demand": {"source": "serp-check", "note": "Template demo: placeholder, replace with a real check of this term.", "checked": "2026-11-26"},
     "title": "Word Counter: count words, characters and reading time",
     "description": "Paste your text to count words, characters and reading time instantly. Runs in your browser, so nothing you type is uploaded or stored.",
     "h1": "Word counter",
@@ -20,6 +23,8 @@
     ]
   },
   "zh": {
+    "keyword": "字数统计",
+    "demand": {"source": "serp-check", "note": "Template demo: placeholder, replace with a real check of this term.", "checked": "2026-11-26"},
     "title": "字数统计：统计字数、字符数和阅读时间",
     "description": "粘贴文本即可即时统计字数、字符数和预计阅读时间。全部在浏览器里完成，你输入的内容不会上传，也不会保存。",
     "h1": "字数统计",
