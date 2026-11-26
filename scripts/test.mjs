@@ -7,7 +7,8 @@ import { SITE, SITE_URL } from '../site.config.ts'
 import { DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, stripLocale } from '../src/core/i18n.ts'
 import { TITLE_MAX_WIDTH, textWidth } from '../src/core/content/schema.ts'
 import { hubPagination, indexableLocales, isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
-import { ORG_ID } from '../src/core/seo.ts'
+// Same value as ORG_ID in src/core/seo.ts (that module is bundler-only: extensionless imports).
+const ORG_ID = `${SITE_URL}/about/#org`
 
 const root = new URL('..', import.meta.url).pathname
 // Optional first argument: another assets directory (used to try the checks on a hand-made site).

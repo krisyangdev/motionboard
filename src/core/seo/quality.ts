@@ -83,7 +83,7 @@ export function guideVerdict(fm: GuideFrontmatter, body: string): Verdict {
 }
 
 /** `indexableMembers`: members of the hub in this language that are themselves indexable. */
-export function hubVerdict(h: HubText, indexableMembers: number, minMembers = DEFAULT_HUB_MIN_MEMBERS): Verdict {
+export function hubVerdict(h: HubText, indexableMembers: number, minMembers: number = DEFAULT_HUB_MIN_MEMBERS): Verdict {
   const reasons: string[] = []
   if (indexableMembers < minMembers) reasons.push(`${indexableMembers} indexable members, at least ${minMembers}`)
   const min = pick(MIN.hub.intro, h.title)
