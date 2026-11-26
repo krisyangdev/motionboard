@@ -458,7 +458,7 @@ export const changelogFileSchema = (locales: readonly string[]) =>
     .superRefine((f, ctx) => {
       checkDates(f, ctx)
       for (const l of locales) {
-        const newest = (f as Record<string, { entries: { date: string }[] } | undefined>)[l]?.entries[0]?.date
+        const newest = (f as unknown as Record<string, { entries: { date: string }[] } | undefined>)[l]?.entries[0]?.date
         if (newest && newest > f.updated) issue(ctx, ['updated'], `${f.updated} is before the newest ${l} entry (${newest}); run npm run stamp or set updated to the newest entry date`)
       }
     })

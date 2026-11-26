@@ -15,6 +15,13 @@
       "when": 1795711121738,
       "tag": "0001_admin_hash_format",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1795712186169,
+      "tag": "0002_query_indexes",
+      "breakpoints": true
     }
   ]
 }

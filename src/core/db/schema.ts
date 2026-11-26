@@ -11,7 +11,9 @@ const updatedAt = () => text('updated_at').notNull().default(sql`(strftime('%Y-%
 
 // ---- Better Auth ----
 
-export const user = sqliteTable('user', {
+export const user = sqliteTable(
+  'user',
+  {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
@@ -25,7 +27,10 @@ export const user = sqliteTable('user', {
   locale: text('locale'),
   createdAt: authTime('created_at').notNull(),
   updatedAt: authTime('updated_at').notNull(),
-})
+  },
+  // admin user list, newest first
+  (t) => [index('user_created_idx').on(t.createdAt)],
+)
 
 export const session = sqliteTable(
   'session',
@@ -153,10 +158,12 @@ export const paymentOrders = sqliteTable(
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
-  (t) => [index('payment_orders_user_idx').on(t.userId, t.createdAt), index('payment_orders_payment_idx').on(t.providerPaymentId)],
+  (t) => [index('payment_orders_user_idx').on(t.userId, t.createdAt), index('payment_orders_payment_idx').on(t.providerPaymentId), index('payment_orders_created_idx').on(t.createdAt)],
 )
 
-export const paymentWebhookEvents = sqliteTable('payment_webhook_events', {
+export const paymentWebhookEvents = sqliteTable(
+  'payment_webhook_events',
+  {
   id: text('id').primaryKey(),
   provider: text('provider').notNull().default('dodo'),
   /** webhook-id header (unique per delivery attempt chain), so retries are recognised. */
@@ -170,7 +177,9 @@ export const paymentWebhookEvents = sqliteTable('payment_webhook_events', {
   payloadJson: text('payload_json'),
   createdAt: createdAt(),
   updatedAt: updatedAt(),
-})
+  },
+  (t) => [index('payment_webhook_events_created_idx').on(t.createdAt)],
+)
 
 // ---- Jobs (queue) ----
 
@@ -194,18 +203,23 @@ export const jobs = sqliteTable(
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
-  (t) => [index('jobs_user_idx').on(t.userId, t.createdAt), index('jobs_status_idx').on(t.status, t.updatedAt)],
+  (t) => [index('jobs_user_idx').on(t.userId, t.createdAt), index('jobs_status_idx').on(t.status, t.updatedAt), index('jobs_reservation_idx').on(t.reservationId), index('jobs_created_idx').on(t.createdAt)],
 )
 
 // ---- Abuse protection ----
 
-export const rateLimits = sqliteTable('rate_limits', {
-  key: text('key').primaryKey(),
-  count: integer('count').notNull(),
-  /** epoch ms */
-  resetAt: integer('reset_at').notNull(),
-  updatedAt: updatedAt(),
-})
+export const rateLimits = sqliteTable(
+  'rate_limits',
+  {
+    key: text('key').primaryKey(),
+    count: integer('count').notNull(),
+    /** epoch ms */
+    resetAt: integer('reset_at').notNull(),
+    updatedAt: updatedAt(),
+  },
+  // the cron deletes expired rows by reset_at
+  (t) => [index('rate_limits_reset_idx').on(t.resetAt)],
+)
 
 // ---- Admin (separate identity, like ShotFrames) ----
 
@@ -231,7 +245,7 @@ export const adminSessions = sqliteTable(
     expiresAt: text('expires_at').notNull(),
     createdAt: createdAt(),
   },
-  (t) => [index('admin_sessions_admin_idx').on(t.adminUserId)],
+  (t) => [index('admin_sessions_admin_idx').on(t.adminUserId), index('admin_sessions_expires_idx').on(t.expiresAt)],
 )
 
 export const adminAuditLogs = sqliteTable(

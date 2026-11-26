@@ -41,7 +41,14 @@ Sites merge template updates, so the split matters:
 - coss ui: `src/core/ui/` (shadcn CLI, `components.json`, registry `@coss`). Only components in use are kept: every class in `src/` ends up in the CSS inlined in every page. Add with `npx shadcn@latest add @coss/<name>`.
 
 ## Performance rules (PSI mobile 99+)
-- The Cloudflare account is on Workers Free (10 ms CPU per request, 100k requests/day shared by every site): public pages are prerendered static assets (no Worker CPU); keep per-request work small in API routes (password hashing ~12k PBKDF2 iterations at most, no heavy SSR).
+- Workers Free, for good (Rui, 2026-11-27). These limits are hard rules, shared by every site and job on the account, so one site's mistake takes down the others (on 2026-11-26 one data import used up the day's D1 reads and every D1 site failed until 00:00 UTC):
+  - 10 ms CPU per request, 100k Worker requests per day.
+  - D1: 5M rows read and 100k rows written per day.
+- Public pages, sitemaps, feeds and llms.txt are prerendered static assets: Cloudflare serves them from its cache without running the Worker. Never move a public page or a sitemap to SSR or an API route.
+- D1 on a request path: no full-table scans. Every `WHERE`, `JOIN` and `ORDER BY` column has an index (`src/core/db/schema.ts`). Always `LIMIT`, and paginate with a cursor, not `OFFSET`. Check a new query with `EXPLAIN QUERY PLAN`: it must say `SEARCH ... USING INDEX`, never `SCAN`.
+- Bulk jobs (imports, backfills, migrations of data, cron sweeps): estimate rows read and written first (rows × passes) and write the estimate in the commit or PR. Process only changed rows, in small batches with pauses. Stop at the first error. Never loop over a whole table per item.
+- Password hashing: PBKDF2-SHA256 at 20,000 iterations (`src/core/auth/hash.ts`, ~2-4 ms). Better Auth's default scrypt (~60 ms) and PBKDF2 at 100k (~11 ms) exceed the CPU limit. A site hasher (`src/site/auth.ts`) must stay in the same range.
+- Keep other per-request work small: no heavy SSR, no large JSON parsing or image work in a Worker.
 - Every public page is prerendered; all CSS is inlined in `<head>` (`?inline` import in `__root.tsx`); one self-hosted font (Inter Latin, preloaded) with a metric-matched Arial fallback, so the swap causes no layout shift.
 - `src/core/Scripts.tsx` replaces TanStack's `<HeadContent>`/`<Scripts>`: the app JS (entry + modulepreloads) is only added once every element with an `elementtiming` attribute in the first viewport has painted (3 s fallback). Mark the LCP element with `elementtiming="lcp"` (images also `fetchPriority="high"`). Otherwise Lighthouse counts the JS toward LCP and mobile scores drop to 90–95 (seen on Motionboard).
 - Popup components (menu, select, dialog, sheet, toast, tooltip, popover) never render in the first screen of a content page and are never imported by the shell; FAQs are native `<details>`; widgets load after hydration inside a fixed-height slot.

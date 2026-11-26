@@ -334,8 +334,6 @@ function assertUniqueTexts(pages: SitePage[]) {
 }
 
 type SeoKnobs = { seo?: { hubMinMembers?: number; maxNoindexShare?: number } }
-/** `seo.hubMinMembers` of site.config.ts, else the spec's 6: indexable members a hub needs to be indexable. */
-const hubMinMembers = (): number => (SITE as SeoKnobs).seo?.hubMinMembers ?? DEFAULT_HUB_MIN_MEMBERS
 /** Indexable members a hub needs: `seo.hubMinMembers` for every hub when the site sets it, else 6 (the glossary index 8). */
 const hubMinFor = (hubId: string): number => (SITE as SeoKnobs).seo?.hubMinMembers ?? (hubId === 'glossary' ? MIN.hub.glossary : DEFAULT_HUB_MIN_MEMBERS)
 /** `seo.maxNoindexShare` of site.config.ts, else 0.2: the share of a collection's items that may be noindex before the build fails. */
