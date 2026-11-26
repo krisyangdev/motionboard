@@ -5,6 +5,7 @@ import { useCoreMessages, useShellLocale } from '@/core/messages'
 import { buttonVariants } from '@/core/ui/button'
 import { SITE } from '../../../site.config.ts'
 import { nav } from '@/site/nav'
+import { AccountLink } from './AccountLink'
 import { LanguageSwitch } from './LanguageSwitch'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -53,6 +54,7 @@ export function Header() {
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <LanguageSwitch />
+          {SITE.accounts.enabled && <AccountLink />}
           <ThemeToggle />
         </div>
       </div>
