@@ -1,0 +1,788 @@
+{
+  "id": "launch-video-examples",
+  "kind": "guide",
+  "path": "/guides/launch-video-examples/",
+  "updated": "2026-11-26",
+  "en": {
+    "title": "AI Launch Video Examples: 3 Claude Code Skills Compared",
+    "description": "Launch films made by three Claude Code skills (Motionboard, HyperFrames, brag) for the same three products, with input, wall time, renders and sound.",
+    "h1": "Product launch videos made by three Claude Code skills",
+    "lede": "Three Claude Code skills, the Motionboard skill, the HyperFrames skill from HeyGen and brag, each made a launch film for the same three products: ShotFrames, Fancy Fonts and Motionboard. Every tool got its default one-line input and only free local features were used, with no sign-in. All films were rendered at 1920×1080 and 30 fps on the same Windows GPU machine.",
+    "blocks": [
+      {
+        "t": "p",
+        "text": "Each tool got the input its own documentation starts from: the Motionboard skill a one-sentence request with the product URL, the HyperFrames skill its launch-video prompt with the URL, and brag the product’s repository. Pages were captured with `--skip-vision`. No film was edited by hand, except where its \"After the run\" row says so. Each film sits below with its facts; the three films of one product are in one row."
+      },
+      {
+        "t": "showcase",
+        "product": "ShotFrames",
+        "url": "https://shotframes.com/en",
+        "story": "Kiln Coffee ships Saturday with no logo: Mara finds the ShotFrames logo generator, gets the Kiln Coffee badge, and it lands on the bag, cup, window and tote.",
+        "films": [
+          {
+            "tool": "Motionboard skill",
+            "href": "https://github.com/krisyangdev/motionboard",
+            "video": "launch-shotframes-motionboard",
+            "dur": 26.5,
+            "facts": [
+              [
+                "Input",
+                "One sentence: `make a launch film for https://shotframes.com/en`"
+              ],
+              [
+                "Wall time",
+                "~20 min"
+              ],
+              [
+                "Renders",
+                "5 (one per shot)"
+              ],
+              [
+                "Sound",
+                "Music and sound effects"
+              ],
+              [
+                "Length",
+                "26.5 s"
+              ],
+              [
+                "After the run",
+                "PLACEHOLDER"
+              ]
+            ]
+          },
+          {
+            "tool": "HyperFrames skill (HeyGen)",
+            "href": "https://github.com/heygen-com/hyperframes",
+            "video": "launch-shotframes-heygen",
+            "dur": 30,
+            "facts": [
+              [
+                "Input",
+                "`A 30-second launch video for https://shotframes.com/en.` Run with the launch workflow of hyperframes@0.9.81 and its recommended storyline."
+              ],
+              [
+                "Wall time",
+                "~30 min"
+              ],
+              [
+                "Renders",
+                "2"
+              ],
+              [
+                "Sound",
+                "Sound effects only (its music catalog needs sign-in)"
+              ],
+              [
+                "Length",
+                "30.0 s"
+              ]
+            ]
+          },
+          {
+            "tool": "brag",
+            "href": "https://github.com/latent-spaces/brag",
+            "video": "launch-shotframes-brag",
+            "dur": 21,
+            "facts": [
+              [
+                "Input",
+                "The product’s repository, `/brag --full`, default settings (brag reads code, not URLs)"
+              ],
+              [
+                "Wall time",
+                "~12 min"
+              ],
+              [
+                "Renders",
+                "1"
+              ],
+              [
+                "Sound",
+                "Music and sound effects"
+              ],
+              [
+                "Length",
+                "21.0 s"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "t": "showcase",
+        "product": "Fancy Fonts",
+        "url": "https://fancyfont.app",
+        "story": "Friday game night, and Pixel Fox’s Discord name looks like everyone’s: she types it into fancyfonts, picks Bold Cursive, copies it, and the name shows up across the server.",
+        "films": [
+          {
+            "tool": "Motionboard skill",
+            "href": "https://github.com/krisyangdev/motionboard",
+            "video": "launch-fancyfonts-motionboard",
+            "dur": 28.4,
+            "facts": [
+              [
+                "Input",
+                "One sentence: `make a launch film for https://fancyfont.app`"
+              ],
+              [
+                "Wall time",
+                "~55 min"
+              ],
+              [
+                "Renders",
+                "5 (one per shot)"
+              ],
+              [
+                "Sound",
+                "Music and sound effects"
+              ],
+              [
+                "Length",
+                "28.4 s"
+              ],
+              [
+                "After the run",
+                "PLACEHOLDER"
+              ]
+            ]
+          },
+          {
+            "tool": "HyperFrames skill (HeyGen)",
+            "href": "https://github.com/heygen-com/hyperframes",
+            "video": "launch-fancyfonts-heygen",
+            "dur": 30,
+            "facts": [
+              [
+                "Input",
+                "`A 30-second launch video for https://fancyfont.app.` Run with the launch workflow of hyperframes@0.9.81 and its recommended storyline."
+              ],
+              [
+                "Wall time",
+                "Not measured (an outage on the render machine)"
+              ],
+              [
+                "Renders",
+                "1"
+              ],
+              [
+                "Sound",
+                "Sound effects only (its music catalog needs sign-in)"
+              ],
+              [
+                "Length",
+                "30.0 s"
+              ]
+            ]
+          },
+          {
+            "tool": "brag",
+            "href": "https://github.com/latent-spaces/brag",
+            "video": "launch-fancyfonts-brag",
+            "dur": 20,
+            "facts": [
+              [
+                "Input",
+                "The product’s repository, `/brag --full`, default settings (brag reads code, not URLs)"
+              ],
+              [
+                "Wall time",
+                "~15 min"
+              ],
+              [
+                "Renders",
+                "2"
+              ],
+              [
+                "Sound",
+                "Music and sound effects"
+              ],
+              [
+                "Length",
+                "20.0 s"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "t": "showcase",
+        "product": "Motionboard",
+        "url": "https://motionboard.app",
+        "story": "Mia’s habit app Tally ships Friday with no launch film: her agent opens Motionboard, plans the shots from its recipes and exports Tally’s film.",
+        "films": [
+          {
+            "tool": "Motionboard skill",
+            "href": "https://github.com/krisyangdev/motionboard",
+            "video": "launch-motionboard-motionboard",
+            "dur": 27.3,
+            "facts": [
+              [
+                "Input",
+                "One sentence: `make a launch film for https://motionboard.app`"
+              ],
+              [
+                "Wall time",
+                "~25 min"
+              ],
+              [
+                "Renders",
+                "5 (one per shot)"
+              ],
+              [
+                "Sound",
+                "Music and sound effects"
+              ],
+              [
+                "Length",
+                "27.3 s"
+              ],
+              [
+                "After the run",
+                "PLACEHOLDER"
+              ]
+            ]
+          },
+          {
+            "tool": "HyperFrames skill (HeyGen)",
+            "href": "https://github.com/heygen-com/hyperframes",
+            "video": "launch-motionboard-heygen",
+            "dur": 30,
+            "facts": [
+              [
+                "Input",
+                "`A 30-second launch video for https://motionboard.app.` Run with the launch workflow of hyperframes@0.9.81 and its recommended storyline."
+              ],
+              [
+                "Wall time",
+                "Not measured (an outage on the render machine)"
+              ],
+              [
+                "Renders",
+                "2"
+              ],
+              [
+                "Sound",
+                "Sound effects only (its music catalog needs sign-in)"
+              ],
+              [
+                "Length",
+                "30.0 s"
+              ]
+            ]
+          },
+          {
+            "tool": "brag",
+            "href": "https://github.com/latent-spaces/brag",
+            "video": "launch-motionboard-brag",
+            "dur": 23,
+            "facts": [
+              [
+                "Input",
+                "The product’s repository, `/brag --full`, default settings (brag reads code, not URLs)"
+              ],
+              [
+                "Wall time",
+                "~13 min"
+              ],
+              [
+                "Renders",
+                "1"
+              ],
+              [
+                "Sound",
+                "Music and sound effects"
+              ],
+              [
+                "Length",
+                "23.0 s"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "What differs"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "Length: the brag films run 20.0 to 23.0 s, the Motionboard skill films 26.5 to 28.4 s and the HyperFrames films 30.0 s.",
+          "Sound: the Motionboard skill and brag films carry music and sound effects. The HyperFrames films have sound effects only, because its music catalog needs sign-in.",
+          "Wall time: brag took about 12 to 15 minutes per film, the Motionboard skill about 20 to 55 minutes and the HyperFrames skill about 30 minutes for the one run that was measured.",
+          "Renders: the Motionboard skill renders each shot on its own, so it used 5 renders per film. The HyperFrames skill used 1 or 2 and brag 1 or 2."
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "How to make one"
+      },
+      {
+        "t": "p",
+        "text": "Install the skill, then ask your agent for a launch film for your product’s URL. The steps, the shot plan and a starter prompt are in [Launch video with Claude Code](/guides/product-launch-video-with-claude-code/)."
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard -g -y"
+      },
+      {
+        "t": "h2",
+        "text": "Music credits"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "\"Digital Lemonade\" Kevin MacLeod ([incompetech.com](https://incompetech.com)), ShotFrames film by the Motionboard skill. Licensed under Creative Commons: By Attribution 4.0. [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)",
+          "\"Inspired\" Kevin MacLeod ([incompetech.com](https://incompetech.com)), Fancy Fonts film by the Motionboard skill. Licensed under Creative Commons: By Attribution 4.0. [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)",
+          "\"Chill Wave\" Kevin MacLeod ([incompetech.com](https://incompetech.com)), Motionboard film by the Motionboard skill. Licensed under Creative Commons: By Attribution 4.0. [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)",
+          "brag films: \"Happy Beats / Business Moves\" by Sascha Ende ([ende.app](https://ende.app)), Vol. 1 in the ShotFrames and Fancy Fonts films, Vol. 12 in the Motionboard film. Licensed under CC BY 4.0, [https://ende.app/en/standard-license](https://ende.app/en/standard-license)",
+          "Sound effects: [Kenney.nl](https://kenney.nl) and Keyboard Soundpack #1 by unicae_games, both CC0."
+        ]
+      },
+      {
+        "t": "sources",
+        "items": [
+          {
+            "label": "Motionboard skill (GitHub)",
+            "url": "https://github.com/krisyangdev/motionboard",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "HyperFrames skill by HeyGen (GitHub)",
+            "url": "https://github.com/heygen-com/hyperframes",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "brag (GitHub)",
+            "url": "https://github.com/latent-spaces/brag",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "ShotFrames",
+            "url": "https://shotframes.com/en",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "Fancy Fonts",
+            "url": "https://fancyfont.app",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "Motionboard",
+            "url": "https://motionboard.app",
+            "checked": "2026-11-26"
+          }
+        ]
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "What input did each tool get?",
+            "The Motionboard skill got one sentence with the product URL. The HyperFrames skill got \"A 30-second launch video for\" the URL and ran its launch workflow. brag got the product’s repository and `/brag --full`, because it reads code and not URLs."
+          ],
+          [
+            "How long does a launch film take to make?",
+            "In these runs, from about 12 minutes (brag, ShotFrames) to about 55 minutes (the Motionboard skill, Fancy Fonts). The wall times are listed under each film."
+          ],
+          [
+            "Can I use these tools for free?",
+            "All three films per product were made with free local features and no sign-in. The HyperFrames skill’s music catalog needs sign-in, so its films carry sound effects only."
+          ]
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "AI 产品宣传片示例：3 个 Claude Code 技能对比",
+    "description": "同样三个产品，Motionboard、HyperFrames、brag 三个 Claude Code 技能各做了一支宣传片，并排放在一起，附输入、耗时、渲染次数和声音。",
+    "h1": "三个 Claude Code 技能做的产品宣传片",
+    "lede": "Motionboard 技能、HeyGen 的 HyperFrames 技能和 brag 三个 Claude Code 技能，分别为同样三个产品做了宣传片：ShotFrames、Fancy Fonts 和 Motionboard。每个工具都用它默认的一句话输入，只用免费的本地功能，无需登录。所有影片都在同一台 Windows 显卡机器上以 1920×1080、30 fps 渲染。",
+    "blocks": [
+      {
+        "t": "p",
+        "text": "每个工具用它自己的文档推荐的输入：Motionboard 技能是带产品网址的一句话，HyperFrames 技能是带网址的宣传片提示词，brag 是产品的代码仓库。网页截取使用 `--skip-vision`。所有影片都没有手工修改，除非它的“跑完后”一行另有说明。每支影片下方是它的各项数据，同一个产品的三支影片排在一行。"
+      },
+      {
+        "t": "showcase",
+        "product": "ShotFrames",
+        "url": "https://shotframes.com/en",
+        "story": "Kiln Coffee 周六开业却没有 logo：Mara 找到 ShotFrames 的 logo 生成器，拿到 Kiln Coffee 的徽标，它出现在咖啡袋、纸杯、橱窗和帆布袋上。",
+        "films": [
+          {
+            "tool": "Motionboard skill",
+            "href": "https://github.com/krisyangdev/motionboard",
+            "video": "launch-shotframes-motionboard",
+            "dur": 26.5,
+            "facts": [
+              [
+                "输入",
+                "一句话：`make a launch film for https://shotframes.com/en`"
+              ],
+              [
+                "耗时",
+                "约 20 分钟"
+              ],
+              [
+                "渲染次数",
+                "5 次（每个镜头 1 次）"
+              ],
+              [
+                "声音",
+                "音乐和音效"
+              ],
+              [
+                "时长",
+                "26.5 秒"
+              ],
+              [
+                "跑完后",
+                "PLACEHOLDER"
+              ]
+            ]
+          },
+          {
+            "tool": "HyperFrames skill (HeyGen)",
+            "href": "https://github.com/heygen-com/hyperframes",
+            "video": "launch-shotframes-heygen",
+            "dur": 30,
+            "facts": [
+              [
+                "输入",
+                "`A 30-second launch video for https://shotframes.com/en.` 用 hyperframes@0.9.81 的 launch 工作流，沿用它推荐的故事线。"
+              ],
+              [
+                "耗时",
+                "约 30 分钟"
+              ],
+              [
+                "渲染次数",
+                "2 次"
+              ],
+              [
+                "声音",
+                "仅音效（它的音乐库需要登录）"
+              ],
+              [
+                "时长",
+                "30.0 秒"
+              ]
+            ]
+          },
+          {
+            "tool": "brag",
+            "href": "https://github.com/latent-spaces/brag",
+            "video": "launch-shotframes-brag",
+            "dur": 21,
+            "facts": [
+              [
+                "输入",
+                "产品的代码仓库，`/brag --full`，默认设置（brag 读代码，不读网址）"
+              ],
+              [
+                "耗时",
+                "约 12 分钟"
+              ],
+              [
+                "渲染次数",
+                "1 次"
+              ],
+              [
+                "声音",
+                "音乐和音效"
+              ],
+              [
+                "时长",
+                "21.0 秒"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "t": "showcase",
+        "product": "Fancy Fonts",
+        "url": "https://fancyfont.app",
+        "story": "周五游戏之夜，Pixel Fox 的 Discord 名字和别人的一样：她把名字输入 fancyfonts，选了 Bold Cursive，复制后，这个名字出现在整个服务器里。",
+        "films": [
+          {
+            "tool": "Motionboard skill",
+            "href": "https://github.com/krisyangdev/motionboard",
+            "video": "launch-fancyfonts-motionboard",
+            "dur": 28.4,
+            "facts": [
+              [
+                "输入",
+                "一句话：`make a launch film for https://fancyfont.app`"
+              ],
+              [
+                "耗时",
+                "约 55 分钟"
+              ],
+              [
+                "渲染次数",
+                "5 次（每个镜头 1 次）"
+              ],
+              [
+                "声音",
+                "音乐和音效"
+              ],
+              [
+                "时长",
+                "28.4 秒"
+              ],
+              [
+                "跑完后",
+                "PLACEHOLDER"
+              ]
+            ]
+          },
+          {
+            "tool": "HyperFrames skill (HeyGen)",
+            "href": "https://github.com/heygen-com/hyperframes",
+            "video": "launch-fancyfonts-heygen",
+            "dur": 30,
+            "facts": [
+              [
+                "输入",
+                "`A 30-second launch video for https://fancyfont.app.` 用 hyperframes@0.9.81 的 launch 工作流，沿用它推荐的故事线。"
+              ],
+              [
+                "耗时",
+                "未测量（渲染机器当时出现故障）"
+              ],
+              [
+                "渲染次数",
+                "1 次"
+              ],
+              [
+                "声音",
+                "仅音效（它的音乐库需要登录）"
+              ],
+              [
+                "时长",
+                "30.0 秒"
+              ]
+            ]
+          },
+          {
+            "tool": "brag",
+            "href": "https://github.com/latent-spaces/brag",
+            "video": "launch-fancyfonts-brag",
+            "dur": 20,
+            "facts": [
+              [
+                "输入",
+                "产品的代码仓库，`/brag --full`，默认设置（brag 读代码，不读网址）"
+              ],
+              [
+                "耗时",
+                "约 15 分钟"
+              ],
+              [
+                "渲染次数",
+                "2 次"
+              ],
+              [
+                "声音",
+                "音乐和音效"
+              ],
+              [
+                "时长",
+                "20.0 秒"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "t": "showcase",
+        "product": "Motionboard",
+        "url": "https://motionboard.app",
+        "story": "Mia 的习惯打卡 App Tally 周五上线，还没有宣传片：她的 agent 打开 Motionboard，用它的配方规划镜头，导出了 Tally 的宣传片。",
+        "films": [
+          {
+            "tool": "Motionboard skill",
+            "href": "https://github.com/krisyangdev/motionboard",
+            "video": "launch-motionboard-motionboard",
+            "dur": 27.3,
+            "facts": [
+              [
+                "输入",
+                "一句话：`make a launch film for https://motionboard.app`"
+              ],
+              [
+                "耗时",
+                "约 25 分钟"
+              ],
+              [
+                "渲染次数",
+                "5 次（每个镜头 1 次）"
+              ],
+              [
+                "声音",
+                "音乐和音效"
+              ],
+              [
+                "时长",
+                "27.3 秒"
+              ],
+              [
+                "跑完后",
+                "PLACEHOLDER"
+              ]
+            ]
+          },
+          {
+            "tool": "HyperFrames skill (HeyGen)",
+            "href": "https://github.com/heygen-com/hyperframes",
+            "video": "launch-motionboard-heygen",
+            "dur": 30,
+            "facts": [
+              [
+                "输入",
+                "`A 30-second launch video for https://motionboard.app.` 用 hyperframes@0.9.81 的 launch 工作流，沿用它推荐的故事线。"
+              ],
+              [
+                "耗时",
+                "未测量（渲染机器当时出现故障）"
+              ],
+              [
+                "渲染次数",
+                "2 次"
+              ],
+              [
+                "声音",
+                "仅音效（它的音乐库需要登录）"
+              ],
+              [
+                "时长",
+                "30.0 秒"
+              ]
+            ]
+          },
+          {
+            "tool": "brag",
+            "href": "https://github.com/latent-spaces/brag",
+            "video": "launch-motionboard-brag",
+            "dur": 23,
+            "facts": [
+              [
+                "输入",
+                "产品的代码仓库，`/brag --full`，默认设置（brag 读代码，不读网址）"
+              ],
+              [
+                "耗时",
+                "约 13 分钟"
+              ],
+              [
+                "渲染次数",
+                "1 次"
+              ],
+              [
+                "声音",
+                "音乐和音效"
+              ],
+              [
+                "时长",
+                "23.0 秒"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "差别"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "时长：brag 的影片 20.0 到 23.0 秒，Motionboard 技能的影片 26.5 到 28.4 秒，HyperFrames 的影片 30.0 秒。",
+          "声音：Motionboard 技能和 brag 的影片有音乐和音效。HyperFrames 的影片只有音效，因为它的音乐库需要登录。",
+          "耗时：brag 每支约 12 到 15 分钟，Motionboard 技能约 20 到 55 分钟，HyperFrames 技能只测到一次，约 30 分钟。",
+          "渲染次数：Motionboard 技能按镜头逐个渲染，每支影片 5 次。HyperFrames 技能 1 到 2 次，brag 1 到 2 次。"
+        ]
+      },
+      {
+        "t": "h2",
+        "text": "怎么做一支"
+      },
+      {
+        "t": "p",
+        "text": "安装这个技能，然后让你的 agent 为你产品的网址做一支宣传片。步骤、镜头方案和起始提示词见[用 Claude Code 做宣传片](/guides/product-launch-video-with-claude-code/)。"
+      },
+      {
+        "t": "cmd",
+        "text": "npx skills add krisyangdev/motionboard -g -y"
+      },
+      {
+        "t": "h2",
+        "text": "音乐版权信息"
+      },
+      {
+        "t": "ul",
+        "items": [
+          "\"Digital Lemonade\" Kevin MacLeod ([incompetech.com](https://incompetech.com)), ShotFrames film by the Motionboard skill. Licensed under Creative Commons: By Attribution 4.0. [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)",
+          "\"Inspired\" Kevin MacLeod ([incompetech.com](https://incompetech.com)), Fancy Fonts film by the Motionboard skill. Licensed under Creative Commons: By Attribution 4.0. [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)",
+          "\"Chill Wave\" Kevin MacLeod ([incompetech.com](https://incompetech.com)), Motionboard film by the Motionboard skill. Licensed under Creative Commons: By Attribution 4.0. [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)",
+          "brag films: \"Happy Beats / Business Moves\" by Sascha Ende ([ende.app](https://ende.app)), Vol. 1 in the ShotFrames and Fancy Fonts films, Vol. 12 in the Motionboard film. Licensed under CC BY 4.0, [https://ende.app/en/standard-license](https://ende.app/en/standard-license)",
+          "Sound effects: [Kenney.nl](https://kenney.nl) and Keyboard Soundpack #1 by unicae_games, both CC0."
+        ]
+      },
+      {
+        "t": "sources",
+        "items": [
+          {
+            "label": "Motionboard skill (GitHub)",
+            "url": "https://github.com/krisyangdev/motionboard",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "HyperFrames skill by HeyGen (GitHub)",
+            "url": "https://github.com/heygen-com/hyperframes",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "brag (GitHub)",
+            "url": "https://github.com/latent-spaces/brag",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "ShotFrames",
+            "url": "https://shotframes.com/en",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "Fancy Fonts",
+            "url": "https://fancyfont.app",
+            "checked": "2026-11-26"
+          },
+          {
+            "label": "Motionboard",
+            "url": "https://motionboard.app",
+            "checked": "2026-11-26"
+          }
+        ]
+      },
+      {
+        "t": "faq",
+        "items": [
+          [
+            "每个工具的输入是什么？",
+            "Motionboard 技能是带产品网址的一句话。HyperFrames 技能是“A 30-second launch video for”加网址，并运行它的 launch 工作流。brag 是产品的代码仓库和 `/brag --full`，因为它读代码，不读网址。"
+          ],
+          [
+            "做一支宣传片要多久？",
+            "这几次运行里，最快约 12 分钟（brag，ShotFrames），最慢约 55 分钟（Motionboard 技能，Fancy Fonts）。每支影片下方列出了耗时。"
+          ],
+          [
+            "这些工具可以免费用吗？",
+            "每个产品的三支影片都用免费的本地功能做成，无需登录。HyperFrames 技能的音乐库需要登录，所以它的影片只有音效。"
+          ]
+        ]
+      }
+    ]
+  }
+}

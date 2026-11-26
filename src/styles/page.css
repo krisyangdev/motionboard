@@ -48,6 +48,23 @@
 .pg-segs li:last-child { border-bottom: 1px solid var(--line); }
 .pg-segs a { font-weight: 500; }
 
+/* showcase: one product's films side by side */
+.pg-body > h2 a { color: inherit; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 6px; transition: text-decoration-color .2s; }
+.pg-body > h2 a:hover { text-decoration-color: var(--line-2); }
+.pg-show { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.pg-film { margin: 0; min-width: 0; }
+.pg-film figcaption { margin-bottom: 12px; font-size: 15px; line-height: 1.35; font-weight: 600; letter-spacing: -.01em; }
+.pg-film figcaption a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; transition: text-decoration-color .2s; }
+.pg-film figcaption a:hover { text-decoration-color: var(--ink); }
+.pg-film dl { margin: 12px 0 0; font-variant-numeric: tabular-nums; }
+.pg-film dl > div { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; padding: 8px 0; box-shadow: inset 0 1px 0 var(--line); }
+.pg-film dt { padding-top: 2px; }
+.pg-film dd { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.pg-film dd code { font-size: 12.5px; }
+@media (max-width: 880px) {
+  .pg-show { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+}
+
 /* sources */
 .pg-src { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
 .pg-body > .pg-src { margin-top: 56px; }
@@ -88,5 +105,5 @@
 :root:lang(zh) .pg-body > p, :root:lang(zh) .pg-body > ul > li, :root:lang(zh) .pg-body > ol > li, :root:lang(zh) .faq details > p { line-height: 1.8; }
 
 @media (prefers-reduced-motion: reduce) {
-  .faq summary::after, .pg-body a, .faq a { transition: none; }
+  .faq summary::after, .pg-body a, .faq a, .pg-film figcaption a { transition: none; }
 }

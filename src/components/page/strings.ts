@@ -17,6 +17,7 @@ export const PAGE_STRINGS = {
     updated: (iso: string) => `Updated ${formatDate(iso, 'en')}`,
     sources: 'Sources',
     checked: (iso: string) => `checked ${formatDate(iso, 'en')}`,
+    filmFor: (tool: string, product: string) => `${tool} film for ${product}`,
   },
   zh: {
     effects: '效果',
@@ -24,5 +25,6 @@ export const PAGE_STRINGS = {
     updated: (iso: string) => `更新于 ${formatDate(iso, 'zh')}`,
     sources: '来源',
     checked: (iso: string) => `查证于 ${formatDate(iso, 'zh')}`,
+    filmFor: (tool: string, product: string) => `${product} 的 ${tool} 宣传片`,
   },
 }

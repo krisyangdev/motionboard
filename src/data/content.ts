@@ -36,6 +36,21 @@ export type Block =
   | { t: 'faq'; items: [string, string][] }
   /** cited sources, each with the date it was checked (YYYY-MM-DD) */
   | { t: 'sources'; items: { label: string; url: string; checked: string }[] }
+  /** one product's films side by side: our film first, then the others, each with its facts */
+  | { t: 'showcase'; product: string; url: string; story: string; films: ShowcaseFilm[] }
+
+export type ShowcaseFilm = {
+  /** tool name shown above the film */
+  tool: string
+  /** neutral link to the tool */
+  href: string
+  /** media base name on MEDIA_URL: <video>.mp4 (1080p), <video>-m.mp4 (720p, phones), <video>.jpg (poster) */
+  video: string
+  /** length in seconds */
+  dur: number
+  /** label/value rows under the film: input, wall time, renders, sound, ... */
+  facts: [string, string][]
+}
 
 export type PageCopy = {
   /** <title> without the brand, at most 55 characters */

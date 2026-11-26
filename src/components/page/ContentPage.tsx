@@ -5,13 +5,13 @@ import { TileGrid } from '@/components/TileGrid'
 import { Inline } from '@/components/page/inline'
 import type { PageData } from '@/components/page/load'
 import { PAGE_STRINGS } from '@/components/page/strings'
-import type { Block } from '@/data/content'
+import type { Block, ShowcaseFilm } from '@/data/content'
 import { HERO, HERO_FILM } from '@/data/hero'
 import { PAGES } from '@/data/pages'
 import { bySlug, termName } from '@/data/terms'
 import { PageLink, useLocale, useStrings } from '@/lib/locale'
 import { track } from '@/lib/track'
-import { SITE, SKILL_INSTALL } from '@/site.config'
+import { MEDIA_URL, SITE, SKILL_INSTALL } from '@/site.config'
 
 const anchor = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '')
 
@@ -72,6 +72,49 @@ function Hero() {
         })}
       </ol>
     </div>
+  )
+}
+
+// One film of a showcase: tool link, the film, and its facts. Plays are counted once per page load.
+function ShowFilm({ film, product }: { film: ShowcaseFilm; product: string }) {
+  const t = PAGE_STRINGS[useLocale()]
+  const counted = useRef(false)
+  const base = `${MEDIA_URL}/${film.video}`
+  return (
+    <figure className="pg-film">
+      <figcaption>
+        <a href={film.href} target="_blank" rel="noopener">
+          {film.tool}
+        </a>
+      </figcaption>
+      <div className="frame">
+        <video
+          controls
+          playsInline
+          preload="none"
+          poster={`${base}.jpg`}
+          aria-label={t.filmFor(film.tool, product)}
+          onPlay={() => {
+            if (counted.current) return
+            counted.current = true
+            track('video_play', { recipe: film.video, page: location.pathname, trigger: 'click' })
+          }}
+        >
+          <source src={`${base}-m.mp4`} type="video/mp4" media="(max-width: 767px)" />
+          <source src={`${base}.mp4`} type="video/mp4" />
+        </video>
+      </div>
+      <dl>
+        {film.facts.map(([label, value]) => (
+          <div key={label}>
+            <dt className="mono">{label}</dt>
+            <dd>
+              <Inline text={value} />
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </figure>
   )
 }
 
@@ -150,6 +193,24 @@ function BlockView({ block: b }: { block: Block }) {
             </details>
           ))}
         </div>
+      )
+    case 'showcase':
+      return (
+        <>
+          <h2 id={anchor(b.product)}>
+            <a href={b.url} target="_blank" rel="noopener">
+              {b.product}
+            </a>
+          </h2>
+          <p>
+            <Inline text={b.story} />
+          </p>
+          <div className="pg-wide pg-show">
+            {b.films.map((film) => (
+              <ShowFilm key={film.video} film={film} product={b.product} />
+            ))}
+          </div>
+        </>
       )
     case 'sources':
       return (

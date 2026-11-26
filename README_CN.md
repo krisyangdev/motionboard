@@ -14,6 +14,10 @@
 
 对 Agent 说「给我的产品做一支宣传片」「在这两个界面之间加一个匹配剪辑」或「给我们的 Logo 做个出场动画」，它会用代码做出镜头并渲染成 MP4，也可以把动效移植到你的网站。Motionboard 把真实的宣传片拆成 38 个镜头。每个镜头都用代码复刻成约 10 秒的 [HyperFrames](https://github.com/heygen-com/hyperframes) 短片（HTML 加 GSAP，渲染成视频），网站上每个配方都把原片和复刻并排放在一起。这个 skill 让你的 Agent 掌握全部 38 个配方，可以只做一个镜头，也可以为你的产品规划并做出完整的宣传片。
 
+[![Motionboard 宣传片，用这个技能一条命令做成](https://media.motionboard.app/launch-motionboard-motionboard.jpg)](https://media.motionboard.app/launch-motionboard-motionboard.mp4)
+
+同样三个产品，我们的影片和 HyperFrames、brag 做的影片并排对比：[宣传片示例](https://motionboard.app/zh/guides/launch-video-examples/)。
+
 环境要求：Node 22+、HyperFrames（`npx hyperframes`）、ffmpeg。
 
 ## 安装

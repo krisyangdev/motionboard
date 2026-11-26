@@ -25,4 +25,5 @@ export const PAGES: PageEntry[] = [
   guide('hyperframes-vs-remotion', 'HyperFrames vs Remotion', 'HyperFrames vs Remotion'),
   guide('claude-code-video-skills', 'Claude Code video skills', 'Claude Code 视频 skill'),
   guide('product-launch-video-with-claude-code', 'Launch video with Claude Code', '用 Claude Code 做宣传片'),
+  guide('launch-video-examples', 'Launch video examples', '宣传片示例'),
 ]

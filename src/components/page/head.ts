@@ -4,7 +4,7 @@ import { bySlug, media, recipePath, termName } from '@/data/terms'
 import { plain } from '@/components/page/inline'
 import { PAGES } from '@/data/pages'
 import { IN_LANGUAGE, pageUrl, seoHead } from '@/lib/seo'
-import { BRAND, SITE_URL, type Locale } from '@/site.config'
+import { BRAND, MEDIA_URL, SITE_URL, type Locale } from '@/site.config'
 import type { PageData } from '@/components/page/load'
 
 const PUBLISHED = '2026-11-16'
@@ -15,7 +15,8 @@ const films = (blocks: Block[]) => [...new Set(blocks.flatMap((b) => (b.t === 'f
 export function contentHead(locale: Locale, { id, kind, path, updated, copy }: PageData) {
   const url = pageUrl(locale, path)
   const slugs = films(copy.blocks)
-  const image = slugs.length ? media(bySlug[slugs[0]], 'jpg') : HERO_FILM.cover
+  const showcase = copy.blocks.find((b): b is Extract<Block, { t: 'showcase' }> => b.t === 'showcase')
+  const image = slugs.length ? media(bySlug[slugs[0]], 'jpg') : showcase ? `${MEDIA_URL}/${showcase.films[0].video}.jpg` : HERO_FILM.cover
   const label = PAGES.find((p) => p.id === id)!.label[locale]
   const faq = copy.blocks.flatMap((b) => (b.t === 'faq' ? b.items : []))
   const crumbs = {
