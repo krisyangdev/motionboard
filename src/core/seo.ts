@@ -90,7 +90,7 @@ export const organizationLd = () => ({
   '@id': ORG_ID,
   name: SITE.name,
   url: SITE_URL,
-  email: SITE.email,
+  ...(SITE.email ? { email: SITE.email } : {}),
   logo: absolute('/favicon.svg'),
 })
 

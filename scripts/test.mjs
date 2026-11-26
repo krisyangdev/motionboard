@@ -250,7 +250,7 @@ check('about page Organization node', aboutPages, ({ path, html }) => {
   const orgs = ldOf(html).flatMap(ldNodes).filter((n) => [n['@type']].flat().includes('Organization') && n['@id'] === ORG_ID)
   if (orgs.length !== 1) return `${path}: ${orgs.length} Organization nodes with @id ${ORG_ID}, want 1`
   const o = orgs[0]
-  const missing = ['name', 'url', 'email', 'logo'].filter((k) => !o[k])
+  const missing = ['name', 'url', 'logo', ...(SITE.email ? ['email'] : [])].filter((k) => !o[k])
   return missing.length ? `${path}: Organization node lacks ${missing.join(', ')}` : ''
 })
 
