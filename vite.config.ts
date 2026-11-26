@@ -10,6 +10,7 @@ import remarkGfm from 'remark-gfm'
 import { SITE_URL } from './site.config.ts'
 import { LOCALES, localizePath, alternateUrls } from './src/core/i18n.ts'
 import { contentIndex, sitePages } from './src/core/pages.ts'
+import { sitemapExclude } from './src/site/pages.ts'
 import { generate } from './scripts/generate.mjs'
 
 // Writes robots.txt, _redirects, _headers, llms.txt and the video sitemap into public/ before every build and dev start.
@@ -29,6 +30,12 @@ const pages = sitePages().flatMap((p) =>
   })),
 )
 
+// Pages the crawler finds through links but that are not search pages (a site's `sitemapExclude`), with and without the trailing slash.
+const excluded = sitemapExclude
+  .flatMap((p) => LOCALES.map((l) => localizePath(l, p)))
+  .flatMap((p) => (p.length > 1 && p.endsWith('/') ? [p, p.slice(0, -1)] : [p]))
+  .map((path) => ({ path, sitemap: { exclude: true } }))
+
 export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
@@ -39,7 +46,7 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       prerender: { enabled: true, crawlLinks: true, failOnError: true, filter: ({ path }) => !path.includes('#') && !/\.\w+\/?$/.test(path) },
-      pages,
+      pages: [...pages, ...excluded],
       sitemap: { enabled: true, host: SITE_URL },
     }),
     viteReact(),

@@ -35,6 +35,11 @@ const block = (pattern: string, headers: Record<string, string>) =>
 
 const IMMUTABLE = { 'Cache-Control': 'public, max-age=31536000, immutable' }
 
-/** Text of public/_headers. */
-export const headersFile = (): string =>
-  [block('/*', securityHeaders()), block('/assets/*', IMMUTABLE), block('/fonts/*', IMMUTABLE)].join('\n')
+/** Text of public/_headers. `extra` adds one block per path pattern (a site's `extraHeaders`). */
+export const headersFile = (extra: Record<string, Record<string, string>> = {}): string =>
+  [
+    block('/*', securityHeaders()),
+    block('/assets/*', IMMUTABLE),
+    block('/fonts/*', IMMUTABLE),
+    ...Object.entries(extra).map(([pattern, headers]) => block(pattern, headers)),
+  ].join('\n')

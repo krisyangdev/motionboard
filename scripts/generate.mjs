@@ -8,6 +8,7 @@ import { SITE, SITE_URL } from '../site.config.ts'
 import { LOCALES, DEFAULT_LOCALE, HTML_LANG, localizePath, pageUrl } from '../src/core/i18n.ts'
 import { sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
 import { headersFile } from '../src/core/headers.ts'
+import { extraHeaders, extraRedirects, llmsTxt } from '../src/site/pages.ts'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
 const PUBLIC = join(ROOT, 'public')
@@ -44,11 +45,13 @@ export function generate() {
       if (f.length > 1 && f.endsWith('/')) redirects.push(`${f.slice(0, -1)} ${localizePath(l, to)} 301`)
     }
   }
+  redirects.push(...extraRedirects)
   out('_redirects', redirects.length ? `${redirects.join('\n')}\n` : '')
 
-  out('_headers', headersFile())
+  out('_headers', headersFile(extraHeaders))
 
-  if (SITE.llmsTxt) {
+  if (SITE.llmsTxt && llmsTxt) out('llms.txt', llmsTxt)
+  else if (SITE.llmsTxt) {
     const lines = sitePages().map((p) => {
       const title = p.title[DEFAULT_LOCALE] || p.path
       const desc = p.description[DEFAULT_LOCALE]
@@ -58,18 +61,27 @@ export function generate() {
   } else rmSync(join(PUBLIC, 'llms.txt'), { force: true })
 
   if (videos.length) {
-    const urls = videos.flatMap((v) =>
+    // One <url> per page and language; several videos on the same page share it. Titles and
+    // descriptions may be per language.
+    const text = (v, l) => (typeof v === 'string' ? v : (v[l] ?? v[DEFAULT_LOCALE]))
+    const byPath = new Map()
+    for (const v of videos) byPath.set(v.path, [...(byPath.get(v.path) ?? []), v])
+    const urls = [...byPath].flatMap(([path, list]) =>
       LOCALES.map(
         (l) => `  <url>
-    <loc>${esc(pageUrl(l, v.path))}</loc>
-    <video:video>
+    <loc>${esc(pageUrl(l, path))}</loc>
+${list
+  .map(
+    (v) => `    <video:video>
       <video:thumbnail_loc>${esc(abs(v.thumbnail))}</video:thumbnail_loc>
-      <video:title>${esc(v.title)}</video:title>
-      <video:description>${esc(v.description)}</video:description>
+      <video:title>${esc(text(v.title, l))}</video:title>
+      <video:description>${esc(text(v.description, l))}</video:description>
       <video:content_loc>${esc(abs(v.content))}</video:content_loc>
       <video:duration>${Math.round(v.duration)}</video:duration>
       <video:publication_date>${esc(v.uploadDate)}</video:publication_date>
-    </video:video>
+    </video:video>`,
+  )
+  .join('\n')}
   </url>`,
       ),
     )

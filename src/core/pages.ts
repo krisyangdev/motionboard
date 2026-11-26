@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE } from '../../site.config.ts'
 import { DEFAULT_LOCALE, LOCALES, type Locale } from './i18n.ts'
-import { extraPages } from '../site/pages.ts'
+import { extraPages, extraVideos } from '../site/pages.ts'
 
 export type SitePage = {
   /** Default-language path with leading and trailing slash. */
@@ -14,10 +14,14 @@ export type SitePage = {
   description: Record<Locale, string>
 }
 
+/** A text that may differ per language; a plain string is used for every language. */
+export type Localized = string | Record<Locale, string>
+
 export type Video = {
+  /** Default-language path of the page that shows the video; several videos may share one page. */
   path: string
-  title: string
-  description: string
+  title: Localized
+  description: Localized
   thumbnail: string
   content: string
   duration: number
@@ -84,12 +88,14 @@ const mdxPage = (path: string, file: (l: Locale) => string, fallbackTitle: strin
 })
 
 export function sitePages(): SitePage[] {
-  const pages: SitePage[] = [
-    { path: '/', title: perLocale((l) => SITE.title[l]), description: perLocale((l) => SITE.description[l]) },
-    hub('/tools/'),
-  ]
+  const pages: SitePage[] = [{ path: '/', title: perLocale((l) => SITE.title[l]), description: perLocale((l) => SITE.description[l]) }]
 
-  for (const slug of slugs('content/tools', '.json')) {
+  // Built-in sections exist only when the site has content for them.
+  const toolSlugs = slugs('content/tools', '.json')
+  const guideSlugs = slugs(`content/guides/${DEFAULT_LOCALE}`, '.mdx')
+  if (toolSlugs.length) pages.push(hub('/tools/'))
+
+  for (const slug of toolSlugs) {
     const tool = readJson<Record<string, any>>(`content/tools/${slug}.json`, {})
     pages.push({
       path: `/tools/${slug}/`,
@@ -98,25 +104,27 @@ export function sitePages(): SitePage[] {
     })
   }
 
-  pages.push(hub('/guides/'))
-  for (const slug of slugs(`content/guides/${DEFAULT_LOCALE}`, '.mdx')) {
+  if (guideSlugs.length) pages.push(hub('/guides/'))
+  for (const slug of guideSlugs) {
     pages.push(mdxPage(`/guides/${slug}/`, (l) => abs('content/guides', l, `${slug}.mdx`), slug))
   }
 
-  pages.push(mdxPage('/privacy/', (l) => abs('content/legal', l, 'privacy.mdx'), 'Privacy Policy'))
-  pages.push(mdxPage('/terms/', (l) => abs('content/legal', l, 'terms.mdx'), 'Terms of Service'))
-
-  for (const path of extraPages) {
-    pages.push({ path, title: perLocale(() => ''), description: perLocale(() => '') })
+  if (existsSync(abs('content/legal', DEFAULT_LOCALE, 'privacy.mdx'))) {
+    pages.push(mdxPage('/privacy/', (l) => abs('content/legal', l, 'privacy.mdx'), 'Privacy Policy'))
   }
+  if (existsSync(abs('content/legal', DEFAULT_LOCALE, 'terms.mdx'))) {
+    pages.push(mdxPage('/terms/', (l) => abs('content/legal', l, 'terms.mdx'), 'Terms of Service'))
+  }
+
+  pages.push(...extraPages)
   return pages
 }
 
 /** content/renamed.json: default-language `{ "/old/": "/new/" }` pairs. */
 export const readRenamed = (): Record<string, string> => readJson('content/renamed.json', {})
 
-/** content/videos.json: videos for the video sitemap. */
-export const readVideos = (): Video[] => readJson('content/videos.json', [])
+/** content/videos.json plus the site's own list (`extraVideos` in src/site/pages.ts): videos for the video sitemap. */
+export const readVideos = (): Video[] => [...readJson<Video[]>('content/videos.json', []), ...extraVideos]
 
 export type ContentIndex = {
   tools: { slug: string; name: Record<Locale, string> }[]

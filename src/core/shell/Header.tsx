@@ -4,6 +4,7 @@ import { localizePath, stripLocale } from '@/core/i18n'
 import { useCoreMessages, useShellLocale } from '@/core/messages'
 import { buttonVariants } from '@/core/ui/button'
 import { SITE } from '../../../site.config.ts'
+import { BrandMark } from '@/site/brand'
 import { nav } from '@/site/nav'
 import { LanguageSwitch } from './LanguageSwitch'
 import { ThemeToggle } from './ThemeToggle'
@@ -29,8 +30,9 @@ export function Header() {
   return (
     <header className="border-b">
       <SkipLink />
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-2 px-4 py-2 sm:flex-nowrap">
-        <a href={localizePath(l, '/')} className="mr-2 font-semibold text-brand text-lg tracking-tight">
+      <div className="mx-auto flex max-w-[var(--site-width,64rem)] flex-wrap items-center gap-x-2 px-4 py-2 sm:flex-nowrap">
+        <a href={localizePath(l, '/')} className="mr-2 inline-flex items-center gap-2 font-semibold text-brand text-lg tracking-tight">
+          <BrandMark />
           {SITE.name}
         </a>
         <nav
@@ -39,10 +41,12 @@ export function Header() {
         >
           <ul className="flex gap-1">
             {nav.map((item) => (
-              <li key={item.path}>
+              <li key={item.label[l]}>
                 <a
-                  href={localizePath(l, item.path)}
-                  aria-current={path.startsWith(item.path) ? 'page' : undefined}
+                  href={item.href ?? localizePath(l, item.path ?? '/')}
+                  {...(item.href ? { target: '_blank', rel: 'noopener' } : {})}
+                  data-cta={item.cta}
+                  aria-current={item.path && path.startsWith(item.path) ? 'page' : undefined}
                   className={cn(buttonVariants({ variant: 'ghost' }), 'text-muted-foreground aria-[current=page]:text-foreground')}
                 >
                   {item.label[l]}
