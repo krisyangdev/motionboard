@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { SITE_URL } from '../../../site.config.ts'
 import { mockSite } from '../test-site'
 import type { SitePage } from '../pages'
 
@@ -49,7 +50,7 @@ describe('sitemapFiles', () => {
       page('/guides/c/', 'guide', { indexable: false, noindex: { en: ['thin'], zh: ['thin'] } }),
     ])
     const urls = files[0].entries
-    expect(urls.map((e) => e.loc)).toEqual(['https://template.krisyang.dev/guides/a/', 'https://template.krisyang.dev/zh/guides/a/', 'https://template.krisyang.dev/guides/b/'])
+    expect(urls.map((e) => e.loc)).toEqual([`${SITE_URL}/guides/a/`, `${SITE_URL}/zh/guides/a/`, `${SITE_URL}/guides/b/`])
     expect(urls[0].alternates.map((a) => a.lang)).toEqual(['en', 'zh-CN', 'x-default'])
     expect(urls[2].alternates.map((a) => a.lang)).toEqual(['en', 'x-default'])
   })
@@ -72,7 +73,7 @@ describe('sitemap XML', () => {
     expect(xml).not.toMatch(/priority|changefreq/)
     const index = sitemapIndexXml([{ name: file.name, lastmod: newestDate(file.entries.map((e) => e.lastmod)) }, { name: 'sitemap-video.xml' }])
     expect(index).toContain('<sitemapindex')
-    expect(index).toContain('https://template.krisyang.dev/sitemap-tools.xml')
+    expect(index).toContain(`${SITE_URL}/sitemap-tools.xml`)
   })
 })
 
@@ -86,8 +87,8 @@ describe('feed', () => {
       page('/guides/hidden/', 'guide', { indexable: false, noindex: { en: ['thin'], zh: ['thin'] } }),
       page('/tools/t/', 'tool'),
     ])
-    expect(items.map((i) => i.link)).toEqual(['https://template.krisyang.dev/guides/new/', 'https://template.krisyang.dev/guides/old/'])
-    const xml = feedXml({ title: 'T', link: 'https://template.krisyang.dev/', description: 'D', language: 'en', self: 'https://template.krisyang.dev/feed.xml' }, items)
+    expect(items.map((i) => i.link)).toEqual([`${SITE_URL}/guides/new/`, `${SITE_URL}/guides/old/`])
+    const xml = feedXml({ title: 'T', link: `${SITE_URL}/`, description: 'D', language: 'en', self: `${SITE_URL}/feed.xml` }, items)
     expect(xml).toContain('<rss version="2.0"')
     expect(xml).toContain('<pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>')
     expect(xml.indexOf('guides/new')).toBeLessThan(xml.indexOf('guides/old'))
