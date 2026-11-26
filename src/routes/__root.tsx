@@ -28,6 +28,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+      { rel: 'alternate', type: 'application/rss+xml', title: SITE.name, href: '/feed.xml' },
       { rel: 'preload', href: '/fonts/inter-latin.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
     ],
     // The @font-face lives here because Vite rewrites public-folder URLs inside ?inline CSS and fails on them.

@@ -25,7 +25,9 @@ const pageFiles = readdirSync(join(root, 'content/pages')).filter((f) => f.endsW
 const prefixes = ['', '/zh']
 
 // 1. page counts: home + about + every recipe + every hub and guide, in both languages
-const locs = all(/<loc>\s*([^<]+?)\s*<\/loc>/g, read('sitemap.xml')).map((m) => m[1])
+// sitemap.xml is an index; the page URLs are in its child sitemaps (all but the video one)
+const children = readdirSync(assets).filter((f) => /^sitemap-.+\.xml$/.test(f) && f !== 'sitemap-video.xml')
+const locs = children.flatMap((f) => all(/<loc>\s*([^<]+?)\s*<\/loc>/g, read(f)).map((m) => m[1]))
 const want = 2 * (2 + terms.length + pageFiles.length)
 check('sitemap count', [locs.length], (n) => (n === want ? '' : `expected ${want} URLs, found ${n}`))
 check('sitemap has no helper pages', locs, (l) => (/\/saved\/|#|\.md$/.test(l) ? `${l} should stay out of the sitemap` : ''))

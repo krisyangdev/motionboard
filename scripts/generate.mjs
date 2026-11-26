@@ -1,13 +1,16 @@
-// Writes the generated files in public/: robots.txt, _redirects, _headers, llms.txt, sitemap-video.xml.
+// Writes the generated files in public/: robots.txt, _redirects, _headers, llms.txt, sitemap.xml (the index) with its
+// child sitemaps, sitemap-video.xml, feed.xml.
 // Run by the `prebuild` plugin in vite.config.ts on every build and dev start, or directly with
 // `node scripts/generate.mjs`. The outputs are gitignored.
-import { writeFileSync, rmSync, mkdirSync } from 'node:fs'
+import { writeFileSync, rmSync, mkdirSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { LOCALES, DEFAULT_LOCALE, localeMeta, localizePath, pageUrl } from '../src/core/i18n.ts'
 import { ROBOTS_DISALLOW, indexableLocales, pageLocales, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
 import { headersFile } from '../src/core/headers.ts'
+import { feedItems, feedXml } from '../src/core/seo/feed.ts'
+import { newestDate, sitemapFiles, sitemapIndexXml, sitemapXml } from '../src/core/seo/sitemaps.ts'
 import { extraHeaders, extraRedirects, llmsTxt } from '../src/site/pages.ts'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
@@ -32,6 +35,8 @@ export function generate() {
     return page ? indexableLocales(page) : LOCALES
   }
 
+  // Search and AI-search crawlers are allowed. `SITE.seo.allowTraining: false` keeps the model-training crawlers out.
+  const TRAINING_BOTS = ['GPTBot', 'ClaudeBot', 'Google-Extended']
   out(
     'robots.txt',
     [
@@ -39,10 +44,24 @@ export function generate() {
       'Allow: /',
       ...ROBOTS_DISALLOW.map((p) => `Disallow: ${p}`),
       '',
+      ...(SITE.seo?.allowTraining === false ? [...TRAINING_BOTS.map((b) => `User-agent: ${b}`), 'Disallow: /', ''] : []),
       `Sitemap: ${SITE_URL}/sitemap.xml`,
       ...(videos.length ? [`Sitemap: ${SITE_URL}/sitemap-video.xml`] : []),
       '',
     ].join('\n'),
+  )
+
+  // sitemap.xml is an index of one child per page type or collection (see src/core/seo/sitemaps.ts); every sitemap*.xml in public/ is generated.
+  for (const f of readdirSync(PUBLIC)) if (/^sitemap.*\.xml$/.test(f)) rmSync(join(PUBLIC, f))
+  const children = sitemapFiles(pages)
+  for (const c of children) out(c.name, sitemapXml(c.entries))
+  const indexChildren = children.map((c) => ({ name: c.name, lastmod: newestDate(c.entries.map((e) => e.lastmod)) }))
+
+  // /feed.xml: RSS of the guides (and the other dated types) in the default language; linked from every page's head.
+  // Hook (SEO step 5): /changelog/rss.xml from the changelog entries, written here with feedXml().
+  out(
+    'feed.xml',
+    feedXml({ title: SITE.name, link: `${SITE_URL}/`, description: SITE.description[DEFAULT_LOCALE], language: localeMeta(DEFAULT_LOCALE).hreflang, self: `${SITE_URL}/feed.xml` }, feedItems(pages)),
   )
 
   // Renames apply to every language the new page exists in; both the slash and the no-slash form of the old path redirect.
@@ -103,6 +122,7 @@ ${shown
         ]
       }),
     )
+    indexChildren.push({ name: 'sitemap-video.xml', lastmod: newestDate([...byPath.keys()].map((path) => pages.find((p) => p.path === path)?.lastmod)) })
     out(
       'sitemap-video.xml',
       `<?xml version="1.0" encoding="UTF-8"?>
@@ -111,9 +131,11 @@ ${urls.join('\n')}
 </urlset>
 `,
     )
-  } else rmSync(join(PUBLIC, 'sitemap-video.xml'), { force: true })
+  }
 
-  console.log(`generate: ${pages.length} pages, ${redirects.length} redirects, ${videos.length} videos`)
+  out('sitemap.xml', sitemapIndexXml(indexChildren))
+
+  console.log(`generate: ${pages.length} pages in ${children.length} sitemaps, ${redirects.length} redirects, ${videos.length} videos`)
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) generate()

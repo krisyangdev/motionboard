@@ -4,9 +4,12 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
-import { DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, stripLocale } from '../src/core/i18n.ts'
+import { DEFAULT_LOCALE, DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, pageUrl, stripLocale } from '../src/core/i18n.ts'
 import { TITLE_MAX_WIDTH, textWidth } from '../src/core/content/schema.ts'
 import { hubPagination, indexableLocales, isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
+import { feedItems } from '../src/core/seo/feed.ts'
+import { stampStatus } from '../src/core/seo/stamp.ts'
+import { MAX_SITEMAP_URLS, newestDate, sitemapFiles, sitemapGroup } from '../src/core/seo/sitemaps.ts'
 // Same value as ORG_ID in src/core/seo.ts (that module is bundler-only: extensionless imports).
 const ORG_ID = `${SITE_URL}/about/#org`
 
@@ -52,19 +55,65 @@ const prerendered = walk(assets)
   .filter((f) => !existsSync(join(root, 'public', f)))
   .map((f) => ({ file: f, path: f === '404.html' ? '/404/' : `/${f.slice(0, -'index.html'.length)}`, is404: f === '404.html' || f === '404/index.html', html: read(f) }))
 
-// 1. sitemap.xml
-const sitemap = read('sitemap.xml')
-const urlBlocks = all(/<url>([\s\S]*?)<\/url>/g, sitemap).map((m) => m[1])
+// 1. sitemap.xml is an index of child sitemaps (one per page type or collection, see src/core/seo/sitemaps.ts) plus sitemap-video.xml
+const sitemapIndex = read('sitemap.xml')
+const indexChildren = all(/<sitemap>([\s\S]*?)<\/sitemap>/g, sitemapIndex).map((m) => ({ loc: m[1].match(/<loc>\s*([^<]+?)\s*<\/loc>/)?.[1] ?? '', lastmod: m[1].match(/<lastmod>\s*([^<]+?)\s*<\/lastmod>/)?.[1] }))
+const childNames = indexChildren.map((c) => stripOrigin(c.loc).slice(1))
+const urlChildren = childNames.filter((n) => n !== 'sitemap-video.xml' && has(n))
+const urlBlocksOf = (name) => all(/<url>([\s\S]*?)<\/url>/g, read(name)).map((m) => m[1])
 const locOf = (b) => b.match(/<loc>\s*([^<]+?)\s*<\/loc>/)?.[1]
+const urlEntries = urlChildren.flatMap((name) => urlBlocksOf(name).map((block) => ({ name, block })))
+const urlBlocks = urlEntries.map((e) => e.block)
 const locs = urlBlocks.map(locOf).filter(Boolean)
 const locSet = new Set(locs)
+const isoDate = /^\d{4}-\d{2}-\d{2}$/
+const pages = sitePages()
+// The registry says which children exist: one per page type or collection with at least one indexable page, split at the URL limit.
+const expectedChildren = [...sitemapFiles(pages).map((f) => f.name), ...(has('sitemap-video.xml') ? ['sitemap-video.xml'] : [])]
+check('sitemap index', [null], () => {
+  if (!/<sitemapindex\b[^>]*xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9"/.test(sitemapIndex)) return 'sitemap.xml is not a <sitemapindex> with the sitemaps.org namespace'
+  if (!/<\/sitemapindex>\s*$/.test(sitemapIndex) || all(/<sitemap>/g, sitemapIndex).length !== all(/<\/sitemap>/g, sitemapIndex).length) return 'sitemap.xml is not well formed'
+  if (/<url>|<priority>|<changefreq>/.test(sitemapIndex)) return 'sitemap.xml lists URLs or has priority/changefreq'
+  const bad = indexChildren.filter((c) => !c.loc.startsWith(`${SITE_URL}/sitemap`) || !c.loc.endsWith('.xml'))
+  if (bad.length) return `child sitemaps not under ${SITE_URL}/: ${bad.map((c) => c.loc).join(', ')}`
+  if (new Set(childNames).size !== childNames.length) return 'a child sitemap is listed twice'
+  const missing = childNames.filter((n) => !has(n))
+  if (missing.length) return `listed but not built: ${missing.join(', ')}`
+  const want = [...expectedChildren].sort().join(', ')
+  return [...childNames].sort().join(', ') === want ? '' : `children ${[...childNames].sort().join(', ')}, want ${want} (one per page type or collection, none empty)`
+})
+check('sitemap index lastmod', indexChildren.filter((c) => c.loc.slice(SITE_URL.length + 1) !== 'sitemap-video.xml'), (c) => {
+  const name = c.loc.slice(SITE_URL.length + 1)
+  const newest = newestDate(urlBlocksOf(name).map((b) => b.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1]))
+  return c.lastmod === newest ? '' : `${name}: index lastmod ${c.lastmod}, newest URL ${newest}`
+})
+check('sitemap children: well formed, not empty, within the URL limit, no priority/changefreq', urlChildren, (name) => {
+  const xml = read(name)
+  const n = urlBlocksOf(name).length
+  if (!/^<\?xml\b/.test(xml) || !xml.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">')) return `${name}: no <?xml?> header or urlset namespaces`
+  if (!/<\/urlset>\s*$/.test(xml) || all(/<url>/g, xml).length !== all(/<\/url>/g, xml).length || all(/<url>/g, xml).length !== n) return `${name}: not well formed`
+  if (n === 0) return `${name}: empty (an empty child is not written)`
+  if (n > MAX_SITEMAP_URLS) return `${name}: ${n} URLs, at most ${MAX_SITEMAP_URLS}`
+  return /<priority>|<changefreq>/.test(xml) ? `${name}: has priority or changefreq (search engines ignore them)` : ''
+})
+check('sitemap urls: lastmod = the page\'s lastmod, child = the page\'s type', urlEntries, ({ name, block }) => {
+  const loc = locOf(block)
+  const page = pages.find((p) => p.path === stripLocale(stripOrigin(loc ?? '')))
+  const lastmod = block.match(/<lastmod>\s*([^<]+?)\s*<\/lastmod>/)?.[1]
+  if (!lastmod || !isoDate.test(lastmod)) return `${loc}: no lastmod in YYYY-MM-DD (${lastmod ?? 'missing'}); extraPages need a lastmod`
+  if (!page) return `${loc}: not a page of the site (sitePages())`
+  if (page.lastmod !== lastmod) return `${loc}: lastmod ${lastmod}, the page says ${page.lastmod}`
+  const group = sitemapGroup(page)
+  return name === `sitemap-${group}.xml` || new RegExp(`^sitemap-${group}-\\d+\\.xml$`).test(name) ? '' : `${loc}: is in ${name}, want sitemap-${group}.xml`
+})
 check('sitemap not empty', [locs.length], (n) => (n > 0 ? '' : 'no <loc> found'))
+const seenLocs = new Set()
+check('sitemap urls listed once', locs, (l) => (seenLocs.has(l) ? `${l} is listed more than once` : (seenLocs.add(l), '')))
 check('sitemap locs on site origin', locs, (l) => (l.startsWith(`${SITE_URL}/`) ? '' : `${l} is not under ${SITE_URL}`))
 check('sitemap locs prerendered', locs, (l) => (pageExists(stripOrigin(l)) ? '' : `no page for ${l}`))
 
 // A page exists only in the languages it has content for (no fallback), and its hreflang set is the languages the quality gate
 // lets into the index plus x-default (a noindex language has no canonical or hreflang and is not in anyone's set).
-const pages = sitePages()
 const pageOfPath = (path) => pages.find((p) => p.path === stripLocale(path))
 // Item pages from a collection (src/site/collections.ts). The collection checks below apply to them; a site's own item pages (extraPages) carry no collection.
 const fromCollection = (p) => p?.type === 'item' && !!p.collection
@@ -331,7 +380,7 @@ check('noindex items: noindex page, not in sitemap, llms.txt or hub lists', noin
   const robots = attr(tags('meta', own.html).find((t) => attr(t, 'name') === 'robots') ?? '', 'content') ?? ''
   if (!/noindex/i.test(robots)) errs.push('no noindex meta')
   if (tags('link', own.html).some((t) => attr(t, 'rel') === 'canonical')) errs.push('has a canonical')
-  if (locSet.has(`${SITE_URL}${url}`)) errs.push('is in sitemap.xml')
+  if (locSet.has(`${SITE_URL}${url}`)) errs.push('is in a sitemap')
   if (llmsText.includes(`${SITE_URL}${url}`)) errs.push('is in llms.txt')
   for (const hub of hubPagesOf(page.collection, l)) if (all(/\shref="([^"]*)"/g, mainOf(hub.html)).some((m) => decode(m[1]) === url)) errs.push(`is listed on ${hub.path}`)
   return errs.length ? `${url}: ${errs.join('; ')}` : ''
@@ -395,7 +444,13 @@ check('robots.txt', [null], () => {
   if (/^Disallow:\s*\/\s*$/im.test(robots)) return 'robots.txt disallows everything'
   const files = ['sitemap.xml', ...(has('sitemap-video.xml') ? ['sitemap-video.xml'] : [])]
   const missing = files.filter((f) => !new RegExp(`^Sitemap:\\s*\\S*/${f.replace('.', '\\.')}\\s*$`, 'mi').test(robots))
-  return missing.length ? `missing Sitemap line for ${missing.join(', ')}` : ''
+  if (missing.length) return `missing Sitemap line for ${missing.join(', ')}`
+  // Training crawlers are blocked exactly when SITE.seo.allowTraining is false; search crawlers are never blocked.
+  const blocked = ['GPTBot', 'ClaudeBot', 'Google-Extended'].filter((b) => new RegExp(`^User-agent:\\s*${b}\\s*$`, 'mi').test(robots))
+  const wantBlocked = SITE.seo?.allowTraining === false ? ['GPTBot', 'ClaudeBot', 'Google-Extended'] : []
+  if (blocked.join() !== wantBlocked.join()) return `robots.txt blocks training crawlers [${blocked.join(', ')}], SITE.seo.allowTraining wants [${wantBlocked.join(', ')}]`
+  const search = ['Googlebot', 'Bingbot', 'OAI-SearchBot', 'PerplexityBot', 'Claude-SearchBot', 'Applebot'].filter((b) => new RegExp(`^User-agent:\\s*${b}\\s*$`, 'mi').test(robots))
+  return search.length ? `robots.txt has rules for search crawlers: ${search.join(', ')}` : ''
 })
 
 // 8. sitemap-video.xml (optional)
@@ -403,7 +458,7 @@ if (has('sitemap-video.xml')) {
   const videoMap = read('sitemap-video.xml')
   const videoLocs = all(/<loc>\s*([^<]+?)\s*<\/loc>/g, videoMap).map((m) => m[1])
   const media = all(/<video:(?:content_loc|thumbnail_loc)>\s*([^<]+?)\s*<\/video:/g, videoMap).map((m) => m[1])
-  check('video sitemap locs', videoLocs, (l) => (locSet.has(l) ? '' : `not in sitemap.xml: ${l}`))
+  check('video sitemap locs', videoLocs, (l) => (locSet.has(l) ? '' : `not in the sitemaps: ${l}`))
   check('video sitemap media urls', media, (u) => (u.startsWith('https://') ? '' : `not https: ${u}`))
 }
 
@@ -421,6 +476,44 @@ check('initial HTML starts no module script', prerendered, ({ path, html }) =>
   moduleScript.test(html) || /<link\b[^>]*\brel="modulepreload"/i.test(html) ? `${path} loads module JS in its initial HTML` : '')
 check('initial HTML has no external stylesheet', prerendered, ({ path, html }) =>
   /<link\b[^>]*\brel="?stylesheet/i.test(html) ? `${path} links an external stylesheet` : '')
+
+// 12. /feed.xml: RSS 2.0 of the dated pages of the default language (guides), newest first, linked from every page's head
+const feedXml = has('feed.xml') ? read('feed.xml') : ''
+const feedBlocks = all(/<item>([\s\S]*?)<\/item>/g, feedXml).map((m) => m[1])
+const feedTag = (xml, t) => decode(xml.match(new RegExp(`<${t}(?:\\s[^>]*)?>([\\s\\S]*?)</${t}>`))?.[1] ?? '').trim()
+check('feed.xml: valid RSS 2.0, the dated pages of the default language, newest first', [null], () => {
+  if (!feedXml) return 'feed.xml missing'
+  if (!/^<\?xml\b/.test(feedXml) || !/<rss version="2\.0"/.test(feedXml) || !/<\/rss>\s*$/.test(feedXml) || all(/<item>/g, feedXml).length !== all(/<\/item>/g, feedXml).length) return 'feed.xml is not well formed RSS 2.0'
+  const channel = feedXml.replace(/<item>[\s\S]*?<\/item>/g, '')
+  for (const t of ['title', 'link', 'description', 'language']) if (!feedTag(channel, t)) return `the channel has no <${t}>`
+  if (feedTag(channel, 'link') !== `${SITE_URL}/`) return `channel link ${feedTag(channel, 'link')}, want ${SITE_URL}/`
+  const want = feedItems(pages).map((i) => i.link)
+  const got = feedBlocks.map((b) => feedTag(b, 'link'))
+  if (got.join() !== want.join()) return `items [${got.join(', ')}], want [${want.join(', ')}] (indexable guides in ${DEFAULT_LOCALE})`
+  let last = Infinity
+  for (const b of feedBlocks) {
+    const link = feedTag(b, 'link')
+    const page = pageOfPath(stripOrigin(link))
+    if (!feedTag(b, 'title') || !feedTag(b, 'description') || feedTag(b, 'guid') !== link) return `${link}: item needs title, description and a guid equal to its link`
+    if (!locSet.has(link) || link !== pageUrl(DEFAULT_LOCALE, page.path)) return `${link}: not an indexable URL of the default language`
+    const date = Date.parse(feedTag(b, 'pubDate'))
+    if (Number.isNaN(date) || date !== Date.parse(`${page.lastmod}T00:00:00Z`)) return `${link}: pubDate is not the page's lastmod ${page.lastmod}`
+    if (date > last) return `${link}: not newest first`
+    last = date
+  }
+  return ''
+})
+check('feed linked from the head', sitemapPages, ({ path, html }) =>
+  tags('link', html).some((t) => attr(t, 'rel') === 'alternate' && attr(t, 'type') === 'application/rss+xml' && attr(t, 'href') === '/feed.xml') ? '' : `${path}: no <link rel="alternate" type="application/rss+xml" href="/feed.xml">`)
+
+// 13. freshness: content/.hashes.json holds the hash of every content file (npm run stamp), so a content change cannot ship without a stamp decision
+const stampState = stampStatus()
+check('content hashes match content/.hashes.json (npm run stamp)', [...Object.keys(stampState.current), ...stampState.removed], (rel) => {
+  if (stampState.changed.includes(rel)) return `${rel}: content changed since the last stamp. Run \`npm run stamp\` (sets \`updated\` to today), or \`npm run stamp -- --minor <slug>\` for a typo fix that keeps the date`
+  if (stampState.added.includes(rel)) return `${rel}: no hash recorded. Run \`npm run stamp\``
+  if (stampState.removed.includes(rel)) return `${rel}: recorded in content/.hashes.json but the file is gone. Run \`npm run stamp\``
+  return ''
+})
 
 if (failures.length) {
   console.error(`\n${failures.length} failure(s):\n` + failures.map((f) => '  ' + f).join('\n'))

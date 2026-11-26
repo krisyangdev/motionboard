@@ -34,5 +34,9 @@ public/_headers
 public/robots.txt
 public/_redirects
 public/llms.txt
-public/sitemap-video.xml
 src/routeTree.gen.ts
+public/sitemap*.xml
+public/feed.xml
+
+# IndexNow deploy cache (scripts/indexnow.mjs)
+.indexnow-sent.json
