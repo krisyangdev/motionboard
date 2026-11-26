@@ -14,7 +14,7 @@ Make launch videos and motion graphics with Claude Code or Codex: a free HyperFr
 
 Ask your agent to "make a launch video for my product", "add a match cut between these two screens" or "animate our logo reveal", and it builds the shot in code and renders an MP4 (or ports the motion to your website). Motionboard breaks real launch films down into 38 shots. Each shot is recreated in code as a ~10 second [HyperFrames](https://github.com/heygen-com/hyperframes) film (HTML and GSAP rendered to video), and the website shows every original next to its recreation. The skill gives your agent all 38 recipes, so it can make one shot or plan and build a whole launch film for your product.
 
-[![Motionboard launch film, made with the skill in one command](https://media.motionboard.app/launch-motionboard-motionboard.jpg)](https://media.motionboard.app/launch-motionboard-motionboard.mp4)
+[![Motionboard launch film, made with the Motionboard skill](https://media.motionboard.app/launch-motionboard-motionboard.jpg)](https://media.motionboard.app/launch-motionboard-motionboard.mp4)
 
 The same three products, with the films from HyperFrames and brag next to ours: [launch video examples](https://motionboard.app/guides/launch-video-examples/).
 
