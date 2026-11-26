@@ -18,3 +18,14 @@ export const hubPagePath = (hubPath: string, n: number): string => (n <= 1 ? hub
 
 /** The members shown on page `n` (1-based). */
 export const hubPageSlice = <T>(members: readonly T[], n: number, pageSize: number): T[] => members.slice((n - 1) * pageSize, n * pageSize)
+
+/** URL base of the hand-written page types beyond tools and guides: /compare/<slug>/, /alternatives/<slug>/, /glossary/<slug>/, /for/<slug>/, /gallery/<slug>/. */
+export const PAGE_BASES = { compare: '/compare/', alternatives: '/alternatives/', glossary: '/glossary/', 'use-case': '/for/', gallery: '/gallery/' } as const
+export type BasedType = keyof typeof PAGE_BASES
+
+/** Default-language path of a page of one of those types. */
+export const typedPath = (type: BasedType, slug: string) => `${PAGE_BASES[type]}${slug}/`
+
+/** The changelog is one page; entries beyond CHANGELOG_PAGE_SIZE continue at /changelog/page/<n>/. */
+export const CHANGELOG_PATH = '/changelog/'
+export const CHANGELOG_PAGE_SIZE = 50

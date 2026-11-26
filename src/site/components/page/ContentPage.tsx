@@ -233,7 +233,7 @@ export function ContentPage({ data }: { data: PageData }) {
         <p className="mt-4 max-w-[720px] text-pretty text-base text-muted-foreground leading-relaxed sm:text-[1.0625rem]">
           <Inline text={copy.lede} />
         </p>
-        {kind === 'guide' && <p className={`mt-4 ${mono}`}>{t.updated(updated)}</p>}
+        {kind === 'guide' && <p className={`mt-4 ${mono}`}><time dateTime={updated}>{t.updated(updated)}</time></p>}
       </header>
       <div className="mt-10 [overflow-wrap:break-word] sm:mt-12 [&>*]:max-w-[720px] [&>*+*]:mt-[18px] [&>h2+*]:mt-4 [&>h2]:mt-11 sm:[&>h2]:mt-14">
         {copy.blocks.map((block, i) => (

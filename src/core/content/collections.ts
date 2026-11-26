@@ -7,7 +7,7 @@ import type { Locale } from '../i18n.ts'
 import { itemFileSchema, parseContent, slugSchema, type ItemFile } from './schema.ts'
 
 /** URL segments the template or the app already uses: a collection id and a category cannot be one of them. */
-export const RESERVED_SEGMENTS = ['tools', 'guides', 'about', 'privacy', 'terms', 'login', 'signup', 'account', 'app', 'admin', 'api', 'forgot-password', 'reset-password', 'page', 'assets', 'fonts']
+export const RESERVED_SEGMENTS = ['tools', 'guides', 'about', 'privacy', 'terms', 'login', 'signup', 'account', 'app', 'admin', 'api', 'forgot-password', 'reset-password', 'page', 'assets', 'fonts', 'compare', 'alternatives', 'glossary', 'for', 'gallery', 'changelog']
 
 export type Collection = {
   /** Folder in content/collections, the URL segment (/<id>/<slug>/) and the hub file content/hubs/<id>.json. */

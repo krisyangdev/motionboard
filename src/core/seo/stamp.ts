@@ -8,8 +8,8 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-/** Folders of content/ that hold pages. Add the folder of a new page type here (SEO step 5: compare, alternatives, glossary, use cases, gallery, changelog). */
-export const STAMP_DIRS = ['tools', 'guides', 'legal', 'about', 'hubs', 'collections']
+/** Folders of content/ that hold pages. Add the folder of a new page type here. */
+export const STAMP_DIRS = ['tools', 'guides', 'legal', 'about', 'hubs', 'collections', 'compare', 'alternatives', 'glossary', 'use-cases', 'gallery', 'changelog']
 export const HASHES_FILE = 'content/.hashes.json'
 
 const ROOT = fileURLToPath(new URL('../../..', import.meta.url))

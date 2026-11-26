@@ -3,14 +3,14 @@
 import index from 'virtual:content-index'
 import type { Locale } from '../i18n'
 import { coreMessages } from '../messages'
-import { itemPath } from './hubs'
+import { itemPath, typedPath } from './hubs'
 import { isIndexable } from './exists'
 
 /** A card in a hub or a related block: `href` is a default-language path. */
 export type Entry = { title: string; description?: string; href: string }
 
 /**
- * Indexable members of a hub in a language, by hub id: `tools` by slug, `guides` newest first, a collection id (its
+ * Indexable members of a hub in a language, by hub id: `tools` by slug, `guides` and `compare` newest first, `glossary` alphabetical, a collection id (its
  * items by slug) or `<collection>/<category>` (the items of that category).
  */
 export function members(hubId: string, l: Locale): Entry[] {
@@ -19,6 +19,16 @@ export function members(hubId: string, l: Locale): Entry[] {
   }
   if (hubId === 'guides') {
     return index.docs.guides[l].filter((d) => isIndexable(l, `/guides/${d.slug}/`)).map((d) => ({ title: d.title, description: d.description, href: `/guides/${d.slug}/` }))
+  }
+  if (hubId === 'compare') {
+    return index.docs.compare[l].filter((d) => isIndexable(l, typedPath('compare', d.slug))).map((d) => ({ title: d.title, description: d.description, href: typedPath('compare', d.slug) }))
+  }
+  if (hubId === 'glossary') {
+    // The glossary index is one alphabetical list.
+    return index.docs.glossary[l]
+      .filter((d) => isIndexable(l, typedPath('glossary', d.slug)))
+      .map((d) => ({ title: d.title, description: d.description, href: typedPath('glossary', d.slug) }))
+      .sort((a, b) => a.title.localeCompare(b.title, l))
   }
   const [id, category] = hubId.split('/')
   return itemEntries(id, l, (i) => !category || i.category.includes(category))
@@ -49,9 +59,9 @@ export function relatedEntries(slugs: readonly string[] | undefined, l: Locale, 
   })
 }
 
-/** Breadcrumb name of a hub in a language: tools and guides from the core messages, a collection or category hub from its hub file. */
+/** Breadcrumb name of a hub in a language: tools, guides, compare and glossary from the core messages, a collection or category hub from its hub file. */
 export function hubName(hubId: string, l: Locale): string {
-  if (hubId === 'tools' || hubId === 'guides') return coreMessages[l].page[hubId]
+  if (hubId === 'tools' || hubId === 'guides' || hubId === 'compare' || hubId === 'glossary') return coreMessages[l].page[hubId]
   return index.hubs[hubId]?.[l] ?? hubId
 }
 

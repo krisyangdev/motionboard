@@ -28,7 +28,7 @@ describe('sitemapGroup', () => {
     expect(sitemapGroup({ type: 'hub' })).toBe('hubs')
     expect(sitemapGroup({ type: 'item', collection: 'recipes' })).toBe('recipes')
     expect(sitemapGroup({ type: 'item' })).toBe('items')
-    for (const type of ['home', 'about', 'legal', 'compare', 'changelog'] as const) expect(sitemapGroup({ type })).toBe('pages')
+    for (const type of ['home', 'about', 'legal', 'compare', 'alternatives', 'glossary', 'use-case', 'gallery', 'changelog'] as const) expect(sitemapGroup({ type })).toBe('pages')
   })
   it('rejects a collection whose id is a fixed child name', async () => {
     const { sitemapGroup } = await load()
@@ -94,3 +94,34 @@ describe('feed', () => {
     expect(xml.indexOf('guides/new')).toBeLessThan(xml.indexOf('guides/old'))
   })
 })
+
+describe('feed with the changelog', () => {
+  const entries = [
+    { id: '2026-11-20-b', date: '2026-11-20', title: 'B', items: ['one', 'two'], page: 1 },
+    { id: '2026-11-10-a', date: '2026-11-10', title: 'A', items: ['three'], page: 1 },
+  ]
+  const changelog = page('/changelog/', 'changelog')
+
+  it('adds each entry of an indexable changelog with its anchor, merged with the pages by date', async () => {
+    const { feedItems } = await load()
+    const items = feedItems([page('/guides/g/', 'guide', { lastmod: '2026-11-15' }), changelog], entries)
+    expect(items.map((i) => i.link)).toEqual([`${SITE_URL}/changelog/#2026-11-20-b`, `${SITE_URL}/guides/g/`, `${SITE_URL}/changelog/#2026-11-10-a`])
+    expect(items[0]).toMatchObject({ title: 'B', description: 'one two', date: '2026-11-20' })
+  })
+  it('links an entry on page 2 to that page', async () => {
+    const { changelogEntryUrl } = await load()
+    expect(changelogEntryUrl({ id: '2026-01-01-x', page: 2 })).toBe(`${SITE_URL}/changelog/page/2/#2026-01-01-x`)
+  })
+  it('leaves the entries out when the changelog is noindex or missing in the default language', async () => {
+    const { feedItems, changelogFeedItems } = await load()
+    expect(feedItems([page('/changelog/', 'changelog', { indexable: false, noindex: { en: ['thin'], zh: ['thin'] } })], entries)).toEqual([])
+    expect(changelogFeedItems([], entries)).toEqual([])
+    expect(changelogFeedItems([page('/changelog/', 'changelog', { title: { zh: 'x' } })], entries)).toEqual([])
+  })
+  it('caps the feed at 50 items', async () => {
+    const { feedItems } = await load()
+    const many = Array.from({ length: 60 }, (_, i) => ({ id: `2026-01-${String(i).padStart(2, '0')}-x`, date: `2026-01-01`, title: `T${i}`, items: ['x'], page: 1 }))
+    expect(feedItems([changelog], many)).toHaveLength(50)
+  })
+})
+

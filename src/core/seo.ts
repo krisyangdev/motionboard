@@ -173,3 +173,16 @@ export const articleLd = (a: {
   author: orgRef(),
   publisher: orgRef(),
 })
+
+/**
+ * A glossary term: `description` is its definition. `inDefinedTermSet` is the glossary index URL when that page exists in
+ * the language, else a named set (the index is built only with enough terms, so a URL would point at nothing).
+ */
+export const definedTermLd = (t: { name: string; description: string; locale: Locale; path: string; setName: string; setUrl?: string }) => ({
+  '@type': 'DefinedTerm',
+  name: t.name,
+  description: t.description,
+  inLanguage: HTML_LANG[t.locale],
+  url: pageUrl(t.locale, t.path),
+  inDefinedTermSet: t.setUrl ?? { '@type': 'DefinedTermSet', name: t.setName },
+})

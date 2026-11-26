@@ -1,5 +1,5 @@
 // Writes the generated files in public/: robots.txt, _redirects, _headers, llms.txt, sitemap.xml (the index) with its
-// child sitemaps, sitemap-video.xml, feed.xml.
+// child sitemaps, sitemap-video.xml, feed.xml, changelog/rss.xml.
 // Run by the `prebuild` plugin in vite.config.ts on every build and dev start, or directly with
 // `node scripts/generate.mjs`. The outputs are gitignored.
 import { writeFileSync, rmSync, mkdirSync, readdirSync } from 'node:fs'
@@ -7,9 +7,9 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { LOCALES, DEFAULT_LOCALE, localeMeta, localizePath, pageUrl } from '../src/core/i18n.ts'
-import { ROBOTS_DISALLOW, indexableLocales, pageLocales, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
+import { ROBOTS_DISALLOW, changelogEntries, indexableLocales, pageLocales, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
 import { headersFile } from '../src/core/headers.ts'
-import { feedItems, feedXml } from '../src/core/seo/feed.ts'
+import { changelogFeedItems, feedItems, feedXml } from '../src/core/seo/feed.ts'
 import { newestDate, sitemapFiles, sitemapIndexXml, sitemapXml } from '../src/core/seo/sitemaps.ts'
 import { extraHeaders, extraRedirects, llmsTxt } from '../src/site/pages.ts'
 
@@ -57,12 +57,24 @@ export function generate() {
   for (const c of children) out(c.name, sitemapXml(c.entries))
   const indexChildren = children.map((c) => ({ name: c.name, lastmod: newestDate(c.entries.map((e) => e.lastmod)) }))
 
-  // /feed.xml: RSS of the guides (and the other dated types) in the default language; linked from every page's head.
-  // Hook (SEO step 5): /changelog/rss.xml from the changelog entries, written here with feedXml().
-  out(
-    'feed.xml',
-    feedXml({ title: SITE.name, link: `${SITE_URL}/`, description: SITE.description[DEFAULT_LOCALE], language: localeMeta(DEFAULT_LOCALE).hreflang, self: `${SITE_URL}/feed.xml` }, feedItems(pages)),
-  )
+  // /feed.xml: RSS of the guides, comparisons and changelog entries in the default language; linked from every page's head.
+  // /changelog/rss.xml: the changelog entries only, linked from the changelog page.
+  const language = localeMeta(DEFAULT_LOCALE).hreflang
+  const entries = changelogEntries()
+  out('feed.xml', feedXml({ title: SITE.name, link: `${SITE_URL}/`, description: SITE.description[DEFAULT_LOCALE], language, self: `${SITE_URL}/feed.xml` }, feedItems(pages, entries)))
+  const changelogPage = pages.find((p) => p.type === 'changelog')
+  const changelogItems = changelogFeedItems(pages, entries)
+  rmSync(join(PUBLIC, 'changelog'), { recursive: true, force: true })
+  if (changelogPage && changelogItems.length) {
+    mkdirSync(join(PUBLIC, 'changelog'), { recursive: true })
+    out(
+      'changelog/rss.xml',
+      feedXml(
+        { title: changelogPage.title[DEFAULT_LOCALE], link: pageUrl(DEFAULT_LOCALE, changelogPage.path), description: changelogPage.description[DEFAULT_LOCALE], language, self: `${SITE_URL}/changelog/rss.xml` },
+        changelogItems,
+      ),
+    )
+  }
 
   // Renames apply to every language the new page exists in; both the slash and the no-slash form of the old path redirect.
   const redirects = []

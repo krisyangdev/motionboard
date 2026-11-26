@@ -6,8 +6,8 @@ import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { DEFAULT_LOCALE, DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, pageUrl, stripLocale } from '../src/core/i18n.ts'
 import { TITLE_MAX_WIDTH, textWidth } from '../src/core/content/schema.ts'
-import { hubPagination, indexableLocales, isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
-import { feedItems } from '../src/core/seo/feed.ts'
+import { changelogEntries, hubPagination, indexableLocales, isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
+import { changelogFeedItems, feedItems } from '../src/core/seo/feed.ts'
 import { stampStatus } from '../src/core/seo/stamp.ts'
 import { MAX_SITEMAP_URLS, newestDate, sitemapFiles, sitemapGroup } from '../src/core/seo/sitemaps.ts'
 // Same value as ORG_ID in src/core/seo.ts (that module is bundler-only: extensionless imports).
@@ -242,9 +242,12 @@ const LD_REQUIRED = {
   home: [['WebSite'], ['Organization']],
   tool: [['WebApplication']],
   guide: [['Article']],
-  compare: [['Article']],
-  alternatives: [['Article']],
-  glossary: [['DefinedTerm']],
+  compare: [['Article'], ['BreadcrumbList']],
+  alternatives: [['Article'], ['BreadcrumbList']],
+  glossary: [['DefinedTerm'], ['BreadcrumbList']],
+  'use-case': [['BreadcrumbList']],
+  gallery: [['BreadcrumbList']],
+  changelog: [['BreadcrumbList']],
   about: [['Organization']],
 }
 check('JSON-LD types per page type', sitemapPages, ({ path, html }) => {
@@ -252,6 +255,8 @@ check('JSON-LD types per page type', sitemapPages, ({ path, html }) => {
   if (!page) return ''
   const types = new Set(ldOf(html).flatMap(ldTypes))
   const missing = (LD_REQUIRED[page.type] ?? []).filter((any) => !any.some((t) => types.has(t))).map((any) => any.join(' or '))
+  // A glossary term is a DefinedTerm, not an Article.
+  if (page.type === 'glossary' && types.has('Article')) return `${path}: glossary page has Article JSON-LD, it describes a DefinedTerm`
   // An item page describes its main media: ImageObject for an image, VideoObject for a video, neither without media.
   if (fromCollection(page)) {
     for (const [kind, type] of [['image', 'ImageObject'], ['video', 'VideoObject']]) {
@@ -396,6 +401,89 @@ check('collection hub lists exactly the indexable items', collectionIds.flatMap(
   return extra.length || missing.length ? `${collection} (${l}): hub lists ${listed.length} items, want the ${items.length} indexable ones (extra: ${extra.join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'})` : ''
 })
 
+// 3f. comparison, alternatives, glossary, use-case, gallery and changelog pages (spec §1.5 to §1.9, §2.6)
+// "Updated <date>" is visible on these pages and on guides, and it is the date in the JSON-LD (dateModified of the Article).
+const UPDATED_VISIBLE = ['guide', 'compare', 'alternatives', 'glossary', 'use-case', 'changelog']
+check('visible Updated date = JSON-LD dateModified', sitemapPages.filter((p) => UPDATED_VISIBLE.includes(pageOfPath(p.path)?.type)), ({ path, html }) => {
+  const times = all(/<time\b[^>]*\bdatetime="(\d{4}-\d{2}-\d{2})"/gi, mainOf(html)).map((m) => m[1])
+  if (!times.length) return `${path}: no visible date (<time datetime>)`
+  const article = ldOf(html).flatMap(ldNodes).find((n) => [n['@type']].flat().includes('Article'))
+  const modified = article ? String(article.dateModified ?? '').slice(0, 10) : ''
+  return !article || times.includes(modified) ? '' : `${path}: JSON-LD dateModified ${modified} is not a date shown on the page (${[...new Set(times)].join(', ')})`
+})
+
+// A page with one of our products next to third-party ones carries the disclosure line; no other page does.
+check('disclosure line on compare and alternatives pages with our product', sitemapPages.filter((p) => ['compare', 'alternatives'].includes(pageOfPath(p.path)?.type)), ({ path, html }) => {
+  const page = pageOfPath(path)
+  const shown = /\sdata-disclosure[\s>=]/.test(mainOf(html))
+  if (!!page.ours !== shown) return `${path}: ${page.ours ? 'one product is ours but the page has no disclosure line' : 'the page has a disclosure line but no product is ours'}`
+  return ''
+})
+
+check('compare pages: a table of at least 6 rows in the HTML', sitemapPages.filter((p) => pageOfPath(p.path)?.type === 'compare'), ({ path, html }) => {
+  const rows = all(/<tr\b/g, mainOf(html)).length - 1
+  return rows >= 6 ? '' : `${path}: ${rows} table rows in the HTML, at least 6`
+})
+
+check('gallery media: alt, width, height; lazy below the first row; a video has a <source>', prerendered.filter((p) => pageOfPath(p.path)?.type === 'gallery'), ({ path, html }) => {
+  const main = mainOf(html)
+  const errs = []
+  tags('img', main).forEach((img, i) => {
+    const decorative = attr(img, 'aria-hidden') === 'true' && attr(img, 'alt') === ''
+    const alt = attr(img, 'alt')?.trim() ?? ''
+    if (!decorative && !alt) errs.push(`<img ${attr(img, 'src')}> has no alt text`)
+    if (!decorative && alt === (attr(img, 'src') ?? '').split('/').pop()) errs.push(`<img ${attr(img, 'src')}> alt is the file name`)
+    if (!attr(img, 'width') || !attr(img, 'height')) errs.push(`<img ${attr(img, 'src')}> has no width and height`)
+    if (i >= 2 && attr(img, 'loading') !== 'lazy') errs.push(`<img ${attr(img, 'src')}> is below the first row but not loading="lazy"`)
+  })
+  const videos = all(/<video\b[\s\S]*?<\/video>/g, main).map((m) => m[0])
+  for (const v of videos) if (!/<source\b[^>]*\bsrc=/.test(v) || !/\bposter=/.test(v) || !/\bpreload="none"/.test(v)) errs.push('a <video> lacks <source>, poster or preload="none" in the HTML')
+  if (!tags('img', main).length && !videos.length) errs.push('no image or video in the HTML')
+  return errs.length ? `${path}: ${errs.join('; ')}` : ''
+})
+
+// The changelog: one section per entry with the id <date>-<slug>, an H2, its date, newest first, at most 50 per page, and a link to its RSS feed.
+check('changelog pages: entry sections, newest first, RSS link', [...sitemapPages, ...prerendered.filter((p) => pagedUrls.has(p.path))].filter((p) => (pageOfPath(p.path) ?? pageOfPath(p.path.replace(/page\/\d+\/$/, '')))?.type === 'changelog'), ({ path, html }) => {
+  const main = mainOf(html)
+  const sections = all(/<section\b[^>]*\bid="([^"]*)"[^>]*>([\s\S]*?)<\/section>/g, main)
+  const errs = []
+  if (!sections.length) errs.push('no entry sections')
+  if (sections.length > 50) errs.push(`${sections.length} entries on one page, at most 50`)
+  let last = '9999-99-99'
+  for (const [, id, body] of sections) {
+    const date = id.slice(0, 10)
+    if (!/^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) errs.push(`section id "${id}" is not <date>-<slug>`)
+    if (!/<h2\b/.test(body)) errs.push(`${id}: no <h2>`)
+    if (!new RegExp(`<time\\b[^>]*datetime="${date}"`, 'i').test(body)) errs.push(`${id}: no <time> with its date`)
+    if (date > last) errs.push(`${id}: not newest first`)
+    last = date
+  }
+  if (!tags('link', html).some((t) => attr(t, 'rel') === 'alternate' && attr(t, 'type') === 'application/rss+xml' && attr(t, 'href') === '/changelog/rss.xml')) errs.push('no <link rel="alternate" type="application/rss+xml" href="/changelog/rss.xml">')
+  return errs.length ? `${path}: ${errs.join('; ')}` : ''
+})
+
+// /changelog/rss.xml: the entries of the changelog (default language), newest first; present exactly when the changelog is indexable.
+const wantChangelogFeed = changelogFeedItems(pages, changelogEntries())
+check('changelog/rss.xml', [null], () => {
+  const present = has('changelog/rss.xml')
+  if (!wantChangelogFeed.length) return present ? 'changelog/rss.xml exists but the site has no indexable changelog' : ''
+  if (!present) return 'changelog/rss.xml missing'
+  const xml = read('changelog/rss.xml')
+  if (!/^<\?xml\b/.test(xml) || !/<rss version="2\.0"/.test(xml) || !/<\/rss>\s*$/.test(xml) || all(/<item>/g, xml).length !== all(/<\/item>/g, xml).length) return 'changelog/rss.xml is not well formed RSS 2.0'
+  const blocks = all(/<item>([\s\S]*?)<\/item>/g, xml).map((m) => m[1])
+  const tag = (b, t) => decode(b.match(new RegExp(`<${t}(?:\\s[^>]*)?>([\\s\\S]*?)</${t}>`))?.[1] ?? '').trim()
+  if (blocks.map((b) => tag(b, 'link')).join() !== wantChangelogFeed.map((i) => i.link).join()) return `items differ from the changelog entries (want ${wantChangelogFeed.map((i) => i.link).join(', ')})`
+  let last = Infinity
+  for (const [i, b] of blocks.entries()) {
+    const date = Date.parse(tag(b, 'pubDate'))
+    if (!tag(b, 'title') || !tag(b, 'description') || tag(b, 'guid') !== tag(b, 'link')) return `${tag(b, 'link')}: item needs title, description and a guid equal to its link`
+    if (date !== Date.parse(`${wantChangelogFeed[i].date}T00:00:00Z`)) return `${tag(b, 'link')}: pubDate is not the entry's date ${wantChangelogFeed[i].date}`
+    if (date > last) return `${tag(b, 'link')}: not newest first`
+    last = date
+  }
+  return ''
+})
+
 // 4. prerendered pages outside the sitemap must not be indexable (pages 2 and up of a paginated hub are indexable but unlisted)
 const outside = prerendered.filter((p) => !locSet.has(`${SITE_URL}${p.path}`) && !p.is404 && !pagedUrls.has(p.path))
 check('pages outside sitemap are noindex', outside, ({ path, html }) => {
@@ -477,7 +565,7 @@ check('initial HTML starts no module script', prerendered, ({ path, html }) =>
 check('initial HTML has no external stylesheet', prerendered, ({ path, html }) =>
   /<link\b[^>]*\brel="?stylesheet/i.test(html) ? `${path} links an external stylesheet` : '')
 
-// 12. /feed.xml: RSS 2.0 of the dated pages of the default language (guides), newest first, linked from every page's head
+// 12. /feed.xml: RSS 2.0 of the dated pages of the default language (guides, comparisons, alternatives) and the changelog entries, newest first, linked from every page's head
 const feedXml = has('feed.xml') ? read('feed.xml') : ''
 const feedBlocks = all(/<item>([\s\S]*?)<\/item>/g, feedXml).map((m) => m[1])
 const feedTag = (xml, t) => decode(xml.match(new RegExp(`<${t}(?:\\s[^>]*)?>([\\s\\S]*?)</${t}>`))?.[1] ?? '').trim()
@@ -487,17 +575,26 @@ check('feed.xml: valid RSS 2.0, the dated pages of the default language, newest 
   const channel = feedXml.replace(/<item>[\s\S]*?<\/item>/g, '')
   for (const t of ['title', 'link', 'description', 'language']) if (!feedTag(channel, t)) return `the channel has no <${t}>`
   if (feedTag(channel, 'link') !== `${SITE_URL}/`) return `channel link ${feedTag(channel, 'link')}, want ${SITE_URL}/`
-  const want = feedItems(pages).map((i) => i.link)
+  const entries = changelogEntries()
+  const want = feedItems(pages, entries).map((i) => i.link)
   const got = feedBlocks.map((b) => feedTag(b, 'link'))
-  if (got.join() !== want.join()) return `items [${got.join(', ')}], want [${want.join(', ')}] (indexable guides in ${DEFAULT_LOCALE})`
+  if (got.join() !== want.join()) return `items [${got.join(', ')}], want [${want.join(', ')}] (indexable guides, comparisons and changelog entries in ${DEFAULT_LOCALE})`
   let last = Infinity
   for (const b of feedBlocks) {
     const link = feedTag(b, 'link')
-    const page = pageOfPath(stripOrigin(link))
     if (!feedTag(b, 'title') || !feedTag(b, 'description') || feedTag(b, 'guid') !== link) return `${link}: item needs title, description and a guid equal to its link`
-    if (!locSet.has(link) || link !== pageUrl(DEFAULT_LOCALE, page.path)) return `${link}: not an indexable URL of the default language`
     const date = Date.parse(feedTag(b, 'pubDate'))
-    if (Number.isNaN(date) || date !== Date.parse(`${page.lastmod}T00:00:00Z`)) return `${link}: pubDate is not the page's lastmod ${page.lastmod}`
+    // A changelog entry links to its anchor on the changelog page (page 1 or /changelog/page/<n>/); its date is the entry's.
+    const [base, anchor] = link.split('#')
+    const entry = anchor ? entries.find((e) => e.id === anchor) : undefined
+    if (anchor) {
+      if (!entry || !base.startsWith(pageUrl(DEFAULT_LOCALE, '/changelog/'))) return `${link}: not an entry of the changelog`
+      if (Number.isNaN(date) || date !== Date.parse(`${entry.date}T00:00:00Z`)) return `${link}: pubDate is not the entry's date ${entry.date}`
+    } else {
+      const page = pageOfPath(stripOrigin(link))
+      if (!locSet.has(link) || link !== pageUrl(DEFAULT_LOCALE, page.path)) return `${link}: not an indexable URL of the default language`
+      if (Number.isNaN(date) || date !== Date.parse(`${page.lastmod}T00:00:00Z`)) return `${link}: pubDate is not the page's lastmod ${page.lastmod}`
+    }
     if (date > last) return `${link}: not newest first`
     last = date
   }

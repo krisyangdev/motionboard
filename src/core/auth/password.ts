@@ -1,5 +1,6 @@
-// The site's password hasher hook (src/site/auth.ts) as Better Auth emailAndPassword options.
-// Undefined = Better Auth's default hasher.
+// Password hashing for Better Auth emailAndPassword: the site's hook (src/site/auth.ts) when set, else the template's
+// PBKDF2 hasher (src/core/auth/hash.ts), which fits Workers Free's 10 ms CPU per request.
 import { password } from '../../site/auth'
+import { templateHasher } from './hash'
 
-export const passwordOptions = () => (password ? { password } : {})
+export const passwordOptions = () => ({ password: password ?? templateHasher })

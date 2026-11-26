@@ -6,7 +6,7 @@ import type { Entry } from '@/core/content/members'
 import type { PageType } from '@/core/pages'
 
 /** What a slot knows about the page it renders in: its type, its slug (none for a hub), its collection (items) and language. */
-export type SlotContext = { type: Extract<PageType, 'tool' | 'guide' | 'hub' | 'about' | 'legal' | 'item'>; slug?: string; collection?: string; locale: Locale }
+export type SlotContext = { type: Extract<PageType, 'tool' | 'guide' | 'hub' | 'about' | 'legal' | 'item' | 'compare' | 'alternatives' | 'glossary' | 'use-case' | 'gallery' | 'changelog'>; slug?: string; collection?: string; locale: Locale }
 
 /** The context of an item page: the collection's `data` of the item (validated at build time by the schema the site declared). */
 export type ItemSlotContext = SlotContext & { type: 'item'; slug: string; collection: string; data: unknown }

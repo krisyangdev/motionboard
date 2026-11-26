@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { aboutSchema, guideSchema, hubFileSchema, legalSchema, parseContent, toolFileSchema } from './schema'
+import { aboutSchema, alternativesFileSchema, changelogFileSchema, compareSchema, galleryFileSchema, glossarySchema, guideSchema, hubFileSchema, legalSchema, parseContent, toolFileSchema, useCaseFileSchema } from './schema'
 
 const demand = { source: 'serp-check', note: 'Page 1 shows tools of the same kind.', checked: '2026-11-26' }
 const text = {
@@ -73,3 +73,89 @@ describe('content schemas', () => {
     expect(() => parseContent(legalSchema, { ...legal, noindex: true }, 'l.mdx')).not.toThrow()
   })
 })
+
+describe('compare, alternatives, glossary, use-case, gallery and changelog schemas', () => {
+  const dates = { published: '2026-11-26', updated: '2026-11-26' }
+  const source = { label: 'Docs', url: 'https://example.com/docs', checked: '2026-11-26' }
+  const product = (name: string, relation: string, url = 'https://example.com/') => ({ name, url, relation })
+  const compare = {
+    ...text,
+    ...dates,
+    keyword: 'a vs b',
+    title: 'A vs B: which to pick',
+    products: [product('A', 'ours', '/tools/a/'), product('B', 'third-party')],
+    verdict: 'Pick A for speed.',
+    table: [{ factor: 'Speed', a: 'Fast', b: 'Slower', chooseIf: 'You need speed.' }],
+    sources: [source],
+  }
+  it('accept a comparison and require exactly two products with a relation, a verdict and sources', () => {
+    expect(() => parseContent(compareSchema, compare, 'c.mdx')).not.toThrow()
+    expect(message(() => parseContent(compareSchema, { ...compare, products: [product('A', 'ours')] }, 'c.mdx'))).toContain('products:')
+    expect(message(() => parseContent(compareSchema, { ...compare, products: [product('A', 'ours'), product('B', 'rival')] }, 'c.mdx'))).toContain('products.1.relation')
+    expect(message(() => parseContent(compareSchema, { ...compare, products: [product('A', 'ours'), product('B', 'third-party', 'http://example.com/')] }, 'c.mdx'))).toContain('products.1.url')
+    const { sources: _s, ...none } = compare
+    expect(message(() => parseContent(compareSchema, none, 'c.mdx'))).toContain('sources:')
+    expect(message(() => parseContent(compareSchema, { ...compare, demand: { ...demand, source: 'none' } }, 'c.mdx'))).toContain('demand.source')
+  })
+  it('accept pricing only with a date', () => {
+    expect(() => parseContent(compareSchema, { ...compare, pricing: { asOf: '2026-11-26', a: 'Free', b: 'See the vendor' } }, 'c.mdx')).not.toThrow()
+    expect(message(() => parseContent(compareSchema, { ...compare, pricing: { a: 'Free', b: 'x' } }, 'c.mdx'))).toContain('pricing.asOf')
+  })
+
+  const entry = { name: 'X', url: 'https://example.com/', bestFor: 'Y', price: 'Not checked', relation: 'third-party', notes: 'Notes.' }
+  const alt = { ...text, keyword: 'x alternatives', title: '5 X alternatives', product: 'X', criteria: 'How we chose.', entries: [entry], sources: [source] }
+  it('accept alternatives per language and reject an entry without a price or relation', () => {
+    const file = { slug: 'x', ...dates, en: alt }
+    expect(() => parseContent(alternativesFileSchema(['en']), file, 'a.json')).not.toThrow()
+    expect(message(() => parseContent(alternativesFileSchema(['en']), { ...file, en: { ...alt, entries: [{ ...entry, price: undefined, relation: 'friend' }] } }, 'a.json'))).toMatch(/en\.entries\.0\.price[\s\S]*en\.entries\.0\.relation/)
+    expect(message(() => parseContent(alternativesFileSchema(['en']), { ...file, slug: 'X Y' }, 'a.json'))).toContain('slug:')
+  })
+
+  const glossary = { ...text, ...dates, keyword: 'dithering', title: 'What is dithering?', definition: 'Dithering is noise.', example: { text: 'x', caption: 'y' }, seeAlso: [{ name: 'T', path: '/glossary/t/' }], useIt: [{ name: 'Tool', path: '/tools/t/' }] }
+  it('accept a glossary term and require site paths with a leading and trailing slash in its links', () => {
+    expect(() => parseContent(glossarySchema, glossary, 'g.mdx')).not.toThrow()
+    expect(message(() => parseContent(glossarySchema, { ...glossary, seeAlso: [{ name: 'T', path: 'glossary/t' }] }, 'g.mdx'))).toContain('seeAlso.0.path')
+    expect(message(() => parseContent(glossarySchema, { ...glossary, useIt: [{ name: 'T', path: 'https://example.com/' }] }, 'g.mdx'))).toContain('useIt.0.path')
+  })
+
+  const titled = (n: string) => ({ title: n, body: 'Body.' })
+  const useCase = {
+    ...text,
+    keyword: 'x for students',
+    title: 'X for students',
+    audience: 'Students',
+    problems: [titled('a'), titled('b'), titled('c')],
+    workflow: [titled('1'), titled('2'), titled('3')],
+    examples: [{ name: 'T', path: '/tools/t/', caption: 'c' }],
+    cta: { name: 'Go', path: '/tools/t/' },
+    faq: [['q1', 'a'], ['q2', 'a'], ['q3', 'a']],
+  }
+  it('accept a use case with exactly three problems, 3 to 6 steps and 3 to 6 FAQ items', () => {
+    const file = { slug: 'students', ...dates, en: useCase }
+    expect(() => parseContent(useCaseFileSchema(['en']), file, 'u.json')).not.toThrow()
+    expect(message(() => parseContent(useCaseFileSchema(['en']), { ...file, en: { ...useCase, problems: [titled('a')] } }, 'u.json'))).toContain('en.problems')
+    expect(message(() => parseContent(useCaseFileSchema(['en']), { ...file, en: { ...useCase, workflow: [titled('1')] } }, 'u.json'))).toContain('en.workflow')
+    expect(message(() => parseContent(useCaseFileSchema(['en']), { ...file, en: { ...useCase, faq: [['q', 'a']] } }, 'u.json'))).toContain('en.faq')
+  })
+
+  const image = { kind: 'image', src: '/a.png', width: 10, height: 10 }
+  const gallery = { ...text, keyword: 'symbol card examples', title: 'Symbol card examples', intro: 'Intro.', entries: [{ media: image, alt: 'A card', title: 'T', caption: 'C' }] }
+  it('accept a gallery and require alt text of at most 125 characters on every entry', () => {
+    const file = { slug: 'cards', ...dates, en: gallery }
+    expect(() => parseContent(galleryFileSchema(['en']), file, 'g.json')).not.toThrow()
+    expect(message(() => parseContent(galleryFileSchema(['en']), { ...file, en: { ...gallery, entries: [{ ...gallery.entries[0], alt: '' }] } }, 'g.json'))).toContain('en.entries.0.alt')
+    expect(message(() => parseContent(galleryFileSchema(['en']), { ...file, en: { ...gallery, entries: [{ ...gallery.entries[0], alt: 'x'.repeat(126) }] } }, 'g.json'))).toContain('en.entries.0.alt')
+  })
+
+  const log = { ...text, keyword: 'acme changelog', title: 'Acme changelog', demand: { ...demand, source: 'none' }, entries: [{ date: '2026-11-26', slug: 'b', title: 'B', items: ['x'] }, { date: '2026-11-20', slug: 'a', title: 'A', items: ['y'] }] }
+  it('accept a changelog newest first with `none` demand, and reject a wrong order, a repeated id and a stale updated date', () => {
+    const file = { published: '2026-11-01', updated: '2026-11-26', en: log }
+    expect(() => parseContent(changelogFileSchema(['en']), file, 'c.json')).not.toThrow()
+    const swapped = { ...log, entries: [...log.entries].reverse() }
+    expect(message(() => parseContent(changelogFileSchema(['en']), { ...file, en: swapped }, 'c.json'))).toContain('en.entries.1.date: 2026-11-26 is newer than the entry before it')
+    const twice = { ...log, entries: [log.entries[0], { ...log.entries[0] }] }
+    expect(message(() => parseContent(changelogFileSchema(['en']), { ...file, en: twice }, 'c.json'))).toContain('"2026-11-26-b" is used by another entry')
+    expect(message(() => parseContent(changelogFileSchema(['en']), { ...file, updated: '2026-11-25' }, 'c.json'))).toContain('updated: 2026-11-25 is before the newest en entry (2026-11-26)')
+  })
+})
+

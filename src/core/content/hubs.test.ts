@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { categoryHubId, HUB_PAGE_SIZE, hubPageCount, hubPagePath, hubPageSlice, itemPath } from './hubs'
+import { categoryHubId, CHANGELOG_PAGE_SIZE, CHANGELOG_PATH, HUB_PAGE_SIZE, hubPageCount, hubPagePath, hubPageSlice, itemPath, typedPath } from './hubs'
 
 describe('hub pagination', () => {
   it('counts pages, at least one', () => {
@@ -27,3 +27,19 @@ describe('collection paths', () => {
     expect(hubPagePath(`/${categoryHubId('symbols', 'decorative')}/`, 2)).toBe('/symbols/decorative/page/2/')
   })
 })
+
+describe('paths of the hand-written page types', () => {
+  it('puts each type under its base', () => {
+    expect(typedPath('compare', 'a-vs-b')).toBe('/compare/a-vs-b/')
+    expect(typedPath('alternatives', 'x')).toBe('/alternatives/x/')
+    expect(typedPath('glossary', 'dithering')).toBe('/glossary/dithering/')
+    expect(typedPath('use-case', 'students')).toBe('/for/students/')
+    expect(typedPath('gallery', 'cards')).toBe('/gallery/cards/')
+  })
+  it('continues the changelog at /changelog/page/<n>/ after 50 entries', () => {
+    expect(hubPageCount(50, CHANGELOG_PAGE_SIZE)).toBe(1)
+    expect(hubPageCount(51, CHANGELOG_PAGE_SIZE)).toBe(2)
+    expect(hubPagePath(CHANGELOG_PATH, 2)).toBe('/changelog/page/2/')
+  })
+})
+
