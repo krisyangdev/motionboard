@@ -8,6 +8,8 @@ The template every site is built from: React 19 + TanStack Start/Router/Query + 
 - `npm test`: unit tests (Vitest), build, then `scripts/test.mjs` checks the output: sitemap ↔ pages, hreflang, canonical, titles, descriptions, `<html lang>`, JSON-LD, internal links, redirects, robots, headers, llms.txt, noindex outside the sitemap, and that no page starts its JS before LCP or links an external stylesheet.
 - `npm run typecheck`: `tsc --noEmit` (run after a build or dev start, which generates `src/routeTree.gen.ts`).
 - `npm run deploy`: build, `cf deploy` (never wrangler), IndexNow ping.
+- `npm run e2e`: the money path end to end in Chromium (Playwright) against the built Worker on http://127.0.0.1:3000 with the mocks on: sign up → verification email → signup credits → buy a pack through the mock Dodo checkout (real signed webhook into the real handler) → replayed webhook grants nothing → generate (hold → commit) → a failing generation is refunded → admin bootstrap, sign-in, credit adjust, audit row. Passing = `1 passed`. Stop `npm run dev` first (same port). Against the live demo: `E2E_BASE_URL=https://template.krisyang.dev E2E_BOOTSTRAP_TOKEN=$(security find-generic-password -s site-template-admin-bootstrap -a template -w) npm run e2e`. Playwright prints request headers when a step fails, so rotate the bootstrap token after a failed live run.
+- `npm run db:generate` after editing `src/core/db/schema.ts` (writes `migrations/NNNN_*.sql`); `npm run db:migrate:local` / `db:migrate:remote` apply them (`cf d1 migrations apply`).
 - `npm run lighthouse -- --url <url> [--perf 99]`: local Lighthouse gate (95 per category by default). Its performance numbers run behind the local proxy and come out lower; pagespeed.web.dev mobile is the reference for the 99 gate (the anonymous PSI API quota is often used up, so use the web page).
 
 ## Who owns what
@@ -31,6 +33,41 @@ Sites merge template updates, so the split matters:
 - `src/core/Scripts.tsx` replaces TanStack's `<HeadContent>`/`<Scripts>`: the app JS (entry + modulepreloads) is only added once every element with an `elementtiming` attribute in the first viewport has painted (3 s fallback). Mark the LCP element with `elementtiming="lcp"` (images also `fetchPriority="high"`). Otherwise Lighthouse counts the JS toward LCP and mobile scores drop to 90–95 (seen on Motionboard).
 - Popup components (menu, select, dialog, sheet, toast, tooltip, popover) never render in the first screen of a content page and are never imported by the shell; FAQs are native `<details>`; widgets load after hydration inside a fixed-height slot.
 - Measured 2026-11-26 on template.krisyang.dev, PSI mobile: home 100/100/100/100, tool page 100/100/100/100.
+
+## Accounts, credits, payments (layer 1)
+Everything runs in the same Worker as the pages: `src/server.ts` is the entry (`fetch` → TanStack Start, `queue` → job consumer, `scheduled` → cron every 10 min). Turn accounts off with `SITE.accounts.enabled = false` (the header link and account APIs go away).
+
+- Env: `src/core/server/env.ts` (`AppEnv`, `appEnv()`, `flag()`); bindings in `cloudflare.config.ts`. Local values in `.dev.vars` (copy `.dev.vars.example`). Only bindings declared `bindings.secret()` take local values from `.dev.vars` (text bindings cannot be overridden locally), which is why `BETTER_AUTH_URL` is a secret. Production secrets: `cf workers secrets update <NAME> --worker <worker> --type secret_text --text …` for `BETTER_AUTH_URL` (`https://<domain>`), `BETTER_AUTH_SECRET`, `ADMIN_BOOTSTRAP_TOKEN`, and when used `DODO_PAYMENTS_API_KEY`, `DODO_PAYMENTS_WEBHOOK_SECRET`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, `POSTHOG_KEY`, `GOOGLE_CLIENT_ID/SECRET`. The template demo's values live in the macOS keychain (`site-template-*`). Never print or commit them.
+- Mocks (`MOCK_PAYMENTS`, `MOCK_EMAIL`, `MOCK_GENERATION` = `true`): a mock Dodo checkout page (`/api/mock/dodo/checkout`) whose Pay button signs a Dodo-format webhook with the webhook secret and hands it to the real webhook handler; emails stored in R2 under `mock-emails/` and readable at `GET /api/mock/emails` with the `x-bootstrap-token` header; generation by `src/core/jobs/mock-provider.ts` (a prompt containing "fail" fails). The template demo runs fully on mocks.
+- DB: `src/core/db/schema.ts` (Drizzle, D1). Better Auth tables + `credit_accounts`, `credit_transactions` (append-only, unique `(type, source_type, source_id)` so nothing applies twice), `credit_reservations`, `payment_orders`, `payment_webhook_events`, `jobs`, `rate_limits`, `admin_users`, `admin_sessions`, `admin_audit_logs`.
+- Auth: `src/core/auth/server.ts` (Better Auth: email + password with required verification, Google when its keys are set, Dodo plugin, signup credits in the user-create hook), `session.ts` (`getSessionUser`, `requireUser`), `client.ts`. Pages: `src/routes/{-$locale}/{login,signup,forgot-password,reset-password,account,app}.tsx` (noindex, rendered per request, never prerendered: `PRIVATE_PATHS` in `src/core/pages.ts`).
+- Credits: only `src/core/credits/ledger.ts` changes balances (`grant`, `hold`, `commit`, `refund`, `adjust`; each one D1 batch guarded so a failed check changes nothing). Tests: `ledger.test.ts` on in-memory SQLite.
+- Payments: `src/core/billing/` (`checkout.ts` creates an order then a Dodo checkout session; `webhooks.ts` verifies amount/currency/product, records the event once, grants credits once, marks the order paid; refunds and failures update the order). Packs: `src/site/plans.ts`. Portal: `POST /api/billing/portal`.
+- Jobs: `POST /api/jobs` → `src/core/jobs/create.ts` (Turnstile, rate limit, hold credits, queue message) → `queue.ts` (runs the provider from `src/site/generation.ts`, stores the file in R2, commits; retries 3×, then fails and refunds) → `cron.ts` settles stale reservations. Files: `GET /api/files/<key>` (owner only).
+- Abuse: `src/core/security/rate-limit.ts` (D1 fixed window, one atomic upsert), `turnstile.ts` (skipped when no secret key is set).
+- Email: `src/core/email/send.ts` (Resend HTTP API), `templates.ts` (verify, reset, receipt; per locale).
+- Server analytics and errors: `src/core/server/track.ts` (`trackServer`, `captureServerException` → PostHog `$exception`).
+- Admin: separate identity (not Better Auth). `src/core/admin/` + `src/routes/api/admin/*` + `src/routes/admin/*` (English, no site chrome). First admin: `curl -X POST https://<domain>/api/admin/bootstrap -H "x-bootstrap-token: …" -H 'content-type: application/json' -d '{"email":"…","password":"…"}'` (also resets that admin's password and sessions). Every credit adjust and login is in the audit log.
+
+### Where layer 1 came from
+Ported from ShotFrames (`~/Documents/imagesaas/apps/api/src`), same semantics, rewritten for Drizzle + TanStack Start server routes:
+- `credits/ledger.ts` ← `services/credits.ts` + the reserve/commit/refund part of `services/images.ts`
+- `billing/*` ← `services/payments.ts`, `services/payments/`, `domain/payment-plans.ts` (Dodo through `@dodopayments/better-auth` instead of the hand-written client)
+- `auth/server.ts` ← `services/better-auth.ts`
+- `admin/*`, `routes/api/admin/*` ← `services/admin-auth.ts`, `routes/admin*.ts`, `utils/crypto.ts`
+- `security/rate-limit.ts` ← `services/rate-limit.ts` (made atomic); `security/turnstile.ts` ← `services/turnstile.ts`
+- `server/track.ts` ← `services/track.ts`
+- `db/schema.ts` ← `migrations/0001_initial.sql`, `0005_admin_identity.sql`, `0022_payment_provider_orders.sql`, `0023_better_auth.sql`
+New here: the mock Dodo checkout, mock emails in R2, the Playwright e2e, account/app pages (coss ui).
+Layer 0 pieces from Motionboard: `src/core/Scripts.tsx` (JS after LCP), the font fallback approach, `scripts/test.mjs` checks, IndexNow script.
+
+### Recipes
+- Add a credit pack: add an entry to `src/site/plans.ts` (code, credits, price in minor units, currency, Dodo product ids per mode). Create the product in the Dodo dashboard (test mode first) and paste its id. `npm run e2e` buys `plans[0]`.
+- Add a paid action (a generation kind): add a provider to `src/site/generation.ts` (`cost`, `run`); the client posts `{ kind, input }` to `/api/jobs`. Nothing else changes: holding, retries, refunds and storage are core.
+- Add a queue job of another kind: same path; a provider's `run` can do any work that returns a file. Work that returns no file belongs in a new core handler; ask before adding one.
+- Add an admin view: a list query in `src/core/admin/queries.ts`, a route in `src/routes/api/admin/` (`requireAdmin` first, `audit()` for any write), a page in `src/routes/admin/` using `src/core/admin/ui.tsx`, and a link in `src/routes/admin/route.tsx`.
+- Change the schema: edit `src/core/db/schema.ts`, `npm run db:generate`, `npm run db:migrate:local`, test, then `npm run db:migrate:remote` before deploying.
+- Go live with real payments: in Dodo create the live products and a webhook to `https://<domain>/api/auth/dodopayments/webhooks`; set `DODO_PAYMENTS_ENVIRONMENT=live_mode`, `MOCK_PAYMENTS=false` and the two Dodo secrets. Real payments need Rui's OK.
 
 ## Starting a new site from the template
 1. `gh repo create krisyangdev/<slug> --private` and clone the template into `~/code/sites/<slug>` (`git clone git@github.com:krisyangdev/site-template.git <slug>`), then `git remote rename origin template` and `git remote add origin <new repo>`; `git push -u origin main`.
