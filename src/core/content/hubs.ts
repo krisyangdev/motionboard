@@ -1,5 +1,11 @@
-// Hub pagination rules, shared by the registry (pages.ts, Node) and the hub route (app): imports nothing from either.
+// Hub pagination rules and the paths of collection pages, shared by the registry (pages.ts, Node) and the routes (app): imports nothing from either.
 // Page 1 is the hub itself (/guides/), page n is /guides/page/<n>/.
+
+/** Default-language path of an item of a collection. */
+export const itemPath = (collection: string, slug: string) => `/${collection}/${slug}/`
+
+/** Hub id of a category hub: its file is content/hubs/<collection>/<category>.json and its page /<collection>/<category>/. */
+export const categoryHubId = (collection: string, category: string) => `${collection}/${category}`
 
 /** Members on a hub page unless the hub file sets `pageSize`; also the maximum. */
 export const HUB_PAGE_SIZE = 60

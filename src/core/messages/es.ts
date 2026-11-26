@@ -26,6 +26,7 @@ export default {
     sources: 'Fuentes',
     checked: 'comprobado',
     related: 'Relacionado',
+    categories: 'Categorías',
     by: 'Por',
     pagination: 'Paginación',
     previous: 'Anterior',

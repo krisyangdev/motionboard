@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { HUB_PAGE_SIZE, hubPageCount, hubPagePath, hubPageSlice } from './hubs'
+import { categoryHubId, HUB_PAGE_SIZE, hubPageCount, hubPagePath, hubPageSlice, itemPath } from './hubs'
 
 describe('hub pagination', () => {
   it('counts pages, at least one', () => {
@@ -17,5 +17,13 @@ describe('hub pagination', () => {
     expect(hubPageSlice(all, 1, 2)).toEqual([1, 2])
     expect(hubPageSlice(all, 3, 2)).toEqual([5])
     expect(hubPageSlice(all, 4, 2)).toEqual([])
+  })
+})
+
+describe('collection paths', () => {
+  it('puts an item at /<collection>/<slug>/ and a category hub at /<collection>/<category>/', () => {
+    expect(itemPath('symbols', 'heart-symbols')).toBe('/symbols/heart-symbols/')
+    expect(categoryHubId('symbols', 'decorative')).toBe('symbols/decorative')
+    expect(hubPagePath(`/${categoryHubId('symbols', 'decorative')}/`, 2)).toBe('/symbols/decorative/page/2/')
   })
 })

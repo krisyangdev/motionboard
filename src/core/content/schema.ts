@@ -171,14 +171,13 @@ export const aboutSchema = z
     checkDates(fm, ctx)
   })
 
-// Hub pages: content/hubs/<collection>.json, the page at /<collection>/ that lists the collection's members.
-
-export const HUB_COLLECTIONS = ['tools', 'guides'] as const
-export type HubCollection = (typeof HUB_COLLECTIONS)[number]
+// Hub pages: content/hubs/<id>.json (tools, guides, a collection id) and content/hubs/<collection>/<category>.json, the page at /<id>/ that lists the members.
 
 export const hubTextSchema = z
   .strictObject({
     ...textFields,
+    /** Short name for breadcrumbs, default the h1. Tools and guides use the core messages instead. */
+    name: z.string().min(1).optional(),
     /** What is in the set and how to choose. Shown on page 1. */
     intro: z.string().min(1),
     sections: z.array(sectionSchema).max(3).optional(),
@@ -187,7 +186,6 @@ export const hubTextSchema = z
   .superRefine(checkText)
 
 const hubShape = {
-  collection: z.enum(HUB_COLLECTIONS),
   /** Members per page (default and maximum 60). */
   pageSize: z.number().int().min(1).max(HUB_PAGE_SIZE).optional(),
   published: dateSchema,
@@ -200,6 +198,93 @@ export const hubFileSchema = (locales: readonly string[]) =>
 
 export type HubText = z.infer<typeof hubTextSchema>
 export type HubFile = z.infer<z.ZodObject<typeof hubShape>> & Partial<Record<Locale, HubText>>
+
+// Collection items (programmatic pages): content/collections/<collection>/<slug>.json, one file per item, one text block per
+// language. The block exists in a language only when it has `name`, `keyword` and `body` (see itemLocales in collections.ts).
+
+/** The item's main media. `src` and `poster` are paths on this site or absolute URLs; the alt text is `alt` of each language block. */
+export const mediaSchema = z.discriminatedUnion('kind', [
+  z.strictObject({
+    kind: z.literal('image'),
+    src: z.string().min(1),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    /** URL of the licence, only when we own the image. */
+    license: z.url().optional(),
+  }),
+  z.strictObject({
+    kind: z.literal('video'),
+    src: z.string().min(1),
+    /** MIME type of `src`, default video/mp4. */
+    mime: z.string().min(1).optional(),
+    poster: z.string().min(1),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    /** Seconds. */
+    duration: z.number().positive(),
+  }),
+])
+
+export const ITEM_FAQ_MAX = 4
+
+export const itemTextSchema = z
+  .strictObject({
+    ...textFields,
+    /** The common searched name: H1, cards and breadcrumb. */
+    name: z.string().min(1),
+    /** Our own name for the item, shown as a sub-line only. */
+    ownName: z.string().min(1).optional(),
+    /** Item-specific prose: what it is, how to use or make it, why it works. */
+    body: z.array(sectionSchema).min(1),
+    /** Describes the main media; required when the item has media. */
+    alt: z.string().min(1).max(125).optional(),
+    faq: faqSchema.max(ITEM_FAQ_MAX).optional(),
+  })
+  .superRefine((t, ctx) => {
+    checkText(t, ctx)
+    checkDemand(t, ctx)
+    // The H1 is `h1`, else the name; it must contain the keyword.
+    if (!t.h1 && !t.name.toLowerCase().includes(t.keyword.toLowerCase())) issue(ctx, ['name'], `is the h1 and must contain the keyword "${t.keyword}"`)
+  })
+
+/** Schema of an item file. `data` is the collection's own schema; `categories` are its category hub ids. */
+export const itemFileSchema = (locales: readonly string[], categories: readonly string[], data: z.ZodType) =>
+  z
+    .object({
+      slug: slugSchema,
+      category: z.array(z.string()).min(1),
+      /** Free tags, used to pick related items after the same category. */
+      tags: z.array(z.string().min(1)).optional(),
+      media: mediaSchema.optional(),
+      data,
+      ...sharedFields,
+      ...Object.fromEntries(locales.map((l) => [l, itemTextSchema.optional()])),
+    })
+    .superRefine((f, ctx) => {
+      checkDates(f, ctx)
+      f.category.forEach((c, i) => {
+        if (!categories.includes(c)) issue(ctx, ['category', i], `"${c}" is not a category of this collection (${categories.join(', ') || 'none declared'})`)
+      })
+      for (const l of locales) {
+        const block = (f as Record<string, { alt?: string } | undefined>)[l]
+        if (f.media && block && !block.alt) issue(ctx, [l, 'alt'], 'required when the item has media: describe what the media shows')
+      }
+    })
+
+export type ItemText = z.infer<typeof itemTextSchema>
+export type Media = z.infer<typeof mediaSchema>
+export type ItemFile = {
+  slug: string
+  category: string[]
+  tags?: string[]
+  media?: Media
+  data: unknown
+  published: string
+  updated: string
+  author?: string
+  ogImage?: string
+  related?: string[]
+} & Partial<Record<Locale, ItemText>>
 
 export type GuideFrontmatter = z.infer<typeof guideSchema>
 export type LegalFrontmatter = z.infer<typeof legalSchema>

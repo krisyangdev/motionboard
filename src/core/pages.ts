@@ -9,7 +9,6 @@ import type { CoreMessages } from './messages/en.ts'
 import {
   aboutSchema,
   guideSchema,
-  HUB_COLLECTIONS,
   hubFileSchema,
   legalSchema,
   parseContent,
@@ -17,14 +16,32 @@ import {
   toolFileSchema,
   type AboutFrontmatter,
   type GuideFrontmatter,
-  type HubCollection,
   type HubFile,
+  type ItemFile,
   type LegalFrontmatter,
   type ToolFile,
 } from './content/schema.ts'
-import { HUB_PAGE_SIZE, hubPageCount, hubPagePath } from './content/hubs.ts'
-import { aboutVerdict, DEFAULT_HUB_MIN_MEMBERS, guideVerdict, hubVerdict, legalVerdict, toolVerdict, type Verdict } from './seo/quality.ts'
+import { readItems, validateCollections, type Collection as ItemCollection } from './content/collections.ts'
+import { pageH1 } from './content/h1.ts'
+import { categoryHubId, HUB_PAGE_SIZE, hubPageCount, hubPagePath, itemPath } from './content/hubs.ts'
+import { selectRelated } from './content/related.ts'
+import {
+  aboutVerdict,
+  DEFAULT_HUB_MIN_MEMBERS,
+  duplicateReason,
+  guideVerdict,
+  hubVerdict,
+  itemText,
+  itemVerdict,
+  legalVerdict,
+  nearDuplicates,
+  noindexShareError,
+  relatedReason,
+  toolVerdict,
+  type Verdict,
+} from './seo/quality.ts'
 import type { Crumb } from './seo.ts'
+import { collections } from '../site/collections.ts'
 import { extraPages, extraVideos, sitemapExclude } from '../site/pages.ts'
 
 /**
@@ -79,6 +96,10 @@ export type SitePage = {
   lastmod?: string
   /** Breadcrumb trail per language, home first, the page itself last; the same trail the page shows. None for the home page. */
   breadcrumb?: Partial<Record<Locale, Crumb[]>>
+  /** Collection id of an item page. */
+  collection?: string
+  /** Kind of the main media of an item page: it decides the JSON-LD (ImageObject or VideoObject). */
+  media?: 'image' | 'video'
 }
 
 /** A page a site adds in src/site/pages.ts; the template fills in `indexable` and `reasons` (`noindex` is optional). */
@@ -177,21 +198,21 @@ function readDoc<C extends Collection>(collection: C, l: Locale, slug: string): 
 }
 const docExists = (collection: Collection, l: Locale, slug: string) => existsSync(abs('content', collection, l, `${slug}.mdx`))
 
-/** Every hub file (content/hubs/<collection>.json), validated. */
-function readHubs(): Map<HubCollection, HubFile> {
+/** Every hub file, validated, by hub id: content/hubs/<id>.json (tools, guides, a collection) and content/hubs/<collection>/<category>.json. */
+function readHubs(validIds: readonly string[]): Map<string, HubFile> {
   const schema = hubFileSchema(LOCALES)
+  const ids = [...slugs('content/hubs', '.json'), ...collections.flatMap((c) => slugs(`content/hubs/${c.id}`, '.json').map((name) => categoryHubId(c.id, name)))]
   return new Map(
-    slugs('content/hubs', '.json').map((name) => {
-      const file = `content/hubs/${name}.json`
+    ids.map((id) => {
+      const file = `content/hubs/${id}.json`
       let data: unknown
       try {
         data = JSON.parse(readFileSync(abs(file), 'utf8'))
       } catch (e) {
         throw new Error(`${file}: invalid JSON: ${(e as Error).message}`)
       }
-      const hub = parseContent(schema, data, file) as HubFile
-      if (!(HUB_COLLECTIONS as readonly string[]).includes(name) || hub.collection !== name) throw new Error(`${file}: the file name and "collection" must both be one of ${HUB_COLLECTIONS.join(', ')}`)
-      return [hub.collection, hub] as const
+      if (!validIds.includes(id)) throw new Error(`${file}: "${id}" is not a hub of this site; the hubs are ${validIds.join(', ')} (collections and categories are declared in src/site/collections.ts)`)
+      return [id, parseContent(schema, data, file) as HubFile] as const
     }),
   )
 }
@@ -232,8 +253,27 @@ function assertUniqueKeywords(pages: SitePage[]) {
   }
 }
 
+/** Titles and descriptions are unique per language: a repeated one is a duplicate page for the search engine. */
+function assertUniqueTexts(pages: SitePage[]) {
+  for (const field of ['title', 'description'] as const) {
+    for (const l of LOCALES) {
+      const seen = new Map<string, string>()
+      for (const p of pages) {
+        const t = p[field][l]?.trim().toLowerCase()
+        if (!t) continue
+        const other = seen.get(t)
+        if (other) throw new Error(`${field} "${p[field][l]}" (${l}) is used by both ${other} and ${p.path}; write a ${field} for each page`)
+        seen.set(t, p.path)
+      }
+    }
+  }
+}
+
+type SeoKnobs = { seo?: { hubMinMembers?: number; maxNoindexShare?: number } }
 /** `seo.hubMinMembers` of site.config.ts, else the spec's 6: indexable members a hub needs to be indexable. */
-const hubMinMembers = (): number => (SITE as { seo?: { hubMinMembers?: number } }).seo?.hubMinMembers ?? DEFAULT_HUB_MIN_MEMBERS
+const hubMinMembers = (): number => (SITE as SeoKnobs).seo?.hubMinMembers ?? DEFAULT_HUB_MIN_MEMBERS
+/** `seo.maxNoindexShare` of site.config.ts, else 0.2: the share of a collection's items that may be noindex before the build fails. */
+const maxNoindexShare = (): number => (SITE as SeoKnobs).seo?.maxNoindexShare ?? 0.2
 
 /**
  * A page of a paginated hub (/guides/page/2/): prerendered, self-canonical, never in the sitemap. It is noindex
@@ -241,7 +281,63 @@ const hubMinMembers = (): number => (SITE as { seo?: { hubMinMembers?: number } 
  */
 export type PagedHub = { path: string; hub: string; n: number; locales: Locale[]; noindex: Locale[] }
 
-function build(): { pages: SitePage[]; paged: PagedHub[] } {
+/** An item of a collection with the quality verdict and the related items it has in each language it exists in. */
+export type BuiltItem = {
+  slug: string
+  file: ItemFile
+  /** Languages the item exists in. */
+  locales: Locale[]
+  /** Languages it is noindex in, with the reasons (the gates of src/core/seo/quality.ts). */
+  noindex: Partial<Record<Locale, string[]>>
+  /** Slugs of the 3 to 8 related items shown on the page, per language. */
+  related: Partial<Record<Locale, string[]>>
+}
+export type BuiltCollection = { collection: ItemCollection; items: BuiltItem[] }
+
+/**
+ * Reads and gates the items of a collection. Per language: the gates that look at one item (text, media or data),
+ * then near-duplicates (the later of two similar items fails, the earlier keeps its place), then related items, which
+ * come from the items that passed the first two.
+ */
+function buildCollection(c: ItemCollection): BuiltCollection {
+  const files = readItems(c, LOCALES, ROOT)
+  for (const [slug, f] of files) {
+    for (const r of f.related ?? []) if (!files.has(r)) throw new Error(`content/collections/${c.id}/${slug}.json: related "${r}" is not an item of "${c.id}"`)
+  }
+  const items: BuiltItem[] = [...files].map(([slug, file]) => ({ slug, file, locales: LOCALES.filter((l) => file[l]), noindex: {}, related: {} }))
+  const forRelated = (i: BuiltItem) => ({ slug: i.slug, category: i.file.category, tags: i.file.tags ?? [] })
+  for (const l of LOCALES) {
+    const here = items.filter((i) => i.file[l])
+    const facts = new Map(here.map((i) => [i.slug, { dataText: c.dataText?.(i.file.data) ?? '', hasMedia: !!i.file.media, dataEntries: c.dataEntries?.(i.file.data) ?? 0 }]))
+    const reasons = new Map(here.map((i) => [i.slug, itemVerdict(i.file[l]!, facts.get(i.slug)!).reasons]))
+    const oldestFirst = [...here].sort((a, b) => a.file.published.localeCompare(b.file.published) || a.slug.localeCompare(b.slug))
+    const duplicates = nearDuplicates(oldestFirst.map((i) => ({ id: itemPath(c.id, i.slug), text: itemText(i.file[l]!, facts.get(i.slug)!.dataText) })))
+    for (const i of here) {
+      const d = duplicates.get(itemPath(c.id, i.slug))
+      if (d) reasons.get(i.slug)!.push(duplicateReason(d))
+    }
+    const pool = here.filter((i) => reasons.get(i.slug)!.length === 0).map(forRelated)
+    for (const i of here) {
+      const related = selectRelated({ ...forRelated(i), related: i.file.related }, pool)
+      i.related[l] = related
+      const all = [...reasons.get(i.slug)!, relatedReason(related.length)].filter((r): r is string => !!r)
+      if (all.length) i.noindex[l] = all
+    }
+  }
+  return { collection: c, items }
+}
+
+type Built = {
+  pages: SitePage[]
+  paged: PagedHub[]
+  collections: BuiltCollection[]
+  /** Breadcrumb name of each collection and category hub, per language it exists in. */
+  hubNames: Record<string, Partial<Record<Locale, string>>>
+  /** Build errors for collections with too many noindex items (see noindexShareError). */
+  shareErrors: string[]
+}
+
+function build(): Built {
   const trail = (l: Locale, ...items: Crumb[]): Crumb[] => [{ name: messages[l].page.home, path: '/' }, ...items]
   const crumbs = (locales: Locale[], make: (l: Locale) => Crumb[]) => Object.fromEntries(locales.map((l) => [l, make(l)]))
   const pages: ExtraPage[] = []
@@ -260,40 +356,61 @@ function build(): { pages: SitePage[]; paged: PagedHub[] } {
   const toolLocales = (tool: ToolFile) => LOCALES.filter((l) => tool[l]?.title)
   const guideSlugs = [...new Set(LOCALES.flatMap((l) => slugs(`content/guides/${l}`, '.mdx')))].sort()
   const guides = new Map(guideSlugs.map((slug) => [slug, perLocale((l) => (docExists('guides', l, slug) ? readDoc('guides', l, slug) : undefined))]))
-  const hubs = readHubs()
+  validateCollections(collections)
+  const built = collections.map(buildCollection)
+  const hubIds = ['tools', 'guides', ...collections.flatMap((c) => [c.id, ...c.categories.map((cat) => categoryHubId(c.id, cat))])]
+  const hubs = readHubs(hubIds)
 
   // Members of each hub per language: all that exist, and the ones the quality gate lets into the index.
   const toolGate = new Map([...tools].map(([slug, t]) => [slug, noindexOf(toolLocales(t), (l) => toolVerdict(t[l]!))]))
   const guideGate = new Map([...guides].map(([slug, g]) => [slug, noindexOf(LOCALES.filter((l) => g[l]), (l) => guideVerdict(g[l]!.fm, g[l]!.body))]))
-  const members = (collection: HubCollection, l: Locale) =>
-    collection === 'tools'
-      ? { all: [...tools].filter(([, t]) => t[l]?.title).length, indexable: [...tools].filter(([slug, t]) => t[l]?.title && !toolGate.get(slug)![l]).length }
-      : { all: [...guides].filter(([, g]) => g[l]).length, indexable: [...guides].filter(([slug, g]) => g[l] && !guideGate.get(slug)![l]).length }
-  const hubLocales = (collection: HubCollection) => LOCALES.filter((l) => hubs.get(collection)?.[l]?.title && members(collection, l).all > 0)
+  // The items of a collection hub, or of a category hub (`<collection>/<category>`).
+  const hubItems = (hubId: string, l: Locale) => {
+    const [id, category] = hubId.split('/')
+    return (built.find((b) => b.collection.id === id)?.items ?? []).filter((i) => i.file[l] && (!category || i.file.category.includes(category)))
+  }
+  const members = (hubId: string, l: Locale) => {
+    if (hubId === 'tools') return { all: [...tools].filter(([, t]) => t[l]?.title).length, indexable: [...tools].filter(([slug, t]) => t[l]?.title && !toolGate.get(slug)![l]).length }
+    if (hubId === 'guides') return { all: [...guides].filter(([, g]) => g[l]).length, indexable: [...guides].filter(([slug, g]) => g[l] && !guideGate.get(slug)![l]).length }
+    const items = hubItems(hubId, l)
+    return { all: items.length, indexable: items.filter((i) => !i.noindex[l]).length }
+  }
+  const hubLocales = (hubId: string) => LOCALES.filter((l) => hubs.get(hubId)?.[l]?.title && members(hubId, l).all > 0)
+  const hubName = (hubId: string, l: Locale): string => {
+    if (hubId === 'tools' || hubId === 'guides') return messages[l].page[hubId]
+    const text = hubs.get(hubId)![l]!
+    return text.name ?? pageH1(text)
+  }
   // The breadcrumb level of a hub exists only in the languages that have the hub.
-  const hubCrumb = (collection: HubCollection, l: Locale): Crumb[] => (hubLocales(collection).includes(l) ? [{ name: messages[l].page[collection], path: `/${collection}/` }] : [])
+  const hubCrumb = (hubId: string, l: Locale): Crumb[] => (hubLocales(hubId).includes(l) ? [{ name: hubName(hubId, l), path: `/${hubId}/` }] : [])
+  // A category hub sits under its collection hub.
+  const hubTrail = (hubId: string, l: Locale): Crumb[] => (hubId.includes('/') ? [...hubCrumb(hubId.split('/')[0], l), ...hubCrumb(hubId, l)] : hubCrumb(hubId, l))
+  const hubMemberDates = (hubId: string): (string | undefined)[] => {
+    if (hubId === 'tools') return [...tools.values()].map((t) => t.updated)
+    if (hubId === 'guides') return [...guides.values()].flatMap((g) => LOCALES.map((l) => g[l]?.fm.updated))
+    return LOCALES.flatMap((l) => hubItems(hubId, l).map((i) => i.file.updated))
+  }
 
   const paged = new Map<string, PagedHub>()
-  for (const [collection, hub] of hubs) {
-    const hubPath = `/${collection}/`
-    const locales = hubLocales(collection)
+  for (const [hubId, hub] of hubs) {
+    const hubPath = `/${hubId}/`
+    const locales = hubLocales(hubId)
     if (!locales.length) continue
     const text = (l: Locale) => hub[l]!
-    const noindex = noindexOf(locales, (l) => hubVerdict(text(l), members(collection, l).indexable, hubMinMembers()))
-    const memberDates = collection === 'tools' ? [...tools.values()].map((t) => t.updated) : [...guides.values()].flatMap((g) => LOCALES.map((l) => g[l]?.fm.updated))
+    const noindex = noindexOf(locales, (l) => hubVerdict(text(l), members(hubId, l).indexable, hubMinMembers()))
     pages.push({
       path: hubPath,
       type: 'hub',
       title: perLocale((l) => (locales.includes(l) ? text(l).title : undefined)),
       description: perLocale((l) => (locales.includes(l) ? text(l).description : undefined)),
       keyword: perLocale((l) => (locales.includes(l) ? text(l).keyword : undefined)),
-      lastmod: newest([hub.updated, ...memberDates]),
-      breadcrumb: crumbs(locales, (l) => trail(l, ...hubCrumb(collection, l))),
+      lastmod: newest([hub.updated, ...hubMemberDates(hubId)]),
+      breadcrumb: crumbs(locales, (l) => trail(l, ...hubTrail(hubId, l))),
       noindex,
     })
     const size = hub.pageSize ?? HUB_PAGE_SIZE
     for (const l of locales) {
-      for (let n = 2; n <= hubPageCount(members(collection, l).indexable, size); n++) {
+      for (let n = 2; n <= hubPageCount(members(hubId, l).indexable, size); n++) {
         const path = hubPagePath(hubPath, n)
         const entry = paged.get(path) ?? { path, hub: hubPath, n, locales: [], noindex: [] }
         entry.locales.push(l)
@@ -329,6 +446,26 @@ function build(): { pages: SitePage[]; paged: PagedHub[] } {
       breadcrumb: crumbs(LOCALES.filter((l) => g[l]), (l) => trail(l, ...hubCrumb('guides', l), { name: g[l]!.fm.title, path })),
       noindex: guideGate.get(slug),
     })
+  }
+
+  for (const { collection: c, items } of built) {
+    for (const item of items) {
+      const path = itemPath(c.id, item.slug)
+      const f = item.file
+      pages.push({
+        path,
+        type: 'item',
+        collection: c.id,
+        media: f.media?.kind,
+        title: perLocale((l) => f[l]?.title),
+        description: perLocale((l) => f[l]?.description),
+        keyword: perLocale((l) => f[l]?.keyword),
+        lastmod: f.updated,
+        // Home, collection, primary category, the item; a level exists only in the languages that have that hub.
+        breadcrumb: crumbs(item.locales, (l) => trail(l, ...hubCrumb(c.id, l), ...hubCrumb(categoryHubId(c.id, f.category[0]), l), { name: f[l]!.name, path })),
+        noindex: Object.keys(item.noindex).length ? item.noindex : undefined,
+      })
+    }
   }
 
   for (const slug of ['privacy', 'terms']) {
@@ -376,11 +513,35 @@ function build(): { pages: SitePage[]; paged: PagedHub[] } {
     return { ...p, noindex, indexable: pageLocales(p).some((l) => !noindex[l]), reasons }
   })
   assertUniqueKeywords(all)
-  return { pages: all, paged: [...paged.values()].sort((a, b) => a.hub.localeCompare(b.hub) || a.n - b.n) }
+  assertUniqueTexts(all)
+
+  // The build fails when too many items of a collection are noindex: fix the data instead of shipping thousands of noindex URLs.
+  const shareErrors = built.flatMap(({ collection: c, items }) =>
+    LOCALES.flatMap((l) => {
+      const here = items.filter((i) => i.file[l])
+      const noindex = here.filter((i) => i.noindex[l]).map((i) => ({ path: itemPath(c.id, i.slug), reasons: i.noindex[l]! }))
+      const error = noindexShareError(c.id, l, noindex, here.length, maxNoindexShare())
+      return error ? [error] : []
+    }),
+  )
+  const hubNames = Object.fromEntries(
+    [...hubs.keys()].filter((id) => id.includes('/') || built.some((b) => b.collection.id === id)).map((id) => [id, Object.fromEntries(hubLocales(id).map((l) => [l, hubName(id, l)]))]),
+  )
+  return { pages: all, paged: [...paged.values()].sort((a, b) => a.hub.localeCompare(b.hub) || a.n - b.n), collections: built, hubNames, shareErrors }
 }
 
-/** Every page of the site with its quality verdict per language (see SitePage). */
-export const sitePages = (): SitePage[] => build().pages
+/**
+ * Every page of the site with its quality verdict per language (see SitePage). Throws when a collection has too many
+ * noindex items (`seo.maxNoindexShare`); `skipShareCheck` returns the pages anyway (seo-report prints the error itself).
+ */
+export const sitePages = (opts: { skipShareCheck?: boolean } = {}): SitePage[] => {
+  const b = build()
+  if (b.shareErrors.length && !opts.skipShareCheck) throw new Error(b.shareErrors.join('\n\n'))
+  return b.pages
+}
+
+/** The build errors of collections whose noindex share is above `seo.maxNoindexShare`, empty when all are within it. */
+export const noindexShareErrors = (): string[] => build().shareErrors
 
 /** Pages 2 and up of the paginated hubs; they are prerendered but not site pages (no sitemap, llms.txt or hreflang entry of their own). */
 export const hubPagination = (): PagedHub[] => build().paged
@@ -388,15 +549,41 @@ export const hubPagination = (): PagedHub[] => build().paged
 /** content/renamed.json: default-language `{ "/old/": "/new/" }` pairs. */
 export const readRenamed = (): Record<string, string> => readJson('content/renamed.json', {})
 
-/** content/videos.json plus the site's own list (`extraVideos` in src/site/pages.ts): videos for the video sitemap. */
-export const readVideos = (): Video[] => [...readJson<Video[]>('content/videos.json', []), ...extraVideos]
+/** content/videos.json, the items whose main media is a video (uploadDate = the item's `published`), and the site's own list (`extraVideos` in src/site/pages.ts): videos for the video sitemap. */
+export const readVideos = (): Video[] => [
+  ...readJson<Video[]>('content/videos.json', []),
+  ...build().collections.flatMap(({ collection: c, items }) =>
+    items.flatMap((i) => {
+      const m = i.file.media
+      if (m?.kind !== 'video') return []
+      return [{ path: itemPath(c.id, i.slug), title: perLocale((l) => i.file[l]?.name), description: perLocale((l) => i.file[l]?.lede), thumbnail: m.poster, content: m.src, duration: m.duration, uploadDate: i.file.published }]
+    }),
+  ),
+  ...extraVideos,
+]
 
 export type DocIndexEntry = { slug: string; title: string; description: string; published: string; updated: string }
+
+/** A collection item in the content index: what cards and related lists need. */
+export type ItemIndexEntry = {
+  slug: string
+  /** `name`, `description` and `related` cover only the languages the item exists in. */
+  name: Partial<Record<Locale, string>>
+  description: Partial<Record<Locale, string>>
+  locales: Locale[]
+  category: string[]
+  /** Slugs of the related items shown on the page, per language. */
+  related: Partial<Record<Locale, string[]>>
+}
 
 export type ContentIndex = {
   /** `name`, `description` and `locales` cover only the languages the tool has text in. */
   tools: { slug: string; name: Partial<Record<Locale, string>>; description: Partial<Record<Locale, string>>; locales: Locale[] }[]
   docs: Record<Collection, Record<Locale, DocIndexEntry[]>>
+  /** Items by collection id. */
+  collections: Record<string, { categories: string[]; items: ItemIndexEntry[] }>
+  /** Breadcrumb name of each collection and category hub (hub id `<collection>` or `<collection>/<category>`), per language it exists in. */
+  hubs: Record<string, Partial<Record<Locale, string>>>
   /** Every site page by default-language path: the languages it exists in and the ones kept out of the index (noindex). */
   pages: Record<string, { locales: Locale[]; noindex: Locale[] }>
 }
@@ -425,6 +612,23 @@ export function contentIndex(): ContentIndex {
         .sort((a, b) => b.published.localeCompare(a.published) || a.slug.localeCompare(b.slug))
     }
   }
-  const pages = Object.fromEntries(sitePages().map((p) => [p.path, { locales: pageLocales(p), noindex: pageLocales(p).filter((l) => p.noindex?.[l]) }]))
-  return { tools, docs, pages }
+  const b = build()
+  const pages = Object.fromEntries(b.pages.map((p) => [p.path, { locales: pageLocales(p), noindex: pageLocales(p).filter((l) => p.noindex?.[l]) }]))
+  const collectionIndex = Object.fromEntries(
+    b.collections.map(({ collection: c, items }) => [
+      c.id,
+      {
+        categories: [...c.categories],
+        items: items.map((i) => ({
+          slug: i.slug,
+          name: perLocale((l) => i.file[l]?.name),
+          description: perLocale((l) => i.file[l]?.description),
+          locales: i.locales,
+          category: i.file.category,
+          related: i.related,
+        })),
+      },
+    ]),
+  )
+  return { tools, docs, collections: collectionIndex, hubs: b.hubNames, pages }
 }

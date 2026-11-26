@@ -26,6 +26,7 @@ export default {
     sources: '来源',
     checked: '核对于',
     related: '相关内容',
+    categories: '分类',
     by: '作者',
     pagination: '分页',
     previous: '上一页',

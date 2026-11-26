@@ -3,7 +3,7 @@ import { SITE, SITE_URL } from '../../site.config.ts'
 import { DEFAULT_LOCALE, HTML_LANG, LOCALES, PREFIXED_LOCALES, pageUrl } from './i18n'
 import { mockSite } from './test-site'
 import * as seoModule from './seo'
-import { absolute, articleLd, breadcrumbLd, ORG_ID, organizationLd, seoHead, videoLd, webApplicationLd, websiteLd } from './seo'
+import { absolute, articleLd, breadcrumbLd, imageObjectLd, ORG_ID, organizationLd, seoHead, videoLd, webApplicationLd, websiteLd } from './seo'
 
 const other = PREFIXED_LOCALES[0]
 const base = { title: 'Merge PDFs', description: 'Combine PDF files in your browser.', path: '/tools/merge/', locale: DEFAULT_LOCALE }
@@ -102,6 +102,24 @@ describe('JSON-LD helpers', () => {
   it('videoLd formats the duration as ISO 8601 and absolutises URLs', () => {
     const v = videoLd({ name: 'n', description: 'd', thumbnailUrl: '/t.jpg', contentUrl: 'https://v.test/a.mp4', uploadDate: '2026-01-01', duration: 95, locale: DEFAULT_LOCALE, path: '/tools/merge/' })
     expect(v).toMatchObject({ '@type': 'VideoObject', duration: 'PT95S', thumbnailUrl: `${SITE_URL}/t.jpg`, contentUrl: 'https://v.test/a.mp4' })
+  })
+  it('videoLd takes the upload date it is given, so each item can use its own published date', () => {
+    const ld = (uploadDate: string) => videoLd({ name: 'n', description: 'd', thumbnailUrl: '/t.jpg', contentUrl: '/a.mp4', uploadDate, duration: 5, locale: DEFAULT_LOCALE, path: '/recipes/a/' })
+    expect([ld('2026-01-01').uploadDate, ld('2026-02-03').uploadDate]).toEqual(['2026-01-01', '2026-02-03'])
+  })
+  it('imageObjectLd points at the image, credits the site and adds a licence only when given', () => {
+    const base = { name: 'Heart symbols', caption: 'Three hearts', contentUrl: '/symbols/heart-symbols.svg', locale: other, path: '/symbols/heart-symbols/' }
+    expect(imageObjectLd(base)).toMatchObject({
+      '@type': 'ImageObject',
+      contentUrl: `${SITE_URL}/symbols/heart-symbols.svg`,
+      caption: 'Three hearts',
+      creditText: SITE.name,
+      creator: { '@id': ORG_ID },
+      inLanguage: HTML_LANG[other],
+      url: pageUrl(other, '/symbols/heart-symbols/'),
+    })
+    expect(imageObjectLd(base)).not.toHaveProperty('license')
+    expect(imageObjectLd({ ...base, license: 'https://x.test/license' })).toMatchObject({ license: 'https://x.test/license' })
   })
   it('webApplicationLd carries type, language, price and URL', () => {
     expect(webApplicationLd({ name: 'n', description: 'd', locale: other, path: '/tools/merge/' })).toMatchObject({

@@ -201,6 +201,13 @@ check('JSON-LD types per page type', sitemapPages, ({ path, html }) => {
   if (!page) return ''
   const types = new Set(ldOf(html).flatMap(ldTypes))
   const missing = (LD_REQUIRED[page.type] ?? []).filter((any) => !any.some((t) => types.has(t))).map((any) => any.join(' or '))
+  // An item page describes its main media: ImageObject for an image, VideoObject for a video, neither without media.
+  if (page.type === 'item') {
+    for (const [kind, type] of [['image', 'ImageObject'], ['video', 'VideoObject']]) {
+      if (page.media === kind && !types.has(type)) missing.push(type)
+      if (page.media !== kind && types.has(type)) return `${path}: item page has ${type} but its main media is ${page.media ?? 'none'}`
+    }
+  }
   return missing.length ? `${path}: ${page.type} page lacks JSON-LD ${missing.join(', ')}` : ''
 })
 
@@ -226,6 +233,20 @@ check('breadcrumb: visible = JSON-LD = registry', sitemapPages, ({ path, html })
   const sameAsWant = (items, pathOf) => items.length === want.length && items.every((it, i) => it.name === want[i].name && (i === want.length - 1 ? pathOf(it) === undefined || pathOf(it) === path : pathOf(it) === want[i].path))
   if (!sameAsWant(visible, (it) => it.href)) return `${path}: visible breadcrumb [${show(visible)}] differs from the registry [${show(want)}]`
   if (!sameAsWant(ld, (it) => it.path)) return `${path}: JSON-LD breadcrumb [${show(ld)}] differs from the registry [${show(want)}]`
+  return ''
+})
+
+// Item pages: Home > collection > category > name. The levels between home and the name are hub pages that exist in that language
+// (the collection hub, then the primary category hub); the visible = JSON-LD = registry check above makes every level a link.
+const hubExists = (path, l) => pages.some((p) => p.path === path && p.type === 'hub' && pageLocales(p).includes(l))
+check('item breadcrumb: Home > collection > category > name', sitemapPages.filter((p) => pageOfPath(p.path)?.type === 'item'), ({ path }) => {
+  const page = pageOfPath(path)
+  const l = localeOfPath(path)
+  const hub = `/${page.collection}/`
+  const levels = (page.breadcrumb?.[l] ?? []).map((c) => c.path).slice(1, -1)
+  if (hubExists(hub, l) && levels[0] !== hub) return `${path}: the breadcrumb lacks the collection level ${hub}`
+  if (levels.length > 2) return `${path}: ${levels.length} levels between Home and the item, want at most 2 (collection, category)`
+  if (levels.length === 2 && !(levels[1].startsWith(hub) && hubExists(levels[1], l))) return `${path}: category level ${levels[1]} is not a hub page`
   return ''
 })
 
@@ -273,6 +294,55 @@ check('hub pagination pages', pagedPairs, (p) => {
   const before = prerendered.find((x) => x.path === localizePath(p.l, p.n === 2 ? p.hub : `${p.hub}page/${p.n - 1}/`))
   if (!before || !all(/\shref="([^"]*)"/g, before.html).some((m) => decode(m[1]) === p.url)) errs.push('is not linked with <a href> from the previous page')
   return errs.length ? `${p.url}: ${errs.join('; ')}` : ''
+})
+
+// 3e. collection items. Media is in the server HTML with alt text and size; an item that fails the quality gates is
+// prerendered with noindex and is in no sitemap, no llms.txt and no hub list, while the indexable ones are all in the collection hub.
+const itemPages = prerendered.filter((p) => pageOfPath(p.path)?.type === 'item')
+const mainOf = (html) => html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? html
+check('item media: alt, width and height; a video has a <source> in the HTML', itemPages, ({ path, html }) => {
+  const page = pageOfPath(path)
+  const main = mainOf(html)
+  const errs = []
+  for (const img of tags('img', main)) {
+    const decorative = attr(img, 'aria-hidden') === 'true' && attr(img, 'alt') === ''
+    if (!decorative && !attr(img, 'alt')?.trim()) errs.push(`<img ${attr(img, 'src')}> has no alt text`)
+    if (!attr(img, 'width') || !attr(img, 'height')) errs.push(`<img ${attr(img, 'src')}> has no width and height`)
+  }
+  if (page.media === 'image' && !tags('img', main).length) errs.push('main media is an image but the page has no <img>')
+  if (page.media === 'video') {
+    const sources = tags('source', main).map((t) => attr(t, 'src'))
+    if (!tags('video', main).length || !sources.length) errs.push('main media is a video but the HTML has no <video> with <source>')
+    const contentUrls = ldOf(html).flatMap(ldNodes).filter((n) => [n['@type']].flat().includes('VideoObject')).map((n) => stripOrigin(n.contentUrl ?? ''))
+    if (!contentUrls.every((u) => sources.includes(u))) errs.push('VideoObject contentUrl is not one of the <source> URLs')
+  }
+  return errs.length ? `${path}: ${errs.join('; ')}` : ''
+})
+const llmsText = has('llms.txt') ? read('llms.txt') : ''
+const noindexItems = pages.filter((p) => p.type === 'item').flatMap((p) => pageLocales(p).filter((l) => p.noindex?.[l]).map((l) => ({ page: p, l, url: localizePath(l, p.path) })))
+const hubPagesOf = (collection, l) =>
+  prerendered.filter((x) => (pageOfPath(x.path)?.type === 'hub' || pagedUrls.has(x.path)) && stripLocale(x.path).startsWith(`/${collection}/`) && localeOfPath(x.path) === l)
+check('noindex items: noindex page, not in sitemap, llms.txt or hub lists', noindexItems, ({ page, l, url }) => {
+  const own = prerendered.find((x) => x.path === url)
+  if (!own) return `${url}: not prerendered`
+  const errs = []
+  const robots = attr(tags('meta', own.html).find((t) => attr(t, 'name') === 'robots') ?? '', 'content') ?? ''
+  if (!/noindex/i.test(robots)) errs.push('no noindex meta')
+  if (tags('link', own.html).some((t) => attr(t, 'rel') === 'canonical')) errs.push('has a canonical')
+  if (locSet.has(`${SITE_URL}${url}`)) errs.push('is in sitemap.xml')
+  if (llmsText.includes(`${SITE_URL}${url}`)) errs.push('is in llms.txt')
+  for (const hub of hubPagesOf(page.collection, l)) if (all(/\shref="([^"]*)"/g, mainOf(hub.html)).some((m) => decode(m[1]) === url)) errs.push(`is listed on ${hub.path}`)
+  return errs.length ? `${url}: ${errs.join('; ')}` : ''
+})
+const collectionIds = [...new Set(pages.filter((p) => p.type === 'item').map((p) => p.collection))]
+check('collection hub lists exactly the indexable items', collectionIds.flatMap((c) => LOCALES.map((l) => [c, l])), ([collection, l]) => {
+  const items = pages.filter((p) => p.type === 'item' && p.collection === collection && indexableLocales(p).includes(l)).map((p) => localizePath(l, p.path))
+  const hubs = hubPagesOf(collection, l).filter((x) => stripLocale(x.path) === `/${collection}/` || stripLocale(x.path).startsWith(`/${collection}/page/`))
+  if (!hubs.length) return items.length ? `no hub page for ${collection} (${l}) but ${items.length} indexable items` : ''
+  const listed = [...new Set(hubs.flatMap((h) => all(/\shref="([^"]*)"/g, mainOf(h.html)).map((m) => decode(m[1]))).filter((h) => items.includes(h) || pageOfPath(h)?.type === 'item'))]
+  const extra = listed.filter((h) => !items.includes(h))
+  const missing = items.filter((h) => !listed.includes(h))
+  return extra.length || missing.length ? `${collection} (${l}): hub lists ${listed.length} items, want the ${items.length} indexable ones (extra: ${extra.join(', ') || 'none'}; missing: ${missing.join(', ') || 'none'})` : ''
 })
 
 // 4. prerendered pages outside the sitemap must not be indexable (pages 2 and up of a paginated hub are indexable but unlisted)
