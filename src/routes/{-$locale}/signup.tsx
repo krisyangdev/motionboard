@@ -70,6 +70,7 @@ function Signup() {
   return (
     <AuthCard title={m.signup.title}>
       <Form
+        method="post"
         className="flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault()

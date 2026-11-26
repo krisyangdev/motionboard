@@ -74,7 +74,7 @@ function insertTx(t: {
           createdAt: sql<string>`${t.now}`,
         })
         .from(creditAccounts)
-        .where(and(eq(creditAccounts.userId, t.userId), t.guard)),
+        .where(and(eq(creditAccounts.userId, t.userId), t.guard)) as never, // Drizzle's insert-select types reject sql<T> projections; the SQL is covered by ledger tests.
     )
 }
 
@@ -188,7 +188,7 @@ export async function hold(input: {
             updatedAt: sql<string>`${now}`,
           })
           .from(creditAccounts)
-          .where(and(eq(creditAccounts.userId, userId), gte(creditAccounts.available, amount))),
+          .where(and(eq(creditAccounts.userId, userId), gte(creditAccounts.available, amount))) as never, // see insertTx
       ),
     insertTx({
       id: txId,

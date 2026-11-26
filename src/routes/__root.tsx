@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
-import { createRootRoute } from '@tanstack/react-router'
+import { useEffect, type ReactNode } from 'react'
+import { createRootRoute, useLocation } from '@tanstack/react-router'
 import { Analytics } from '@/core/Analytics'
 import { HTML_LANG } from '@/core/i18n'
 import { useShellLocale } from '@/core/messages'
@@ -39,6 +39,10 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: ReactNode }) {
   const locale = useShellLocale()
+  // /admin is an internal tool: no site chrome, no page analytics.
+  const admin = useLocation({ select: (l) => l.pathname.startsWith('/admin') })
+  // Set once React has hydrated; end-to-end tests wait for it before interacting.
+  useEffect(() => document.documentElement.setAttribute('data-hydrated', ''), [])
   return (
     <html lang={HTML_LANG[locale]} suppressHydrationWarning>
       <head>
@@ -47,12 +51,12 @@ function RootDocument({ children }: { children: ReactNode }) {
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
       </head>
       <body className="flex min-h-screen flex-col">
-        <Header />
+        {!admin && <Header />}
         <div id="main" className="flex-1">
           {children}
         </div>
-        <Footer />
-        <Analytics />
+        {!admin && <Footer />}
+        {!admin && <Analytics />}
         <Scripts />
       </body>
     </html>

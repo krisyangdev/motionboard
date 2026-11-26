@@ -38,7 +38,10 @@ export default defineConfig({
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
     tanstackStart({
-      prerender: { enabled: true, crawlLinks: true, failOnError: true, filter: ({ path }) => !path.includes('#') && !/\.\w+\/?$/.test(path) },
+      // The page list (sitePages) is the single source for prerender and the sitemap: no link crawling and no
+      // automatic static-route discovery, so private routes (admin, account, app) never get prerendered or listed.
+      // scripts/test.mjs checks that every internal link points at a listed page or a private path.
+      prerender: { enabled: true, crawlLinks: false, autoStaticPathsDiscovery: false, failOnError: true },
       pages,
       sitemap: { enabled: true, host: SITE_URL },
     }),

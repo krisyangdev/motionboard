@@ -62,6 +62,7 @@ function Login() {
   return (
     <AuthCard title={m.login.title}>
       <Form
+        method="post"
         className="flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault()

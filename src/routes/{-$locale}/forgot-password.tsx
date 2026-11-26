@@ -58,6 +58,7 @@ function ForgotPassword() {
   return (
     <AuthCard title={m.forgot.title}>
       <Form
+        method="post"
         className="flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault()

@@ -24,7 +24,7 @@ function loadScript() {
       loading = null
       reject(new Error('Turnstile failed to load'))
     }
-    document.head.append(s)
+    document.head.appendChild(s)
   })
   return loading
 }

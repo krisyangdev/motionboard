@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { LOCALES, DEFAULT_LOCALE, HTML_LANG, localizePath, pageUrl } from '../src/core/i18n.ts'
-import { sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
+import { ROBOTS_DISALLOW, sitePages, readRenamed, readVideos } from '../src/core/pages.ts'
 import { headersFile } from '../src/core/headers.ts'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
@@ -25,9 +25,7 @@ export function generate() {
     [
       'User-agent: *',
       'Allow: /',
-      'Disallow: /api/',
-      'Disallow: /admin/',
-      'Disallow: /account/',
+      ...ROBOTS_DISALLOW.map((p) => `Disallow: ${p}`),
       '',
       `Sitemap: ${SITE_URL}/sitemap.xml`,
       ...(videos.length ? [`Sitemap: ${SITE_URL}/sitemap-video.xml`] : []),

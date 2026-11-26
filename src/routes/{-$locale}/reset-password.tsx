@@ -72,6 +72,7 @@ function ResetPassword() {
   return (
     <AuthCard title={m.reset.title}>
       <Form
+        method="post"
         className="flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault()

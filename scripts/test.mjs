@@ -5,6 +5,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { HTML_LANG, LOCALES, PREFIXED_LOCALES } from '../src/core/i18n.ts'
+import { isPrivatePath } from '../src/core/pages.ts'
 
 const root = new URL('..', import.meta.url).pathname
 // Optional first argument: another assets directory (used to try the checks on a hand-made site).
@@ -139,7 +140,7 @@ for (const { path, html } of prerendered) {
 }
 check('internal links', [...links], ([href, from]) => {
   if (!href.endsWith('/')) return `link without trailing slash ${href} (on ${from})`
-  return pageExists(href) || redirectSources.has(href) ? '' : `broken ${href} (on ${from})`
+  return isPrivatePath(href) || pageExists(href) || redirectSources.has(href) ? '' : `broken ${href} (on ${from})`
 })
 
 // 7. robots.txt

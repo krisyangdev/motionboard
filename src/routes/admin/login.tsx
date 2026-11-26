@@ -35,7 +35,7 @@ function Login() {
     <main className="mx-auto flex min-h-screen w-full max-w-sm items-center px-4">
       <Card className="w-full">
         <CardPanel>
-          <form onSubmit={submit} className="flex flex-col gap-4">
+          <form method="post" onSubmit={submit} className="flex flex-col gap-4">
             <h1 className="font-semibold text-xl">Admin sign in</h1>
             {login.error ? (
               <Alert variant="error">

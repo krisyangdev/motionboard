@@ -10,12 +10,16 @@ import { grant } from '../credits/ledger'
 import { db, schema } from '../db'
 import { sendEmail } from '../email/send'
 import { resetPassword, verifyEmail } from '../email/templates'
-import { isLocale, localizePath, type Locale } from '../i18n'
+import { DEFAULT_LOCALE, isLocale, localizePath, type Locale } from '../i18n'
 import { appEnv } from '../server/env'
 import { captureServerException, trackServer } from '../server/track'
 import { SITE } from '../../../site.config.ts'
 
-const localeOf = (user: { locale?: unknown }): Locale => (isLocale(user.locale) ? user.locale : 'en')
+// `locale` is an additional user field; Better Auth's hook types do not include it.
+const localeOf = (user: object): Locale => {
+  const locale = (user as { locale?: unknown }).locale
+  return isLocale(locale) ? locale : DEFAULT_LOCALE
+}
 
 export function auth() {
   const env = appEnv()

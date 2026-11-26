@@ -13,7 +13,7 @@ const body = z.object({
 export const Route = createFileRoute('/api/admin/users/$id/credits')({
   server: {
     handlers: {
-      POST: handle(async ({ request, params }) => {
+      POST: handle(async ({ request, params }: { request: Request; params: { id: string } }) => {
         const admin = await requireAdmin(request)
         const { delta, reason } = await readJson(request, body)
         if (!(await userExists(params.id))) throw new HttpError(404, 'User not found', 'not_found')

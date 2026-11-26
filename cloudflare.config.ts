@@ -17,7 +17,10 @@ export default defineConfig({
       DB: bindings.d1({ name: 'site-template', id: '28ab46c0-0d3e-4fbb-8b5e-8c79a83d7ce8' }),
       BUCKET: bindings.r2({ name: 'site-template-files' }),
       JOBS: bindings.queue<{ jobId: string }>({ name: 'site-template-jobs' }),
-      BETTER_AUTH_URL: bindings.text(`https://${SITE.domain}`),
+      // Declared as a secret only because local runs take values from .dev.vars for secrets alone (text
+      // bindings cannot be overridden locally). Production value: https://<domain>, set with
+      // `cf workers secrets update`.
+      BETTER_AUTH_URL: bindings.secret(),
       BETTER_AUTH_SECRET: bindings.secret(),
       ADMIN_BOOTSTRAP_TOKEN: bindings.secret(),
       DODO_PAYMENTS_ENVIRONMENT: bindings.text('test_mode'),

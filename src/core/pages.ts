@@ -4,8 +4,20 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SITE } from '../../site.config.ts'
-import { DEFAULT_LOCALE, LOCALES, type Locale } from './i18n.ts'
+import { DEFAULT_LOCALE, LOCALES, localizePath, stripLocale, type Locale } from './i18n.ts'
 import { extraPages } from '../site/pages.ts'
+
+/**
+ * Pages rendered per request, never prerendered or listed in the sitemap: accounts, the app, admin, API.
+ * They answer with noindex. `robotsDisallow` also keeps crawlers out (login/signup stay crawlable so
+ * crawlers can see their noindex, since every page links to them).
+ */
+export const PRIVATE_PATHS = ['/api/', '/admin/', '/account/', '/app/', '/login/', '/signup/', '/forgot-password/', '/reset-password/']
+export const ROBOTS_DISALLOW = ['/api/', '/admin/', ...LOCALES.flatMap((l) => ['/account/', '/app/'].map((p) => localizePath(l, p)))]
+export const isPrivatePath = (path: string) => {
+  const p = stripLocale(path.endsWith('/') ? path : `${path}/`)
+  return PRIVATE_PATHS.some((prefix) => p.startsWith(prefix))
+}
 
 export type SitePage = {
   /** Default-language path with leading and trailing slash. */
