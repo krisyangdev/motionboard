@@ -1,5 +1,5 @@
 {
-  "include": ["src", "vite.config.ts", ".cloudflare/types"],
+  "include": ["src", "content", "scripts", "*.ts", ".cloudflare/types"],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
@@ -8,25 +8,16 @@
       "@/*": ["./src/*"]
     },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": [
-        "./.cloudflare/types/index.d.ts",
-        "node",
-        "vite/client"
-    ],
-
-    /* Bundler mode */
+    "types": ["node", "vite/client"],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
-
-    /* Linting */
     "skipLibCheck": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
     "resolveJsonModule": true
   }
 }

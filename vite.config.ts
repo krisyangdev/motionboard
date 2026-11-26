@@ -1,37 +1,45 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
-import terms from './src/data/terms.json'
-import { PAGES } from './src/data/page-index'
-import { ALT_LANGS, alternateUrls, SITE_URL } from './src/site.config'
+import mdx from '@mdx-js/rollup'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import remarkGfm from 'remark-gfm'
+import { SITE_URL } from './site.config.ts'
+import { LOCALES, localizePath, alternateUrls } from './src/core/i18n.ts'
+import { contentIndex, sitePages } from './src/core/pages.ts'
+import { generate } from './scripts/generate.mjs'
 
-// A page in every language with its hreflang alternates.
-const indexed = (path: string) => {
-  const alternateRefs = alternateUrls(path).map((a) => ({ hreflang: a.lang, href: a.href }))
-  return ALT_LANGS.map(({ prefix }) => ({ path: `${prefix}${path}`, sitemap: { alternateRefs } }))
-}
+// Writes robots.txt, _redirects, _headers, llms.txt and the video sitemap into public/ before every build and dev start.
+// `virtual:content-index`: names and frontmatter of all content files (see contentIndex()).
+const contentIndexPlugin = (): Plugin => ({
+  name: 'content-index',
+  resolveId: (id) => (id === 'virtual:content-index' ? '\0virtual:content-index' : undefined),
+  load: (id) => (id === '\0virtual:content-index' ? `export default ${JSON.stringify(contentIndex())}` : undefined),
+})
+
+const prebuild = (): Plugin => ({ name: 'prebuild', buildStart: () => generate(), configureServer: () => generate() })
+
+const pages = sitePages().flatMap((p) =>
+  LOCALES.map((l) => ({
+    path: localizePath(l, p.path),
+    sitemap: { alternateRefs: alternateUrls(p.path).map((a) => ({ hreflang: a.lang, href: a.href })) },
+  })),
+)
 
 export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
+    prebuild(),
+    contentIndexPlugin(),
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm], providerImportSource: undefined }) },
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
+    tailwindcss(),
     tanstackStart({
-      // Every page is prerendered to static HTML and served as a static asset; links to
-      // static files (recipe .md, media) are not pages.
       prerender: { enabled: true, crawlLinks: true, failOnError: true, filter: ({ path }) => !path.includes('#') && !/\.\w+\/?$/.test(path) },
-      pages: [
-        // English at the root, Chinese mirrored under /zh/.
-        ...indexed('/'),
-        ...terms.flatMap((t) => indexed(`/recipes/${t.slug}/`)),
-        ...PAGES.flatMap((p) => indexed(p.path)),
-        // Found by the crawler but not search pages: the personal saved list, an in-page
-        // anchor, and the recipe files written for agents (listed in llms.txt instead).
-        ...['/saved', '/saved/', '/#recipes', '/zh/saved', '/zh/saved/', '/zh/#recipes', ...terms.map((t) => `/r/${t.slug}.md`)].map((path) => ({
-          path,
-          sitemap: { exclude: true },
-        })),
-      ],
+      pages,
       sitemap: { enabled: true, host: SITE_URL },
     }),
     viteReact(),
