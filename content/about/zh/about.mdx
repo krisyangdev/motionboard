@@ -1,0 +1,24 @@
+---
+title: 关于 Motionboard
+description: "介绍 Motionboard 由谁制作、58 个动效配方如何从宣传片中拆解出来并核对、发现错误怎样反馈，以及 MIT 许可允许你做什么。"
+published: "2026-11-26"
+updated: "2026-11-26"
+lede: "Motionboard 是一个免费的宣传片动效配方库。这个页面说明它由谁制作，以及每个配方是怎样做出来和核对的。"
+faq: [["配方可以用在商业宣传片里吗？", "可以。配方和源码采用 MIT 许可，可以用在你自己的项目里，包括付费项目。"], ["一定要用 Claude Code 或 Codex 吗？", "不用。每个配方文件都是普通的 Markdown，里面有完整的 HTML 和 GSAP 源码，任何编程 agent 或者人都能运行。"]]
+---
+
+## Motionboard 是什么
+
+Motionboard 收录了 58 个动效配方。每个配方是一个 10 秒、1920x1080 的镜头，取自苹果级宣传片的镜头语言，用 HyperFrames、HTML 和 GSAP 重新做成代码。每个配方页面都有成片、简短规格、提示词，以及一个包含完整可运行源码的 Markdown 文件，编程 agent 拿到它就能为你自己的产品重做这个镜头。
+
+## 谁在制作
+
+Motionboard 由 Kris Yang 制作（GitHub 账号 [krisyangdev](https://github.com/krisyangdev)）。源码和 agent skill 都在 [Motionboard 仓库](https://github.com/krisyangdev/motionboard)里。
+
+## 配方怎样制作和核对
+
+每个配方都从真实宣传片里的一个镜头动作出发。我们先写规格，再搭建镜头、渲染成片，然后对照规格逐帧检查，通过后才发布。配方文件里的源码就是渲染页面上那段成片的代码。配方有改动时，页面会显示新的更新日期。
+
+## 更正
+
+如果某个配方渲染失败，或者成片和源码对不上，请在 [GitHub](https://github.com/krisyangdev/motionboard/issues) 上提一个 issue，写明配方名称。确认的问题我们会修复，并更新页面日期。

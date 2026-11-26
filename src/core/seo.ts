@@ -24,7 +24,7 @@ export type SeoPage = {
   breadcrumb?: Crumb[]
   /** JSON-LD nodes, wrapped in one @graph with the breadcrumb. Use the helpers below. Never FAQPage: the FAQ stays visible content only. */
   jsonLd?: object[]
-  /** noindex pages get no canonical or hreflang links and stay out of the sitemap. */
+  /** noindex,follow: no canonical or hreflang links, out of the sitemap, but crawlers still follow the links. */
   noindex?: boolean
 }
 
@@ -54,7 +54,7 @@ export function seoHead(p: SeoPage) {
   ]
   if (SITE.social.twitter) meta.push({ name: 'twitter:site', content: SITE.social.twitter })
   if (p.video) meta.push({ property: 'og:video', content: p.video })
-  if (p.noindex) meta.push({ name: 'robots', content: 'noindex' })
+  if (p.noindex) meta.push({ name: 'robots', content: 'noindex,follow' })
   return {
     meta,
     links: p.noindex

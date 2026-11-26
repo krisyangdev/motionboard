@@ -9,9 +9,10 @@ type FooterLink = { label: string; href: string; external?: boolean; cta?: strin
 export function Footer() {
   const l = useShellLocale()
   const m = useCoreMessages()
-  // Privacy and Terms appear only when the site has those pages in this language; Contact only with an email address.
+  // About, Privacy and Terms appear only when the site has those pages in this language; Contact only with an email address.
   const links: FooterLink[] = [
     ...footerNav.filter((item) => !item.path || pageExists(l, item.path.split('#')[0])).map((item) => ({ label: item.label[l], href: item.href ?? localizePath(l, item.path ?? '/'), external: !!item.href, cta: item.cta })),
+    ...(pageExists(l, '/about/') ? [{ label: m.footer.about, href: localizePath(l, '/about/') }] : []),
     ...(pageExists(l, '/privacy/') ? [{ label: m.footer.privacy, href: localizePath(l, '/privacy/') }] : []),
     ...(pageExists(l, '/terms/') ? [{ label: m.footer.terms, href: localizePath(l, '/terms/') }] : []),
     ...(SITE.email ? [{ label: m.footer.contact, href: `mailto:${SITE.email}` }] : []),

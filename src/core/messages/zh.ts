@@ -7,7 +7,7 @@ export default {
   language: '语言',
   signIn: '登录',
   notFound: { title: '页面不存在', body: '这个页面不存在，或已经搬走。', back: '回到首页' },
-  footer: { privacy: '隐私政策', terms: '服务条款', contact: '联系' },
+  footer: { about: '关于', privacy: '隐私政策', terms: '服务条款', contact: '联系' },
 
   page: {
     breadcrumb: '面包屑导航',
@@ -19,19 +19,18 @@ export default {
     howTo: '使用方法',
     faq: '常见问题',
     moreTools: '更多工具',
-  },
-
-  hubs: {
-    tools: {
-      title: '免费在线工具',
-      description: '在浏览器里直接使用的免费工具：无需注册，无需安装，内容不会上传。',
-      lede: '在浏览器里直接使用的免费工具，无需注册，无需安装。',
-    },
-    guides: {
-      title: '指南',
-      description: '一步一步的操作指南和实用笔记，写给想把事情做完的人。',
-      lede: '一步一步的操作指南和实用笔记。',
-    },
+    examples: '示例',
+    exampleInput: '输入',
+    exampleOutput: '结果',
+    limits: '限制与隐私',
+    sources: '来源',
+    checked: '核对于',
+    related: '相关内容',
+    by: '作者',
+    pagination: '分页',
+    previous: '上一页',
+    next: '下一页',
+    pageN: (n: number) => `第 ${n} 页`,
   },
 
   app: {

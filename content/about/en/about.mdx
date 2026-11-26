@@ -1,0 +1,24 @@
+---
+title: About Motionboard
+description: "Who runs Motionboard, how its 58 motion recipes are broken down from launch films and checked, how to report a mistake, and what the MIT licence lets you do."
+published: "2026-11-26"
+updated: "2026-11-26"
+lede: "Motionboard is a free library of motion recipes for launch films. This page says who makes it and how each recipe is built and checked."
+faq: [["Can I use a recipe in a commercial launch film?", "Yes. The recipes and their source are MIT licensed, so you can use them in your own projects, including paid work."], ["Do I need Claude Code or Codex?", "No. Each recipe file is plain Markdown with the full HTML and GSAP source. Any coding agent, or a person, can run it."]]
+---
+
+## What Motionboard is
+
+Motionboard is a library of 58 motion recipes. Each recipe is one 10-second 1920x1080 shot taken from the language of Apple-grade launch films and rebuilt in code with HyperFrames, HTML and GSAP. Every recipe page has the film, a short spec, a prompt and a Markdown file with the full runnable source, so a coding agent can recreate the shot for your own product.
+
+## Who makes it
+
+Motionboard is made by Kris Yang ([krisyangdev on GitHub](https://github.com/krisyangdev)). The source and the agent skill live in the [Motionboard repository](https://github.com/krisyangdev/motionboard).
+
+## How recipes are made and checked
+
+Each recipe starts from a move we saw in real launch films. We write the spec first, build the shot, render it, and watch the film frame by frame against the spec before it is published. The source in the recipe file is the exact code that rendered the film on the page. When a recipe changes, its page shows the new update date.
+
+## Corrections
+
+If a recipe does not render, or the film and the source disagree, open an issue on [GitHub](https://github.com/krisyangdev/motionboard/issues) with the recipe name. We fix confirmed problems and update the page date.

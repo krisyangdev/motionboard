@@ -1,6 +1,6 @@
-// UI strings of the template (shell, page templates, sign-in/account/app pages, emails, hub pages), one file per language.
+// UI strings of the template (shell, page templates, sign-in/account/app pages, emails), one file per language.
 // `src/core/messages/<code>.ts` must exist for every code in `languages` in site.config.ts: copy this file and translate it.
-// Plain data and type-only imports, so Node can load it too (src/core/pages.ts reads `hubs`). Site strings live in src/site/messages.ts.
+// Plain data and type-only imports, so Node can load it too (src/core/pages.ts reads `page`). Site strings live in src/site/messages.ts.
 // Admin pages are English only and have no strings here.
 const en = {
   // Shell
@@ -10,7 +10,7 @@ const en = {
   language: 'Language',
   signIn: 'Sign in',
   notFound: { title: 'Page not found', body: 'This page does not exist or has moved.', back: 'Back to home' },
-  footer: { privacy: 'Privacy', terms: 'Terms', contact: 'Contact' },
+  footer: { about: 'About', privacy: 'Privacy', terms: 'Terms', contact: 'Contact' },
 
   // Page templates
   page: {
@@ -23,23 +23,20 @@ const en = {
     howTo: 'How to use',
     faq: 'Frequently asked questions',
     moreTools: 'More tools',
+    examples: 'Examples',
+    exampleInput: 'Input',
+    exampleOutput: 'Result',
+    limits: 'Limits and privacy',
+    sources: 'Sources',
+    checked: 'checked',
+    related: 'Related',
+    by: 'By',
+    pagination: 'Pagination',
+    previous: 'Previous',
+    next: 'Next',
+    pageN: (n: number) => `Page ${n}`,
   },
 
-  // Hub pages: title and description go in <head>, the lede under the heading.
-  hubs: {
-    tools: {
-      title: 'Free online tools',
-      description: 'Free browser tools that run on your device: no sign-up, nothing to install, nothing uploaded.',
-      lede: 'Free browser tools that run on your device. No sign-up, nothing to install.',
-    },
-    guides: {
-      title: 'Guides',
-      description: 'Step-by-step guides and practical notes, written for people who want the task done.',
-      lede: 'Step-by-step guides and practical notes.',
-    },
-  },
-
-  // Sign-in, account and app pages
   app: {
     seo: {
       login: { title: 'Sign in', description: 'Sign in to your account.' },

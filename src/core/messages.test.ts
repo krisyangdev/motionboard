@@ -26,6 +26,7 @@ describe('core messages files', () => {
   it('the functions return text for the same arguments in every language', () => {
     for (const m of [en, zh, es]) {
       expect(m.app.signup.done('a@b.test')).toContain('a@b.test')
+      expect(m.page.pageN(12)).toContain('12')
       expect(m.app.account.packCredits(5)).toContain('5')
       expect(m.email.verify.subject('Acme')).toContain('Acme')
       expect(m.email.receipt.subject('Acme', 'Pro')).toContain('Pro')

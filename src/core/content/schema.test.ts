@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { guideSchema, legalSchema, parseContent, toolFileSchema } from './schema'
+import { aboutSchema, guideSchema, hubFileSchema, legalSchema, parseContent, toolFileSchema } from './schema'
 
 const demand = { source: 'serp-check', note: 'Page 1 shows tools of the same kind.', checked: '2026-11-26' }
 const text = {
@@ -9,7 +9,7 @@ const text = {
   description: 'Paste your text to count words, characters and reading time instantly. Runs in your browser, so nothing you type is uploaded or stored.',
   lede: 'Paste text to see the counts.',
 }
-const tool = { slug: 'word-counter', tool: null, published: '2026-11-26', updated: '2026-11-26', en: text }
+const tool = { slug: 'word-counter', tool: 'word-counter', published: '2026-11-26', updated: '2026-11-26', en: text }
 const guide = { ...text, published: '2026-11-26', updated: '2026-11-26', kind: 'guide' }
 const legal = { title: 'Privacy Policy', description: text.description, published: '2026-11-26', updated: '2026-11-26' }
 const message = (fn: () => unknown) => {
@@ -49,5 +49,27 @@ describe('content schemas', () => {
     const { demand: _, ...noDemand } = guide
     expect(message(() => parseContent(guideSchema, noDemand, 'g.mdx'))).toContain('demand:')
     expect(message(() => parseContent(legalSchema, { ...legal, updated: '2026-01-01' }, 'l.mdx'))).toContain('updated:')
+  })
+  it('require a tool id: a page without a working tool is a guide', () => {
+    expect(message(() => parseContent(toolFileSchema(['en']), { ...tool, tool: null }, 't.json'))).toContain('tool:')
+  })
+  it('accept tool examples, limits and at most three sections', () => {
+    const section = { h2: 'When to use it', body: 'Use it for limits.' }
+    const full = { ...text, examples: [{ input: 'a b', output: '2 words', caption: 'Two words.' }], limits: 'Plain text only.', sections: [section] }
+    expect(() => parseContent(toolFileSchema(['en']), { ...tool, en: full }, 't.json')).not.toThrow()
+    expect(message(() => parseContent(toolFileSchema(['en']), { ...tool, en: { ...full, sections: [section, section, section, section] } }, 't.json'))).toContain('en.sections')
+  })
+  it('accept a hub with `none` demand and check its intro, page size and FAQ length', () => {
+    const hubText = { ...text, keyword: 'free online tools', title: 'Free online tools for text', demand: { ...demand, source: 'none' }, intro: 'What is in the set.' }
+    const hub = { collection: 'tools', published: '2026-11-26', updated: '2026-11-26', en: hubText }
+    expect(() => parseContent(hubFileSchema(['en']), hub, 'h.json')).not.toThrow()
+    expect(message(() => parseContent(hubFileSchema(['en']), { ...hub, pageSize: 61 }, 'h.json'))).toContain('pageSize')
+    expect(message(() => parseContent(hubFileSchema(['en']), { ...hub, collection: 'items' }, 'h.json'))).toContain('collection')
+    expect(message(() => parseContent(hubFileSchema(['en']), { ...hub, en: { ...hubText, faq: Array.from({ length: 6 }, (_, i) => [`q${i}`, 'a']) } }, 'h.json'))).toContain('en.faq')
+  })
+  it('accept an about page without a keyword and a legal page with noindex', () => {
+    const about = { title: 'About Acme', description: text.description, lede: 'Who runs the site.', published: '2026-11-26', updated: '2026-11-26' }
+    expect(() => parseContent(aboutSchema, about, 'a.mdx')).not.toThrow()
+    expect(() => parseContent(legalSchema, { ...legal, noindex: true }, 'l.mdx')).not.toThrow()
   })
 })

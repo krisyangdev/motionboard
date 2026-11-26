@@ -1,0 +1,14 @@
+// Hub pagination rules, shared by the registry (pages.ts, Node) and the hub route (app): imports nothing from either.
+// Page 1 is the hub itself (/guides/), page n is /guides/page/<n>/.
+
+/** Members on a hub page unless the hub file sets `pageSize`; also the maximum. */
+export const HUB_PAGE_SIZE = 60
+
+/** Number of pages for `total` members, at least 1 (an empty hub still has its page). */
+export const hubPageCount = (total: number, pageSize: number): number => Math.max(1, Math.ceil(total / pageSize))
+
+/** Default-language path of page `n` of the hub at `hubPath` (leading and trailing slash). */
+export const hubPagePath = (hubPath: string, n: number): string => (n <= 1 ? hubPath : `${hubPath}page/${n}/`)
+
+/** The members shown on page `n` (1-based). */
+export const hubPageSlice = <T>(members: readonly T[], n: number, pageSize: number): T[] => members.slice((n - 1) * pageSize, n * pageSize)

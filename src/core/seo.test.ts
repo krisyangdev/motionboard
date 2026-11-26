@@ -45,7 +45,7 @@ describe('seoHead', () => {
   it('noindex drops canonical and hreflang and adds the robots meta', () => {
     const head = seoHead({ ...base, noindex: true })
     expect(head.links).toEqual([])
-    expect(metaOf(head, 'name', 'robots')).toBe('noindex')
+    expect(metaOf(head, 'name', 'robots')).toBe('noindex,follow')
     expect(metaOf(seoHead(base), 'name', 'robots')).toBeUndefined()
   })
   it('serialises JSON-LD into one @graph script', () => {

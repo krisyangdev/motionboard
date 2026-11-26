@@ -4,7 +4,7 @@
 // dev start and build (npm predev / prebuild).
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import type { SitePage, Video } from '../core/pages.ts'
+import type { ExtraPage, Video } from '../core/pages.ts'
 
 const gen = (file: string) => fileURLToPath(new URL(`./data/gen/${file}`, import.meta.url))
 const read = (file: string) => {
@@ -13,7 +13,7 @@ const read = (file: string) => {
 }
 
 /** Recipe pages, hub pages and guides (everything but the home page). */
-export const extraPages: SitePage[] = JSON.parse(read('pages.json'))
+export const extraPages: ExtraPage[] = JSON.parse(read('pages.json'))
 
 /** Recipe films and the showcase films of the launch-video-examples guide. */
 export const extraVideos: Video[] = JSON.parse(read('videos.json'))

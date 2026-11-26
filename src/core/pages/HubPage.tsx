@@ -1,83 +1,123 @@
-// List page template, plus the small pieces the other page templates share (breadcrumb, card grid, link).
-import type { ReactNode } from 'react'
-import { Link } from '@tanstack/react-router'
-import { localizePath, type Locale } from '@/core/i18n'
+// Template for a hub: the page at /<collection>/ that lists the collection's indexable members, 60 per page
+// (or `pageSize` of the hub file); further pages live at /<collection>/page/<n>/ (route files `page/$n.tsx`).
+// Order: breadcrumb, h1, lede, intro, members, pagination, sections, FAQ. Page 2 and up show only the members.
+import { notFound } from '@tanstack/react-router'
+import { existingLocales, pageExists, seoState } from '@/core/content/exists'
+import { pageH1 } from '@/core/content/h1'
+import { HUB_PAGE_SIZE, hubPageCount, hubPagePath, hubPageSlice } from '@/core/content/hubs'
+import { members, type Entry } from '@/core/content/members'
+import type { HubCollection, HubFile, HubText } from '@/core/content/schema'
+import { paramLocale, type Locale } from '@/core/i18n'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
-import type { Crumb } from '@/core/seo'
+import { seoHead } from '@/core/seo'
+import { Breadcrumb, trail } from '@/core/ui/page/Breadcrumb'
+import { FaqList } from '@/core/ui/page/FaqList'
+import { LCP } from '@/core/ui/page/link'
+import { Pagination } from '@/core/ui/page/Pagination'
+import { RelatedGrid } from '@/core/ui/page/RelatedGrid'
+import { slots } from '@/site/slots'
 
-/** Spread onto the h1 so the browser reports it as the LCP candidate (not in React's intrinsic types). */
-export const LCP = { elementtiming: 'lcp' }
+// The account and sign-in pages (layer 1) import PathLink from here.
+export { PathLink } from '@/core/ui/page/link'
 
-/** Client-side link to a default-language path; the current language is applied here. */
-export function PathLink({ path, locale, className, children }: { path: string; locale: Locale; className?: string; children: ReactNode }) {
-  // The path is data (content files, MDX), so it cannot be checked against the route tree.
-  return (
-    <Link className={className} to={localizePath(locale, path) as '/{-$locale}/'}>
-      {children}
-    </Link>
-  )
+const hubFiles = import.meta.glob<HubFile>('/content/hubs/*.json', { import: 'default' })
+
+export type HubData = {
+  collection: HubCollection
+  /** Page number, 1 = the hub itself. */
+  n: number
+  pages: number
+  text: HubText
+  /** The members shown on this page. */
+  entries: Entry[]
+  /** Languages the hub exists in (language switcher). */
+  locales: readonly Locale[]
+  /** Languages for the hreflang set of this page: the indexable ones that have page `n`. */
+  hreflang: readonly Locale[]
 }
 
-/** Breadcrumb trail of a page in a language: home, then `items`, the page itself last. The same array goes to seoHead's `breadcrumb`. */
-export const trail = (locale: Locale, ...items: Crumb[]): Crumb[] => [{ name: coreMessages[locale].page.home, path: '/' }, ...items]
+const hubPath = (collection: HubCollection) => `/${collection}/`
 
-/** The visible breadcrumb; `crumbs` is the whole trail from `trail()`, home first and the current page last (not a link). */
-export function Breadcrumb({ crumbs }: { crumbs: Crumb[] }) {
+/**
+ * Route loader of a hub page. 404 when the hub does not exist in the language (no hub text or no member there)
+ * or page `n` does not exist.
+ */
+export async function loadHub(collection: HubCollection, localeParam: string | undefined, n: number): Promise<HubData> {
+  const locale = paramLocale(localeParam)
+  const path = hubPath(collection)
+  if (!pageExists(locale, path)) throw notFound()
+  const file = await hubFiles[`/content/hubs/${collection}.json`]?.()
+  const text = file?.[locale]
+  if (!file || !text) throw notFound()
+  const size = file.pageSize ?? HUB_PAGE_SIZE
+  const pages = hubPageCount(members(collection, locale).length, size)
+  if (!Number.isInteger(n) || n < 1 || n > pages) throw notFound()
+  const hreflang = seoState(path, locale).locales.filter((l) => hubPageCount(members(collection, l).length, size) >= n)
+  return { collection, n, pages, text, entries: hubPageSlice(members(collection, locale), n, size), locales: existingLocales(path), hreflang }
+}
+
+/** The breadcrumb of a hub page: shown by the page and written to its JSON-LD. Page 2 and up add a level for the page. */
+const hubCrumbs = (collection: HubCollection, n: number, locale: Locale) => {
+  const m = coreMessages[locale].page
+  return trail(locale, { name: m[collection], path: hubPath(collection) }, ...(n > 1 ? [{ name: m.pageN(n), path: hubPagePath(hubPath(collection), n) }] : []))
+}
+
+export function hubHead(d: HubData, locale: Locale) {
+  const suffix = d.n > 1 ? ` – ${coreMessages[locale].page.pageN(d.n)}` : ''
+  return seoHead({
+    title: `${d.text.title}${suffix}`,
+    description: d.text.description,
+    path: hubPagePath(hubPath(d.collection), d.n),
+    locale,
+    locales: d.hreflang,
+    // A page of a noindex hub is noindex as well.
+    noindex: seoState(hubPath(d.collection), locale).noindex,
+    type: 'website',
+    breadcrumb: hubCrumbs(d.collection, d.n, locale),
+  })
+}
+
+const H2 = 'text-xl font-semibold tracking-tight'
+
+export function HubPage({ data }: { data: HubData }) {
   const locale = useLocale()
-  return (
-    <nav aria-label={coreMessages[locale].page.breadcrumb}>
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-        {crumbs.map((c, i) => (
-          <li className="flex items-center gap-2" key={c.path}>
-            {i > 0 && <span aria-hidden>›</span>}
-            {i < crumbs.length - 1 ? (
-              <PathLink className="hover:text-foreground hover:underline" locale={locale} path={c.path}>
-                {c.name}
-              </PathLink>
-            ) : (
-              <span aria-current="page">{c.name}</span>
-            )}
-          </li>
-        ))}
-      </ol>
-    </nav>
-  )
-}
-
-export type HubEntry = { title: string; description?: string; href: string }
-
-export function CardGrid({ entries, locale }: { entries: HubEntry[]; locale: Locale }) {
-  return (
-    <ul className="grid gap-3 sm:grid-cols-2">
-      {entries.map((e) => (
-        <li key={e.href}>
-          <PathLink
-            className="flex h-full flex-col gap-1 rounded-xl border bg-card p-4 text-card-foreground shadow-xs/5 transition-colors hover:bg-muted"
-            locale={locale}
-            path={e.href}
-          >
-            <span className="font-medium">{e.title}</span>
-            {e.description && <span className="text-sm text-muted-foreground">{e.description}</span>}
-          </PathLink>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-export function HubPage({ title, lede, entries, crumbs }: { title: string; lede: ReactNode; entries: HubEntry[]; crumbs: Crumb[] }) {
-  const locale = useLocale()
+  const { collection, n, pages, text, entries } = data
+  const ctx = { type: 'hub', locale } as const
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <Breadcrumb crumbs={crumbs} />
+      <Breadcrumb crumbs={hubCrumbs(collection, n, locale)} />
       <h1 {...LCP} className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        {title}
+        {n > 1 ? `${pageH1(text)} – ${coreMessages[locale].page.pageN(n)}` : pageH1(text)}
       </h1>
-      <p className="mt-3 text-lg text-muted-foreground">{lede}</p>
+      {n === 1 && (
+        <>
+          <p className="mt-3 text-lg text-muted-foreground">{text.lede}</p>
+          {slots.afterLede?.(ctx)}
+          <p className="mt-4 text-muted-foreground">{text.intro}</p>
+        </>
+      )}
       <div className="mt-8">
-        <CardGrid entries={entries} locale={locale} />
+        <RelatedGrid card={slots.card} entries={entries} locale={locale} />
       </div>
+      <Pagination hubPath={hubPath(collection)} locale={locale} page={n} pages={pages} />
+      {n === 1 && (
+        <>
+          {text.sections?.map((s) => (
+            <section className="mt-12" key={s.h2}>
+              <h2 className={H2}>{s.h2}</h2>
+              <p className="mt-3 text-muted-foreground">{s.body}</p>
+            </section>
+          ))}
+          {text.faq && text.faq.length > 0 && (
+            <section className="mt-12">
+              <h2 className={H2}>{coreMessages[locale].page.faq}</h2>
+              <FaqList items={text.faq} />
+            </section>
+          )}
+          {slots.afterContent?.(ctx)}
+        </>
+      )}
     </main>
   )
 }

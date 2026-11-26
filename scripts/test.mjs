@@ -6,8 +6,9 @@ import { join, relative, resolve } from 'node:path'
 import { SITE, SITE_URL } from '../site.config.ts'
 import { DIR, HTML_LANG, LOCALES, PREFIXED_LOCALES, localizePath, stripLocale } from '../src/core/i18n.ts'
 import { TITLE_MAX_WIDTH, textWidth } from '../src/core/content/schema.ts'
-import { isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
-import { sitemapExclude } from '../src/site/pages.ts'
+import { hubPagination, indexableLocales, isPrivatePath, messagesOf, pageLocales, sitePages } from '../src/core/pages.ts'
+// Same value as ORG_ID in src/core/seo.ts (that module is bundler-only: extensionless imports).
+const ORG_ID = `${SITE_URL}/about/#org`
 
 const root = new URL('..', import.meta.url).pathname
 // Optional first argument: another assets directory (used to try the checks on a hand-made site).
@@ -61,16 +62,16 @@ check('sitemap not empty', [locs.length], (n) => (n > 0 ? '' : 'no <loc> found')
 check('sitemap locs on site origin', locs, (l) => (l.startsWith(`${SITE_URL}/`) ? '' : `${l} is not under ${SITE_URL}`))
 check('sitemap locs prerendered', locs, (l) => (pageExists(stripOrigin(l)) ? '' : `no page for ${l}`))
 
-// A page exists only in the languages it has content for (no fallback), so its hreflang set is those languages plus x-default.
+// A page exists only in the languages it has content for (no fallback), and its hreflang set is the languages the quality gate
+// lets into the index plus x-default (a noindex language has no canonical or hreflang and is not in anyone's set).
 const pages = sitePages()
 const pageOfPath = (path) => pages.find((p) => p.path === stripLocale(path))
-const wantLangsOf = (page) => [...pageLocales(page).map((l) => HTML_LANG[l]), 'x-default'].sort().join(',')
+const wantLangsOf = (page) => [...indexableLocales(page).map((l) => HTML_LANG[l]), 'x-default'].sort().join(',')
 
-// 2a. every page is listed in every language it exists in, and nothing else is listed
-const excludedPaths = new Set(sitemapExclude.flatMap((p) => LOCALES.map((l) => localizePath(l, p))))
-const expectedLocs = pages.flatMap((p) => pageLocales(p).map((l) => `${SITE_URL}${localizePath(l, p.path)}`)).filter((u) => !excludedPaths.has(stripOrigin(u)))
-check('sitemap lists every page in its languages', [...new Set([...expectedLocs, ...locs])], (l) =>
-  locSet.has(l) && expectedLocs.includes(l) ? '' : locSet.has(l) ? `${l} is listed but is not a page in that language` : `${l} is a page but is not in the sitemap`)
+// 2a. the sitemap is exactly the indexable pages in their indexable languages: nothing noindex, nothing missing
+const expectedLocs = pages.flatMap((p) => indexableLocales(p).map((l) => `${SITE_URL}${localizePath(l, p.path)}`))
+check('sitemap = exactly the indexable pages', [...new Set([...expectedLocs, ...locs])], (l) =>
+  locSet.has(l) && expectedLocs.includes(l) ? '' : locSet.has(l) ? `${l} is in the sitemap but is not an indexable page` : `${l} is an indexable page but is not in the sitemap`)
 
 // 2b. hreflang alternates in the sitemap: one per language the page exists in plus x-default, all themselves in the sitemap
 check('sitemap alternates', urlBlocks, (b) => {
@@ -79,7 +80,7 @@ check('sitemap alternates', urlBlocks, (b) => {
   const page = pageOfPath(stripOrigin(loc))
   if (!page) return `${loc}: not a page of the site (sitePages())`
   const wantLangs = wantLangsOf(page)
-  if (links.length !== pageLocales(page).length + 1) return `${loc}: ${links.length} alternates, want ${pageLocales(page).length + 1}`
+  if (links.length !== indexableLocales(page).length + 1) return `${loc}: ${links.length} alternates, want ${indexableLocales(page).length + 1}`
   const langs = links.map((h) => attr(h, 'hreflang')).sort().join(',')
   if (langs !== wantLangs) return `${loc}: hreflang set ${langs}, want ${wantLangs}`
   const hrefs = links.map((h) => attr(h, 'href'))
@@ -115,8 +116,8 @@ check('page head', sitemapPages, ({ path, html }) => {
   const page = pageOfPath(path)
   const alts = tags('link', html).filter((t) => attr(t, 'rel') === 'alternate' && attr(t, 'hreflang'))
   if (!page) errs.push('not a page of the site (sitePages())')
-  else if (alts.length !== pageLocales(page).length + 1) errs.push(`${alts.length} hreflang links, want ${pageLocales(page).length + 1}`)
-  else if (alts.map((t) => attr(t, 'hreflang')).sort().join(',') !== wantLangsOf(page)) errs.push('hreflang set differs from the languages the page exists in')
+  else if (alts.length !== indexableLocales(page).length + 1) errs.push(`${alts.length} hreflang links, want ${indexableLocales(page).length + 1}`)
+  else if (alts.map((t) => attr(t, 'hreflang')).sort().join(',') !== wantLangsOf(page)) errs.push('hreflang set differs from the indexable languages of the page')
   for (const m of all(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g, html)) {
     try {
       JSON.parse(decode(m[1]))
@@ -147,6 +148,14 @@ const metaContent = (html, key, value) => attr(tags('meta', html).find((t) => at
 check('exactly one h1', sitemapPages, ({ path, html }) => {
   const n = all(/<h1[\s>]/g, html).length
   return n === 1 ? '' : `${path}: ${n} <h1> elements, want 1`
+})
+
+// The h1 contains the page's keyword (pages with a keyword: tools, guides, hubs).
+const h1Text = (html) => decode((html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? '').replace(/<[^>]+>/g, '')).trim()
+check('h1 contains the keyword', sitemapPages, ({ path, html }) => {
+  const keyword = pageOfPath(path)?.keyword?.[localeOfPath(path)]
+  if (!keyword) return ''
+  return h1Text(html).toLowerCase().includes(keyword.toLowerCase()) ? '' : `${path}: h1 "${h1Text(html)}" does not contain the keyword "${keyword}"`
 })
 
 check('og:image is an absolute URL', sitemapPages, ({ path, html }) =>
@@ -180,7 +189,7 @@ check('no FAQPage markup', prerendered, ({ path, html }) =>
 // JSON-LD types a page must carry, by page type (any one of each group). BreadcrumbList is checked below against the visible trail.
 const LD_REQUIRED = {
   home: [['WebSite'], ['Organization']],
-  tool: [['WebApplication', 'Article']],
+  tool: [['WebApplication']],
   guide: [['Article']],
   compare: [['Article']],
   alternatives: [['Article']],
@@ -230,8 +239,44 @@ check('year in title = updated year', sitemapPages, ({ path, html }) => {
   return years.every((y) => y === updated) ? '' : `${path}: title year ${years.join(', ')} differs from the updated year ${updated}`
 })
 
-// 4. prerendered pages outside the sitemap must not be indexable
-const outside = prerendered.filter((p) => !locSet.has(`${SITE_URL}${p.path}`) && !p.is404)
+// 3c. the about page defines the Organization node that every page's graph points at (ORG_ID, /about/#org in the default language)
+const aboutPages = prerendered.filter((p) => pageOfPath(p.path)?.type === 'about')
+check('Organization node lives on the about page', [null], () => {
+  const own = aboutPages.find((p) => p.path === localizePath(LOCALES[0], '/about/'))
+  if (!own) return `no about page at ${localizePath(LOCALES[0], '/about/')}: ${ORG_ID} points nowhere`
+  return ''
+})
+check('about page Organization node', aboutPages, ({ path, html }) => {
+  const orgs = ldOf(html).flatMap(ldNodes).filter((n) => [n['@type']].flat().includes('Organization') && n['@id'] === ORG_ID)
+  if (orgs.length !== 1) return `${path}: ${orgs.length} Organization nodes with @id ${ORG_ID}, want 1`
+  const o = orgs[0]
+  const missing = ['name', 'url', 'email', 'logo'].filter((k) => !o[k])
+  return missing.length ? `${path}: Organization node lacks ${missing.join(', ')}` : ''
+})
+
+// 3d. pages 2 and up of a paginated hub: prerendered, never in the sitemap, self-canonical (or noindex where the hub is),
+// linked from the page before, and with a numbered title
+const pagedUrls = new Set(hubPagination().flatMap((p) => p.locales.map((l) => localizePath(l, p.path))))
+const pagedPairs = hubPagination().flatMap((p) => p.locales.map((l) => ({ ...p, l, url: localizePath(l, p.path) })))
+check('hub pagination pages', pagedPairs, (p) => {
+  const page = prerendered.find((x) => x.path === p.url)
+  if (!page) return `${p.url}: not prerendered`
+  const errs = []
+  if (locSet.has(`${SITE_URL}${p.url}`)) errs.push('is in the sitemap')
+  const canon = tags('link', page.html).filter((t) => attr(t, 'rel') === 'canonical').map((t) => attr(t, 'href'))
+  if (p.noindex.includes(p.l)) {
+    const robots = attr(tags('meta', page.html).find((t) => attr(t, 'name') === 'robots') ?? '', 'content') ?? ''
+    if (!/noindex/i.test(robots)) errs.push('hub is noindex but the page has no noindex')
+    if (canon.length) errs.push('noindex page has a canonical')
+  } else if (canon.length !== 1 || canon[0] !== `${SITE_URL}${p.url}`) errs.push(`canonical ${canon.join(', ') || '(none)'} is not its own URL`)
+  if (!new RegExp(`\\b${p.n}\\b`).test(unbranded(titleOf(page.html)))) errs.push(`title has no page number ${p.n}`)
+  const before = prerendered.find((x) => x.path === localizePath(p.l, p.n === 2 ? p.hub : `${p.hub}page/${p.n - 1}/`))
+  if (!before || !all(/\shref="([^"]*)"/g, before.html).some((m) => decode(m[1]) === p.url)) errs.push('is not linked with <a href> from the previous page')
+  return errs.length ? `${p.url}: ${errs.join('; ')}` : ''
+})
+
+// 4. prerendered pages outside the sitemap must not be indexable (pages 2 and up of a paginated hub are indexable but unlisted)
+const outside = prerendered.filter((p) => !locSet.has(`${SITE_URL}${p.path}`) && !p.is404 && !pagedUrls.has(p.path))
 check('pages outside sitemap are noindex', outside, ({ path, html }) => {
   const robots = tags('meta', html).find((t) => attr(t, 'name') === 'robots')
   return robots && /noindex/i.test(attr(robots, 'content') ?? '') ? '' : `${path} is not in the sitemap and has no noindex`

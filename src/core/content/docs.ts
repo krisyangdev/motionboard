@@ -1,11 +1,9 @@
-// MDX pages: content/guides/<lang>/<slug>.mdx and content/legal/<lang>/<slug>.mdx.
+// MDX pages: content/guides/<lang>/<slug>.mdx, content/legal/<lang>/<slug>.mdx and content/about/<lang>/about.mdx.
 import type { ComponentType } from 'react'
-import index from 'virtual:content-index'
-import { LOCALES, type Locale } from '../i18n'
-import type { DocIndexEntry } from '../pages'
+import type { Locale } from '../i18n'
 import type { DocFrontmatter, GuideFrontmatter } from './schema'
 
-export type Collection = 'guides' | 'legal'
+export type Collection = 'guides' | 'legal' | 'about'
 export type { DocFrontmatter, GuideFrontmatter }
 
 export const isGuide = (fm: DocFrontmatter): fm is GuideFrontmatter => 'kind' in fm
@@ -14,11 +12,11 @@ export type Doc = { Component: DocComponent; frontmatter: DocFrontmatter }
 
 type DocModule = { default: DocComponent; frontmatter: DocFrontmatter }
 
-const modules = import.meta.glob<DocModule>('/content/{guides,legal}/*/*.mdx')
+const modules = import.meta.glob<DocModule>('/content/{guides,legal,about}/*/*.mdx')
 
 const fileOf = (collection: Collection, locale: Locale, slug: string) => `/content/${collection}/${locale}/${slug}.mdx`
 
-/** Default-language path of a doc page: /guides/<slug>/, /privacy/. */
+/** Default-language path of a doc page: /guides/<slug>/, /privacy/, /about/. */
 export const docPath = (collection: Collection, slug: string) => (collection === 'guides' ? `/guides/${slug}/` : `/${slug}/`)
 
 // Loaded modules are kept here so a component can read them synchronously: a function cannot travel
@@ -45,12 +43,3 @@ export function loadDoc(collection: Collection, locale: Locale, slug: string): P
 
 /** Doc already loaded by loadDoc, or undefined. */
 export const loadedDoc = (collection: Collection, locale: Locale, slug: string) => loaded.get(fileOf(collection, locale, slug))
-
-/** Docs of a collection in one language, newest first. */
-export function docList(collection: Collection, locale: Locale): DocIndexEntry[] {
-  return index.docs[collection][locale]
-}
-
-/** Languages a doc exists in (the languages that have its file). */
-export const docLocales = (collection: Collection, slug: string): Locale[] =>
-  LOCALES.filter((l) => index.docs[collection][l].some((d) => d.slug === slug))

@@ -19,9 +19,10 @@ The look is coss ui's default (https://coss.com/ui): neutral, quiet, near-black 
 - Popup components (menu, select, dialog, sheet, toast, tooltip, popover) are never in the first screen of a content page and never imported by the shell. Header navigation uses plain links and a native `<details>` on phones; FAQs use `<details>` so answers are in the HTML.
 
 ## Page patterns
-- Tool / recipe page (JSON in `content/tools/`): breadcrumb, h1 with the search keyword, one-line lede, the tool widget, steps, FAQ, related pages, updated date.
-- Guide / legal page (MDX in `content/guides/`, `content/legal/`): breadcrumb, h1, date, prose.
-- Hub page: h1, lede, card grid.
+- Tool page (JSON in `content/tools/`): breadcrumb, h1 with the search keyword, one-line lede, the tool widget, examples, steps, sections, limits, FAQ (first item open), more tools, updated date.
+- Guide page (MDX in `content/guides/`): breadcrumb, h1, lede, byline, prose, sources, FAQ, related.
+- About and legal pages (MDX): breadcrumb, h1, date, prose (about adds the lede and a FAQ).
+- Hub page: breadcrumb, h1, lede, intro, card grid, pagination, sections, FAQ.
 - Account and app pages (layer 1): coss forms (`Field`, `Input`, `Button`), cards, tables; noindex.
 
 ## Checks
