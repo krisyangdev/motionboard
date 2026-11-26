@@ -14,7 +14,7 @@ if (unknown.length || (at !== -1 && !minor.length)) {
 }
 
 const d = new Date()
-const today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+const today = d.toISOString().slice(0, 10) // UTC, the same day the JSON-LD dates (+00:00) name
 try {
   const r = stamp({ today, minor })
   for (const rel of r.bumped) console.log(`updated ${today}: ${rel}`)
