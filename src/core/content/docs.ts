@@ -1,5 +1,6 @@
 // MDX pages: content/guides/<lang>/<slug>.mdx and content/legal/<lang>/<slug>.mdx.
 import type { ComponentType } from 'react'
+import index from 'virtual:content-index'
 import type { Locale } from '../i18n'
 
 export type Collection = 'guides' | 'legal'
@@ -10,7 +11,6 @@ export type Doc = { Component: DocComponent; frontmatter: DocFrontmatter }
 type DocModule = { default: DocComponent; frontmatter: DocFrontmatter }
 
 const modules = import.meta.glob<DocModule>('/content/{guides,legal}/*/*.mdx')
-const frontmatters = import.meta.glob<DocFrontmatter>('/content/{guides,legal}/*/*.mdx', { eager: true, import: 'frontmatter' })
 
 const fileOf = (collection: Collection, locale: Locale, slug: string) => `/content/${collection}/${locale}/${slug}.mdx`
 
@@ -44,9 +44,5 @@ export const loadedDoc = (collection: Collection, locale: Locale, slug: string) 
 
 /** Docs of a collection in one language, newest first. */
 export function docList(collection: Collection, locale: Locale): (DocFrontmatter & { slug: string })[] {
-  const prefix = `/content/${collection}/${locale}/`
-  return Object.entries(frontmatters)
-    .filter(([path]) => path.startsWith(prefix))
-    .map(([path, fm]) => ({ ...fm, slug: path.slice(prefix.length, -'.mdx'.length) }))
-    .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))
+  return index.docs[collection][locale]
 }

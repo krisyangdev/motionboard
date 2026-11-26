@@ -15,7 +15,7 @@ function init() {
   inited = true
   initTracking({ site: SITE.id, key: (import.meta.env as Record<string, string | undefined>)[SITE.posthogKeyEnv], host: SITE.posthogHost })
   addEventListener('error', (e) => captureException(e.error ?? e.message))
-  addEventListener('unhandledrejection', (e) => captureException(e.reason))
+  addEventListener('unhandledrejection', (e: PromiseRejectionEvent) => captureException(e.reason))
   document.addEventListener(
     'click',
     (e) => {

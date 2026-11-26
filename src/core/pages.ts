@@ -117,3 +117,30 @@ export const readRenamed = (): Record<string, string> => readJson('content/renam
 
 /** content/videos.json: videos for the video sitemap. */
 export const readVideos = (): Video[] => readJson('content/videos.json', [])
+
+export type ContentIndex = {
+  tools: { slug: string; name: Record<Locale, string> }[]
+  docs: Record<'guides' | 'legal', Record<Locale, { slug: string; title: string; description: string; date: string; updated?: string }[]>>
+}
+
+/**
+ * Names and frontmatter of every content file, served to the app as `virtual:content-index`
+ * (vite.config.ts). Lists and sibling links read this small index, so a page chunk never bundles
+ * the full text of every other page.
+ */
+export function contentIndex(): ContentIndex {
+  const tools = slugs('content/tools', '.json').map((slug) => ({ slug, name: readJson<Record<string, any>>(`content/tools/${slug}.json`, {}).name }))
+  const docs = {} as ContentIndex['docs']
+  for (const collection of ['guides', 'legal'] as const) {
+    docs[collection] = {} as ContentIndex['docs']['guides']
+    for (const l of LOCALES) {
+      docs[collection][l] = slugs(`content/${collection}/${l}`, '.mdx')
+        .map((slug) => {
+          const fm = frontmatter(abs('content', collection, l, `${slug}.mdx`))
+          return { slug, title: fm.title ?? slug, description: fm.description ?? '', date: fm.date ?? '', ...(fm.updated ? { updated: fm.updated } : {}) }
+        })
+        .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))
+    }
+  }
+  return { tools, docs }
+}

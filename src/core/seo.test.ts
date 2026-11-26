@@ -27,7 +27,7 @@ describe('seoHead', () => {
   it('adds one hreflang link per language plus x-default', () => {
     const alts = seoHead(base).links.filter((l) => l.rel === 'alternate')
     expect(alts).toHaveLength(LOCALES.length + 1)
-    expect(alts.find((l) => l.hrefLang === 'x-default')?.href).toBe(pageUrl(DEFAULT_LOCALE, base.path))
+    expect(alts.find((l) => 'hrefLang' in l && l.hrefLang === 'x-default')?.href).toBe(pageUrl(DEFAULT_LOCALE, base.path))
   })
   it('uses the default og image, made absolute', () => {
     expect(metaOf(seoHead(base), 'property', 'og:image')).toBe(absolute(SITE.ogImage))

@@ -86,7 +86,9 @@ check('page head', sitemapPages, ({ path, html }) => {
   else titles.set(title, path)
   const metas = tags('meta', html)
   const desc = attr(metas.find((t) => attr(t, 'name') === 'description') ?? '', 'content') ?? ''
-  if (desc.length < 50 || desc.length > 170) errs.push(`description length ${desc.length}`)
+  // A CJK character carries about two Latin characters of meaning; search results cut CJK snippets near 80-100.
+  const [min, max] = /[\u3040-\u30ff\u3400-\u9fff]/.test(desc) ? [25, 110] : [50, 170]
+  if (desc.length < min || desc.length > max) errs.push(`description length ${desc.length}`)
   const lang = html.match(/<html[^>]*\blang="([^"]*)"/)?.[1]
   const want = HTML_LANG[localeOfPath(path)]
   if (lang !== want) errs.push(`lang ${lang}, want ${want}`)

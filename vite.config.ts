@@ -9,10 +9,17 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
 import { SITE_URL } from './site.config.ts'
 import { LOCALES, localizePath, alternateUrls } from './src/core/i18n.ts'
-import { sitePages } from './src/core/pages.ts'
+import { contentIndex, sitePages } from './src/core/pages.ts'
 import { generate } from './scripts/generate.mjs'
 
 // Writes robots.txt, _redirects, _headers, llms.txt and the video sitemap into public/ before every build and dev start.
+// `virtual:content-index`: names and frontmatter of all content files (see contentIndex()).
+const contentIndexPlugin = (): Plugin => ({
+  name: 'content-index',
+  resolveId: (id) => (id === 'virtual:content-index' ? '\0virtual:content-index' : undefined),
+  load: (id) => (id === '\0virtual:content-index' ? `export default ${JSON.stringify(contentIndex())}` : undefined),
+})
+
 const prebuild = (): Plugin => ({ name: 'prebuild', buildStart: () => generate(), configureServer: () => generate() })
 
 const pages = sitePages().flatMap((p) =>
@@ -26,6 +33,7 @@ export default defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     prebuild(),
+    contentIndexPlugin(),
     { enforce: 'pre', ...mdx({ remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm], providerImportSource: undefined }) },
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
