@@ -1,38 +1,126 @@
-import type { Locale } from '../../site.config.ts'
+// UI strings per locale. The en object is the type source; zh must have the same shape.
+// Recipe names and text live in data/terms.ts, brand copy in config.ts, header and footer links in nav.ts.
+import type { Position } from '@/site/data/terms'
+import type { Locale } from '@/core/i18n'
+import { BRAND } from '@/site/config'
 
-type Feature = { title: string; body: string }
-
-export const messages: Record<Locale, { hero: { title: string; lede: string; tools: string; guides: string }; features: Feature[] }> = {
-  en: {
-    hero: {
-      title: 'A fast, bilingual site starter',
-      lede: 'React, TanStack Start and coss ui, prerendered and served from Cloudflare Workers.',
-      tools: 'Browse tools',
-      guides: 'Read guides',
-    },
-    features: [
-      { title: 'Prerendered', body: 'Every page is static HTML built ahead of time. The app JavaScript loads after the first paint.' },
-      { title: 'English and Chinese', body: 'The default language lives at the root and the others under a prefix, with hreflang links on every page.' },
-      { title: 'SEO built in', body: 'Titles, canonical URLs, Open Graph tags, JSON-LD and the sitemap all come from one function.' },
-      { title: 'Fast first paint', body: 'CSS is inlined and the hero renders before any script runs, which keeps mobile PageSpeed above 99.' },
-      { title: 'coss ui', body: 'Accessible Base UI components styled with Tailwind, copied into the repository so you own them.' },
-      { title: 'Cloudflare Workers', body: 'One config file and one deploy command put the site on static hosting around the world.' },
-    ],
+const en = {
+  nav: { recipes: 'Recipes' },
+  positions: {
+    open: 'Opening',
+    reveal: 'Product reveal',
+    feature: 'Features',
+    bridge: 'Transitions',
+    close: 'Ending',
+  } satisfies Record<Position, string>,
+  hero: { shots: 'Shots in the film', play: 'Play film', open: 'Open recipe' },
+  shelves: { label: 'Recipe positions' },
+  actions: {
+    copy: 'Copy for your agent',
+    copied: 'Copied',
+    like: 'Like',
+    unlike: 'Unlike',
+    save: 'Save',
+    saved: 'Saved',
+    unsave: 'Remove from saved',
+    wish: 'Make it from my product link',
+    wishPop: 'Coming soon. Your vote is counted.',
   },
-  zh: {
-    hero: {
-      title: '快速的双语站点起点',
-      lede: 'React、TanStack Start 和 coss ui，预渲染后部署在 Cloudflare Workers 上。',
-      tools: '浏览工具',
-      guides: '阅读指南',
-    },
-    features: [
-      { title: '预渲染', body: '每个页面都是提前生成的静态 HTML，应用的 JavaScript 在首屏绘制之后才加载。' },
-      { title: '中英双语', body: '默认语言放在根路径，其他语言放在前缀下，每个页面都带 hreflang 链接。' },
-      { title: '内置 SEO', body: '标题、规范链接、Open Graph 标签、JSON-LD 和站点地图都由同一个函数生成。' },
-      { title: '快速首屏', body: 'CSS 内联，主视觉在任何脚本运行之前就已渲染，移动端 PageSpeed 保持在 99 分以上。' },
-      { title: 'coss ui', body: '基于 Base UI 的无障碍组件，用 Tailwind 设置样式，代码复制进仓库，由你自己掌控。' },
-      { title: 'Cloudflare Workers', body: '一个配置文件、一条部署命令，就把站点放到全球的静态托管上。' },
-    ],
+  recipe: {
+    breadcrumb: 'Breadcrumb',
+    prev: (name: string) => `Previous: ${name}`,
+    next: (name: string) => `Next: ${name}`,
+    copiedTimes: (n: number) => `Copied ${n.toLocaleString('en-US')} ${n === 1 ? 'time' : 'times'}`,
+    seenIn: 'Seen in',
+    shot: (name: string) => `${BRAND.name} shot: ${name}`,
+    howto: (name: string) => `How to make a ${name} with Claude Code or Codex`,
+    faq: 'FAQ',
+    more: (position: string) => `More ${position}`,
+    original: 'Original',
+    originalAria: (title: string) => `Original: ${title}`,
+    recreation: `${BRAND.name} recreation`,
+    recreationOnly: `${BRAND.name} recreation · no launch-film original`,
+    compare: 'Compare',
+    showing: 'Showing',
+    watchOnX: 'Watch on X ↗',
+    watchOnYouTube: 'Watch on YouTube ↗',
+    play: (name: string) => `Play ${name}`,
+    pause: (name: string) => `Pause ${name}`,
   },
+  full: {
+    title: 'Full recipe',
+    why: 'Why it works',
+    spec: 'Spec',
+    prompt: 'Prompt',
+    says: 'People describe it as',
+    vs: 'Often confused with',
+    file: 'Recipe file (.md)',
+    copyPrompt: 'Copy prompt',
+    promptCopied: 'Prompt copied',
+  },
+  saved: { title: 'Saved', empty: 'Nothing saved yet.', browse: 'Browse recipes' },
+  skill: { title: 'Make a whole launch film', copy: 'Copy command', github: 'View on GitHub' },
 }
+
+export type Strings = typeof en
+
+const zh: Strings = {
+  nav: { recipes: '配方' },
+  positions: {
+    open: '开场',
+    reveal: '亮出产品',
+    feature: '讲功能',
+    bridge: '衔接',
+    close: '收尾',
+  },
+  hero: { shots: '影片中的镜头', play: '播放影片', open: '打开配方' },
+  shelves: { label: '配方分类' },
+  actions: {
+    copy: '复制给 Agent',
+    copied: '已复制',
+    like: '点赞',
+    unlike: '取消点赞',
+    save: '收藏',
+    saved: '已收藏',
+    unsave: '取消收藏',
+    wish: '贴产品链接直接出片',
+    wishPop: '即将上线，已记下你的一票。',
+  },
+  recipe: {
+    breadcrumb: '面包屑',
+    prev: (name) => `上一个：${name}`,
+    next: (name) => `下一个：${name}`,
+    copiedTimes: (n) => `已复制 ${n.toLocaleString('zh-CN')} 次`,
+    seenIn: '原片出处',
+    shot: (name) => `${BRAND.name} 镜头名：${name}`,
+    howto: (name) => `用 Claude Code 或 Codex 做${name}`,
+    faq: '常见问题',
+    more: (position) => `更多「${position}」`,
+    original: '原片',
+    originalAria: (title) => `原片：${title}`,
+    recreation: `${BRAND.name} 复刻`,
+    recreationOnly: `${BRAND.name} 复刻 · 没有对应的发布片原片`,
+    compare: '对比',
+    showing: '对比中',
+    watchOnX: '在 X 上观看 ↗',
+    watchOnYouTube: '在 YouTube 上观看 ↗',
+    play: (name) => `播放 ${name}`,
+    pause: (name) => `暂停 ${name}`,
+  },
+  full: {
+    title: '完整配方',
+    why: '为什么有效',
+    spec: '参数',
+    prompt: '提示词',
+    says: '常见说法',
+    vs: '容易混淆',
+    file: '配方文件 (.md)',
+    copyPrompt: '复制提示词',
+    promptCopied: '提示词已复制',
+  },
+  saved: { title: '收藏', empty: '还没有收藏。', browse: '浏览配方' },
+  skill: { title: '做一整支宣传片', copy: '复制命令', github: '在 GitHub 查看' },
+}
+
+export const messages: Record<Locale, Strings> = { en, zh }
+

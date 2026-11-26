@@ -1,0 +1,8 @@
+// The text a visitor pastes into their own agent. Agent-facing text is always English.
+// The agent installs the skill by following the repo README, which owns the install steps.
+import type { Term } from './terms'
+import { BRAND, GITHUB_URL } from '@/site/config'
+
+export function copyText(t: Term) {
+  return `Install the ${BRAND.name} skill from ${GITHUB_URL}, then use it to make the "${t.name.en}" shot (recipe ${t.slug}) for my product.`
+}

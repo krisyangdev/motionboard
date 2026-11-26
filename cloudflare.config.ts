@@ -1,5 +1,5 @@
 import { bindings, defineConfig } from "cf/config";
-import { SITE } from "./src/site.config.ts";
+import { SITE } from "./site.config.ts";
 
 export default defineConfig({
 	worker: {

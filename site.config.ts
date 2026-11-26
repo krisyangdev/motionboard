@@ -4,30 +4,30 @@
 // No domain or brand string is hard-coded anywhere else.
 export const SITE = {
   /** Value of the `site` property on every analytics event (shared PostHog project "Sites"). */
-  id: 'site-template',
-  name: 'Site Template',
-  domain: 'template.krisyang.dev',
+  id: 'motionboard',
+  name: 'Motionboard',
+  domain: 'motionboard.app',
   /** Cloudflare Worker name. */
-  worker: 'site-template',
+  worker: 'motionboard',
   /** First entry is the default language, served at the root; the others live under /<lang>/. */
   languages: ['en', 'zh'],
   defaultLang: 'en',
   /** Home page <title> and meta description, per language. */
-  title: { en: 'Site Template: React, TanStack and coss ui on Cloudflare', zh: '站点模板：React、TanStack 和 coss ui，跑在 Cloudflare 上' },
+  title: { en: 'Launch-Film Motion Graphics with Claude Code & Codex', zh: '用 Claude Code 和 Codex 做宣传片动效' },
   description: {
-    en: 'The starter every site is built from: prerendered pages, English and Chinese, SEO checks, analytics and fast first paint on Cloudflare Workers.',
-    zh: '每个站点的起点：预渲染页面、中英双语、SEO 检查、统计和快速首屏，部署在 Cloudflare Workers 上。',
+    en: 'A free HyperFrames skill and 58 shot recipes from Apple, Linear and Figma launch films, rebuilt in code. Copy one to your agent and make the same shot for your product.',
+    zh: '免费的 HyperFrames skill 和 58 个镜头配方，拆自苹果、Linear、Figma 等公司的宣传片，用代码复刻。复制一条给你的 Agent，给你的产品做同款镜头。',
   },
   /** Default Open Graph image (absolute URL or a path under public/). */
-  ogImage: '/og.png',
-  /** Contact address shown on legal pages and in the footer. */
-  email: 'hello@krisyang.dev',
-  github: 'krisyangdev/site-template',
+  ogImage: 'https://media.motionboard.app/hero-film.jpg',
+  /** Contact address shown on legal pages and in the footer; empty hides the footer link. */
+  email: '',
+  github: 'krisyangdev/motionboard',
   /** Build-time env var holding the PostHog project key; unset = events go to the console. */
   posthogKeyEnv: 'VITE_POSTHOG_KEY',
   posthogHost: 'https://us.i.posthog.com',
   /** 32 hex chars; public/<key>.txt must contain the same key. Empty = no IndexNow ping. */
-  indexNowKey: '',
+  indexNowKey: '2635d416ece22f80c26589dcc5be6170',
   /** Write public/llms.txt from the page list (worth it only for sites coding agents read). */
   llmsTxt: true,
   social: { twitterCard: 'summary_large_image', twitter: '' },
@@ -36,7 +36,7 @@ export const SITE = {
     script: [] as string[],
     connect: [] as string[],
     img: ['https:'] as string[],
-    media: [] as string[],
+    media: ['https://media.motionboard.app'] as string[], // films and posters on MEDIA_URL (src/site/config.ts)
     frame: [] as string[],
     form: [] as string[],
   },

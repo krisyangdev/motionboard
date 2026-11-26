@@ -1,3 +1,25 @@
 {
-  "/old-tools/": "/tools/"
+  "/recipes/": "/",
+  "/recipes/match-cut/": "/recipes/match-cut-transition/",
+  "/recipes/rhythmic-typing/": "/recipes/typing-animation/",
+  "/recipes/mark-to-wordmark-unfold/": "/recipes/logo-wordmark-reveal/",
+  "/recipes/word-by-word-highlight/": "/recipes/word-by-word-text-highlight/",
+  "/recipes/line-boil/": "/recipes/line-boil-effect/",
+  "/recipes/glass-lens/": "/recipes/liquid-glass-effect/",
+  "/recipes/chromatic-stretch/": "/recipes/chromatic-aberration-text-effect/",
+  "/recipes/morph-relay/": "/recipes/morph-transition/",
+  "/recipes/dot-matrix-glyph/": "/recipes/dot-matrix-animation/",
+  "/recipes/iris-window-montage/": "/recipes/iris-transition/",
+  "/recipes/foreground-wipe-flash/": "/recipes/wipe-flash-transition/",
+  "/recipes/confirmation-burst/": "/recipes/confetti-success-animation/",
+  "/recipes/map-pin-drop/": "/recipes/map-pin-animation/",
+  "/recipes/card-flip-to-code/": "/recipes/card-flip-animation/",
+  "/recipes/multiplayer-cursors/": "/recipes/multiplayer-cursor-animation/",
+  "/recipes/auto-zoom/": "/recipes/zoom-to-cursor/",
+  "/recipes/tilted-ui-with-depth-of-field/": "/recipes/3d-tilted-ui-depth-of-field/",
+  "/recipes/scattered-spec-type/": "/recipes/kinetic-typography/",
+  "/recipes/rotate-to-lockup/": "/recipes/rotating-logo-reveal/",
+  "/recipes/converge-to-mark/": "/recipes/converge-logo-reveal/",
+  "/recipes/outline-to-solid/": "/recipes/outline-to-solid-reveal/",
+  "/recipes/x-ray-dissolve/": "/recipes/x-ray-effect/"
 }

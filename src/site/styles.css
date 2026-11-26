@@ -2,10 +2,80 @@
 
 /* The one per-site colour: logo, links, highlights. Leave coss tokens (--primary etc.) alone. */
 :root {
-  --brand: oklch(0.55 0.2 260);
+  --brand: oklch(0.52 0.2 262);
   --brand-foreground: oklch(0.99 0 0);
+  /* Content and header width; the films and the recipe grid use more of a wide screen than the template's 64rem. */
+  --site-width: 90rem;
+  /* Height of the header: the home hero sizes the film so hero and timeline fit one screen. */
+  --nav-h: 3.1rem;
 }
 .dark {
-  --brand: oklch(0.7 0.16 260);
+  --brand: oklch(0.66 0.18 259);
   --brand-foreground: oklch(0.15 0 0);
+}
+
+/* Content column used by every page. */
+@utility wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--site-width);
+  padding-inline: 1rem;
+}
+
+/* Home hero: on large screens H1, film and timeline fit one viewport. 370px is H1, timeline, shot row and spacing. */
+@media (min-width: 900px) {
+  .hero-stage {
+    --vw: min(100%, max(640px, calc((100svh - var(--nav-h) - 370px) * 16 / 9)));
+  }
+}
+
+/* Recipe page: both films and their captions fit the first screen. */
+@media (min-width: 900px) {
+  .rc-compare {
+    max-width: min(var(--site-width), max(720px, calc((100svh - var(--nav-h) - 140px) * 32 / 9 + 12px)));
+  }
+}
+
+/* Copy confirmation: eight short strokes fly out of the button (created and animated by burst() in CopyButton.tsx). */
+.burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.burst i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 10px;
+  margin: -5px -1px;
+  border-radius: 2px;
+  background: var(--foreground);
+}
+
+@keyframes like-pop {
+  0% { transform: scale(0.7); }
+  55% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* The film frame and the heading of a tile morph into the recipe page (FilmTile.tsx sets the names). */
+::view-transition-group(film),
+::view-transition-group(title) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Chinese: no negative tracking, looser lines on headings. */
+:root:lang(zh) :is(h1, h2, h3) {
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    transition: none !important;
+  }
 }

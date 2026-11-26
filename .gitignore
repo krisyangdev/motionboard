@@ -24,7 +24,7 @@ public/source
 public/r/
 public/llms.txt
 public/_redirects
-src/data/gen/
+src/site/data/gen/
 *.tsbuildinfo
 public/sitemap-video.xml
 public/robots.txt
