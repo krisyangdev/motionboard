@@ -12,6 +12,7 @@ import { sendEmail } from '../email/send'
 import { resetPassword, verifyEmail } from '../email/templates'
 import { DEFAULT_LOCALE, isLocale, localizePath, type Locale } from '../i18n'
 import { appEnv } from '../server/env'
+import { passwordOptions } from './password'
 import { captureServerException, trackServer } from '../server/track'
 import { SITE } from '../../../site.config.ts'
 
@@ -42,6 +43,8 @@ export function auth() {
     },
     emailAndPassword: {
       enabled: true,
+      // A site's own hasher (src/site/auth.ts), e.g. for users moved in from an older auth.
+      ...passwordOptions(),
       requireEmailVerification: true,
       sendResetPassword: async ({ user, url }) => {
         await sendEmail({ to: user.email, ...resetPassword(localeOf(user), url) })

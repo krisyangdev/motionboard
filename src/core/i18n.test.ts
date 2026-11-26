@@ -151,8 +151,8 @@ describe('a right-to-left language', () => {
   it('Arabic gets dir rtl and its own tags', async () => {
     const i = await load(['en', 'ar'])
     expect(i.DIR).toEqual({ en: 'ltr', ar: 'rtl' })
-    expect(i.HTML_LANG.ar).toBe('ar')
-    expect(i.OG_LOCALE.ar).toBe('ar_AR')
+    expect((i.HTML_LANG as Record<string, string>).ar).toBe('ar')
+    expect((i.OG_LOCALE as Record<string, string>).ar).toBe('ar_AR')
     expect(i.localeMeta(L('ar')).name).toBe('العربية')
     expect(i.localizePath(L('ar'), '/tools/')).toBe('/ar/tools/')
   })

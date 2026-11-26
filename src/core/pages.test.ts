@@ -14,13 +14,13 @@ const L = (code: string) => code as Locale
 describe('pageLocales', () => {
   it('lists the languages that have a title, in site order', async () => {
     const { pageLocales } = await load(['en', 'zh', 'es'])
-    expect(pageLocales({ title: { en: 'Hello', es: 'Hola' } })).toEqual(['en', 'es'])
-    expect(pageLocales({ title: { es: 'Hola', en: 'Hello' } })).toEqual(['en', 'es'])
+    expect(pageLocales({ title: { en: 'Hello', es: 'Hola' } as Record<string, string> })).toEqual(['en', 'es'])
+    expect(pageLocales({ title: { es: 'Hola', en: 'Hello' } as Record<string, string> })).toEqual(['en', 'es'])
   })
   it('ignores empty titles and languages the site does not list', async () => {
     const { pageLocales } = await load(['en', 'es'])
-    expect(pageLocales({ title: { en: 'Hello', es: '', zh: '你好' } })).toEqual(['en'])
-    expect(pageLocales({ title: {} })).toEqual([])
+    expect(pageLocales({ title: { en: 'Hello', es: '', zh: '你好' } as Record<string, string> })).toEqual(['en'])
+    expect(pageLocales({ title: {} as Record<string, string> })).toEqual([])
   })
 })
 

@@ -44,7 +44,7 @@ describe('coreMessages', () => {
     await mockSite(['en', 'zh', 'es'])
     const { coreMessages } = await import('./messages')
     expect(Object.keys(coreMessages)).toEqual(['en', 'zh', 'es'])
-    expect(coreMessages.es.page.home).toBe('Inicio')
+    expect((coreMessages as Record<string, typeof coreMessages.en>).es.page.home).toBe('Inicio')
   })
 
   it('names the file to add for a language without strings', async () => {
