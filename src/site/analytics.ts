@@ -1,4 +1,4 @@
-// Site-owned: maps a page to the `page_type` property of page_view events. Add a branch for each new kind of page.
+// Site-owned: maps a page to the `page_type` property of $pageview events. Add a branch for each new kind of page.
 
 /** `defaultLangPath` is the pathname without the locale prefix ('/tools/x/'). */
 export function pageType(defaultLangPath: string): string {
