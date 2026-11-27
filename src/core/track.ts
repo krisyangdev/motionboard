@@ -1,13 +1,15 @@
 // Self-contained tracking. Events go straight to PostHog's capture endpoint (no SDK, no extra scripts).
-// Stateless and cookieless: a random anonymous id per page load, nothing stored in the browser,
-// no person profiles, no replay, no IP property. Without a key it logs to the console and sends nothing.
-// No framework imports, so the file can be copied to any site.
+// Cookieless: every event uses distinct_id `$posthog_cookieless` with `$cookieless_mode`, and PostHog replaces it
+// with a server-side hash of daily salt + IP + host + user agent, so nothing is stored in the browser.
+// No person profiles, no replay. Country comes from /cdn-cgi/trace (PostHog drops the IP of cookieless events),
+// UTM and click-id params from the landing URL are kept in memory and sent on every event, and bot user agents send nothing.
+// Without a key it logs to the console and sends nothing. No framework imports, so the file can be copied to any site.
 
 type Dict = Record<string, string | number | boolean | undefined>
 
 /** Browser events from the shared schema in ~/code/home/lines/sites.md. `lang` and `site` are added automatically. */
 export type TrackEvent =
-  | { event: 'page_view'; page: string; page_type: string; landing_page: string; referrer_type: string; device: string }
+  | { event: '$pageview'; page: string; page_type: string; landing_page: string; referrer_type: string; device: string }
   | { event: 'tool_start'; tool: string; page: string }
   | { event: 'tool_result'; tool: string; page: string; ms: number; ok: boolean }
   | { event: 'upload'; tool: string; file_type: string; size_bucket: string }
@@ -35,25 +37,40 @@ interface WireEvent {
 }
 
 let opts: TrackingOptions = { site: 'unknown', host: '' }
-let anonId = ''
 let queue: WireEvent[] = []
 let ready = false
+/** The first flush waits for the country lookup. */
+let held = true
+let bot = false
+let campaign: Dict = {}
+let countryProps: Dict = {}
 let exceptionCount = 0
 /** A crash loop must not flood the project. */
 const MAX_EXCEPTIONS = 10
+const BOT_UA = /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|prerender|phantomjs|puppeteer|playwright|selenium|gtmetrix|inspectiontool/i
+const CAMPAIGN_PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid', 'msclkid', 'ref']
 
 export function initTracking(options: TrackingOptions): void {
   opts = { ...options }
-  anonId = crypto.randomUUID()
+  held = true
+  campaign = {}
+  countryProps = {}
   ready = document.readyState === 'complete'
-  if (!opts.key) return
+  bot = BOT_UA.test(navigator.userAgent)
+  if (!opts.key || bot) return
+  const params = new URLSearchParams(location.search)
+  for (const name of CAMPAIGN_PARAMS) {
+    const value = params.get(name)
+    if (value) campaign[name] = value
+  }
   // Hold events until the page has loaded so analytics never competes with first paint; flush early if the page is hidden.
-  if (!ready) {
+  if (ready) void lookupCountry()
+  else {
     addEventListener(
       'load',
       () => {
         ready = true
-        setTimeout(flush, 0)
+        void lookupCountry()
       },
       { once: true },
     )
@@ -62,6 +79,25 @@ export function initTracking(options: TrackingOptions): void {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') flush()
   })
+}
+
+/** Country from the edge (PostHog never sees the IP of cookieless events). Releases the held flush when it resolves or after 1500 ms. */
+async function lookupCountry(): Promise<void> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 1500)
+  try {
+    const text = await (await fetch('/cdn-cgi/trace', { signal: controller.signal })).text()
+    const code = /^loc=([A-Z]{2})$/m.exec(text)?.[1]
+    if (code && code !== 'XX' && code !== 'T1') {
+      countryProps = { $geoip_country_code: code, $geoip_country_name: new Intl.DisplayNames(['en'], { type: 'region' }).of(code) }
+    }
+  } catch {
+    /* no country */
+  } finally {
+    clearTimeout(timer)
+    held = false
+    setTimeout(flush, 0)
+  }
 }
 
 /** Update the language reported on later events (client-side navigation can change language without changing <html lang>). */
@@ -95,13 +131,16 @@ function client(): Dict {
     $viewport_width: innerWidth,
     $viewport_height: innerHeight,
     $raw_user_agent: ua,
+    $cookieless_mode: true,
+    $timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     $process_person_profile: false,
   }
 }
 
 function flush(): void {
   if (!queue.length) return
-  const body = JSON.stringify({ api_key: opts.key, batch: queue })
+  const batch = queue.map((e) => ({ ...e, properties: { ...e.properties, ...countryProps } }))
+  const body = JSON.stringify({ api_key: opts.key, batch })
   queue = []
   const url = `${opts.host}/batch/`
   try {
@@ -123,8 +162,9 @@ function send(event: string, props: Record<string, unknown>): void {
     ;((window as unknown as { __events?: unknown[] }).__events ??= []).push({ event, ...payload })
     return
   }
-  queue.push({ event, distinct_id: anonId, timestamp: new Date().toISOString(), properties: { ...client(), ...payload } })
-  if (ready) setTimeout(flush, 0)
+  if (bot) return
+  queue.push({ event, distinct_id: '$posthog_cookieless', timestamp: new Date().toISOString(), properties: { ...client(), ...campaign, ...payload } })
+  if (ready && !held) setTimeout(flush, 0)
 }
 
 export function track<E extends TrackEvent['event']>(event: E, props: Omit<Extract<TrackEvent, { event: E }>, 'event'>): void {

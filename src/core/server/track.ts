@@ -1,12 +1,31 @@
 // Server-side analytics: the sibling of src/core/track.ts, same `site` property and event names.
 // PostHog /capture/ over fetch, fired through waitUntil so it never delays a response, never throws.
 // Without POSTHOG_KEY it logs to the console. No IP, prompt text or file content is sent.
+// Every event is marked `$lib: posthog-server` so PostHog does not count it as a bot. When a visitor request is in scope the
+// event also carries its user agent and edge country (GeoIP is off because the Worker's own IP would geolocate wrong).
 import { waitUntil } from 'cloudflare:workers'
+import { getRequest } from '@tanstack/react-start/server'
 import { appEnv } from './env'
 import { SITE } from '../../../site.config.ts'
 
 export type ServerEvent = 'signup' | 'checkout_start' | 'payment_success' | 'generate_request' | 'generate_result'
 type Props = Record<string, string | number | boolean | null | undefined>
+
+/** User agent and country of the request being served; empty in queue and cron context where there is no request. */
+function requestProps(): Props {
+  try {
+    const request = getRequest()
+    const props: Props = { $raw_user_agent: request.headers.get('user-agent') ?? undefined }
+    const code = (request as { cf?: { country?: string } }).cf?.country
+    if (code && code !== 'XX' && code !== 'T1') {
+      props.$geoip_country_code = code
+      props.$geoip_country_name = new Intl.DisplayNames(['en'], { type: 'region' }).of(code)
+    }
+    return props
+  } catch {
+    return {}
+  }
+}
 
 function send(body: Record<string, unknown>): void {
   try {
@@ -30,7 +49,7 @@ function send(body: Record<string, unknown>): void {
 }
 
 export function trackServer(event: ServerEvent, distinctId: string, props: Props = {}): void {
-  const properties = { ...props, site: SITE.id, source: 'server', $process_person_profile: false, $geoip_disable: true }
+  const properties = { ...props, ...requestProps(), site: SITE.id, source: 'server', $lib: 'posthog-server', $process_person_profile: false, $geoip_disable: true }
   const key = appEnv().POSTHOG_KEY
   if (!key) {
     console.log('[track]', event, distinctId, JSON.stringify(properties))
@@ -64,8 +83,10 @@ export function captureServerException(error: unknown, extra: Record<string, str
       .reverse() // PostHog wants the oldest frame first
     const properties = {
       ...extra,
+      ...requestProps(),
       site: SITE.id,
       source: 'server',
+      $lib: 'posthog-server',
       $process_person_profile: false,
       $geoip_disable: true,
       $exception_list: [

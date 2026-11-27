@@ -1,4 +1,4 @@
-// Mounted once in the root route. Starts tracking, sends page_view on every navigation,
+// Mounted once in the root route. Starts tracking, sends $pageview on every navigation,
 // reports uncaught errors and counts clicks on links marked data-cta="<target>".
 import { useEffect } from 'react'
 import { useRouterState } from '@tanstack/react-router'
@@ -34,7 +34,7 @@ export function Analytics() {
     setTrackingLang(localeOf(pathname))
     const first = !landing
     if (first) landing = pathname
-    track('page_view', {
+    track('$pageview', {
       page: pathname,
       page_type: pageType(stripLocale(pathname)),
       landing_page: landing,

@@ -1,4 +1,4 @@
-// Site-owned: maps a page to the `page_type` property of page_view events.
+// Site-owned: maps a page to the `page_type` property of $pageview events.
 
 /** `defaultLangPath` is the pathname without the locale prefix ('/recipes/x/'). */
 export function pageType(defaultLangPath: string): string {

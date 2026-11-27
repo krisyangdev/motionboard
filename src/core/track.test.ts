@@ -4,7 +4,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 type Track = typeof import('./track')
 const fresh = (): Promise<Track> => import('./track')
 
-function stubBrowser(lang = 'en') {
+const CHROME_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/120.0 Safari/537.36'
+
+function stubBrowser(lang = 'en', userAgent = CHROME_UA, search = '') {
   const beacons: string[] = []
   const events: Record<string, unknown>[] = []
   const win = { __events: events as unknown[] | undefined }
@@ -17,13 +19,14 @@ function stubBrowser(lang = 'en') {
     addEventListener: () => {},
   })
   vi.stubGlobal('navigator', {
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/120.0 Safari/537.36',
+    userAgent,
     sendBeacon: (_url: string, blob: Blob) => {
       void blob.text().then((t) => beacons.push(t))
       return true
     },
   })
-  vi.stubGlobal('location', { href: 'https://example.test/tools/x/', host: 'example.test', hostname: 'example.test', pathname: '/tools/x/' })
+  vi.stubGlobal('location', { href: 'https://example.test/tools/x/', host: 'example.test', hostname: 'example.test', pathname: '/tools/x/', search })
+  vi.stubGlobal('fetch', vi.fn(async () => ({ text: async () => 'fl=1\nloc=JP\n' })))
   vi.stubGlobal('screen', { width: 1440, height: 900 })
   vi.stubGlobal('innerWidth', 1200)
   vi.stubGlobal('innerHeight', 800)
@@ -79,18 +82,52 @@ describe('without a key', () => {
 })
 
 describe('with a key', () => {
-  it('batches events to PostHog with lang, site and no person profile', async () => {
+  it('batches cookieless events to PostHog with lang, site, campaign params and country', async () => {
     const { win, beacons } = stubBrowser('en')
     const { initTracking, track } = await fresh()
     initTracking({ site: 'demo', key: 'phc_test', host: 'https://ph.test' })
     track('cta_click', { page: '/tools/x/', to: 'github' })
     await vi.waitFor(() => expect(beacons).toHaveLength(1))
+    expect(fetch).toHaveBeenCalledWith('/cdn-cgi/trace', expect.anything())
     const body = JSON.parse(beacons[0])
     expect(body.api_key).toBe('phc_test')
     expect(body.batch).toHaveLength(1)
     expect(body.batch[0]).toMatchObject({ event: 'cta_click', properties: { page: '/tools/x/', to: 'github', lang: 'en', site: 'demo', $process_person_profile: false, $browser: 'Chrome', $os: 'Mac OS X' } })
-    expect(body.batch[0].distinct_id).toBeTruthy()
+    expect(body.batch[0].distinct_id).toBe('$posthog_cookieless')
+    expect(body.batch[0].properties).toMatchObject({ $cookieless_mode: true, $geoip_country_code: 'JP', $geoip_country_name: 'Japan' })
+    expect(typeof body.batch[0].properties.$timezone).toBe('string')
     expect(win.__events).toEqual([]) // nothing goes to the console buffer
+  })
+  it('attaches the landing URL campaign params to every event', async () => {
+    const { beacons } = stubBrowser('en', CHROME_UA, '?utm_source=news&utm_medium=email&ref=producthunt&gclid=&other=1')
+    const { initTracking, track } = await fresh()
+    initTracking({ site: 'demo', key: 'phc_test', host: 'https://ph.test' })
+    track('cta_click', { page: '/tools/x/', to: 'github' })
+    track('cta_click', { page: '/tools/x/', to: 'docs' })
+    await vi.waitFor(() => expect(beacons).toHaveLength(1))
+    for (const e of JSON.parse(beacons[0]).batch) {
+      expect(e.properties).toMatchObject({ utm_source: 'news', utm_medium: 'email', ref: 'producthunt' })
+      expect(e.properties).not.toHaveProperty('gclid')
+      expect(e.properties).not.toHaveProperty('other')
+    }
+  })
+  it('sends events without country when the trace fails', async () => {
+    const { beacons } = stubBrowser()
+    vi.stubGlobal('fetch', vi.fn(async () => Promise.reject(new Error('offline'))))
+    const { initTracking, track } = await fresh()
+    initTracking({ site: 'demo', key: 'phc_test', host: 'https://ph.test' })
+    track('cta_click', { page: '/tools/x/', to: 'github' })
+    await vi.waitFor(() => expect(beacons).toHaveLength(1))
+    expect(JSON.parse(beacons[0]).batch[0].properties).not.toHaveProperty('$geoip_country_code')
+  })
+  it('sends nothing for a bot user agent', async () => {
+    const { beacons } = stubBrowser('en', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)')
+    const { initTracking, track } = await fresh()
+    initTracking({ site: 'demo', key: 'phc_test', host: 'https://ph.test' })
+    track('cta_click', { page: '/tools/x/', to: 'github' })
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect(beacons).toHaveLength(0)
+    expect(fetch).not.toHaveBeenCalled()
   })
 })
 
