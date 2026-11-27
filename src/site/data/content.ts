@@ -60,6 +60,8 @@ export type PageCopy = {
   h1: string
   /** one paragraph under the H1 */
   lede: string
+  /** one line under the H1 on hub pages; the lede moves below the grid */
+  short?: string
   blocks: Block[]
 }
 

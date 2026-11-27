@@ -9,8 +9,9 @@ export function Compare({ term, source }: { term: Term; source: Source }) {
   const { clip } = source
   const { recipe } = useStrings()
   return (
-    <div className="grid grid-cols-1 gap-5 min-[900px]:grid-cols-2 min-[900px]:gap-3">
-      <figure className="m-0 min-w-0">
+    // Below 768px the grid dissolves (contents) so RecipePage can interleave both figures with the header and actions.
+    <div className="grid grid-cols-1 gap-5 max-md:contents min-[900px]:grid-cols-2 min-[900px]:gap-3">
+      <figure className="m-0 min-w-0 scroll-mt-4 max-md:order-5 max-md:mt-6" data-original>
         {clip ? (
           <Film src={clip.src} poster={clip.poster} name={recipe.originalAria(source.title)} />
         ) : (
@@ -40,7 +41,7 @@ export function Compare({ term, source }: { term: Term; source: Source }) {
           )}
         </figcaption>
       </figure>
-      <figure className="m-0 min-w-0 max-[899px]:-order-1">
+      <figure className="m-0 min-w-0 max-md:order-1 max-md:mt-1 md:max-[899px]:-order-1">
         <Player term={term} />
         <figcaption className={`mt-1 flex h-7 min-w-0 items-center justify-between gap-3 ${mono}`}>
           <span className="min-w-0 truncate">{recipe.recreation}</span>

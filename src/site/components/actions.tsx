@@ -11,18 +11,6 @@ import { useStrings } from '@/site/lib/strings'
 import { useSaved } from '@/site/lib/saved'
 import { trackCopy, trackWish, useLike } from '@/site/lib/stats'
 
-// A link bar above a film frame: your product link becomes a shot. Drawn on lucide's 24px grid.
-function LinkToFilm() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="3" y="3" width="18" height="4.5" rx="2.25" />
-      <path d="M6.5 5.25h5" />
-      <rect x="3" y="10.5" width="18" height="10.5" rx="2.5" />
-      <path d="M10.25 13.6v4.3l3.7-2.15z" fill="currentColor" />
-    </svg>
-  )
-}
-
 /** Tiles sit inside links; compact controls must not trigger navigation. */
 const isolate = (e: MouseEvent) => {
   e.preventDefault()
@@ -35,10 +23,15 @@ export const formatCount = (n: number) => (n > 999 ? `${(n / 1000).toFixed(1).re
 const mini =
   'relative inline-flex size-9 min-w-9 shrink-0 cursor-pointer items-center justify-center gap-1 rounded-lg bg-background/65 text-foreground ring-1 ring-border backdrop-blur-md transition hover:bg-background/85 active:scale-95 pointer-coarse:size-11 [&_svg]:size-4 [&_svg]:shrink-0'
 
-export function CopyAction({ term, compact }: { term: Term; compact?: boolean }) {
+/**
+ * Copy button. `className` styles the full button (e.g. `max-md:w-full`); `onCopied` runs after every successful copy.
+ * The full variant renders the button plus a persistent paste hint as a full-width line (`basis-full`) in the parent flex row.
+ */
+export function CopyAction({ term, compact, className, onCopied }: { term: Term; compact?: boolean; className?: string; onCopied?: () => void }) {
   const ref = useRef<HTMLButtonElement>(null)
   const timer = useRef<number>(0)
   const [done, setDone] = useState(false)
+  const [hinted, setHinted] = useState({ slug: term.slug, on: false })
   const { actions } = useStrings()
 
   useEffect(() => () => window.clearTimeout(timer.current), [])
@@ -50,8 +43,10 @@ export function CopyAction({ term, compact }: { term: Term; compact?: boolean })
     trackCopy(term.slug)
     track('copy', { tool: SITE.id, what: 'prompt', recipe: term.slug, page: location.pathname })
     setDone(true)
+    setHinted({ slug: term.slug, on: true })
     window.clearTimeout(timer.current)
     timer.current = window.setTimeout(() => setDone(false), 1600)
+    onCopied?.()
   }
 
   if (compact) {
@@ -63,17 +58,22 @@ export function CopyAction({ term, compact }: { term: Term; compact?: boolean })
   }
 
   return (
-    <Button ref={ref} size="lg" className="min-w-40 max-sm:min-w-0 max-sm:flex-1 sm:min-w-44" onClick={copy}>
-      {done ? <Check aria-hidden /> : <Copy aria-hidden />}
-      <span aria-live="polite">{done ? actions.copied : actions.copy}</span>
-    </Button>
+    <>
+      <Button ref={ref} size="lg" className={cn('min-w-44 max-sm:min-w-0', className)} onClick={copy}>
+        {done ? <Check aria-hidden /> : <Copy aria-hidden />}
+        <span>{done ? actions.copied : actions.copy}</span>
+      </Button>
+      <span role="status" className="order-last basis-full text-muted-foreground text-sm empty:sr-only">
+        {hinted.on && hinted.slug === term.slug ? actions.pasteHint : null}
+      </span>
+    </>
   )
 }
 
 export function LikeButton({ slug, compact }: { slug: string; compact?: boolean }) {
   const { liked, likes, toggle } = useLike(slug)
   const { actions } = useStrings()
-  const count = formatCount(likes)
+  const count = likes >= 10 ? formatCount(likes) : null
   return (
     <button
       type="button"
@@ -86,14 +86,14 @@ export function LikeButton({ slug, compact }: { slug: string; compact?: boolean 
       )}
       aria-pressed={liked}
       // starts with the visible count so the accessible name contains the visible text
-      aria-label={`${count} ${liked ? actions.unlike : actions.like}`}
+      aria-label={`${count ? `${count} ` : ''}${liked ? actions.unlike : actions.like}`}
       onClick={(e) => {
         if (compact) isolate(e)
         toggle()
       }}
     >
       <Heart aria-hidden fill={liked ? 'currentColor' : 'none'} className={cn('size-4 shrink-0', liked && 'animate-[like-pop_0.45s_cubic-bezier(0.16,1,0.3,1)]')} />
-      <span className="font-mono text-xs font-medium tabular-nums">{count}</span>
+      {count && <span className="font-mono text-xs font-medium tabular-nums">{count}</span>}
     </button>
   )
 }
@@ -119,50 +119,24 @@ export function SaveButton({ slug, compact }: { slug: string; compact?: boolean 
   )
 }
 
-export function WishButton({ slug }: { slug: string }) {
-  const [open, setOpen] = useState(false)
-  const box = useRef<HTMLDivElement>(null)
+// Small muted vote link at the end of the recipe page; the thanks replaces the link text in place.
+export function WishLink({ slug }: { slug: string }) {
+  const [voted, setVoted] = useState(false)
   const { actions } = useStrings()
-
-  useEffect(() => {
-    if (!open) return
-    const onDown = (e: PointerEvent) => {
-      if (!box.current?.contains(e.target as Node)) setOpen(false)
-    }
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
-    }
-    document.addEventListener('pointerdown', onDown)
-    document.addEventListener('keydown', onKey)
-    return () => {
-      document.removeEventListener('pointerdown', onDown)
-      document.removeEventListener('keydown', onKey)
-    }
-  }, [open])
-
-  return (
-    <div className="relative inline-block max-sm:w-full" ref={box}>
-      <Button
-        variant="outline"
-        size="lg"
-        className="max-sm:w-full"
-        aria-expanded={open}
-        onClick={() => {
-          trackWish(slug)
-          setOpen(true)
-        }}
-      >
-        <LinkToFilm />
-        {actions.wish}
-      </Button>
-      {open && (
-        <div
-          role="status"
-          className="absolute top-[calc(100%+0.5rem)] left-0 z-20 w-max max-w-[min(17.5rem,calc(100vw-2rem))] rounded-lg border bg-popover px-3.5 py-2.5 text-popover-foreground text-sm shadow-lg/10"
-        >
-          {actions.wishPop}
-        </div>
-      )}
-    </div>
+  return voted ? (
+    <p role="status" className="text-muted-foreground text-sm">
+      {actions.wishPop}
+    </p>
+  ) : (
+    <button
+      type="button"
+      className="inline-flex min-h-11 cursor-pointer items-center text-left text-muted-foreground text-sm underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground"
+      onClick={() => {
+        trackWish(slug)
+        setVoted(true)
+      }}
+    >
+      {actions.wish}
+    </button>
   )
 }

@@ -76,6 +76,8 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
   // The <video> is only rendered once the tile first needs to play, so the page markup carries one
   // video per page (the recipe film) for search engines, and tiles download nothing until then.
   const [armed, setArmed] = useState(false)
+  const [hint, setHint] = useState(false)
+  const hintTimer = useRef(0)
   const locale = useLocale()
   const s = useStrings()
   const src = media(term, 'small')
@@ -90,6 +92,15 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
   useEffect(() => {
     if (armed) video.current?.play().catch(() => {})
   }, [armed])
+
+  useEffect(() => () => window.clearTimeout(hintTimer.current), [])
+
+  // After a copy, the paste hint shows inside the tile's frame for a moment.
+  const onCopied = () => {
+    setHint(true)
+    window.clearTimeout(hintTimer.current)
+    hintTimer.current = window.setTimeout(() => setHint(false), 2500)
+  }
 
   const stop = useCallback(() => {
     const v = video.current
@@ -176,9 +187,14 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
             onPlaying={() => setLive(true)}
           />
         )}
+        {hint && (
+          <div role="status" className="absolute inset-x-0 bottom-0 z-10 bg-background/85 px-2.5 py-1.5 text-xs leading-snug backdrop-blur-md">
+            {s.actions.pasteHint}
+          </div>
+        )}
       </div>
-      <div className="absolute top-2 right-2 z-10 flex gap-0.5 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
-        <CopyAction term={term} compact />
+      <div className="absolute top-2 right-2 z-10 flex gap-0.5 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100 max-md:opacity-100">
+        <CopyAction term={term} compact onCopied={onCopied} />
         <SaveButton slug={term.slug} compact />
       </div>
       <div className="flex items-center justify-between gap-2 pt-2">
@@ -188,12 +204,12 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
             slug={term.slug}
             viewTransition
             data-tile-title
-            className="overflow-hidden text-ellipsis whitespace-nowrap font-medium text-[0.9rem] leading-snug outline-none pointer-coarse:-my-3 pointer-coarse:py-3 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-brand focus-visible:after:ring-offset-2 focus-visible:after:ring-offset-background"
+            className="line-clamp-2 font-medium text-[0.9rem] leading-snug outline-none pointer-coarse:-my-3 pointer-coarse:py-3 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-brand focus-visible:after:ring-offset-2 focus-visible:after:ring-offset-background"
             onClick={onNavigate}
           >
             {termName(term, locale)}
           </RecipeLink>
-          <span className="font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.positions[term.pos]}</span>
+          <span className="font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide max-[559px]:hidden">{s.positions[term.pos]}</span>
         </div>
         <div className="relative z-10 shrink-0">
           <LikeButton slug={term.slug} compact />

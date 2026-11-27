@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
 import { buttonVariants } from '@/core/ui/button'
-import { CopyAction, LikeButton, SaveButton, WishButton } from '@/site/components/actions'
+import { CopyAction, LikeButton, SaveButton, WishLink } from '@/site/components/actions'
 import { TileGrid } from '@/site/components/TileGrid'
 import { FullRecipe } from '@/site/components/recipe/FullRecipe'
 import { Compare } from '@/site/components/recipe/Compare'
@@ -55,7 +55,10 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   const select = (idx: number) => {
     setPick({ slug: t.slug, k: idx })
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-    compare.current?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
+    // Below 768px the compare wrapper is display: contents (no box), so scroll to the original figure instead.
+    const narrow = matchMedia('(max-width: 767px)').matches
+    const target = narrow ? compare.current?.querySelector('[data-original]') : compare.current
+    target?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
   }
 
   // Lower sections fade up once as they scroll into view.
@@ -105,71 +108,87 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
         </div>
       </div>
 
-      <div className="rc-compare mx-auto mt-1 max-w-[var(--site-width)] scroll-mt-4" ref={compare}>
-        {selected ? (
-          <Compare term={t} source={selected} />
-        ) : (
-          <figure className="m-0 min-w-0">
-            <Player term={t} />
-            <figcaption className="mt-1 flex h-7 items-center font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">
-              <span className="min-w-0 truncate">{s.recipe.recreationOnly}</span>
-            </figcaption>
-          </figure>
-        )}
-      </div>
-
-      <div className="mx-auto max-w-[var(--site-width)]">
-        <header className="mt-5 sm:mt-7">
-          <h1 className="text-balance font-semibold text-[clamp(1.9rem,4vw,3.25rem)] leading-[1.05] tracking-tight" style={{ viewTransitionName: 'title' }}>
-            {name}
-          </h1>
-          {shot.toLowerCase() !== name.toLowerCase() && (
-            <p className="mt-2.5 font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.recipe.shot(shot)}</p>
+      {/* Below 768px this wrapper is a flex column and the two wrappers inside dissolve (contents), so the order is:
+          recreation, header, actions, original (data-original in Compare), rest. */}
+      <div className="max-md:flex max-md:flex-col">
+        <div className="rc-compare mx-auto mt-1 max-w-[var(--site-width)] scroll-mt-4 max-md:contents" ref={compare}>
+          {selected ? (
+            <Compare term={t} source={selected} />
+          ) : (
+            <figure className="m-0 min-w-0 max-md:order-1 max-md:mt-1">
+              <Player term={t} />
+              <figcaption className="mt-1 flex h-7 items-center font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">
+                <span className="min-w-0 truncate">{s.recipe.recreationOnly}</span>
+              </figcaption>
+            </figure>
           )}
-          <p className="mt-3.5 max-w-[60ch] text-pretty text-base text-muted-foreground leading-relaxed sm:text-[1.0625rem]">{t.def[locale]}</p>
-        </header>
-
-        <div className="mt-6 flex flex-wrap items-center gap-2.5">
-          <CopyAction term={t} />
-          <LikeButton slug={t.slug} />
-          <SaveButton slug={t.slug} />
-          {copies > 0 && <span className="mx-1.5 font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.recipe.copiedTimes(copies)}</span>}
-          <div className="max-[720px]:w-full min-[721px]:ml-auto">
-            <WishButton slug={t.slug} />
-          </div>
         </div>
 
-        {clips.length > 1 && (
-          <section className="mt-14 sm:mt-18" data-rv>
-            <h2 className={h2}>{s.recipe.seenIn}</h2>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-3">
-              {clips.map((c, idx) => (
-                <SourceClip key={`${c.href}-${idx}`} source={c} selected={idx === k} onSelect={() => select(idx)} />
-              ))}
-            </div>
-          </section>
-        )}
+        <div className="mx-auto max-w-[var(--site-width)] max-md:contents">
+          <header className="mt-5 sm:mt-7 max-md:order-2">
+            <h1 className="text-balance font-semibold text-[clamp(1.9rem,4vw,3.25rem)] leading-[1.05] tracking-tight" style={{ viewTransitionName: 'title' }}>
+              {name}
+            </h1>
+            {shot.toLowerCase() !== name.toLowerCase() && (
+              <p className="mt-2.5 font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.recipe.shot(shot)}</p>
+            )}
+            <p className="mt-3.5 max-w-[60ch] text-pretty text-base text-muted-foreground leading-relaxed sm:text-[1.0625rem]">{t.def[locale]}</p>
+          </header>
 
-        <section className="mt-14 sm:mt-18" data-rv>
-          <h2 className={h2}>{s.recipe.howto(name)}</h2>
-          {text.seo.howto.map((p) => (
-            <p key={p} className="mb-3.5 max-w-[64ch] text-muted-foreground leading-relaxed">
-              {p}
-            </p>
-          ))}
-          <div className="flex flex-wrap items-center gap-3">
-            <InstallCommand />
+          <div className="mt-6 flex flex-wrap items-center gap-2.5 max-md:order-3">
+            <CopyAction term={t} className="max-md:w-full" />
+            <LikeButton slug={t.slug} />
+            <SaveButton slug={t.slug} />
+            {copies >= 10 && <span className="mx-1.5 font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.recipe.copiedTimes(copies)}</span>}
           </div>
-        </section>
 
-        <section className="mt-14 sm:mt-18">
-          <FullRecipe term={t} text={text} />
-        </section>
+          <div className="max-md:order-6">
+            {clips.length > 1 && (
+              <section className="mt-14 sm:mt-18" data-rv>
+                <h2 className={h2}>{s.recipe.seenIn}</h2>
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-3">
+                  {clips.map((c, idx) => (
+                    <SourceClip key={`${c.href}-${idx}`} source={c} selected={idx === k} onSelect={() => select(idx)} />
+                  ))}
+                </div>
+              </section>
+            )}
 
-        <section className="mt-14 sm:mt-18" data-rv>
-          <h2 className={h2}>{s.recipe.faq}</h2>
-          <Faq items={text.seo.faq} />
-        </section>
+            <section className="mt-14 sm:mt-18" data-rv>
+              <h2 className={h2}>{s.recipe.howto(name)}</h2>
+              <p className="mb-3.5 max-w-[64ch] text-muted-foreground leading-relaxed">{s.recipe.pasteLine}</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <InstallCommand />
+              </div>
+              <details className="group mt-5 rounded-xl bg-muted ring-1 ring-border">
+                <summary className="flex min-h-12 cursor-pointer list-none select-none items-center justify-between gap-3 rounded-xl px-4 font-semibold text-[0.9375rem] hover:bg-accent group-open:rounded-b-none group-open:shadow-[0_1px_0_var(--border)] [&::-webkit-details-marker]:hidden">
+                  <span>{s.recipe.built}</span>
+                  <ChevronDown aria-hidden="true" className="size-[18px] text-muted-foreground transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div className="px-4 pt-5 pb-6 sm:px-5">
+                  {text.seo.howto.map((p) => (
+                    <p key={p} className="mb-3.5 max-w-[64ch] text-muted-foreground leading-relaxed last:mb-0">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              </details>
+            </section>
+
+            <section className="mt-14 sm:mt-18">
+              <FullRecipe term={t} text={text} />
+            </section>
+
+            <section className="mt-14 sm:mt-18" data-rv>
+              <h2 className={h2}>{s.recipe.faq}</h2>
+              <Faq items={text.seo.faq} />
+            </section>
+
+            <div className="mt-8">
+              <WishLink slug={t.slug} />
+            </div>
+          </div>
+        </div>
       </div>
       {more.length > 0 && (
         <section className="mt-14 sm:mt-18" data-rv>

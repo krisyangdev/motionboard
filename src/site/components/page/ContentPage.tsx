@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
 import { cn } from '@/core/lib/utils'
@@ -210,6 +210,8 @@ export function ContentPage({ data }: { data: PageData }) {
   const locale = useLocale()
   const t = PAGE_STRINGS[locale]
   const { kind, updated, copy } = data
+  const short = kind === 'hub' ? copy.short : undefined
+  const firstFilms = short ? copy.blocks.findIndex((b) => b.t === 'films') : -1
 
   return (
     <main className="wrap min-h-[70vh] pt-2">
@@ -231,13 +233,20 @@ export function ContentPage({ data }: { data: PageData }) {
       <header className="mt-5 sm:mt-7">
         <h1 className="max-w-[20em] text-balance font-semibold text-[clamp(1.9rem,4vw,3.25rem)] leading-[1.05] tracking-tight">{copy.h1}</h1>
         <p className="mt-4 max-w-[720px] text-pretty text-base text-muted-foreground leading-relaxed sm:text-[1.0625rem]">
-          <Inline text={copy.lede} />
+          <Inline text={short ?? copy.lede} />
         </p>
         {kind === 'guide' && <p className={`mt-4 ${mono}`}><time dateTime={updated}>{t.updated(updated)}</time></p>}
       </header>
       <div className="mt-10 [overflow-wrap:break-word] sm:mt-12 [&>*]:max-w-[720px] [&>*+*]:mt-[18px] [&>h2+*]:mt-4 [&>h2]:mt-11 sm:[&>h2]:mt-14">
         {copy.blocks.map((block, i) => (
-          <BlockView key={i} block={block} />
+          <Fragment key={i}>
+            <BlockView block={block} />
+            {i === firstFilms && (
+              <p className={text}>
+                <Inline text={copy.lede} />
+              </p>
+            )}
+          </Fragment>
         ))}
       </div>
     </main>

@@ -184,19 +184,23 @@ export function HeroFilm() {
             </Button>
           )}
         </div>
-        <ol className="m-0 flex h-11 list-none gap-1 p-0 max-sm:mx-4 sm:h-16 min-[900px]:w-[var(--vw)]" aria-label={s.hero.shots}>
+        <ol className="m-0 flex h-11 list-none gap-1 p-0 max-sm:mx-4 sm:h-12 min-[900px]:w-[var(--vw)]" aria-label={s.hero.shots}>
           {SEGS.map((seg, i) => (
             <li key={seg.slug} className="tl-item min-w-0 flex-1 basis-0" style={{ flexGrow: seg.dur }}>
               <button
                 type="button"
-                className="relative flex size-full cursor-pointer flex-col items-start justify-between overflow-hidden rounded-lg bg-muted px-3 py-2 text-left text-muted-foreground ring-1 ring-border transition-colors before:absolute before:inset-x-0 before:top-0 before:h-0.5 before:bg-brand before:opacity-0 before:transition-opacity hover:bg-accent hover:text-foreground aria-[current=true]:bg-accent aria-[current=true]:text-foreground aria-[current=true]:before:opacity-100 max-sm:items-center max-sm:justify-center max-sm:p-0"
+                className="group relative flex size-full cursor-pointer items-center justify-center overflow-hidden rounded-lg px-2 text-muted-foreground transition-colors sm:bg-muted sm:ring-1 sm:ring-border sm:before:absolute sm:before:inset-x-0 sm:before:top-0 sm:before:h-0.5 sm:before:bg-brand sm:before:opacity-0 sm:before:transition-opacity sm:hover:bg-accent sm:hover:text-foreground sm:aria-[current=true]:bg-accent sm:aria-[current=true]:text-foreground sm:aria-[current=true]:before:opacity-100"
+                aria-label={termName(seg.term, locale)}
                 aria-current={i === index ? 'true' : undefined}
                 onClick={() => select(i)}
               >
-                <span className="pointer-events-none absolute inset-0 bg-foreground/8 [transform:scaleX(0)] origin-left" ref={(el) => void (fills.current[i] = el)} />
-                <span className="relative font-mono text-[0.6875rem] uppercase tracking-wide sm:hidden">{String(i + 1).padStart(2, '0')}</span>{' '}
-                <span className="relative max-w-full truncate font-mono text-[0.6875rem] uppercase tracking-wide max-sm:sr-only">{s.positions[seg.term.pos]}</span>{' '}
-                <span className="relative max-w-full truncate font-medium text-[0.8125rem] max-sm:sr-only">{termName(seg.term, locale)}</span>
+                {/* Phones: a slim progress bar inside the full-height tap target. From 640px: the tab's background. */}
+                <span className="pointer-events-none absolute overflow-hidden max-sm:inset-x-0 max-sm:top-1/2 max-sm:h-1.5 max-sm:-translate-y-1/2 max-sm:rounded-full max-sm:bg-muted max-sm:ring-1 max-sm:ring-border max-sm:group-aria-[current=true]:bg-accent sm:inset-0">
+                  <span className="absolute inset-0 origin-left [transform:scaleX(0)] max-sm:bg-brand sm:bg-foreground/8" ref={(el) => void (fills.current[i] = el)} />
+                </span>
+                <span className="relative max-w-full truncate font-medium text-[0.8125rem] max-sm:hidden" aria-hidden="true">
+                  {seg.short[locale]}
+                </span>
               </button>
             </li>
           ))}
@@ -206,8 +210,8 @@ export function HeroFilm() {
             <span className="font-semibold text-xl leading-tight tracking-tight min-[900px]:text-[1.375rem]">{termName(cur.term, locale)}</span>
             <span className="font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.positions[cur.term.pos]}</span>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <CopyAction term={cur.term} />
+          <div className="flex flex-wrap items-center gap-2 max-md:w-full">
+            <CopyAction term={cur.term} className="max-md:w-full" />
             <RecipeLink slug={cur.term.slug} className={buttonVariants({ variant: 'outline', size: 'lg' })}>
               {s.hero.open}
             </RecipeLink>

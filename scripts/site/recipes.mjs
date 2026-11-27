@@ -3,7 +3,8 @@
 // skills/motionboard/source/<video>/. Run before every dev start and build (npm predev / prebuild).
 // Writes (all gitignored except the README tables and the skill's recipes/):
 //   src/site/data/gen/index.json and text/<slug>.<locale>.json: index.json is bundled with every page,
-//     the long text of one recipe is a chunk only the recipe page loads
+//     the long text of one recipe is a chunk only the recipe page loads; search.json is the home search's
+//     haystack, imported on first use
 //   src/site/data/gen/pages.json, videos.json, redirects.txt, llms.txt: read by src/site/pages.ts, which
 //     feeds the template's sitemap, video sitemap, _redirects and llms.txt generation
 //   public/r/<slug>.md and index.md (recipe files for agents, fetched with curl) and public/source (copy of
@@ -84,6 +85,17 @@ gen(
       def: { en: en[t.slug].def, zh: zh1 },
     }
   }),
+)
+// Search haystack per recipe: names, shot names and the phrases people use for the shot, both languages, lowercased.
+// Loaded by the home page search on first use, so it is not part of any page's bundle.
+gen(
+  'search.json',
+  Object.fromEntries(
+    terms.map((t) => [
+      t.slug,
+      [seo[t.slug].en.name, seo[t.slug].zh.name, t.en, t.zh, ...(en[t.slug]?.says || []), ...(t.says || [])].join(' ').toLowerCase(),
+    ]),
+  ),
 )
 const pageSeo = ({ title, description, howto, faq }) => ({ title, description, howto, faq })
 for (const t of terms) {

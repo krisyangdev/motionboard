@@ -7,6 +7,7 @@
     "title": "Text Animation and Kinetic Typography Examples",
     "description": "Fourteen text animation recipes from launch films: kinetic typography, typing, text behind an object, blur text, count up and more. Built with HyperFrames.",
     "h1": "Text animation examples from launch films",
+    "short": "14 text effects from real launch films. Open one and copy it to your agent.",
     "lede": "Text animation moves words and letters on screen to carry a message in a launch film. These fourteen recipes cover kinetic typography, typing animation, the typewriter effect, word-by-word highlight, text that interacts with objects, text behind an object, folded 3D ribbons, scrolling text, one word per cut, blur text, a Star Wars style text crawl and count-up numbers. Each film runs 10 to 12 seconds at 1920x1080, is built in code with HyperFrames and is shown next to the original clip, with timing per word, letter and character.",
     "blocks": [
       {
@@ -110,6 +111,7 @@
     "title": "文字动画与动态文字排版示例",
     "description": "14 个来自发布片的文字动画配方，包括动态文字排版、打字动画、文字在物体后面、模糊文字、数字滚动等，用 HyperFrames 写代码做出，并与原片对照。",
     "h1": "发布片里的文字动画示例",
+    "short": "14 个发布片文字效果。点开一个，复制给你的 agent。",
     "lede": "文字动画让文字和字母在画面上运动，用来传达发布片里的信息。这 14 个配方覆盖动态文字排版（kinetic typography）、打字动画、打字机效果、逐词高亮、文字与物体的互动、文字在物体后面、3D 折带文字、滚动文字、一词一切、模糊文字、星战风格字幕滚动和数字滚动。每个都是用 HyperFrames 写代码做出的 10 到 12 秒 1920x1080 短片，旁边附上原片，并标出每个词、字母和字符的时间。",
     "blocks": [
       {
