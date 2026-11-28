@@ -20,8 +20,12 @@ export const extraPages: ExtraPage[] = JSON.parse(read('pages.json'))
 /** The showcase films of the launch-video-examples guide. */
 export const extraVideos: Video[] = JSON.parse(read('videos.json'))
 
-/** Old recipe files: /r/<old>.md -> /r/<new>.md. The page redirects come from content/renamed.json. */
-export const extraRedirects: string[] = read('redirects.txt').split('\n').filter(Boolean)
+/** Old recipe files (/r/<old>.md -> /r/<new>.md) and retired sitemap children. The page redirects come from content/renamed.json. */
+export const extraRedirects: string[] = [
+  ...read('redirects.txt').split('\n').filter(Boolean),
+  // Retired sitemap children. v8.4.0 moved the recipes from extraPages (sitemap-items.xml) to the recipes collection.
+  '/sitemap-items.xml /sitemap-recipes.xml 301',
+]
 
 /** The recipe files for agents are not search pages. */
 export const extraHeaders: Record<string, Record<string, string>> = { '/r/*': { 'X-Robots-Tag': 'noindex' } }
