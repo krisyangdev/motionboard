@@ -1,4 +1,4 @@
-// With a site jobs source (src/site/admin.ts) the admin's three job reads go to it and never touch the db `jobs` table.
+// With a site jobs source (src/site/admin-jobs.ts) the admin's three job reads go to it and never touch the db `jobs` table.
 import { describe, expect, it, vi } from 'vitest'
 
 const state = vi.hoisted(() => ({ fromTables: [] as unknown[], calls: [] as string[] }))
@@ -23,13 +23,11 @@ vi.mock('../db', () => ({
   db: () => ({ select: chain, ...{ then: undefined } }),
   schema: new Proxy({ jobs: JOBS, user: USER }, { get: (t, p) => (p in t ? (t as Record<string | symbol, unknown>)[p] : { table: String(p) }) }),
 }))
-vi.mock('../../site/admin', () => ({
-  adminSite: {
-    jobs: {
-      statusCounts: async () => (state.calls.push('statusCounts'), [{ status: 'done', count: 3 }]),
-      list: async (o: { limit: number; offset: number }) => (state.calls.push(`list:${o.limit}:${o.offset}`), { rows: [{ id: 'j1', userId: 'u1', kind: 'gen', status: 'done', cost: 2, error: null, createdAt: 0 }], total: 120 }),
-      forUser: async (id: string, limit: number) => (state.calls.push(`forUser:${id}:${limit}`), [{ id: 'j1', userId: id, kind: 'gen', status: 'done', cost: 2, error: null, createdAt: 0 }]),
-    },
+vi.mock('../../site/admin-jobs', () => ({
+  adminJobs: {
+    statusCounts: async () => (state.calls.push('statusCounts'), [{ status: 'done', count: 3 }]),
+    list: async (o: { limit: number; offset: number }) => (state.calls.push(`list:${o.limit}:${o.offset}`), { rows: [{ id: 'j1', userId: 'u1', kind: 'gen', status: 'done', cost: 2, error: null, createdAt: 0 }], total: 120 }),
+    forUser: async (id: string, limit: number) => (state.calls.push(`forUser:${id}:${limit}`), [{ id: 'j1', userId: id, kind: 'gen', status: 'done', cost: 2, error: null, createdAt: 0 }]),
   },
 }))
 

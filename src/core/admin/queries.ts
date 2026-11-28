@@ -1,6 +1,6 @@
 // Read queries behind /api/admin/*. Lists are newest first, 50 per page; `hasMore` replaces a total count.
 import { desc, eq, gte, sql } from 'drizzle-orm'
-import { adminSite } from '../../site/admin'
+import { adminJobs } from '../../site/admin-jobs'
 import { db, schema } from '../db'
 import type { AdminJobRow } from './types'
 
@@ -37,7 +37,7 @@ export async function getStats() {
       .from(paymentOrders)
       .where(eq(paymentOrders.status, 'paid'))
       .groupBy(paymentOrders.mode, paymentOrders.currency),
-    adminSite.jobs ? adminSite.jobs.statusCounts() : db().select({ status: jobs.status, count: sql<number>`count(*)` }).from(jobs).groupBy(jobs.status),
+    adminJobs ? adminJobs.statusCounts() : db().select({ status: jobs.status, count: sql<number>`count(*)` }).from(jobs).groupBy(jobs.status),
     db()
       .select({
         type: creditTransactions.type,
@@ -109,8 +109,8 @@ export async function getUserDetail(id: string) {
       .orderBy(desc(creditTransactions.createdAt), desc(creditTransactions.id))
       .limit(PAGE_SIZE),
     db().select().from(paymentOrders).where(eq(paymentOrders.userId, id)).orderBy(desc(paymentOrders.createdAt)).limit(20),
-    adminSite.jobs
-      ? adminSite.jobs.forUser(id, 20).then((rows) => rows.map(({ id, kind, status, cost, error, createdAt }) => ({ id, kind, status, cost, error, createdAt: iso(createdAt) })))
+    adminJobs
+      ? adminJobs.forUser(id, 20).then((rows) => rows.map(({ id, kind, status, cost, error, createdAt }) => ({ id, kind, status, cost, error, createdAt: iso(createdAt) })))
       : db()
           .select({ id: jobs.id, kind: jobs.kind, status: jobs.status, cost: jobs.cost, error: jobs.error, createdAt: jobs.createdAt })
           .from(jobs)
@@ -182,8 +182,8 @@ export async function listOrders(page: number) {
 }
 
 export async function listJobs(page: number) {
-  if (adminSite.jobs) {
-    const { rows, total } = await adminSite.jobs.list({ limit: PAGE_SIZE, offset: offsetOf(page) })
+  if (adminJobs) {
+    const { rows, total } = await adminJobs.list({ limit: PAGE_SIZE, offset: offsetOf(page) })
     return { items: rows.map((j) => ({ ...jobRow(j), email: j.email ?? null, attempts: j.attempts ?? 0 })), page, pageSize: PAGE_SIZE, hasMore: offsetOf(page) + PAGE_SIZE < total }
   }
   const rows = await db()

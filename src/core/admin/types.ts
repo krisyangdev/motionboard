@@ -1,4 +1,4 @@
-// Types of the admin site slot (src/site/admin.ts), kept apart from queries.ts so the slot file imports no database code.
+// Types of the admin site slots: src/site/admin.ts (nav, read by the browser) and src/site/admin-jobs.ts (jobs source, server only).
 
 /** One job as the admin pages show it. `email`, `attempts` and `updatedAt` only fill the Jobs page columns and may be left out. */
 export type AdminJobRow = {
@@ -28,5 +28,4 @@ export type AdminNavItem = { to: string; label: string }
 
 export type AdminSite = {
   nav?: AdminNavItem[]
-  jobs?: AdminJobsSource
 }
