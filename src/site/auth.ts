@@ -1,11 +1,32 @@
-// Site-owned auth hooks. Leave `password` undefined to use the template's hasher (src/core/auth/hash.ts, PBKDF2-SHA256 at 20k).
-// A site that moves existing users in (e.g. ShotFrames' salt:hash PBKDF2 format) sets `password` to its
-// own { hash, verify }; src/core/auth/server.ts passes it to Better Auth as emailAndPassword.password.
-// Keep it cheap: Workers Free allows 10 ms CPU per request (PBKDF2-SHA256 at 12k-20k iterations fits; 100k and scrypt do not).
+// Site-owned auth hooks, read by src/core/auth/server.ts. Every field is optional; an empty object is the
+// template's own behaviour. A site that moves an existing user base in (ShotFrames) uses them to keep its
+// URLs, cookies and emails unchanged so users stay signed in.
+//
+// - password: { hash, verify } for a stored hash format other than the template's (src/core/auth/hash.ts).
+//   Keep it cheap: Workers Free allows 10 ms CPU per request (PBKDF2-SHA256 at 12k-20k fits; 100k and scrypt do not).
+// - basePath: where Better Auth answers (default /api/auth). The OAuth callback is <BETTER_AUTH_URL><basePath>/callback/<provider>.
+// - cookiePrefix: cookie name prefix (default Better Auth's "better-auth").
+// - trustedOrigins: origins allowed besides BETTER_AUTH_URL (e.g. other hosts of the same site).
+// - account: Better Auth account options (linking, token encryption).
+// - plugins: extra Better Auth plugins, added before the template's own.
+// - sendVerificationEmail: replaces the template's verification mail.
+// - afterUserCreated: runs after the template's signup grant and `signup` event.
+import type { BetterAuthOptions, BetterAuthPlugin, User } from 'better-auth'
 
 export type PasswordHasher = {
   hash: (password: string) => Promise<string>
   verify: (input: { hash: string; password: string }) => Promise<boolean>
 }
 
-export const password: PasswordHasher | undefined = undefined
+export type AuthSite = {
+  password?: PasswordHasher
+  basePath?: string
+  cookiePrefix?: string
+  trustedOrigins?: string[]
+  account?: BetterAuthOptions['account']
+  plugins?: () => BetterAuthPlugin[]
+  sendVerificationEmail?: (data: { user: User; url: string; token: string }, request?: Request) => Promise<void>
+  afterUserCreated?: (user: User) => Promise<void>
+}
+
+export const authSite: AuthSite = {}

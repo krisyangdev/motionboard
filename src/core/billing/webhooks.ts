@@ -2,6 +2,7 @@
 // verified the signature. Port of ShotFrames handlePaymentWebhook: every event is recorded once
 // (unique provider_event_id), a repeat of a finished event is acknowledged without doing anything,
 // and a failure is rethrown so Dodo retries. Credits are granted through the idempotent ledger.
+import { verifyWebhookPayload } from '@dodopayments/core/webhook'
 import type { WebhookPayload } from '@dodopayments/core/schemas'
 import { and, eq, inArray, isNull, ne, or, sql } from 'drizzle-orm'
 import { planByCode } from '../../site/plans'
@@ -27,6 +28,28 @@ const integer = (v: unknown) => {
 function eventId(payload: WebhookPayload, data: Data) {
   const object = str(data.refund_id) ?? str(data.payment_id) ?? str(data.subscription_id) ?? str(data.dispute_id)
   return `${object ?? new Date(payload.timestamp).toISOString()}:${payload.type}`
+}
+
+/**
+ * A Dodo webhook received at a site's own path (the template's is the Better Auth plugin route): verifies the
+ * Standard Webhooks signature with `secret`, then runs handleDodoWebhook. 401 on a bad signature; 500 when
+ * handling fails, so Dodo retries.
+ */
+export async function handleDodoWebhookRequest(request: Request, secret: string): Promise<Response> {
+  const body = await request.text()
+  let payload: WebhookPayload
+  try {
+    payload = await verifyWebhookPayload({ webhookKey: secret, headers: Object.fromEntries(request.headers), body })
+  } catch {
+    return Response.json({ error: 'Invalid webhook signature', code: 'invalid_signature' }, { status: 401 })
+  }
+  try {
+    await handleDodoWebhook(payload)
+  } catch (error) {
+    console.error('[billing] webhook failed', error instanceof Error ? error.message : String(error))
+    return Response.json({ error: 'Webhook failed', code: 'webhook_failed' }, { status: 500 })
+  }
+  return Response.json({ received: true })
 }
 
 export async function handleDodoWebhook(payload: WebhookPayload): Promise<void> {

@@ -1,6 +1,6 @@
-// Password hashing for Better Auth emailAndPassword: the site's hook (src/site/auth.ts) when set, else the template's
-// PBKDF2 hasher (src/core/auth/hash.ts), which fits Workers Free's 10 ms CPU per request.
-import { password } from '../../site/auth'
+// Password hashing for Better Auth emailAndPassword: the site's hook (authSite.password in src/site/auth.ts) when
+// set, else the template's PBKDF2 hasher (src/core/auth/hash.ts), which fits Workers Free's 10 ms CPU per request.
+import { authSite } from '../../site/auth'
 import { templateHasher } from './hash'
 
-export const passwordOptions = () => ({ password: password ?? templateHasher })
+export const passwordOptions = () => ({ password: authSite.password ?? templateHasher })
