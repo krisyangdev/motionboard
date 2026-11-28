@@ -30,6 +30,7 @@ describe('startCheckout', () => {
     const { url, orderId } = await startCheckout(user, 'starter', '/account/', 'https://example.com')
     expect(url).toBe('https://test.checkout.dodopayments.com/s')
     const body = created[0]
+    expect(body.customer).toEqual({ email: 'buyer@example.com' })
     expect(body.billing_currency).toBe('USD')
     expect(body.feature_flags).toEqual({ allow_currency_selection: false })
     expect(body.return_url).toBe(`https://example.com/account/?checkout=success&order=${orderId}`)

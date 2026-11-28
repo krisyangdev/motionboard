@@ -58,7 +58,8 @@ export async function startCheckout(
     } else {
       const session = await dodoClient().checkoutSessions.create({
         product_cart: [{ product_id: dodoProductId(plan), quantity: 1 }],
-        customer: { email: user.email, name: user.name },
+        // Email only: a name sent here is locked for the session, and Dodo then rejects the name the buyer types.
+        customer: { email: user.email },
         // Charge in the plan's currency. Without this Dodo localises the price to the buyer's billing country.
         billing_currency: plan.price.currency,
         feature_flags: { allow_currency_selection: false },
