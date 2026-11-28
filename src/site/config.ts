@@ -19,7 +19,7 @@ export const SKILL_INSTALL = `npx skills add ${SITE.github}`
 export const BRAND = {
   name: SITE.name,
   headline: {
-    en: 'Copy launch-film effects into Claude Code or Codex',
-    zh: '复制宣传片动效，粘贴进 Claude Code 或 Codex',
+    en: 'Copy launch-video effects into Claude Code',
+    zh: '复制宣传片动效到 Claude Code',
   },
 }
