@@ -367,9 +367,10 @@ check('item media: alt, width and height; a video has a <source> in the HTML', i
   }
   if (page.media === 'image' && !tags('img', main).length) errs.push('main media is an image but the page has no <img>')
   if (page.media === 'video') {
-    const sources = tags('source', main).map((t) => attr(t, 'src'))
+    const abs = (u) => new URL(decode(u), SITE_URL).href
+    const sources = tags('source', main).map((t) => abs(attr(t, 'src') ?? ''))
     if (!tags('video', main).length || !sources.length) errs.push('main media is a video but the HTML has no <video> with <source>')
-    const contentUrls = ldOf(html).flatMap(ldNodes).filter((n) => [n['@type']].flat().includes('VideoObject')).map((n) => stripOrigin(n.contentUrl ?? ''))
+    const contentUrls = ldOf(html).flatMap(ldNodes).filter((n) => [n['@type']].flat().includes('VideoObject')).map((n) => abs(n.contentUrl ?? ''))
     if (!contentUrls.every((u) => sources.includes(u))) errs.push('VideoObject contentUrl is not one of the <source> URLs')
   }
   return errs.length ? `${path}: ${errs.join('; ')}` : ''
