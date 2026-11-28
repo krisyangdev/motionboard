@@ -9,12 +9,12 @@ type Dict = Record<string, string | number | boolean | undefined>
 
 /** Browser events from the shared schema in ~/code/home/lines/sites.md. `lang` and `site` are added automatically. */
 export type TrackEvent =
-  | { event: '$pageview'; page: string; page_type: string; landing_page: string; referrer_type: string; device: string }
+  | { event: '$pageview'; page: string; page_type: string; landing_page: string; prev_path: string; referrer_type: string; device: string }
   | { event: 'tool_start'; tool: string; page: string }
   | { event: 'tool_result'; tool: string; page: string; ms: number; ok: boolean }
   | { event: 'upload'; tool: string; file_type: string; size_bucket: string }
   | { event: 'download'; tool: string; format: string }
-  | { event: 'copy'; tool: string; what: string; page: string; recipe?: string }
+  | { event: 'copy'; tool: string; what: string; page: string; recipe?: string; from?: string }
   | { event: 'video_play'; recipe: string; page: string; trigger: 'auto' | 'click' }
   | { event: 'cta_click'; page: string; to: string }
   | { event: 'error'; page: string; endpoint: string; code: string }

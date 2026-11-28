@@ -1,22 +1,30 @@
-// Theme: `.dark` on <html>, chosen from localStorage 'theme', else from SITE.theme.default
-// ('system' follows the system preference, 'light' stays light until the visitor picks dark).
+// Theme: `.dark` on <html>. The visitor's choice ('light' | 'dark' | 'system') is a `theme` cookie on SITE.domain, so
+// every host of the site (www, app, ...) shows the same theme; with no choice SITE.theme.default applies
+// ('system' follows the system preference, 'light' stays light until the visitor picks dark or system).
 import { SITE } from '../../site.config.ts'
 
-const SYSTEM_SCRIPT = `(()=>{try{const d=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)'),s=()=>{let t;try{t=localStorage.getItem('theme')}catch{}d.classList.toggle('dark',t==='dark'||(t!=='light'&&m.matches))};s();m.addEventListener('change',s);addEventListener('storage',s)}catch{}})()`
-const LIGHT_SCRIPT = `(()=>{try{const d=document.documentElement,s=()=>{let t;try{t=localStorage.getItem('theme')}catch{}d.classList.toggle('dark',t==='dark')};s();addEventListener('storage',s)}catch{}})()`
+export type ThemeChoice = 'light' | 'dark' | 'system'
 
-/** Inline <head> script. Runs before first paint. */
+const COOKIE = /(?:^|;\s*)theme=(light|dark|system)(?:;|$)/
+
+/** Inline <head> script. Runs before first paint, and again when the system preference changes. */
 export function themeScript(defaultTheme: 'light' | 'system'): string {
-  return defaultTheme === 'light' ? LIGHT_SCRIPT : SYSTEM_SCRIPT
+  return `(()=>{try{const d=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)'),s=()=>{const t=(document.cookie.match(${COOKIE.toString()})||[])[1]||'${defaultTheme}';d.classList.toggle('dark',t==='dark'||(t==='system'&&m.matches))};s();m.addEventListener('change',s)}catch{}})()`
 }
 
 export const THEME_SCRIPT = themeScript(SITE.theme.default)
 
-export function setTheme(theme: 'light' | 'dark') {
-  document.documentElement.classList.toggle('dark', theme === 'dark')
-  try {
-    localStorage.setItem('theme', theme)
-  } catch {
-    // Private mode or blocked storage: the choice applies to this page view only.
-  }
+/** The stored choice, or null when the visitor has not picked one. Browser only. */
+export function storedTheme(): ThemeChoice | null {
+  return (document.cookie.match(COOKIE)?.[1] as ThemeChoice | undefined) ?? null
+}
+
+/** Stores the visitor's choice for every host of the site and applies it now. */
+export function setTheme(theme: ThemeChoice) {
+  const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)
+  document.documentElement.classList.toggle('dark', dark)
+  const host = location.hostname
+  const domain = host === SITE.domain || host.endsWith(`.${SITE.domain}`) ? `; Domain=${SITE.domain}` : ''
+  const secure = location.protocol === 'https:' ? '; Secure' : ''
+  document.cookie = `theme=${theme}; Path=/; Max-Age=31536000; SameSite=Lax${domain}${secure}`
 }

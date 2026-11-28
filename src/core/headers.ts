@@ -14,6 +14,8 @@ const csp = () =>
     "font-src 'self'",
     `connect-src ${list("'self'", SITE.posthogHost, 'https://cloudflareinsights.com', SITE.csp.connect)}`,
     `media-src ${list("'self' blob:", SITE.csp.media)}`,
+    // Libraries that decode in a Worker often start it from a blob: URL (e.g. HEIC and WebAssembly decoders).
+    "worker-src 'self' blob:",
     `frame-src ${list(SITE.csp.frame.length ? SITE.csp.frame : ["'none'"])}`,
     `form-action ${list("'self'", SITE.csp.form)}`,
     "frame-ancestors 'none'",

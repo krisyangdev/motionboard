@@ -37,15 +37,40 @@ describe('fonts', () => {
 
 describe('theme', () => {
   const color = { light: '#fafaf7', dark: '#111111' }
-  it('light default: one theme-color, script ignores the system preference', () => {
+  it('light default: one theme-color', () => {
     expect(themeColorMetas({ default: 'light', color })).toEqual([{ name: 'theme-color', content: '#fafaf7' }])
-    expect(themeScript('light')).not.toContain('prefers-color-scheme')
   })
-  it('system default: theme-color per scheme, script follows the system preference', () => {
+  it('system default: theme-color per scheme', () => {
     expect(themeColorMetas({ default: 'system', color }).map((m) => m.media)).toEqual([
       '(prefers-color-scheme: light)',
       '(prefers-color-scheme: dark)',
     ])
-    expect(themeScript('system')).toContain('prefers-color-scheme')
+  })
+
+  /** Runs the head script against a stub page and says whether it set `.dark`. */
+  function runScript(defaultTheme: 'light' | 'system', stored: string | null, systemDark: boolean) {
+    let dark = false
+    const document = {
+      cookie: stored === null ? 'other=1' : `other=1; theme=${stored}`,
+      documentElement: { classList: { toggle: (_: string, on: boolean) => (dark = on) } },
+    }
+    const matchMedia = () => ({ matches: systemDark, addEventListener: () => {} })
+    new Function('document', 'matchMedia', themeScript(defaultTheme))(document, matchMedia)
+    return dark
+  }
+
+  it('nothing stored: the site default decides', () => {
+    expect(runScript('light', null, true)).toBe(false)
+    expect(runScript('system', null, true)).toBe(true)
+    expect(runScript('system', null, false)).toBe(false)
+  })
+  it('a stored choice wins over the default and the system preference', () => {
+    expect(runScript('light', 'dark', false)).toBe(true)
+    expect(runScript('system', 'light', true)).toBe(false)
+    expect(runScript('light', 'system', true)).toBe(true)
+    expect(runScript('light', 'system', false)).toBe(false)
+  })
+  it('an unknown stored value falls back to the default', () => {
+    expect(runScript('light', 'blue', true)).toBe(false)
   })
 })

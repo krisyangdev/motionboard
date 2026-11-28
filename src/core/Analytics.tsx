@@ -1,4 +1,5 @@
-// Mounted once in the root route. Starts tracking, sends $pageview on every navigation,
+// Mounted once in the root route. Starts tracking, sends $pageview on every navigation (with prev_path, the in-site
+// path before it, '' on a document's first pageview),
 // reports uncaught errors and counts clicks on links marked data-cta="<target>".
 import { useEffect } from 'react'
 import { useRouterState } from '@tanstack/react-router'
@@ -9,6 +10,7 @@ import { captureException, initTracking, referrerType, setTrackingLang, track } 
 
 let inited = false
 let landing = ''
+let prev = ''
 
 function init() {
   if (inited) return
@@ -31,13 +33,18 @@ export function Analytics() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   useEffect(() => {
     init()
+    if (pathname === prev) return // React's dev double effect
     setTrackingLang(localeOf(pathname))
     const first = !landing
     if (first) landing = pathname
+    // $referrer stays the document's referrer on client-side navigations; prev_path names the in-site page before.
+    const prev_path = first ? '' : prev
+    prev = pathname
     track('$pageview', {
       page: pathname,
       page_type: pageType(stripLocale(pathname)),
       landing_page: landing,
+      prev_path,
       referrer_type: first ? referrerType() : 'internal',
       device: matchMedia('(max-width: 720px)').matches ? 'mobile' : 'desktop',
     })
