@@ -15,7 +15,7 @@ export type SeoPage = {
   type?: 'website' | 'article'
   /** Open Graph image: absolute URL or a path on this site. Defaults to SITE.ogImage. */
   image?: string
-  /** Absolute video URL for og:video. */
+  /** og:video: absolute URL or a path on this site. */
   video?: string
   /**
    * The page's breadcrumb trail, home first. It becomes the BreadcrumbList node; pass the same array to the
@@ -53,7 +53,7 @@ export function seoHead(p: SeoPage) {
     { name: 'twitter:image', content: image },
   ]
   if (SITE.social.twitter) meta.push({ name: 'twitter:site', content: SITE.social.twitter })
-  if (p.video) meta.push({ property: 'og:video', content: p.video })
+  if (p.video) meta.push({ property: 'og:video', content: absolute(p.video) })
   if (p.noindex) meta.push({ name: 'robots', content: 'noindex,follow' })
   return {
     meta,
