@@ -1,5 +1,5 @@
 // Scheduled cleanup (every 10 minutes): settle stale credit holds and delete expired rows and old mock emails.
-// Workers Free: every query here uses an index (schema.ts) and writes only rows that change.
+// Every query here uses an index (schema.ts) and writes only rows that change.
 import { and, eq, lt } from 'drizzle-orm'
 import { commit, refund } from '../credits/ledger'
 import { db } from '../db'

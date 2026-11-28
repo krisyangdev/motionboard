@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { hashPassword, ITERATIONS, verifyPassword } from './hash'
+import { hashPassword, ITERATIONS, needsRehash, verifyPassword } from './hash'
 
 const pbkdf2 = async (password: string, salt: string, iterations: number) => {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits'])
@@ -20,6 +20,9 @@ describe('template password hasher', () => {
   it('verifies a hash made with another iteration count', async () => {
     const old = ['pbkdf2-sha256', 1000, 'somesalt', await pbkdf2('pw-123456', 'somesalt', 1000)].join('$')
     expect(await verifyPassword({ hash: old, password: 'pw-123456' })).toBe(true)
+    expect(needsRehash(old)).toBe(true)
+    expect(needsRehash(await hashPassword('pw-123456'))).toBe(false)
+    expect(needsRehash('salt:hash')).toBe(false)
   })
   it('rejects other formats and absurd iteration counts', async () => {
     expect(await verifyPassword({ hash: 'salt:hash', password: 'x' })).toBe(false)

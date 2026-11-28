@@ -1,4 +1,4 @@
-// R2 keys and the Workers Free rules for R2: every upload is size-capped, and mock emails are pruned so the prefix stays small.
+// R2 keys and the R2 cost rules: every upload is size-capped, and mock emails are pruned so the prefix stays small.
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const store = new Map<string, string>()

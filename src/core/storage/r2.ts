@@ -1,6 +1,6 @@
 import { appEnv } from '../server/env'
 
-/** Largest object the template writes. R2 bills storage and operations above its free tier even on Workers Free. */
+/** Largest object the template writes. R2 bills storage and operations above its free tier. */
 export const MAX_OBJECT_BYTES = 10 * 1024 * 1024
 
 const byteLength = (body: ArrayBuffer | string) => (typeof body === 'string' ? new TextEncoder().encode(body).byteLength : body.byteLength)

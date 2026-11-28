@@ -1,11 +1,11 @@
 // The template's password hasher: PBKDF2-SHA256 through WebCrypto, used by Better Auth (user accounts) and by the
-// admin identity. Workers Free gives a request 10 ms of CPU; scrypt (Better Auth's default) takes ~60 ms and PBKDF2 at
-// 100k iterations ~11 ms, so neither fits. 20,000 iterations measured 2-4 ms, which leaves room for the rest of a
-// sign-in (D1 queries, session token, cookie signing). The iteration count is stored in each hash, so raising
-// ITERATIONS later keeps old hashes verifiable. A site that moves users in with another format sets src/site/auth.ts.
+// admin identity. 600,000 iterations is OWASP's figure for PBKDF2-SHA256 (~45 ms CPU in workerd). The iteration
+// count is stored in each hash, so hashes made with an older count keep verifying, and a sign-in replaces them
+// (needsRehash, src/core/auth/server.ts). A site that moves users in with another format sets src/site/auth.ts.
 import type { PasswordHasher } from '../../site/auth'
 
-export const ITERATIONS = 20_000
+export const ITERATIONS = 600_000
+const MAX_ITERATIONS = 1_000_000
 const PREFIX = 'pbkdf2-sha256'
 const encoder = new TextEncoder()
 
@@ -41,9 +41,15 @@ export async function hashPassword(password: string): Promise<string> {
 export async function verifyPassword({ hash, password }: { hash: string; password: string }): Promise<boolean> {
   const [prefix, iter, salt, expected] = hash.split('$')
   const iterations = Number(iter)
-  const valid = prefix === PREFIX && Number.isInteger(iterations) && iterations > 0 && iterations <= 100_000 && !!salt && !!expected
+  const valid = prefix === PREFIX && Number.isInteger(iterations) && iterations > 0 && iterations <= MAX_ITERATIONS && !!salt && !!expected
   const actual = await derive(password, valid ? salt : 'invalid-hash', valid ? iterations : ITERATIONS)
   return valid && timingSafeEqual(actual, expected)
+}
+
+/** True for a template hash made with fewer iterations than ITERATIONS. */
+export const needsRehash = (hash: string) => {
+  const [prefix, iter] = hash.split('$')
+  return prefix === PREFIX && Number(iter) < ITERATIONS
 }
 
 export const templateHasher: PasswordHasher = { hash: hashPassword, verify: verifyPassword }

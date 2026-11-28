@@ -3,7 +3,7 @@
 // URLs, cookies and emails unchanged so users stay signed in.
 //
 // - password: { hash, verify } for a stored hash format other than the template's (src/core/auth/hash.ts).
-//   Keep it cheap: Workers Free allows 10 ms CPU per request (PBKDF2-SHA256 at 12k-20k fits; 100k and scrypt do not).
+//   With it set, sign-in does not rehash: stored hashes stay in the site's format.
 // - basePath: where Better Auth answers (default /api/auth). The OAuth callback is <BETTER_AUTH_URL><basePath>/callback/<provider>.
 // - cookiePrefix: cookie name prefix (default Better Auth's "better-auth").
 // - trustedOrigins: origins allowed besides BETTER_AUTH_URL (e.g. other hosts of the same site).
