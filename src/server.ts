@@ -23,7 +23,10 @@ function isAccountPath(pathname: string) {
 export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url)
-    if (!SITE.accounts.enabled && isAccountPath(url.pathname)) {
+    // Static files are served before this Worker runs, so a page path with a file extension that reaches it does not
+    // exist: answer the 404 page directly (the router's trailing-slash rule would first 307 to "<path>/").
+    const notFile = !url.pathname.startsWith('/api/') && /\.[^/]+$/.test(url.pathname)
+    if (notFile || (!SITE.accounts.enabled && isAccountPath(url.pathname))) {
       if (url.pathname.startsWith('/api/')) return Response.json({ error: 'Not found', code: 'not_found' }, { status: 404 })
       // Render the site's own 404 page in the page's language.
       request = new Request(new URL(`${localePrefix(localeOf(url.pathname))}/__not-found__/`, url), { headers: request.headers })
