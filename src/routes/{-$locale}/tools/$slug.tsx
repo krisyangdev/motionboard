@@ -12,10 +12,10 @@ export const Route = createFileRoute('/{-$locale}/tools/$slug')({
     const page = await loadTool(params.slug, locale)
     if (!page) throw notFound()
     // The tool's `related` list when it has one, else the six tools after this one in slug order (wrapping around), so every tool gets inbound links.
-    const all = members('tools', locale)
+    const all = await members('tools', locale)
     const at = all.findIndex((t) => t.href === toolPath(page.slug))
     const next = at < 0 ? all : [...all.slice(at + 1), ...all.slice(0, at)]
-    const siblings = page.related?.length ? relatedEntries(page.related, locale, ['tools']) : next.slice(0, 6)
+    const siblings = page.related?.length ? await relatedEntries(page.related, locale, ['tools']) : next.slice(0, 6)
     return { page, siblings, locales: page.locales }
   },
   head: ({ loaderData, params }) => (loaderData ? toolHead(loaderData.page, paramLocale(params.locale)) : {}),

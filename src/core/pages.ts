@@ -801,45 +801,60 @@ export const changelogEntries = (): ChangelogFeedEntry[] =>
 
 export type DocIndexEntry = { slug: string; title: string; description: string; published: string; updated: string }
 
-/** A collection item in the content index: what cards and related lists need. */
+/** A collection item in its collection module: what cards, related lists and the item's own head need. */
 export type ItemIndexEntry = {
   slug: string
   /** `name`, `description` and `related` cover only the languages the item exists in. */
   name: Partial<Record<Locale, string>>
   description: Partial<Record<Locale, string>>
   locales: Locale[]
+  /** Languages the item exists in but is kept out of the index (noindex). */
+  noindex: Locale[]
   category: string[]
   /** Slugs of the related items shown on the page, per language. */
   related: Partial<Record<Locale, string[]>>
 }
 
+/**
+ * The part of the content registry every page loads (`virtual:content-index`): which pages exist and are indexable,
+ * hub names and categories. It has no descriptions and no collection items, so it stays small however many items a
+ * site has. Lists with descriptions load per page from `virtual:content-lists` and `virtual:content-collection/<id>`.
+ */
 export type ContentIndex = {
-  /** `name`, `description` and `locales` cover only the languages the tool has text in. */
-  tools: { slug: string; name: Partial<Record<Locale, string>>; description: Partial<Record<Locale, string>>; locales: Locale[] }[]
-  docs: Record<Collection, Record<Locale, DocIndexEntry[]>>
-  /** Items by collection id. */
-  collections: Record<string, { categories: string[]; items: ItemIndexEntry[] }>
+  /** Every site page except collection items, by default-language path: the languages it exists in and the ones kept out of the index (noindex). */
+  pages: Record<string, { locales: Locale[]; noindex: Locale[] }>
   /** Breadcrumb name of each collection and category hub (hub id `<collection>` or `<collection>/<category>`), per language it exists in. */
   hubs: Record<string, Partial<Record<Locale, string>>>
-  /** Every site page by default-language path: the languages it exists in and the ones kept out of the index (noindex). */
-  pages: Record<string, { locales: Locale[]; noindex: Locale[] }>
+  /** Category slugs by collection id. */
+  categories: Record<string, string[]>
 }
 
-/**
- * Names and frontmatter of every content file, served to the app as `virtual:content-index`
- * (vite.config.ts). Lists, sibling links and the noindex state of each page read this small index, so a
- * page chunk never bundles the full text of every other page.
- */
+/** Tools and docs with their descriptions (`virtual:content-lists`), loaded by the pages that list them. */
+export type ContentLists = {
+  /** `name` and `description` cover only the languages the tool has text in. */
+  tools: { slug: string; name: Partial<Record<Locale, string>>; description: Partial<Record<Locale, string>> }[]
+  docs: Record<Collection, Record<Locale, DocIndexEntry[]>>
+}
+
+const pageState = (p: SitePage) => ({ locales: pageLocales(p), noindex: pageLocales(p).filter((l) => p.noindex?.[l]) })
+
 export function contentIndex(): ContentIndex {
+  const b = build()
+  const pages = Object.fromEntries(b.pages.filter((p) => p.type !== 'item').map((p) => [p.path, pageState(p)]))
+  const categories = Object.fromEntries(b.collections.map(({ collection: c }) => [c.id, [...c.categories]]))
+  return { pages, hubs: b.hubNames, categories }
+}
+
+export function contentLists(): ContentLists {
   const tools = [...readTools()].flatMap(([slug, tool]) => {
     const locales = LOCALES.filter((l) => tool[l]?.title)
     const name = Object.fromEntries(locales.map((l) => [l, tool.name?.[l] || tool[l]!.title]))
     const description = Object.fromEntries(locales.map((l) => [l, tool[l]!.description]))
-    return locales.length ? [{ slug, name, description, locales }] : []
+    return locales.length ? [{ slug, name, description }] : []
   })
-  const docs = {} as ContentIndex['docs']
+  const docs = {} as ContentLists['docs']
   for (const collection of ['guides', 'legal', 'about', 'compare', 'glossary'] as const) {
-    docs[collection] = {} as ContentIndex['docs']['guides']
+    docs[collection] = {} as ContentLists['docs']['guides']
     for (const l of LOCALES) {
       docs[collection][l] = slugs(`content/${collection}/${l}`, '.mdx')
         .map((slug) => {
@@ -849,23 +864,27 @@ export function contentIndex(): ContentIndex {
         .sort((a, b) => b.published.localeCompare(a.published) || a.slug.localeCompare(b.slug))
     }
   }
+  return { tools, docs }
+}
+
+/** Collection ids that have items. */
+export const collectionIds = (): string[] => build().collections.map(({ collection: c }) => c.id)
+
+/** The items of one collection (`virtual:content-collection/<id>`), loaded by its item and hub pages. */
+export function collectionItems(id: string): ItemIndexEntry[] {
   const b = build()
-  const pages = Object.fromEntries(b.pages.map((p) => [p.path, { locales: pageLocales(p), noindex: pageLocales(p).filter((l) => p.noindex?.[l]) }]))
-  const collectionIndex = Object.fromEntries(
-    b.collections.map(({ collection: c, items }) => [
-      c.id,
-      {
-        categories: [...c.categories],
-        items: items.map((i) => ({
-          slug: i.slug,
-          name: perLocale((l) => i.file[l]?.name),
-          description: perLocale((l) => i.file[l]?.description),
-          locales: i.locales,
-          category: i.file.category,
-          related: i.related,
-        })),
-      },
-    ]),
-  )
-  return { tools, docs, collections: collectionIndex, hubs: b.hubNames, pages }
+  const items = b.collections.find(({ collection: c }) => c.id === id)?.items ?? []
+  const pages = new Map(b.pages.filter((p) => p.type === 'item').map((p) => [p.path, p]))
+  return items.map((i) => {
+    const page = pages.get(itemPath(id, i.slug))
+    return {
+      slug: i.slug,
+      name: perLocale((l) => i.file[l]?.name),
+      description: perLocale((l) => i.file[l]?.description),
+      locales: i.locales,
+      noindex: page ? pageState(page).noindex : [],
+      category: i.file.category,
+      related: i.related,
+    }
+  })
 }
