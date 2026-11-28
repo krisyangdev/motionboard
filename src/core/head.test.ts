@@ -50,11 +50,12 @@ describe('theme', () => {
   /** Runs the head script against a stub page and says whether it set `.dark`. */
   function runScript(defaultTheme: 'light' | 'system', stored: string | null, systemDark: boolean) {
     let dark = false
-    const document = { documentElement: { classList: { toggle: (_: string, on: boolean) => (dark = on) } } }
-    const localStorage = { getItem: () => stored }
+    const document = {
+      cookie: stored === null ? 'other=1' : `other=1; theme=${stored}`,
+      documentElement: { classList: { toggle: (_: string, on: boolean) => (dark = on) } },
+    }
     const matchMedia = () => ({ matches: systemDark, addEventListener: () => {} })
-    const addEventListener = () => {}
-    new Function('document', 'localStorage', 'matchMedia', 'addEventListener', themeScript(defaultTheme))(document, localStorage, matchMedia, addEventListener)
+    new Function('document', 'matchMedia', themeScript(defaultTheme))(document, matchMedia)
     return dark
   }
 
