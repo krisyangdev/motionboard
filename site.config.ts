@@ -41,6 +41,29 @@ export const SITE = {
   seo: { hubMinMembers: 1, maxNoindexShare: 0.2, allowTraining: true },
   /** Layer 1: sign-up, credits, payments, the app and /admin. Off = content-only site. */
   accounts: { enabled: true, signupCredits: 20 },
+  /**
+   * `default`: 'system' follows the visitor's system preference until they pick one; 'light' stays light until they
+   * pick dark. `color`: the browser theme-color for each scheme.
+   */
+  theme: { default: 'system' as 'light' | 'system', color: { light: '#ffffff', dark: '#161616' } },
+  /**
+   * `body`: 'inter' self-hosts and preloads Inter Latin; 'system' uses the system UI font and loads nothing.
+   * `display`: optional heading font (h1-h3, prose headings, font-heading), a variable woff2 under public/fonts with a
+   * metric-matched local fallback; it is preloaded too. Shape: DisplayFont in src/core/head.ts.
+   */
+  fonts: {
+    body: 'inter' as 'inter' | 'system',
+    display: undefined as
+      | undefined
+      | {
+          family: string
+          file: string
+          weight: string
+          stretch?: string
+          unicodeRange: string
+          fallback: { local: string; ascent: string; descent: string; lineGap: string; sizeAdjust: string }
+        },
+  },
   social: { twitterCard: 'summary_large_image', twitter: '' },
   /** Extra origins allowed by the Content-Security-Policy, per directive. */
   csp: {
