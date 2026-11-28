@@ -60,14 +60,14 @@ export function CopyAction({ term, compact, className, onCopied }: { term: Term;
         ref={ref}
         type="button"
         className={cn(
-          'relative z-10 inline-flex h-9 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-primary px-3.5 font-semibold text-primary-foreground text-sm transition hover:bg-primary-hover active:scale-95 max-md:w-9 max-md:px-0 [&_svg]:size-4 [&_svg]:shrink-0',
+          'relative z-10 inline-flex h-9 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-primary px-3.5 font-semibold text-primary-foreground text-sm transition hover:bg-primary-hover active:scale-95 max-md:h-8 max-md:gap-1 max-md:px-2.5 max-md:text-[13px] [&_svg]:size-4 max-md:[&_svg]:size-3.5 [&_svg]:shrink-0',
           done && 'bg-ok hover:bg-ok',
         )}
         aria-label={done ? actions.copied : actions.copy}
         onClick={copy}
       >
         {done ? <Check aria-hidden /> : <Copy aria-hidden />}
-        <span className="max-md:hidden">{done ? actions.copied : actions.copyShort}</span>
+        <span>{done ? actions.copied : actions.copyShort}</span>
       </button>
     )
   }

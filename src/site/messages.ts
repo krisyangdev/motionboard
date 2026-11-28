@@ -16,6 +16,7 @@ const en = {
   hero: {
     shots: 'Shots in the film',
     all: 'All',
+    how: 'Copy → paste into Claude Code or Codex → get the shot',
   },
   shelves: {
     label: 'Recipe positions',
@@ -94,6 +95,7 @@ const zh: Strings = {
   hero: {
     shots: '影片中的镜头',
     all: '全部',
+    how: '复制 → 粘贴到 Claude Code 或 Codex → 得到同款镜头',
   },
   shelves: {
     label: '配方分类',

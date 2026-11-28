@@ -218,6 +218,8 @@ export function FilmTile({ term, eager = false, priority = false }: { term: Term
       <div className="relative aspect-video overflow-hidden rounded-[13px] bg-media md:rounded-media" ref={frame}>
         <img
           src={media(term, 'jpgSmall')}
+          srcSet={`${media(term, 'jpgXs')} 480w, ${media(term, 'jpgSmall')} 960w`}
+          sizes="(max-width: 767px) 50vw, 420px"
           alt=""
           aria-hidden="true"
           width={960}
@@ -246,8 +248,12 @@ export function FilmTile({ term, eager = false, priority = false }: { term: Term
         <span className="pointer-events-none absolute right-2 bottom-2 rounded-full bg-black/55 px-2 py-1 font-semibold text-white text-xs leading-none tabular-nums max-md:hidden">
           {Number(term.dur.toFixed(1))}s
         </span>
+        {/* Phones: Copy sits on the poster so the name keeps the full width under it. */}
+        <div className="absolute right-1.5 bottom-1.5 z-10 md:hidden">
+          <CopyAction term={term} compact onCopied={onCopied} />
+        </div>
         {hint && (
-          <div role="status" className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-background/85 px-2.5 py-1.5 text-xs leading-snug backdrop-blur-md">
+          <div role="status" className="pointer-events-none absolute inset-x-0 bottom-0 z-10 max-md:top-0 max-md:bottom-auto bg-background/85 px-2.5 py-1.5 text-xs leading-snug backdrop-blur-md">
             {s.actions.pasteHint}
           </div>
         )}
@@ -266,7 +272,9 @@ export function FilmTile({ term, eager = false, priority = false }: { term: Term
         >
           {termName(term, locale)}
         </RecipeLink>
-        <CopyAction term={term} compact onCopied={onCopied} />
+        <div className="max-md:hidden">
+          <CopyAction term={term} compact onCopied={onCopied} />
+        </div>
       </div>
     </article>
   )

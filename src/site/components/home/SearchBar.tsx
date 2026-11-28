@@ -95,6 +95,7 @@ export function SearchBar({ query, onQuery, onLoaded }: { query: string; onQuery
           </Link>
         ))}
       </nav>
+      <p className="m-0 -mt-1 text-[13px] text-muted-foreground md:text-sm">{s.hero.how}</p>
     </div>
   )
 }

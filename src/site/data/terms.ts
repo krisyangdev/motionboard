@@ -85,6 +85,7 @@ const MEDIA_FILE = {
   small: '-s.mp4', // 360p loop for grid tiles
   jpg: '.jpg', // 1920px poster
   jpgSmall: '-m.jpg', // 960px poster
+  jpgXs: '-xs.jpg', // 480px poster (phone tiles, srcset)
 }
 export type MediaKind = keyof typeof MEDIA_FILE
 export const media = (t: Pick<Term, 'video'>, kind: MediaKind) => `${MEDIA_URL}/${t.video}${MEDIA_FILE[kind]}`
