@@ -3,6 +3,7 @@
 // site moves them (authSite.basePath in src/site/auth.ts, with its other hooks).
 import { dodopayments, portal, webhooks, type DodoPaymentsPlugins } from '@dodopayments/better-auth'
 import { betterAuth } from 'better-auth'
+import { createAuthMiddleware } from 'better-auth/api'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 import { dodoClient, hasDodoKey, webhookSecret } from '../billing/dodo'
@@ -13,6 +14,7 @@ import { sendEmail } from '../email/send'
 import { resetPassword, verifyEmail } from '../email/templates'
 import { DEFAULT_LOCALE, isLocale, localizePath, type Locale } from '../i18n'
 import { appEnv } from '../server/env'
+import { hashPassword, needsRehash } from './hash'
 import { passwordOptions } from './password'
 import { authSite } from '../../site/auth'
 import { captureServerException, trackServer } from '../server/track'
@@ -75,6 +77,22 @@ export function auth() {
     // In-memory per isolate: Better Auth's database storage needs a table our schema does not have.
     // Checkout and jobs use the D1 rate limiter. Dodo's webhooks come from a few IPs and must not be throttled.
     rateLimit: { enabled: true, storage: 'memory', customRules: { '/dodopayments/webhooks': false } },
+    // A sign-in with a template hash made at a lower cost stores a new one at today's cost. Sites with their own
+    // hasher keep their format.
+    hooks: {
+      after: createAuthMiddleware(async (ctx) => {
+        if (authSite.password || ctx.path !== '/sign-in/email' || !ctx.context.newSession) return
+        const password = (ctx.body as { password?: unknown } | undefined)?.password
+        if (typeof password !== 'string') return
+        const userId = ctx.context.newSession.user.id
+        try {
+          const account = (await ctx.context.internalAdapter.findAccounts(userId)).find((a) => a.providerId === 'credential')
+          if (account?.password && needsRehash(account.password)) await ctx.context.internalAdapter.updatePassword(userId, await hashPassword(password))
+        } catch (error) {
+          captureServerException(error, { where: 'password_rehash', userId })
+        }
+      }),
+    },
     databaseHooks: {
       user: {
         create: {

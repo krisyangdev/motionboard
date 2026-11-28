@@ -3,7 +3,7 @@ import { and, eq, gt } from 'drizzle-orm'
 import { db, schema } from '../db'
 import { createId, nowIso } from '../server/ids'
 import { HttpError } from '../server/http'
-import { hashPassword, verifyPassword } from '../auth/hash'
+import { hashPassword, needsRehash, verifyPassword } from '../auth/hash'
 import { randomToken, sha256Hex } from './crypto'
 
 const COOKIE = 'asid'
@@ -62,6 +62,9 @@ export async function loginAdmin(input: { email: string; password: string }): Pr
   // Hash even when the admin does not exist, so response time does not reveal which emails are admins.
   const ok = await verifyPassword({ hash: row?.passwordHash ?? '', password: input.password })
   if (!row || row.status !== 'active' || !ok) throw new HttpError(401, 'Invalid email or password', 'invalid_credentials')
+  if (needsRehash(row.passwordHash)) {
+    await db().update(schema.adminUsers).set({ passwordHash: await hashPassword(input.password), updatedAt: nowIso() }).where(and(eq(schema.adminUsers.id, row.id), eq(schema.adminUsers.passwordHash, row.passwordHash)))
+  }
 
   const token = randomToken(32)
   await db().insert(schema.adminSessions).values({
