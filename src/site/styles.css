@@ -48,7 +48,6 @@
   --shadow-card-v: 0 10px 30px -14px rgba(90, 50, 20, 0.28), 0 0 0 1px rgba(27, 21, 18, 0.05);
   --shadow-card-hover-v: 0 24px 50px -18px rgba(90, 50, 20, 0.38), 0 0 0 1px rgba(27, 21, 18, 0.05);
   --shadow-film-v: 0 30px 70px -30px rgba(90, 50, 20, 0.45);
-  --shadow-float-v: 0 24px 50px -20px rgba(60, 30, 10, 0.4), 0 2px 6px rgba(0, 0, 0, 0.06);
   --shadow-primary-v: 0 10px 24px -10px rgba(217, 56, 31, 0.7);
   --shadow-search-v: 0 12px 40px -12px rgba(120, 70, 40, 0.28), 0 0 0 1px rgba(27, 21, 18, 0.06);
   --grad-hero: linear-gradient(160deg, #dcebff 0%, #eef3ff 35%, #fff1e6 70%, #ffe6d6 100%);
@@ -97,7 +96,6 @@
   --shadow-card-v: 0 10px 30px -14px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 240, 230, 0.06);
   --shadow-card-hover-v: 0 24px 50px -18px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 240, 230, 0.1);
   --shadow-film-v: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
-  --shadow-float-v: 0 24px 50px -20px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.3);
   --shadow-primary-v: 0 10px 24px -10px rgba(217, 56, 31, 0.6);
   --shadow-search-v: 0 12px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 240, 230, 0.08);
   --grad-hero: linear-gradient(160deg, #18202e 0%, #1a1c27 35%, #2a1c16 70%, #321e14 100%);
@@ -124,7 +122,6 @@
   --shadow-card: var(--shadow-card-v);
   --shadow-card-hover: var(--shadow-card-hover-v);
   --shadow-film: var(--shadow-film-v);
-  --shadow-float: var(--shadow-float-v);
   --shadow-primary: var(--shadow-primary-v);
   --shadow-search: var(--shadow-search-v);
   --shadow-soft: 0 0 0 1px var(--ring-soft);
@@ -134,7 +131,6 @@
   --radius-media: 1rem;
   /* Headings: the template's display-font slot (SITE.fonts.display); body is the system font (SITE.fonts.body). */
   --font-display: var(--font-heading);
-  --animate-bob: bob 7s ease-in-out infinite alternate;
 }
 
 @utility bg-hero { background-image: var(--grad-hero); }
@@ -198,12 +194,6 @@ html { scroll-padding-top: calc(var(--nav-h) + 1rem); }
   background: var(--foreground);
 }
 
-/* Floating hero films bob up and down (C). */
-@keyframes bob {
-  from { transform: translateY(-8px); }
-  to { transform: translateY(8px); }
-}
-
 @keyframes like-pop {
   0% { transform: scale(0.7); }
   55% { transform: scale(1.25); }
@@ -222,14 +212,8 @@ html { scroll-padding-top: calc(var(--nav-h) + 1rem); }
   letter-spacing: 0;
   line-height: 1.25;
 }
-/* The Chinese hero headline breaks at its comma and spaces only, one step smaller so it keeps to two lines. */
+/* The Chinese hero headline breaks at its comma and spaces only. */
 :root:lang(zh) .hero-h1 { word-break: keep-all; }
-@media (max-width: 767px) {
-  :root:lang(zh) .hero-h1 { font-size: 36px; }
-}
-@media (min-width: 1280px) {
-  :root:lang(zh) .hero-h1 { font-size: 60px; }
-}
 
 @media (prefers-reduced-motion: reduce) {
   *,

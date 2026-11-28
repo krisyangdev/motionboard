@@ -15,8 +15,6 @@ const en = {
   } satisfies Record<Position, string>,
   hero: {
     shots: 'Shots in the film',
-    kicker: (n: number) => `${n} free effects from real launch films`,
-    sub: 'Copy an effect. Paste it into Claude Code or Codex. Get the shot for your product.',
     all: 'All',
     allEffects: 'All effects',
   },
@@ -96,8 +94,6 @@ const zh: Strings = {
   },
   hero: {
     shots: '影片中的镜头',
-    kicker: (n) => `${n} 个免费动效，拆自真实宣传片`,
-    sub: '复制一个动效，粘贴进 Claude Code 或 Codex，给你的产品做出同款镜头。',
     all: '全部',
     allEffects: '全部动效',
   },

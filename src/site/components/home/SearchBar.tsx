@@ -49,7 +49,7 @@ export function SearchBar({ query, onQuery, onLoaded }: { query: string; onQuery
 
   return (
     <div className="flex w-full max-w-[640px] flex-col items-center gap-4" role="search">
-      <label className="relative flex h-14 w-full cursor-text items-center rounded-full bg-card pr-5 pl-[52px] shadow-search transition-shadow focus-within:ring-3 focus-within:ring-primary md:h-16">
+      <label className="relative flex h-12 w-full cursor-text items-center rounded-full bg-card pr-5 pl-[52px] shadow-search transition-shadow focus-within:ring-3 focus-within:ring-primary md:h-16">
         <Search className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
         <input
           ref={input}
@@ -78,7 +78,7 @@ export function SearchBar({ query, onQuery, onLoaded }: { query: string; onQuery
         />
         <kbd className="hidden rounded-md bg-surface-2 px-2 py-0.5 font-medium font-sans text-[13px] text-muted-foreground md:inline-block">/</kbd>
       </label>
-      <nav className="flex flex-wrap justify-center gap-2" aria-label={s.shelves.types}>
+      <nav className="-mx-4 flex flex-nowrap justify-start gap-2 self-stretch overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:flex-wrap md:justify-center md:self-auto md:overflow-visible md:px-0" aria-label={s.shelves.types}>
         <button
           type="button"
           className={`${chip} bg-foreground text-background`}

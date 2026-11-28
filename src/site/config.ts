@@ -15,11 +15,11 @@ export const GITHUB_URL = `https://github.com/${SITE.github}`
 export const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`
 export const SKILL_INSTALL = `npx skills add ${SITE.github}`
 
-/** Brand copy: H1 and the line under it. The <title> and meta description of the home page are SITE.title and SITE.description. */
+/** Brand copy: the H1. The <title> and meta description of the home page are SITE.title and SITE.description. */
 export const BRAND = {
   name: SITE.name,
   headline: {
-    en: 'Copy launch-video effects into Claude Code',
-    zh: '复制宣传片动效到 Claude Code',
+    en: 'Launch-video effects for Claude Code',
+    zh: '给 Claude Code 的宣传片动效',
   },
 }
