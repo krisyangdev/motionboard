@@ -226,7 +226,7 @@ export const rateLimits = sqliteTable(
 export const adminUsers = sqliteTable('admin_users', {
   id: text('id').primaryKey(),
   email: text('email').notNull().unique(),
-  /** pbkdf2-sha256$<iterations>$<salt>$<hash> (src/core/auth/hash.ts) */
+  /** scrypt$<N>$<r>$<p>$<salt>$<hash>, or an older pbkdf2-sha256$<iterations>$<salt>$<hash> (src/core/auth/hash.ts) */
   passwordHash: text('password_hash').notNull(),
   /** owner | operator */
   role: text('role').notNull().default('owner'),
