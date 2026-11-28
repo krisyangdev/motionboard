@@ -4,7 +4,7 @@
 import { memoryAdapter } from 'better-auth/adapters/memory'
 import { describe, expect, it, vi } from 'vitest'
 
-const calls = vi.hoisted(() => ({ verifyMail: [] as string[], created: [] as string[], grants: [] as string[], pluginHits: 0 }))
+const calls = vi.hoisted(() => ({ verifyMail: [] as string[], created: [] as string[], grants: [] as string[], pluginHits: 0, events: [] as { event: string; id: string; props: object }[] }))
 const store = vi.hoisted(() => ({ user: [], session: [], account: [], verification: [] }) as Record<string, Record<string, unknown>[]>)
 
 vi.mock('cloudflare:workers', () => ({ env: {} }))
@@ -17,7 +17,7 @@ vi.mock('better-auth/adapters/drizzle', () => ({ drizzleAdapter: () => memoryAda
 vi.mock('better-auth/tanstack-start', () => ({ tanstackStartCookies: () => ({ id: 'tanstack-start-cookies-stub' }) }))
 vi.mock('../db', () => ({ db: () => ({}), schema: {} }))
 vi.mock('../credits/ledger', () => ({ grant: async ({ userId }: { userId: string }) => void calls.grants.push(userId) }))
-vi.mock('../server/track', () => ({ trackServer: () => {}, captureServerException: () => {} }))
+vi.mock('../server/track', () => ({ trackServer: (event: string, id: string, props: object) => void calls.events.push({ event, id, props }), captureServerException: () => {} }))
 vi.mock('../email/send', () => ({ sendEmail: async () => { throw new Error('template mail must not be sent') } }))
 vi.mock('../../../site.config.ts', async (original) => {
   const real = (await original()) as { SITE: object }
@@ -39,6 +39,7 @@ vi.mock('../../site/auth', () => ({
       },
     ],
     sendVerificationEmail: async ({ user }: { user: { email: string } }) => void calls.verifyMail.push(user.email),
+    signupProps: async () => ({ first_source: 'bing.com', lang: 'zh' }),
     afterUserCreated: async (user: { id: string }) => {
       // the template's grant has already run
       expect(calls.grants).toContain(user.id)
@@ -64,6 +65,7 @@ describe('site auth hooks', () => {
     expect(calls.created).toEqual([id])
     expect(calls.verifyMail).toEqual(['new@example.com'])
     expect(calls.pluginHits).toBeGreaterThan(0)
+    expect(calls.events).toEqual([{ event: 'signup', id, props: { lang: 'zh', first_source: 'bing.com' } }])
   })
 
   it('does not answer at the template path, and names cookies with the site prefix', async () => {

@@ -11,8 +11,10 @@
 // - session: Better Auth session options (e.g. expiresIn; default 7 days).
 // - plugins: extra Better Auth plugins, added before the template's own.
 // - sendVerificationEmail: replaces the template's verification mail.
+// - signupProps: extra properties for the template's `signup` event (e.g. first-touch attribution); they win over the template's.
 // - afterUserCreated: runs after the template's signup grant and `signup` event.
 import type { BetterAuthOptions, BetterAuthPlugin, User } from 'better-auth'
+import type { Props } from '../core/server/track'
 
 export type PasswordHasher = {
   hash: (password: string) => Promise<string>
@@ -28,6 +30,7 @@ export type AuthSite = {
   session?: BetterAuthOptions['session']
   plugins?: () => BetterAuthPlugin[]
   sendVerificationEmail?: (data: { user: User; url: string; token: string }, request?: Request) => Promise<void>
+  signupProps?: (user: User, request?: Request) => Props | Promise<Props>
   afterUserCreated?: (user: User) => Promise<void>
 }
 

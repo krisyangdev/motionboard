@@ -78,7 +78,7 @@ export function auth() {
     databaseHooks: {
       user: {
         create: {
-          after: async (user) => {
+          after: async (user, context) => {
             const lang = localeOf(user)
             try {
               if (SITE.accounts.signupCredits > 0) {
@@ -88,7 +88,13 @@ export function auth() {
               // The account exists; the grant is idempotent, so it can be repeated by hand.
               captureServerException(error, { where: 'signup_grant', userId: user.id })
             }
-            trackServer('signup', user.id, { lang })
+            let siteProps = {}
+            try {
+              siteProps = (await authSite.signupProps?.(user, context?.request)) ?? {}
+            } catch (error) {
+              captureServerException(error, { where: 'site_signup_props', userId: user.id })
+            }
+            trackServer('signup', user.id, { lang, ...siteProps })
             try {
               await authSite.afterUserCreated?.(user)
             } catch (error) {
