@@ -8,6 +8,7 @@
 // - cookiePrefix: cookie name prefix (default Better Auth's "better-auth").
 // - trustedOrigins: origins allowed besides BETTER_AUTH_URL (e.g. other hosts of the same site).
 // - account: Better Auth account options (linking, token encryption).
+// - session: Better Auth session options (e.g. expiresIn; default 7 days).
 // - plugins: extra Better Auth plugins, added before the template's own.
 // - sendVerificationEmail: replaces the template's verification mail.
 // - afterUserCreated: runs after the template's signup grant and `signup` event.
@@ -24,6 +25,7 @@ export type AuthSite = {
   cookiePrefix?: string
   trustedOrigins?: string[]
   account?: BetterAuthOptions['account']
+  session?: BetterAuthOptions['session']
   plugins?: () => BetterAuthPlugin[]
   sendVerificationEmail?: (data: { user: User; url: string; token: string }, request?: Request) => Promise<void>
   afterUserCreated?: (user: User) => Promise<void>

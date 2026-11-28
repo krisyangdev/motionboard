@@ -27,6 +27,7 @@ vi.mock('../../site/auth', () => ({
   authSite: {
     basePath: '/auth/v2',
     cookiePrefix: 'mysite',
+    session: { expiresIn: 60 * 60 * 24 * 30 },
     trustedOrigins: ['https://app.example.com'],
     plugins: () => [
       {
@@ -81,5 +82,9 @@ describe('site auth hooks', () => {
     const cookies = signIn.headers.get('set-cookie') ?? ''
     expect(cookies).toContain('mysite.session_token=')
     expect(cookies).not.toContain('better-auth.')
+    // the site's session length: 30 days instead of Better Auth's 7
+    const days = ((store.session.at(-1)?.expiresAt as Date).getTime() - Date.now()) / 86_400_000
+    expect(days).toBeGreaterThan(29)
+    expect(days).toBeLessThan(31)
   })
 })

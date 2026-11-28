@@ -38,6 +38,7 @@ export function auth() {
     secret: env.BETTER_AUTH_SECRET,
     trustedOrigins: [env.BETTER_AUTH_URL, ...(authSite.trustedOrigins ?? [])],
     account: authSite.account,
+    session: authSite.session,
     database: drizzleAdapter(db(), { provider: 'sqlite', schema: { user: schema.user, session: schema.session, account: schema.account, verification: schema.verification } }),
     user: {
       additionalFields: {
