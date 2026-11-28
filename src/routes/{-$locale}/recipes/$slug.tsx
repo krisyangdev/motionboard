@@ -4,7 +4,7 @@ import { relatedItemEntries } from '@/core/content/members'
 import { paramLocale } from '@/core/i18n'
 import { itemHead } from '@/core/pages/ItemPage'
 import { RecipePage } from '@/site/components/recipe/RecipePage'
-import { bySlug, order } from '@/site/data/terms'
+import { bySlug, order, recipeData } from '@/site/data/terms'
 
 export const Route = createFileRoute('/{-$locale}/recipes/$slug')({
   loader: async ({ params }) => {
@@ -14,7 +14,10 @@ export const Route = createFileRoute('/{-$locale}/recipes/$slug')({
     if (!item) throw notFound()
     // Related recipes in site order; an entry's href is /recipes/<slug>/.
     const slugs = new Set(relatedItemEntries('recipes', params.slug, locale).map((e) => e.href.split('/')[2]))
-    return { item, term, related: order.filter((t) => slugs.has(t.slug)) }
+    // The loader data is serialized into the page for hydration: keep only this language's recipe text.
+    const data = recipeData(item)
+    const trimmed = { ...item, data: { ...data, text: { [locale]: data.text[locale] } } }
+    return { item: trimmed, term, related: order.filter((t) => slugs.has(t.slug)) }
   },
   head: ({ loaderData, params }) => (loaderData ? itemHead(loaderData.item, paramLocale(params.locale)) : {}),
   component: RecipeRoute,
