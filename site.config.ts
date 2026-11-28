@@ -41,6 +41,38 @@ export const SITE = {
   seo: { hubMinMembers: 1, maxNoindexShare: 0.2, allowTraining: true },
   /** Layer 1: sign-up, credits, payments, the app and /admin. Off = content-only site. */
   accounts: { enabled: false, signupCredits: 0 },
+  /**
+   * `default`: 'system' follows the visitor's system preference until they pick one; 'light' stays light until they
+   * pick dark. `color`: the browser theme-color for each scheme.
+   */
+  theme: { default: 'light' as 'light' | 'system', color: { light: '#ffffff', dark: '#17120f' } },
+  /**
+   * `body`: 'inter' self-hosts and preloads Inter Latin; 'system' uses the system UI font and loads nothing.
+   * `display`: optional heading font (h1-h3, prose headings, font-heading), a variable woff2 under public/fonts with a
+   * metric-matched local fallback; it is preloaded too. Shape: DisplayFont in src/core/head.ts.
+   */
+  fonts: {
+    body: 'system' as 'inter' | 'system',
+    // Bricolage Grotesque (OFL), Latin only, weights 700-800 (headings), opsz axis kept. Fallback: Arial Bold scaled to
+    // its advance widths (0.93) and vertical metrics (930/270 per 1000).
+    display: {
+      family: 'Bricolage Grotesque',
+      file: 'bricolage-grotesque-latin.woff2',
+      weight: '700 800',
+      unicodeRange:
+        'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD',
+      fallback: { local: 'Arial Bold', ascent: '100%', descent: '29%', lineGap: '0%', sizeAdjust: '93%' },
+    } as
+      | undefined
+      | {
+          family: string
+          file: string
+          weight: string
+          stretch?: string
+          unicodeRange: string
+          fallback: { local: string; ascent: string; descent: string; lineGap: string; sizeAdjust: string }
+        },
+  },
   social: { twitterCard: 'summary_large_image', twitter: '' },
   /** Extra origins allowed by the Content-Security-Policy, per directive. */
   csp: {
