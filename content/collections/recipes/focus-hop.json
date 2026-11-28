@@ -1,0 +1,196 @@
+{
+  "slug": "focus-hop",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/focus-hop.mp4",
+    "poster": "https://media.motionboard.app/focus-hop.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.8
+  },
+  "data": {
+    "n": 19,
+    "cat": "B",
+    "star": false,
+    "video": "focus-hop",
+    "samples": [
+      {
+        "t": "Arc Boosts",
+        "id": "N0jMmiCS8oQ",
+        "at": "0:13–0:18",
+        "s": 13
+      },
+      {
+        "t": "Raycast",
+        "id": "Mi173xGb0ZA",
+        "at": "0:14–0:17",
+        "s": 14
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The highlight block is the strongest color in the frame and leads the eye cell by cell. The focus frame takes its color from what is inside, so the selection state and the content share one palette. The one-cell-per-stop rhythm turns each pause into a choice.",
+        "spec": [
+          [
+            "Timing",
+            "Window enters 0–0.7s; shelf act: camera push 0.5–1.3s, frame fades in 1.1s, five slides at 1.4, 1.9, 2.4, 2.9, 3.4s (0.25s slide, 8 frames, then 0.25s hold), frame hides 3.95s; grid act: camera drop 3.8–4.6s, cursor arrives 4.2s, highlight hops from 4.7s with 0.22–0.34s dwell (7–10 frames) across 11 cells to 7.34s, click 7.84s, pull-back 8.09–8.89s (0.8s); end card 8.5s, frame hops at 9.05, 9.28, 9.5s; film 10.8s"
+          ],
+          [
+            "Easing",
+            "Grid highlight hops are hard jumps (<code>tl.set</code>); shelf slide <code>expo.out</code> 0.25s with the frame color tweening <code>power1.inOut</code>; camera moves <code>expo.out</code> 0.8s; cursor moves <code>power2.inOut</code> 0.14–0.2s; click ripple 0.45s, frame <code>scale 0.975</code> then <code>back.out(2.4)</code>"
+          ],
+          [
+            "Camera",
+            "Cropped close-up at 2.1x on the shelf (drifting to 2.2x <code>linear</code> over 2.6s); drops to 2.0x on the grid, follows the cursor row horizontally at 40% of the cell offset, and sinks about 300px over 2.6s; pulls back to the full window at 8.09s"
+          ],
+          [
+            "Subject",
+            "Dark app-store window; shelf of 10 app cards (156×162px, 172px pitch) slides left one card per step under a fixed focus frame on the third slot; grid of 12 extension cells (307×134px, 4 columns) where the highlight hops along a snake path (0, 1, 2, 3, 7, 6, 5, 4, 8, 9, 10) with the cursor following ±8px off center; the last cell's Install chip flips to Installed on the click frame"
+          ],
+          [
+            "Sync",
+            "The frame's outline (2px) and fill (<code>rgba(r,g,b,0.15)</code>, plus a <code>0 0 36px</code> glow on the grid) take the main color of the icon inside it, tweening through the shelf slide and jumping with each grid hop; the cursor crosses a cell boundary at the midpoint of its move"
+          ],
+          [
+            "Style",
+            "Near-black <code>#08080a</code> stage, <code>#121215</code> sidebar, gradient app icons; focus frame color follows the icon, 15px corner radius; end card with a four-tile mark and a 76px wordmark"
+          ]
+        ],
+        "prompt": "Show a selection process with a shot called Focus Hop. Open a dark app-store window and push into a horizontal shelf of app cards at 2.1x (expo.out, 0.8s), drifting to 2.2x. A focus frame (2px outline, 15% fill) stays fixed on the third slot and takes the main color of the icon inside it; every 0.5s the cards slide left one slot over 0.25s with expo.out while the frame color tweens to the next icon, five times. Then drop the camera to a 2.0x grid of extension cells, where a highlight hard-hops cell to cell along a snake path with no transition, dwelling 0.22 to 0.34s per cell and taking each icon's color, while the cursor follows with small offsets and the camera follows the row and sinks about 300px. Click the last cell's Install chip: the chip flips to Installed on the click frame, the frame squishes to 0.975 and settles with back.out(2.4). Pull back over 0.8s and close on a four-tile mark where the same frame hops across the tiles.",
+        "says": [
+          "A highlight block hops down one cell at a time",
+          "The selection frame changes color with the icon",
+          "Wherever the cursor goes, it lights up"
+        ],
+        "vs": [
+          [
+            "multiplayer-cursor-animation",
+            "In Multiplayer Cursors the cursors are characters and perform actions; in Focus Hop the cursor only guides the highlight, and the attention is on the highlight block and focus frame."
+          ],
+          [
+            "zoom-to-cursor",
+            "Auto Zoom moves the camera; in Focus Hop the camera is nearly still and the highlight block moves."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "高亮块是画面里最强的颜色，带视线一格格走；焦点框颜色取自框内内容，选中态和内容用同一套颜色；一格一停的节奏让每次停顿成为一次选择。",
+        "spec": [
+          [
+            "时长",
+            "窗口 0–0.7s 入场；货架段：镜头推近 0.5–1.3s，焦点框 1.1s 淡入，1.4、1.9、2.4、2.9、3.4s 五次滑动（滑动 0.25s，8 帧，再停 0.25s），3.95s 焦点框隐藏；网格段：镜头下沉 3.8–4.6s，光标 4.2s 入画，高亮从 4.7s 起每格停留 0.22–0.34s（7–10 帧），跳过 11 格到 7.34s，7.84s 点击，8.09–8.89s 拉回（0.8s）；尾卡 8.5s，焦点框 9.05、9.28、9.5s 跳格；全片 10.8s"
+          ],
+          [
+            "缓动",
+            "网格高亮跳格是硬跳（<code>tl.set</code>）；货架滑动 <code>expo.out</code> 0.25s，焦点框颜色同时 <code>power1.inOut</code> 渐变；镜头移动 <code>expo.out</code> 0.8s；光标移动 <code>power2.inOut</code> 0.14–0.2s；点击涟漪 0.45s，焦点框 <code>scale 0.975</code> 后 <code>back.out(2.4)</code> 回弹"
+          ],
+          [
+            "镜头",
+            "裁切特写：货架段 2.1x（<code>linear</code> 缓推到 2.2x，2.6s），网格段 2.0x，横向按格子位移的 40% 跟随光标所在行，2.6s 内下沉约 300px；8.09s 拉回整窗"
+          ],
+          [
+            "主体",
+            "深色应用商店窗口；货架有 10 张应用卡（156×162px，间距 172px），固定在第三个槽位的焦点框不动，卡片每步左滑一张；网格有 12 个扩展格（307×134px，4 列），高亮沿蛇形路径（0、1、2、3、7、6、5、4、8、9、10）跳格，光标偏离格心约 ±8px 跟随；最后一格的 Install 按钮在点击帧变成 Installed"
+          ],
+          [
+            "同步",
+            "焦点框的描边（2px）和底色（<code>rgba(r,g,b,0.15)</code>，网格段另加 <code>0 0 36px</code> 光晕）取框内图标的主色，货架滑动时渐变换色，网格跳格时随高亮硬跳；光标在移动路程的中点越过格子边界"
+          ],
+          [
+            "风格",
+            "近黑 <code>#08080a</code> 舞台，侧栏 <code>#121215</code>，渐变应用图标；焦点框颜色跟随图标，圆角 15px；尾卡是四格标志加 76px 字标"
+          ]
+        ],
+        "prompt": "用「焦点跳格（Focus Hop）」展示选择过程：深色应用商店窗口，镜头用 expo.out 在 0.8s 内推到横向应用货架 2.1x，并缓推到 2.2x。焦点框（2px 描边、15% 底色）固定在第三个槽位，颜色取框内图标的主色；每 0.5s 卡片用 expo.out 左滑一格（滑动 0.25s），焦点框同时渐变到下一个图标的颜色，共 5 次。随后镜头下沉到 2.0x 的扩展格网格，高亮沿蛇形路径逐格硬跳，每格停留 0.22 到 0.34s，颜色取各格图标，光标带小幅偏移跟随，镜头跟随所在行并下沉约 300px。点击最后一格的 Install 按钮：按钮在点击帧变成 Installed，焦点框压到 0.975 后用 back.out(2.4) 回弹。0.8s 拉回，收在四格标志上，同一个焦点框在格子间跳动。",
+        "says": [
+          "高亮块一格一格往下跳",
+          "选中框颜色跟着图标变",
+          "光标走到哪里亮到哪里"
+        ],
+        "vs": [
+          [
+            "multiplayer-cursor-animation",
+            "多人光标的光标是画面角色并执行动作；本条光标只引导高亮，关注点在高亮块和焦点框"
+          ],
+          [
+            "zoom-to-cursor",
+            "推近再拉回移动镜头；本条镜头近乎静止，移动的是高亮块"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Focus Hop",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Focus Hop\": focus hope; focus hope detroit; focus hope trade school; focus hope food",
+      "checked": "2026-11-28"
+    },
+    "title": "Focus Hop: Example and Code Recipe",
+    "description": "A highlight block hops one cell at a time with the cursor and takes the color of the icon inside it. Make this focus animation with Claude Code or Codex.",
+    "lede": "A highlight block or focus frame hops one cell at a time with the cursor, and the frame can take the color of the icon inside it.",
+    "name": "Focus Hop",
+    "ownName": "Focus Hop",
+    "body": [
+      {
+        "h2": "How to make a Focus Hop with Claude Code or Codex",
+        "body": "On a dark app-store window, use two acts. On the shelf, 10 cards (156×162px, 172px pitch) slide left one step at a time, 0.25s on expo.out with 0.25s holds, under a fixed focus frame on the third slot. The frame’s 2px outline and rgba(r,g,b,0.15) fill take the main color of the icon inside it, tweening on power1.inOut.\n\nIn the grid act (12 cells of 307×134px, 4 columns) the highlight hops as hard jumps (tl.set) along a snake path across 11 cells, dwelling 0.22–0.34s on each, with the cursor following within 8px of the cell center. Camera moves take 0.8s on expo.out. The last cell’s Install chip flips to Installed on the click frame at 7.84s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the shelf, the grid and the focus frame. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A dark app store grid where a green focus ring outlines the Cadence card and the cursor rests on it.",
+    "faq": [
+      [
+        "What is a focus hop animation?",
+        "A focus frame or highlight block jumps from one cell to the next, one stop at a time, to show selection moving through a grid or list. Each pause reads as a choice."
+      ],
+      [
+        "How do I set the focus frame color from an icon?",
+        "Take the main color of the icon in each cell and write it to the frame’s outline, fill and glow, tweening through the shelf slide and jumping with each grid hop. The selection state and the content then share one palette."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "焦点跳转动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"焦点跳转动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "焦点跳转动画：示例与代码配方",
+    "description": "高亮块随光标一格一停地跳动，焦点框取框内图标的颜色。用 Claude Code 或 Codex 按免费配方做出这个焦点跳转动画。",
+    "lede": "高亮块或焦点框随光标一格一停跳动，焦点框可取框内图标的颜色。",
+    "name": "焦点跳转动画",
+    "ownName": "焦点跳格",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做焦点跳转动画",
+        "body": "在深色应用商店窗口里分两幕。货架幕里，10 张卡片（156×162px，间距 172px）每步向左滑一格，用 0.25s、expo.out，停 0.25s，固定的焦点框停在第三个位置。焦点框的 2px 描边和 rgba(r,g,b,0.15) 填充取框内图标的主色，用 power1.inOut 过渡。\n\n网格幕有 12 个格子（307×134px，4 列），高亮沿蛇形路径在 11 个格子间硬跳（tl.set），每格停留 0.22–0.34s，光标跟随，偏离格子中心不超过 8px。镜头移动用 0.8s、expo.out。最后一格的 Install 标签在 7.84s 点击那一帧变成 Installed。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出货架、网格和焦点框。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "深色应用商店网格里，绿色焦点框圈住 Cadence 卡片，鼠标停在上面。",
+    "faq": [
+      [
+        "什么是焦点跳转动画？",
+        "焦点框或高亮块一格一停地跳到下一格，表现选中状态在网格或列表里移动。每次停顿都像一次选择。"
+      ],
+      [
+        "焦点框颜色怎么取自图标？",
+        "取每个格子里图标的主色，写到焦点框的描边、填充和辉光上，货架滑动时渐变，网格里随每次跳动直接切换。这样选中状态和内容共用一套配色。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

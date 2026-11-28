@@ -1,12 +1,12 @@
-// Build-time generator for everything derived from the recipe data, from content/recipes/terms.json,
-// content/recipes/en.json, content/recipes/seo/<slug>.json, content/pages/<id>.json and
-// skills/motionboard/source/<video>/. Run before every dev start and build (npm predev / prebuild).
+// Build-time generator for everything derived from the recipe collection, from
+// content/collections/recipes/<slug>.json, content/pages/<id>.json and skills/motionboard/source/<video>/.
+// Run before every dev start and build (npm predev / prebuild).
 // Writes (all gitignored except the README tables and the skill's recipes/):
-//   src/site/data/gen/index.json and text/<slug>.<locale>.json: index.json is bundled with every page,
-//     the long text of one recipe is a chunk only the recipe page loads; search.json is the home search's
-//     haystack, imported on first use
+//   src/site/data/gen/index.json (bundled with every page for the cards) and search.json (the home search's
+//     haystack, imported on first use); the recipe page itself loads its collection item through the template
 //   src/site/data/gen/pages.json, videos.json, redirects.txt, llms.txt: read by src/site/pages.ts, which
-//     feeds the template's sitemap, video sitemap, _redirects and llms.txt generation
+//     feeds the template's sitemap, video sitemap, _redirects and llms.txt generation. The recipe pages and
+//     recipe films are not listed here: the template adds them from the collection items
 //   public/r/<slug>.md and index.md (recipe files for agents, fetched with curl) and public/source (copy of
 //     skills/motionboard/source)
 //   skills/motionboard/recipes/<slug>.md and index.md (source files by relative path, committed)
@@ -42,75 +42,69 @@ const POSITIONS_ZH = {
 const POSITION_ORDER = Object.keys(POSITIONS)
 
 const readJson = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8'))
-const terms = readJson('content/recipes/terms.json')
-const en = readJson('content/recipes/en.json')
-
-const order = [...terms].sort(
-  (a, b) => POSITION_ORDER.indexOf(a.pos) - POSITION_ORDER.indexOf(b.pos) || a.n - b.n,
-)
-const bySlug = Object.fromEntries(terms.map((t) => [t.slug, t]))
-
-const seo = Object.fromEntries(
-  terms.map((t) => {
-    const file = `content/recipes/seo/${t.slug}.json`
-    if (!existsSync(join(ROOT, file))) throw new Error(`missing ${file} for recipe "${t.slug}"`)
-    return [t.slug, readJson(file)]
-  }),
-)
-const commonName = (t) => seo[t.slug].en.name
-
-// Client data: the index fields with the one-line def, and one text file per recipe and locale.
-const GEN_DIR = join(ROOT, 'src/site/data/gen')
-const slugByZh = Object.fromEntries(terms.map((t) => [t.zh, t.slug]))
-rmSync(GEN_DIR, { recursive: true, force: true })
-mkdirSync(join(GEN_DIR, 'text'), { recursive: true })
-const gen = (file, data) => writeFileSync(join(GEN_DIR, file), JSON.stringify(data))
-gen(
-  'index.json',
-  terms.map((t) => {
-    if (!en[t.slug]) throw new Error(`no en.json entry for "${t.slug}"`)
-    const { n, slug, cat, pos, zh, en: name, star, samples, video, dur, zh1 } = t
+const RECIPES_DIR = 'content/collections/recipes'
+// Fields the generator needs from each collection item. Recipes are numbered; n is the card order.
+const recipes = readdirSync(join(ROOT, RECIPES_DIR))
+  .filter((f) => f.endsWith('.json'))
+  .map((f) => {
+    const r = readJson(`${RECIPES_DIR}/${f}`)
+    const { n, cat, star, video, samples, text } = r.data
     return {
       n,
-      slug,
+      slug: r.slug,
       cat,
-      pos,
-      zh,
-      en: name,
-      name: { en: seo[slug].en.name, zh: seo[slug].zh.name },
+      pos: r.category[0],
       star,
       samples,
       video,
-      dur,
-      def: { en: en[t.slug].def, zh: zh1 },
+      dur: r.media.duration,
+      shot: { en: r.en.ownName, zh: r.zh.ownName },
+      name: { en: r.en.name, zh: r.zh.name },
+      def: { en: r.en.lede, zh: r.zh.lede },
+      text,
     }
-  }),
+  })
+  .sort((a, b) => a.n - b.n)
+
+const order = [...recipes].sort(
+  (a, b) => POSITION_ORDER.indexOf(a.pos) - POSITION_ORDER.indexOf(b.pos) || a.n - b.n,
+)
+const bySlug = Object.fromEntries(recipes.map((t) => [t.slug, t]))
+const commonName = (t) => t.name.en
+
+// Client data: the index fields with the one-line def, and the search haystack.
+const GEN_DIR = join(ROOT, 'src/site/data/gen')
+rmSync(GEN_DIR, { recursive: true, force: true })
+mkdirSync(GEN_DIR, { recursive: true })
+const gen = (file, data) => writeFileSync(join(GEN_DIR, file), JSON.stringify(data))
+gen(
+  'index.json',
+  recipes.map((t) => ({
+    n: t.n,
+    slug: t.slug,
+    cat: t.cat,
+    pos: t.pos,
+    zh: t.shot.zh,
+    en: t.shot.en,
+    name: t.name,
+    star: t.star,
+    samples: t.samples,
+    video: t.video,
+    dur: t.dur,
+    def: t.def,
+  })),
 )
 // Search haystack per recipe: names, shot names and the phrases people use for the shot, both languages, lowercased.
 // Loaded by the home page search on first use, so it is not part of any page's bundle.
 gen(
   'search.json',
   Object.fromEntries(
-    terms.map((t) => [
+    recipes.map((t) => [
       t.slug,
-      [seo[t.slug].en.name, seo[t.slug].zh.name, t.en, t.zh, ...(en[t.slug]?.says || []), ...(t.says || [])].join(' ').toLowerCase(),
+      [t.name.en, t.name.zh, t.shot.en, t.shot.zh, ...t.text.en.says, ...t.text.zh.says].join(' ').toLowerCase(),
     ]),
   ),
 )
-const pageSeo = ({ title, description, howto, faq }) => ({ title, description, howto, faq })
-for (const t of terms) {
-  const { def, ...enText } = en[t.slug]
-  gen(`text/${t.slug}.en.json`, { ...enText, seo: pageSeo(seo[t.slug].en) })
-  gen(`text/${t.slug}.zh.json`, {
-    why: t.why,
-    spec: t.spec,
-    prompt: t.prompt,
-    says: t.says,
-    // a source reference to a recipe that is not on the site is dropped
-    vs: t.vs.flatMap(([zh, text]) => (slugByZh[zh] ? [[slugByZh[zh], text]] : [])),
-    seo: pageSeo(seo[t.slug].zh),
-  })
-}
 
 const encodePath = (p) => p.split('/').map(encodeURIComponent).join('/')
 const mdUrl = (slug) => `${SITE_URL}/r/${slug}.md`
@@ -191,7 +185,7 @@ You are a coding agent. The user wants this shot for their own product. Follow t
 }
 
 function recipeMd(t, skill) {
-  const x = en[t.slug]
+  const x = t.text.en
   const files = listFiles(join(ROOT, SOURCE_DIR, t.video))
   const pkgFile = files.find((f) => f.path === 'package.json')
   let version = ''
@@ -202,8 +196,8 @@ function recipeMd(t, skill) {
 
   const L = []
   L.push(`# ${commonName(t)}`, '')
-  if (t.en.toLowerCase() !== commonName(t).toLowerCase()) L.push(`${SITE.name} shot name: ${t.en}`, '')
-  if (x?.def) L.push(x.def, '')
+  if (t.shot.en.toLowerCase() !== commonName(t).toLowerCase()) L.push(`${SITE.name} shot name: ${t.shot.en}`, '')
+  L.push(t.def.en, '')
   L.push(
     `- Position in a launch film: ${POSITIONS[t.pos]}`,
     `- Slug: ${t.slug}`,
@@ -217,18 +211,18 @@ function recipeMd(t, skill) {
     L.push(`- License: MIT. Free to use in your own projects, including commercial launch films. ${REPO}/blob/main/LICENSE`)
   }
   L.push('', howTo(t, version, skill), '')
-  if (skill && x?.says?.length) {
+  if (skill && x.says?.length) {
     L.push('## Matches requests like', '', ...x.says.map((s) => `- ${s}`), '')
   }
 
-  if (x?.spec?.length) {
+  if (x.spec?.length) {
     L.push('## Spec', '', '| Item | Value |', '| --- | --- |')
     for (const [label, val] of x.spec) L.push(`| ${cell(label)} | ${cell(htmlToMd(val))} |`)
     L.push('')
   }
-  if (x?.why) L.push('## Why it works', '', x.why, '')
-  if (x?.prompt) L.push('## Prompt', '', ...x.prompt.split(/\r?\n/).map((l) => `> ${l}`.trimEnd()), '')
-  if (x?.vs?.length) {
+  if (x.why) L.push('## Why it works', '', x.why, '')
+  if (x.prompt) L.push('## Prompt', '', ...x.prompt.split(/\r?\n/).map((l) => `> ${l}`.trimEnd()), '')
+  if (x.vs?.length) {
     L.push('## Often confused with', '')
     for (const [slug, text] of x.vs) {
       const o = bySlug[slug]
@@ -272,13 +266,8 @@ for (const d of [webDir, skillDir]) {
   mkdirSync(d, { recursive: true })
 }
 
-let missing = 0
 const built = []
 for (const t of order) {
-  if (!en[t.slug]) {
-    missing++
-    console.warn(`warn: no en.json entry for "${t.slug}", text sections skipped`)
-  }
   if (!existsSync(join(ROOT, SOURCE_DIR, t.video))) {
     console.warn(`warn: ${SOURCE_DIR}/${t.video}/ missing, skipping ${t.slug}`)
     continue
@@ -294,7 +283,7 @@ for (const p of POSITION_ORDER) {
   const group = order.filter((t) => t.pos === p)
   if (!group.length) continue
   idx.push(`## ${POSITIONS[p]}`, '')
-  for (const t of group) idx.push(`- [${commonName(t)}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
+  for (const t of group) idx.push(`- [${commonName(t)}](${mdUrl(t.slug)})${t.def.en ? `: ${t.def.en}` : ''}`)
   idx.push('')
 }
 writeFileSync(join(webDir, 'index.md'), idx.join('\n'))
@@ -311,7 +300,7 @@ for (const p of POSITION_ORDER) {
   if (!group.length) continue
   sidx.push(`## ${POSITIONS[p]}`, '')
   for (const t of group) {
-    sidx.push(`- **${commonName(t)}** \`${t.slug}\`: ${en[t.slug]?.def || ''} (${filmSeconds(t.video)}s)`)
+    sidx.push(`- **${commonName(t)}** \`${t.slug}\`: ${t.def.en || ''} (${filmSeconds(t.video)}s)`)
   }
   sidx.push('')
 }
@@ -328,7 +317,7 @@ function readmeTable(lang) {
     if (!group.length) continue
     L.push(`### ${zh ? POSITIONS_ZH[p] : POSITIONS[p]} (${group.length})`, '', zh ? '| 配方 | 镜头 |' : '| Recipe | Shot |', '| --- | --- |')
     for (const t of group) {
-      L.push(`| [${zh ? seo[t.slug].zh.name : commonName(t)}](${base}/${t.slug}/) | ${mdCell(zh ? t.zh1 || '' : en[t.slug]?.def || '')} |`)
+      L.push(`| [${zh ? t.name.zh : commonName(t)}](${base}/${t.slug}/) | ${mdCell(zh ? t.def.zh || '' : t.def.en || '')} |`)
     }
     L.push('')
   }
@@ -363,7 +352,7 @@ const llms = [
   '',
   `- [All recipes](${SITE_URL}/r/index.md): the full list grouped by position in a launch film`,
 ]
-for (const t of order) llms.push(`- [${commonName(t)}](${mdUrl(t.slug)})${en[t.slug]?.def ? `: ${en[t.slug].def}` : ''}`)
+for (const t of order) llms.push(`- [${commonName(t)}](${mdUrl(t.slug)})${t.def.en ? `: ${t.def.en}` : ''}`)
 llms.push('')
 writeFileSync(join(GEN_DIR, 'llms.txt'), llms.join('\n'))
 
@@ -374,8 +363,8 @@ const redirects = Object.entries(renamed)
   .map(([from, to]) => `/r/${from.split('/')[2]}.md /r/${to.split('/')[2]}.md 301`)
 writeFileSync(join(GEN_DIR, 'redirects.txt'), `${redirects.join('\n')}\n`)
 
-// Pages for the sitemap: the home page is the template's; recipes, hubs and guides are listed here, with the
-// registry fields the template needs (type, lastmod = last commit of the source file, breadcrumb per language).
+// Pages for the sitemap: the home page and the recipe pages are the template's; hubs and guides are listed here, with
+// the registry fields the template needs (type, lastmod = last commit of the source file, breadcrumb per language).
 const HOME = { en: coreEn.page.home, zh: coreZh.page.home }
 const lastmod = (...files) => {
   const dates = files.map((f) => execFileSync('git', ['log', '-1', '--format=%cs', '--', f], { cwd: ROOT, encoding: 'utf8' }).trim()).filter(Boolean)
@@ -386,19 +375,6 @@ const crumbs = (path, name) => ({
   zh: [{ name: HOME.zh, path: '/' }, { name: name.zh, path }],
 })
 const pages = [
-  ...order.map((t) => {
-    const path = `/recipes/${t.slug}/`
-    return {
-      path,
-      type: 'item',
-      title: { en: seo[t.slug].en.title, zh: seo[t.slug].zh.title },
-      description: { en: seo[t.slug].en.description, zh: seo[t.slug].zh.description },
-      // The effect names were picked from search data (task 1), so the name is the page's keyword.
-      keyword: { en: seo[t.slug].en.name, zh: seo[t.slug].zh.name },
-      lastmod: lastmod(`content/recipes/seo/${t.slug}.json`),
-      breadcrumb: crumbs(path, { en: seo[t.slug].en.name, zh: seo[t.slug].zh.name }),
-    }
-  }),
   ...readdirSync(join(ROOT, 'content/pages'))
     .filter((f) => f.endsWith('.json'))
     .sort()
@@ -418,17 +394,9 @@ const pages = [
 ]
 writeFileSync(join(GEN_DIR, 'pages.json'), JSON.stringify(pages))
 
-// Video sitemap: every recipe film, plus the Motionboard skill's showcase films on the launch-video-examples page.
-const PUBLISHED = '2026-10-30' // date the recipe films went online
-const videos = order.map((t) => ({
-  path: `/recipes/${t.slug}/`,
-  title: { en: seo[t.slug].en.name, zh: seo[t.slug].zh.name },
-  description: { en: seo[t.slug].en.description, zh: seo[t.slug].zh.description },
-  thumbnail: `${MEDIA_URL}/${t.video}.jpg`,
-  content: `${MEDIA_URL}/${t.video}.mp4`,
-  duration: t.dur,
-  uploadDate: PUBLISHED,
-}))
+// Video sitemap: the Motionboard skill's showcase films on the launch-video-examples page. The recipe films are
+// the template's (one per video item).
+const videos = []
 const showcase = readJson('content/pages/launch-video-examples.json')
 for (const b of showcase.en.blocks.filter((b) => b.t === 'showcase')) {
   const zhBlock = showcase.zh.blocks.find((x) => x.t === 'showcase' && x.films[0].video === b.films[0].video)
@@ -446,4 +414,4 @@ for (const b of showcase.en.blocks.filter((b) => b.t === 'showcase')) {
 }
 writeFileSync(join(GEN_DIR, 'videos.json'), JSON.stringify(videos))
 
-console.log(`recipes: wrote ${built.length} recipes x 2 variants (public/r, ${SKILL_DIR}/recipes), index.md, README tables and gen/ (${pages.length} pages, ${videos.length} videos, ${missing} without en.json text) for ${SITE_URL}`)
+console.log(`recipes: read ${recipes.length} items from ${RECIPES_DIR}, wrote ${built.length} recipes x 2 variants (public/r, ${SKILL_DIR}/recipes), index.md, README tables and gen/ (index, search, ${pages.length} hub and guide pages, ${videos.length} showcase videos) for ${SITE_URL}`)

@@ -1,0 +1,202 @@
+{
+  "slug": "liquid-glass-effect",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/glass-lens.mp4",
+    "poster": "https://media.motionboard.app/glass-lens.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.8
+  },
+  "data": {
+    "n": 28,
+    "cat": "D",
+    "star": true,
+    "video": "glass-lens",
+    "samples": [
+      {
+        "t": "Apple iOS 26 Liquid Glass",
+        "id": "jGztGfRujSE",
+        "at": "1:48–1:52",
+        "s": 108
+      },
+      {
+        "t": "Apple iOS 26 Liquid Glass",
+        "id": "jGztGfRujSE",
+        "at": "1:32–1:36",
+        "s": 92
+      },
+      {
+        "t": "Apple iOS 26 Liquid Glass",
+        "id": "jGztGfRujSE",
+        "at": "1:52–2:00",
+        "s": 112
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Barrel distortion at the edge says \"this is glass\" more than the magnification inside the lens does. The transition tool is the material being introduced: on the frame where the camera pushes in until the glass fills the screen, the background flips from black to light gray-white, and the flip hides in the fully covered frame.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.8s. Phone rises 0-0.9s. Tab-bar lens: pop 1.45s, slide Home to Library 1.6-2.3s, release 2.25s. Plus tap 3.0s, sheet up 3.1-3.75s. Caret loupe: pop 4.05s, hops 4.45-4.85s and 4.85-5.25s, drop 5.3s. Toggle: lens pop 5.45s, drag 5.55-5.95s, drop 6.0s. Create tap 6.05s, Now Playing up 6.2-6.95s. Scrubber knob: pop 7.2s, drag 7.35-8.45s. Camera push 8.1-8.8s, crossfade to the wordmark 8.6-8.95s, final lens slides 8.7-10.8s"
+          ],
+          [
+            "Easing",
+            "Pop-in <code>expo.out</code> 0.28s, magnification ramp <code>expo.out</code> 0.3-0.35s, lens moves <code>expo.out</code> (0.7s tab bar, 0.4s per caret hop, 0.4s toggle, 1.1s scrubber), release <code>power2.out</code> 0.26s, camera moves <code>expo.out</code> 0.7-0.95s with two <code>none</code> holds; the final lens drifts <code>none</code> over 2.1s. The glass and the content copy under it move in the same tween, same ease, same duration"
+          ],
+          [
+            "Camera",
+            "A scaled stage, not a moving lens: scale 1.06 to 1.09, then pushes to 1.75 on the tab bar (0.95s), 1.8 hold, 1.15 on the sheet (2.45s), 2.3 on the caret line (3.6s), 2.9 on the toggle (5.1s), 1.1 pull-back (6.0s), 2.2 on the scrubber (6.95s), and 6.0 into the knob (8.1s), each 0.7-0.95s <code>expo.out</code>, centered on the control about to get glass"
+          ],
+          [
+            "Subject",
+            "Glass is a scaled copy of the same content clipped to a pill with <code>saturate(1.2) contrast(1.03)</code>: tab bar 72x56 at 1.55x, caret loupe 132x58 at 1.7x, toggle 64x40 at 1.5x, scrubber knob 64x38 at 1.6x, final wordmark lens 440x262 at 1.28x. Each pops from scale 0.7-0.85 to 1.0-1.12; controls are solid at rest and turn to glass only while dragged"
+          ],
+          [
+            "Sync",
+            "The glass and its content copy are offset in the same tween. On arrival (2.25s) the tab color, selection pill, screen swap and lens release happen on one frame. The toggle thumb, track color (green <code>#34c759</code> at 5.65s) and lens move together; the scrubber knob, fill and the elapsed and remaining time (0:41 to 2:41, -3:02 to -1:02, 7 steps) follow the lens"
+          ],
+          [
+            "Style",
+            "Light gray radial background (<code>#f6f7f9</code> to <code>#dddfe5</code>) with a 12% edge vignette; dark phone body. Glass has a white top highlight, 1.2px conic-gradient rim (pink, amber, green, blue, violet), 3px pink left and blue right inner edge shadow, and a soft drop shadow. Final wordmark Inter 600, 250px, letter-spacing -0.05em, <code>#101114</code>"
+          ]
+        ],
+        "prompt": "Build a product tour film called Glass Lens, 10.8s on a light gray radial background (#f6f7f9 to #dddfe5, 12% edge vignette) with a phone UI that stays solid at rest and shows glass only on the control being dragged. Glass is a scaled copy of the same content clipped to a pill, with saturate(1.2) contrast(1.03), a white top highlight, a 1.2px conic-gradient rim (pink, amber, green, blue, violet) and 3px pink and blue inner edge shadows; the glass and the content copy beneath it move in one tween with the same ease and duration. Pop each lens in over 0.28s with expo.out (scale 0.7-0.85 to 1.0-1.12) while magnification ramps over 0.3s: tab bar lens 1.55x slides from Home to Library over 0.7s at 1.6s and releases at 2.25s on the same frame the tab, screen and selection change; a 132x58 caret loupe at 1.7x pops at 4.05s and hops line to line, 0.4s expo.out each, at 4.45s and 4.85s; a 64x40 toggle lens at 1.5x drags the thumb 20px over 0.4s at 5.55s while the track turns #34c759; a 64x38 knob lens at 1.6x drags the scrubber for 1.1s at 7.35s with the elapsed and remaining times stepping 7 times. Animate the camera as a scaled stage that centers on each control before its lens appears (1.09, 1.75, 1.15, 2.3, 2.9, 1.1, 2.2, each 0.7-0.95s expo.out), push to 6.0x at 8.1s, crossfade over 0.35s at 8.6s to a 250px Inter 600 wordmark (#101114, letter-spacing -0.05em), and slide a 440x262 lens at 1.28x across it by 150px over 2.1s with ease: \"none\".",
+        "says": [
+          "A clear glass piece magnifying the text under it",
+          "A magnifier following the cursor across a line of text",
+          "As a glass button slides by, the content under it is magnified and warped"
+        ],
+        "vs": [
+          [
+            "glass-droplet-split",
+            "Glass Droplet Split shows glass deforming and breaking apart; Glass Lens shows glass refracting and magnifying the content below it."
+          ],
+          [
+            "match-cut-transition",
+            "Match Cut swaps in another object at the same anchor; Glass Lens flips the scene on the one frame where the lens fills the screen."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "边缘的桶形扭曲比镜内放大更能说明这是一块玻璃。转场的工具就是被介绍的材质本身：镜头推进到玻璃填满画面的那一帧，背景从黑翻成浅灰白，翻转藏在遮满画面的帧里。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.8s。手机 0–0.9s 升起。标签栏透镜：1.45s 出现，1.6–2.3s 从 Home 滑到 Library，2.25s 松开。3.0s 点加号，3.1–3.75s 弹窗升起。光标放大镜：4.05s 出现，4.45–4.85s 与 4.85–5.25s 两次跳行，5.3s 消失。开关：5.45s 出现玻璃，5.55–5.95s 拖动，6.0s 消失。6.05s 点创建，6.2–6.95s 正在播放升起。进度条旋钮：7.2s 出现，7.35–8.45s 拖动。8.1–8.8s 镜头推近，8.6–8.95s 交叉淡入字标，8.7–10.8s 末尾透镜滑过字标"
+          ],
+          [
+            "缓动",
+            "出现 <code>expo.out</code> 0.28s，放大倍率 <code>expo.out</code> 0.3–0.35s，透镜移动 <code>expo.out</code>（标签栏 0.7s，光标每次跳行 0.4s，开关 0.4s，进度条 1.1s），松开 <code>power2.out</code> 0.26s，镜头移动 <code>expo.out</code> 0.7–0.95s 中间夹两段 <code>none</code>；末尾透镜 <code>none</code> 匀速 2.1s。玻璃和它下方的内容副本在同一个 tween 里移动，缓动和时长相同"
+          ],
+          [
+            "镜头",
+            "移动的是缩放后的舞台，透镜本身不推近：缩放 1.06 到 1.09，然后推到 1.75 对准标签栏（0.95s），1.8 保持，1.15 看弹窗（2.45s），2.3 看光标所在行（3.6s），2.9 看开关（5.1s），1.1 拉回（6.0s），2.2 看进度条（6.95s），6.0 推进旋钮（8.1s），每段 0.7–0.95s <code>expo.out</code>，以即将变成玻璃的控件为中心"
+          ],
+          [
+            "主体",
+            "玻璃是同一内容的放大副本，裁成胶囊并加 <code>saturate(1.2) contrast(1.03)</code>：标签栏 72×56 放大 1.55 倍，光标放大镜 132×58 放大 1.7 倍，开关 64×40 放大 1.5 倍，进度条旋钮 64×38 放大 1.6 倍，字标透镜 440×262 放大 1.28 倍。每个从缩放 0.7–0.85 弹到 1.0–1.12；控件静止时是实心样式，只在被拖动时变成玻璃"
+          ],
+          [
+            "同步",
+            "玻璃和它的内容副本在同一个 tween 里反向位移。到达时（2.25s）标签颜色、选中胶囊、屏幕切换和透镜松开发生在同一帧。开关滑块、轨道颜色（5.65s 变绿 <code>#34c759</code>）和透镜一起移动；进度条旋钮、填充条以及已播放和剩余时间（0:41 到 2:41，-3:02 到 -1:02，共 7 档）跟随透镜"
+          ],
+          [
+            "风格",
+            "浅灰径向渐变背景（<code>#f6f7f9</code> 到 <code>#dddfe5</code>）加 12% 边缘暗角；深色手机机身。玻璃有白色顶部高光、1.2px 圆锥渐变边框（粉、琥珀、绿、蓝、紫）、左粉右蓝各 3px 内侧边缘阴影和柔和投影。末尾字标 Inter 600，250px，字距 -0.05em，<code>#101114</code>"
+          ]
+        ],
+        "prompt": "用「玻璃透镜（Glass Lens）」做产品导览片，10.8s，浅灰径向渐变背景（#f6f7f9 到 #dddfe5，边缘 12% 暗角），手机界面静止时是实心样式，只有被拖动的控件才显示玻璃。玻璃是同一内容的放大副本，裁成胶囊，带 saturate(1.2) contrast(1.03)、白色顶部高光、1.2px 圆锥渐变边框（粉、琥珀、绿、蓝、紫）以及粉色和蓝色各 3px 的内侧边缘阴影；玻璃和下方的内容副本在同一个 tween 里移动，缓动和时长相同。每个透镜用 expo.out 0.28s 弹出（缩放 0.7–0.85 到 1.0–1.12），同时放大倍率用 0.3s 升起：标签栏透镜放大 1.55 倍，1.6s 起用 0.7s 从 Home 滑到 Library，2.25s 松开，同一帧切换标签、屏幕和选中态；132×58 的光标放大镜放大 1.7 倍，4.05s 出现，4.45s 和 4.85s 逐行跳转，每次 0.4s expo.out；64×40 的开关透镜放大 1.5 倍，5.55s 起用 0.4s 拖动滑块 20px，同时轨道变成 #34c759；64×38 的旋钮透镜放大 1.6 倍，7.35s 起拖动进度条 1.1s，已播放和剩余时间分 7 档跳变。镜头做成缩放舞台，在每个透镜出现前对准对应控件（1.09、1.75、1.15、2.3、2.9、1.1、2.2，每段 0.7–0.95s expo.out），8.1s 推到 6.0 倍，8.6s 用 0.35s 交叉淡入 250px Inter 600 字标（#101114，字距 -0.05em），再让 440×262、放大 1.28 倍的透镜用 ease: \"none\" 在 2.1s 内从字标上滑过 150px。",
+        "says": [
+          "透明玻璃片放大下面的文字",
+          "放大镜跟着光标扫过一行字",
+          "玻璃按钮滑过去时下面的内容被放大变形"
+        ],
+        "vs": [
+          [
+            "glass-droplet-split",
+            "水滴分离展示玻璃的形变与断开；玻璃透镜展示玻璃对下方内容的折射和放大"
+          ],
+          [
+            "match-cut-transition",
+            "同位替换在同一锚点换成另一物体；玻璃透镜用透镜铺满画面的一帧完成场景翻转"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Liquid Glass Effect",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 2400 for \"liquid glass effect\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Liquid Glass Effect: Example and Code Recipe",
+    "description": "Glass lenses pop onto a phone UI's tab bar, caret, toggle and scrubber, refracting what is below. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A transparent glass disc, loupe, or control moves over content, magnifying and refracting what lies beneath, with dispersion at the edge.",
+    "name": "Liquid Glass Effect",
+    "ownName": "Glass Lens",
+    "body": [
+      {
+        "h2": "How to make a Liquid Glass Effect with Claude Code or Codex",
+        "body": "Build each lens as a scaled copy of the same content clipped to a pill, with saturate(1.2) contrast(1.03): tab bar 72 x 56 px at 1.55x, caret loupe 132 x 58 at 1.7x, toggle 64 x 40 at 1.5x. Pop each lens in over 0.28 s with expo.out from scale 0.7 to 0.85 up to 1.0 to 1.12. Controls stay solid at rest and turn to glass only while dragged.\n\nGive the glass a white top highlight, a 1.2 px conic-gradient rim (pink, amber, green, blue, violet) and 3 px pink and blue inner edge shadows. The lens and its content copy move in the same tween with the same ease and duration, 0.7 s on the tab bar and 1.1 s on the scrubber. The camera pushes the scaled stage to 1.75, 2.3, 2.9 and finally 6.0 into the knob.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own interface."
+      }
+    ],
+    "alt": "A phone playlist settings screen with a clear glass magnifier enlarging the text being edited.",
+    "faq": [
+      [
+        "What is the liquid glass effect?",
+        "It is a translucent material that refracts and magnifies the content behind it, with a bright edge and color dispersion at the rim, so a control looks like a piece of curved glass sitting on the interface."
+      ],
+      [
+        "Can I make a liquid glass effect in CSS?",
+        "Partly. backdrop-filter gives blur and saturation, and an SVG displacement filter can bend the backdrop in Chromium browsers. This recipe uses a more portable method: a scaled copy of the content clipped to a pill, moved in the same tween, which also renders to video."
+      ],
+      [
+        "Is the Liquid Glass Effect recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "液态玻璃效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"液态玻璃效果\": 液态玻璃效果; iphone 液态玻璃效果",
+      "checked": "2026-11-28"
+    },
+    "title": "液态玻璃效果：示例与制作配方",
+    "description": "玻璃透镜依次出现在手机界面的标签栏、光标、开关和进度条上，折射放大下方内容。用免费配方，让 Claude Code 或 Codex 做出液态玻璃效果。",
+    "lede": "透明玻璃圆、放大镜或控件在内容上移动，折射放大下方内容，边缘带色散。",
+    "name": "液态玻璃效果",
+    "ownName": "玻璃透镜",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做液态玻璃效果",
+        "body": "每个透镜都是同一份内容的放大副本，裁成胶囊形，加 saturate(1.2) contrast(1.03)：标签栏 72 x 56px 放大 1.55 倍，光标放大镜 132 x 58 放大 1.7 倍，开关 64 x 40 放大 1.5 倍。透镜用 expo.out 在 0.28 秒内从 0.7 到 0.85 的缩放弹到 1.0 到 1.12。控件静止时是实体，只在被拖动时变成玻璃。\n\n玻璃带白色顶部高光、1.2px 的锥形渐变边缘（粉、琥珀、绿、蓝、紫），以及 3px 的粉色和蓝色内边缘阴影。透镜和它下面的内容副本放在同一个动画里，缓动和时长一致，标签栏 0.7 秒，进度条 1.1 秒。镜头推动放大的舞台，依次到 1.75、2.3、2.9 倍，最后以 6.0 倍推进旋钮。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，界面换成你自己的。"
+      }
+    ],
+    "alt": "手机歌单设置页上，一个透明玻璃放大镜放大了正在编辑的文字。",
+    "faq": [
+      [
+        "液态玻璃效果是什么？",
+        "指一种半透明材质：折射并放大背后的内容，边缘明亮并带色散，让控件看起来像放在界面上的一块弧面玻璃。"
+      ],
+      [
+        "能用 CSS 做液态玻璃效果吗？",
+        "可以做一部分。backdrop-filter 提供模糊和饱和度，SVG 位移滤镜在 Chromium 浏览器里能弯折背景。这份配方用的是兼容性更好的做法：把内容的放大副本裁成胶囊，和玻璃在同一个动画里移动，也能直接渲染成视频。"
+      ],
+      [
+        "液态玻璃效果配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

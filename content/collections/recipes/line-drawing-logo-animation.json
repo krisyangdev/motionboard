@@ -1,0 +1,196 @@
+{
+  "slug": "line-drawing-logo-animation",
+  "category": [
+    "close"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/plotter-logo.mp4",
+    "poster": "https://media.motionboard.app/plotter-logo.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 44,
+    "cat": "C",
+    "star": false,
+    "video": "plotter-logo",
+    "samples": [
+      {
+        "t": "Linear Orbit",
+        "id": "PsY9J2DB1FM",
+        "at": "0:00–0:13",
+        "s": 0
+      },
+      {
+        "t": "Linear Orbit",
+        "id": "PsY9J2DB1FM",
+        "at": "0:15–0:27",
+        "s": 15
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Macro paper with depth of field makes a few thin lines the subject, so the viewer sees how the logo is drawn before seeing the finished mark. Four camera positions cut at 1.9s, 3.4s and 4.7s, each showing one thing (ring, meridian, letters, fill), and the three cut points set the rhythm. After the hard cut to the flat logo it defocuses into the paper over 0.9s (moving up 90px) and the date and URL type on below it once the defocus has finished, so the two never overlap and the eye does not have to move. The whole film has one accent color, used only for the meridian, the 26 and the URL.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Hard cuts at 1.9s, 3.4s and 4.7s, and to the flat logo at 5.8s. A thin pen draws the ring 0–2.6s (55% to closed) and a blue pen the meridian 2.3–3.2s. The 10 skeletons start from 3.0s to 4.78s, 0.16–0.22s apart, 0.3–0.55s each. The heavy pen fills 4.5–5.755s, characters 0.075s apart, 0.42s each. Flat logo 5.8–7.0s, defocus 7.0–7.9s, the lockup moves up 90px as it defocuses, date types from 7.75s, URL from 8.15s, held to 11s. The paper texture and guides are on screen from frame 0 with no fade-in"
+          ],
+          [
+            "Easing",
+            "Ring pen <code>none</code> (constant speed); meridian and letter skeletons <code>power1.inOut</code>; heavy fill <code>power2.out</code>; guides <code>power2.out</code>; camera constant speed (<code>none</code>) in takes 1, 2 and 3, <code>power3.out</code> in take 4; logo defocus <code>power2.inOut</code>; date and URL <code>expo.out</code> (0.5s per character, 0.035s apart, each character rising 8px from below and going from 6px blur to sharp)"
+          ],
+          [
+            "Camera",
+            "Perspective 1500px, the paper tilted about a horizontal axis. Take 1 zoom 5.2→4.4, tilt 58°→55°, roll −10°→−6°, the camera aimed 4° of arc ahead of the pen tip so the tip stays near the middle of the frame (about 45% of the frame height); take 2 zoom 2.5→2.2, tilt 50°→47°; take 3 zoom 1.9→1.75, tilt 55°→52°, the camera sliding right aimed about 25 units left of the letter being drawn, so the pen tip sits in the middle-right of the frame; take 4 zoom 1.15→0.78, tilt 52°→46°, pulling back and sliding right while the fill runs, with the whole mark inside the frame at its start and the right edge of the 6 about 280px inside the frame at the end. An extra 1.00→1.02 slow push runs across all four takes. Depth of field uses four identical copies of the plane blurred 0, 2.4, 6 and 12px, with a focus band half-width of 150, 190, 160 and 330px (takes 1 to 4)"
+          ],
+          [
+            "Subject",
+            "Plane units: 1 unit = 2.8px, x-height 100 units (280px). Mark: an ink ring plus a blue meridian ellipse (radius 66, half-width 30 units); wordmark meridian plus a blue 26, 10 characters built from arcs and straight lines. Thin pen 0.7 units (about 2px), heavy pen 16 units (about 45px) for letters and 13 units for the ring and meridian. 36 guide strokes: 4 horizontal rulings, 3 concentric circles, 3 diagonals, 2 cross lines, the left and right edge of every character and the bounding circle of each round letter, plus baseline ticks every 6 units and registration crosses"
+          ],
+          [
+            "Sync",
+            "Each character's guides are drawn 0.8–0.9s before its skeleton; each character's heavy stroke starts only after its own skeleton is done (the m skeleton ends at 3.55s and its fill starts at 4.66s; the 6 skeleton ends at 5.28s and its fill starts at 5.335s); strokes inside a character run one after another in both passes (m: stem, then the two arches; e: crossbar, then the bowl) and the character's total time stays the same; the i-dots fill 0.28s after the heavy stroke starts; the last character is filled at 5.755s and the film cuts to the flat logo at 5.8s, 0.045s later"
+          ],
+          [
+            "Style",
+            "Paper base <code>#f3f4f6</code> with two multiply relief textures (256px and 1024px); ink <code>#0d0f13</code>, ultramarine accent <code>#2346ff</code> (meridian, 26, URL), guides <code>#7d838d</code>; a 256px grain tile jumped every frame (9% multiply, 3% screen) and a 30% vignette; date and URL Inter 500, 50px, centered (date text box top at y=600px, URL at y=680px), the URL in the accent color"
+          ]
+        ],
+        "prompt": "Build a closing shot called Plotter-Drawn Logo for an event, 11 seconds, 1920×1080, 30fps. Use one paper plane (base #f3f4f6 with relief texture) that carries the whole logo: a mark made of an ink ring and a blue (#2346ff) meridian ellipse, plus a lowercase wordmark meridian built from arcs and lines and a blue 26, 10 characters in all, x-height 100 units = 280px. The camera is a low macro with 1500px perspective, and depth of field comes from four identical copies of the plane blurred 0, 2.4, 6 and 12px with a focus band half-width of 150–330px. Draw every stroke with stroke-dashoffset and set pathLength to 10000 (GSAP rounds CSS lengths to whole numbers, so a pathLength of 1 makes strokes jump). 0–1.9s take 1 (zoom 5.2→4.4, tilt 58°→55°, constant speed): the paper texture and gray guides (cross lines, concentric circles, diagonals, horizontal rulings) are on screen from frame 0 with no fade-in, and a thin pen (about 2px) draws the ring at constant speed from 55% to 79% while the camera is aimed 4° of arc ahead of the pen tip, so the tip stays in the middle of the frame. At 1.9s hard cut to take 2 (zoom 2.5→2.2, tilt 50°→47°): the ring closes at 2.6s, a blue pen draws the meridian ellipse over 0.9s (power1.inOut), and from 3.0s the m appears at the right edge. At 3.4s hard cut to take 3 (zoom 1.9→1.75, tilt 55°→52°, constant speed): the 10 character skeletons start in turn at 3.0, 3.22, 3.44, 3.62, 3.78, 3.98, 4.14, 4.34, 4.56 and 4.78s, 0.3–0.55s each with power1.inOut, the strokes inside a character drawn one after another, each character's edge lines and bounding circle start drawing 0.8–0.9s earlier; the camera slides right, aimed about 25 units left of the letter being drawn, so the pen tip sits middle-right in the frame. At 4.7s hard cut to take 4 (zoom 1.15→0.78, tilt 52°→46°, power3.out, the camera pulling back and sliding right), opening with the whole ring mark inside the frame and ending with the right edge of the 6 about 280px inside the frame: a heavy pen (letters 16 units, about 45px; ring 13 units) traces over every skeleton, ring at 4.5s, meridian at 4.58s, characters from 4.66s every 0.075s, 0.42s each (power2.out), the strokes inside a character drawn one after another (m: stem, then the two arches; e: crossbar, then the bowl), the i-dots filling 0.28s later. At 5.8s hard cut to the flat paper: the logo is 1480px wide and centered, pushing 1.00→1.03 until 7.0s, then over 0.9s (power2.inOut) it defocuses to 16px blur, 18% opacity and scale 1.10 while moving up 90px, and keeps drifting to 1.14. From 7.75s the date \"16 Dec 2026\" (Inter 500, 50px, text box top at y=600px, below the defocused logo) types in character by character, 0.5s each with expo.out, 0.035s apart, rising 8px from below and going from 6px blur to sharp; from 8.15s the URL \"meridian26.com\" (text box top at y=680px) types in the same way in the accent color; hold to 11s. Finish with a per-frame jumping grain tile and a vignette. Build it with HTML/SVG + GSAP.",
+        "says": [
+          "The camera hugs the paper while a pen draws a ring and letters",
+          "After the line drawing, a heavy pen fills every letter from left to right",
+          "The logo blurs back into the paper and the date and URL type on below it"
+        ],
+        "vs": [
+          [
+            "logo-wordmark-reveal",
+            "Mark-to-Wordmark Unfold pushes the wordmark out of an existing mark in one 1.3s move; Plotter-Drawn Logo draws the mark and wordmark stroke by stroke on blank paper with a moving camera and ends on a date and URL."
+          ],
+          [
+            "outline-to-solid-reveal",
+            "Outline to Solid lights a product outline and fills it in place on a fixed camera; Plotter-Drawn Logo draws the strokes one by one on paper with a moving macro camera."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "纸面微距加景深让几根细线成为画面主体，观众先看到标志是怎么画出来的，再看到画完的样子；四个机位在 1.9s、3.4s、4.7s 硬切，每个机位只讲一件事（圆环、经线、字母、描实），节奏由三个切点决定；硬切到正面标志后，标志用 0.9s 虚化回纸面，虚化结束后日期和网址在它下方逐字打出，两者不重叠，视线不用移动；整片只有一个强调色，蓝色只给经线、26 和网址。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s，镜头在 1.9s、3.4s、4.7s 硬切，5.8s 硬切到正面标志。细笔画圆环 0–2.6s（进度 55%→封口），蓝笔画经线 2.3–3.2s；10 个字符骨架 3.0–4.78s 依次起笔，间隔 0.16–0.22s，每个 0.3–0.55s。粗笔描实 4.5–5.755s，字符间隔 0.075s，每个 0.42s。正面标志 5.8–7.0s，虚化 7.0–7.9s（同时上移 90px），日期 7.75s、网址 8.15s 起逐字打出，停到 11s。0s 起纸面纹理和辅助线就在画面上，没有淡入"
+          ],
+          [
+            "缓动",
+            "圆环细笔 <code>none</code>（匀速）；经线和字母骨架 <code>power1.inOut</code>；粗笔描实 <code>power2.out</code>；辅助线 <code>power2.out</code>；镜头一、二、三匀速（<code>none</code>），镜头四 <code>power3.out</code>；标志虚化 <code>power2.inOut</code>；日期和网址 <code>expo.out</code>（每字 0.5s，间隔 0.035s，同时从下方 8px 升到位，模糊 6px 变清晰）"
+          ],
+          [
+            "镜头",
+            "透视 1500px，纸面绕水平轴倾斜。镜头一缩放 5.2→4.4，倾角 58°→55°，滚转 −10°→−6°，镜头对准笔尖前方 4° 弧度，笔尖停在画面中部（约 45% 高度）；镜头二缩放 2.5→2.2，倾角 50°→47°；镜头三缩放 1.9→1.75，倾角 55°→52°，镜头向右滑，对准正在画的字母左侧约 25 单位，笔尖在画面中部偏右；镜头四缩放 1.15→0.78，倾角 52°→46°，镜头向右拉远，开头标志完整在画面内，结束时 6 的右边缘离画面右边约 280px。整段另有 1.00→1.02 的慢推。景深用四份同样的画面叠加，模糊 0、2.4、6、12px，对焦带半宽 150、190、160、330px（按镜头一到四）"
+          ],
+          [
+            "主体",
+            "纸面坐标 1 单位 = 2.8px，x 高度 100 单位（280px）。标志：墨色圆环加蓝色经线椭圆（半径 66、半宽 30 单位）；字标 meridian 加蓝色 26，共 10 个字符，用圆弧和直线几何构造。细笔 0.7 单位（约 2px），字母粗笔 16 单位（约 45px），圆环和经线 13 单位。辅助线共 36 条：4 条横向基准线、3 个同心圆、3 条斜线、2 条十字线、每个字符的左右边线和圆形字母的外接圆，另有基线刻度（每 6 单位）和定位十字"
+          ],
+          [
+            "同步",
+            "每个字符的辅助线比骨架早 0.8–0.9s 开始画；每个字符的粗笔在它自己的骨架画完之后才开始（m 骨架 3.55s 结束，粗笔 4.66s 开始；6 骨架 5.28s 结束，粗笔 5.335s 开始）；i 的圆点在粗笔开始后 0.28s 填实；字符内的笔画依次画出（m 先竖线再两个拱，e 先横线再圆弧），骨架和粗笔都是这样，每个字符的总时长不变；最后一个字符 5.755s 描完，5.8s 硬切到正面标志，两者间隔 0.045s"
+          ],
+          [
+            "风格",
+            "纸面底色 <code>#f3f4f6</code>，叠两层 multiply 浮雕纹理（256px 和 1024px）；墨色 <code>#0d0f13</code>，强调色群青 <code>#2346ff</code>（经线、26、网址），辅助线 <code>#7d838d</code>；每帧跳位的 256px 颗粒（multiply 9%、screen 3%）和 30% 暗角；日期和网址 Inter 500，50px，居中，日期文字框顶部 y=600px，网址 y=680px，网址用强调色"
+          ]
+        ],
+        "prompt": "用「绘图仪画标（Plotter-Drawn Logo）」做活动片尾，整段 11 秒，1920×1080，30fps。用一张纸面平面（底色 #f3f4f6，叠浮雕纹理）承载整个标志：墨色圆环和蓝色（#2346ff）经线椭圆组成的标志，加几何构造的小写字标 meridian 和蓝色 26，共 10 个字符，x 高度 100 单位 = 280px。镜头是低角度微距，透视 1500px，用四份同样的画面叠加做景深（模糊 0、2.4、6、12px，对焦带半宽 150–330px）。笔画用 stroke-dashoffset，pathLength 设 10000（GSAP 会把 CSS 长度取整，设 1 会让笔画直接跳出来）。0–1.9s 镜头一（缩放 5.2→4.4，倾角 58°→55°，匀速）：从第 0 帧起纸面纹理和灰色辅助线就在画面上，没有淡入，辅助线（十字线、同心圆、斜线、横向基准线）已在纸上，细笔（约 2px）匀速画圆环，进度 55%→79%，镜头对准笔尖前方 4° 弧度，笔尖始终在画面中部。1.9s 硬切到镜头二（缩放 2.5→2.2，倾角 50°→47°）：圆环 2.6s 封口，蓝笔用 0.9s（power1.inOut）画经线椭圆，3.0s 起 m 出现在右侧。3.4s 硬切到镜头三（缩放 1.9→1.75，倾角 55°→52°，匀速）：10 个字符的骨架依次起笔，起笔时间 3.0、3.22、3.44、3.62、3.78、3.98、4.14、4.34、4.56、4.78s，每个 0.3–0.55s，power1.inOut，字符内的笔画依次画出，每个字符的边线和外接圆提前 0.8–0.9s 开始画；镜头向右滑，对准正在画的字母左侧约 25 单位，笔尖在画面中部偏右。4.7s 硬切到镜头四（缩放 1.15→0.78，倾角 52°→46°，power3.out，镜头向右拉远），开头标志完整在画面内，结束时 6 的右边缘离画面右边约 280px：粗笔（字母 16 单位约 45px，圆环 13 单位）沿骨架描实，圆环 4.5s、经线 4.58s，字符从 4.66s 起每隔 0.075s 一个，每个 0.42s（power2.out），字符内的笔画依次画出（m 先竖线再两个拱，e 先横线再圆弧），i 的圆点晚 0.28s 填实。5.8s 硬切到纸面正面：标志宽 1480px 居中，慢推 1.00→1.03 到 7.0s，再用 0.9s（power2.inOut）虚化到 16px 模糊、18% 不透明、放大到 1.10，同时上移 90px，之后慢推到 1.14。7.75s 起日期「16 Dec 2026」（Inter 500，50px，文字框顶部 y=600px，在虚化标志下方）逐字打出，每字 0.5s expo.out，间隔 0.035s，从下方 8px 升到位，模糊 6px 变清晰；8.15s 起网址「meridian26.com」（文字框顶部 y=680px）用强调色同样打出，停到 11s。最后叠每帧跳位的颗粒和暗角。用 HTML/SVG + GSAP 实现。",
+        "says": [
+          "镜头贴着纸面，笔一笔一笔画出圆环和字母",
+          "画完线稿，粗笔从左到右把所有字描实",
+          "标志虚化回纸面，日期和网址在它下方打出来"
+        ],
+        "vs": [
+          [
+            "logo-wordmark-reveal",
+            "符号展开字标由已有的标志推出字标，只有一个 1.3s 的动作；绘图仪画标从空白纸面逐笔画出标志和字标，镜头一直在纸面上移动，结尾带日期和网址"
+          ],
+          [
+            "outline-to-solid-reveal",
+            "描边显形是固定机位上把产品轮廓点亮再原地填成实体；绘图仪画标是笔在纸上逐笔画出笔画，微距镜头在纸面上移动"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Line Drawing Logo Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Line Drawing Logo Animation\": line drawing logo animation; line art logo animation; what is a line drawing",
+      "checked": "2026-11-28"
+    },
+    "title": "Line Drawing Logo Animation: Example and Code Recipe",
+    "description": "A macro camera follows a plotter pen over textured paper as it draws a ring mark and letters, then the logo blurs and the date types on. Free recipe.",
+    "lede": "A low macro camera follows a plotter pen across paper: it draws a ring and a meridian, sketches each letter as a skeleton, a heavy pen fills them in, then the film cuts to the flat logo, which blurs while the date and URL type on below it.",
+    "name": "Line Drawing Logo Animation",
+    "ownName": "Plotter-Drawn Logo",
+    "body": [
+      {
+        "h2": "How to make a Line Drawing Logo Animation with Claude Code or Codex",
+        "body": "Build one paper plane (1 unit = 2.8px, x-height 100 units) that holds the whole logo as stroke paths, and draw it with stroke-dashoffset on pathLength=10000 paths (GSAP rounds CSS lengths to whole numbers, so a pathLength of 1 would make every stroke jump). A thin pen (about 2px) draws the ring from 55% to 79% in take 1 (0–1.9s), then the blue meridian ellipse takes 0.9s at 2.3s. Light gray guides (36 strokes plus baseline ticks every 6 units) sit under the pen.\n\nRun the camera as four takes with hard cuts at 1.9s, 3.4s and 4.7s: zoom 5.2→4.4 at 58° tilt, zoom 2.5→2.2 at 50°, zoom 1.9→1.75 at 55°, then zoom 1.15→0.78 at 52°→46° with power3.out, pulling back and sliding right so the 6 ends about 280px inside the frame. Keep the pen tip near the middle of the frame: aim the camera 4° of arc ahead of the tip in take 1, and about 25 units left of the letter being drawn in take 3. The 10 letter skeletons start from 3.0s, 0.16–0.22s apart. Fake depth of field with four copies of the plane blurred 0, 2.4, 6 and 12px under screen-space masks. The heavy pen (16 units, about 45px) fills the letters from 4.66s, 0.075s apart, with the strokes inside a letter drawn one after another.\n\nAt 5.8s cut to the flat logo, 1480px wide, hold it sharp to 7.0s, then defocus it over 0.9s (blur 0→16px, opacity 1→0.18, moving up 90px). Once the defocus is done, type the date below it from 7.75s (0.035s per character, expo.out) and the URL from 8.15s, and hold both to 11s. The paper and guides are on screen from frame 0. Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard, then render an MP4 with HyperFrames."
+      }
+    ],
+    "alt": "The logo \"meridian 26\" in black and blue on textured white paper.",
+    "faq": [
+      [
+        "How do you make a line drawing logo animation?",
+        "Put the logo's strokes on a path, give each path a large pathLength such as 10000 and animate stroke-dashoffset from 10000 to 0 so the line grows from its start. Draw a thin skeleton first and trace a heavy stroke over it afterwards, as this film does, so the logo seems to be drawn and then inked."
+      ],
+      [
+        "How does the film fake depth of field on a drawing?",
+        "It stacks four copies of the paper plane, blurs them 0, 2.4, 6 and 12px and masks each with a soft band, so the area around the pen stays sharp while the near and far paper blur. The band is set once per take and resets at each cut, with a half-width of 150, 190, 160 and 330px."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "线条绘制 logo 动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"线条绘制 logo 动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "线条绘制 logo 动画：示例与代码配方",
+    "description": "微距镜头跟着绘图笔在纸面上画出圆环标志和字母，随后标志虚化，日期和网址逐字打出。用 Claude Code 或 Codex 按免费配方做出这个效果。",
+    "lede": "低角度微距镜头在纸面上跟着绘图笔移动：先画圆环和经线，再画出每个字母的骨架，粗笔描实后硬切到正面标志，标志虚化，日期和网址逐字打出。",
+    "name": "线条绘制 logo 动画",
+    "ownName": "绘图仪画标",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做线条绘制 logo 动画",
+        "body": "用一张纸面平面（1 单位 = 2.8px，x 高度 100 单位）装下整个标志的笔画路径，每条路径设 pathLength=10000，用 stroke-dashoffset 画出（GSAP 会把 CSS 长度取整，pathLength 设成 1 时笔画会直接跳出来）。镜头一（0–1.9s）细笔（约 2px）把圆环从 55% 画到 79%，2.3s 起蓝色经线椭圆用 0.9s 画完。纸上有浅灰辅助线（36 条，另有每 6 单位一个的基线刻度）。\n\n镜头分四个机位，在 1.9s、3.4s、4.7s 硬切：缩放 5.2→4.4、倾角 58°；缩放 2.5→2.2、倾角 50°；缩放 1.9→1.75、倾角 55°；最后缩放 1.15→0.78、倾角 52°→46°，用 power3.out，镜头向右拉远，让 6 的右边缘离画面右边约 280px。笔尖保持在画面中部：镜头一把镜头对准笔尖前方 4° 弧度，镜头三把镜头对准正在画的字母左侧约 25 单位。10 个字母骨架从 3.0s 起，每隔 0.16–0.22s 起笔。景深用四份同样的纸面平面，模糊 0、2.4、6、12px，再用屏幕空间蒙版叠起来。粗笔（16 单位，约 45px）从 4.66s 起每隔 0.075s 描实一个字母，字母内的笔画依次画出。\n\n5.8s 硬切到正面标志，宽 1480px，清晰停到 7.0s，再用 0.9s 虚化（模糊 0→16px，不透明度 1→0.18，同时上移 90px）。虚化结束后，日期从 7.75s 起在标志下方逐字打出（每字间隔 0.035s，expo.out），网址从 8.15s 起，两者都停到 11s。纸面和辅助线从第 0 帧起就在画面上。点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill，再用 HyperFrames 渲染成 MP4。"
+      }
+    ],
+    "alt": "带纹理的白纸上印着黑蓝两色的 meridian 26 标志。",
+    "faq": [
+      [
+        "线条绘制 logo 动画怎么做？",
+        "把 logo 的笔画写成路径，每条路径设一个较大的 pathLength（比如 10000），再把 stroke-dashoffset 从 10000 动画到 0，线条就从起点长出来。像这支片子一样先画细骨架、再用粗线描一遍，观众会先看到画线，再看到上墨。"
+      ],
+      [
+        "这支片子怎么给线稿做景深？",
+        "把纸面平面叠成四份，分别模糊 0、2.4、6、12px，再各用一条柔和的蒙版带，笔尖附近保持清晰，近处和远处的纸面变模糊。蒙版带每个机位设置一次，在每次硬切时重设，半宽依次是 150、190、160、330px。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

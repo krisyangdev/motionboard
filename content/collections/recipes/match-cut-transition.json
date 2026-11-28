@@ -1,0 +1,202 @@
+{
+  "slug": "match-cut-transition",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/match-cut.mp4",
+    "poster": "https://media.motionboard.app/match-cut.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 36,
+    "cat": "E",
+    "star": true,
+    "video": "match-cut",
+    "samples": [
+      {
+        "t": "Apple Vision Pro",
+        "id": "7B-rzR2avR0",
+        "at": "0:41–0:45",
+        "s": 41
+      },
+      {
+        "t": "Apple A19 Pro 芯片",
+        "id": "dJObc0V6hJU",
+        "at": "0:55–0:57",
+        "s": 55
+      },
+      {
+        "t": "Stripe Reader S700",
+        "id": "9oieNo53aNY",
+        "at": "0:19–0:26",
+        "s": 19
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The new subject appears exactly where the eye already is, so the viewer never has to search the frame. The product stopping at the spot where it is worn ties object and person together without a visible cut.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. Hard cuts at 2.0, 3.0, 3.75, 4.4 and 5.05s. Scene 1 push-in 0-1.3s then drift to 2.0s; popover opens 2.0s; status swap 3.3s; badge lands 3.75s; mic swap 4.6s; scene 6 cards from 5.2s, cursor 6.25-6.8s, click swap 6.85s; product fades 7.4s; avatar to center 7.45-8.55s; wordmark 8.1s; hold to 10s"
+          ],
+          [
+            "Easing",
+            "Cuts are hard (opacity flips in one frame, no cross-fade); scene 1 push-in <code>expo.out</code> 1.3s; every scene then drifts 3% (scene 6: 5%) with <code>ease: \"none\"</code>; popover <code>expo.out</code> 0.4s; badge scale 0.6 to 1 <code>expo.out</code> 0.35s; cards <code>expo.out</code> 0.5s, 0.16s stagger; cursor <code>expo.out</code> 0.55s; press scale 0.88 <code>power2.out</code> 0.08s; avatar to center <code>expo.out</code> 1.1s"
+          ],
+          [
+            "Camera",
+            "Each scene is a UI sheet whose own avatar is scaled to exactly 112px and centered on the shared anchor (780, 450), so the face stays still while everything around it changes; only the opening wide shot scales (0.55x to 1x); end card holds the avatar at 1.45x drifting to 1.5x"
+          ],
+          [
+            "Subject",
+            "One orange avatar (<code>#e8734a</code>, 112px, initials MC) fixed at the anchor through six app scenes: team chat, calendar invite, issue tracker, pull request review, video call, and the product Kite, where cards fade up and a cursor clicks Approve. In the end card the avatar moves 40px right and 90px down, scales to 1.45x, swaps its initials for a gem glyph and becomes the mark beside the wordmark"
+          ],
+          [
+            "Sync",
+            "Every cut lands with the new avatar exactly at the old avatar's position and size; each in-scene change is a one-frame swap placed after the cut (reaction 1.15s, status 3.3s, mic 4.6s, Approve to Approved 6.85s)"
+          ],
+          [
+            "Style",
+            "Backgrounds per scene: blue radial (<code>#6d83c9</code> to <code>#2e2f6b</code>), white, <code>#0b0c0d</code>, white, <code>#141416</code>, warm dark radial (<code>#3a2219</code> to <code>#09090a</code>); accent <code>#e8734a</code>; Inter UI text and JetBrains Mono metadata. Wordmark Inter 600 128px, letter-spacing -0.035em, <code>#f4f4f5</code>"
+          ]
+        ],
+        "prompt": "Build a transition called Match Cut, 10s. Anchor one orange avatar (#e8734a, 112px, initials MC) at the same center (780, 450) for the whole film, and build six app scenes as UI sheets, each scaled so its own avatar is exactly 112px at that anchor: a team chat on a blue radial background (0-2.0s), a calendar invite on white (2.0-3.0s), an issue tracker in near-black (3.0-3.75s), a pull request review on white (3.75-4.4s), a video call in dark gray (4.4-5.05s) and the product on a warm dark gradient (5.05-7.4s). Cut hard between scenes by flipping scene opacity on a single frame with no cross-fade. The opening wide shot pushes from 0.55x to 1x over 1.3s with expo.out, then every scene drifts 3% (scene 6: 5%) with ease: \"none\". Inside scenes, use one-frame swaps for state (status at 3.3s, mic at 4.6s, Approve to Approved at 6.85s) and small expo.out entrances (popover 0.4s, badge 0.35s, cards 0.5s with 0.16s stagger from 5.2s, a cursor in 0.55s at 6.25s). At 7.4s fade the product out over 0.45s, move the avatar 40px right and 90px down at 1.45x over 1.1s with expo.out, swap its initials for a gem glyph, set the wordmark in at 8.1s (0.7s expo.out, 128px Inter 600) and hold to 10s.",
+        "says": [
+          "The product shrinks back into place and becomes worn on a face",
+          "Something else takes the same position",
+          "A pin on a map becomes a pin in real street view"
+        ],
+        "vs": [
+          [
+            "wipe-flash-transition",
+            "Foreground Wipe & Flash uses a large object or white light to cover the frame before changing scenes; Match Cut keeps the anchor point still."
+          ],
+          [
+            "liquid-glass-effect",
+            "Glass Lens flips the background on the frame where the lens fills the screen; Match Cut keeps the composition position unchanged."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "新主体出现在视线已经停留的位置，观众不用在画面里重新寻找。产品停在佩戴它的位置，物与人之间没有可见的剪切，两者直接连在一起。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。硬切发生在 2.0s、3.0s、3.75s、4.4s、5.05s。场景一推近 0–1.3s，随后漂移到 2.0s；2.0s 弹出气泡；3.3s 状态替换；3.75s 徽章落下；4.6s 麦克风替换；场景六卡片从 5.2s 起，光标 6.25–6.8s，6.85s 点击替换；7.4s 产品淡出；7.45–8.55s 头像移到中心；8.1s 出字标；停到 10s"
+          ],
+          [
+            "缓动",
+            "切镜是硬切（透明度一帧翻转，无叠化）；场景一推近 <code>expo.out</code> 1.3s；之后每个场景漂移 3%（场景六 5%），<code>ease: \"none\"</code>；气泡 <code>expo.out</code> 0.4s；徽章缩放 0.6 到 1，<code>expo.out</code> 0.35s；卡片 <code>expo.out</code> 0.5s，间隔 0.16s；光标 <code>expo.out</code> 0.55s；按下缩放 0.88，<code>power2.out</code> 0.08s；头像移到中心 <code>expo.out</code> 1.1s"
+          ],
+          [
+            "镜头",
+            "每个场景都是一张 UI 画板，把画板里自己的头像缩放到刚好 112px，并居中在共享锚点 (780, 450)，所以脸保持不动而周围一切在变；只有开场的广角镜头在缩放（0.55 倍到 1 倍）；结尾页头像保持 1.45 倍并漂移到 1.5 倍"
+          ],
+          [
+            "主体",
+            "一个橙色头像（<code>#e8734a</code>，112px，首字母 MC）固定在锚点上，贯穿六个应用场景：团队聊天、日历邀请、任务追踪、代码评审、视频通话，以及产品 Kite（卡片淡入上移，光标点击 Approve）。结尾页头像向右移 40px、向下移 90px，放大到 1.45 倍，首字母换成宝石图形，成为字标旁的标志"
+          ],
+          [
+            "同步",
+            "每次切镜都让新头像精确落在旧头像的位置和大小上；场景内的每个变化都是切镜之后的一帧替换（表情 1.15s、状态 3.3s、麦克风 4.6s、Approve 变 Approved 6.85s）"
+          ],
+          [
+            "风格",
+            "各场景背景：蓝色径向渐变（<code>#6d83c9</code> 到 <code>#2e2f6b</code>）、白、<code>#0b0c0d</code>、白、<code>#141416</code>、暖色深色径向渐变（<code>#3a2219</code> 到 <code>#09090a</code>）；强调色 <code>#e8734a</code>；界面文字 Inter，元数据 JetBrains Mono。字标 Inter 600 128px，字距 -0.035em，<code>#f4f4f5</code>"
+          ]
+        ],
+        "prompt": "用「同位替换（Match Cut）」做转场，全片 10s：把一个橙色头像（#e8734a，112px，首字母 MC）整段固定在同一中心 (780, 450)，并把六个应用场景做成 UI 画板，每张都缩放到画板里自己的头像刚好 112px 落在这个锚点上：蓝色径向渐变上的团队聊天（0–2.0s）、白底日历邀请（2.0–3.0s）、近黑底任务追踪（3.0–3.75s）、白底代码评审（3.75–4.4s）、深灰视频通话（4.4–5.05s）、暖色深色渐变上的产品（5.05–7.4s）。场景之间用一帧翻转透明度硬切，不做叠化。开场广角镜头用 expo.out 1.3 秒从 0.55 倍推到 1 倍，之后每个场景用 ease: \"none\" 漂移 3%（场景六 5%）。场景内状态变化用一帧替换（3.3s 状态、4.6s 麦克风、6.85s Approve 变 Approved），小幅入场用 expo.out（气泡 0.4 秒、徽章 0.35 秒、卡片从 5.2s 起每 0.16 秒错开一张、光标 6.25s 起 0.55 秒进入）。7.4s 产品用 0.45 秒淡出，头像用 expo.out 1.1 秒向右移 40px、向下移 90px 并放大到 1.45 倍，首字母换成宝石图形，8.1s 字标（Inter 600 128px，expo.out 0.7 秒）进入，停到 10s。",
+        "says": [
+          "产品缩回原位然后变成戴在人脸上",
+          "同一个位置换成另一样东西",
+          "地图上的钉子变成真实街景里的钉子"
+        ],
+        "vs": [
+          [
+            "wipe-flash-transition",
+            "遮挡与闪白用大物体或白光遮满画面再换场景；同位替换保持锚点不动"
+          ],
+          [
+            "liquid-glass-effect",
+            "玻璃透镜借透镜铺满画面的一帧翻转背景；同位替换保持构图位置不变"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Match Cut Transition",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 90 for \"match cut transition\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Match Cut Transition: Example and Code Recipe",
+    "description": "Six app scenes cut on one fixed anchor while an orange avatar stays at the same spot. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "One object is replaced by another at the same anchor point, so the viewer's gaze never moves.",
+    "name": "Match Cut Transition",
+    "ownName": "Match Cut",
+    "body": [
+      {
+        "h2": "How to make a Match Cut Transition with Claude Code or Codex",
+        "body": "Fix one anchor at (780, 450) and scale each scene's own avatar to exactly 112 px centered there. Six scenes (team chat, calendar invite, issue tracker, pull request, video call, product) cut at 2.0, 3.0, 3.75, 4.4 and 5.05 s. Cuts are hard: opacity flips in one frame with no cross-fade, so the face stays still while everything around it changes.\n\nPlace each in-scene change on one frame after the cut: reaction 1.15 s, status 3.3 s, mic 4.6 s, Approve to Approved 6.85 s. Scenes drift 3% (scene 6: 5%) with ease none, popovers use expo.out over 0.4 s and cards use 0.5 s with a 0.16 s stagger. On the end card the avatar moves 40 px right and 90 px down, scales to 1.45x and swaps initials for a gem glyph.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own scenes."
+      }
+    ],
+    "alt": "A video call grid of colourful initial avatars, with Maya Chen as host in the centre and a participant list.",
+    "faq": [
+      [
+        "What is a match cut?",
+        "A match cut joins two shots through a matching shape, position or movement, so the viewer's eye stays on the same place while the subject changes. Classic examples cut from one object to a visually similar one; in product films the shared element is often a fixed UI anchor."
+      ],
+      [
+        "How do I make a match cut for a product video?",
+        "Fix the shared element at one position and size across every scene, then cut so the new element lands exactly where the old one was. Put any change inside the scene on a separate frame after the cut, as the recipe does."
+      ],
+      [
+        "Is the Match Cut Transition recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "匹配剪辑转场",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"匹配剪辑转场\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "匹配剪辑转场：示例与制作配方",
+    "description": "六个应用场景围绕同一个锚点硬切，橙色头像始终停在原位。用免费配方，让 Claude Code 或 Codex 做出这段匹配剪辑转场。",
+    "lede": "在同一个锚点把一个东西换成另一个，视线位置不动。",
+    "name": "匹配剪辑转场",
+    "ownName": "同位替换",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做匹配剪辑转场",
+        "body": "在 (780, 450) 设一个固定锚点，把每个场景自己的头像缩放到恰好 112px 并居中放在那里。六个场景（团队聊天、日历邀请、问题追踪、代码审查、视频通话、产品）在 2.0、3.0、3.75、4.4、5.05 秒硬切。切换是一帧内翻转 opacity，没有交叉淡化，所以头像不动，周围的一切在变。\n\n场景内的变化都放在切换之后的一帧：反应 1.15 秒，状态 3.3 秒，麦克风 4.6 秒，Approve 变 Approved 6.85 秒。每个场景缓慢漂移 3%（第 6 个场景 5%），缓动为 none；弹出层用 expo.out 0.4 秒，卡片用 0.5 秒并错开 0.16 秒。结尾画面里头像右移 40px、下移 90px，放大到 1.45 倍，首字母换成宝石图形。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，场景换成你自己的。"
+      }
+    ],
+    "alt": "视频会议的彩色首字母头像网格，主持人 Maya Chen 在中间，右侧是参会名单。",
+    "faq": [
+      [
+        "匹配剪辑是什么？",
+        "匹配剪辑通过相近的形状、位置或运动把两个镜头接在一起，让观众的视线停在同一个位置，而画面里的主体已经换了。经典例子是从一个物体切到外形相近的另一个物体；产品片里，共用的元素常常是固定在同一处的界面锚点。"
+      ],
+      [
+        "产品视频怎样做匹配剪辑？",
+        "让共用的元素在每个场景里保持同样的位置和大小，切换时新元素正好落在旧元素的位置上。场景内部的变化像配方一样放在切换后的另一帧。"
+      ],
+      [
+        "匹配剪辑转场配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

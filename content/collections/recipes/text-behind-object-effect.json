@@ -1,0 +1,196 @@
+{
+  "slug": "text-behind-object-effect",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/text-behind-object.mp4",
+    "poster": "https://media.motionboard.app/text-behind-object.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 39,
+    "cat": "C",
+    "star": false,
+    "video": "text-behind-object",
+    "samples": [
+      {
+        "t": "Apple iPhone 17 Pro",
+        "id": "TNhX1uR2vO8",
+        "at": "0:00–0:03",
+        "s": 0
+      },
+      {
+        "t": "Samsung Galaxy Z Fold8 Ultra All-new Unfolds",
+        "id": "3vvJeRHe3sk",
+        "at": "0:01–0:05",
+        "s": 1
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The headline and the window sit on two layers, so when the camera turns slowly the back layer moves about 60px less than the window and the viewer reads real depth from parallax. The window covers only about a quarter of the lowercase letter height, so the word stays readable. Each swap happens at the window's top edge, so the eye never leaves one spot, and the headline word, the window content and the camera push start on the same frame, which ties each word to one feature.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Headline settles 0–1.2s, window rises 0.3–1.45s (1.15s, 34 frames); typing 1.45–2.4s (40 characters), task tick 2.5s, web clip card 2.62s (0.45s). First swap: old word sinks 3.0–3.3s (0.3s), new word rises for 0.9s from 3.32s, window content changes on the same frame; hover card appears 4.7s and leaves 5.3s. Second swap: sink 5.5–5.8s, rise 5.82–6.72s, command palette opens 5.82s already listing 6 recent notes; query typed 6.15–6.9s, matched results replace the recents at 7.0s, answer streams 7.1–7.75s. Finish: Recall sinks 8.2–8.5s (230px, power3.in), palette closes 8.3s, wordmark rises 8.52–9.42s, window sinks 8.45–9.45s (1.0s), icon 8.75s, tagline 9.1s (after the window's top edge has sunk below it, 0.55s rise), hold to 11s with about 1.6s of settled wordmark and about 1.35s of settled tagline"
+          ],
+          [
+            "Easing",
+            "Rises and word swaps <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); old word sinks with power3.in (0.3s); the closing window sink uses power3.inOut; camera pushes and the closing pull-back both use expo.out, with a 3px blur added for the first 0.12s of each push (2px on the pull-back) and removed over 0.3s; the world rotation is linear"
+          ],
+          [
+            "Camera",
+            "3D world with 2600px perspective: the headline layer sits 420px behind the window and is scaled 1.1615 to cancel the perspective shrink, so it looks the same size from the front. The whole world turns from rotateY −4° to +4° at constant speed over 11s, with a slow push 1.00→1.03. The window rises from below the frame (y 800px) with rotateX 10°→0 and stays opaque throughout. On each swap the camera pushes fast: from 3.32s, 0.7s to 1.10x on the right panel, with the window's left edge about 55px outside the frame, then from 5.82s, 0.7s to 1.12x on the palette, then from 8.3s a 0.9s pull-back to full frame"
+          ],
+          [
+            "Subject",
+            "Headline Inter 650, 340px, letter-spacing −0.045em, no punctuation; window 1500×900px at (210,425), bottom 245px off-frame. Its top edge covers the letters by about 51px, a quarter of the letter height. The window is a three-pane notes app: sidebar 248px, note list 352px, editor 590px, right panel 310px, body text 12.5–15px, secondary text 10.5–12px, note title 31px, section headings 17px, palette query 18px, answer text 15.5px; header collaborator avatars 28px, right-panel collaborator list avatars 22px. Ending: the app icon is a 100px emerald rounded square (23px radius, gradient <code>#17c585</code> to <code>#0a8a5c</code>, white H), centred, top at y 70px; the tagline \"Notes that remember.\" is Inter 500 at 32px in <code>#7a7b83</code>, centred, top at y 520px. The headline text box starts at y 182px with 340px line height, so the window's top edge at y 425px covers about 51px of the letter bottoms"
+          ],
+          [
+            "Sync",
+            "First swap (3.32s): the right panel changes from outline to linked notes, six links turn accent every 0.1s from 3.42s, ten graph lines draw every 0.07s from 3.52s. The cursor moves in 4.1–4.65s and stops about 8px below the link text so the link stays readable. When the hover card appears (4.7s) the matching graph node rings on the same frame and its graph edge thickens to 2.4px. Second swap (5.82s): the new word, the command palette and the camera push start on the same frame, and the window dims by 16%"
+          ],
+          [
+            "Style",
+            "Light stage gradient <code>#f3f2ee</code> to <code>#e9e7e2</code>, headline ink <code>#17171b</code>, one accent emerald <code>#0f9d68</code> (links, selected row, icon); white window with <code>#e7e6e3</code> hairlines and a <code>#f3f2ef</code> sidebar, four layered soft shadows, soft corner vignette"
+          ]
+        ],
+        "prompt": "Build an 11-second product opener called Headline Behind Product for a fictional Mac notes app named Halden. Light stage (gradient #f3f2ee to #e9e7e2), 1920x1080, 30fps. Put two layers in one 3D world with 2600px perspective: the headline layer sits 420px behind the window (translateZ(-420px), scaled 1.1615 to cancel the perspective shrink), set in Inter 650 at 340px with letter-spacing -0.045em, ink #17171b, text box top at y 182px with 340px line height, centred, with no punctuation after the word; the window layer is a 1500x900px macOS-style window that stays fully opaque, with its top-left at (210,425) and its bottom 245px off-frame, so its top edge covers about a quarter of the letter height. The window is a three-pane notes app: sidebar 248px (inbox, folders, tags with counts), note list 352px, editor 590px, right panel 310px, filled with real work content (Pricing review, Atlas launch checklist, Maya Chen) with body text 12.5-15px, secondary text 10.5-12px, note title 31px, section headings 17px, palette query 18px, answer text 15.5px, header avatars 28px and collaborator-list avatars 22px, with grey text at least 4.5:1 against white. Turn the whole world from rotateY -4deg to +4deg at constant speed over 11s with a slow push 1.00 to 1.03, so the back headline shifts against the window. Timeline: 0.3-1.45s the window rises from below the frame (y 800px to 0, rotateX 10deg to 0, expo.out); 1.45-2.4s a 40-character bullet types in the editor; 3.0-3.3s the headline Capture sinks 230px (power3.in) behind the window, and once it is fully hidden Connect rises from behind it at 3.32s (expo.out, 0.9s), so only one word is on screen in any frame; on the same frame the right panel becomes linked notes, six links turn accent every 0.1s, ten graph lines draw every 0.07s and the camera pushes to 1.10x in 0.7s (expo.out, 3px blur for the first 0.12s, leaving the window's left edge about 55px outside the frame); the cursor moves in 4.1-4.65s and stops about 8px below the link text; at 4.7s a hover card opens and the matching graph node rings and its edge thickens to 2.4px on the same frame, and the card leaves at 5.3s; 5.5-5.8s the word sinks and Recall rises at 5.82s (0.9s), with a command palette opening on the same frame (background dimmed 16%, six recent notes listed from the first frame) and the camera pushing to 1.12x in 0.7s; 6.15-6.9s a question types in, at 7.0s the recents are replaced by matched results, 7.1-7.75s the answer streams word by word with three sources; Recall sinks 230px (power3.in) behind the window 8.2-8.5s, at 8.3s the palette closes, and the Halden wordmark rises 8.52-9.42s, the window sinks 210px over 1.0s with power3.inOut, the camera pulls back to full frame in 0.9s (expo.out, 2px blur), the app icon appears at 8.75s (100px emerald rounded square, 23px radius, gradient #17c585 to #0a8a5c, white H, centred, top at y 70px) and the tagline \"Notes that remember.\" rises at 9.1s, after the window top has sunk below it (Inter 500, 32px, #7a7b83, centred, top at y 520px, 0.55s), then hold to 11s. Use plain HTML elements and GSAP on one paused timeline.",
+        "says": [
+          "A giant headline hides behind the app window and the window covers its lower edge",
+          "The product holds still while the headline words swap behind it",
+          "The window content changes on the same frame as the headline word"
+        ],
+        "vs": [
+          [
+            "text-object-interleave",
+            "Text–Object Interleave has a 3D product rise in front of the type and lets words pass through an object; Headline Behind Product uses a real app window that holds still while only the word and the window content change."
+          ],
+          [
+            "3d-tilted-ui-depth-of-field",
+            "Tilted UI with Depth of Field shoots one interface at an angle with only the active row in focus; Headline Behind Product shows the whole window and builds the shot on the occlusion between the window and a giant headline."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "标题和窗口分在前后两层，镜头缓慢转动时后层字比窗口少移约 60px，观众凭视差读出前后空间；窗口只盖住小写字母高度的约四分之一，字仍然能读；换词在窗口上沿完成，视线不用离开同一个位置；标题词、窗口内容和镜头推近在同一帧起动，功能与词一一对应。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。字 0–1.2s 落位，窗口升起 0.3–1.45s（1.15s，34 帧）；打字 1.45–2.4s（40 个字符），勾选 2.5s，网页剪藏卡片 2.62s（0.45s）。第一次换词：旧词下沉 3.0–3.3s（0.3s），新词 3.32s 起升起 0.9s，窗口内容同一帧起变；悬停卡片 4.7s 出现，5.3s 收起。第二次换词：5.5–5.8s 下沉，5.82–6.72s 升起，命令面板 5.82s 打开，打开时已列出 6 条最近笔记；输入 6.15–6.9s，7.0s 换成匹配结果，答案 7.1–7.75s 逐词出现。收尾：8.2–8.5s 旧词 Recall 下沉 230px，8.3s 面板关闭，字标 8.52–9.42s 升起，窗口下沉 8.45–9.45s（1.0s），图标 8.75s，副标 9.1s（窗口上沿降到副标下面之后）升起 0.55s，停到 11s，字标落定后保持约 1.6s，副标落定后保持约 1.35s"
+          ],
+          [
+            "缓动",
+            "升起和换词用 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；旧词下沉 power3.in（0.3s）；窗口收尾下沉 power3.inOut；相机推近和收尾拉回都用 expo.out，推近的头 0.12s 叠 3px 模糊（收尾拉回叠 2px），再在 0.3s 内退掉；整场世界旋转 linear"
+          ],
+          [
+            "镜头",
+            "3D 世界透视 2600px：标题层放在窗口后面 420px 处并放大 1.1615 倍抵消透视缩小，正面看大小不变；整个世界 11s 内从 rotateY −4° 匀速转到 +4°，整体慢推 1.00→1.03。窗口从画面下方（y 800px）升起，带 rotateX 10°→0，全程不透明。换词时相机快推：第一次 3.32s 起 0.7s 推到 1.10 倍对准右侧面板，窗口左缘落在画面外约 55px，第二次 5.82s 起 0.7s 推到 1.12 倍对准面板，收尾 8.3s 起 0.9s 拉回全幅"
+          ],
+          [
+            "主体",
+            "标题 Inter 650，340px，字距 −0.045em，不加标点；窗口 1500×900px，左上角 (210,425)，下方 245px 出画。窗口上沿盖住字约 51px，约四分之一的字高。窗口里是三栏笔记应用：侧栏 248px、笔记列表 352px、编辑区 590px、右侧面板 310px，界面正文 12.5–15px、次要文字 10.5–12px，笔记标题 31px、小节标题 17px、命令面板输入 18px、答案 15.5px；顶栏协作者头像 28px，右侧协作者列表头像 22px。收尾：应用图标是 100px 翠绿圆角方块（渐变 <code>#17c585</code> 到 <code>#0a8a5c</code>，白色 H），水平居中，顶边 y 70px；副标「Notes that remember.」Inter 500、32px、<code>#7a7b83</code>，水平居中，顶边 y 520px。标题文字框顶边 y 182px、行高 340px，窗口上沿 y 425px 盖住字底约 51px"
+          ],
+          [
+            "同步",
+            "第 1 次换词（3.32s）：右面板从大纲换成关联笔记，6 个链接在 3.42s 起每隔 0.1s 变成强调色，关联图 10 条线 3.52s 起每隔 0.07s 画出。光标 4.1–4.65s 移到链接文字下沿下方约 8px 处停住，链接文字保持可读；悬停卡片 4.7s 出现的同一帧，图里对应节点亮圈，对应连线加粗到 2.4px。第 2 次换词（5.82s）：新词升起、命令面板打开、相机推近在同一帧，背景压暗 16%"
+          ],
+          [
+            "风格",
+            "浅色舞台 <code>#f3f2ee</code> 到 <code>#e9e7e2</code> 渐变，标题墨色 <code>#17171b</code>，强调色只有翠绿 <code>#0f9d68</code>（链接、选中行、图标）；窗口白底，细线 <code>#e7e6e3</code>，侧栏 <code>#f3f2ef</code>，窗口外加 4 层柔影，四角暗角"
+          ]
+        ],
+        "prompt": "用「字后出物（Headline Behind Product）」做一支 11 秒的软件开场，产品是虚构的 Mac 笔记应用 Halden。浅色舞台（#f3f2ee 到 #e9e7e2 渐变），1920×1080，30fps。分前后两层放进同一个 3D 世界（perspective 2600px）：标题层放在窗口后面 420px（translateZ(-420px)，放大 1.1615 倍抵消透视缩小），标题用 Inter 650、340px、字距 −0.045em，墨色 #17171b，文字框顶边 y 182px、行高 340px、水平居中，字后不加标点；窗口层是 1500×900px 的 macOS 风格窗口，全程不透明，左上角放在 (210,425)，下方 245px 出画，上沿盖住字约四分之一的字高。窗口是三栏笔记应用：侧栏 248px（收件箱、文件夹、标签带计数）、笔记列表 352px、编辑区 590px、右侧面板 310px，文案用真实工作内容（Pricing review、Atlas launch checklist、Maya Chen），界面正文 12.5–15px、次要文字 10.5–12px，笔记标题 31px、小节标题 17px、命令面板输入 18px、答案 15.5px，顶栏协作者头像 28px、右侧协作者列表头像 22px，灰色文字对白底对比度不低于 4.5:1。整个世界 11s 内 rotateY 从 −4° 匀速转到 +4°，整体慢推 1.00→1.03，让后层标题相对窗口产生视差。时间线：0.3–1.45s 窗口从画面下方升起（y 800px→0，rotateX 10°→0，expo.out）；1.45–2.4s 编辑区打出一行 40 字符的要点；3.0–3.3s 标题「Capture」下沉 230px（power3.in）到窗口后面，等它完全藏住后 3.32s「Connect」从窗口后面升起（expo.out，0.9s），任何一帧只显示一个词；同一帧右面板换成关联笔记，6 个链接每隔 0.1s 变强调色，关联图 10 条线每隔 0.07s 画出，相机 0.7s 快推到 1.10 倍（expo.out，头 0.12s 叠 3px 模糊，推近后窗口左缘落在画面外约 55px）；光标 4.1–4.65s 移到链接文字下沿下方约 8px 处停住；4.7s 悬停卡片出现，图里对应节点同帧亮圈、对应连线加粗到 2.4px，5.3s 收起；5.5–5.8s 下沉，5.82s「Recall」升起（0.9s），同一帧命令面板打开（背景压暗 16%，面板一开始就列出 6 条最近笔记），相机 0.7s 推到 1.12 倍；6.15–6.9s 输入问题，7.0s 最近笔记换成匹配结果，7.1–7.75s 答案逐词出现并带 3 个来源；8.2–8.5s「Recall」下沉 230px（power3.in）藏到窗口后面，8.3s 面板关闭，8.52s「Halden」字标升起（0.9s），窗口下沉 210px（1.0s，power3.inOut），相机 0.9s 拉回全幅（expo.out，叠 2px 模糊），8.75s 出应用图标（100px 圆角方块，圆角 23px，渐变 #17c585 到 #0a8a5c，白色 H，水平居中，顶边 y 70px），9.1s 副标「Notes that remember.」升起（Inter 500、32px、#7a7b83，水平居中，顶边 y 520px，0.55s，窗口上沿降到它下面之后才出现），停到 11s。全部用 HTML 元素 + GSAP，一条暂停的时间线。",
+        "says": [
+          "大标题藏在软件窗口后面，窗口盖住字的下沿",
+          "产品原地不动，后面的标题一个词一个词换",
+          "窗口里的功能和标题词同一帧切换"
+        ],
+        "vs": [
+          [
+            "text-object-interleave",
+            "字物穿插里 3D 产品在字前面升起，字穿过实物变成别的字；字后出物用的是真实软件窗口，产品原地不动，只换字和窗口内容"
+          ],
+          [
+            "3d-tilted-ui-depth-of-field",
+            "斜拍景深界面把一个界面斜着贴近拍，只有当前行在焦内；字后出物拍整扇窗口，重点是窗口与大标题的前后遮挡"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Text Behind Object Effect",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Text Behind Object Effect\": text behind object effect; text behind object after effects; put text behind object after effects; text reveal behind object after effects",
+      "checked": "2026-11-28"
+    },
+    "title": "Text Behind Object Effect: Example and Code Recipe",
+    "description": "A giant headline sits behind an app window and changes word by word as the window holds still. Make this text behind object effect with Claude Code.",
+    "lede": "A giant headline sits behind a product window and the window covers its lower edge. The window holds still while each feature swaps the headline: the old word sinks behind it, the new word rises from behind it, and the app content changes on the same frame.",
+    "name": "Text Behind Object Effect",
+    "ownName": "Headline Behind Product",
+    "body": [
+      {
+        "h2": "How to make a Text Behind Object Effect with Claude Code or Codex",
+        "body": "Build two layers in one 3D world with 2600px perspective. Put the headline 420px behind the window and scale it 1.1615 to cancel the perspective shrink. Use Inter 650 at 340px with -0.045em spacing, and place the 1500x900px window so its top edge, at y 425px, covers about a quarter of the letter height.\n\nTurn the whole world from rotateY -4deg to +4deg over 11s so the back headline shifts against the window. Swap the word at the window edge: the old word sinks 230px in 0.3s with power3.in, and once it is hidden the new word rises 230px in 0.9s with expo.out. Change the window content and push the camera to 1.10x on the same frame as the new word.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the layers, the two feature swaps and the closing wordmark. Render an MP4 with HyperFrames, or port the GSAP timeline to your landing page hero."
+      }
+    ],
+    "alt": "The giant word Capture partly hidden behind a notes app window on a light background.",
+    "faq": [
+      [
+        "What is a text behind object effect?",
+        "It places a headline on a layer behind the main subject so the subject covers part of the letters. Here the subject is an app window, the headline keeps changing, and a slow camera turn shifts the two layers by about 60px against each other."
+      ],
+      [
+        "How do you keep the headline readable behind the window?",
+        "Cover only the bottom of the letters. In this film the window edge cuts about 51px of the letter height, roughly a quarter, and the words are short enough to stay inside the 1500px window width."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "文字在物体后面",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"文字在物体后面效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "字后出物：文字在物体后面的示例与配方",
+    "description": "超大标题藏在软件窗口后面，窗口不动，标题逐词替换。用 Claude Code 或 Codex 按免费配方做出这个文字在物体后面的效果。",
+    "lede": "超大标题放在产品窗口后面，窗口盖住字的下沿；窗口稳稳不动，每介绍一个功能，标题词就从窗口后面沉下去、换成新词升起来，窗口里的内容在同一帧跟着变。",
+    "name": "文字在物体后面效果",
+    "ownName": "字后出物",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做文字在物体后面效果",
+        "body": "在同一个 3D 世界里做两层，透视 2600px。标题放在窗口后面 420px 处，放大 1.1615 倍抵消透视缩小，字用 Inter 650、340px、字距 -0.045em；窗口 1500×900px，上沿在 y 425px，盖住字高的约四分之一。\n\n整个世界 11s 内从 rotateY -4° 转到 +4°，后层标题相对窗口产生位移。在窗口上沿换词：旧词用 power3.in 下沉 230px（0.3s），藏到窗口后面之后，新词用 expo.out 升起 230px（0.9s），同一帧换窗口内容并把相机推到 1.10 倍。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出前后两层、两次功能换词和收尾字标。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到落地页首屏。"
+      }
+    ],
+    "alt": "浅色背景上的巨大单词 Capture 被一个笔记应用窗口挡住了一部分。",
+    "faq": [
+      [
+        "什么是文字在物体后面的效果？",
+        "把标题放在主体后面的图层，主体盖住一部分字。这里的主体是软件窗口，标题不断更换，镜头缓慢转动让前后两层相对位移约 60px。"
+      ],
+      [
+        "标题藏在窗口后面怎么还能读清？",
+        "只盖住字的底部。这支片子里窗口边缘盖住约 51px 的字高，大约四分之一，而且词都够短，宽度留在 1500px 的窗口以内。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

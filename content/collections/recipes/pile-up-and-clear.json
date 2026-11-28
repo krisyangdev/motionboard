@@ -1,0 +1,196 @@
+{
+  "slug": "pile-up-and-clear",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/pile-up-clear.mp4",
+    "poster": "https://media.motionboard.app/pile-up-clear.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.8
+  },
+  "data": {
+    "n": 21,
+    "cat": "B",
+    "star": false,
+    "video": "pile-up-clear",
+    "samples": [
+      {
+        "t": "Superhuman",
+        "id": "nJUylrt1OdU",
+        "at": "0:05–0:11",
+        "s": 5
+      },
+      {
+        "t": "Notion Calendar",
+        "id": "C4Q2ezioTUM",
+        "at": "0:07–0:09",
+        "s": 7
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The number and position of elements draw the feeling of \"more and more things to do\", with red tags gradually surrounding the person. On clearing, the color changes from red to green and many tags become one, so the before-and-after contrast takes a single image swap.",
+        "spec": [
+          [
+            "Timing",
+            "Window arrives 0–0.9s; 22 emails land from 0.9s with intervals shrinking 0.62→0.05s (last at 5.32s); 8 desktop notifications 2.75–5.1s; select-all key HUD 5.45s, selection 5.85s; clear in one frame at 6.45s; Inbox Zero holds 6.45–8.4s (about 1.95s, 58 frames); scene fades 8.4s (0.5s), mark 8.7s, wordmark 8.8s, tagline 9.1s; film 10.8s"
+          ],
+          [
+            "Easing",
+            "Row arrival: list shift <code>expo.out</code> (duration min(0.36s, 1.6× the interval)) and row fade <code>power2.out</code> up to 0.14s; badge pulse <code>scale 1.15→1</code> <code>power2.out</code> 0.1s; urgent rows flash red for 0.9s; notifications <code>expo.out</code> 0.22s (<code>scale 1.08→1</code>, <code>x 30→0</code>); the clear is a single-frame <code>tl.set</code>; Inbox Zero image <code>scale 1.07→1</code> <code>expo.out</code> 1.8s"
+          ],
+          [
+            "Camera",
+            "Fixed medium shot with a slow drift, <code>scale</code> 1→1.035 over 8.4s <code>linear</code> (origin 50% 12%); the window enters <code>y 46→0, scale 0.965→1</code> over 0.9s <code>expo.out</code>"
+          ],
+          [
+            "Subject",
+            "A mail app (Cobalt) with 4 existing messages; 22 new ones land at the top of the Inbox and push the list down 52px per row, while the Inbox badge and Important tab counter step 5→26; urgent rows flash red; 8 desktop notifications stack at the window edge (88px pitch); command-A selects all 26 rows, E marks them done: list, notifications, selection bar and badge disappear and a dusk-landscape Inbox Zero panel with a green check and a toast takes over"
+          ],
+          [
+            "Sync",
+            "Each arrival and its counter step share one frame; the command-A key caps and the row selection land on the same frame (5.85s); the E key cap, the clear, the toast and the Inbox Zero panel land on the same frame (6.45s)"
+          ],
+          [
+            "Style",
+            "Light mail UI on a desktop wallpaper; red Urgent chips (<code>#fde4e4</code> background, <code>#c62f34</code> text), green check <code>#2fb36a</code>, a deep blue-violet dusk gradient for the result; the end card is a blue app mark with a lowercase wordmark and a one-line tagline"
+          ]
+        ],
+        "prompt": "Show your product wiping out chores with a shot called Pile-up and Clear. Open a mail app window (y 46 to 0, scale 0.965 to 1, 0.9s with expo.out) with a slow scale drift 1 to 1.035. From 0.9s, 22 new emails land at the top of the Inbox one at a time, the interval shrinking from 0.62s to 0.05s (the last at 5.32s); each row slides the list down 52px with expo.out and fades in, the Inbox badge counts from 5 to 26 with a 1.15 to 1 scale pulse on every arrival, and urgent rows flash red for 0.9s. From 2.75s to 5.1s, 8 desktop notifications stack over the window edge, each entering over 0.22s with expo.out. Fade up a command-A key HUD at 5.45s and select all rows on one frame at 5.85s. At 6.45s press E: on that single frame hide the list, notifications, selection bar and badge, show a dusk-landscape Inbox Zero panel with a green check, and raise a toast. Hold about 1.95s, then fade the scene out over 0.5s at 8.4s and land your wordmark with a one-line tagline.",
+        "says": [
+          "The to-dos pile up, then drop to zero at once",
+          "The schedule fills up cell by cell",
+          "Tags surround the person, then all disappear"
+        ],
+        "vs": [
+          [
+            "wireframe-re-layout",
+            "Wireframe Re-layout is a continuous interpolated re-layout with a constant number of elements; Pile-up and Clear grows and then clears the element count with hard cuts."
+          ],
+          [
+            "showcase-wall",
+            "Showcase Wall is full from the start and moves as a whole; in Pile-up and Clear elements appear one by one and end in a single clear."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "元素的数量和位置把「事情越来越多」画出来，红色标签逐渐包围人物；清空时颜色由红换绿、标签从多变一，前后对比由一次换图完成。",
+        "spec": [
+          [
+            "时长",
+            "窗口 0–0.9s 入场；22 封邮件从 0.9s 起落入，间隔 0.62→0.05s 递减（最后一封 5.32s）；8 条桌面通知 2.75–5.1s；全选按键提示 5.45s，选中 5.85s；6.45s 单帧清空；Inbox Zero 停留 6.45–8.4s（约 1.95s，58 帧）；场景 8.4s 淡出（0.5s），标志 8.7s、字标 8.8s、标语 9.1s；全片 10.8s"
+          ],
+          [
+            "缓动",
+            "邮件落入：列表位移 <code>expo.out</code>（时长取 0.36s 与间隔 1.6 倍中的较小值），行淡入 <code>power2.out</code> 最长 0.14s；角标脉冲 <code>scale 1.15→1</code>，<code>power2.out</code> 0.1s；紧急邮件红色闪烁 0.9s；通知 <code>expo.out</code> 0.22s（<code>scale 1.08→1</code>，<code>x 30→0</code>）；清空是单帧 <code>tl.set</code>；Inbox Zero 画面 <code>scale 1.07→1</code>，<code>expo.out</code> 1.8s"
+          ],
+          [
+            "镜头",
+            "固定中景加缓慢漂移，8.4s 内 <code>scale</code> 1→1.035 <code>linear</code>（原点 50% 12%）；窗口以 <code>y 46→0, scale 0.965→1</code> 在 0.9s 内 <code>expo.out</code> 入场"
+          ],
+          [
+            "主体",
+            "一个邮件 App（Cobalt），原有 4 封邮件；22 封新邮件落在收件箱顶部，每封把列表下推 52px，收件箱角标和 Important 标签计数 5→26 逐步递增；紧急邮件闪红；8 条桌面通知堆叠在窗口边缘（间距 88px）；command-A 选中全部 26 行，E 标记完成：列表、通知、选择栏和角标消失，换成黄昏风景的 Inbox Zero 面板，带绿色对勾和 toast"
+          ],
+          [
+            "同步",
+            "每封邮件落入与计数递增同一帧；command-A 键帽与行选中同一帧（5.85s）；E 键帽、清空、toast 和 Inbox Zero 面板同一帧（6.45s）"
+          ],
+          [
+            "风格",
+            "浅色邮件界面配桌面壁纸；红色 Urgent 标签（<code>#fde4e4</code> 底、<code>#c62f34</code> 字），绿色对勾 <code>#2fb36a</code>，结果面板是深蓝紫黄昏渐变；尾卡是蓝色应用标志加小写字标和一行标语"
+          ]
+        ],
+        "prompt": "用「堆积清空（Pile-up and Clear）」表达你的产品把杂事归零：一个邮件 App 窗口（y 46→0，scale 0.965→1，0.9s expo.out 入场），全程缓慢 scale 1→1.035 漂移。0.9s 起，22 封新邮件逐封落在收件箱顶部，间隔从 0.62s 缩短到 0.05s（最后一封 5.32s）；每封用 expo.out 把列表下推 52px 并淡入，收件箱角标随每封邮件从 5 数到 26，并做 1.15→1 的 scale 脉冲，紧急邮件红色闪烁 0.9s。2.75s 到 5.1s，8 条桌面通知堆叠在窗口边缘，每条用 0.22s、expo.out 入场。5.45s 淡出 command-A 按键提示，5.85s 同一帧选中所有行。6.45s 按下 E：在这一帧里同时隐藏列表、通知、选择栏和角标，显示带绿色对勾的黄昏风景 Inbox Zero 面板，并升起 toast。停留约 1.95s，8.4s 用 0.5s 淡出场景，落上你的字标和一行标语。",
+        "says": [
+          "待办越堆越多然后一下清零",
+          "日程一格格被填满",
+          "标签把人围起来再全部消失"
+        ],
+        "vs": [
+          [
+            "wireframe-re-layout",
+            "线框重排是连续插值重排，元素数量不变；本条元素数量先增后清，靠硬切"
+          ],
+          [
+            "showcase-wall",
+            "作品墙一开始就铺满并整体移动；本条元素逐个出现，终点是一次清空"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Pile-up and Clear",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Pile-up and Clear\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Pile-up and Clear: Inbox Zero Animation Recipe",
+    "description": "22 emails and 8 notifications pile up in a mail app, then one keypress clears it all to Inbox Zero. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "Tasks, tags, or events pile up one by one until the screen is full, then clear in one step to a single result state.",
+    "name": "Pile-up and Clear",
+    "ownName": "Pile-up and Clear",
+    "body": [
+      {
+        "h2": "How to make a Pile-up and Clear with Claude Code or Codex",
+        "body": "Land 22 emails from 0.9 s with the interval shrinking from 0.62 s to 0.05 s. Each arrival pushes the list down 52 px with expo.out, and the Inbox badge steps from 5 to 26 on the same frame. Urgent rows flash red for 0.9 s, and 8 desktop notifications stack at an 88 px pitch between 2.75 s and 5.1 s.\n\nSelect all at 5.85 s, then clear in a single frame at 6.45 s with tl.set. The list, notifications, selection bar and badge disappear while the Inbox Zero panel, a green check and a toast take over. Hold the result for about 1.95 s. The window drifts from scale 1 to 1.035 over 8.4 s so the frame is never fully still.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own mail, task or alert items."
+      }
+    ],
+    "alt": "A full email inbox with a stack of notifications piled up on the right edge of the screen.",
+    "faq": [
+      [
+        "What is a pile-up and clear animation?",
+        "It is a sequence where tasks, tags or events accumulate one by one, usually at a quickening pace, until the screen is full. One action then resets everything to a single result state. It shows a problem and the product's answer in one continuous scene."
+      ],
+      [
+        "Why does the clear happen on one frame?",
+        "A single-frame tl.set turns the before and after contrast into one image swap. In this recipe the red Urgent chips (#c62f34 text) and the counters vanish on the same frame the green check (#2fb36a) and the Inbox Zero panel appear."
+      ],
+      [
+        "Is the Pile-up and Clear recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "堆积清空动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"堆积清空动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "堆积清空动画：Inbox Zero 示例与配方",
+    "description": "邮件应用里 22 封邮件和 8 条通知越堆越多，一次按键后全部清空，变成 Inbox Zero。用免费配方，让 Claude Code 或 Codex 做出来。",
+    "lede": "任务、标签或事件逐个堆满画面，然后一次清空成一个结果状态。",
+    "name": "堆积清空动画",
+    "ownName": "堆积清空",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做堆积清空动画",
+        "body": "22 封邮件从 0.9 秒起落下，间隔从 0.62 秒缩短到 0.05 秒。每封到达时列表用 expo.out 下移 52px，收件箱徽标在同一帧从 5 跳到 26。紧急邮件红色闪 0.9 秒，8 条桌面通知在 2.75 到 5.1 秒之间以 88px 间距叠放。\n\n5.85 秒全选，6.45 秒用 tl.set 在一帧内清空：列表、通知、选择栏和徽标消失，Inbox Zero 面板、绿色对勾和提示条接管画面，结果停留约 1.95 秒。窗口在 8.4 秒内从 1 倍缓慢漂移到 1.035 倍，画面不会完全静止。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，内容换成你自己的邮件、任务或提醒。"
+      }
+    ],
+    "alt": "塞满的邮件收件箱，屏幕右侧堆着一摞通知。",
+    "faq": [
+      [
+        "堆积清空动画是什么？",
+        "指任务、标签或事件一个个堆上来，节奏通常越来越快，直到画面被占满，再用一个动作把它们一次清成单一的结果状态。一个连续场景里同时讲出问题和产品给出的答案。"
+      ],
+      [
+        "为什么清空要在一帧内完成？",
+        "单帧的 tl.set 把前后对比变成一次画面替换。配方里红色紧急标签（文字 #c62f34）和计数在同一帧消失，绿色对勾（#2fb36a）和 Inbox Zero 面板在同一帧出现。"
+      ],
+      [
+        "堆积清空动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

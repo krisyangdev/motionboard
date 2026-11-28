@@ -1,0 +1,208 @@
+{
+  "slug": "typing-animation",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/rhythmic-typing.mp4",
+    "poster": "https://media.motionboard.app/rhythmic-typing.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 23,
+    "cat": "C",
+    "star": false,
+    "video": "rhythmic-typing",
+    "samples": [
+      {
+        "t": "Linear Releases",
+        "id": "6dIwFoQ0eVg",
+        "at": "0:22–0:27",
+        "s": 22
+      },
+      {
+        "t": "Cursor 1.0",
+        "id": "s5kX-UHgMLo",
+        "at": "0:01–0:05",
+        "s": 1
+      },
+      {
+        "t": "Apple MacBook Pro M5",
+        "id": "GriXfu4tL30",
+        "at": "0:00–0:14",
+        "s": 0
+      },
+      {
+        "t": "Raycast",
+        "id": "Mi173xGb0ZA",
+        "at": "0:28–0:37",
+        "s": 28
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The screen holds only a cursor and one line of small text, with a great deal of empty space. Typing pauses 0.3–0.5s between words like real keystrokes, and deleting is twice as fast as typing, which splits the product name and the launch status into two beats. The font is the same monospace used for the numbered labels in the product UI.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s: first line typed 0.17–4.51s (typo 'bakcoff' 1.2–1.57s, five backspaces 2.1–2.27s, retype 2.47–2.77s); hold 0.7s; delete 32 characters 5.21–5.9s; check mark and '214 tests passing' 6.47–7.77s; hold 0.4s; delete 8.17–8.43s; wordmark typed 8.63–9.0s; green cursor and tagline 9.43s; hold to 11s"
+          ],
+          [
+            "Easing",
+            "No tweening: each character is an <code>opacity</code> hard set (<code>tl.set</code>) on a fixed 33.6px monospace grid; the cursor is solid on every keystroke, then 0.5s on / 0.5s off in idle gaps; slow drift <code>scale</code> 1→1.04 <code>linear</code>"
+          ],
+          [
+            "Camera",
+            "Fixed; the line is left-anchored at x 240px and grows to the right; the terminal line drifts <code>scale</code> 1→1.04 over 8.53s and the wordmark 1→1.035 over 2.47s (<code>linear</code>)"
+          ],
+          [
+            "Subject",
+            "Typing gaps 0.04–0.11s (about 9–25 characters per second) with 0.3–0.5s pauses between words; backspace 0.04s per character for the typo, 0.022s for the whole line, 0.015s for the status line; a solid white block cursor (33.6×66px) follows the end of the text; a 15-name feature rail at 13% opacity scrolls up 380px behind the line"
+          ],
+          [
+            "Sync",
+            "A muted label 'TALON 2.4 / AGENT' (28px) appears at 0.15s and clears at 8.15s; the rail fades in at 0.9s and out at 8.05s; at 9.43s the cursor turns green <code>#3ddc97</code> on the same frame the tagline appears"
+          ],
+          [
+            "Style",
+            "Near-black <code>#09090c</code> background; JetBrains Mono 56px (5.2% of frame height) in <code>#f2f2f4</code>, prompt prefix in muted <code>#70707c</code>, check mark in <code>#3ddc97</code>; wordmark 150px weight 500; soft vignette"
+          ]
+        ],
+        "prompt": "Build a terminal title card called Rhythmic Typing. Near-black background (#09090c) and one line of JetBrains Mono at 56px with a solid white block cursor following the end. Type '> add backoff to webhook retries' character by character with uneven gaps of 0.04 to 0.11s and 0.3 to 0.5s pauses between words, including a typo ('bakcoff') that you fix with five backspaces at 0.04s each. Hold 0.7s, delete the whole line at 0.022s per character, wait 0.5s, then type a green check mark and '214 tests passing', hold 0.4s, delete at 0.015s per character, and type the wordmark at 150px. The cursor is solid on every keystroke and blinks 0.5s on and 0.5s off during idle gaps. Characters are hard sets with no fade. Behind the line, a list of 15 feature names at 13% opacity scrolls up 380px, and at the end the cursor turns green as a tagline appears. The whole piece runs 11 seconds with a slow scale drift of 1 to 1.04.",
+        "says": [
+          "Typed out one character at a time like a terminal",
+          "Typed, deleted, then a new line typed",
+          "The cursor blinks and the typing speed keeps changing"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "Word-by-Word Highlight brightens words and never deletes; Rhythmic Typing appends characters and has a cursor and delete-and-retype."
+          ],
+          [
+            "prompt-carousel",
+            "Prompt Carousel happens inside an input box with several prompts scrolling vertically; Rhythmic Typing is a single line of text."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "整屏只有光标和一行小字，留白极大。打字速度在单词之间停 0.3–0.5s，像真人按键；删除比打字快一倍，把「产品名」和「上线状态」分成两个节拍。字体与产品界面的编号标签使用同一种等宽字。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s：第一行 0.17–4.51s 打出（拼写错误「bakcoff」1.2–1.57s，五次退格 2.1–2.27s，重打 2.47–2.77s）；停 0.7s；5.21–5.9s 删除 32 个字符；对勾和「214 tests passing」6.47–7.77s；停 0.4s；8.17–8.43s 删除；字标 8.63–9.0s 打出；9.43s 绿色光标和标语；停到 11s"
+          ],
+          [
+            "缓动",
+            "无补间：每个字符是 <code>opacity</code> 硬设置（<code>tl.set</code>），落在固定 33.6px 的等宽网格上；光标在每次按键时实心，空闲间隙里亮 0.5s、灭 0.5s；缓慢漂移 <code>scale</code> 1→1.04 <code>linear</code>"
+          ],
+          [
+            "镜头",
+            "固定；这一行左端锚定在 x 240px，向右生长；终端行 8.53s 内 <code>scale</code> 1→1.04 漂移，字标 2.47s 内 1→1.035（<code>linear</code>）"
+          ],
+          [
+            "主体",
+            "按键间隔 0.04–0.11s（约 9–25 字符/秒），词间停 0.3–0.5s；退格：拼写错误时每字符 0.04s，删整行 0.022s，删状态行 0.015s；白色实心块光标（33.6×66px）始终跟在文字末尾；文字后方有 15 条功能名的列表，13% 不透明度，上滚 380px"
+          ],
+          [
+            "同步",
+            "弱色标签「TALON 2.4 / AGENT」（28px）0.15s 出现、8.15s 清除；列表 0.9s 淡入、8.05s 淡出；9.43s 光标变成绿色 <code>#3ddc97</code>，与标语出现同一帧"
+          ],
+          [
+            "风格",
+            "近黑 <code>#09090c</code> 底；JetBrains Mono 56px（占画面高 5.2%），颜色 <code>#f2f2f4</code>，提示符前缀为弱色 <code>#70707c</code>，对勾 <code>#3ddc97</code>；字标 150px、字重 500；柔和暗角"
+          ]
+        ],
+        "prompt": "用「节奏打字（Rhythmic Typing）」做终端风标题卡：近黑底（#09090c），画面里一行 56px 的 JetBrains Mono，白色实心块光标跟在末尾。逐字打出「> add backoff to webhook retries」，按键间隔不均匀（0.04 到 0.11s），词间停 0.3 到 0.5s，中间故意打错一次（「bakcoff」），用五次退格（每次 0.04s）改正。停 0.7s，以每字符 0.022s 删除整行，等 0.5s，再打出绿色对勾和「214 tests passing」，停 0.4s，以每字符 0.015s 删除，然后打出 150px 的字标。光标在每次按键时实心，空闲间隙里亮 0.5s、灭 0.5s。字符直接硬显示，无淡入。行后方有 15 条功能名的列表，13% 不透明度，上滚 380px，结尾光标变绿，同时标语出现。整段 11 秒，全程缓慢 scale 1→1.04 漂移。",
+        "says": [
+          "像终端一样一个字一个字打出来",
+          "打完再删掉重打一句",
+          "光标闪着，打字速度忽快忽慢"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "逐词点亮按词提亮、不删除；节奏打字按字符追加，有光标和删除重打"
+          ],
+          [
+            "prompt-carousel",
+            "提示词轮播发生在输入框里，多条提示词上下滚动；节奏打字是单行文字"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Typing Animation (Typewriter Effect)",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 480 for \"typing animation\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Typing Animation (Typewriter Effect): Recipe and Code",
+    "description": "Monospace text types at uneven human speed, fixes a typo with backspaces, then deletes and retypes. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "Monospace text is typed character by character with a cursor at uneven human speed, then deleted and retyped.",
+    "name": "Typing Animation (Typewriter Effect)",
+    "ownName": "Rhythmic Typing",
+    "body": [
+      {
+        "h2": "How to make a Typing Animation (Typewriter Effect) with Claude Code or Codex",
+        "body": "Anchor a left-aligned line at x 240 px in JetBrains Mono 56 px on #09090c, with a 33.6 x 66 px white block cursor at the end of the text. Each character is an opacity hard set (tl.set) on a fixed 33.6 px grid with no tweening. Gaps between characters run 0.04 to 0.11 s, with 0.3 to 0.5 s pauses between words.\n\nBuild in a typo: 'bakcoff' typed at 1.2 s, five backspaces at 0.04 s each from 2.1 s, then the retype. Deleting is much faster than typing: 32 characters in 0.69 s. The cursor stays solid on every keystroke and blinks 0.5 s on and 0.5 s off in idle gaps. At 9.43 s it turns green (#3ddc97) as the tagline appears.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own command line, status text and wordmark."
+      }
+    ],
+    "alt": "A terminal prompt typing \"add backoff to webhook retries\" beside a faded column of feature names.",
+    "faq": [
+      [
+        "What is a typing animation (typewriter effect)?",
+        "Text appears one character at a time, usually with a cursor at the end of the line, imitating keystrokes. More realistic versions vary the speed, pause between words and backspace over mistakes."
+      ],
+      [
+        "How do I make typing look human?",
+        "Vary the delay between characters within a range, here 0.04 to 0.11 s, which is about 9 to 25 characters per second. Add longer pauses between words (0.3 to 0.5 s) and delete much faster than you type. Seed the random jitter so every render is identical."
+      ],
+      [
+        "Is the Typing Animation (Typewriter Effect) recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "打字机动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"打字机动画\": ppt 打字机动画",
+      "checked": "2026-11-28"
+    },
+    "title": "打字机动画：示例与制作配方",
+    "description": "等宽字以不均匀的人手速度逐字打出，打错后退格修正，再删除重打。用免费配方，让 Claude Code 或 Codex 做出这段打字机动画。",
+    "lede": "等宽字加光标逐字打出，速度不均匀，可打出、停住、删除再重打。",
+    "name": "打字机动画",
+    "ownName": "节奏打字",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做打字机动画",
+        "body": "在 #09090c 的背景上，把一行左对齐文字锚定在 x 240px，用 JetBrains Mono 56px，末尾跟一个 33.6 x 66px 的白色方块光标。每个字符是一次 opacity 硬切（tl.set），落在 33.6px 的固定网格上，不做补间。字符间隔 0.04 到 0.11 秒，词与词之间停 0.3 到 0.5 秒。\n\n加入一次打错：1.2 秒打出 'bakcoff'，从 2.1 秒起每 0.04 秒退格一次，共五次，再重打。删除比打字快得多，32 个字符只用 0.69 秒。每次按键时光标实心，空闲间隙里 0.5 秒亮、0.5 秒灭，9.43 秒标语出现的同一帧光标变成绿色（#3ddc97）。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，换成你自己的命令行、状态文字和字标。"
+      }
+    ],
+    "alt": "终端里正在输入 add backoff to webhook retries，旁边是一列淡出的功能名。",
+    "faq": [
+      [
+        "打字机动画是什么？",
+        "文字一个字符一个字符地出现，行尾通常带光标，模仿敲键盘。更真实的版本会改变速度、在词间停顿，还会退格修改错字。"
+      ],
+      [
+        "怎样让打字看起来像真人？",
+        "让字符间隔在一个范围内变化，这里是 0.04 到 0.11 秒，约每秒 9 到 25 个字符；词间加 0.3 到 0.5 秒的停顿，删除速度明显快于打字。随机抖动用固定种子，保证每次渲染结果一致。"
+      ],
+      [
+        "打字机动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "slug": "showcase-wall",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/showcase-wall.mp4",
+    "poster": "https://media.motionboard.app/showcase-wall.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 14,
+    "cat": "B",
+    "star": false,
+    "video": "showcase-wall",
+    "samples": [
+      {
+        "t": "Framer",
+        "id": "6xJWQRVl9nw",
+        "at": "0:15–0:18",
+        "s": 15
+      },
+      {
+        "t": "Linear Releases",
+        "id": "6dIwFoQ0eVg",
+        "at": "0:10–0:15",
+        "s": 10
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The number of cards shows that many people use the product. The cards all have different colors, so color blocks take turns passing through the center of the frame while drifting, and the push-in on one card at the end lands the eye on a specific piece of work.",
+        "spec": [
+          [
+            "Timing",
+            "Drift 0–5.9s (177 frames); push-in 5.35–6.0s (about 20 frames); hold on the landed card 6.0–7.65s, with a template bar rising at 6.3s (0.7s); pull-back 7.65–8.65s (1.0s); lockup from 8.3s; film 11s"
+          ],
+          [
+            "Easing",
+            "Drift and scale-up <code>linear</code>; push-in uses an <code>expo.in</code> curve (2^(10p−10)) for the first 72% of the 0.65s, then a velocity-matched cubic ease-out over the last ~0.18s so the card lands softly; pull-back <code>power3.inOut</code>; bar and lockup <code>expo.out</code>"
+          ],
+          [
+            "Camera",
+            "A 2400×1600px wall translates <code>x:-440, y:-260</code> toward the upper left over 5.9s (about 75px per second, 3.9% of frame width), <code>scale</code> 1→1.15 about the frame center; the film opens from black over 0.5s (<code>power1.out</code>); the push-in fills the frame with one card while its <code>borderRadius</code> goes 10→0"
+          ],
+          [
+            "Subject",
+            "Six masonry columns of website screenshot cards, 360px wide with a 22px gap, column tops staggered between −260 and −40px, five card heights (202.5, 225, 360, 450, 480px); each card is a miniature page with its own palette and typeface; the push-in target is a 202.5px-tall SaaS template page"
+          ],
+          [
+            "Style",
+            "Dark <code>#0b0b0c</code> stage; cards with 10px radius, a mix of white, dark, orange, yellow, and purple site designs in many different typefaces; after the hold the wall dims under a dark radial overlay (0.9s) and a ring-and-planet mark with a 136px wordmark takes over"
+          ]
+        ],
+        "prompt": "Show your users' work with a shot called Showcase Wall. Fill the frame with six masonry columns of website screenshot cards (360px wide, 22px gap, five heights from 202.5 to 480px, column tops staggered), each card a miniature page with its own palette and typeface, and open from black over 0.5s. The whole wall drifts toward the upper left with linear ease (x -440px and y -260px over 5.9s, about 4% of frame width per second) while scale grows linearly from 1 to 1.15. From 5.35s push into one card over 0.65s, accelerating with an expo.in curve and settling with a short cubic ease-out, until it fills the frame and its corner radius reaches 0. Hold on it for about 1.6s while your product bar rises (0.7s, expo.out), then pull back over 1s with power3.inOut to the whole wall, dim it, and land your wordmark.",
+        "says": [
+          "A full screen of work cards slowly floating past",
+          "The wall of showcases that says lots of people use this",
+          "A card wall moving diagonally, then pushing in on one card"
+        ],
+        "vs": [
+          [
+            "zoom-to-cursor",
+            "Auto Zoom serves one action and pulls back; Showcase Wall drifts at constant speed and ends with a one-way push-in and a cut."
+          ],
+          [
+            "pile-up-and-clear",
+            "Pile-up and Clear adds elements one at a time and then clears them; the cards in Showcase Wall fill the frame from the start and move as a whole."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "靠卡片数量证明有很多人在用；卡片配色各不相同，漂移时色块轮流经过画面中心，结尾推近一张让视线落到具体作品。",
+        "spec": [
+          [
+            "时长",
+            "漂移 0–5.9s（177 帧）；推近 5.35–6.0s（约 20 帧）；落定卡片停留 6.0–7.65s，模板栏 6.3s 升起（0.7s）；拉回 7.65–8.65s（1.0s）；字标 8.3s 起；全片 11s"
+          ],
+          [
+            "缓动",
+            "漂移与放大 <code>linear</code>；推近前 72% 用 <code>expo.in</code> 曲线（2^(10p−10)），最后约 0.18s 接速度衔接的三次缓出，让卡片软着陆；拉回 <code>power3.inOut</code>；模板栏与字标 <code>expo.out</code>"
+          ],
+          [
+            "镜头",
+            "2400×1600px 的墙朝左上平移 <code>x:-440, y:-260</code>，历时 5.9s（约每秒 75px，占画面宽 3.9%），<code>scale</code> 1→1.15，以画面中心为原点；片头 0.5s 从黑场淡入（<code>power1.out</code>）；推近让一张卡片铺满画面，同时 <code>borderRadius</code> 10→0"
+          ],
+          [
+            "主体",
+            "六列 masonry 网站截图卡片，宽 360px，间距 22px，列顶错开在 −260 到 −40px，五种卡高（202.5、225、360、450、480px）；每张卡是自带配色和字体的缩小页面；推近目标是一张 202.5px 高的 SaaS 模板页"
+          ],
+          [
+            "风格",
+            "深色 <code>#0b0b0c</code> 底；卡片圆角 10px，白、深色、橙、黄、紫的网站设计混排，字体各异；停留后墙面被深色径向遮罩压暗（0.9s），由环轨加行星的标志和 136px 字标接管"
+          ]
+        ],
+        "prompt": "用「作品墙漂移（Showcase Wall）」展示你的用户作品：画面铺满六列 masonry 网站截图卡片（宽 360px，间距 22px，五种卡高从 202.5 到 480px，列顶错开），每张卡是自带配色和字体的缩小页面，片头 0.5s 从黑场淡入。整面墙朝左上 linear 漂移（5.9s 内 x -440px、y -260px，约每秒 4% 画面宽），同时 scale 从 1 线性放大到 1.15。5.35s 起用 0.65s 推近其中一张卡片，先按 expo.in 曲线加速，最后用一小段三次缓出软着陆，直到它铺满画面、圆角归零。在这张卡片上停留约 1.6s，你的产品信息栏用 expo.out 在 0.7s 内升起；随后用 1s、power3.inOut 拉回整面墙，压暗墙面，落上你的字标。",
+        "says": [
+          "满屏作品卡片慢慢飘过去",
+          "很多人在用的那种展示墙",
+          "卡片墙斜着移动再推到一张"
+        ],
+        "vs": [
+          [
+            "zoom-to-cursor",
+            "推近再拉回服务一次操作并会拉回；本条是匀速漂移，结尾单向推近后切走"
+          ],
+          [
+            "pile-up-and-clear",
+            "堆积清空是元素逐个出现再清空；本条的卡片从一开始就铺满，整体在移动"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Showcase Wall",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Showcase Wall\": showcase wall; showcase wallpaper; showcase wall design; showcase wall mounted",
+      "checked": "2026-11-28"
+    },
+    "title": "Showcase Wall: Example and Code Recipe",
+    "description": "A full-screen wall of website cards drifts diagonally while scaling up, then accelerates into one card. Make this showcase wall with Claude Code or Codex.",
+    "lede": "A full-screen wall of work cards drifts diagonally at constant speed while slowly scaling up, then accelerates into one card at the end.",
+    "name": "Showcase Wall",
+    "ownName": "Showcase Wall",
+    "body": [
+      {
+        "h2": "How to make a Showcase Wall with Claude Code or Codex",
+        "body": "Lay out a 2400×1600px wall of six masonry columns of website cards, 360px wide with a 22px gap and column tops staggered between −260 and −40px. Translate it linearly by x −440, y −260 over 5.9s (about 75px per second) while scaling 1 to 1.15 about the frame center. The film opens from black over 0.5s.\n\nThe push-in takes 0.65s: an expo.in curve for the first 72%, then a velocity-matched cubic ease-out over the last 0.18s so the card lands softly, while its border radius goes from 10px to 0. Hold 1.65s with a template bar rising at 6.3s, pull back over 1.0s on power3.inOut, and dim the wall under a dark radial overlay for the lockup.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the wall from miniature pages with their own palettes and typefaces. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A tiled wall of website screenshots in many styles: magazine, pricing, podcast and synthesizer pages.",
+    "faq": [
+      [
+        "What is a showcase wall?",
+        "A showcase wall is a grid or masonry layout of many work samples, such as site screenshots, shown at once so the viewer sees how many people use a product. The wall in this film ends by landing on one card."
+      ],
+      [
+        "How do I keep the card wall moving smoothly?",
+        "Use constant linear drift and scale so the speed stays even, about 75px per second here (3.9% of frame width). Acceleration happens only in the final push-in, which makes the landing on one card stand out."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "作品墙展示动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"作品墙展示动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "作品墙展示动画：示例与代码配方",
+    "description": "满屏网站卡片斜向匀速漂移并慢慢放大，结尾加速推近一张。用 Claude Code 或 Codex 按免费配方做出这个作品墙展示动画。",
+    "lede": "满屏作品卡片斜向匀速漂移并慢放大，结尾加速推近一张。",
+    "name": "作品墙展示动画",
+    "ownName": "作品墙漂移",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做作品墙展示动画",
+        "body": "排一面 2400×1600px 的墙，六列瀑布流网站卡片，每张宽 360px，间距 22px，各列顶部在 −260 到 −40px 之间错开。墙在 5.9s 内线性平移 x −440、y −260（约每秒 75px），同时围绕画面中心从 1 倍放大到 1.15 倍。影片用 0.5s 从黑场开始。\n\n推近用 0.65s：前 72% 用 expo.in 曲线，最后约 0.18s 换成速度衔接的三次缓出，让卡片轻轻落下，同时圆角从 10px 变为 0。落定后保持 1.65s，6.3s 时模板栏升起；用 power3.inOut 在 1.0s 内拉回，再用深色径向遮罩压暗墙面，给 lockup 让位。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用一批各有配色和字体的迷你页面搭出这面墙。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "满墙拼贴的网站截图，风格各异：杂志、定价、播客、合成器页面。",
+    "faq": [
+      [
+        "什么是作品墙？",
+        "作品墙把大量作品样例（比如网站截图）排成网格或瀑布流，同时展示，让观众看到有多少人在用这款产品。这支片子的作品墙最后落到一张卡片上。"
+      ],
+      [
+        "怎样让卡片墙移动得顺滑？",
+        "平移和缩放都用恒定的线性速度，这里约每秒 75px（画面宽度的 3.9%）。只有最后的推近才加速，落到一张卡片上才有重点。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

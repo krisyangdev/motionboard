@@ -1,0 +1,182 @@
+{
+  "slug": "chromatic-aberration-text-effect",
+  "category": [
+    "close"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/chromatic-stretch.mp4",
+    "poster": "https://media.motionboard.app/chromatic-stretch.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 27,
+    "cat": "C",
+    "star": false,
+    "video": "chromatic-stretch",
+    "samples": [
+      {
+        "t": "Apple AirPods Pro 3",
+        "id": "EMmKs8vMKhU",
+        "at": "0:00–0:03",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The background and the type are black and white, and only the few distorted frames show a saturated separation into cyan, magenta, and yellow, so the color flashes and never stays. The distortion acts only on some letters and the rest stay clean, so the wordmark remains readable.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s (315 frames). Wordmark: entry distortion 0.1-0.4s, second 0.73-0.97s, third 1.3-1.53s, smear-out 2.4-2.73s. Headline 1 enters 2.8s (settled 3.1s), re-distorts 4.0-4.17s, smears out 4.87-5.13s. Headline 2 enters 5.2s, re-distorts 6.4-6.57s, smears out 7.27-7.53s. Closing wordmark enters 7.6s (settled 7.9s), distorts 8.13-8.4s, tagline fades up 8.42s over 0.6s and holds to 10.5s"
+          ],
+          [
+            "Easing",
+            "Stepped, no tween between states: each state holds 2 frames (66ms), then the ghost strength drops to 0.3 for 1 frame and the line returns clean. The stretch amount decays across the steps (4.4x, 3.7x, 2.9x, 1.8x). The master timeline runs <code>ease: \"none\"</code>; the tagline uses <code>expo.out</code>"
+          ],
+          [
+            "Camera",
+            "Fixed frame with a slow push on each block, scale 1 to 1.03 over its on-screen time"
+          ],
+          [
+            "Subject",
+            "Each distortion picks one letter segment (2-8 characters) and stretches it horizontally up to 4.4x (smear-out reaches 16x), scales it 1.1-1.55x vertically, arcs the baseline up to 28px, and squeezes the rest of the line to 0.6-0.96x. The R, G and B channels are warped separately and offset by 2.2% of font size each (about 4.7px at 214px) with a 12px horizontal blur on R and B; added on black and subtracted from the background, the misaligned channels read as cyan, magenta and yellow. Smear-out shifts the block left up to 420px and trails 22 fading copies"
+          ],
+          [
+            "Style",
+            "Background <code>#f4f4f6</code>, black ink. Wordmark Inter 500 and 300 at 214px, letter-spacing -0.034em; headlines Inter 600 at 104px with 34px supporting lines at 47% opacity. RGB color exists only on distorted frames; settled frames are pure black on light gray"
+          ]
+        ],
+        "prompt": "Build a wordmark opening called Chromatic Stretch, 10.5s at 30fps. Light gray background #f4f4f6, black Inter wordmark centered (500 for the name, 300 for the suffix, 214px, letter-spacing -0.034em); the source film uses Ember Pro. Distort one letter segment at a time in 2-frame steps with no tweening: stretch it horizontally from 4.4x down through 3.7x, 2.9x and 1.8x, enlarge it 1.1-1.55x vertically, arc the baseline up to 28px, and squeeze the rest of the line to 0.6-0.93x. Warp the R, G and B channels separately, offset each by 2.2% of font size with a 12px horizontal blur on R and B, add them on black and subtract from the background so the edges split into cyan, magenta and yellow; drop the split to 0.3 for 1 frame, then return clean. Run three distortions on the wordmark at 0.1s, 0.73s and 1.3s, then smear it out to the left at 2.4-2.73s (stretch up to 16x, shift up to 420px, 22 fading trail copies). Swap in two headline blocks (2.8s and 5.2s) using the same enter, one re-distort and smear-out pattern, then bring the wordmark back at 7.6s with one more distortion at 8.13s and fade a tagline up at 8.42s (0.6s, expo.out). Push each block in slowly from scale 1 to 1.03; color appears only on distorted frames.",
+        "says": [
+          "Letters stretched sideways with colored ghosting",
+          "The wordmark distorts a few times and then recovers",
+          "An RGB-split glitch effect on text"
+        ],
+        "vs": [
+          [
+            "logo-wordmark-reveal",
+            "Mark-to-Wordmark Unfold changes the order in which the wordmark appears; Chromatic Stretch locally distorts a wordmark that is already visible."
+          ],
+          [
+            "wipe-flash-transition",
+            "Foreground Wipe & Flash is a scene transition; Chromatic Stretch happens on the wordmark itself."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "底色和字都是黑白，只有扭曲那几帧出现青、品红、黄的高饱和分离，彩色只闪现不常驻。扭曲只作用在局部字母，其余字母保持干净，字标始终可读。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s（315 帧）。字标：入场扭曲 0.1–0.4s，第二次 0.73–0.97s，第三次 1.3–1.53s，向左涂抹退出 2.4–2.73s。标题一 2.8s 入场（3.1s 回正），4.0–4.17s 再扭曲一次，4.87–5.13s 涂抹退出。标题二 5.2s 入场，6.4–6.57s 再扭曲，7.27–7.53s 涂抹退出。结尾字标 7.6s 入场（7.9s 回正），8.13–8.4s 扭曲，8.42s 起标语淡入上移 0.6s，停到 10.5s"
+          ],
+          [
+            "缓动",
+            "阶跃式，状态之间不做补间：每个状态保持 2 帧（66ms），随后色散强度降到 0.3 保持 1 帧，再回到干净状态。拉伸量在步进中逐级衰减（4.4×、3.7×、2.9×、1.8×）。总时间线 <code>ease: \"none\"</code>；标语用 <code>expo.out</code>"
+          ],
+          [
+            "镜头",
+            "画面固定，每个文字块在屏时间内缓慢推进，缩放 1 到 1.03"
+          ],
+          [
+            "主体",
+            "每次扭曲选一个字母区段（2–8 个字符），横向拉长最多 4.4 倍（涂抹退出时到 16 倍），纵向放大 1.1–1.55 倍，基线弯曲最多 28px，其余部分压缩到 0.6–0.96 倍。R、G、B 三个通道分别变形，每个通道偏移字号的 2.2%（214px 时约 4.7px），R 和 B 加 12px 横向模糊；叠加在黑色上再从背景中相减，错位的通道显示为青、品红、黄。涂抹退出时整块向左位移最多 420px，拖出 22 个渐隐副本"
+          ],
+          [
+            "风格",
+            "背景 <code>#f4f4f6</code>，黑色墨层。字标 Inter 500 与 300，214px，字距 -0.034em；标题 Inter 600，104px，配 34px 辅助行（47% 不透明度）。RGB 色彩只在扭曲帧出现，回正帧是浅灰底上的纯黑"
+          ]
+        ],
+        "prompt": "用「色散拉伸（Chromatic Stretch）」做字标开场，30fps、全片 10.5s：背景浅灰 #f4f4f6，黑色 Inter 字标居中（名称 500、后缀 300，214px，字距 -0.034em；源片用 Ember Pro）。每次选一个字母区段，用 2 帧一档的阶跃方式扭曲，档间不做补间：横向拉长从 4.4 倍逐级降到 3.7、2.9、1.8 倍，纵向放大 1.1–1.55 倍，基线弯曲最多 28px，其余部分压缩到 0.6–0.93 倍。R、G、B 三个通道分别变形，每个通道偏移字号的 2.2%，R 和 B 加 12px 横向模糊，在黑色上相加后从背景中相减，边缘分出青、品红、黄三色；色散降到 0.3 保持 1 帧，再回到干净状态。字标在 0.1s、0.73s、1.3s 各扭曲一次，2.4–2.73s 向左涂抹退出（拉伸最多 16 倍，位移最多 420px，拖 22 个渐隐副本）。2.8s 和 5.2s 换入两个标题块，用同样的入场、一次再扭曲、涂抹退出；7.6s 字标回来，8.13s 再扭曲一次，8.42s 起标语淡入上移 0.6s（expo.out）。每个块在屏期间缓慢推进，缩放从 1 到 1.03；彩色只在扭曲帧出现。",
+        "says": [
+          "字母被横向拉长还带彩色重影",
+          "字标扭曲几下再恢复",
+          "文字的 RGB 分离故障效果"
+        ],
+        "vs": [
+          [
+            "logo-wordmark-reveal",
+            "符号展开字标的变化是字标出现的顺序；色散拉伸是已出现字标的局部变形"
+          ],
+          [
+            "wipe-flash-transition",
+            "遮挡与闪白是场景转场；色散拉伸发生在字标自身"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Chromatic Aberration Text Effect",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Chromatic Aberration Text Effect\": chromatic aberration text effect; chromatic aberration text effect photoshop; chromatic aberration text after effects; what is chromatic aberration effect",
+      "checked": "2026-11-28"
+    },
+    "title": "Chromatic Aberration Text Effect: Recipe",
+    "description": "Letters of a wordmark stretch up to 4.4x with RGB ghosting, distort in steps, then snap back clean. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "Some letters of a wordmark stretch horizontally with RGB ghosting, distort in steps, then snap back clean.",
+    "name": "Chromatic Aberration Text Effect",
+    "ownName": "Chromatic Stretch",
+    "body": [
+      {
+        "h2": "How to make a Chromatic Aberration Text Effect with Claude Code or Codex",
+        "body": "Distort the wordmark (Inter 500, 214 px, letter-spacing -0.034em) in steps with no tween. Each state holds 2 frames (66 ms), then ghost strength drops to 0.3 for 1 frame and the line returns clean. The stretch decays across the steps: 4.4x, 3.7x, 2.9x, 1.8x.\n\nPick one segment of 2 to 8 characters, stretch it horizontally, scale it 1.1 to 1.55x vertically, arc the baseline up to 28 px and squeeze the rest of the line to 0.6 to 0.96x. Warp the R, G and B channels separately and offset each by 2.2% of the font size (about 4.7 px), with a 12 px horizontal blur on R and B.\n\nSettled frames are pure black on #f4f4f6, so color shows only on distorted frames. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site."
+      }
+    ],
+    "alt": "Two lines of text on a white screen smeared into red, green and blue streaks as they slide in.",
+    "faq": [
+      [
+        "What is chromatic aberration in text?",
+        "In optics, a lens focuses colors at slightly different points and leaves colored fringes at edges. In motion design the effect imitates this by offsetting the red, green and blue channels of text, which shows as cyan, magenta and yellow ghosts."
+      ],
+      [
+        "Can I make a chromatic aberration text effect in CSS?",
+        "A basic version layers three copies of the text in red, green and blue, offsets them a few pixels and combines them with mix-blend-mode. The recipe goes further and warps each channel separately, so the stretch and the color split come from one distortion."
+      ],
+      [
+        "Is the Chromatic Aberration Text Effect recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "色散文字效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"色散文字效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "色散文字效果：RGB 重影示例与配方",
+    "description": "字标的局部字母横向拉长最多 4.4 倍并分出 RGB 重影，阶跃式扭曲后回正。用免费配方，让 Claude Code 或 Codex 做出这个色散文字效果。",
+    "lede": "字标局部字母被横向拉长并分出 RGB 重影，阶跃式扭曲后回正。",
+    "name": "色散文字效果",
+    "ownName": "色散拉伸",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做色散文字效果",
+        "body": "字标（Inter 500，214px，字距 -0.034em）按阶跃方式扭曲，状态之间没有补间。每个状态保持 2 帧（66 毫秒），然后重影强度降到 0.3 保持 1 帧，再回到干净状态。拉伸量逐步衰减：4.4 倍、3.7 倍、2.9 倍、1.8 倍。\n\n每次选一段 2 到 8 个字符，横向拉长，纵向放大 1.1 到 1.55 倍，基线最多弧起 28px，其余部分压缩到 0.6 到 0.96 倍。R、G、B 三个通道分别变形，各自偏移字号的 2.2%（约 4.7px），R 和 B 再加 12px 的横向模糊。\n\n稳定帧是 #f4f4f6 底上的纯黑字，颜色只在扭曲的几帧出现。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站。"
+      }
+    ],
+    "alt": "白色画面上两行文字滑入时拉出红、绿、蓝的彩色拖影。",
+    "faq": [
+      [
+        "文字的色散是什么？",
+        "光学里，镜头对不同颜色的聚焦位置略有差异，物体边缘会出现彩色边。动态设计用错开文字红、绿、蓝三个通道来模仿它，画面上表现为青、品红、黄三色重影。"
+      ],
+      [
+        "能用 CSS 做色散文字效果吗？",
+        "基础版本是叠三份文字，分别设为红、绿、蓝，错开几个像素，再用 mix-blend-mode 混合。配方更进一步，三个通道分别变形，拉伸和色彩分离来自同一次扭曲。"
+      ],
+      [
+        "色散文字配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

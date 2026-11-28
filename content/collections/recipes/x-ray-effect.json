@@ -1,0 +1,188 @@
+{
+  "slug": "x-ray-effect",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/x-ray-dissolve.mp4",
+    "poster": "https://media.motionboard.app/x-ray-dissolve.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 4,
+    "cat": "A",
+    "star": true,
+    "video": "x-ray-dissolve",
+    "samples": [
+      {
+        "t": "Apple A19 Pro 芯片",
+        "id": "dJObc0V6hJU",
+        "at": "0:55–0:57",
+        "s": 55
+      },
+      {
+        "t": "Apple A19 Pro 芯片",
+        "id": "dJObc0V6hJU",
+        "at": "0:53–0:55",
+        "s": 53
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The internal parts and the shell dissolve in exact alignment, so viewers see where the chip sits inside the body. Orange bleeds in from the glow before it switches to the body, so color changes before shape and the transition has no hard jump. One camera position explains what is inside.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. Macro shots: chip close-up 0–2.1s (fade in from black 0–0.7s), board and camera modules 2.1–4.3s. Dissolve shot 2.9s (87 frames): inner part drifts 4.3–5.5s (1.2s, 36 frames), accent tint 4.85–5.65s, shell fades in 5.5–6.0s (0.5s, 15 frames) while the inner layer drops to 30% over 5.5–5.8s, holds 0.2s, and reaches 0 at 6.18s; pull-back 6.0–7.2s (1.2s, 36 frames); wordmark 6.4–7.1s; settle 7.2–10.0s"
+          ],
+          [
+            "Easing",
+            "Dissolve and tint power2.inOut (<code>cubic-bezier(0.65,0,0.35,1)</code>); drift sine.out; pull-back expo.out (<code>cubic-bezier(0.16,1,0.3,1)</code>) with a 4-frame zero-velocity run-up, nearly stopped for the last 0.4s; settle sine.inOut; wordmark power2.out"
+          ],
+          [
+            "Camera",
+            "Perspective 24° fov. Macro shots oblique with a shallow depth of field. Dissolve shot is frontal and fixed from 5.5s; the drift before it moves about 2% of frame width per second, easing to rest. The pull-back scales 5x→1x with radial shutter blur (180°), ending with the body at 70% of frame height; the vignette tightens during the pull-back; settle push 1.00→1.025"
+          ],
+          [
+            "Subject",
+            "Two layers composited at the same position: the inner part (chip) at weight 1→0.3→0, and the phone shell at 0→1; the accent tint is masked by a Gaussian around the chip, so it bleeds in from the chip's glow first and the brightest shell edges arrive before the body fills in"
+          ],
+          [
+            "Style",
+            "Black background, cool white top light (spot <code>#dde8ff</code>, cool-white strip lights), inner part in gray metal, shell in the accent color (cosmic orange <code>rgb(255,107,41)</code>); ACES tone mapping at exposure 1.25, bloom, 0.022 grain, wordmark Inter 600 40px"
+          ]
+        ],
+        "prompt": "Build a reveal of a product's internal structure called X-ray Dissolve. Black background, cool white top light, 24° fov, ACES tone mapping, bloom and light grain. Open with two oblique macro shots with a shallow depth of field: a chip close-up (0–2.1s, fading in from black over 0.7s) and the board with its camera modules (2.1–4.3s). Then cut to a frontal fixed camera on the chip: drift very slowly (about 2% of frame width per second, easing to rest) from 4.3 to 5.5s. From the same camera position, dissolve in the shell render at the same position: tint the chip's glow with the accent color (cosmic orange) over 4.85–5.65s, fade the shell in over 5.5–6.0s with power2.inOut (cubic-bezier(0.65,0,0.35,1)), and take the inner layer from 100% to 30% over 5.5–5.8s, hold 30% for 0.2s, then to 0% by 6.18s. From 6.0s pull back for 1.2 seconds with expo.out (cubic-bezier(0.16,1,0.3,1)) with a 4-frame run-up from zero velocity, scale 5x to 1x, with radial shutter blur, until the whole device is 70% of frame height. The vignette radius tightens during the pull-back, and the product name fades in 6.4–7.1s (power2.out, blur 6px→0). Settle with a slow push of 2.5% until 10s. The two renders must be aligned exactly.",
+        "says": [
+          "The chip shows through the body, then becomes the whole device",
+          "The parts inside slowly turn into the shell",
+          "Like an X-ray into the device, then a pull-back"
+        ],
+        "vs": [
+          [
+            "light-reveal",
+            "Light Reveal adjusts exposure; X-ray Dissolve switches between two images, the inner layer and the shell."
+          ],
+          [
+            "macro-pull-out-reveal",
+            "The first half of Macro Pull-out Reveal is continuous movement across one surface; X-ray Dissolve completes a layer dissolve before pulling back."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "内部件和外壳用同一位置对齐叠化，观众直接看到芯片在机身里的哪个位置；橙色先从光晕渗入再换到机身，颜色变化先于形状变化，切换没有硬跳；一个机位讲清里面有什么。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。微距镜头：芯片特写 0–2.1s（0–0.7s 从黑场淡入），主板和摄像头模组 2.1–4.3s。叠化镜头 2.9s（87 帧）：内部件慢移 4.3–5.5s（1.2s，36 帧），强调色渗入 4.85–5.65s，外壳淡入 5.5–6.0s（0.5s，15 帧），同时内部层在 5.5–5.8s 降到 30%，保持 0.2s，在 6.18s 降到 0；拉远 6.0–7.2s（1.2s，36 帧）；字标 6.4–7.1s；落定 7.2–10.0s"
+          ],
+          [
+            "缓动",
+            "叠化与强调色 power2.inOut（<code>cubic-bezier(0.65,0,0.35,1)</code>）；慢移 sine.out；拉远 expo.out（<code>cubic-bezier(0.16,1,0.3,1)</code>），前 4 帧从零速度起步，最后 0.4s 基本停住；落定 sine.inOut；字标 power2.out"
+          ],
+          [
+            "镜头",
+            "透视相机 fov 24°。微距镜头斜向取景，景深很浅。叠化镜头为正面机位，5.5s 起固定；之前的慢移约每秒 2% 画面宽，逐渐停住。拉远 scale 5x→1x，带径向快门模糊（180°），最终机身高度约占画面 70%；暗角随拉远收紧；落定推近 1.00→1.025"
+          ],
+          [
+            "主体",
+            "两层在同一位置合成：内部件（芯片）权重 1→0.3→0，手机外壳 0→1；强调色以芯片为中心做高斯遮罩，所以先从芯片光晕渗入，外壳最亮的边先到，机身再填满"
+          ],
+          [
+            "风格",
+            "黑底，冷白顶光（聚光灯 <code>#dde8ff</code>，冷白条形灯），内部件灰金属，外壳强调色（宇宙橙 <code>rgb(255,107,41)</code>）；ACES 色调映射，曝光 1.25，辉光，颗粒 0.022，字标 Inter 600、40px"
+          ]
+        ],
+        "prompt": "用「透视叠化（X-ray Dissolve）」做一个产品内部结构揭示。黑底，冷白顶光，fov 24°，ACES 色调映射，加辉光和轻微颗粒。开头两个斜向微距镜头，景深很浅：芯片特写（0–2.1s，0.7 秒从黑场淡入）和带摄像头模组的主板（2.1–4.3s）。然后切到正面固定机位对准芯片，4.3 到 5.5 秒极慢漂移（每秒约 2% 画面宽，逐渐停住）。同一机位、同一位置叠入外壳渲染图：4.85–5.65 秒让芯片光晕被强调色（宇宙橙）染上，5.5–6.0 秒用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）淡入外壳，内部层在 5.5–5.8 秒从 100% 降到 30%，保持 30% 0.2 秒，6.18 秒降到 0%。6.0 秒起用 expo.out（cubic-bezier(0.16,1,0.3,1)）拉远 1.2 秒，前 4 帧从零速度起步，scale 5x 到 1x，带径向快门模糊，直到整机占画面高 70%。暗角半径随拉远收紧，产品名在 6.4–7.1 秒淡入（power2.out，blur 6px→0）。最后慢推 2.5% 落定到 10 秒。两层渲染图必须精确对位。",
+        "says": [
+          "芯片透过机身显出来再变成整机",
+          "里面的零件慢慢变成外壳",
+          "X 光一样看到内部然后拉远"
+        ],
+        "vs": [
+          [
+            "light-reveal",
+            "暗场显影调整的是曝光；透视叠化切换的是内部层和外壳层两张图"
+          ],
+          [
+            "macro-pull-out-reveal",
+            "微距拉出的前段是同一表面上的连续移动；透视叠化在拉远前先完成一次层间叠化"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "X-Ray Effect",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"X-Ray Effect\": x-ray effect; x-ray effect plarail; x-ray effect photoshop; x-ray effects on humans",
+      "checked": "2026-11-28"
+    },
+    "title": "X-Ray Effect: Example and Code Recipe",
+    "description": "An inner chip and the phone shell cross-dissolve from one camera position, then the camera pulls back to the phone. Make it with Claude Code or Codex.",
+    "lede": "The internal structure and the outer shell cross-dissolve from the same camera position, then the camera pulls back to the whole device.",
+    "name": "X-Ray Effect",
+    "ownName": "X-ray Dissolve",
+    "body": [
+      {
+        "h2": "How to make a X-Ray Effect with Claude Code or Codex",
+        "body": "Composite two layers at the same position under a 24° perspective camera: the inner part (a chip) at weight 1 and the phone shell at 0. The camera is frontal and fixed from 5.5s. The shell fades in over 0.5s (5.5–6.0s) while the inner layer drops to 30% over 5.5–5.8s, holds 0.2s and reaches 0 at 6.18s, all on power2.inOut.\n\nMask the accent tint (orange, rgb(255,107,41)) with a Gaussian around the chip, so color arrives from the chip first, then the brightest shell edges, then the body. Pull back for 1.2s (6.0–7.2s) on expo.out from 5× to 1× with 180° radial shutter blur, ending with the body at 70% of frame height.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds both layers in one Three.js scene so they line up exactly. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "The inside of a device: a circuit board with an S1 Pro chip at the centre, lit in cool grey.",
+    "faq": [
+      [
+        "What is an X-ray effect in video?",
+        "An X-ray effect shows the inside of an object as if its outer surface were transparent. In motion design it is usually built by cross-dissolving an internal layer into the exterior from one fixed camera position, so the internal parts line up with the body."
+      ],
+      [
+        "Why must the camera stay fixed during the dissolve?",
+        "The two layers have to line up exactly. In this recipe the dissolve shot is frontal and fixed from 5.5s, so the chip sits where it would sit inside the shell. A camera move during the dissolve would shift the layers apart."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "X 光透视效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"X 光透视效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "X 光透视效果：示例与代码配方",
+    "description": "内部芯片与外壳在同一机位对位叠化，随后镜头拉远成整机。用 Claude Code 或 Codex 按免费配方做出这个 X 光透视效果。",
+    "lede": "内部结构和外壳在同一机位对位叠化，随后镜头拉远成整机。",
+    "name": "X 光透视效果",
+    "ownName": "透视叠化",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做X 光透视效果",
+        "body": "用 24° 透视相机，把两层放在同一位置合成：内部零件（芯片）权重 1，手机外壳权重 0。5.5s 起机位正面固定。外壳在 5.5–6.0s 的 0.5s 内淡入，内部层在 5.5–5.8s 降到 30%，停 0.2s，在 6.18s 降到 0，全程用 power2.inOut。\n\n主题色（橙色，rgb(255,107,41)）用围绕芯片的高斯遮罩，让颜色先从芯片的辉光里渗出，再到外壳最亮的边缘，最后填满机身。6.0–7.2s 用 expo.out 后拉 1.2s，缩放从 5 倍到 1 倍，带 180° 径向快门模糊，结束时机身占画面高度 70%。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会把两层放进同一个 Three.js 场景，保证对位。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "设备内部的电路板，中央是一颗 S1 Pro 芯片，灰冷色调。",
+    "faq": [
+      [
+        "视频里的 X 光效果是什么？",
+        "X 光效果让外表面像透明一样，露出物体内部。动效设计里通常在同一个固定机位上，把内部层叠化成外观层，内部零件和机身对位。"
+      ],
+      [
+        "叠化时为什么机位必须固定？",
+        "两层必须严格对位。这份配方里叠化镜头从 5.5s 起正面固定，芯片的位置就是它在外壳里的真实位置。叠化中移动镜头会让两层错开。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

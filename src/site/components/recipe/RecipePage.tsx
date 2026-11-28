@@ -9,7 +9,8 @@ import { Compare } from '@/site/components/recipe/Compare'
 import { Player } from '@/site/components/recipe/Player'
 import { SourceClip } from '@/site/components/recipe/SourceClip'
 import { InstallCommand } from '@/site/components/home/SkillInstall'
-import { byPos, order, shotName, sources, termName, type RecipeText, type Term } from '@/site/data/terms'
+import type { Item } from '@/core/content/items'
+import { order, recipeData, shotName, sources, termName, type Term } from '@/site/data/terms'
 import { gsap, ScrollTrigger, useGSAP } from '@/site/lib/gsap'
 import { HomeLink, RecipeLink, useGoToRecipe } from '@/site/lib/links'
 import { useStat } from '@/site/lib/stats'
@@ -23,7 +24,7 @@ const navBtn = 'inline-flex size-10 items-center justify-center rounded-full bg-
 const typing = (el: EventTarget | null) =>
   el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))
 
-export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) {
+export function RecipePage({ term: t, item, related: more }: { term: Term; item: Item; related: Term[] }) {
   const root = useRef<HTMLDivElement>(null)
   const goTo = useGoToRecipe()
   const locale = useLocale()
@@ -40,7 +41,8 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   const selected = clips[k]
   const name = termName(t, locale)
   const shot = shotName(t, locale)
-  const more = byPos(t.pos).filter((x) => x.slug !== t.slug)
+  const text = recipeData(item).text[locale]
+  const howto = item.text.body[0]
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -109,7 +111,7 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
         <div className="mt-1 grid items-center gap-4 md:gap-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-12">
           <div className="min-w-0">
             <div className="rounded-[20px] bg-card p-[5px] shadow-film md:rounded-[2rem] md:p-2 md:motion-safe:-rotate-1">
-              <Player term={t} />
+              <Player term={t} alt={item.text.alt} />
             </div>
             {!selected && <p className="mt-4 text-[15px] text-muted-foreground">{s.recipe.recreationOnly}</p>}
           </div>
@@ -150,7 +152,7 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
 
         <div className="max-w-[800px]">
           <section className="mt-14 md:mt-[4.5rem]" data-rv>
-            <h2 className={h2Small}>{s.recipe.howto(name)}</h2>
+            <h2 className={h2Small}>{howto.h2}</h2>
             <p className="mb-4 text-base text-muted-foreground leading-relaxed">{s.recipe.pasteLine}</p>
             <div className="mb-5 flex flex-wrap items-center gap-3">
               <InstallCommand />
@@ -160,7 +162,7 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
                 <span>{s.recipe.built}</span>
               </summary>
               <div className="px-5 pb-[18px] md:px-6">
-                {text.seo.howto.map((p) => (
+                {howto.body.split('\n\n').map((p) => (
                   <p key={p} className="mb-3 text-base text-muted-foreground leading-relaxed last:mb-0">
                     {p}
                   </p>
@@ -172,7 +174,7 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
 
           <section className="mt-10" data-rv>
             <h2 className={h2Small}>{s.recipe.faq}</h2>
-            <Faq items={text.seo.faq} />
+            <Faq items={item.text.faq ?? []} />
           </section>
 
           <div className="mt-14">

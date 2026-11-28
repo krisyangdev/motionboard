@@ -1,0 +1,194 @@
+{
+  "slug": "branching-growth",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/branching-growth.mp4",
+    "poster": "https://media.motionboard.app/branching-growth.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 30,
+    "cat": "D",
+    "star": false,
+    "video": "branching-growth",
+    "samples": [
+      {
+        "t": "Claude Fable 5.1",
+        "id": "ROF2Nv_KjOM",
+        "at": "0:14–0:20",
+        "s": 14
+      },
+      {
+        "t": "Claude Fable 5.1",
+        "id": "ROF2Nv_KjOM",
+        "at": "0:51–0:58",
+        "s": 51
+      },
+      {
+        "t": "Linear Releases",
+        "id": "6dIwFoQ0eVg",
+        "at": "0:00–0:09",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Going from one dot to thousands uses only black lines, black dots, and paper texture. Growth is slow at first and fast later, which turns scale into a visible rhythm. The big nodes and the small end dots differ greatly in size, so the layers read at a glance. The doubling version advances by doubling the count each beat, with no arrows or numbers.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Tree on paper 0.45-3.2s: layers 1-3 take 0.5s each (0.45-1.95s), layers 4-6 take 0.333s each (1.95-2.95s), layer 7 at 2.8-3.2s; camera pull-back 0.45-3.45s; six nodes turn green 2.9-3.4s; dive into one node 3.95-4.35s, then a 4-frame darken to the dark scene. Doubling beats at 4.48, 4.95, 5.5, 6.1, 6.7, 7.3, 7.9s (1, 2, 4, 8, 16, 32, 77 documents); slate at 8.4s with tagline at 8.7s, holding to 11s"
+          ],
+          [
+            "Easing",
+            "Nodes pop with <code>cubic-bezier(0.34,1.56,0.64,1)</code>; each line is drawn outward from its parent with <code>1-(1-p)^2.4</code> over 60% of the layer window, then its dot pops at 92% of the line; the pull-back interpolates log-scale (constant zoom rate); the dive eases scale with <code>t^3</code> and position with <code>t^2</code>; the document re-deal steps at 8fps; slate letters <code>expo.out</code> 0.4s"
+          ],
+          [
+            "Camera",
+            "Starts at scale 2.0 with the root low in frame (330px bias) and pulls back over 0.45-3.45s until the network is about 80% of frame width, centered on the tree extents; dives into one green node over 3.95-4.35s until it fills a 44px radius; the dark scene is fixed; the slate pushes 1.035x over 2.6s"
+          ],
+          [
+            "Subject",
+            "Root dot (radius 34) with 7 layers below it. Layer 1 splits in 2 at ±31 degrees; layers 2-6 split in 2 or 3 (45% chance of 3) at ±34-38 degrees with ±5.5 degrees jitter and a bend toward radial; layer 7 splits in 2 or 3. Radius 24, 17, 12, 8, 5.6, 3.6, 1.9; edge length 300, 235, 195, 150, 110, 80, 42 (times 0.88-1.12); line width 1.9 down to 1.0. Six nodes labeled as documents turn green at 1.3x scale with a 0.7s ring pulse. Doubling scene: document cards (10 kinds) re-deal on a grid at 8fps, card scale 2.0, 1.9, 1.7, 1.25, 1.0, 0.78, 0.64, new cards pop at 0.8 then 1.05 then 1 over 3 frames, 40% carry a green status dot"
+          ],
+          [
+            "Style",
+            "Paper <code>#e3d5b5</code> with fibers, specks and a warm vignette for the tree and slate; near-black grain (about <code>#0d0d0c</code>) for the doubling beats; pencil ink <code>#1d1b18</code> with graphite gaps and burr strokes; the only accent is green <code>#3cc24a</code>, used for activated nodes, the status dots and the last slate node. Wordmark Inter 600 168px, letter-spacing -0.045em; tagline Inter 400 30px <code>#6b5e3f</code>"
+          ]
+        ],
+        "prompt": "Build a scale-growth film called Branching Growth, 11s. Beige paper background #e3d5b5 with fibers, specks and a warm vignette, and a single pencil-black dot (#1d1b18, radius 34) in the center. Starting at 0.45s, grow 7 layers below it: layer 1 splits in 2 at ±31 degrees, layers 2-6 split into 2 or 3 at ±34-38 degrees, layer 7 into 2 or 3, with radius 24, 17, 12, 8, 5.6, 3.6, 1.9 and edge length 300, 235, 195, 150, 110, 80, 42. Layers 1-3 take 0.5s each, layers 4-6 take 0.333s each, layer 7 runs 2.8-3.2s; draw each line outward with 1-(1-p)^2.4 and pop its dot at 92% of the line with cubic-bezier(0.34,1.56,0.64,1). At the same time pull the camera back from scale 2.0 over 0.45-3.45s at a constant zoom rate until the network fills about 80% of the frame width. The only accent is green #3cc24a: light six document-named nodes at 2.9-3.4s with a 1.3x scale and a ring pulse, then dive into one of them over 3.95-4.35s. Cut to near-black with a 4-frame darken and run the doubling scene, re-dealing document cards on a grid at 8fps: 1, 2, 4, 8, 16, 32 and 77 documents at 4.48, 4.95, 5.5, 6.1, 6.7, 7.3 and 7.9s, card scale falling from 2.0 to 0.64, green status dots on 40%. At 8.4s return to paper, grow a small 7-node tree mark, set the wordmark in with a 0.02s per-letter stagger (expo.out 0.4s) and the tagline at 8.7s, and hold to 11s with a slow 1.035x push.",
+        "says": [
+          "A dot slowly branches into a big web",
+          "One dot becomes two, then four, then fills the screen",
+          "Thin lines merge and flow in one direction"
+        ],
+        "vs": [
+          [
+            "iris-transition",
+            "Iris Window Montage cuts rapidly between images in a fixed frame; Branching Growth is one structure that keeps getting bigger."
+          ],
+          [
+            "glass-droplet-split",
+            "Glass Droplet Split is one shape shedding one bead; Branching Growth is a multi-level structural expansion."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "从一个点到上千个点只用黑线、黑点和纸纹，生长速度前慢后快，把规模增长做成可见的节奏。大节点和末端小点尺寸差很大，层级一眼可读；翻倍版用每拍数量翻倍推进，没有箭头和数字。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。纸面上的树 0.45–3.2s：第 1–3 层每层 0.5s（0.45–1.95s），第 4–6 层每层 0.333s（1.95–2.95s），第 7 层 2.8–3.2s；镜头拉远 0.45–3.45s；六个节点 2.9–3.4s 变绿；3.95–4.35s 扎进一个节点，随后 4 帧变暗进入深色场景。翻倍节拍在 4.48、4.95、5.5、6.1、6.7、7.3、7.9s（文档数 1、2、4、8、16、32、77）；8.4s 进入收尾页，8.7s 出标语，停到 11s"
+          ],
+          [
+            "缓动",
+            "节点弹出 <code>cubic-bezier(0.34,1.56,0.64,1)</code>；每根线从父节点向外描出，在层窗口的 60% 时间内走 <code>1-(1-p)^2.4</code>，线走到 92% 时圆点弹出；拉远按对数缩放插值（匀速倍率变化）；扎入时缩放用 <code>t^3</code>、位置用 <code>t^2</code>；文档重新排布按 8fps 阶跃；收尾页字母 <code>expo.out</code> 0.4s"
+          ],
+          [
+            "镜头",
+            "起始缩放 2.0，根点偏低（330px 偏移），在 0.45–3.45s 拉远到网络约占画面宽 80%，中心跟随树的范围；3.95–4.35s 扎入一个绿色节点直到它占 44px 半径；深色场景镜头固定；收尾页 2.6s 内缓推 1.035 倍"
+          ],
+          [
+            "主体",
+            "根点（半径 34）下面共 7 层。第 1 层分 2 根，夹角 ±31 度；第 2–6 层分 2 或 3 根（45% 概率 3 根），夹角 ±34–38 度，带 ±5.5 度随机偏移并向径向弯曲；第 7 层分 2 或 3 根。半径 24、17、12、8、5.6、3.6、1.9；线长 300、235、195、150、110、80、42（乘 0.88–1.12）；线宽从 1.9 递减到 1.0。六个标成文档名的节点以 1.3 倍变绿，带 0.7s 光环脉冲。翻倍场景：文档卡片（10 种）按网格以 8fps 重新排布，卡片缩放 2.0、1.9、1.7、1.25、1.0、0.78、0.64，新卡片 3 帧内从 0.8 到 1.05 再到 1 弹出，40% 带绿色状态点"
+          ],
+          [
+            "风格",
+            "树和收尾页用米黄纸 <code>#e3d5b5</code>，带纤维、斑点和暖色暗角；翻倍节拍用近黑颗粒底（约 <code>#0d0d0c</code>）；铅笔墨色 <code>#1d1b18</code>，带石墨断笔和毛边；唯一强调色是绿色 <code>#3cc24a</code>，用于被激活的节点、状态点和收尾页最后一个节点。字标 Inter 600 168px，字距 -0.045em；标语 Inter 400 30px <code>#6b5e3f</code>"
+          ]
+        ],
+        "prompt": "用「分叉生长（Branching Growth）」做规模增长的画面，全片 11s：米黄纸底 #e3d5b5，带纤维、斑点和暖色暗角，中央一颗铅笔黑圆点（#1d1b18，半径 34）。从 0.45s 起向下长出 7 层：第 1 层分 2 根，夹角 ±31 度；第 2–6 层分 2 或 3 根，夹角 ±34–38 度；第 7 层分 2 或 3 根；半径依次为 24、17、12、8、5.6、3.6、1.9，线长依次为 300、235、195、150、110、80、42。第 1–3 层每层 0.5s，第 4–6 层每层 0.333s，第 7 层 2.8–3.2s；每根线按 1-(1-p)^2.4 从父节点向外描出，线走到 92% 时圆点用 cubic-bezier(0.34,1.56,0.64,1) 弹出。镜头同时在 0.45–3.45s 从缩放 2.0 以匀速倍率拉远，直到网络占画面宽约 80%。唯一强调色是绿色 #3cc24a：2.9–3.4s 点亮六个以文档命名的节点（放大 1.3 倍并带光环脉冲），然后在 3.95–4.35s 扎进其中一个。随后 4 帧变暗切到近黑底，进入翻倍场景，文档卡片按网格以 8fps 重新排布：4.48、4.95、5.5、6.1、6.7、7.3、7.9s 分别为 1、2、4、8、16、32、77 份文档，卡片缩放从 2.0 降到 0.64，40% 带绿色状态点。8.4s 回到纸面，长出 7 个节点的小树标志，字标逐字错开 0.02s 淡入（expo.out 0.4s），8.7s 出标语，镜头缓推 1.035 倍，停到 11s。",
+        "says": [
+          "一个点慢慢分叉长成一张大网",
+          "一个点变成两个、四个、最后铺满屏幕",
+          "细线汇在一起往一个方向流"
+        ],
+        "vs": [
+          [
+            "iris-transition",
+            "圆窗蒙太奇是固定取景框里快切多张图；分叉生长是同一结构不断变大"
+          ],
+          [
+            "glass-droplet-split",
+            "水滴分离是一个形体分出一颗；分叉生长是多层级的结构扩张"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Branching Growth",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Branching Growth\": branching growth; branching cyphastrea growth rate; branching marine growth crossword; branching apical growth",
+      "checked": "2026-11-28"
+    },
+    "title": "Branching Growth: Network Animation Recipe",
+    "description": "One dot branches layer by layer into a network, slow then fast, then doubles into 77 documents. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A single dot branches layer by layer into a network, slow at first and then faster, or splits in doubling beats until it fills the frame.",
+    "name": "Branching Growth",
+    "ownName": "Branching Growth",
+    "body": [
+      {
+        "h2": "How to make a Branching Growth with Claude Code or Codex",
+        "body": "Draw a root dot (radius 34) and seven layers. Layer 1 splits in 2 at 31 degrees either side; layers 2 to 6 split in 2 or 3 (45% chance of 3) at 34 to 38 degrees with 5.5 degrees of jitter. Radii step 24, 17, 12, 8, 5.6, 3.6, 1.9 and edge lengths 300, 235, 195, 150, 110, 80, 42, in pencil ink #1d1b18 on paper #e3d5b5.\n\nSpeed the layers up: layers 1 to 3 take 0.5 s each, layers 4 to 6 take 0.333 s, layer 7 takes 0.4 s. Each line draws outward from its parent with 1-(1-p)^2.4, and its dot pops with cubic-bezier(0.34,1.56,0.64,1). The camera pulls back from scale 2.0 over 0.45 to 3.45 s, interpolated on a log scale, and six nodes turn green.\n\nThen dive into one node and run doubling beats at 4.48 to 7.9 s (1, 2, 4, 8, 16, 32, 77 documents) re-dealt at 8 fps. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site."
+      }
+    ],
+    "alt": "A single yellow note card titled Q3 roadmap, listing goals for the next quarter, on a dark background.",
+    "faq": [
+      [
+        "What is a branching growth animation?",
+        "One point splits into branches, and each branch splits again, layer by layer, until a network fills the frame. A second form doubles the item count on every beat. Both show scale as a visible rhythm."
+      ],
+      [
+        "How do I make growth feel like it accelerates?",
+        "Shorten the time per layer as depth increases, here 0.5 s and then 0.333 s, and zoom the camera out at a constant rate by interpolating scale on a log scale. The network then speeds up while staying in frame."
+      ],
+      [
+        "Is the Branching Growth recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "分叉生长动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"分叉生长动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "分叉生长动画：网络扩张示例与配方",
+    "description": "一个点逐层分叉长成网络，前慢后快，再按翻倍节奏分裂出 77 份文档。用免费配方，让 Claude Code 或 Codex 做出这段分叉生长动画。",
+    "lede": "一个点逐层分叉长成网络，前慢后快；或一个点按翻倍节奏分裂铺满画面。",
+    "name": "分叉生长动画",
+    "ownName": "分叉生长",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做分叉生长动画",
+        "body": "画一个根节点（半径 34）和七层分叉。第 1 层向两侧各 31° 分成 2 支；第 2 到 6 层分成 2 或 3 支（45% 的概率是 3 支），角度 34° 到 38°，带 5.5° 的抖动。半径依次为 24、17、12、8、5.6、3.6、1.9，边长依次为 300、235、195、150、110、80、42，铅笔墨色 #1d1b18，纸色 #e3d5b5。\n\n层与层越来越快：第 1 到 3 层各 0.5 秒，第 4 到 6 层各 0.333 秒，第 7 层 0.4 秒。每条线按 1-(1-p)^2.4 从父节点向外画出，节点用 cubic-bezier(0.34,1.56,0.64,1) 弹出。镜头在 0.45 到 3.45 秒从 2.0 倍拉远，缩放按对数插值，六个节点变绿。\n\n随后镜头扎进其中一个节点，4.48 到 7.9 秒按翻倍节奏推进（1、2、4、8、16、32、77 份文档），以 8fps 重新排布。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站。"
+      }
+    ],
+    "alt": "深色背景上只有一张黄色便签，标题 Q3 roadmap，列着下季度目标。",
+    "faq": [
+      [
+        "分叉生长动画是什么？",
+        "一个点分出枝，每根枝再分，逐层展开，直到网络铺满画面。另一种形式是每一拍把数量翻倍。两种都把规模变成看得见的节奏。"
+      ],
+      [
+        "怎样让生长看起来在加速？",
+        "层数越深，每层用时越短，这里是 0.5 秒再到 0.333 秒，同时让镜头按对数插值缩放，匀速拉远。网络越长越快，又始终留在画面里。"
+      ],
+      [
+        "分叉生长动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

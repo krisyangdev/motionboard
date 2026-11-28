@@ -1,0 +1,190 @@
+{
+  "slug": "locked-layout-reskin",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/locked-reskin.mp4",
+    "poster": "https://media.motionboard.app/locked-reskin.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 17,
+    "cat": "B",
+    "star": false,
+    "video": "locked-reskin",
+    "samples": [
+      {
+        "t": "Arc Boosts",
+        "id": "N0jMmiCS8oQ",
+        "at": "0:00–0:05",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "With the layout locked, the viewer's eye stays in one place and sees only what changes with each switch. Cuts land on the strong beats of the music, and the skins differ enough in color.",
+        "spec": [
+          [
+            "Timing",
+            "Skin cuts: 4 at 16-frame spacing (0.53s) from 1.0s to 2.6s; title card 3.13–3.73s (18 frames); 10 cuts at 8-frame spacing (0.27s) 3.73–6.13s; 11 cuts at 6-frame spacing (0.2s) 6.4–8.4s, landing on one skin; Enter applies at 8.67s; wordmark cuts 9.4–9.7s; film 11s"
+          ],
+          [
+            "Easing",
+            "No transition, a class swap with <code>tl.set</code> on a single frame; only the toast (<code>expo.out</code> 0.35s), cursor move and the final <code>scale</code> push animate"
+          ],
+          [
+            "Camera",
+            "Fixed; the editor window is 1632×918px (85% of the frame) with position locked; <code>scale</code> 1→1.03 <code>linear</code> over 1s after landing (8.4–9.4s)"
+          ],
+          [
+            "Subject",
+            "One page (a 1240×828px site canvas) re-skinned through eight theme classes: Mono white, Gazette beige serif, Neon dark purple with lime and monospace, Fern green serif, Block orange with condensed black type, Sorbet pink and lilac, Poster blue with condensed caps, Noir dark with gold serif; layout and elements never move"
+          ],
+          [
+            "Sync",
+            "A theme-list panel highlights the active row, and an arrow-down key cap lights for 3 frames on every cut; the cursor picks the Gazette row at 0.87s and the first cut follows at 1.0s; the title card colors come from the skins on either side (<code>#fff1f5</code> background, <code>#ff5a1f</code> text)"
+          ],
+          [
+            "Style",
+            "Each skin changes background, text, accent, border and font through CSS variables; saturated solid fields (Block <code>#ff5a1f</code>, Poster <code>#2340ff</code>) alternate with quiet light and dark skins; type styles differ clearly between skins"
+          ]
+        ],
+        "prompt": "Show that your page is customizable with a shot called Locked-Layout Reskin. Put one page in an editor window that takes up 85% of the frame (1632×918px), with position and element layout fully locked. Swap it through eight skins by changing a theme class on a single frame, each skin changing background, text, accent, border and typeface through CSS variables (white Mono, beige serif Gazette, dark Neon with lime and monospace, green Fern, orange Block with condensed black type, pink Sorbet, blue Poster, dark gold Noir). Light an arrow-down key cap for 3 frames on every cut. Start with the cursor picking one skin at 0.87s, cut every 16 frames for 4 skins (1.0 to 2.6s), insert a 0.6s solid-color title card at 3.13s with colors taken from the skins before and after, cut every 8 frames for 10 skins, then every 6 frames for 11 skins until it lands on the chosen skin at 8.4s. Press Enter with a toast at 8.67s, push scale 1 to 1.03 over 1s, then finish with a few hard-cut wordmark skins.",
+        "says": [
+          "The same web page in lots of colors and fonts",
+          "The layout stays put while the colors keep jumping",
+          "Quick switching between different themes"
+        ],
+        "vs": [
+          [
+            "control-driven-change",
+            "Control-Driven Change shows a control that changes the result on the same frame; Locked-Layout Reskin has no control and conveys customizability through edit rhythm."
+          ],
+          [
+            "focus-hop",
+            "Focus Hop moves a single highlight block; Locked-Layout Reskin changes the skin of the whole page."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "布局锁定后观众的眼睛停在同一位置，每次切换只看到变化的部分；切点卡音乐重拍，皮肤之间的颜色差距足够大。",
+        "spec": [
+          [
+            "时长",
+            "皮肤切换：1.0s 到 2.6s 间隔 16 帧（0.53s）共 4 次；字卡 3.13–3.73s（18 帧）；3.73–6.13s 间隔 8 帧（0.27s）共 10 次；6.4–8.4s 间隔 6 帧（0.2s）共 11 次，落在一套皮肤上；8.67s 回车应用；字标硬切 9.4–9.7s；全片 11s"
+          ],
+          [
+            "缓动",
+            "无过渡，单帧 <code>tl.set</code> 切换 class；只有 toast（<code>expo.out</code> 0.35s）、光标移动和最后的 <code>scale</code> 推近有动画"
+          ],
+          [
+            "镜头",
+            "固定；编辑器窗口 1632×918px（占画面 85%），位置锁死；落定后 8.4–9.4s <code>scale</code> 1→1.03 <code>linear</code> 缓推 1s"
+          ],
+          [
+            "主体",
+            "同一个页面（1240×828px 站点画布）通过八个主题 class 换肤：Mono 白、Gazette 米黄衬线、Neon 深紫加荧光绿与等宽、Fern 绿色衬线、Block 橙底粗体窄字、Sorbet 粉与淡紫、Poster 蓝底窄体大写、Noir 深色加金色衬线；布局和元素全程不动"
+          ],
+          [
+            "同步",
+            "主题列表面板高亮当前行，每次切换时向下方向键键帽亮 3 帧；光标 0.87s 点中 Gazette 行，1.0s 开始第一次切换；字卡颜色取自前后两套皮肤（<code>#fff1f5</code> 底、<code>#ff5a1f</code> 字）"
+          ],
+          [
+            "风格",
+            "每套皮肤通过 CSS 变量改背景、文字、强调色、边框和字体；饱和纯色（Block <code>#ff5a1f</code>、Poster <code>#2340ff</code>）与安静的浅色、深色皮肤交替；皮肤之间字体风格差异明显"
+          ]
+        ],
+        "prompt": "用「同版换肤快切（Locked-Layout Reskin）」展示你的页面可定制：同一页面放在占画面 85%（1632×918px）的编辑器窗口里，位置和元素布局完全锁死。在单帧内切换主题 class，轮换八套皮肤，每套通过 CSS 变量改背景、文字、强调色、边框和字体（白色 Mono、米黄衬线 Gazette、深色加荧光绿与等宽的 Neon、绿色 Fern、橙底粗体窄字 Block、粉色 Sorbet、蓝底 Poster、深色金色 Noir）。每次切换让向下方向键键帽亮 3 帧。开场光标 0.87s 点中一套皮肤，随后 1.0 到 2.6s 每 16 帧切一套，共 4 套；3.13s 插入一张 0.6s 纯色字卡，颜色取自前后两套皮肤；接着每 8 帧切一套，共 10 套；再每 6 帧切一套，共 11 套，8.4s 落在选中的那套上。8.67s 回车确认并弹出 toast，用 1s 把 scale 从 1 推到 1.03，最后用几次硬切皮肤收成字标。",
+        "says": [
+          "同一个网页换好多种配色字体",
+          "版式不变颜色一直跳",
+          "快速切换不同主题"
+        ],
+        "vs": [
+          [
+            "control-driven-change",
+            "控件驱动画面里有控件并同帧改变结果；本条没有控件，靠剪辑节奏表达可换肤"
+          ],
+          [
+            "focus-hop",
+            "焦点跳格是一个高亮块移动；本条整页皮肤变化"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Locked-Layout Reskin",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Locked-Layout Reskin\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Locked-Layout Reskin: Example and Code Recipe",
+    "description": "One site layout stays locked while color and font skins hard-cut every 6 to 16 frames. Make this reskin animation with Claude Code or Codex.",
+    "lede": "Layout positions stay locked while the color scheme and fonts hard-cut every 6–10 frames.",
+    "name": "Locked-Layout Reskin",
+    "ownName": "Locked-Layout Reskin",
+    "body": [
+      {
+        "h2": "How to make a Locked-Layout Reskin with Claude Code or Codex",
+        "body": "Build one site canvas (1240×828px) inside a fixed editor window (1632×918px) and define eight theme classes through CSS variables for background, text, accent, border and font: Mono, Gazette, Neon, Fern, Block, Sorbet, Poster and Noir. Each cut is a class swap with tl.set on a single frame, with no transition.\n\nSpeed up the cuts: 4 at 16-frame spacing (0.53s) from 1.0s, 10 at 8 frames (0.27s) from 3.73s, then 11 at 6 frames (0.2s) from 6.4s. Light an arrow-down key cap for 3 frames on every cut. Place saturated solid skins (Block #ff5a1f, Poster #2340ff) between quiet light and dark ones, land on one skin and press Enter at 8.67s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the eight skins and the cut schedule. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A headphone store page in a site builder, styled with a warm serif theme picked from the theme list on the right.",
+    "faq": [
+      [
+        "What is a reskin animation?",
+        "A reskin keeps the layout and swaps the visual theme: colors, fonts and accents. Cutting quickly between skins shows how far the look of a single page structure can change, with every element staying in place."
+      ],
+      [
+        "Should skin changes use transitions?",
+        "In this recipe each switch is a class swap on one frame with no transition. The hard cut lands on a beat and keeps every position locked, so the viewer sees only what changes. Only the toast, the cursor and the final scale push animate."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "固定版式换肤动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"固定版式换肤动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "固定版式换肤动画：示例与代码配方",
+    "description": "同一个网页版式位置锁定，配色和字体每隔 6 到 16 帧硬切一次。用 Claude Code 或 Codex 按免费配方做出这个换肤快切动画。",
+    "lede": "布局位置不变，每 6–10 帧硬切换一套配色和字体。",
+    "name": "固定版式换肤动画",
+    "ownName": "同版换肤快切",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做固定版式换肤动画",
+        "body": "在固定的编辑器窗口（1632×918px）里放一个 1240×828px 的网页画布，用 CSS 变量定义八个主题类，控制背景、文字、强调色、边框和字体：Mono、Gazette、Neon、Fern、Block、Sorbet、Poster、Noir。每次切换是一帧内用 tl.set 换类名，没有过渡。\n\n切换越来越快：1.0s 起 4 次，间隔 16 帧（0.53s）；3.73s 起 10 次，间隔 8 帧（0.27s）；6.4s 起 11 次，间隔 6 帧（0.2s）。每次切换让向下箭头键帽亮 3 帧。饱和的纯色皮肤（Block #ff5a1f、Poster #2340ff）放在安静的浅色和深色皮肤之间，最后落在一套皮肤上，8.67s 按下 Enter。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出八套皮肤和切换节奏表。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "建站工具里的耳机商店页面，用右侧主题列表选中的暖色衬线主题重新排版。",
+    "faq": [
+      [
+        "什么是换肤动画？",
+        "换肤保持版式不变，只替换视觉主题：颜色、字体和强调色。快速在皮肤之间切换，能展示同一个页面结构的外观可以变化到什么程度。"
+      ],
+      [
+        "换肤要加过渡吗？",
+        "这份配方里每次切换都是一帧内换类名，没有过渡。硬切落在节拍上，所有位置保持锁定，观众只看到变化的部分。只有提示条、光标和最后的缩放推近有动画。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

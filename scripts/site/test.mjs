@@ -1,6 +1,7 @@
 // Motionboard's own checks of the built output, run after the template's scripts/test.mjs (npm test).
 // Covers what is specific to this site: page counts, the video sitemap, redirects, the noindex header on
 // the recipe files, the film <source> elements in the server HTML, config values repeated elsewhere, D1.
+// The recipes are the items in content/collections/recipes/.
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { MEDIA_URL, SITE, SITE_URL } from '../../src/site/config.ts'
@@ -20,7 +21,13 @@ const check = (name, items, fn) => {
   console.log(`${failures.length === before ? 'ok  ' : 'FAIL'} ${name}: ${items.length} checked, ${failures.length - before} failed`)
 }
 
-const terms = json('content/recipes/terms.json')
+const recipes = readdirSync(join(root, 'content/collections/recipes'))
+  .filter((f) => f.endsWith('.json'))
+  .sort()
+  .map((f) => {
+    const r = json(`content/collections/recipes/${f}`)
+    return { slug: r.slug, video: r.data.video }
+  })
 const pageFiles = readdirSync(join(root, 'content/pages')).filter((f) => f.endsWith('.json'))
 const prefixes = ['', '/zh']
 
@@ -28,21 +35,21 @@ const prefixes = ['', '/zh']
 // sitemap.xml is an index; the page URLs are in its child sitemaps (all but the video one)
 const children = readdirSync(assets).filter((f) => /^sitemap-.+\.xml$/.test(f) && f !== 'sitemap-video.xml')
 const locs = children.flatMap((f) => all(/<loc>\s*([^<]+?)\s*<\/loc>/g, read(f)).map((m) => m[1]))
-const want = 2 * (2 + terms.length + pageFiles.length)
+const want = 2 * (2 + recipes.length + pageFiles.length)
 check('sitemap count', [locs.length], (n) => (n === want ? '' : `expected ${want} URLs, found ${n}`))
 check('sitemap has no helper pages', locs, (l) => (/\/saved\/|#|\.md$/.test(l) ? `${l} should stay out of the sitemap` : ''))
 
 // 2. video sitemap: one <video> per recipe and language, three showcase films on the launch-video-examples page
 const videoMap = read('sitemap-video.xml')
 const videoUrls = all(/<url>([\s\S]*?)<\/url>/g, videoMap).map((m) => m[1])
-check('video sitemap count', [videoUrls.length], (n) => (n === 2 * (terms.length + 1) ? '' : `expected ${2 * (terms.length + 1)} URLs, found ${n}`))
+check('video sitemap count', [videoUrls.length], (n) => (n === 2 * (recipes.length + 1) ? '' : `expected ${2 * (recipes.length + 1)} URLs, found ${n}`))
 check('video sitemap videos', videoUrls, (b) => {
   const loc = b.match(/<loc>([^<]+)<\/loc>/)[1]
   const n = all(/<video:video>/g, b).length
   const want = loc.endsWith('/guides/launch-video-examples/') ? 3 : 1
   return n === want ? '' : `${loc}: ${n} videos, want ${want}`
 })
-check('video sitemap language', terms.slice(0, 5), (t) => {
+check('video sitemap language', recipes.slice(0, 5), (t) => {
   const zh = videoUrls.find((b) => b.includes(`/zh/recipes/${t.slug}/`))
   const en = videoUrls.find((b) => b.includes(`${SITE_URL}/recipes/${t.slug}/`))
   const title = (b) => b?.match(/<video:title>([^<]*)<\/video:title>/)?.[1]
@@ -65,12 +72,12 @@ check('renamed recipe files redirect', renamed.filter(([from]) => from.startsWit
 })
 
 // 4. recipe files for agents exist and carry X-Robots-Tag: noindex
-check('recipe md files', [...terms.map((t) => `r/${t.slug}.md`), 'r/index.md'], (f) => (existsSync(join(assets, f)) ? '' : `${f} missing`))
+check('recipe md files', [...recipes.map((t) => `r/${t.slug}.md`), 'r/index.md'], (f) => (existsSync(join(assets, f)) ? '' : `${f} missing`))
 check('/r/* noindex header', [read('_headers')], (h) => (/^\/r\/\*\n\s+X-Robots-Tag: noindex$/m.test(h) ? '' : '_headers has no X-Robots-Tag: noindex block for /r/*'))
 
 // 5. film <source> elements in the server HTML; the poster is the LCP element
 const hasSource = (html, base) => html.includes(`src="${MEDIA_URL}/${base}.mp4"`) && html.includes(`src="${MEDIA_URL}/${base}-m.mp4"`)
-check('recipe film in server HTML', terms.flatMap((t) => prefixes.map((p) => ({ t, p }))), ({ t, p }) => {
+check('recipe film in server HTML', recipes.flatMap((t) => prefixes.map((p) => ({ t, p }))), ({ t, p }) => {
   const html = read(`${p ? `${p.slice(1)}/` : ''}recipes/${t.slug}/index.html`)
   if (!hasSource(html, t.video)) return `${p}/recipes/${t.slug}/ has no <source> for ${t.video}`
   return /<img[^>]*fetchPriority="high"[^>]*elementtiming="poster"/.test(html) ? '' : `${p}/recipes/${t.slug}/ has no poster with elementtiming`
@@ -87,7 +94,7 @@ const cf = readFileSync(join(root, 'cloudflare.config.ts'), 'utf8')
 check('cloudflare.config.ts matches site.config.ts', [[`name: "${SITE.worker}"`], [`domains: ["${SITE.domain}"]`]], ([s]) => (cf.includes(s) ? '' : `cloudflare.config.ts lacks ${s}`))
 check('CSP allows the media host', [read('_headers')], (h) => (new RegExp(`media-src[^;\\n]*${MEDIA_URL.replace(/\./g, '\\.')}`).test(h) ? '' : `media-src does not allow ${MEDIA_URL}`))
 check('IndexNow key file', [SITE.indexNowKey], (k) => (existsSync(join(root, 'public', `${k}.txt`)) && readFileSync(join(root, 'public', `${k}.txt`), 'utf8').trim() === k ? '' : `public/${k}.txt missing or different`))
-check('llms.txt lists the recipe files', [read('llms.txt')], (t) => (t.includes(`${SITE_URL}/r/index.md`) && terms.every((x) => t.includes(`/r/${x.slug}.md`)) ? '' : 'llms.txt misses recipe files'))
+check('llms.txt lists the recipe files', [read('llms.txt')], (t) => (t.includes(`${SITE_URL}/r/index.md`) && recipes.every((x) => t.includes(`/r/${x.slug}.md`)) ? '' : 'llms.txt misses recipe files'))
 
 // 7. the D1 stats server functions are in the Worker bundle
 const bundle = join(assets, '../bundle')

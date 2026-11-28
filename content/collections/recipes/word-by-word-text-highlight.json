@@ -1,0 +1,202 @@
+{
+  "slug": "word-by-word-text-highlight",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/word-highlight.mp4",
+    "poster": "https://media.motionboard.app/word-highlight.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 22,
+    "cat": "C",
+    "star": false,
+    "video": "word-highlight",
+    "samples": [
+      {
+        "t": "Apple iPhone 17 Pro",
+        "id": "TNhX1uR2vO8",
+        "at": "0:05–0:30",
+        "s": 5
+      },
+      {
+        "t": "Apple MacBook Pro M5",
+        "id": "GriXfu4tL30",
+        "at": "1:31–1:35",
+        "s": 91
+      },
+      {
+        "t": "Apple AirPods Pro 3",
+        "id": "EMmKs8vMKhU",
+        "at": "0:19–0:22",
+        "s": 19
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The type is only 2.5% of frame height with over 90% empty space around it, so reading pace is controlled entirely by the word-by-word brightening. A slowly rotating product sits under each selling-point card, so the card always has something to look at. In the closing version, the frame where the last word of the subtitle appears lines up with the end frame of the lid-closing motion.",
+        "spec": [
+          [
+            "Timing",
+            "One 37-word paragraph: words appear 0–5.92s, the last finishes lighting at 6.34s, hold until the hard cut at 8.3s (about 1.96s, 59 frames); wordmark card 8.3–11s: letters from 8.42s (0.07s apart), tagline 8.8s; film 11s"
+          ],
+          [
+            "Easing",
+            "Each word is set to <code>#666</code> and then runs <code>linear</code> to <code>#fff</code> over 0.42s (13 frames); words appear with no movement; product fades up from black over 0.7s (sine in-out); mark <code>expo.out</code> 1.4s (<code>rotation</code> −40→0, meridian <code>rx</code> 20→0.6)"
+          ],
+          [
+            "Camera",
+            "Text card fixed in the top band; the product is a 3D laptop on a turntable at a constant −13° per second (68°→−40° by 8.3s) with a slow camera push of 2.5% (fov 19°, elevation 17°); the wordmark card drifts <code>scale</code> 1→1.04 over 2.7s"
+          ],
+          [
+            "Subject",
+            "Gap after each word = <code>0.075 + 0.0125 × letters</code> seconds (0.09–0.22s), plus 0.42s after a period and 0.22s after a comma; each word appears at 40% gray (<code>#666</code>) and the next appears while the previous is still brightening; the whole paragraph holds and then hard-cuts"
+          ],
+          [
+            "Sync",
+            "Reading rhythm follows word length and punctuation; the paragraph stays still while the product turns beneath it; at 8.3s the hard cut lands the wordmark, where each letter repeats the same gray-to-white step"
+          ],
+          [
+            "Style",
+            "Pure black <code>#000</code> background; white Inter 500 at 33px (3.1% of frame height), 1000px wide, centered, <code>line-height 1.42</code>, <code>text-wrap: balance</code>; wordmark 124px weight 600 with a white disc mark; bloom and fine grain on the product"
+          ]
+        ],
+        "prompt": "Build a selling-point title card called Word-by-Word Highlight. Pure black background; a 1000px-wide centered paragraph of white Inter 500 at 33px (about 3% of frame height, balanced wrap) sits in the top band, with a 3D product turning slowly below it. Words appear in order with no movement. Each word is set to 40% gray (#666) and brightens linearly to white over 0.42s, and the next word appears while the previous one is still brightening. The gap after each word is 0.075s plus 0.0125s per letter, with an extra 0.42s after a period and 0.22s after a comma, so a 37-word paragraph finishes at 6.34s. Hold it until 8.3s, then hard-cut to a wordmark card where each letter brightens from gray to white 0.07s apart and a tagline fades in over 0.5s. The product behind turns at a constant 13 degrees per second while the text stays still.",
+        "says": [
+          "One sentence lighting up word by word on black",
+          "The words turn from gray to white one at a time",
+          "The subtitle fills in word by word with the action"
+        ],
+        "vs": [
+          [
+            "typing-animation",
+            "Rhythmic Typing appends characters one at a time with a cursor; Word-by-Word Highlight brightens whole words in sequence, with no cursor."
+          ],
+          [
+            "kinetic-typography",
+            "In Scattered Spec Type the words land at spread-out positions and appear with a hard cut; in Word-by-Word Highlight the words sit on one line."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "字号只有画面高度的 2.5%，四周留白 90% 以上，阅读节奏全由逐词提亮控制。每个卖点字卡下面垫着慢转的产品，字卡上始终有可看的画面；收尾版本里副标题最后一个词的出现帧对齐合盖动作的结束帧。",
+        "spec": [
+          [
+            "时长",
+            "一段 37 个词的文案：词在 0–5.92s 依次出现，最后一个词 6.34s 点亮完毕，停留到 8.3s 硬切（约 1.96s，59 帧）；字标卡 8.3–11s：字母 8.42s 起（间隔 0.07s），标语 8.8s；全片 11s"
+          ],
+          [
+            "缓动",
+            "每个词先设为 <code>#666</code>，再 <code>linear</code> 在 0.42s（13 帧）内变到 <code>#fff</code>；词出现时无位移；产品 0.7s 从黑场淡入（sine in-out）；标志 <code>expo.out</code> 1.4s（<code>rotation</code> −40→0，经线 <code>rx</code> 20→0.6）"
+          ],
+          [
+            "镜头",
+            "文字卡固定在顶部区域；产品是转盘上的 3D 笔记本，以 −13°/秒匀速转动（到 8.3s 从 68° 转到 −40°），镜头缓推 2.5%（fov 19°，俯角 17°）；字标卡 2.7s 内 <code>scale</code> 1→1.04 漂移"
+          ],
+          [
+            "主体",
+            "每个词之后的间隔 = <code>0.075 + 0.0125 × 字母数</code> 秒（0.09–0.22s），句号后加 0.42s，逗号后加 0.22s；每个词出现时是 40% 灰（<code>#666</code>），前一个词还在提亮时后一个词就出现；整段停留后硬切"
+          ],
+          [
+            "同步",
+            "阅读节奏随词长和标点变化；整段文字不动，产品在下方转动；8.3s 硬切到字标，每个字母重复同样的灰到白"
+          ],
+          [
+            "风格",
+            "纯黑 <code>#000</code> 底；白色 Inter 500，字号 33px（占画面高 3.1%），宽 1000px，居中，<code>line-height 1.42</code>，<code>text-wrap: balance</code>；字标 124px、字重 600，配白色圆盘标志；产品带泛光和细颗粒"
+          ]
+        ],
+        "prompt": "用「逐词点亮（Word-by-Word Highlight）」做一段卖点字卡：纯黑底，顶部区域放一段宽 1000px、居中的白色 Inter 500 文案，字号 33px（约画面高度的 3%，balance 换行），下方一个 3D 产品缓慢转动。词按顺序出现，字不做任何位移。每个词先设为 40% 灰（#666），用 0.42s 线性提亮到白，前一个词还在提亮时后一个词就出现。每个词之后的间隔是 0.075s 加每个字母 0.0125s，句号后再加 0.42s，逗号后再加 0.22s，37 个词的段落在 6.34s 全部点亮。停留到 8.3s 后硬切到字标卡，字母每隔 0.07s 从灰提亮到白，标语用 0.5s 淡入。背后的产品以每秒 13° 匀速转动，文字保持不动。",
+        "says": [
+          "黑底上一句话一个词一个词亮起来",
+          "字一个个由灰变白",
+          "副标题跟着动作一个词一个词补出来"
+        ],
+        "vs": [
+          [
+            "typing-animation",
+            "节奏打字按字符逐个追加并带光标；逐词点亮是整词先后提亮，无光标"
+          ],
+          [
+            "kinetic-typography",
+            "散排参数的词落在拉开的不同位置且硬出现；逐词点亮的词排在同一行里"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Word-by-Word Text Highlight",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Word-by-Word Text Highlight\": word by word text highlighting; how to text highlight in word; how to automatically highlight words in word",
+      "checked": "2026-11-28"
+    },
+    "title": "Word-by-Word Text Highlight: Recipe and Code",
+    "description": "A 37-word paragraph brightens from gray to white one word at a time as a laptop turns below. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "Words in a small centered line brighten from gray to white one at a time, and the text never moves.",
+    "name": "Word-by-Word Text Highlight",
+    "ownName": "Word-by-Word Highlight",
+    "body": [
+      {
+        "h2": "How to make a Word-by-Word Text Highlight with Claude Code or Codex",
+        "body": "Set one centered paragraph in Inter 500 at 33 px, 1000 px wide, line-height 1.42, on pure black. Each word appears at #666 and runs a linear tween to #fff over 0.42 s with no movement. The next word starts while the previous one is still brightening, so the highlight travels along the line.\n\nSpace the words by 0.075 + 0.0125 × letters seconds, add 0.42 s after a period and 0.22 s after a comma. Words appear from 0 to 5.92 s and the paragraph holds until a hard cut at 8.3 s. Under the text a 3D laptop turns at a constant -13° per second with a 2.5% camera push.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to a page where your own copy lights up word by word."
+      }
+    ],
+    "alt": "A silver laptop on black under a paragraph about its aluminium body, read one word at a time.",
+    "faq": [
+      [
+        "What is a word-by-word text highlight?",
+        "The full text is laid out in a dim color, and each word switches to a bright color in reading order. The layout never changes, so the highlight sets the reading pace. It works well for short, centered statements."
+      ],
+      [
+        "How do I build a word-by-word highlight with CSS and GSAP?",
+        "Wrap each word in a span set to #666 and animate its color to #fff with a GSAP timeline, starting each span by the word-length formula. Since only color changes, nothing shifts as words light up."
+      ],
+      [
+        "Is the Word-by-Word Text Highlight recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "逐词高亮",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"逐词高亮动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "逐词高亮文字动画：示例与配方",
+    "description": "黑底上一段 37 个词的小字按顺序由灰变白，一次点亮一个词，下方的笔记本电脑缓慢转动。用免费配方，让 Claude Code 或 Codex 做出来。",
+    "lede": "黑场小字按顺序由灰变白，一次点亮一个词，字本身不位移。",
+    "name": "逐词高亮动画",
+    "ownName": "逐词点亮",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做逐词高亮动画",
+        "body": "黑色背景上放一段居中文字：Inter 500，33px，宽 1000px，行高 1.42。每个词先以 #666 出现，再用线性动画在 0.42 秒内变到 #fff，字本身不位移。上一个词还在变亮时下一个词就开始，高亮会沿着句子推进。\n\n词间隔按 0.075 + 0.0125 × 字母数（秒）计算，句号后多停 0.42 秒，逗号后多停 0.22 秒。文字在 0 到 5.92 秒逐词出现，整段停留到 8.3 秒硬切。文字下方的 3D 笔记本电脑以每秒 -13° 匀速转动，镜头同时推近 2.5%。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到网页，让你自己的文案逐词点亮。"
+      }
+    ],
+    "alt": "黑底上一台银色笔记本，上方关于铝制机身的一段文字逐词亮起。",
+    "faq": [
+      [
+        "逐词高亮是什么？",
+        "整段文字先以暗色排好，再按阅读顺序让每个词切到亮色。版面不变，阅读节奏完全由高亮速度决定，适合居中的短句。"
+      ],
+      [
+        "怎样用 CSS 和 GSAP 做逐词高亮？",
+        "把每个词包进 span，初始颜色设为 #666，用 GSAP 时间线把颜色动画到 #fff，每个 span 的起点按词长公式错开。只有颜色在变，词点亮时版面不会移动。"
+      ],
+      [
+        "逐词高亮配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

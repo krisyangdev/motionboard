@@ -1,0 +1,190 @@
+{
+  "slug": "domino-wave",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/domino-wave.mp4",
+    "poster": "https://media.motionboard.app/domino-wave.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.8
+  },
+  "data": {
+    "n": 35,
+    "cat": "D",
+    "star": false,
+    "video": "domino-wave",
+    "samples": [
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:17–0:20",
+        "s": 17
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Each cube does only a simple flip, and the phase offset combines into a sense of forward motion. The material is a uniform matte dark gray, with faces told apart only by the top light. The slogan means moving forward, and the direction of the motion matches it.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.8s. White flash fades 0.05-0.75s. Pass 1 from 0.34s (flip 0.6s, 0.10s offset); arrow sweep 0.95-2.45s; pass 2 from 2.5s (turn 0.72s, 0.10s offset); slogan words from 2.78s, 0.1s apart, out at 5.9s; pass 3 from 3.75s (flip 0.6s, 0.07s offset, right to left); camera push 6.2-7.5s; flash 7.42s; end card 7.66s; mark 8.2s, wordmark 8.32s, ring 8.55-9.35s"
+          ],
+          [
+            "Easing",
+            "Flip <code>cubic-bezier(0.65,0,0.35,1)</code> on every wave; camera pan linear at 2.03 units per second; arrow <code>power2.inOut</code>; push <code>t^2</code>; slogan words and wordmark <code>expo.out</code>; flash <code>power2.in</code> 0.2s then <code>power2.out</code> 0.7s; ring stroke <code>power2.inOut</code> 0.8s"
+          ],
+          [
+            "Camera",
+            "Perspective camera (24 degree field) tracking along the row at 2.03 world units per second, about 15% of frame width, from (-8, 3.9, 13.5) looking at (0.5, 1.15, 0), with a roll of -0.1 rad (5.7 degrees); lens radius 0.30 for depth of field. From 6.2s it dives toward cube 7 and ends 1.28 units in front of its face as the roll eases to 0"
+          ],
+          [
+            "Subject",
+            "A row of 36 matte cubes (edge 1.45, spacing 2.2, hovering at 1.32). Pass 1 turns each cube 90 degrees in the view plane with a 0.1 unit hop; pass 2 turns each 180 degrees with a 0.8 unit hop; pass 3 runs right to left, rolls each cube 90 degrees along the row with a 0.22 unit hop and brings the ring face toward the lens. Cube 7 carries an orange hex ring (<code>#ff5a1f</code>), the others a dark groove. A white extruded arrow with a trail sweeps above the row"
+          ],
+          [
+            "Sync",
+            "The five slogan words (Every write lands in order.) fade in 0.1s apart from 2.78s, following the left-to-right sweep of pass 2; the arrow passes before it. The push into cube 7 ends in a white flash at 7.42s that resolves into the end card, where the mark and wordmark Basalt appear"
+          ],
+          [
+            "Style",
+            "Light gray studio gradient background; matte cubes <code>#5a5b60</code> with 0.07 bevels and a hex groove on one face; top softbox key light with soft shadow, thin rim strips, a floor reflection at 20% opacity and a 0.3 vignette; slogan Inter 500 64px, wordmark Inter 600 120px, letter-spacing -0.045em"
+          ]
+        ],
+        "prompt": "Express forward motion with a shot called Domino Wave, 10.8s. Light gray studio gradient background, with a row of 36 matte dark gray cubes (#5a5b60, edge 1.45, spacing 2.2, hovering at 1.32, 0.07 bevels) seen by a 24 degree perspective camera from (-8, 3.9, 13.5) looking at (0.5, 1.15, 0) with a roll of -0.1 rad and a depth-of-field lens radius of 0.30. Pan the camera along the row linearly at 2.03 units per second, about 15% of frame width. Run three waves with cubic-bezier(0.65,0,0.35,1): pass 1 from 0.34s turns each cube 90 degrees in the view plane (0.6s, 0.10s offset, 0.1 unit hop); pass 2 from 2.5s turns each 180 degrees with a 0.8 unit hop (0.72s, 0.10s offset); pass 3 from 3.75s runs right to left and rolls each cube 90 degrees along the row (0.6s, 0.07s offset, 0.22 unit hop). Sweep a white extruded arrow with a 6 unit trail across the top of the row at 0.95-2.45s with power2.inOut, and write the slogan along the row, rotated -11 degrees, word by word 0.1s apart from 2.78s with expo.out 0.7s and an 8px blur, fading out at 5.9s. From 6.2s dive toward cube 7, which carries an orange hex ring (#ff5a1f), with a t^2 ease, flash white at 7.42s, then show the mark at 8.2s, the wordmark at 8.32s and the ring stroked on over 0.8s from 8.55s, with a 4% push to 10.8s. Top softbox key light with soft shadow and a floor reflection at 20% opacity, no other decoration.",
+        "says": [
+          "A row of blocks flipping over in turn like a conveyor track",
+          "Blocks flipping one after another to move forward",
+          "Cubes rolling over in sequence like dominoes"
+        ],
+        "vs": [
+          [
+            "branching-growth",
+            "Branching Growth is node count growing; Domino Wave is a fixed number of objects flipping in turn."
+          ],
+          [
+            "wipe-flash-transition",
+            "Foreground Wipe & Flash is a scene transition; Domino Wave is an action within a scene and ends with a white flash."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "每个立方体只做一个简单翻转，相位差组合出整体的前进感。材质统一为哑光深灰，只靠顶光区分面；标语的语义是推进，动作方向与之一致。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.8s。开场白闪 0.05–0.75s 淡去。第一波 0.34s 起（翻转 0.6s，相位差 0.10s）；箭头掠过 0.95–2.45s；第二波 2.5s 起（翻转 0.72s，相位差 0.10s）；标语从 2.78s 起逐词出现，间隔 0.1s，5.9s 淡出；第三波 3.75s 起（翻转 0.6s，相位差 0.07s，从右向左）；镜头推近 6.2–7.5s；7.42s 闪白；7.66s 进入结尾页；8.2s 出标志，8.32s 出字标，8.55–9.35s 描出光环"
+          ],
+          [
+            "缓动",
+            "每一波翻转用 <code>cubic-bezier(0.65,0,0.35,1)</code>；镜头平移线性，每秒 2.03 个单位；箭头 <code>power2.inOut</code>；推近 <code>t^2</code>；标语词和字标 <code>expo.out</code>；闪白先 <code>power2.in</code> 0.2s，再 <code>power2.out</code> 0.7s；光环描边 <code>power2.inOut</code> 0.8s"
+          ],
+          [
+            "镜头",
+            "透视镜头（24 度视野）沿队列追踪，每秒平移 2.03 个世界单位，约占画面宽 15%，机位 (-8, 3.9, 13.5)，看向 (0.5, 1.15, 0)，滚转 -0.1 弧度（5.7 度）；镜头光圈半径 0.30，产生景深。6.2s 起向 7 号立方体推近，在距其正面 1.28 个单位处结束，滚转同时回到 0"
+          ],
+          [
+            "主体",
+            "一排 36 个哑光立方体（边长 1.45，间距 2.2，悬浮高度 1.32）。第一波每个立方体在画面平面内转 90°，带 0.1 单位的小跳；第二波转 180°，带 0.8 单位的高跳；第三波从右向左，每个立方体沿队列方向翻滚 90°，带 0.22 单位的跳起，并把光环面转向镜头。7 号立方体带橙色六边形光环（<code>#ff5a1f</code>），其余是暗色凹槽。一个带拖尾的白色挤出箭头从队列上方掠过"
+          ],
+          [
+            "同步",
+            "五个标语词（Every write lands in order.）从 2.78s 起每隔 0.1s 淡入，跟随第二波从左向右的传递；箭头在标语之前掠过。推向 7 号立方体的镜头在 7.42s 以闪白收尾，并过渡到结尾页，标志和字标 Basalt 在其中出现"
+          ],
+          [
+            "风格",
+            "浅灰棚拍渐变背景；哑光立方体 <code>#5a5b60</code>，0.07 倒角，一个面上有六边形凹槽；顶部柔光箱主光和柔和阴影，细长边缘光条，20% 不透明度的地面倒影，0.3 暗角；标语 Inter 500 64px，字标 Inter 600 120px，字距 -0.045em"
+          ]
+        ],
+        "prompt": "用「波浪翻转（Domino Wave）」表现推进，全片 10.8s：浅灰棚拍渐变背景，一排 36 个哑光深灰立方体（#5a5b60，边长 1.45，间距 2.2，悬浮高度 1.32，0.07 倒角），用 24 度视野的透视镜头拍摄，机位 (-8, 3.9, 13.5)，看向 (0.5, 1.15, 0)，滚转 -0.1 弧度，镜头光圈半径 0.30 产生景深。镜头沿队列线性平移，每秒 2.03 个单位，约占画面宽 15%。三波翻转都用 cubic-bezier(0.65,0,0.35,1)：第一波 0.34s 起，每个立方体在画面平面内转 90°（0.6 秒，相位差 0.10 秒，0.1 单位小跳）；第二波 2.5s 起，每个转 180° 并带 0.8 单位高跳（0.72 秒，相位差 0.10 秒）；第三波 3.75s 起从右向左，每个立方体沿队列方向翻滚 90°（0.6 秒，相位差 0.07 秒，0.22 单位跳起）。一个带 6 单位拖尾的白色挤出箭头在 0.95–2.45s 用 power2.inOut 掠过队列上方；标语沿队列旋转 -11°，从 2.78s 起逐词出现，间隔 0.1 秒，用 expo.out 0.7 秒并带 8px 模糊，5.9s 淡出。6.2s 起用 t^2 缓动向 7 号立方体推近，它带橙色六边形光环（#ff5a1f），7.42s 闪白，随后 8.2s 出标志，8.32s 出字标，8.55s 起用 0.8 秒描出光环，并缓推 4% 到 10.8s。顶部柔光箱主光带柔和阴影，加 20% 不透明度的地面倒影，不加其他装饰。",
+        "says": [
+          "一排方块依次翻过去像履带",
+          "方块一个接一个翻转往前推进",
+          "多米诺一样依次翻滚的立方体"
+        ],
+        "vs": [
+          [
+            "branching-growth",
+            "分叉生长是节点数量增长；波浪翻转是固定数量的物体依次翻转"
+          ],
+          [
+            "wipe-flash-transition",
+            "遮挡与闪白是场景转场；波浪翻转是场景内的动作，结尾才接闪白"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Domino Wave",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Domino Wave\": domino wave; domino's waverly iowa; domino's waverly; domino's waverly tn",
+      "checked": "2026-11-28"
+    },
+    "title": "Domino Wave: Flipping Cubes Animation Recipe",
+    "description": "A row of 36 matte cubes flips in turn with a phase offset while the camera tracks along the line. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A row of cubes flips 90 degrees one after another with a phase offset, while the camera pans along the line.",
+    "name": "Domino Wave",
+    "ownName": "Domino Wave",
+    "body": [
+      {
+        "h2": "How to make a Domino Wave with Claude Code or Codex",
+        "body": "Place 36 matte cubes (#5a5b60, edge 1.45, spacing 2.2, hovering at 1.32) on a light gray studio gradient. Pass 1 starts at 0.34 s: each cube turns 90 degrees in 0.6 s with cubic-bezier(0.65,0,0.35,1), 0.10 s after its neighbor, with a 0.1 unit hop. Pass 2 turns each 180 degrees in 0.72 s with a 0.8 unit hop. Pass 3 runs right to left with a 0.07 s offset.\n\nTrack the row with a 24 degree perspective camera at 2.03 world units per second, linear, from (-8, 3.9, 13.5) with a -0.1 rad roll and a 0.30 lens radius for depth of field. Light it with a top softbox, a floor reflection at 20% opacity and a 0.3 vignette. From 6.2 s dive toward cube 7 with t^2 easing and end in a white flash at 7.42 s.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own marks and slogan."
+      }
+    ],
+    "alt": "A row of grey cubes with hexagon faces tipping over one by one, one cube lit red, under \"Every write lands in order.\"",
+    "faq": [
+      [
+        "What is a domino wave animation?",
+        "Objects in a row perform the same movement one after another with a fixed delay, a phase offset, so the motion travels along the row like a wave. Each object does only a simple move."
+      ],
+      [
+        "How do I make a wave of flips in GSAP?",
+        "Animate every cube with the same tween and start each at index x offset, here 0.10 s, or 0.07 s on the last pass. A GSAP stagger does this. Changing the offset changes the wave speed without touching the individual flip."
+      ],
+      [
+        "Is the Domino Wave recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "方块波浪翻转",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"方块波浪翻转\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "方块波浪翻转动画：示例与制作配方",
+    "description": "一排 36 个哑光方块按相位差依次翻转，镜头沿队列平移。用免费配方，让 Claude Code 或 Codex 做出这段方块波浪翻转动画。",
+    "lede": "一排方块按相位差依次翻转 90°，镜头沿队列平移。",
+    "name": "方块波浪翻转",
+    "ownName": "波浪翻转",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做方块波浪翻转",
+        "body": "在浅灰色影棚渐变背景上放 36 个哑光方块（#5a5b60，边长 1.45，间距 2.2，悬浮高度 1.32）。第 1 轮 0.34 秒开始：每个方块用 cubic-bezier(0.65,0,0.35,1) 在 0.6 秒内翻转 90°，比前一个晚 0.10 秒，带 0.1 单位的跳起。第 2 轮每个翻 180°，用时 0.72 秒，跳起 0.8 单位。第 3 轮从右向左，错开 0.07 秒。\n\n用 24° 视场的透视相机沿队列平移，匀速每秒 2.03 个世界单位，起点 (-8, 3.9, 13.5)，滚转 -0.1 弧度，镜头半径 0.30 用于景深。灯光是顶部柔光箱，加 20% 不透明度的地面倒影和 0.3 的暗角。6.2 秒起用 t^2 缓动扎向第 7 个方块，7.42 秒以一次闪白收尾。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，标志和口号换成你自己的。"
+      }
+    ],
+    "alt": "一排印着六边形的灰色方块依次倒下，其中一块亮红色，上方写着每次写入按顺序落地。",
+    "faq": [
+      [
+        "方块波浪翻转是什么？",
+        "一排物体依次做同一个动作，每个比前一个晚固定的时间，这个时间差叫相位差，动作就像波浪一样沿队列传递。每个物体只做一个简单动作。"
+      ],
+      [
+        "怎样用 GSAP 做一排依次翻转？",
+        "给每个方块同一个动画，起点按序号乘以间隔错开，这里是 0.10 秒，最后一轮是 0.07 秒，用 GSAP 的 stagger 就能实现。改变间隔就改变波的速度，单个翻转不用动。"
+      ],
+      [
+        "方块波浪翻转配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

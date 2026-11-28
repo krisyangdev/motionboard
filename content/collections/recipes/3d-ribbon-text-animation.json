@@ -1,0 +1,190 @@
+{
+  "slug": "3d-ribbon-text-animation",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/folded-ribbon.mp4",
+    "poster": "https://media.motionboard.app/folded-ribbon.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 43,
+    "cat": "C",
+    "star": false,
+    "video": "folded-ribbon",
+    "samples": [
+      {
+        "t": "Figma 3D Transforms",
+        "id": "IqrOeK4gyWg",
+        "at": "0:00–0:05",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The title is already rising on the first frame. Each word group gets its own panel, so every crease falls between words and every face shows a whole word, which keeps the title readable while it folds. The fold stays near 37° and the camera pitch is moderate, so no panel turns edge-on, and the multiplied rows sit 340px apart so no row crosses another. The wide bands carry arrow copy that names the feature (TILT → SKEW → ROTATE → PERSPECTIVE) and double as the transition: the editor appears on the frame where the last band covers the screen, with no extra transition element. In the editor one drag turns the frame and a second drag changes the perspective distance, then the editor dims and the wordmark holds at a large size to the end. The whole film uses black, white and one violet accent.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s. Title rises line by line through a mask 0–0.8s (expo.out, second line 0.12s later), accent color sweeps across both lines panel by panel 0.3–1.16s; fold 1.0–2.3s (1.3s, 39 frames), second line 0.1s later; row spacing opens from 176px to 340px (1.0–2.4s); 6 more rows multiply 2.25–3.38s (0.95s each, staggered 0.09s per ring); violet sweep over the rows 2.79–3.87s; the four wide bands enter at 3.0s, 3.3s, 3.55s and 3.75s and run to 5.05s; wipe 4.3–5.8s, full cover at 5.05s; editor from 5.05s, Rotate Y handle drag 6.25–7.3s, Distance slider drag 7.8–8.3s, editor dims 8.2–8.85s and the wordmark lands 8.35–9.35s, wordmark holds to 10.5s"
+          ],
+          [
+            "Easing",
+            "Title rise expo.out; title fold easeInOut cubic; multiplying rows and editor settle expo.out; Rotate Y drag expo.out; band paths monotone cubic splines, fast then slow; wipe easeInOut cubic; Distance slider sine inOut; wordmark fades with easeOut cubic and rises with expo.out"
+          ],
+          [
+            "Camera",
+            "Rows scene, perspective 2400px: camera pitches down 0°→26° (2.3s)→30° (3.3s)→34° (4.6s)→36° (5.05s), rolls −6°→−10°→−22° (4.6s)→−27° (5.05s), yaw within 4°; it pulls back 300px at 2.3s and 560px at 3.3s to fit more rows, then dollies in to +400px at 4.6s and about +617px at 5.05s. Bands scene, perspective 1100px: dolly 0→360px (3.0–5.1s), roll 0°→−8°. The editor settles from 1.14x scale, 7° tilt and −5° yaw to 1.0 in 1.15s (expo.out), pushes slowly from 6.0s with sine inOut to reach 1.05x at 8.35s, then pulls back to 0.97x as it dims and drifts back to 0.99x by 10.5s"
+          ],
+          [
+            "Subject",
+            "Each row is a folded strip with one panel per word group, so creases fall only between words: PERSPECTIVE (865px) and FRAMES (545px) in line one, NOW (348px), IN (161px) and PLANAR (537px) in line two; each panel is its word width plus 18px each side (Inter 700, 128px, letter-spacing −0.035em). Neighbouring panels alternate ±37° with their edges joined; the two title rows overshoot to about 44° while folding (peak near 2.3–2.5s, second line 0.1s later) and settle back to 37° by 3.4s (second line 3.5s) so the zig-zag shows sooner; from 2.25s every row breathes ±3°, 34–44° in all; panels leaning away drop to 50% brightness. 8 rows in all, 4 of PERSPECTIVE FRAMES and 4 of NOW IN PLANAR, 340px apart. Bands are 300px, 230px, 420px and 160px high and 9000px wide with text scrolling along them (1100–1700px/s); the wipe band is 3000px thick and carries two lines of 620px type that cross the frame near 4.95s and 5.05s, so the cover frame still shows type, with a 150px white band and a 120px dark band beside it. The editor window is 1700x900 with three phone frames on the canvas"
+          ],
+          [
+            "Sync",
+            "The last band fills the frame at 5.05s, the rows and bands scenes end on that frame and the editor shows underneath; during the Rotate Y drag the value, the Home frame on the canvas, the highlight box on the Y field and the tooltip above the frame (it follows the cursor sideways) change on the same frame, and the cursor stays on the handle; during the Distance drag the Distance field lights up and the frame's perspective distance changes from 1200px to 450px in step"
+          ],
+          [
+            "Style",
+            "Background <code>#050507</code>, white type, violet accent <code>#6e56ff</code> (band gradient <code>#5b44f0</code> → <code>#7a65ff</code>, light violet type <code>#a597ff</code>); three band looks: white type on violet, black type on near-white, violet type on black; the editor is a dark UI with three light phone frames; at the end the editor drops to 20% opacity, a dark radial scrim fades in behind the mark (8.0–8.5s) and the Planar wordmark sits centered (120px icon, Inter 700 at 136px, fading in from 8.35s and growing 2.5% to 10.5s)"
+          ]
+        ],
+        "prompt": "Build a 10.5-second opening called Folded Ribbon Text for a design tool named Planar, 1920x1080, background #050507, white type and one violet accent #6e56ff, font Inter. From 0s a two-line title PERSPECTIVE FRAMES / NOW IN PLANAR rises line by line through a mask (0 to 0.8s, expo.out, second line 0.12s later) (Inter 700, 128px, letter-spacing -0.035em, PLANAR in #a597ff); from 0.3 to 1.16s the accent color #a597ff sweeps across both lines left to right, panel by panel. From 1.0 to 2.3s (easeInOut cubic, second line 0.1s later) split each line into one panel per word, each panel as wide as its word plus 18px on each side (line one: PERSPECTIVE 865px, FRAMES 545px; line two: NOW 348px, IN 161px, PLANAR 537px), so every crease falls between words; rotate neighbouring panels alternately by ±37° with their edges joined so the strip folds into a zig-zag, and drop panels that lean away to 50% brightness; the two title rows overshoot to about 44° (peak near 2.3–2.5s, second line 0.1s later) and settle back to 37° by 3.4s; the camera uses 2400px perspective, pitches down to 26° and rolls -6°. From 1.0 to 2.4s open the row spacing from 176px to 340px, and from 2.25 to 3.38s multiply 6 more rows (3 of PERSPECTIVE FRAMES above, 3 of NOW IN PLANAR below; 0.95s each, expo.out, fading in, staggered 0.09s per ring), with the fold angle breathing ±3°, the camera pulling back to 560px and pitching to 30° with -10° roll, and a violet sweep running across the rows from 2.79 to 3.87s. From 3.0 to 5.05s four wide bands (300, 230, 420 and 160px high, 9000px wide; white type on violet, black type on near-white, violet type on black, and a thin violet band; entering at 3.0, 3.3, 3.55 and 3.75s; text TILT → SKEW → ROTATE → PERSPECTIVE →, PERSPECTIVE → ROTATE → SKEW → TILT →, SKEW → TILT → ROTATE → PERSPECTIVE → and NOW IN PLANAR →, scrolling at 1500, 1300, 1100 and 1700px/s) fly in from off-screen in a second 3D scene with 1100px perspective that dollies in 360px and rolls -8°, while the rows camera reaches 34° pitch, -22° roll and +400px dolly at 4.6s and about 36° pitch, -27° roll and +617px dolly at 5.05s (yaw stays within 4°), and the rows fade to 32% between 3.4 and 4.5s. From 4.3 to 5.8s a 3000px-thick violet band (tilted -26°, with two lines of 620px type PERSPECTIVE → FRAMES → on it that cross the frame near 4.95s and 5.05s, and a 150px white band and a 120px dark band beside it) sweeps across with easeInOut cubic and fills the frame at 5.05s; on that frame swap the rows scene for the Planar editor (a 1700x900 dark window: layers on the left, three phone frames on the canvas, a properties panel on the right with a Perspective section). The window settles from 1.14x scale, 7° tilt and -5° yaw to 1.0 in 1.15s with expo.out, then from 6.0s pushes slowly with sine inOut to reach 1.05x at 8.35s. The cursor fades in at 5.5s and reaches the handle at the right-middle of the selected frame at 6.15s; from 6.25 to 7.3s it drags the handle and Rotate Y goes 0° to -38° with expo.out, with the frame, the value, the highlight box on the Y field and a Rotate Y -38° tooltip above the frame (following the cursor sideways) changing on the same frame; from 7.4 to 7.78s the cursor moves to the Distance slider and from 7.8 to 8.3s it drags it, the frame's perspective going 1200px to 450px with sine inOut and the Distance field lighting up. From 8.2 to 8.85s the editor drops to 20% opacity and pulls back to 0.97x (then drifts back to 0.99x by 10.5s), a dark radial scrim fades in behind the mark from 8.0 to 8.5s, and from 8.35s the Planar wordmark (a 120px violet icon and 136px Inter 700 text) fades in centered and rises 36px with expo.out until 9.35s, then holds to the end.",
+        "says": [
+          "A title folds into 3D ribbons and multiplies",
+          "Wide arrow bands sweep past the camera",
+          "The last band covers the frame and wipes to the product UI"
+        ],
+        "vs": [
+          [
+            "wipe-flash-transition",
+            "Foreground Wipe & Flash hides the frame behind a foreground object and flashes to change scene; Folded Ribbon Text uses bands that carry feature copy as the transition and wipes straight to the product UI."
+          ],
+          [
+            "kinetic-typography",
+            "Scattered Spec Type places spec words around the lens; Folded Ribbon Text takes one title line, folds it into ribbons, multiplies it and sweeps bands over it."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "标题从第一帧起就在升起，折叠时每个词单独占一块面板，折痕都落在词与词之间，每个面上是一个完整的词，折过去之后仍然读得出来。折叠和机位下俯同时进行，折角控制在 37° 上下（折叠时过冲到 44° 并停留一会儿，让折痕更快读出来），面板不会转到几乎看不见字；复制出的行拉开到 340px 行距，行与行之间不叠字。随后宽色带带着“TILT → SKEW → ROTATE → PERSPECTIVE”这样的箭头文案掠过，既点出功能，又当转场用，最后一条色带铺满画面的瞬间换成编辑器，没有额外的转场元素。编辑器里先拖 Rotate Y 手柄，再拖 Distance 滑块，随后编辑器变暗，Planar 字标以大字号停到结尾。全片只有黑、白和一个紫色强调色。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s。标题 0–0.8s 逐行从遮罩下升起（expo.out，第二行晚 0.12s），0.3–1.16s 强调色按面板从左到右扫过两行；折叠 1.0–2.3s（1.3s，39 帧），第二行晚 0.1s；行距从 176px 拉开到 340px（1.0–2.4s）；增殖出 6 行 2.25–3.38s（每行 0.95s，每圈错开 0.09s）；紫色扫光 2.79–3.87s；宽色带 3.0s、3.3s、3.55s、3.75s 依次入场，到 5.05s 结束；擦除 4.3–5.8s，5.05s 铺满画面；编辑器 5.05s 起，拖动 Rotate Y 手柄 6.25–7.3s，拖 Distance 滑块 7.8–8.3s，编辑器变暗 8.2–8.85s，字标 8.35–9.35s，字标停到 10.5s"
+          ],
+          [
+            "缓动",
+            "标题升起 expo.out；标题折叠 easeInOut 三次方；增殖出的行和编辑器落位 expo.out；Rotate Y 拖动 expo.out；色带位置用单调三次样条，先快后慢；擦除 easeInOut 三次方；Distance 滑块 sine inOut；字标淡入 easeOut 三次方，上移 expo.out"
+          ],
+          [
+            "镜头",
+            "行场景透视 2400px：机位下俯 0°→26°（2.3s）→30°（3.3s）→34°（4.6s）→36°（5.05s），横滚 −6°→−10°→−22°（4.6s）→−27°（5.05s），偏航在 4° 以内；机位在 2.3s 拉远 300px、3.3s 拉远 560px 以容纳更多行，4.6s 推近到 +400px，5.05s 推近到约 +617px。色带场景透视 1100px：推近 0→360px（3.0–5.1s），横滚 0°→−8°。编辑器从 1.14 倍缩放、7° 俯仰和 −5° 偏航用 1.15s（expo.out）落到 1.0，再从 6.0s 起用 sine inOut 慢推，到 8.35s 达到 1.05 倍，随后随变暗退到 0.97 倍，再缓缓漂回 0.99 倍直到 10.5s"
+          ],
+          [
+            "主体",
+            "每行是一条折带，每个词一块面板，折痕只落在词与词之间：第一行 PERSPECTIVE（865px）和 FRAMES（545px）2 段，第二行 NOW（348px）、IN（161px）、PLANAR（537px）3 段，面板宽度是词宽加两侧各 18px（Inter 700，128px，字距 −0.035em）。相邻段交替旋转 ±37°，折线首尾相接；两行标题在折叠时过冲到 44° 左右（2.3–2.5s 到顶，第二行晚 0.1s），3.4s 前后回到 37°（第二行 3.5s），让折痕更早显出锯齿；2.25s 起各行有 ±3° 起伏，整体范围 34–44°；背光的段亮度降到 50%。全片 8 行：PERSPECTIVE FRAMES 4 行，NOW IN PLANAR 4 行，行距 340px。色带高 300、230、420、160px，宽 9000px，文字沿带身滚动（1100–1700px/s）；擦除带厚 3000px，带上有两行 620px 巨型文字（分别在 4.95s 和 5.05s 前后从画面中穿过，铺满画面那一帧仍有字），旁边各跟一条 150px 白带和 120px 深色带。编辑器窗口 1700×900，画布上三个手机画框"
+          ],
+          [
+            "同步",
+            "最后一条色带在 5.05s 铺满画面，行场景和色带场景在这一帧结束，编辑器从下面露出；拖 Rotate Y 手柄时，数值、画布上的 Home 画框、Y 输入框的高亮框和选中画框上方跟随光标左右移动的提示条在同一帧变化，光标始终压在拖动的把手上；拖 Distance 滑块时，Distance 输入框亮起，画框的透视距离同步从 1200px 变到 450px"
+          ],
+          [
+            "风格",
+            "背景 <code>#050507</code>，白字，强调色紫 <code>#6e56ff</code>（色带渐变 <code>#5b44f0</code> → <code>#7a65ff</code>，亮紫字 <code>#a597ff</code>）；色带三种：紫底白字、近白底黑字、黑底紫字；编辑器为深色界面加三个浅色手机画框；结尾编辑器降到 20% 不透明度，字标后面有一层深色径向底（8.0–8.5s 淡入），Planar 字标居中（图标 120px，Inter 700，136px，8.35s 起淡入，到 10.5s 缓慢放大 2.5%）"
+          ]
+        ],
+        "prompt": "用「折带文字（Folded Ribbon Text）」做一个设计工具 Planar 的 10.5 秒开场，1920×1080，黑底 #050507，白字加一个紫色强调色 #6e56ff，字体 Inter。0 秒起两行标题「PERSPECTIVE FRAMES / NOW IN PLANAR」逐行从遮罩下升起（0–0.8 秒，expo.out，第二行晚 0.12 秒）（Inter 700，128px，字距 −0.035em，PLANAR 用 #a597ff），0.3–1.16 秒强调色 #a597ff 按面板从左到右扫过两行。1.0–2.3 秒（easeInOut 三次方，第二行晚 0.1s）把每行按词拆成面板，每个词一块，宽度是词宽加两侧各 18px（第一行 PERSPECTIVE 865px、FRAMES 545px，第二行 NOW 348px、IN 161px、PLANAR 537px），折痕只落在词与词之间；让相邻面板交替旋转 ±37°，折线首尾相接，折成锯齿状，背光的面亮度降到 50%；两行标题在折叠时过冲到 44° 左右（2.3–2.5 秒到顶，第二行晚 0.1 秒），3.4 秒前后回到 37°；同时机位透视 2400px，下俯到 26°，横滚 −6°。1.0–2.4 秒行距从 176px 拉到 340px，2.25–3.38 秒再复制出 6 行（上面 3 行 PERSPECTIVE FRAMES，下面 3 行 NOW IN PLANAR，每行 0.95s，expo.out，每圈错开 0.09s，同时淡入），折角继续 ±3° 起伏，机位拉远到 560px 并下俯到 30°、横滚 −10°，2.79–3.87 秒一道紫色扫过各行。3.0–5.05 秒四条宽色带（高 300、230、420、160px，宽 9000px；紫底白字、近白底黑字、黑底紫字、一条薄紫带；分别在 3.0、3.3、3.55、3.75 秒入场；文字依次是「TILT → SKEW → ROTATE → PERSPECTIVE →」「PERSPECTIVE → ROTATE → SKEW → TILT →」「SKEW → TILT → ROTATE → PERSPECTIVE →」「NOW IN PLANAR →」，沿带身分别以 1500、1300、1100、1700px/s 滚动）在另一个透视 1100px 的 3D 场景里从屏外飞过，场景同时推近 360px、横滚 −8°；行场景的机位在 4.6 秒时下俯到 34°、横滚到 −22°、推近到 +400px，5.05 秒时下俯约 36°、横滚约 −27°、推近约 +617px，偏航全程在 4° 以内，3.4–4.5 秒行淡到 32%。4.3–5.8 秒一条厚 3000px 的紫色大带（−26° 斜向，上面有两行 620px 的巨型文字「PERSPECTIVE → FRAMES →」，分别在 4.95 秒和 5.05 秒前后穿过画面，前后各跟一条 150px 白带和 120px 深色带）用 easeInOut 三次方扫过，5.05 秒铺满画面，这一帧把行场景换成 Planar 编辑器（1700×900 深色窗口，左图层、中间画布放三个手机画框、右属性面板里有 Perspective 区块），窗口用 1.15s expo.out 从 1.14 倍、7° 俯仰和 −5° 偏航落到 1.0，之后从 6.0 秒起用 sine inOut 慢推，到 8.35 秒达到 1.05 倍。光标 5.5 秒淡入，6.15 秒到达选中画框右侧中点的把手；6.25–7.3 秒拖动，Rotate Y 从 0° 到 −38°（expo.out），画框、属性数值、Y 输入框的高亮框和选中画框上方跟随光标左右移动的「Rotate Y −38°」提示条同一帧变化；7.4–7.78 秒光标移到 Distance 滑块，7.8–8.3 秒拖动，透视从 1200px 到 450px（sine inOut），Distance 输入框亮起。8.2–8.85 秒编辑器降到 20% 不透明度并退到 0.97 倍（之后缓缓漂回 0.99 倍），8.0–8.5 秒字标后面淡入一层深色径向底，8.35 秒起 Planar 字标（120px 紫色图标加 136px Inter 700 文字）居中淡入并上移 36px（expo.out，到 9.35 秒），停在这一帧到 10.5 秒。",
+        "says": [
+          "标题折成 3D 折带，再复制出一整片",
+          "带箭头的宽色带从镜头旁扫过",
+          "色带铺满画面后擦出产品界面"
+        ],
+        "vs": [
+          [
+            "wipe-flash-transition",
+            "遮挡与闪白用前景物体挡住画面再闪白换场；折带文字的转场本身就是带着功能文案的色带，擦过后直接露出产品界面。"
+          ],
+          [
+            "kinetic-typography",
+            "散排参数把参数词散在镜头周围；折带文字只有标题这一行字，被折成折带后复制，再被色带扫过。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "3D Ribbon Text Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"3D Ribbon Text Animation\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "3D Ribbon Text Animation: Example and Code Recipe",
+    "description": "A title folds into zig-zag 3D ribbons, multiplies, then arrow bands sweep past and wipe to the product UI. Make it with Claude Code or Codex.",
+    "lede": "A two-line title folds between its words into zig-zag 3D ribbons and multiplies into a field of rows, wide arrow bands sweep past the camera, the last band fills the frame and wipes to the product UI, and the film ends on the product wordmark.",
+    "name": "3D Ribbon Text Animation",
+    "ownName": "Folded Ribbon Text",
+    "body": [
+      {
+        "h2": "How to make a 3D Ribbon Text Animation with Claude Code or Codex",
+        "body": "Cut each title line at the word breaks, one panel per word (PERSPECTIVE 865px and FRAMES 545px in line one; NOW 348px, IN 161px and PLANAR 537px in line two), set in Inter 700 at 128px. From 1.0 to 2.3s rotate neighbouring panels alternately by 37° with easeInOut (the two title rows overshoot to about 44° near 2.3–2.5s, then settle back to 37°) so their edges stay joined and the strip folds into a zig-zag whose creases fall between words, while the camera pitches down to 26° with a 2400px perspective. Then open the row spacing from 176px to 340px and add 6 more rows from 2.25 to 3.38s.\n\nFrom 3.0 to 5.05s send four bands (300, 230, 420 and 160px high) past a camera that dollies in 360px with 1100px perspective, with TILT → SKEW → ROTATE → PERSPECTIVE → and three other short arrow lines scrolling along them at 1100–1700px/s. A 3000px violet band with two lines of 620px type wipes across from 4.3 to 5.8s and covers the frame at 5.05s, where the scene switches to the product UI.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the folded strips, the band scene and the wipe with GSAP. Render an MP4 with HyperFrames, or port the timeline to your website."
+      }
+    ],
+    "alt": "Purple and white ribbons of text reading Rotate, Perspective, Skew and Tilt cross a dark screen at steep angles.",
+    "faq": [
+      [
+        "How do you make text fold into 3D ribbons?",
+        "Split one line at its word breaks into panels that each show one word, then rotate neighbouring panels in opposite directions by about 37° and move each panel so its edge meets the previous one. Animating the angle from 0° over 1.3s folds the strip into a zig-zag, and because the creases fall between words every word stays readable."
+      ],
+      [
+        "How do the bands work as a transition?",
+        "The bands carry copy that names the feature and move through a second 3D scene. A thick band sweeps across at 4.3–5.8s and covers the screen at 5.05s, so the next scene can replace the ribbons on that frame."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "3D 折带文字动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"3D 折带文字动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "3D 折带文字动画：示例与代码配方",
+    "description": "标题折成锯齿状 3D 折带并增殖，随后带箭头的宽色带扫过，擦出产品界面。用 Claude Code 或 Codex 按免费配方做出这个 3D 文字动画。",
+    "lede": "两行标题在词与词之间折成锯齿状的 3D 折带，再复制成一整片，随后带箭头的宽色带从镜头旁扫过，最后一条色带铺满画面，擦出产品界面，界面里先拖 Rotate Y 手柄、再拖 Distance 滑块，最后停在 Planar 字标上。",
+    "name": "3D 折带文字动画",
+    "ownName": "折带文字",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做3D 折带文字动画",
+        "body": "把每行标题按词切成面板，每个词一块（第一行 PERSPECTIVE 865px、FRAMES 545px，第二行 NOW 348px、IN 161px、PLANAR 537px），用 Inter 700、128px 显示。1.0–2.3s 用 easeInOut 让相邻面板交替旋转 37°（两行标题在 2.3–2.5s 过冲到约 44° 再回到 37°），边与边保持相接，整条折成锯齿状，折痕落在词与词之间，同时机位下俯到 26°，透视 2400px。之后把行距从 176px 拉到 340px，并在 2.25–3.38s 再复制出 6 行。\n\n3.0–5.05s 让四条色带（高 300、230、420、160px）从镜头旁飞过，镜头推近 360px，透视 1100px，「TILT → SKEW → ROTATE → PERSPECTIVE →」和另外三行短箭头文案沿带身以 1100–1700px/s 滚动。4.3–5.8s 一条 3000px 厚、带两行 620px 巨型文字的紫色大带扫过，5.05s 铺满画面，这一帧把场景换成产品界面。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用 GSAP 做出折带、色带场景和擦除转场。可以用 HyperFrames 渲染成 MP4，也可以把时间线移植到网站上。"
+      }
+    ],
+    "alt": "紫色和白色的文字飘带写着 Rotate、Perspective、Skew、Tilt，斜着穿过深色画面。",
+    "faq": [
+      [
+        "文字怎么折成 3D 折带？",
+        "把一行字按词切成面板，每个面板只显示一个词，让相邻面板往相反方向各转约 37°，再移动每个面板，使它的边接上前一个的边。让角度在 1.3s 内从 0° 变化到目标值，整条字就折成锯齿状，折痕落在词与词之间，每个词都读得清。"
+      ],
+      [
+        "色带怎么当转场用？",
+        "色带上写着点明功能的文案，在第二个 3D 场景里穿过。4.3–5.8s 一条厚色带扫过，5.05s 铺满画面，下一个场景就在这一帧替换掉折带。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

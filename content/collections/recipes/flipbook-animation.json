@@ -1,0 +1,190 @@
+{
+  "slug": "flipbook-animation",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/flipbook-burst.mp4",
+    "poster": "https://media.motionboard.app/flipbook-burst.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 46,
+    "cat": "D",
+    "star": false,
+    "video": "flipbook-burst",
+    "samples": [
+      {
+        "t": "Figma 3D Transforms",
+        "id": "IqrOeK4gyWg",
+        "at": "0:11–0:14",
+        "s": 11
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The collapse, the flip and the burst all use the same 15 cards, so the viewer recognizes them the whole time and the cut from interface to collage needs no mask or cross-fade. The gap between page turns shrinks from 0.20s to 0.07s, and the last six pages are in the air together and stop as a fan that the burst starts from. The burst uses expo.out and is followed by 4s of linear drift, so the frame never stops. Depth-of-field blur separates near and far cards, and vermilion is the only accent color against neutrals.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s. Interface 0–1.62s, camera pushes from z 0 to z 70 over 0–1.9s (power1.out), cursor travels to the button 0.45–1.6s, click at 1.62s; cards collapse into a book 1.62–2.9s (1.15s); window recedes and fades over 0.8s (24 frames); page flips 2.6–4.78s (15 pages; the first 9 take 0.64s shrinking to 0.51s each with the gap shrinking from 0.20s to 0.07s; the last 6 take 0.94s shrinking to 0.56s and all stop in a fan at 4.78s); fan holds 4.78–4.95s, anticipation 4.85–4.95s (0.1s, 3 frames); burst 4.95–6.3s (1.35s); drift 6.2–10.5s; veil rises from 7.7s over 0.9s, wordmark 8.0–9.1s, tagline from 8.4s over 0.7s"
+          ],
+          [
+            "Easing",
+            "Collapse and burst <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); first 9 page flips power2.inOut, last 6 a front-loaded ease that starts fast and settles into the fan (0.7 × out power 1.6 + 0.3 × inOut power 1.6); window recede power2.in; camera orbit power3.inOut; camera pan power2.inOut; opening push power1.out; post-burst drift and slow camera push linear; wordmark expo.out"
+          ],
+          [
+            "Camera",
+            "Perspective 1600px. From 0–1.9s the camera pushes from z 0 to z 70 (power1.out). From 1.9–3.4s it turns to rotY −26°, rotX 8° and pushes to z 150; the view also pans 211px left to center the closed book (1.62–2.52s) and pans back to 0 as the pages open (2.7–3.6s); during the flips rotY turns at constant speed from −26° to +20° (3.4–4.95s) while z pushes slowly from 150 to 260 (3.4–4.85s), backing to z 200 at the anticipation; at the burst the camera returns to rotY −4°, z 150 (expo.out, 1.5s), then pushes slowly for about 4s to z 330, rotY 5°"
+          ],
+          [
+            "Subject",
+            "15 cards of 240×320, each with a front and a back showing another card's content; each card has a cream paper edge on its right and bottom sides as thick as the page spacing (two creams alternating) and a 46px dark gradient at the spine side (opacity 0.36), so the closed book shows its thickness; scale 0.76 in the interface, 1.6 as the book (384×512, page spacing 3.6px, book about 50px thick), 0.8–1.1 in the collage; pages turn about the spine (x 960): the first 9 to −180°, the last 6 stop at −168°, −146°, −124°, −102°, −80° and −58° as a fan; at the burst each card keeps turning another 160°–320° and lands within ±25° of face-on between z −330 and +340, with 8 extra shapes (4 discs, 2 rounded squares, 1 dotted ring, 1 thin outline ring) between z −420 and +380; card depth-of-field blur up to about 4px, plus a 0.12s 3px motion blur that starts on all 15 cards together at the burst, ignoring the stagger; during the 0.1s anticipation the first 9 pages fan apart in z, page spacing from 3.6px to 9px (the last 6 are already 9px apart while flipping)"
+          ],
+          [
+            "Sync",
+            "Click at 1.62s: the button press and the card launch are on the same frame; the last 6 pages stop in the fan at 4.78s, hold for 0.17s, and the burst starts from the fan at 4.95s; cards are staggered 0–0.16s at the burst and the shapes start 0.05–0.16s after it; the collage keeps drifting while the veil rises; the dark quote card lands in the upper left of the collage, fully inside the frame and clear of the wordmark area"
+          ],
+          [
+            "Style",
+            "Light theme. Warm gray desktop <code>#dcd7ce</code> → <code>#cfc9bf</code>, neutrals <code>#1b1a18</code>, <code>#8d877e</code>, <code>#cfc8bb</code>, <code>#e9e4da</code>, vermilion accent <code>#ff5a36</code>; interface in Inter, serif for the type-specimen card, Archivo Black for the poster card; grain and vignette on top"
+          ]
+        ],
+        "prompt": "Build a moodboard-app transition called Flipbook Burst as a 10.5-second light film for an app named Pinwheel. Use one accent color, vermilion #ff5a36, and neutrals (#1b1a18, #8d877e, #cfc8bb, #e9e4da) on a warm gray desktop. Use HTML + CSS 3D (perspective 1600px) and GSAP. Prepare 15 cards of 240×320 (photo poster, color palette, type specimen, phone screenshot, quote, product shot, article link, sticky note, texture, typographic poster, chart, architecture illustration, materials, record sleeve, component kit), each with a front and a back; give each card a cream paper edge on its right and bottom sides as thick as the page spacing, and a 46px dark gradient at the spine side (opacity 0.36). 0–1.62s: a 1700×960 macOS-style window with a sidebar, top bar, a 5×3 card grid (cards scaled 0.76) and a details panel on the right; the camera pushes in slowly from z 0 to z 70 over 0–1.9s (power1.out); the cursor travels to the Present button over 0.45–1.6s. Click at 1.62s: the button presses and on the same frame the cards launch and collapse with expo.out over 1.15s into a closed book at screen center (scale 1.6, page spacing 3.6px, spine at x 960); the window recedes to z −320 and fades over 0.8s (power2.in); the camera turns to rotY −26°, rotX 8°, z 150 over 1.9–3.4s, and the view pans 211px left to center the closed book (1.62–2.52s, power2.inOut) and back to 0 as the pages open (2.7–3.6s). Page flips 2.6–4.78s: each page turns about the spine (the first 9 with power2.inOut, the last 6 with a front-loaded ease that starts fast and settles into the fan: 0.7 × out power 1.6 + 0.3 × inOut power 1.6), with the gap between flips shrinking from 0.20s to 0.07s; the first 9 pages turn to −180°, each 0.64s shrinking to 0.51s; the last 6 pages take 0.94s shrinking to 0.56s and all end at 4.78s as a fan at −168°, −146°, −124°, −102°, −80° and −58°, so six pages are in the air together; add a shade on a page while it turns; camera rotY turns at constant speed from −26° to +20° (3.4–4.95s) while z pushes slowly from 150 to 260 (3.4–4.85s, power1.in). The fan holds for 0.17s; anticipation 4.85–4.95s: cards scale to 0.93, the first 9 pages fan apart in z to 9px spacing (the last 6 already are) and the camera backs to z 200. Burst at 4.95s from the fan: the 15 cards fly with expo.out over 1.35s to 3D positions between z −330 and +340, staggered 0–0.16s, each card turning another 160°–320° and ending within ±25° of face-on at scale 0.8–1.1; 8 shapes (4 discs, 2 rounded squares, 1 dotted ring, 1 thin outline ring) start 0.05–0.16s later and fly with expo.out over 1.3s to z −420 to +380; the camera returns to rotY −4°, z 150 over 1.5s with expo.out. Add a 3px blur for 0.12s starting on all cards together at the burst, then depth-of-field blur by distance (up to about 4px). Place the dark quote card in the upper left of the collage, fully inside the frame and clear of the wordmark area. From 6.2s to 10.5s every card drifts toward the camera 40–170px at constant speed while the camera keeps pushing to z 330. From 7.7s a cream radial veil rises over 0.9s; at 8.0s a pinwheel mark turns from −200° to 0 and scales 0.4 to 1 (1.1s, expo.out); at 8.2s the wordmark Pinwheel rises 26px into place (0.9s); at 8.4s the tagline fades in. Finish with grain and vignette.",
+        "says": [
+          "The cards on the board collapse into a small book",
+          "Pages flip one after another, faster and faster",
+          "The pages burst into a 3D collage that drifts toward the camera"
+        ],
+        "vs": [
+          [
+            "card-flip-animation",
+            "Card Flip to Code turns one card over and stops on its back; Flipbook Burst turns a whole set of cards into a book and then scatters them as a collage."
+          ],
+          [
+            "confetti-success-animation",
+            "Confirmation Burst is a particle burst after a click; Flipbook Burst bursts the interface's own cards and lets them drift toward the camera in 3D."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "收成书、翻页、炸开用的是同一组 15 张卡片，观众从头到尾认得它们，所以界面切到拼贴不需要遮罩或叠化；翻页间隔从 0.20s 缩到 0.07s，最后 6 页同时在空中，停成一把扇形，爆点从扇形炸开；炸开用 expo 缓出，之后 4s 线性漂移，画面不停；景深模糊把前后卡片分出层次，全片只有朱红一个强调色，其余是中性色。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s。界面 0–1.62s，镜头 0–1.9s 从 z 0 缓推到 z 70（power1.out），光标 0.45–1.6s 移到按钮，1.62s 点击；收拢成书 1.62–2.9s（1.15s）；窗口后退并淡出 0.8s（24 帧）；翻页 2.6–4.78s（15 页，前 9 页每页 0.64s 缩到 0.51s，页间隔 0.20s 缩到 0.07s；后 6 页翻页时长 0.94s 缩到 0.56s，同在 4.78s 停成扇形）；扇形停住 4.78–4.95s，蓄力 4.85–4.95s（0.1s，3 帧）；炸开 4.95–6.3s（1.35s）；漂移 6.2–10.5s；罩层 7.7s 起 0.9s，字标 8.0–9.1s，口号 8.4s 起 0.7s"
+          ],
+          [
+            "缓动",
+            "收拢和炸开 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；前 9 页翻页 power2.inOut，后 6 页翻页用先快后慢的前置缓动（0.7 × 出向 1.6 次幂 + 0.3 × 入出向 1.6 次幂）；窗口后退 power2.in；镜头环绕 power3.inOut；镜头平移 power2.inOut；开头前推 power1.out；炸开后的漂移和镜头慢推 linear；字标 expo.out"
+          ],
+          [
+            "镜头",
+            "透视 1600px。0–1.9s 从 z 0 推到 z 70（power1.out）。1.9–3.4s 相机转到 rotY −26°、rotX 8°，前推到 z 150；画面同时向左平移 211px，让合上的书居中（1.62–2.52s），页面打开时平移回 0（2.7–3.6s）；翻页期间 rotY 从 −26° 匀速转到 +20°（3.4–4.95s），同时 z 从 150 慢推到 260（3.4–4.85s），蓄力时退到 z 200；炸开时相机回到 rotY −4°、z 150（expo.out 1.5s），之后约 4s 慢推到 z 330、rotY 5°"
+          ],
+          [
+            "主体",
+            "15 张 240×320 的卡片，每张有正反面，背面是另一张卡片的内容；每张的右边和下边各有一条和页间距等厚的纸边（两种奶油色交替），书脊一侧有 46px 宽的暗色渐变（透明度 0.36），所以合上的书看得到厚度；界面里缩放 0.76，成书 1.6（384×512，页间距 3.6px，书厚约 50px），拼贴里 0.8–1.1；翻页以书脊（x 960）为轴转动，前 9 页转到 −180°，后 6 页依次停在 −168°、−146°、−124°、−102°、−80°、−58°，成一把扇形；炸开时每张继续转 160°–320°，停在 ±25° 以内，落在 z −330 到 +340 之间，另有 8 个形状（4 个圆、2 个圆角方块、1 个点线圆环、1 个细线圆环），z −420 到 +380；卡片景深模糊最大约 4px，炸开起 15 张卡片同时有 0.12s 的 3px 动态模糊，与错开无关；蓄力 0.1s 内前 9 页在 z 上拉开，页间距从 3.6px 到 9px（后 6 页翻页时已经是 9px）"
+          ],
+          [
+            "同步",
+            "点击 1.62s，按钮按下和卡片起飞在同一帧；后 6 页 4.78s 停成扇形，停 0.17s，4.95s 从扇形炸开；炸开时卡片错开 0–0.16s，形状晚 0.05–0.16s；罩层升起时拼贴继续漂移，不停；深色引言卡落在画面左上方，整张留在画面里，离字标区域有一段距离"
+          ],
+          [
+            "风格",
+            "浅色。暖灰桌面 <code>#dcd7ce</code> → <code>#cfc9bf</code>，中性色 <code>#1b1a18</code>、<code>#8d877e</code>、<code>#cfc8bb</code>、<code>#e9e4da</code>，强调色朱红 <code>#ff5a36</code>；界面用 Inter，卡片里的字体样张用衬线，海报用 Archivo Black；颗粒和暗角收尾"
+          ]
+        ],
+        "prompt": "用「翻页炸开（Flipbook Burst）」做一个白板类 App 的转场，整段 10.5 秒，浅色，只用一个强调色朱红 #ff5a36，其余是中性色（#1b1a18、#8d877e、#cfc8bb、#e9e4da），暖灰桌面背景。全部用 HTML + CSS 3D（透视 1600px）和 GSAP。准备 15 张 240×320 的卡片（照片海报、色板、字体样张、手机截图、引言、商品图、文章链接、便签、纹理、字体海报、图表、建筑插画、材质、唱片封面、组件库），每张有正反面；每张的右边和下边各加一条奶油色纸边，厚度等于页间距，书脊一侧加一条 46px 宽、透明度 0.36 的暗色渐变。0–1.62 秒：1700×960 的 macOS 风格窗口，左侧栏、顶栏、5×3 卡片网格（卡片缩放 0.76）、右侧详情栏，相机 0–1.9 秒从 z 0 缓推到 z 70（power1.out）；光标 0.45–1.6 秒移到「Present」按钮。1.62 秒点击：按钮按下，同一帧卡片起飞，用 expo.out 1.15 秒收成一本合上的书（缩放 1.6，页间距 3.6px，书脊在 x 960），窗口 0.8 秒后退到 z −320 并淡出（power2.in）；相机 1.9–3.4 秒转到 rotY −26°、rotX 8°、z 150；画面同时向左平移 211px 让合上的书居中（1.62–2.52 秒，power2.inOut），页面打开时平移回 0（2.7–3.6 秒）。2.6–4.78 秒翻页：每页以书脊为轴转动（前 9 页 power2.inOut，后 6 页用先快后慢的前置缓动：0.7 × 出向 1.6 次幂 + 0.3 × 入出向 1.6 次幂），页间隔从 0.20 秒缩到 0.07 秒；前 9 页转到 −180°，每页 0.64 秒缩到 0.51 秒；后 6 页的翻页时长从 0.94 秒缩到 0.56 秒，全部在 4.78 秒结束，停成扇形，角度依次是 −168°、−146°、−124°、−102°、−80°、−58°，所以最后 6 页同时在空中；转动时页面加阴影；相机 rotY 从 −26° 匀速转到 +20°（3.4–4.95 秒），同时 z 从 150 慢推到 260（3.4–4.85 秒，power1.in）。扇形停住 0.17 秒，4.85–4.95 秒蓄力：卡片缩到 0.93 倍，前 9 页在 z 上拉开到每页间隔 9px（后 6 页已是 9px），相机退到 z 200。4.95 秒从扇形炸开：15 张卡片用 expo.out 1.35 秒飞到 z −330 到 +340 的 3D 位置，错开 0–0.16 秒，每张继续转 160°–320°，停在 ±25° 以内，缩放 0.8–1.1；8 个形状（4 个圆、2 个圆角方块、1 个点线圆环、1 个细线圆环）晚 0.05–0.16 秒出发，用 expo.out 1.3 秒飞到 z −420 到 +380；相机用 expo.out 1.5 秒回到 rotY −4°、z 150。炸开瞬间所有卡片同时开始 0.12 秒 3px 模糊，随后按距离做景深模糊（最大约 4px）。把深色引言卡放在画面左上方，整张留在画面里，离字标区域有一段距离。6.2–10.5 秒所有卡片按各自速度线性朝镜头漂移 40–170px，相机继续慢推到 z 330。7.7 秒起 0.9 秒升起奶油色径向罩层，8.0 秒风车标（转 −200° 到 0°，缩放 0.4 到 1，1.1 秒 expo.out），8.2 秒字标 Pinwheel 上移 26px 出现（0.9 秒），8.4 秒口号淡入。收尾加颗粒和暗角。",
+        "says": [
+          "白板里的卡片收成一本小册子",
+          "页面一张接一张翻过去，越翻越快",
+          "翻完的页面炸开，变成朝镜头漂来的 3D 拼贴"
+        ],
+        "vs": [
+          [
+            "card-flip-animation",
+            "翻面看代码是一张卡片翻到背面，停在代码上；翻页炸开是一组卡片翻成书，再散开成拼贴。"
+          ],
+          [
+            "confetti-success-animation",
+            "确认爆发是点击结果的粒子爆发；翻页炸开炸出的是界面里原有的卡片，并在 3D 里朝镜头漂移。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Flipbook Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Flipbook Animation\": flipbook animation; flipbook animation maker; flipbook animation ideas; flipbook animation online",
+      "checked": "2026-11-28"
+    },
+    "title": "Flipbook Animation: Example and Code Recipe",
+    "description": "A moodboard collapses into a book, flips page by page, then bursts into a 3D collage drifting toward the camera. Make it with Claude Code or Codex.",
+    "lede": "After a click, the 15 cards on a moodboard collapse into a book, the pages flip faster and faster, then burst into a 3D collage that drifts toward the camera and settles behind a wordmark.",
+    "name": "Flipbook Animation",
+    "ownName": "Flipbook Burst",
+    "body": [
+      {
+        "h2": "How to make a Flipbook Animation with Claude Code or Codex",
+        "body": "Prepare 15 cards of 240×320, each with a front, a back and a paper edge as thick as the page spacing, and place them in a 5×3 grid inside an app window at scale 0.76. On the click (1.62s) collapse them with expo.out over 1.15s into a closed book at screen center, scale 1.6, page spacing 3.6px, spine at x 960, while the window recedes to z −320 over 0.8s and the view pans 211px left to center the closed book.\n\nFlip the pages from 2.6s to 4.78s: each page turns about the spine with power2.inOut, the gap between flips shrinks from 0.20s to 0.07s, and the last six pages stop in a fan between −168° and −58° so they are in the air together. Turn the camera from rotY −26° to +20° at constant speed under perspective 1600px, hold the fan for 0.17s, then shrink the cards to 0.93 times their book size over the last 0.1s while the camera backs to z 200.\n\nAt 4.95s send the 15 cards to z −330 to +340 and 8 shapes (4 discs, 2 rounded squares, a dotted ring and a thin outline ring) to z −420 to +380 with expo.out over about 1.3s, each card turning on to face-on, then drift the cards 40–170px toward the camera until 10.5s with depth-of-field blur up to about 4px. Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A fan of design cards flipping like pages: a colour palette, a chart with +34% and an arched illustration.",
+    "faq": [
+      [
+        "What is a flipbook animation in a product video?",
+        "It turns a set of screens or images into pages of a book that flip one after another. In this film the cards from a moodboard become the pages, so the transition shows the same content before, during and after the flip."
+      ],
+      [
+        "How does the film go from a flat interface to a 3D collage?",
+        "All 15 cards are 3D elements from the first frame. At the click they leave the grid, form the book, flip and then fly to scattered depths between z −330 and +340, so no mask or cross-fade is needed."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "翻页动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"翻页动画效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "翻页动画：示例与代码配方",
+    "description": "白板里的卡片收成一本书，越翻越快，再炸开成朝镜头漂来的 3D 拼贴。用 Claude Code 或 Codex 按免费配方做出这个翻页动画效果。",
+    "lede": "点击按钮后，白板里的 15 张卡片收成一本书，逐页翻动并越翻越快，然后全部炸开成一幅朝镜头漂来的 3D 拼贴，最后落在字标上。",
+    "name": "翻页动画效果",
+    "ownName": "翻页炸开",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做翻页动画效果",
+        "body": "准备 15 张 240×320 的卡片，每张有正反面和一条与页间距等厚的纸边，按 5×3 放进 App 窗口，缩放 0.76。点击时（1.62s）用 expo.out 1.15s 把它们收成屏幕中央合上的一本书，缩放 1.6，页间距 3.6px，书脊在 x 960，窗口同时用 0.8s 退到 z −320，画面向左平移 211px 让合上的书居中。\n\n2.6s 到 4.78s 翻页：每页以书脊为轴转动，缓动 power2.inOut，页间隔从 0.20s 缩到 0.07s，最后 6 页停成 −168° 到 −58° 的扇形，所以它们同时在空中。透视 1600px 下相机 rotY 从 −26° 匀速转到 +20°，扇形停住 0.17s，最后 0.1s 书堆缩到 0.93 倍，相机退到 z 200。\n\n4.95s 用 expo.out 把 15 张卡片炸到 z −330 到 +340，8 个形状（4 个圆、2 个圆角方块、1 个点线圆环、1 个细线圆环）炸到 z −420 到 +380，用时约 1.3s，每张卡片继续转到正面朝前，然后卡片在 10.5s 前朝镜头漂 40–170px，景深模糊最大约 4px。点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "一叠设计卡片像书页一样翻开：配色卡、标着 +34% 的图表和拱门插画。",
+    "faq": [
+      [
+        "产品视频里的翻页动画是什么？",
+        "把一组界面或图片做成书页，一页接一页翻过去。这支片子里白板的卡片就是书页，所以翻页前、翻页中和翻页后看到的是同一批内容。"
+      ],
+      [
+        "片子怎么从平面界面变成 3D 拼贴？",
+        "15 张卡片从第一帧起就是 3D 元素。点击后它们离开网格，收成书，翻页，再飞到 z −330 到 +340 的不同深度，不需要遮罩或叠化。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

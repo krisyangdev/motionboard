@@ -1,0 +1,190 @@
+{
+  "slug": "dock-arrival",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/dock-arrival.mp4",
+    "poster": "https://media.motionboard.app/dock-arrival.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 20,
+    "cat": "B",
+    "star": false,
+    "video": "dock-arrival",
+    "samples": [
+      {
+        "t": "Notion Calendar",
+        "id": "C4Q2ezioTUM",
+        "at": "0:04–0:08",
+        "s": 4
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "A familiar macOS Dock motion says \"an app was installed\" with no text needed. The radiating short lines appear only once and are very small, which marks the landing point without taking over the frame.",
+        "spec": [
+          [
+            "Timing",
+            "Gap opens and icon grows 0.45–0.95s (0.5s, 15 frames); radiating strokes 0.95–1.30s (0.29s each, staggered 0.02s, about 9 frames); cursor appears 1.5s and moves 1.5–2.1s (0.6s, 18 frames); tooltip 2.2s; press dim 2.4s (0.1s, 3 frames); window opens at 2.5s over 0.55s; typing 3.45–4.84s; checkbox click 5.8s; window closes 7.4s (0.42s); icon lands 7.8s, wordmark unfolds 8.4s (1.2s); film 11s"
+          ],
+          [
+            "Easing",
+            "Growth <code>cubic-bezier(0.34,1.56,0.64,1)</code> (back.out(1.4)); cursor <code>cubic-bezier(0.65,0,0.35,1)</code> (power3.inOut); window open <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); strokes draw <code>power2.out</code> and retract <code>power2.in</code>; window close <code>power3.in</code>; wordmark <code>expo.out</code>"
+          ],
+          [
+            "Camera",
+            "Dock magnified 3.0x on a fixed point, pushing slowly to 3.06x until 2.5s; at the click, cut to a medium shot (1.0x, drifting to 1.012x) where the window opens from a small size at the center"
+          ],
+          [
+            "Subject",
+            "A 13-slot macOS Dock (12 icons and a separator); the new icon's slot grows <code>width</code> 0→64px (gap 0→8px) while its icon goes <code>scale</code> 0.6→1 and fades in, and neighbors slide apart as the Dock re-centers; after it settles, four 2.1px strokes (at −96°, −62°, −30°, 2°) flick out of its upper right corner; the Dock magnifies icons 1.58x near the cursor; the opened window is a notes app with a checklist"
+          ],
+          [
+            "Sync",
+            "The icon dims (opacity 0→0.32) on the press frame at 2.4s and the window opens 0.1s later at 2.5s; in the window a checklist row types a new item at 0.042s per character, and the click at 5.8s checks the box, updates the counter to \"3 of 5\" and the progress bar to 60% on one frame"
+          ],
+          [
+            "Style",
+            "Light gray-white <code>#efeff2</code> base with a soft orange, pink, and blue gradient wallpaper; frosted Dock plate (<code>backdrop-filter: blur(24px)</code>); gradient squircle icons; the end card is a large icon plus a wordmark and one-line tagline"
+          ]
+        ],
+        "prompt": "Show your app being installed with a shot called Dock Arrival. The frame is a macOS Dock magnified 3x on a fixed point with a very slow push to 3.06x. Starting at 0.45s, open a gap between two icons over 0.5s and grow your app icon in it (width 0 to 64px, gap 0 to 8px, scale 0.6 to 1, back.out(1.4)). After it settles, flick four 2.1px strokes out of its upper right corner, each drawing in 0.13s and retracting by 0.29s, staggered 0.02s. At 1.5s the cursor enters and moves to the icon over 0.6s with power3.inOut, the Dock magnifies icons 1.58x near it, and a tooltip appears. At 2.4s the icon dims over 0.1s, and at 2.5s cut to a medium shot where a notes window scales from 0.16 to 1 over 0.55s with expo.out. Type a new checklist item at 0.042s per character, click its checkbox at 5.8s and change the checkbox, counter and progress bar on the same frame. At 7.4s fold the window back to the center over 0.42s with power3.in, land a large icon with back.out(1.5), then slide it left while the wordmark unfolds with clip-path and blur 10px to 0 over 1.2s with expo.out.",
+        "says": [
+          "A new icon shows up in the Dock",
+          "The icon grows in with a little spark",
+          "Click the icon to open a window"
+        ],
+        "vs": [
+          [
+            "morph-transition",
+            "Morph Relay is one element changing shape continuously; Dock Arrival adds a new element to the Dock and then opens a window on click."
+          ],
+          [
+            "pile-up-and-clear",
+            "Pile-up and Clear piles up more and more elements and then clears them; Dock Arrival adds only one element."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "用观众熟悉的 macOS Dock 动作讲「装了一个新 App」，不需要文字；放射短线只给一次、尺寸极小，强调落点又不抢画面。",
+        "spec": [
+          [
+            "时长",
+            "空位撑开、图标长出 0.45–0.95s（0.5s，15 帧）；放射短线 0.95–1.30s（每条 0.29s，错开 0.02s，约 9 帧）；光标 1.5s 入画并移动 1.5–2.1s（0.6s，18 帧）；提示标签 2.2s；按下变暗 2.4s（0.1s，3 帧）；窗口 2.5s 起 0.55s 打开；打字 3.45–4.84s；复选框点击 5.8s；窗口 7.4s 收回（0.42s）；图标 7.8s 落定，字标 8.4s 展开（1.2s）；全片 11s"
+          ],
+          [
+            "缓动",
+            "长出 <code>cubic-bezier(0.34,1.56,0.64,1)</code>（back.out(1.4)）；光标 <code>cubic-bezier(0.65,0,0.35,1)</code>（power3.inOut）；开窗 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；短线绘出 <code>power2.out</code>、收回 <code>power2.in</code>；关窗 <code>power3.in</code>；字标 <code>expo.out</code>"
+          ],
+          [
+            "镜头",
+            "Dock 放大 3.0x 锁定在一个点上，到 2.5s 缓推到 3.06x；点击后切到中景（1.0x，缓推到 1.012x），窗口从中心小尺寸放大打开"
+          ],
+          [
+            "主体",
+            "13 个槽位（12 个图标加一条分隔线）的 macOS Dock；新图标所在槽位 <code>width</code> 0→64px（间距 0→8px），图标 <code>scale</code> 0.6→1 并淡入，Dock 重新居中使相邻图标向两侧滑开；落定后图标右上角弹出四条 2.1px 短线（角度 −96°、−62°、−30°、2°）；光标靠近时 Dock 图标放大 1.58x；打开的窗口是带清单的笔记 App"
+          ],
+          [
+            "同步",
+            "光标按下的 2.4s 那一帧图标变暗（透明度 0→0.32），0.1s 后 2.5s 开窗；窗口里清单新行以每字符 0.042s 打字，5.8s 点击让复选框打勾、计数变成「3 of 5」、进度条变成 60%，三者同一帧"
+          ],
+          [
+            "风格",
+            "浅灰白 <code>#efeff2</code> 底，橙、粉、蓝柔和渐变壁纸；磨砂 Dock 底板（<code>backdrop-filter: blur(24px)</code>）；渐变圆角方形图标；尾卡是大图标加字标和一行标语"
+          ]
+        ],
+        "prompt": "用「Dock 登场（Dock Arrival）」展示你的 App 安装：画面是放大 3x、锁定在一个点上的 macOS Dock，镜头极缓慢地推到 3.06x。从 0.45s 起，在两个图标之间用 0.5s 撑开空位，你的 App 图标从空位长出（width 0→64px，间距 0→8px，scale 0.6→1，back.out(1.4)）。落定后图标右上角弹出四条 2.1px 短线，每条 0.13s 绘出、0.29s 内收回，错开 0.02s。1.5s 光标入画，用 0.6s、power3.inOut 移到图标上，光标附近的 Dock 图标放大 1.58x，并出现提示标签。2.4s 图标用 0.1s 变暗，2.5s 切到中景，笔记窗口用 0.55s、expo.out 从 scale 0.16 放大到 1。窗口里按每字符 0.042s 打出一条新清单项，5.8s 点击它的复选框，复选框、计数和进度条同一帧变化。7.4s 窗口用 0.42s、power3.in 收回中心，落下一个大图标（back.out(1.5)），随后图标左移，字标用 clip-path 加 blur 10px→0，在 1.2s 内以 expo.out 展开。",
+        "says": [
+          "Dock 里多出一个新图标",
+          "图标长出来冒点小火花",
+          "点击图标打开窗口"
+        ],
+        "vs": [
+          [
+            "morph-transition",
+            "形变接力是元素连续变形；本条是在 Dock 里新增一个元素，随后点击开窗"
+          ],
+          [
+            "pile-up-and-clear",
+            "堆积清空是元素越堆越多再清空；本条只新增一个元素"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Dock Arrival",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Dock Arrival\": dock arrival; southampton dock arrivals; felixstowe dock arrivals; pembroke dock arrivals",
+      "checked": "2026-11-28"
+    },
+    "title": "Dock Arrival: macOS Dock Animation Recipe",
+    "description": "A new icon grows into a magnified macOS Dock with one small spark, and a click opens a window. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A magnified Dock opens a gap, a new icon grows into it with one small spark, and a cursor click opens the window.",
+    "name": "Dock Arrival",
+    "ownName": "Dock Arrival",
+    "body": [
+      {
+        "h2": "How to make a Dock Arrival with Claude Code or Codex",
+        "body": "Start with a 13-slot Dock magnified 3.0x on a fixed point, pushing slowly to 3.06x. At 0.45 s the new icon's slot grows from 0 to 64 px wide while the icon scales from 0.6 to 1 with back.out(1.4) over 0.5 s, and its neighbors slide apart as the Dock re-centers. At 0.95 s four 2.1 px strokes flick out of the icon's upper right corner.\n\nBring in the cursor at 1.5 s with a 0.6 s power3.inOut move. Dim the icon on the press frame at 2.4 s, then open the window at 2.5 s with expo.out over 0.55 s while the shot cuts to a 1.0x medium view. The dim, the click and the window opening sit on adjacent frames, so the three read as one gesture.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an 11-second MP4 with HyperFrames, or ports the GSAP timeline to your website with your own app icon and window content."
+      }
+    ],
+    "alt": "A notes app window open on a Mac desktop with the dock below and the cursor near a checklist.",
+    "faq": [
+      [
+        "What is a Dock arrival animation?",
+        "It is a motion pattern where a new app icon appears in a macOS-style Dock. The existing icons slide apart, the new icon grows into the gap, and a short flourish marks where it landed. It tells the viewer an app was installed or became available without any text."
+      ],
+      [
+        "Can I build a Dock animation on a website?",
+        "Yes. The Dock is a row of HTML elements whose width and scale are animated with GSAP, on a plate with backdrop-filter: blur(24px). In this recipe icons magnify 1.58x near the cursor, and the same timeline runs on a page or in a rendered video."
+      ],
+      [
+        "Is the Dock Arrival recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "Dock 图标动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Dock 图标动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Dock 图标动画：示例与配方",
+    "description": "放大的 macOS Dock 撑开空位，新图标长进去并冒出一次小火花，点击后打开窗口。用免费配方，让 Claude Code 或 Codex 做出这段动画。",
+    "lede": "放大的 Dock 撑开空位长出新图标，冒一次小火花，光标点击后开窗。",
+    "name": "Dock 图标动画",
+    "ownName": "Dock 登场",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做Dock 图标动画",
+        "body": "先做一个 13 格、放大 3.0 倍的 Dock，镜头定点缓推到 3.06 倍。0.45 秒起，新图标所在格的宽度从 0 长到 64px，图标缩放从 0.6 到 1，缓动用 back.out(1.4)，历时 0.5 秒，相邻图标随 Dock 重新居中而滑开。0.95 秒时，四条 2.1px 的短线从图标右上角弹出。\n\n光标 1.5 秒出现，用 power3.inOut 移动 0.6 秒。2.4 秒的按下帧让图标变暗，2.5 秒窗口用 expo.out 在 0.55 秒内打开，镜头同时切到 1.0 倍中景。变暗、点击和开窗放在相邻帧上，观众会把它们看成同一个动作。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 11 秒的 MP4，或者把 GSAP 时间线移植到你的网站，图标和窗口内容换成你自己的产品。"
+      }
+    ],
+    "alt": "Mac 桌面上打开的笔记应用窗口，下方是程序坞，鼠标停在待办清单旁。",
+    "faq": [
+      [
+        "Dock 图标出现动画是什么？",
+        "指在 macOS 风格的 Dock 里出现一个新应用图标的动效：原有图标向两侧滑开，新图标长进空位，再用一个很短的小动作标出落点。不用文字，观众就能看出应用已经安装或可以使用。"
+      ],
+      [
+        "能在网站上做 Dock 动画吗？",
+        "可以。Dock 是一排 HTML 元素，用 GSAP 动画控制宽度和缩放，底板用 backdrop-filter: blur(24px) 做磨砂。配方里光标附近的图标放大 1.58 倍，同一条时间线既能放在网页里，也能渲染成视频。"
+      ],
+      [
+        "Dock 图标动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

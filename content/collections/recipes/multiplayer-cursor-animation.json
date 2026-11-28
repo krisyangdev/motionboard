@@ -1,0 +1,202 @@
+{
+  "slug": "multiplayer-cursor-animation",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/multiplayer-cursors.mp4",
+    "poster": "https://media.motionboard.app/multiplayer-cursors.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 18,
+    "cat": "B",
+    "star": false,
+    "video": "multiplayer-cursors",
+    "samples": [
+      {
+        "t": "Figma Slides",
+        "id": "p-B--SGq_ZQ",
+        "at": "0:01–0:09",
+        "s": 1
+      },
+      {
+        "t": "Figma Slides",
+        "id": "p-B--SGq_ZQ",
+        "at": "1:20–1:24",
+        "s": 80
+      },
+      {
+        "t": "Framer",
+        "id": "6xJWQRVl9nw",
+        "at": "0:00–0:06",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Enlarged cursors become characters in the frame, and the interaction between two cursors stages collaboration. The comment bubble matches its cursor's color, so it maps to a person at a glance. The thumbnail grid provides density, and after the push-in only a small part of it is visible.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s; avatars pop at 0.35, 0.8, 1.2, 1.53, 1.8s (0.25s each, spacing 0.45→0.27s); Liam box-select 1.9–2.65s; Maya's bubble 2.5s (0.3s), typing 2.65–4.05s at 15 characters per second, Enter 4.2s; push-in 4.3–4.7s (0.4s, 12 frames); press 4.8s, drag 4.95–5.75s (0.8s), reflow shift 0.4s each, drop 5.85s; pull-back 6.15s (0.6s); Present click 7.55s; lockup 8.75s"
+          ],
+          [
+            "Easing",
+            "Push-in <code>expo.out</code> with a 3px blur pulse; drag <code>power2.inOut</code> with a 12px arc in y; avatars <code>back.out(2.2)</code>; bubble <code>back.out(1.7)</code>; reflow <code>expo.out</code> 0.4s; press <code>scale 0.86</code> over 0.08s, release <code>back.out(1.7)</code> 0.22s"
+          ],
+          [
+            "Camera",
+            "Canvas content scrolls up 140px over 4.3s <code>linear</code> (about 3% of frame height per second) while the whole scene drifts <code>scale</code> 1→1.04 over 8.7s; at 4.3s push in 1.4x onto the slide, cursors counter-scale by 1/1.4 to keep their on-screen size; pull back at 6.15s"
+          ],
+          [
+            "Subject",
+            "Cursors 46×56px (about 5% of frame height), one black <code>#141414</code> (Liam Ortiz) and one magenta <code>#d81283</code> (Maya Chen), each with a name tag; Liam box-selects three slides, Maya rests on a green slide and a same-color comment bubble types \"Can we lead with this?\", then she drags slide 12 two columns left to position 10 while slides 11 and 10 shift one column right; the slide numbers and left panel list update on the drop frame; Maya then clicks Present and the slide opens full screen"
+          ],
+          [
+            "Sync",
+            "Enter changes the bubble header from \"typing…\" to \"Just now\" on one frame; push-in follows Enter by 0.1s; the drag starts 0.5s after the push-in begins; on the drop frame (5.85s) slide numbers and the panel order change together"
+          ],
+          [
+            "Style",
+            "White window on a <code>#fafafa</code> canvas with a 33-slide pitch deck in neon green, yellow, orange, and dark green slides; cursors with a white outline and a soft shadow"
+          ]
+        ],
+        "prompt": "Demonstrate collaboration with a shot called Multiplayer Cursors. A white editor window holds a 33-slide thumbnail grid that scrolls up 140px over 4.3s with linear ease, and avatars pop into the top bar one by one (back.out(2.2), spacing shrinking from 0.45s to 0.27s). Two named cursors, 46×56px (about 5% of frame height), black for Liam and magenta for Maya, move across it: Liam box-selects three slides from 1.9s, Maya rests beside a green slide from 2.45s and a same-color comment bubble pops up (back.out(1.7)) and types at 15 characters per second. After Enter at 4.2s the view pushes in 1.4x over 0.4s with expo.out while the cursors counter-scale to keep their size. Maya presses at 4.8s and drags the slide two columns left to position 10 over 0.8s with power2.inOut, the other two thumbnails shifting a column with expo.out in 0.4s, and the numbers update on the drop frame. Pull back at 6.15s, click Present at 7.55s so the slide opens full screen, and land your wordmark at 8.75s with both cursors meeting on it. Cursor paths include pauses.",
+        "says": [
+          "Several people working on the canvas at once",
+          "Named colored cursors moving all over",
+          "Collaborative comments and drag-to-reorder"
+        ],
+        "vs": [
+          [
+            "control-driven-change",
+            "Control-Driven Change has a single control change the result; Multiplayer Cursors has several cursors acting in parallel on a canvas."
+          ],
+          [
+            "focus-hop",
+            "In Focus Hop the cursor only guides a highlight block; in Multiplayer Cursors the cursors are characters and carry out comments and drags."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "光标放大后成为画面里的角色，用两个光标的互动演出协作；评论气泡与光标同色，一眼对应到人；缩略图网格提供密度，推近后只看一小块。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s；头像 0.35、0.8、1.2、1.53、1.8s 依次弹出（每个 0.25s，间隔 0.45→0.27s）；Liam 框选 1.9–2.65s；Maya 气泡 2.5s 弹出（0.3s），2.65–4.05s 以 15 字符/秒打字，4.2s 回车；推近 4.3–4.7s（0.4s，12 帧）；4.8s 按下，4.95–5.75s 拖动（0.8s），让位各 0.4s，5.85s 放下；6.15s 拉回（0.6s）；7.55s 点击 Present；字标 8.75s"
+          ],
+          [
+            "缓动",
+            "推近 <code>expo.out</code> 并带 3px 模糊脉冲；拖动 <code>power2.inOut</code>，y 方向有 12px 弧线；头像 <code>back.out(2.2)</code>；气泡 <code>back.out(1.7)</code>；让位 <code>expo.out</code> 0.4s；按下 <code>scale 0.86</code> 历时 0.08s，松开 <code>back.out(1.7)</code> 0.22s"
+          ],
+          [
+            "镜头",
+            "画布内容 4.3s 内 <code>linear</code> 上滚 140px（约每秒 3% 画面高），整个场景 8.7s 内 <code>scale</code> 1→1.04 漂移；4.3s 推近 1.4x 到幻灯片上，光标按 1/1.4 反向缩放保持屏幕尺寸；6.15s 拉回"
+          ],
+          [
+            "主体",
+            "光标 46×56px（约画面高 5%），一黑 <code>#141414</code>（Liam Ortiz）一品红 <code>#d81283</code>（Maya Chen），各带名字标签；Liam 框选三张幻灯片，Maya 停在一张绿色幻灯片旁，弹出同色评论气泡并打出「Can we lead with this?」，随后把第 12 张向左拖两列到第 10 位，第 11、10 张向右让一列；放下那一帧幻灯片编号和左侧列表同步更新；Maya 随后点击 Present，该幻灯片全屏打开"
+          ],
+          [
+            "同步",
+            "回车那一帧气泡头部从「typing…」变成「Just now」；推近比回车晚 0.1s；推近开始 0.5s 后开始拖动；放下帧（5.85s）幻灯片编号和左侧列表顺序同时变化"
+          ],
+          [
+            "风格",
+            "白色窗口，<code>#fafafa</code> 画布上是 33 页路演幻灯片，荧光绿、黄、橙、墨绿；光标带白描边和柔和阴影"
+          ]
+        ],
+        "prompt": "用「多人光标（Multiplayer Cursors）」演示协作：白色编辑器窗口里是 33 页缩略图网格，4.3s 内 linear 上滚 140px，顶部栏的头像逐个弹出（back.out(2.2)，间隔从 0.45s 缩到 0.27s）。两个带名字的光标尺寸 46×56px（约画面高 5%），Liam 黑色、Maya 品红，在画布上移动：Liam 从 1.9s 起框选三张幻灯片，Maya 2.45s 起停在一张绿色幻灯片旁，弹出同色评论气泡（back.out(1.7)），以 15 字符/秒打字。4.2s 回车后，画面用 0.4s、expo.out 推近 1.4x，光标反向缩放保持屏幕尺寸。Maya 4.8s 按下，用 0.8s、power2.inOut 把幻灯片向左拖两列到第 10 位，另外两张缩略图用 expo.out 在 0.4s 内让出一列，放下那一帧编号同步更新。6.15s 拉回，7.55s 点击 Present 让该幻灯片全屏打开，8.75s 落上你的字标，两个光标汇合在字标上。光标路径带停顿。",
+        "says": [
+          "好几个人同时在画布上操作",
+          "带名字的彩色光标到处移动",
+          "协作评论和拖动排序"
+        ],
+        "vs": [
+          [
+            "control-driven-change",
+            "控件驱动是单个控件改变结果；本条多个光标在画布上并行活动"
+          ],
+          [
+            "focus-hop",
+            "焦点跳格里光标只引导一个高亮块；本条光标本身是角色，执行评论和拖动"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Multiplayer Cursor Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Multiplayer Cursor Animation\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Multiplayer Cursor Animation: Example and Code Recipe",
+    "description": "Two named cursors select slides, leave a comment and drag a slide to a new position in a shared deck. Make this with Claude Code or Codex.",
+    "lede": "Enlarged two-color named cursors move across a canvas, leave comments, and drag items to reorder.",
+    "name": "Multiplayer Cursor Animation",
+    "ownName": "Multiplayer Cursors",
+    "body": [
+      {
+        "h2": "How to make a Multiplayer Cursor Animation with Claude Code or Codex",
+        "body": "Draw cursors at 46×56px (about 5% of frame height) with a white outline, a soft shadow and a name tag: Liam Ortiz in black #141414, Maya Chen in magenta #d81283. Avatars pop in between 0.35s and 1.8s on back.out(2.2). Maya’s comment bubble matches her color, types at 15 characters per second and changes from \"typing…\" to \"Just now\" on the Enter frame.\n\nPush in 1.4× over 0.4s on expo.out at 4.3s and counter-scale each cursor by 1/1.4 to keep its on-screen size. Drag slide 12 two columns left over 0.8s on power2.inOut with a 12px arc, shifting slides 11 and 10 one column right. Slide numbers and the left panel update together on the drop frame at 5.85s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the 33-slide deck and the two cursors. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A slide deck editor with named cursors of several people and a comment on a green slide.",
+    "faq": [
+      [
+        "What is a multiplayer cursor?",
+        "A multiplayer cursor is a pointer labeled with a user’s name and color that shows where another collaborator is working in a shared document. Enlarged in a film, the cursors act as characters."
+      ],
+      [
+        "How big should the cursors be in a product film?",
+        "In this film they are 46×56px, about 5% of frame height, so the name tags are readable. When the camera pushes in, they are counter-scaled to keep that on-screen size."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "多人协作光标动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"多人协作光标动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "多人协作光标动画：示例与代码配方",
+    "description": "两个带名字的光标在共享幻灯片里框选、评论并拖动幻灯片换位。用 Claude Code 或 Codex 按免费配方做出这个多人协作光标动画。",
+    "lede": "放大的双色带名字光标在画布上移动、评论、拖动重排。",
+    "name": "多人协作光标动画",
+    "ownName": "多人光标",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做多人协作光标动画",
+        "body": "光标做成 46×56px（约占画面高度 5%），带白色描边、柔和阴影和名字标签：Liam Ortiz 用黑色 #141414，Maya Chen 用洋红 #d81283。头像在 0.35s 到 1.8s 之间用 back.out(2.2) 依次弹出。Maya 的评论气泡与她的颜色一致，每秒输入 15 个字符，在回车那一帧从「typing…」变成「Just now」。\n\n4.3s 用 expo.out 在 0.4s 内推近 1.4 倍，每个光标反向缩放 1/1.4，保持屏幕上的大小。把第 12 张幻灯片向左拖两列，用 0.8s、power2.inOut，路径带 12px 的弧线，第 11、10 张各向右移一列。5.85s 落下那一帧，幻灯片编号和左侧面板同时更新。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出 33 页的幻灯片和两个光标。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "幻灯片编辑器里有几个人带名字的光标，绿色那页上有一条评论。",
+    "faq": [
+      [
+        "什么是多人光标？",
+        "多人光标是带有用户名字和颜色的指针，显示协作者在共享文档里正在操作的位置。在片子里放大之后，光标成为画面里的角色。"
+      ],
+      [
+        "产品片里光标应该多大？",
+        "这支片子里光标是 46×56px，约占画面高度 5%，名字标签可以读清。镜头推近时反向缩放，保持这个屏幕大小。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

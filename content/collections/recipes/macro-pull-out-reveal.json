@@ -1,0 +1,206 @@
+{
+  "slug": "macro-pull-out-reveal",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/macro-pull-out.mp4",
+    "poster": "https://media.motionboard.app/macro-pull-out.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 3,
+    "cat": "A",
+    "star": true,
+    "video": "macro-pull-out",
+    "samples": [
+      {
+        "t": "Apple Vision Pro",
+        "id": "7B-rzR2avR0",
+        "at": "0:10–0:41",
+        "s": 10
+      },
+      {
+        "t": "Apple iOS 26 Liquid Glass",
+        "id": "jGztGfRujSE",
+        "at": "0:52–1:08",
+        "s": 52
+      },
+      {
+        "t": "Linear Releases",
+        "id": "6dIwFoQ0eVg",
+        "at": "0:00–0:09",
+        "s": 0
+      },
+      {
+        "t": "Figma Slides",
+        "id": "p-B--SGq_ZQ",
+        "at": "1:00–1:02",
+        "s": 60
+      },
+      {
+        "t": "Framer",
+        "id": "6xJWQRVl9nw",
+        "at": "0:00–0:07",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Viewers first learn the material and texture up close, then see where those details sit in the whole as the camera pulls out. The depth of field is very shallow with only one band in focus, so a flat UI reads like a physical object. The pull-out is fast at first and slow at the end, which lands steadily on the full device.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s. Three macro shots: chart 0–1.7s (51 frames), deployment row 1.7–3.3s (48 frames), primary button 3.3–4.8s (45 frames); pull-out 4.8–6.0s (1.2s, 36 frames); residual drift 6.0–8.4s; focus racks out and the wordmark comes in 7.9–8.75s, held to 10.5s"
+          ],
+          [
+            "Easing",
+            "Macro drift <code>linear</code>; pull-out <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); residual drift <code>linear</code>; the focus band re-centers after each cut with power2.out over 0.5s; wordmark opacity power2.out 0.5s, scale 1.06→1 and blur 10px→0 expo.out 0.8s"
+          ],
+          [
+            "Camera",
+            "CSS 3D, <code>perspective</code> 2000px, window tilted <code>rotateX</code> 25–26° and <code>rotateZ</code> −3° to −4°. Macro scale 4.2x, 4.2x, 4.0x; pans of 75, 80 and 60 window px (315, 336, 240 screen px), about 8–11% of frame width per second. Pull-out scale 4.0x→1x, rotateX 25°→11°, ending with the window at 80% of frame width. Residual drift scale 1.00→1.03, rotateX 11°→9.5°, rotateY −1°→−4°"
+          ],
+          [
+            "Subject",
+            "A 1536×880 dashboard window rebuilt in DOM/SVG; it never moves and only the camera does. The pull-out starts from the primary button the last macro shot ended on. A pixel-grid overlay is visible during the macro shots and fades out 4.8–5.15s"
+          ],
+          [
+            "Style",
+            "Near-black background <code>#050506</code>, raking light from the upper left (radial gradient <code>rgba(150,170,210,0.13)</code> from the top-left corner plus a 118° sheen), shallow depth of field from four stacked copies at blur 0, 2.6, 6 and 11px under a tilted focus band (half-width 100–125px), grain at 7.5% opacity re-rolled every 3 frames, vignette to 62% black"
+          ]
+        ],
+        "prompt": "Build a product shot called Macro Pull-out Reveal. Total length 10.5 seconds. Rebuild a dashboard window (1536×880) in DOM/SVG and tilt it in CSS 3D (perspective 2000px, rotateX 25°, rotateZ −3° to −4°) on a near-black #050506 background with a raking light from the upper left. For the first 4.8 seconds the camera makes three linear macro shots at scale 4.0–4.2x, panning about 8–11% of frame width per second: a chart curve (0–1.7s), a table row (1.7–3.3s) and the primary button (3.3–4.8s). Depth of field is very shallow: stack four copies of the scene at blur 0, 2.6, 6 and 11px, masked by a tilted focus band about 200–250px wide across the middle of the frame that re-centers with power2.out 0.5s after each cut; overlay a pixel grid and grain. From 4.8 to 6.0 seconds pull back with expo.out (cubic-bezier(0.16,1,0.3,1)), scale 4.0x to 1x, relaxing the tilt to rotateX 11° and widening the focus band to 560px, until the window fills about 80% of the frame. Then drift linearly for 2.4 seconds (scale 1.00→1.03). At 7.9–8.75 seconds rack the focus out of the window and bring in the wordmark (scale 1.06→1 and blur 10px→0 with expo.out over 0.8s), holding to 10.5 seconds. The subject does not move; only the camera does.",
+        "says": [
+          "Starts very close on a detail, then pulls out to show the whole product",
+          "The camera slowly pulls back from a detail to the full picture",
+          "A close-up, then a sudden pull-out to the whole page"
+        ],
+        "vs": [
+          [
+            "zoom-to-cursor",
+            "Auto Zoom serves a single UI action in 0.6–0.8s and then pulls back so the action can continue; Macro Pull-out Reveal ends on its pull-out."
+          ],
+          [
+            "device-push-in-focus",
+            "Device Push-in Focus pans to one key after another on a single device; Macro Pull-out Reveal tours one detail in a single shot, then pulls out once."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "观众先在微距里认识材质和纹理，再在拉出时看到这些细节在整体中的位置；景深很浅，只有焦平面一条带清晰，平面 UI 因此像实物；拉出段前快后慢，落在整机上很稳。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s。三个微距子镜头：图表 0–1.7s（51 帧）、部署行 1.7–3.3s（48 帧）、主按钮 3.3–4.8s（45 帧）；拉出 4.8–6.0s（1.2s，36 帧）；余漂 6.0–8.4s；焦点虚出并带出字标 7.9–8.75s，停到 10.5s"
+          ],
+          [
+            "缓动",
+            "微距漂移 <code>linear</code>；拉出 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；余漂 <code>linear</code>；每次切镜后焦带用 power2.out 在 0.5s 内回到中心；字标透明度 power2.out 0.5s，scale 1.06→1 与 blur 10px→0 用 expo.out 0.8s"
+          ],
+          [
+            "镜头",
+            "CSS 3D，<code>perspective</code> 2000px，窗口倾斜 <code>rotateX</code> 25–26°、<code>rotateZ</code> −3° 到 −4°。微距 scale 依次为 4.2x、4.2x、4.0x；平移依次为窗口坐标 75、80、60px（屏幕 315、336、240px），约每秒 8–11% 画面宽。拉出 scale 4.0x→1x，rotateX 25°→11°，终点窗口占画面宽 80%。余漂 scale 1.00→1.03，rotateX 11°→9.5°，rotateY −1°→−4°"
+          ],
+          [
+            "主体",
+            "1536×880 的仪表盘窗口，用 DOM/SVG 重建；窗口不动，只有镜头移动。拉出起点是最后一个微距子镜头所拍的主按钮。微距阶段叠一层像素网格，4.8–5.15s 淡出"
+          ],
+          [
+            "风格",
+            "近黑背景 <code>#050506</code>，左上方掠射光（左上角径向渐变 <code>rgba(150,170,210,0.13)</code> 加 118° 反光带），景深用四份同一场景叠加，模糊 0、2.6、6、11px，外加倾斜焦带（半宽 100–125px），颗粒透明度 7.5%、每 3 帧重抽一次，暗角到 62% 黑"
+          ]
+        ],
+        "prompt": "用「微距拉出（Macro Pull-out Reveal）」做一个产品展示镜头。总长 10.5 秒。用 DOM/SVG 重建一个 1536×880 的仪表盘窗口，放进 CSS 3D 倾斜（perspective 2000px，rotateX 25°，rotateZ −3° 到 −4°），背景近黑 #050506，左上方一束掠射光。前 4.8 秒镜头以 4.0–4.2x 的 scale 做三个线性微距子镜头，每秒平移约 8–11% 画面宽：图表曲线（0–1.7s）、表格一行（1.7–3.3s）、主按钮（3.3–4.8s）。景深很浅：叠四份同一场景，模糊 0、2.6、6、11px，用画面中间一条约 200–250px 宽的倾斜焦带做蒙版，每次切镜后焦带用 power2.out 在 0.5 秒内回到中心；再叠像素网格和颗粒。4.8 到 6.0 秒用 expo.out（cubic-bezier(0.16,1,0.3,1)）向后拉出，scale 从 4.0x 到 1x，倾斜放松到 rotateX 11°，焦带加宽到 560px，直到窗口占画面约 80%。之后线性余漂 2.4 秒（scale 1.00→1.03）。7.9–8.75 秒焦点从窗口虚出，带入字标（scale 1.06→1 与 blur 10px→0，expo.out 0.8 秒），停到 10.5 秒。主体不动，只有镜头移动。",
+        "says": [
+          "先贴得很近拍局部，最后拉出整个产品",
+          "镜头从细节慢慢拉远看到全貌",
+          "特写之后一下子拉出整页"
+        ],
+        "vs": [
+          [
+            "zoom-to-cursor",
+            "镜头服务一次 UI 操作，时长 0.6–0.8s，拉回后继续操作；微距拉出以拉出结尾作为收束"
+          ],
+          [
+            "device-push-in-focus",
+            "实物推进聚焦在一台设备上按选项逐次平移；微距拉出是一镜游览局部后一次拉出"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Macro Pull-out Reveal",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Macro Pull-out Reveal\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Macro Pull-out Reveal: Example and Code Recipe",
+    "description": "The camera drifts over a dashboard at extreme close range, then one fast pull-out shows the whole window. Make it with Claude Code or Codex.",
+    "lede": "The camera drifts slowly across a surface at extreme close range, then one pull-back reveals the whole device or page.",
+    "name": "Macro Pull-out Reveal",
+    "ownName": "Macro Pull-out Reveal",
+    "body": [
+      {
+        "h2": "How to make a Macro Pull-out Reveal with Claude Code or Codex",
+        "body": "Rebuild a 1536×880 dashboard window in DOM and SVG, tilt it with CSS 3D (perspective 2000px, rotateX 25°, rotateZ −3°) and move only the camera. Three macro shots at 4.0–4.2× scale last 1.7s, 1.6s and 1.5s, each drifting linearly at about 8–11% of frame width per second, on a chart, a deployment row and the primary button.\n\nThe pull-out runs 1.2s (4.8–6.0s) on expo.out, cubic-bezier(0.16,1,0.3,1), from 4.0× to 1× with rotateX 25° to 11°, ending with the window at 80% of frame width. Shallow depth of field comes from four stacked copies at blur 0, 2.6, 6 and 11px under a tilted focus band, and a pixel grid fades out 4.8–5.15s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent rebuilds the dashboard window and moves the CSS 3D camera over it. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A tilted close view of a dark deployment dashboard with error rate, cold starts and top routes.",
+    "faq": [
+      [
+        "What is a macro shot in motion design?",
+        "A macro shot frames a very small area at extreme close range so texture and detail fill the frame. In a UI film the camera travels over details such as a chart or a button, then pulls out to show where they sit in the whole."
+      ],
+      [
+        "Can I build a pull-out reveal with CSS?",
+        "Yes. This recipe builds the dashboard in DOM and SVG and moves the camera with CSS 3D transforms (perspective, rotateX, scale), so the same timeline works in a video render and on a web page. Stacked blur layers add the shallow depth of field."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "微距拉远揭示",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"微距拉远揭示\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "微距拉远揭示：示例与代码配方",
+    "description": "镜头贴着仪表盘局部超近距离慢移，最后一次快速后拉交代整个窗口。用 Claude Code 或 Codex 按免费配方做出这个微距拉远效果。",
+    "lede": "镜头贴着局部超近距离慢移，最后一次后拉把整机或整页交代出来。",
+    "name": "微距拉远揭示",
+    "ownName": "微距拉出",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做微距拉远揭示",
+        "body": "用 DOM 和 SVG 重建一个 1536×880 的仪表盘窗口，用 CSS 3D 倾斜（perspective 2000px，rotateX 25°，rotateZ −3°），只移动镜头。三个微距镜头缩放 4.0–4.2 倍，依次拍图表、部署行和主按钮，分别持续 1.7s、1.6s、1.5s，每个镜头以每秒约 8–11% 画面宽度线性漂移。\n\n后拉在 4.8–6.0s 用 1.2s，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)），缩放从 4.0 倍到 1 倍，rotateX 从 25° 到 11°，结束时窗口占画面宽度 80%。浅景深用四层叠放的副本实现，模糊分别为 0、2.6、6、11px，放在一条倾斜的焦点带下，像素网格在 4.8–5.15s 淡出。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会重建仪表盘窗口，并用 CSS 3D 相机在上面移动。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "倾斜的深色部署面板特写，显示错误率、冷启动和热门路由。",
+    "faq": [
+      [
+        "设计里的微距镜头是什么？",
+        "微距镜头用极近的距离拍摄很小的区域，让质感和细节占满画面。在界面类片子里，镜头先贴着图表、按钮这类细节移动，再拉远，让观众看到这些细节在整体里的位置。"
+      ],
+      [
+        "能用 CSS 做拉远揭示吗？",
+        "可以。这份配方用 DOM 和 SVG 搭仪表盘，用 CSS 3D 变换（perspective、rotateX、scale）移动镜头，同一条时间线既能渲染视频，也能放在网页上。叠放的模糊层负责浅景深。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

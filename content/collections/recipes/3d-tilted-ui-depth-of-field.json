@@ -1,0 +1,208 @@
+{
+  "slug": "3d-tilted-ui-depth-of-field",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/tilted-ui.mp4",
+    "poster": "https://media.motionboard.app/tilted-ui.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 10,
+    "cat": "B",
+    "star": true,
+    "video": "tilted-ui",
+    "samples": [
+      {
+        "t": "Dia",
+        "id": "YVOw0TAO9ok",
+        "at": "0:42–0:53",
+        "s": 42
+      },
+      {
+        "t": "Dia",
+        "id": "YVOw0TAO9ok",
+        "at": "0:18–0:21",
+        "s": 18
+      },
+      {
+        "t": "Linear Releases",
+        "id": "6dIwFoQ0eVg",
+        "at": "0:10–0:15",
+        "s": 10
+      },
+      {
+        "t": "Raycast",
+        "id": "Mi173xGb0ZA",
+        "at": "0:00–0:05",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Tilt, shallow depth of field, and grain make the screen UI read as a physical object, and they match the color grade of the live-action shots before and after it. Only the row being typed in is in focus, so the eye has nothing to search for.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. Panel slides in 0–1.0s (30 frames); camera pans linearly 0–8.0s; typing 1.4–3.2s (47 characters); results swap 3.3s, rows stagger 0.05s (0.5s each from 3.5s); highlight appears 4.4s and hops at 5.1s and 5.82s (0.22s, 7 frames each); select press 6.3s; answer streams 6.72–7.8s (7 lines, 0.18s apart); pull-back 8.0–8.9s (0.9s, 27 frames); wordmark 8.3–8.9s"
+          ],
+          [
+            "Easing",
+            "Pan and backdrop drift <code>linear</code>; panel slide-in, row reveals, highlight hops, focus jumps and the pull-back <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); select press back.out(2)"
+          ],
+          [
+            "Camera",
+            "CSS 3D, <code>perspective</code> 1200px; panel (760×500px) rotated <code>rotateX</code> 18°, <code>rotateY</code> −16°, <code>rotateZ</code> 5° at scale 2.3; camera close, panning slowly sideways (x 110→−150px) while a follow offset keeps the active line at about 40% of frame height; the in-focus band is 168px of panel height, about 36% of frame height, and the pull-back at 8.0s halves the tilt (9°, −8°, 2.5°), scales 2.3→1.5 and widens the band to the whole panel"
+          ],
+          [
+            "Subject",
+            "The active row is sharp; two blurred copies of the same panel (<code>blur</code> 4px next to the band, 13px beyond it) cross-fade over 60px and 200px masks; typing at about 30ms per letter with 75ms per space, caret blinking on a 1s cycle; the highlight moves down two rows of the results, then the answer streams line by line"
+          ],
+          [
+            "Sync",
+            "The focus band jumps to the same row as the highlight (0.22–0.35s expo.out) and follows each answer line (0.18s); the press (scale 0.98, then back.out(2)) and the tag turning orange <code>#ff6a3d</code> land on the same frame at 6.3s"
+          ],
+          [
+            "Style",
+            "Near-black <code>#070708</code> backdrop with five blurred white diagonal bands (−25°, opacity 0.07–0.14) drifting 288px (15% of frame width) over 9s; panel <code>rgba(28,28,30,0.78)</code>, radius 14px, 1px border <code>rgba(255,255,255,0.10)</code>; grain at 8% opacity re-rolled every 3 frames; vignette to 45% black; orange accent <code>#ff6a3d</code>"
+          ]
+        ],
+        "prompt": "Build a close-up of your interface called Tilted UI with Depth of Field as a 10-second film. Put a 760×500px command-palette panel in a CSS 3D container with perspective 1200px, rotateX 18°, rotateY −16°, rotateZ 5°, scaled 2.3x, on a near-black #070708 backdrop with blurred diagonal light bands, 8% grain and a vignette. The panel slides in over 1.0s with expo.out and the camera pans sideways at linear speed for 8 seconds. Only the active row is sharp: stack three copies of the panel (sharp, blur 4px, blur 13px) under masks that cross-fade over 60px and 200px, with an in-focus band of 168px of panel height (about 36% of the frame) that jumps to the active row with expo.out. Type a 47-character query at about 30ms per letter (75ms per space) from 1.4s with a cursor blinking every 1s; at 3.3s swap to the results, whose rows fade in staggered 0.05s; from 4.4s a highlight moves down two rows (0.22s hops), and at 6.3s the selection presses (scale 0.98 then back.out(2)) while its tag turns orange on the same frame; then stream a 7-line answer 0.18s per line. At 8.0s pull back with expo.out over 0.9s: halve the tilt, scale 2.3x to 1.5x and widen the focus band to the whole panel, then fade in the wordmark.",
+        "says": [
+          "The interface looks like a real object shot on a desk",
+          "Only the row being typed in is sharp",
+          "The interface is tilted with blur in front and behind"
+        ],
+        "vs": [
+          [
+            "macro-pull-out-reveal",
+            "In Macro Pull-out Reveal the subject is a physical product and the shot pulls out to show it whole; here the subject is a flat UI shot as a physical object through tilt and depth of field, and the camera never pulls out."
+          ],
+          [
+            "zoom-to-cursor",
+            "Auto Zoom uses scale to serve a single action and then pulls back; this shot stays close and only pans slowly sideways."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "倾斜、浅景深和颗粒让屏幕界面读成实拍物体，和前后真人镜头的调色连成一体；焦内只有正在输入的那一行，视线不用寻找。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。面板滑入 0–1.0s（30 帧）；镜头线性横移 0–8.0s；打字 1.4–3.2s（47 个字符）；3.3s 结果替换列表，各行错开 0.05s（3.5s 起每行 0.5s）；高亮 4.4s 出现，5.1s 和 5.82s 各跳一行（0.22s，7 帧）；选中按下 6.3s；答案 6.72–7.8s 逐行流出（7 行，每行间隔 0.18s）；拉回 8.0–8.9s（0.9s，27 帧）；字标 8.3–8.9s"
+          ],
+          [
+            "缓动",
+            "横移与背景漂移 <code>linear</code>；面板滑入、行显现、高亮跳转、焦点跳转和拉回 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；选中按压 back.out(2)"
+          ],
+          [
+            "镜头",
+            "CSS 3D，<code>perspective</code> 1200px；面板（760×500px）<code>rotateX</code> 18°、<code>rotateY</code> −16°、<code>rotateZ</code> 5°，scale 2.3；镜头贴近，缓慢横移（x 110→−150px），跟随偏移让当前行保持在画面高约 40% 处；焦内带是面板高度 168px，约占画面高 36%；8.0s 拉回把倾斜减半（9°、−8°、2.5°），scale 2.3→1.5，焦带放宽到整个面板"
+          ],
+          [
+            "主体",
+            "当前行清楚；同一面板的两份虚化副本（紧邻焦带 <code>blur</code> 4px，更远 13px）在 60px 和 200px 的蒙版上交叉渐变；逐字打出，每个字母约 30ms、空格 75ms，光标 1s 周期闪烁；高亮在结果里向下移动两行，之后答案逐行流出"
+          ],
+          [
+            "同步",
+            "焦带跳到与高亮相同的行（0.22–0.35s expo.out），并跟随每一行答案（0.18s）；按压（scale 0.98 后 back.out(2) 回弹）与标签变橙 <code>#ff6a3d</code> 在 6.3s 同一帧发生"
+          ],
+          [
+            "风格",
+            "近黑 <code>#070708</code> 背景，五条模糊的白色斜带（−25°，不透明度 0.07–0.14）在 9s 内漂移 288px（15% 画面宽）；面板 <code>rgba(28,28,30,0.78)</code>，圆角 14px，1px 边框 <code>rgba(255,255,255,0.10)</code>；颗粒 8% 不透明度、每 3 帧重抽一次；暗角到 45% 黑；强调色橙 <code>#ff6a3d</code>"
+          ]
+        ],
+        "prompt": "用「斜拍景深界面（Tilted UI with Depth of Field）」做一段你的界面特写，整段 10 秒。把 760×500px 的命令面板放进 CSS 3D 容器，perspective 1200px，rotateX 18°、rotateY −16°、rotateZ 5°，放大 2.3 倍，背景近黑 #070708，叠模糊的斜向光带、8% 颗粒和暗角。面板用 expo.out 滑入 1.0 秒，镜头以 linear 横移 8 秒。只有当前行清晰：叠三份面板（清晰、blur 4px、blur 13px），用 60px 和 200px 交叉渐变的蒙版，焦内带取面板高度 168px（约占画面 36%），用 expo.out 跳到当前行。从 1.4 秒起逐字打出 47 个字符的查询，每个字母约 30ms、空格 75ms，光标 1 秒闪烁；3.3 秒切换成结果列表，各行错开 0.05 秒淡入；4.4 秒起高亮向下移动两行（每次 0.22 秒），6.3 秒选中按压（scale 0.98 后 back.out(2)），标签在同一帧变橙；随后答案按每行 0.18 秒流出 7 行。8.0 秒用 expo.out 拉回 0.9 秒：倾斜减半，scale 从 2.3 倍到 1.5 倍，焦带放宽到整个面板，然后淡入字标。",
+        "says": [
+          "界面像放在桌上拍的实物",
+          "只有正在输入的那一行是清楚的",
+          "界面斜着放、前后虚化"
+        ],
+        "vs": [
+          [
+            "macro-pull-out-reveal",
+            "微距拉出的主体是产品实物并拉出全貌；本条主体是平面 UI，靠倾斜和景深当实物拍，镜头不拉远"
+          ],
+          [
+            "zoom-to-cursor",
+            "推近再拉回靠缩放服务一次操作；本条镜头保持贴近，只做缓慢横移"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "3D Tilted UI with Depth of Field",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"3D Tilted UI with Depth of Field\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "3D Tilted UI with Depth of Field: Code Recipe",
+    "description": "A command-palette UI is tilted in 3D and shot close, with only the active row in focus. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A UI plane tilted 10–15° and shot up close, with only the active row in focus and the rest blurred.",
+    "name": "3D Tilted UI with Depth of Field",
+    "ownName": "Tilted UI with Depth of Field",
+    "body": [
+      {
+        "h2": "How to make a 3D Tilted UI with Depth of Field with Claude Code or Codex",
+        "body": "Build the panel (760×500px) in DOM and tilt it with CSS 3D: perspective 1200px, rotateX 18°, rotateY −16°, rotateZ 5°, scale 2.3. Pan the camera linearly sideways (x 110 to −150px) over 8s while a follow offset keeps the active line at about 40% of frame height.\n\nFake the depth of field with the sharp panel plus two blurred copies (4px next to the focus band, 13px beyond), cross-faded through 60px and 200px masks. The band is 168px of panel height and jumps to the highlighted row in 0.22–0.35s on expo.out. The pull-back at 8.0s halves the tilt, scales 2.3 to 1.5 and widens the band to the whole panel.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the panel in DOM with grain at 8% opacity re-rolled every 3 frames. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A dark command palette tilted back in space, its top rows sharp and the lower rows blurred.",
+    "faq": [
+      [
+        "What is depth of field?",
+        "Depth of field is the range of distances that appear sharp in an image. A shallow depth of field keeps one plane sharp and blurs what lies in front of and behind it, which directs attention to the sharp area."
+      ],
+      [
+        "Can I fake depth of field in CSS?",
+        "Yes. This recipe stacks blurred copies of the same panel and reveals the sharp one through a mask band that follows the active row. The same markup works in a video render and on a web page."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "3D 倾斜界面景深效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"3D 倾斜界面景深效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "3D 倾斜界面景深效果：示例与代码配方",
+    "description": "命令面板界面在 3D 里倾斜并贴近拍摄，只有当前操作行在焦内。用 Claude Code 或 Codex 按免费配方做出这个倾斜界面景深效果。",
+    "lede": "UI 平面倾斜 10–15° 贴近拍摄，只有当前操作行在焦内，其余行虚化。",
+    "name": "3D 倾斜界面景深效果",
+    "ownName": "斜拍景深界面",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做3D 倾斜界面景深效果",
+        "body": "用 DOM 做一个 760×500px 的面板，用 CSS 3D 倾斜：perspective 1200px，rotateX 18°，rotateY −16°，rotateZ 5°，缩放 2.3 倍。镜头在 8s 内线性横移（x 从 110 到 −150px），同时用跟随偏移把当前行保持在画面高度约 40% 的位置。\n\n景深用清晰的面板加两层模糊副本模拟（紧挨焦点带的是 4px，更远的是 13px），通过 60px 和 200px 的遮罩交叉渐变。焦点带高 168px，用 expo.out 在 0.22–0.35s 内跳到高亮行。8.0s 的后拉把倾斜角减半，缩放从 2.3 到 1.5，焦点带扩大到整个面板。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用 DOM 做出面板，并加上不透明度 8%、每 3 帧重抽一次的颗粒。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "深色命令面板向后倾斜，上面几行清晰，下面几行虚化。",
+    "faq": [
+      [
+        "什么是景深？",
+        "景深是画面中看起来清晰的距离范围。浅景深只让一个平面清晰，前后都虚化，把注意力引向清晰的区域。"
+      ],
+      [
+        "能用 CSS 模拟景深吗？",
+        "可以。这份配方叠放同一个面板的模糊副本，再用跟随当前行的遮罩带露出清晰的那一层。同一套标记既能渲染视频，也能用在网页上。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

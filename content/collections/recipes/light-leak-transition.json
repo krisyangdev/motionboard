@@ -1,0 +1,183 @@
+{
+  "slug": "light-leak-transition",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/light-leak.mp4",
+    "poster": "https://media.motionboard.app/light-leak.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.4
+  },
+  "data": {
+    "n": 55,
+    "cat": "E",
+    "star": false,
+    "video": "light-leak",
+    "samples": [],
+    "text": {
+      "en": {
+        "why": "A light leak is the orange, amber and magenta glow that stray light prints on film. This film uses it as a transition: light drifts in from one side, reaches near-white exactly on the cut frame, the scene is swapped on that brightest frame so no hard cut is visible, and then the light recedes while the new scene develops out of the overexposure. The glow is seven large radial gradients with different sizes, colors, paths and eases (the big orange one covers the middle with power3.out, the magenta one turns slowly, a narrow streak sweeps across with power1.inOut, and a deep red one stays on the bottom edge), so the shape reads as organic and not as one mask sliding across. The layer uses screen blending, which only adds light, so dark scenes pick up the warm color and it bleeds in naturally at the edges. Three exposure moves stack around the cut: the blobs, a near-white flash layer (peak opacity 0.98, with a 0.04 s plateau on each side of the cut; the three cuts sit on frames 84, 171 and 249, all inside the plateau) and an exposure lift on the scene itself (brightness 2.3, contrast 0.82, saturation 1.3), so the picture washes out from within. Grain rises from 0.5 to 0.85 during a leak, as it does on real overexposed film. All three scenes are real screens of Grain, a film-look camera app, so the theme and the effect agree: a light leak is a film defect and here it becomes the brand's language. The first leak is triggered by the shutter (pressed at 1.75 s, the glow enters at 1.8 s); the later ones land after each scene has finished its content, and the next scene's elements (gallery frames, the preview) develop out of the overexposure, which turns the transition and the next scene's entrance into one move. There is a single accent color, amber #ff9a2e; the orange and magenta only exist inside the light.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.4s. Scene 1 0–2.8s (phone rises 0–1.2s, focus box 0.9s, shutter 1.75s); leak 1 blobs 1.8–4.3s, flash 2.3–3.79s, cut to the gallery at 2.8s; scene 2 2.8–5.7s (frames develop one by one from 3.02s, heart 3.95s, selection 4.35s); leak 2 blobs 4.7–7.2s, flash 5.2–6.69s, cut to the picker at 5.7s; scene 3 5.7–8.3s (stock change at 7.0s); small tail leak blobs 7.5–9.5s, flash 7.9–9.1s, cut to the wordmark at 8.3s; lockup from 8.5s, held to the end (2.1s)"
+          ],
+          [
+            "Easing",
+            "Flash rises power3.in (0.46s) and falls power2.out (0.95s); blobs move horizontally with power3.out / power2.out / power1.out / power1.inOut and vertically with sine.inOut, fade in power2.out and out power2.in; scene exposure lift power3.in (0.55s) and release power2.out (0.9s); UI entrances <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out), panels settle power3.out"
+          ],
+          [
+            "Camera",
+            "Flat framing with a slow push in each scene: the phone goes 1→1.05x over the whole 2.8s and the picture in the viewfinder 1→1.08x with a slight sideways drift; the gallery and picker panels settle from 1.06x to 1 over 1.5s (power3.out), then push linearly to 1.025x and 1.02x; the lockup pushes 4% over 8.3–10.4s. The phone enters with a -16° Y rotation, perspective 2000px. The leak itself never moves the camera; it only drifts across the frame"
+          ],
+          [
+            "Subject",
+            "Phone 440x900px, radius 72px, screen 420x880px, viewfinder 420x560px (3:4), shutter ring 84px; the viewfinder holds a code-drawn sunset (gradient sky, sun with glow, three silhouette ridges, small pines). Gallery panel 1640x900px with a 5x3 grid of film-bordered frames, each 296x219px (picture 280x187px, 3:2, a 24px bottom strip with edge print and frame numbers 04A–18A). Picker panel with an 800x533px preview on the left, six stocks on the right (Saltair 200, Marigold 400, Dusk 800, Vesper 100, Neon Alley 500T, Cinder 400) and three sliders (Grain, Fade, Halation) under the preview. Seven blobs: orange 1800x1300px, amber 1300x1000px, magenta 1000x1500px, near-white core 900x700px, narrow streak 300x1500px (24px blur), bottom-edge deep red 2200x520px, top-edge amber 800x600px, gradient stops at 0% / 40% / 72% / 100%. Leak 1 enters from the left, leak 2 is mirrored in x and y and enters from the bottom right, leak 3 enters from the right at strength 0.85, time scale 0.8 and without the deep red blob"
+          ],
+          [
+            "Sync",
+            "The three cuts sit at 2.8s, 5.7s and 8.3s (frames 84, 171 and 249), all inside the 0.08s plateau where the flash is at 0.98; blob peaks fall 0–0.3s around the cut; the scene exposure lift starts 0.55s before the cut and ends 0.9s after it; the shutter fires at 1.75s and the glow enters at 1.8s; gallery frames develop one every 0.055s from 3.02s (0.75s each, brightness 2.4→1); the selection box slides to Dusk 800 at 7.0s (0.55s), the preview cross-fades at 7.05s (0.45s) and the sliders move to 72 / 38 / 58 from 7.1s over 0.7s; the flash of leak 2 has already ended at 6.69s"
+          ],
+          [
+            "Style",
+            "Warm black <code>#0c0806</code>, panels <code>#16100c</code>, text <code>#f6ead7</code>, a single accent amber <code>#ff9a2e</code>; Inter, readouts in JetBrains Mono; the flash layer is a near-white radial gradient <code>#fff8e6</code>→<code>#ffe8bd</code>→<code>#ffc88c</code>; the blob layer uses screen blending; a 384px noise tile re-offset every 1/24s with overlay blending, opacity 0.5 (0.85 during a leak); vignette 50% dark at the corners"
+          ]
+        ],
+        "prompt": "Build a 10.4-second, 1920x1080, 30 fps film called Light Leak Transition for a fictional product, Grain (a film-look camera app). Palette: background #0c0806, panels #16100c, text #f6ead7, one accent amber #ff9a2e; Inter for the UI. Three scenes are joined by two large light leaks, and a small third leak leads into the lockup. Scene 1 (0–2.8s): a CSS phone 440x900px, radius 72px, screen 420x880px, viewfinder 420x560px showing an SVG sunset drawn in code (gradient sky, sun with glow, three silhouette ridges, small pines) with a thirds grid, a focus box, readouts (ISO 400, 1/125 f/2.8, 07 / 36), a Saltair 200 chip and an 84px shutter ring. On the left a 176px headline, Shoot / it warm., the second line in amber. The phone rises from 130px below with a -16° Y rotation over 1.2s (expo.out) and pushes to 1.05x. The focus box appears at 0.9s; at 1.75s the shutter is pressed (button 1→0.86 in 0.09s, back over 0.35s), the viewfinder blinks black for 0.27s and the counter goes 07→08. Scene 2 (2.8–5.7s): a gallery panel 1640x900px with a 5x3 grid of film frames, each 296x219px with a film border, a 3:2 picture drawn in code and a bottom strip printed with SALTAIR 200 and frame numbers 04A–18A. From 3.02s the frames develop out of overexposure one every 0.055s (0.75s power3.out, brightness 2.4→1). At 3.95s frame 08 (the sunset from scene 1) gets a heart and at 4.35s an amber selection ring and check. Scene 3 (5.7–8.3s): a preset picker with an 800x533px preview on the left (the same sunset), three sliders under it (Grain, Fade, Halation at 40 / 22 / 30) and six film stocks on the right (Saltair 200, Marigold 400, Dusk 800, Vesper 100, Neon Alley 500T, Cinder 400). At 7.0s an amber selection box slides from Saltair 200 to Dusk 800 over 0.55s (expo.out), the preview cross-fades over 0.45s into a darker grade and the sliders move to 72 / 38 / 58. Lockup (8.3–10.4s): an amber rounded-square lens icon, the word Grain (Inter 700, 196px) with letters staggered 0.05s from 8.5s, and the line Film look, in every frame. at 9.0s. The light leak is the core and sits above every scene with screen blending. Let T be a cut (2.8s, 5.7s, 8.3s). It is seven large radial gradients (closest-side, stops at 0% / 40% / 72% / 100%): orange rgb(255,96,18) 1800x1300px, x -900→1500, T-1.0 to T+1.5s, power3.out; amber rgb(255,176,32) 1300x1000px, x -1200→1300, T-0.8 to T+1.4s, power2.out; magenta rgb(255,40,120) 1000x1500px, x 300→1750, rotating -25°→15°, T-0.55 to T+1.3s, power1.out; a near-white core rgb(255,246,222) 900x700px, scale 0.6→1.5, T-0.5 to T+0.9s; a narrow streak rgb(255,130,50) 300x1500px, 24px blur, rotated 14°, x -400→2400, T-0.7 to T+0.9s, power1.inOut; a bottom-edge deep red rgb(224,48,24) 2200x520px; and a top-edge amber rgb(255,160,40) 800x600px. All move vertically with sine.inOut and fade in power2.out and out power2.in, peaking 0–0.3s around the cut. Leak 1 enters from the left, leak 2 is mirrored in x and y, and leak 3 enters from the right at strength 0.85, time scale 0.8 and without the deep red blob. Exposure: a near-white radial gradient layer (#fff8e6→#ffe8bd→#ffc88c) rises to opacity 0.98 over 0.46s (power3.in) from T-0.5s, holds until T+0.04s and falls to 0 over 0.95s (power2.out); the scene swap happens at T, inside the plateau. From 0.55s before the cut the outgoing scene's filter rises to brightness(2.3) contrast(0.82) saturate(1.3) (power3.in), and the incoming scene eases from that state back to normal over 0.9s (power2.out). Grain is a seeded 384px noise tile, overlay blending, opacity 0.5 (0.85 during a leak), offset re-rolled every 1/24s; add a vignette. Drive everything from one paused GSAP timeline.",
+        "says": [
+          "A warm glow drifts in from the edge and the picture has already changed when it peaks",
+          "Like an old film camera leaking light: orange, amber and magenta glow washes over and recedes",
+          "Two leaks join the viewfinder, the gallery and the picker"
+        ],
+        "vs": [
+          [
+            "wipe-flash-transition",
+            "Foreground Wipe & Flash covers the frame with a large blurred object or a center white flash before the scene changes; the leak here is several organic blobs of different colors drifting from one side, with grain and an exposure lift, and the swap lands on the brightest frame."
+          ],
+          [
+            "match-cut-transition",
+            "Match Cut keeps the anchor position still and swaps one thing for another; a light leak needs no shared position between the two scenes, because the overexposure hides the cut and the scenes can be completely different."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "漏光是胶片机漏进光线时留在底片上的橙、琥珀、洋红色光斑。这支片子把它当转场用：光从画面一侧飘进来，在切点那一帧亮到接近纯白，场景在最亮的一帧被换掉，观众看不到硬切，然后光退走，新场景从过曝里显影出来。光斑由七团大的径向渐变组成，大小、颜色、路径和缓动各不相同（橙色大团用 power3.out 很快铺到画面中央，洋红团慢慢转动，窄长的光条用 power1.inOut 快速扫过，底边一团深红始终贴着下沿），所以形状读起来是有机的，看不出是一块整体平移的遮罩。光斑用 screen 混合，只加光不压暗，深色场景被它点亮，边缘自然渗出暖色。切点前后有三个叠加的曝光动作：光斑本身、一层近白的闪光层（峰值不透明度 0.98，在切点前后各留 0.04s 的平台，三个切点分别在第 84、171、249 帧，都落在平台里）、以及场景自身的曝光抬升（亮度 2.3、对比度 0.82、饱和度 1.3），所以画面是从内容里逐渐洗白的。颗粒在漏光时从 0.5 升到 0.85，和真实胶片过曝时的颗粒感一致。三个场景都是 Grain 这个胶片相机 App 的真实界面（取景器、相册、胶片预设），主题和效果一致：漏光本来就是胶片的瑕疵，换到数字界面里就成了品牌语言。第一次漏光由快门触发（1.75s 按下，1.8s 光斑进场），后两次落在场景内容做完之后，新场景里的元素（相册格子、预览图）从过曝里“显影”，把转场和下一幕的出场合成同一个动作。全片只有一个强调色琥珀 #ff9a2e，漏光的橙、洋红只出现在光里。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.4s。场景 1 0–2.8s（手机升起 0–1.2s，对焦框 0.9s，快门 1.75s）；漏光 1 光斑 1.8–4.3s，闪光 2.3–3.79s，2.8s 切到相册；场景 2 2.8–5.7s（相册格子 3.02s 起逐格显影，加心 3.95s，选中 4.35s）；漏光 2 光斑 4.7–7.2s，闪光 5.2–6.69s，5.7s 切到预设；场景 3 5.7–8.3s（7.0s 换预设）；尾部小漏光 光斑 7.5–9.5s，闪光 7.9–9.1s，8.3s 切到字标；字标 8.5s 起，保持到片尾 2.1s"
+          ],
+          [
+            "缓动",
+            "闪光升起 power3.in（0.46s），回落 power2.out（0.95s）；光斑横向 power3.out / power2.out / power1.out / power1.inOut，纵向 sine.inOut，出现 power2.out、消失 power2.in；场景曝光抬升 power3.in（0.55s），回落 power2.out（0.9s）；界面进场 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out），面板落位 power3.out"
+          ],
+          [
+            "镜头",
+            "平面构图，三个场景各自有一段慢推：手机 1→1.05 倍用满 2.8s，取景器内画面 1→1.08 倍并轻微横移；相册和预设面板先从 1.06 倍用 1.5s（power3.out）落到 1，再线性推到 1.025 倍和 1.02 倍；字标 8.3–10.4s 推 4%。手机进场带 −16° 的 Y 轴旋转，透视 2000px。漏光本身不动镜头，只是从一侧飘过"
+          ],
+          [
+            "主体",
+            "手机 440x900px，圆角 72px，屏幕 420x880px，取景器 420x560px（3:4），快门环 84px；取景器里是代码画的日落（渐变天空、太阳加光晕、三层剪影山脊、小松树）。相册面板 1640x900px，5x3 个胶片格，每格 296x219px（图 280x187px，3:2，底边 24px 印片边码和帧号 04A–18A）。预设面板左侧预览 800x533px，右侧 6 个胶片预设（Saltair 200、Marigold 400、Dusk 800、Vesper 100、Neon Alley 500T、Cinder 400），下方 Grain、Fade、Halation 三个滑块。光斑七团：橙 1800x1300px、琥珀 1300x1000px、洋红 1000x1500px、近白核心 900x700px、窄光条 300x1500px（模糊 24px）、底边深红 2200x520px、顶边琥珀 800x600px，渐变停靠点 0% / 40% / 72% / 100%。漏光 1 从左侧进，漏光 2 横向纵向都翻转，从右下进，漏光 3 从右侧进，强度 0.85、时间缩短到 0.8 倍、不含底边深红"
+          ],
+          [
+            "同步",
+            "三个切点在 2.8s、5.7s、8.3s（第 84、171、249 帧），都落在闪光 0.98 的 0.08s 平台里；光斑峰值分别在切点前后 0–0.3s；场景曝光抬升在切点前 0.55s 开始、切点后 0.9s 结束；快门 1.75s 按下，光斑 1.8s 进场；相册格子 3.02s 起每 0.055s 一格显影（0.75s，亮度 2.4→1）；预设选中框 7.0s 滑到 Dusk 800（0.55s），预览图 7.05s 交叉淡入（0.45s），滑块 7.1s 起用 0.7s 变到 72 / 38 / 58；7.0s 时漏光 2 的闪光已在 6.69s 结束"
+          ],
+          [
+            "风格",
+            "暖黑 <code>#0c0806</code>，面板 <code>#16100c</code>，文字 <code>#f6ead7</code>，唯一强调色琥珀 <code>#ff9a2e</code>；Inter，读数用 JetBrains Mono；闪光层是近白径向渐变 <code>#fff8e6</code>→<code>#ffe8bd</code>→<code>#ffc88c</code>；光斑图层 screen 混合；384px 噪点贴图每 1/24s 换一次偏移，overlay 混合，不透明度 0.5（漏光时升到 0.85）；暗角四角 50% 暗"
+          ]
+        ],
+        "prompt": "用「漏光转场（Light Leak Transition）」做一支 10.4 秒、1920x1080、30fps 的产品片，虚构产品 Grain（胶片质感相机 App）。暖黑配色：背景 #0c0806，面板 #16100c，文字 #f6ead7，唯一强调色琥珀 #ff9a2e，字体 Inter，读数用等宽字体。三个场景由两次大的漏光连接，再接一次小漏光进字标。场景 1（0–2.8s）：CSS 手机 440x900px，圆角 72px，屏幕 420x880px，取景器 420x560px，里面是 SVG 代码画的日落（渐变天空、太阳加光晕、三层剪影山脊、小松树），叠加三分线、对焦框、读数（ISO 400、1/125 f/2.8、07 / 36）、Saltair 200 胶片标签和 84px 的快门环；左侧大标题 Shoot / it warm.，176px，第二行用琥珀色。手机从下方 130px、−16° Y 旋转用 1.2s（expo.out）升起，全程缓慢推到 1.05 倍。0.9s 对焦框出现，1.75s 按快门：按钮 1→0.86（0.09s）再回弹（0.35s expo.out），取景器黑闪 0.27s，计数 07 变 08，缩略图弹出。场景 2（2.8–5.7s）：相册面板 1640x900px，圆角 30px，5x3 个胶片格，每格 296x219px，深棕胶片边，图 3:2，底边印片边码 SALTAIR 200 和帧号 04A–18A，用 9 种代码画的风景（日落、湖、沙漠、城市、雾山、海滩、霓虹街、麦田、雪峰）；3.02s 起每 0.055s 一格从过曝显影出来（0.75s power3.out，亮度 2.4→1）；3.95s 第 08 帧（场景 1 拍下的日落）加心，4.35s 出现琥珀选中框和对勾，页脚换成 1 selected。场景 3（5.7–8.3s）：预设面板，左侧 800x533px 预览（同一张日落），下方 Grain、Fade、Halation 三个滑块（40 / 22 / 30），右侧 6 个胶片预设：Saltair 200、Marigold 400、Dusk 800、Vesper 100、Neon Alley 500T、Cinder 400。7.0s 琥珀选中框用 0.55s（expo.out）从 Saltair 200 滑到 Dusk 800，预览 0.45s 交叉淡入偏暗的 Dusk 色调，滑块变到 72 / 38 / 58。字标（8.3–10.4s）：琥珀圆角方形图标加镜头，字标 Grain（Inter 700，196px）逐字 0.05s 错开出现，8.5s 起，一行 Film look, in every frame.，9.0s 出现，慢推 4%。漏光是核心，叠在所有场景上方（screen 混合）。每次漏光 T 为切点（2.8s、5.7s、8.3s）。由七团大径向渐变（closest-side，停靠点 0% / 40% / 72% / 100%）组成：橙 rgb(255,96,18) 1800x1300px，横向 −900→1500，T−1.0 到 T+1.5s，power3.out；琥珀 rgb(255,176,32) 1300x1000px，横向 −1200→1300，T−0.8 到 T+1.4s，power2.out；洋红 rgb(255,40,120) 1000x1500px，横向 300→1750，旋转 −25°→15°，T−0.55 到 T+1.3s，power1.out；近白核心 rgb(255,246,222) 900x700px，缩放 0.6→1.5，T−0.5 到 T+0.9s；窄光条 rgb(255,130,50) 300x1500px，模糊 24px，旋转 14°，横向 −400→2400，T−0.7 到 T+0.9s，power1.inOut；底边深红 rgb(224,48,24) 2200x520px；顶边琥珀 rgb(255,160,40) 800x600px。纵向都用 sine.inOut，不透明度 power2.out 升起、power2.in 退去，峰值在切点前后 0–0.3s。漏光 1 从左侧进，漏光 2 在横向和纵向都翻转，漏光 3 从右侧进，强度 0.85、时间 0.8 倍，不含底边深红。曝光：一层近白径向渐变（#fff8e6→#ffe8bd→#ffc88c）从 T−0.5s 起用 0.46s（power3.in）升到不透明度 0.98，保持到 T+0.04s，再用 0.95s（power2.out）退到 0；场景切换发生在 T，正好落在平台里。切点前 0.55s 起，前一个场景的滤镜升到 brightness(2.3) contrast(0.82) saturate(1.3)（power3.in），下一个场景从同一状态用 0.9s（power2.out）回到正常。颗粒是 384px 的种子噪点贴图，overlay 混合，不透明度 0.5，漏光时升到 0.85，偏移每 1/24s 换一次；四角加 50% 暗角。全部动画由一条暂停的 GSAP 时间线驱动，不用随机数和 requestAnimationFrame。",
+        "says": [
+          "一团暖色的光从边上飘进来，亮到发白时画面已经换了",
+          "像老胶片机漏光，橙色、琥珀色、洋红色的光斑盖过去再退走",
+          "两次漏光，把取景器、相册、预设三个界面接在一起"
+        ],
+        "vs": [
+          [
+            "wipe-flash-transition",
+            "遮挡与闪白用一个虚焦大物体或中心白光遮满画面再换场景；漏光转场的光是几团不同颜色的有机光斑，从一侧飘过，叠加颗粒和曝光抬升，换景那一帧是最亮的一帧。"
+          ],
+          [
+            "match-cut-transition",
+            "同位替换保持锚点位置不动，直接把一样东西换成另一样；漏光转场不要求前后画面有相同的位置，靠过曝盖住切点，前后场景可以完全不同。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Light Leak Transition",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 140 for \"light leak transition\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Light Leak Transition: Example and Code Recipe",
+    "description": "A warm film light leak drifts across, peaks near white on the cut and carries one screen into the next. Make it with Claude Code or Codex.",
+    "lede": "A soft orange, amber and magenta glow drifts in from one side of the frame, peaks near white on the cut frame, and the next screen develops out of the overexposure. It happens twice, ending on the lockup.",
+    "name": "Light Leak Transition",
+    "ownName": "Light Leak Transition",
+    "body": [
+      {
+        "h2": "How to make a Light Leak Transition with Claude Code or Codex",
+        "body": "Build the leak from seven large radial gradients with different sizes, colors and paths, layered above the scene with mix-blend-mode screen: orange 1800x1300px, amber 1300x1000px, magenta 1000x1500px, a near-white core, a narrow streak with 24px blur, and two edge glows. Each one moves from off-screen with its own ease (power3.out, power2.out, power1.out, power1.inOut) from about 1s before the cut to about 1.5s after it, so the shape stays organic.\n\nPut the scene swap on the brightest frame. A near-white flash layer rises to opacity 0.98 over 0.46s (power3.in) and holds for 0.08s around the cut, while the outgoing scene lifts to brightness(2.3) contrast(0.82) saturate(1.3). The cuts are at 2.8s, 5.7s and 8.3s; the incoming scene eases back to normal over 0.9s (power2.out) and its elements develop out of the overexposure. Raise film grain from 0.5 to 0.85 during the leak.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the phone, the gallery, the picker and the leak for your own screens. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A photo roll of 15 sunset frames in warm orange and purple, one selected, in a dark gallery app.",
+    "faq": [
+      [
+        "What is a light leak transition?",
+        "A light leak transition imitates the glow that stray light prints on film. A warm glow drifts across the frame, brightens until the picture is nearly white, and the next shot appears as the glow recedes. The cut is hidden inside the brightest frame."
+      ],
+      [
+        "How do you make a light leak in HTML and CSS?",
+        "Stack several large radial gradients in orange, amber and magenta over the scene with mix-blend-mode screen, move each on its own path and ease, and add a near-white flash layer that peaks on the cut frame. Lift the scene's brightness at the same moment and add film grain with overlay blending."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "漏光转场",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"漏光转场\": 漏光转场 素材",
+      "checked": "2026-11-28"
+    },
+    "title": "漏光转场：示例与代码配方",
+    "description": "一团暖色胶片漏光从一侧飘过，在切点亮到近乎纯白，把一个界面接到下一个界面。用 Claude Code 或 Codex 按免费配方做出这个漏光转场。",
+    "lede": "一团橙、琥珀、洋红的柔光从画面一侧飘进来，在切点那一帧亮到近乎纯白，下一个界面从过曝里显影出来，连着两次，最后落到字标。",
+    "name": "漏光转场",
+    "ownName": "漏光转场",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做漏光转场",
+        "body": "用七团大的径向渐变拼出漏光，大小、颜色和路径各不相同，叠在场景上方，混合模式 screen：橙色 1800x1300px、琥珀 1300x1000px、洋红 1000x1500px、近白核心、模糊 24px 的窄光条，以及两团贴边的光。每团从画面外进来，各用自己的缓动（power3.out、power2.out、power1.out、power1.inOut），从切点前约 1s 持续到切点后约 1.5s，形状才显得有机。\n\n把换场景放在最亮的一帧。一层近白闪光层用 0.46s（power3.in）升到不透明度 0.98，并在切点前后保持 0.08s，同时前一个场景的滤镜升到 brightness(2.3) contrast(0.82) saturate(1.3)。三个切点在 2.8s、5.7s、8.3s；下一个场景用 0.9s（power2.out）回到正常，里面的元素从过曝里显影出来。漏光期间把胶片颗粒的不透明度从 0.5 升到 0.85。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会按你自己的界面做出手机、相册、预设选择器和漏光。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "深色相册应用里一卷 15 张橙紫色日落照片，其中一张被选中。",
+    "faq": [
+      [
+        "漏光转场是什么？",
+        "漏光转场模仿杂散光在胶片上留下的光晕。一团暖色的光从画面一侧飘过，把画面照到近乎纯白，光退去时下一个镜头已经出现。切点藏在最亮的那一帧里。"
+      ],
+      [
+        "怎么用 HTML 和 CSS 做漏光？",
+        "在场景上方叠几团橙色、琥珀、洋红的大径向渐变，混合模式用 screen，每团走自己的路径和缓动，再加一层在切点那一帧达到峰值的近白闪光层。同一时刻抬高场景的亮度，并用 overlay 混合叠上胶片颗粒。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -6,10 +6,10 @@ import { track } from '@/core/track'
 import { media, termName, type Term } from '@/site/data/terms'
 import { useStrings } from '@/site/lib/strings'
 
-type FilmProps = { src: string; mobileSrc?: string; poster: string; posterSmall?: string; name: string; transitionName?: string; slug?: string; radius?: string }
+type FilmProps = { src: string; mobileSrc?: string; poster: string; posterSmall?: string; name: string; alt?: string; transitionName?: string; slug?: string; radius?: string }
 
 // Autoplays muted on loop; click toggles. Reduced motion shows the poster and plays only on click.
-export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName, slug, radius = 'rounded-media' }: FilmProps) {
+export function Film({ src, mobileSrc, poster, posterSmall, name, alt, transitionName, slug, radius = 'rounded-media' }: FilmProps) {
   const video = useRef<HTMLVideoElement>(null)
   const bar = useRef<HTMLElement>(null)
   const [paused, setPaused] = useState(false)
@@ -87,7 +87,8 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
           src={poster}
           srcSet={posterSmall ? `${posterSmall} 960w, ${poster} 1920w` : undefined}
           sizes={posterSmall ? '(min-width: 900px) 1100px, 100vw' : undefined}
-          alt=""
+          alt={alt ?? ''}
+          aria-hidden={alt ? undefined : true}
           width={1920}
           height={1080}
           fetchPriority="high"
@@ -128,7 +129,7 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
 }
 
 // The full film of a recipe.
-export function Player({ term: t }: { term: Term }) {
+export function Player({ term: t, alt }: { term: Term; alt: string | undefined }) {
   const locale = useLocale()
-  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} posterSmall={media(t, 'jpgSmall')} name={termName(t, locale)} transitionName="film" slug={t.slug} radius="rounded-[15px] md:rounded-[24px]" />
+  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} posterSmall={media(t, 'jpgSmall')} name={termName(t, locale)} alt={alt} transitionName="film" slug={t.slug} radius="rounded-[15px] md:rounded-[24px]" />
 }

@@ -1,5 +1,5 @@
 // Hub and guide pages. The index (PAGES) is eager; the long copy of one page is a separate chunk
-// that only that page loads, like loadText in terms.ts. The copy files are content/pages/<id>.json.
+// that only that page loads. The copy files are content/pages/<id>.json.
 import type { ContentPage } from './content'
 
 export * from './page-index'

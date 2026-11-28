@@ -1,0 +1,196 @@
+{
+  "slug": "dot-matrix-animation",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/dot-matrix-glyph.mp4",
+    "poster": "https://media.motionboard.app/dot-matrix-glyph.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 33,
+    "cat": "D",
+    "star": false,
+    "video": "dot-matrix-glyph",
+    "samples": [
+      {
+        "t": "Nothing Phone (3)",
+        "id": "MHGQRnvE9GQ",
+        "at": "0:03–0:05",
+        "s": 3
+      },
+      {
+        "t": "Nothing Phone (3)",
+        "id": "MHGQRnvE9GQ",
+        "at": "0:15–0:18",
+        "s": 15
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Rotation is quantized onto a low-resolution dot matrix, so the motion jumps cell by cell and the edges are jagged, matching how real hardware displays work. Rotation speed drops from shot to shot, so the slowing down itself builds suspense, and alternating dot-matrix shots with expression shots deepens the wait.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s, eight hard-cut shots. Wide rotation shots at 0-1.4s (rotation 0.8s), 1.85-3.55s (1.15s), 4.0-6.0s (1.6s), 6.4-8.8s (2.0s); close-ups of the crown 1.4-1.85s, 3.55-4.0s and 6.0-6.4s; each rotation covers 120 degrees and leaves the glyph still for 0.6, 0.55, 0.4 and 0.4s; captions at 2.0s and 4.12s; end card from 8.8s, tagline at 8.9s"
+          ],
+          [
+            "Easing",
+            "Rotation <code>cubic-bezier(0.16,1,0.3,1)</code> (strong ease-out); crown click uses the same curve over 0.35s; dots turn on and off with a hard cut, no glow and no trail; camera pushes are linear inside each shot; captions <code>expo.out</code> 0.8s; scene fade-in 0.5s <code>power2.out</code>"
+          ],
+          [
+            "Camera",
+            "Perspective camera (20 degree field) with a hard cut per shot: wide shots at zoom 1.0 (device body), 1.6, 1.95 and 1.7, each pushing linearly 2-16% inside the shot; close-ups of the crown and rim at zoom 4.2, 4.8 and 3.3 with depth of field; end card locked at zoom 1.98-2.0 on the screen"
+          ],
+          [
+            "Subject",
+            "A 25x25 grid cropped to a circle of radius 12.3 cells (481 dots), dot diameter 60% of pitch. A vector glyph (arrow, hourglass, bell with badge, letter M) is rotated by angle each frame and every cell tests whether its rotated position falls inside the shape. Rotation runs from the final angle minus 120 degrees to 30 degrees for the arrow and 0 degrees for the others"
+          ],
+          [
+            "Sync",
+            "Rotation duration lengthens shot by shot (0.8, 1.15, 1.6, 2.0s) and alternates with product close-ups; the crown clicks 30 degrees at 1.5s and 6.1s as the cut lands. On the end card the dots spell Mote letter by letter at 8.8, 8.9, 9.0 and 9.1s while the lights fade out over 0.65s"
+          ],
+          [
+            "Style",
+            "Black circular dot screen behind glass: lit dots white, unlit dots dim <code>#1a1713</code>, set in a cream plastic body (<code>#e3ddd0</code>) with a knurled aluminium crown on a dark wood table; warm spot lighting (<code>#ffd0a0</code>), warm bokeh, ACES tone mapping, 0.4 vignette, light grain. Captions Inter 500 84px and a tagline Inter 400 28px"
+          ]
+        ],
+        "prompt": "Build a graphic rotation called Dot-Matrix Glyph, 11s, on a physical device shot with a perspective camera (20 degree field) and hard cuts. A black circular screen behind glass holds a 25x25 grid cropped to a circle of radius 12.3 cells (481 dots), dot diameter 60% of the pitch, lit dots white and unlit dots dim #1a1713, set in a cream plastic body (#e3ddd0) with a knurled aluminium crown on a dark wood table, lit by warm spots with bokeh, ACES tone mapping and a 0.4 vignette. Rotate vector glyphs (arrow, hourglass, bell with badge, letter M) by angle every frame and test each cell against the rotated shape: inside lights, outside stays dim, with hard on/off cuts, no glow and jagged edges left visible. Each rotation travels 120 degrees with cubic-bezier(0.16,1,0.3,1) and ends at 30 degrees for the arrow and 0 degrees for the others. Use four wide shots (0-1.4s, 1.85-3.55s, 4.0-6.0s, 6.4-8.8s) with rotation durations of 0.8s, 1.15s, 1.6s and 2.0s, each pushing slowly and linearly, and cut to 0.4-0.45s close-ups of the crown (zoom 3.3-4.8 with depth of field) in between, with the crown clicking 30 degrees at 1.5s and 6.1s. At 8.8s fade the lights out over 0.65s and let the dots spell Mote letter by letter at 8.8, 8.9, 9.0 and 9.1s in a 5x7 pixel font, with captions and a tagline rising with expo.out.",
+        "says": [
+          "The graphic becomes cells of round dots rotating on a screen",
+          "A pattern rotating on a pixel dot-matrix screen",
+          "The rotation slows down more and more until it stops"
+        ],
+        "vs": [
+          [
+            "line-boil-effect",
+            "Line Boil is a low frame rate that swaps in a new trace each frame; Dot-Matrix Glyph quantizes spatial resolution to a grid of points."
+          ],
+          [
+            "iris-transition",
+            "The window in Iris Window Montage cuts quickly between real images; the round screen in Dot-Matrix Glyph holds a single discretized graphic."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "旋转被量化到低分辨率点阵上，运动一格一格地跳，边缘有锯齿，和硬件真实显示方式一致。转速随镜头递减，减速本身成为悬念，点阵镜头与表情镜头交替加深等待。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s，共 8 个硬切镜头。旋转的全景镜头 0–1.4s（旋转 0.8s）、1.85–3.55s（1.15s）、4.0–6.0s（1.6s）、6.4–8.8s（2.0s）；旋钮特写 1.4–1.85s、3.55–4.0s、6.0–6.4s；每次旋转 120°，之后图形分别静止 0.6s、0.55s、0.4s、0.4s；字幕在 2.0s 和 4.12s；8.8s 起收尾，8.9s 出标语"
+          ],
+          [
+            "缓动",
+            "旋转 <code>cubic-bezier(0.16,1,0.3,1)</code>（强缓出）；旋钮点击用同一条曲线，0.35s；点亮与熄灭硬切，无辉光和拖影；每个镜头内镜头推近是线性的；字幕 <code>expo.out</code> 0.8s；开场淡入 0.5s <code>power2.out</code>"
+          ],
+          [
+            "镜头",
+            "透视镜头（20 度视野），每个镜头硬切：全景镜头缩放 1.0（整个机身）、1.6、1.95、1.7，镜头内线性推进 2–16%；旋钮和边缘特写缩放 4.2、4.8、3.3，带景深；收尾页锁定在屏幕上，缩放 1.98–2.0"
+          ],
+          [
+            "主体",
+            "25×25 点阵裁成半径 12.3 格的圆形（481 个点），点径为间距的 60%。矢量图形（箭头、沙漏、带角标的铃铛、字母 M）逐帧按角度旋转，每个格点判断旋转后的位置是否落在形状内。旋转从终点角度减 120° 开始，箭头停在 30°，其余停在 0°"
+          ],
+          [
+            "同步",
+            "旋转时长逐镜加长（0.8s、1.15s、1.6s、2.0s），并与产品特写交替；旋钮在 1.5s 和 6.1s 点击 30°，与切镜落在一起。收尾页上点阵在 8.8s、8.9s、9.0s、9.1s 逐字母拼出 Mote，同时灯光在 0.65s 内淡出"
+          ],
+          [
+            "风格",
+            "玻璃后面是黑色圆形点阵屏：点亮的点为白色，未点亮的点为暗色 <code>#1a1713</code>，嵌在奶白塑料机身（<code>#e3ddd0</code>）里，带滚花铝制旋钮，放在深色木桌上；暖色聚光灯（<code>#ffd0a0</code>）、暖色虚化光斑、ACES 色调映射、0.4 暗角和轻微颗粒。字幕 Inter 500 84px，标语 Inter 400 28px"
+          ]
+        ],
+        "prompt": "用「点阵量化（Dot-Matrix Glyph）」做一段图形旋转，全片 11s，拍摄一台实物设备，用透视镜头（20 度视野）和硬切镜头。玻璃后面是黑色圆形屏幕，内含 25×25 点阵裁成的半径 12.3 格的圆（481 个点），点径为间距的 60%，点亮的点为白色，未点亮的点为暗色 #1a1713，嵌在奶白塑料机身（#e3ddd0）里，带滚花铝制旋钮，放在深色木桌上，暖色聚光灯加虚化光斑，ACES 色调映射和 0.4 暗角。把矢量图形（箭头、沙漏、带角标的铃铛、字母 M）逐帧按角度旋转，每个格点按旋转后的形状判断：落在形状内的点亮，其余保持暗色，点亮和熄灭硬切、无辉光，边缘保留锯齿。每次旋转 120°，用 cubic-bezier(0.16,1,0.3,1)，箭头停在 30°，其余停在 0°。用四个全景镜头（0–1.4s、1.85–3.55s、4.0–6.0s、6.4–8.8s），旋转时长依次为 0.8 秒、1.15 秒、1.6 秒、2.0 秒，每个镜头线性缓慢推近，中间切入 0.4–0.45 秒的旋钮特写（缩放 3.3–4.8，带景深），旋钮在 1.5s 和 6.1s 点击 30°。8.8s 灯光在 0.65 秒内淡出，点阵在 8.8s、8.9s、9.0s、9.1s 用 5×7 像素字体逐字母拼出 Mote，字幕和标语用 expo.out 升起。",
+        "says": [
+          "图形变成一格一格的圆点在屏幕上转",
+          "像素点阵屏上旋转的图案",
+          "旋转越转越慢最后停下"
+        ],
+        "vs": [
+          [
+            "line-boil-effect",
+            "手绘抖线是描线逐帧换版的低帧率；点阵量化是空间分辨率被量化为格点"
+          ],
+          [
+            "iris-transition",
+            "圆窗蒙太奇的窗里是真实图像快切；点阵量化的圆屏里是被离散化的单个图形"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Dot Matrix Animation",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 110 for \"dot matrix animation\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Dot Matrix Animation: LED Display Recipe",
+    "description": "A graphic is quantized onto a 481-dot circular display, and each rotation frame snaps to the grid. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A graphic is quantized onto a circular dot-matrix display, and every frame of its rotation or change snaps to the dot grid.",
+    "name": "Dot Matrix Animation",
+    "ownName": "Dot-Matrix Glyph",
+    "body": [
+      {
+        "h2": "How to make a Dot Matrix Animation with Claude Code or Codex",
+        "body": "Build a 25 x 25 grid cropped to a circle of radius 12.3 cells (481 dots), with dot diameter at 60% of the pitch. On every frame, rotate a vector glyph (arrow, hourglass, bell with badge, letter M) by the current angle and test whether each cell's rotated position falls inside the shape. Lit dots are white, unlit dots #1a1713, and dots switch with a hard cut, with no glow and no trail.\n\nEach rotation covers 120 degrees with cubic-bezier(0.16,1,0.3,1) and gets longer shot by shot: 0.8, 1.15, 1.6 and 2.0 s. Alternate them with crown close-ups at zoom 4.2, 4.8 and 3.3 with depth of field. Eight hard-cut shots fill 11 s under a 20 degree perspective camera. On the end card the dots spell the name letter by letter every 0.1 s from 8.8 s.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own glyphs."
+      }
+    ],
+    "alt": "A round speaker grille whose dot matrix of white lights forms a shape, next to the text \"120 Hz.\"",
+    "faq": [
+      [
+        "What is a dot matrix animation?",
+        "It is motion on a display built from a grid of dots that are either on or off. Each frame decides which dots are lit, so movement advances cell by cell and edges look stepped, as on real dot-matrix hardware."
+      ],
+      [
+        "Can I build a dot matrix display in the browser?",
+        "Yes. Draw the grid with canvas or SVG circles and, for each dot, test whether it lies inside the shape at the current angle. The test runs per frame, so the same code renders to MP4 or runs live on a page."
+      ],
+      [
+        "Is the Dot Matrix Animation recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "点阵动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"点阵动画\": 点阵动画",
+      "checked": "2026-11-28"
+    },
+    "title": "点阵动画：圆形点阵屏示例与配方",
+    "description": "图形被量化到 481 个点组成的圆形点阵屏上，旋转的每一帧都对齐到点阵。用免费配方，让 Claude Code 或 Codex 做出这段点阵动画。",
+    "lede": "图形被量化到圆形点阵屏上，旋转或变化时每一帧都对齐到点阵。",
+    "name": "点阵动画",
+    "ownName": "点阵量化",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做点阵动画",
+        "body": "做一个 25 x 25 的网格，裁成半径 12.3 格的圆（481 个点），点的直径是间距的 60%。每一帧把矢量图形（箭头、沙漏、带角标的铃铛、字母 M）按当前角度旋转，再判断每个格子旋转后的位置是否落在图形内。亮点为白色，暗点 #1a1713，点的开关是硬切，没有辉光和拖尾。\n\n每次旋转 120°，缓动 cubic-bezier(0.16,1,0.3,1)，时长逐镜头加长：0.8、1.15、1.6、2.0 秒，中间穿插表冠特写（缩放 4.2、4.8、3.3，带景深）。11 秒里有 8 个硬切镜头，用 20° 视场的透视相机。结尾画面从 8.8 秒起，每 0.1 秒用点阵拼出一个字母。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，图形换成你自己的。"
+      }
+    ],
+    "alt": "圆形音箱面板上的白色点阵灯拼出图形，旁边写着 120 Hz。",
+    "faq": [
+      [
+        "点阵动画是什么？",
+        "指在由点阵构成的屏幕上做动画，每个点只有亮和灭两种状态。每一帧决定哪些点亮，运动因此逐格推进，边缘呈阶梯状，和真实点阵硬件的显示方式一致。"
+      ],
+      [
+        "能在浏览器里做点阵屏吗？",
+        "可以。用 canvas 或 SVG 圆点画出网格，对每个点判断它在当前角度下是否落在图形内。判断逐帧运行，同一份代码既能渲染成 MP4，也能在网页里实时运行。"
+      ],
+      [
+        "点阵动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,25 +1,8 @@
-// Shapes of the hand-written search copy. Two sources:
-//   content/recipes/seo/<slug>.json    one file per recipe: the common name users search for, title, meta
-//                               description, a short how-to and 2-3 FAQ items, in both locales.
-//   content/pages/<id>.json    hub pages (films grouped by what users search) and guides.
+// Shapes of the hand-written search copy of hub pages (films grouped by what users search) and guides:
+//   content/pages/<id>.json
 // Text fields are plain text. Paragraph, list and table text may contain two inline forms only:
 // [label](url) links and `code`. Internal links are written as English paths ("/recipes/x/") and the
 // renderer prefixes /zh on Chinese pages.
-import type { Locale } from '@/site/config'
-
-export type RecipeSeoCopy = {
-  /** Common name of the effect, the H1 and the name used in tiles and links ("Match Cut Transition") */
-  name: string
-  /** <title> without the brand, at most 55 characters */
-  title: string
-  /** meta description, 120-155 characters */
-  description: string
-  /** "How to make a <name> with Claude Code or Codex": 2-3 short paragraphs */
-  howto: string[]
-  /** 2-3 [question, answer] pairs, shown on the page and marked up as FAQPage */
-  faq: [string, string][]
-}
-export type RecipeSeo = Record<Locale, RecipeSeoCopy>
 
 export type Block =
   | { t: 'h2'; text: string }

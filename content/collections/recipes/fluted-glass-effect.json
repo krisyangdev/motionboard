@@ -1,0 +1,190 @@
+{
+  "slug": "fluted-glass-effect",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/fluted-glass.mp4",
+    "poster": "https://media.motionboard.app/fluted-glass.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 41,
+    "cat": "D",
+    "star": false,
+    "video": "fluted-glass",
+    "samples": [
+      {
+        "t": "Apple MacBook Pro PROLED XDR",
+        "id": "WzuIZLoHqqA",
+        "at": "0:03–0:10",
+        "s": 3
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Every rib shows the same content compressed to 0.6 of its width, so the word breaks into offset vertical slices. Each rib also carries cylinder shading on top of the letters (dark left edge, a bright band near the left, darker falloff to the right), so the glass shading sits on the letters as well as in the gaps. The streaks are already on screen at frame 0 and the word starts rising at 1.4s. The lockup starts rising at 5.2s, while the last of the word is still lifting out, so the two overlap inside the blur and the screen is never empty. The rib shading starts to fade at 6.3s. Around the title it goes to zero, leaving faint lines only on the three ribs at each side. The only color is ice blue #7fc8ff.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s, starting on lit streaks with no black lead-in. Streaks rise 0–3.4s (four per rib, 0.9–1.3s each, the first already part-way up at frame 0); PRO rises in 1.4–3.55s (1.55s per rib, staggered over about 0.6s); highlight sweep 3.0–4.8s; push-in 4.7–6.1s (1.4s, 42 frames); PRO lifts out 4.8–5.4s (0.42s per rib, staggered over about 0.15s); lockup rises 5.2–6.7s (1.25s per rib, staggered over about 0.22s); blur-to-sharp 5.7–7.4s; glass flattens 5.95–7.4s (1.2s per rib); rib shading fades 6.3–7.9s; sub line 7.4–8.2s (0.8s); closing shimmer 8.0–9.8s"
+          ],
+          [
+            "Easing",
+            "PRO and lockup entrances expo.out; streak rise power2.in (accelerating); PRO exit power2.in; camera descent power3.out; push-in power4.out; glass flattening power2.inOut; blur clearing power2.out; drift sine.out"
+          ],
+          [
+            "Camera",
+            "2600px perspective. 0–1.15s holds at a 66° high angle with the lid leaning back 8°; 1.15–4.7s the angle lowers to 14° (3.55s) while scale goes 1.0→1.2; from 4.7s it pushes to 1.36× in 1.4s and squares up to the lid (8° angle), moving the view down 58px so the lid's bottom edge meets the frame bottom and the keyboard is out of frame, with the screen bezel and notch still in frame; then a 3.9s drift to 1.4×"
+          ],
+          [
+            "Subject",
+            "Lid 1116×704px (12px screen bezel, 8px lid edge thickness, ice-blue rim light on the edge), deck 1160×740px (14px front lip, dim backlit keys with an arrow cluster, ice-blue floor reflection). Screen 1092×680px in 28 ribs, 39px wide. Each rib holds a full copy of the word, compressed horizontally to 0.6× (the refraction), entering at 1.7× width, stretched vertically 5–8× and settling to 1×, with a random offset of ±9px horizontal and none vertical. Each rib has cylinder shading over the letters (left edge 60% black fading to 0 by 12% of the width, a 50% ice-white band about 7px from the left edge, darkening from 44% of the width to 78% black on the right), its own vertical brightness (47%–100%), four thin texture lines, a 2px specular line on its left edge, and an ice-blue glow from 46% at the foot to 9% at the top. Word: Inter 800 448px, vertical gradient #ffffff → #dcefff → #7fc8ff"
+          ],
+          [
+            "Sync",
+            "The PRO exit runs 4.8–5.4s and the lockup starts rising at 5.2s, so they overlap for about 0.2s while the whole screen is under the 3.5px blur. The lockup arrives at 0.6× compression with ±6px per-rib offsets, then each rib returns to 1× between 5.95s and 7.4s. Rib shading, edge lines and texture lines hold until 6.3s, then fade over 1.3s per rib. The middle ribs go to 0 and the three ribs at each side keep their lines at 30%. The foot glow drops to 23–30% in the middle ribs and 38–50% in the three edge ribs. The blur returns to 0 between 5.7s and 7.4s"
+          ],
+          [
+            "Style",
+            "Pure black background, charcoal laptop, one accent: ice blue #7fc8ff. Sub line Inter 500 22px: Opal Display · 2,000 nits peak · 120 Hz. Lockup Inter 640 176px, Novis near-white, Pro in an ice-blue gradient. The end frame keeps the bezel, the notch and faint vertical ribs on the three ribs at each side, with a clean field around the lockup"
+          ]
+        ],
+        "prompt": "Build a 10-second laptop screen launch shot called Fluted Glass Reveal, 1920×1080, pure black background, one accent color ice blue #7fc8ff. Make a charcoal laptop in CSS 3D with a 2600px perspective: lid 1116×704px leaning back 8° with a 12px screen bezel, 8px lid edge thickness and an ice-blue rim light; deck 1160×740px with a 14px front lip, dim backlit keys including an arrow cluster, and a soft ice-blue reflection on the floor. The screen is 1092×680px, split into 28 vertical ribs 39px wide. Each rib holds a copy of the same content scaled horizontally by 0.6 around the rib's center and offset randomly by ±9px horizontally. Shade each rib like a cylinder on top of the content: left edge 60% black fading to 0 by 12% of the width, a 50% ice-white band about 7px from the left edge (screen blend), right half darkening from 44% of the width to 78% black. Add a 2px white specular line on the left edge, four thin texture lines, its own vertical brightness (47%–100%) and an ice-blue foot glow from 46% at the bottom to 9% at the top. Timeline: at frame 0 the laptop is already lit at a 66° high angle (halo, rim light, foot glow, the first streak part-way up each rib; no black lead-in). 0–3.4s four light streaks per rib rise (2–34px wide, 200–560px tall, white head and ice-blue tail, one wide and soft, power2.in, 0.9–1.3s each, staggered). From 1.4s the word PRO (Inter 800 448px, vertical gradient white to #7fc8ff) rises into each rib from 520–780px below, entering at scaleX 1.7 and settling to 0.6, stretched vertically 5–8× and settling to 1×, expo.out 1.55s, staggered over about 0.6s (done by 3.55s). 1.15–4.7s the camera lowers from 66° to 14° (power3.out) while scale goes 1.0→1.2. 3.0–4.8s a highlight sweeps left to right rib by rib (0.3s up to 0.38, 0.5s out). From 4.7s push into the screen for 1.4s (power4.out), square up to the lid (8°), scale to 1.36× and move the view down 58px so the lid's bottom edge meets the frame bottom, with bezel and notch in frame. From 4.95s the whole screen goes to blur 3.5px at brightness 1.3. 4.8–5.4s PRO lifts out rib by rib (0.42s each, power2.in, up 420–520px, stretched 1.8×). From 5.2s the lockup Novis Pro (Inter 640 176px, Pro in an ice-blue gradient, ±6px offset per rib) rises from 420–520px below (expo.out 1.25s, stretched 3.5× settling to 1×, done by 6.7s) at 0.6× compression, overlapping the tail of the PRO exit inside the blur. 5.7–7.4s blur returns to 0 and brightness to 1 (power2.out); 5.95–7.4s each rib returns from 0.6× to 1× (1.2s, power2.inOut). From 6.3s rib shading, edge lines and texture lines fade over 1.3s per rib: the middle ribs go to 0, the three ribs at each side keep their lines at 30%, and the foot glow drops to 23–30% in the middle ribs and 38–50% in the edge ribs. At 7.4s the sub line Opal Display · 2,000 nits peak · 120 Hz (Inter 500 22px) rises 14px and fades in over 0.8s. 8.0–9.8s a faint highlight sweeps the lockup once more while the camera drifts to 1.4×; hold on the lockup until 10s.",
+        "says": [
+          "Light streaks rise through a row of glass ribs",
+          "The streaks settle into a big word on a laptop screen",
+          "The glass flattens and the title sharpens"
+        ],
+        "vs": [
+          [
+            "text-object-interleave",
+            "Text–Object Interleave builds depth by putting the product in front of the type; Fluted Glass Reveal slices one piece of content into ribs and clears them to reveal it."
+          ],
+          [
+            "liquid-glass-effect",
+            "Glass Lens is one round lens that sweeps across copy and magnifies it; here the whole screen is cut into vertical ribs and the word grows out of light streaks."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "同一段内容被切成 28 条，每条用 0.6 倍横向压缩看到更宽的一段，字被切成错位的竖片；每条还有叠在字面上的圆柱明暗（左边缘暗、近左边缘一条亮带、右侧渐暗），字面上和暗缝里都能看到玻璃明暗；亮线第 0 帧就在屏幕上，字从 1.4s 才开始升起；字标在 PRO 抽走的尾声 5.2s 就开始升起，两者在模糊里重叠，中间没有空屏；棱条阴影从 6.3s 开始淡掉，字标周围淡到 0，只在屏幕左右各 3 条留淡线；全片只有一个冰蓝色 #7fc8ff。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s，开场就是已亮起的亮线，没有黑场。亮线上升 0–3.4s（每条 4 道，每道 0.9–1.3s，第 0 帧第一道已升起一段）；PRO 入场 1.4–3.55s（每条 1.55s，错开约 0.6s）；高光扫过 3.0–4.8s；推近 4.7–6.1s（1.4s，42 帧）；PRO 抽走 4.8–5.4s（每条 0.42s，错开约 0.15s）；字标升起 5.2–6.7s（每条 1.25s，错开约 0.22s）；模糊变清晰 5.7–7.4s；玻璃变平 5.95–7.4s（每条 1.2s）；棱条阴影淡出 6.3–7.9s；副标题 7.4–8.2s（0.8s）；收尾闪光 8.0–9.8s"
+          ],
+          [
+            "缓动",
+            "PRO 和字标入场 expo.out；亮线上升 power2.in（越升越快）；PRO 抽走 power2.in；机位下降 power3.out；推近 power4.out；玻璃变平 power2.inOut；模糊变清晰 power2.out；漂移 sine.out"
+          ],
+          [
+            "镜头",
+            "透视 2600px。0–1.15s 停在 66° 俯角，笔记本盖后倾 8°；1.15–4.7s 俯角降到 14°（3.55s），同时缩放 1.0→1.2；4.7s 起 1.4s 内推到 1.36 倍并转正（俯角 8°，与盖板同角），画面下移 58px，盖板下沿落在画面底边，键盘出画，屏幕边框和刘海留在画面里；之后 3.9s 慢推到 1.4 倍"
+          ],
+          [
+            "主体",
+            "笔记本盖 1116×704px（屏幕边框 12px，盖边厚 8px，边缘有冰蓝轮廓光），键盘区 1160×740px（前沿厚 14px，暗淡背光键帽带方向键组，地面有冰蓝反光）；屏幕 1092×680px，28 条，每条 39px 宽；每条里一份完整的字，横向压缩到 0.6 倍（折射），入场时先以 1.7 倍宽度进来，竖向先拉伸 5–8 倍再落回 1 倍，每条随机错位 ±9px 横向，竖向不错位；每条有叠在字面上的圆柱明暗（左边缘 60% 黑渐到 0，离左边缘约 7px 处一条 50% 的冰蓝白亮带，右侧从 44% 宽处起渐暗到 78% 黑）、自己的竖向明暗（亮度 47%–100%）、4 道细纹和一条 2px 的边缘高光线；每条底部有冰蓝柔光，从底部 46% 渐弱到顶部 9%；字为 Inter 800 448px，竖向渐变 #ffffff → #dcefff → #7fc8ff"
+          ],
+          [
+            "同步",
+            "PRO 抽走 4.8–5.4s，字标从 5.2s 开始升起，两者重叠约 0.2s，这时整屏处于 3.5px 模糊里；字标进来时是 0.6 倍压缩，每条错位 ±6px，之后在 5.95–7.4s 逐条变回 1 倍；棱条阴影、边缘高光线和细纹保持到 6.3s，再每条用 1.3s 淡掉，中间的条淡到 0，屏幕左右各 3 条留 30% 的淡线；底部柔光在中间的条降到 23%–30%，左右各 3 条降到 38%–50%；blur 3.5px 在 5.7–7.4s 回到 0"
+          ],
+          [
+            "风格",
+            "纯黑背景，笔记本深炭灰，唯一强调色冰蓝 #7fc8ff；副标题 Inter 500 22px：Opal Display · 2,000 nits peak · 120 Hz；字标 Inter 640 176px，Novis 近白，Pro 冰蓝渐变；收尾画面保留屏幕边框、刘海和左右各 3 条淡竖纹，字标周围干净"
+          ]
+        ],
+        "prompt": "用「棱镜玻璃显字（Fluted Glass Reveal）」做一支 10 秒的笔记本屏幕发布镜头，1920×1080，纯黑背景，唯一强调色冰蓝 #7fc8ff。用 CSS 3D 做一台深炭灰笔记本，透视 2600px：盖 1116×704px，后倾 8°，屏幕边框 12px，盖边厚 8px，边缘一圈冰蓝轮廓光；键盘区 1160×740px，前沿厚 14px，暗淡背光键帽（含方向键组），地面有一层冰蓝反光。屏幕 1092×680px，切成 28 条宽 39px 的竖条，每条里放同一份内容的副本，以条中心为原点横向缩放 0.6，每条随机错位 ±9px 横向。每条的明暗做成圆柱，叠在字面上：左边缘 60% 黑渐到 0（到 12% 宽处），离左边缘约 7px 处一条 50% 的冰蓝白亮带（screen 混合），右半边从 44% 宽处起渐暗到 78% 黑；再加左边缘 2px 白色高光线、4 道细纹、各自不同的竖向明暗（亮度 47%–100%），以及底部 46% 渐弱到顶部 9% 的冰蓝柔光。时间线：第 0 帧笔记本就已在 66° 俯角下亮着（光晕、轮廓光、底部柔光，每条里第一道亮线已升起一段，没有黑场）；0–3.4s 每条升起 4 道亮线（宽 2–34px，高 200–560px，白头冰蓝尾，其中一道宽而柔，power2.in，0.9–1.3s 一道，各条错开）；1.4s 起大字 PRO（Inter 800 448px，竖向渐变白到 #7fc8ff）从下方 520–780px 处升进每条，先以 1.7 倍宽度进来，落到 0.6 倍，竖向拉伸 5–8 倍落回 1 倍，expo.out 1.55s，各条错开约 0.6s（3.55s 前到位）；1.15–4.7s 机位从 66° 降到 14°（power3.out），缩放 1.0→1.2；3.0–4.8s 一道高光逐条从左到右扫过（0.3s 亮到 0.38，再 0.5s 淡出）。4.7s 起用 1.4s（power4.out）推进屏幕并转正（8°），缩放到 1.36 倍，画面下移 58px，盖板下沿落在画面底边，屏幕边框和刘海留在画面里；4.95s 起整屏 blur 3.5px、亮度 1.3；4.8–5.4s PRO 逐条向上抽走（每条 0.42s，power2.in，上移 420–520px，竖向拉伸 1.8 倍）；5.2s 起字标 Novis Pro（Inter 640 176px，Pro 冰蓝渐变，每条错位 ±6px）从下方 420–520px 处升起（expo.out 1.25s，竖向 3.5 倍落回 1 倍，6.7s 前到位），保持 0.6 倍压缩，与 PRO 抽走的尾声在模糊里重叠；5.7–7.4s blur 回 0、亮度回 1（power2.out）；5.95–7.4s 每条从 0.6 倍变回 1 倍（1.2s，power2.inOut）；6.3s 起棱条阴影、边缘高光线和细纹每条用 1.3s 淡掉，中间的条淡到 0，左右各 3 条留 30% 的淡线，底部柔光在中间的条降到 23%–30%，左右各 3 条降到 38%–50%；7.4s 副标题 Opal Display · 2,000 nits peak · 120 Hz（Inter 500 22px）上浮 14px，0.8s 淡入；8.0–9.8s 一道很淡的高光再扫一遍字标，镜头慢推到 1.4 倍，停在字标上到 10s。",
+        "says": [
+          "亮线从一排竖条玻璃后面升起来",
+          "亮线收成屏幕上的大字",
+          "玻璃变平，字标从模糊变清晰"
+        ],
+        "vs": [
+          [
+            "text-object-interleave",
+            "字物穿插靠前后遮挡做层次；棱镜玻璃显字让同一段内容被切成竖条，用折射和变清晰完成显现"
+          ],
+          [
+            "liquid-glass-effect",
+            "玻璃透镜是一个圆形透镜扫过文案并放大；这里是整块屏幕被竖向切条，字在亮线之后升起，再变平"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Fluted Glass Effect",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Fluted Glass Effect\": fluted glass effect; fluted glass effect photoshop; fluted glass effect film; fluted glass effect illustrator",
+      "checked": "2026-11-28"
+    },
+    "title": "Fluted Glass Effect: Example and Code Recipe",
+    "description": "Light streaks rise through 28 glass ribs on a laptop screen and form a big word; the camera pushes in, the glass flattens and the title sharpens.",
+    "lede": "A laptop screen is split into 28 vertical glass ribs. Light streaks rise through the ribs and settle into a big word. The camera then pushes into the screen, the word lifts out, the title rises in, the glass flattens and the blur clears into a lockup with only a few faint ribs left at the screen edges.",
+    "name": "Fluted Glass Effect",
+    "ownName": "Fluted Glass Reveal",
+    "body": [
+      {
+        "h2": "How to make a Fluted Glass Effect with Claude Code or Codex",
+        "body": "Split the screen into 28 vertical ribs, 39px wide on a 1092×680px screen, and put a full copy of the word in each one. Scale each copy horizontally to 0.6 around the rib's center and offset it by ±9px horizontally with no vertical offset, so the word breaks into slices like fluted glass. Shade each rib like a cylinder over the letters (dark left edge, a bright band about 7px in, darker falloff to the right), give it its own vertical brightness and a 2px specular line on its left edge, and keep a soft ice-blue glow from 46% at the foot to 9% at the top.\n\nThe film opens on lit streaks: four per rib rise with power2.in from 0s, then the word rises in from 520–780px below at 1.4s, stretched 5–8× and settling to 1× over 1.55s with expo.out. The camera lowers from a 66° to a 14° angle over 3.55s with power3.out, and a highlight sweeps across the ribs from 3.0s to 4.8s.\n\nAt 4.7s the camera pushes 1.4s to 1.36× and moves down 58px so the lid's bottom edge meets the frame bottom. The word lifts out between 4.8s and 5.4s and the new title (Inter 640, 176px) starts rising at 5.2s at 0.6× compression. Between 5.95s and 7.4s each rib goes back to 1× while a 3.5px blur clears, and the rib shading fades to nothing around the title by 7.9s, leaving faint lines on the three ribs at each side. Press the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard, then render an MP4 with HyperFrames."
+      }
+    ],
+    "alt": "The word PRO seen through vertical ribbed glass on a laptop screen against black.",
+    "faq": [
+      [
+        "How do you make a fluted glass effect in CSS?",
+        "Cut the element into narrow vertical strips and put a copy of the content in each. Scale each copy horizontally around the strip's center, usually to 0.5–0.7, and offset it a few pixels. The strips then show shifted slices of the same content, like a ribbed pane."
+      ],
+      [
+        "Why do the streaks come before the word?",
+        "The streaks are already rising at 0s and the word starts rising at 1.4s, so the light is on screen about 1.4s before any letter. The word is also stretched 5–8× vertically while it rises, so it looks like a streak until it settles."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "棱镜玻璃",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"棱镜玻璃效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "棱镜玻璃显字效果：示例与代码配方",
+    "description": "笔记本屏幕被切成 28 条玻璃棱，亮线穿过棱条收成大字，再变平变清晰。用 Claude Code 或 Codex 按免费配方做出这个效果。",
+    "lede": "笔记本屏幕被切成 28 条竖向棱镜，亮线从下往上穿过玻璃，收成大字；镜头推进屏幕后，字被抽走，字标升起，玻璃变平，字标从模糊变清晰，只在屏幕左右各留 3 条淡线。",
+    "name": "棱镜玻璃效果",
+    "ownName": "棱镜玻璃显字",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做棱镜玻璃效果",
+        "body": "把屏幕切成 28 条竖向棱，1092×680px 的屏幕里每条宽 39px，每条放一份完整的字。每份字以条中心为原点横向缩放到 0.6，再随机错位横向 ±9px，竖向不错位，字就被切成像棱镜玻璃一样的错位竖片。每条在字面上叠一层圆柱明暗（左边缘暗、约 7px 处一条亮带、右侧渐暗），再加各自的竖向明暗、左边缘一条 2px 的高光线，以及从底部 46% 渐弱到顶部 9% 的冰蓝柔光。\n\n开场就是亮着的亮线：0s 起每条升起四道（power2.in），1.4s 字从下方 520–780px 处升起，竖向拉伸 5–8 倍，用 expo.out 1.55s 落回 1 倍。镜头用 power3.out 在 3.55s 内从 66° 降到 14° 俯角，3.0s 到 4.8s 一道高光逐条扫过棱条。\n\n4.7s 起镜头用 1.4s 推到 1.36 倍并下移 58px，盖板下沿落在画面底边。字在 4.8s 到 5.4s 被抽走，新字标（Inter 640，176px）5.2s 起以 0.6 倍压缩升起，5.95s 到 7.4s 每条逐条变回 1 倍，同时 3.5px 模糊散去，7.9s 前字标周围的棱条阴影淡到 0，只在屏幕左右各 3 条留淡线。点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill，再用 HyperFrames 渲染成 MP4。"
+      }
+    ],
+    "alt": "黑底上的笔记本屏幕里，PRO 字样隔着竖条纹玻璃显示。",
+    "faq": [
+      [
+        "棱镜玻璃效果用 CSS 怎么做？",
+        "把元素切成窄的竖条，每条里放一份内容副本。每份副本以条中心为原点横向缩放，一般取 0.5 到 0.7，再错位几个像素。每条显示同一内容的不同片段，就像一块条纹玻璃。"
+      ],
+      [
+        "为什么亮线比字先出现？",
+        "亮线 0s 就已经在升起，字 1.4s 才开始升起，屏幕上先有约 1.4s 只有光、没有字。字升起时还被竖向拉伸 5 到 8 倍，在落定前看起来就是一条亮线。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

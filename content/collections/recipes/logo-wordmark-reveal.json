@@ -1,0 +1,208 @@
+{
+  "slug": "logo-wordmark-reveal",
+  "category": [
+    "close"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/mark-to-wordmark.mp4",
+    "poster": "https://media.motionboard.app/mark-to-wordmark.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 9.4
+  },
+  "data": {
+    "n": 26,
+    "cat": "C",
+    "star": true,
+    "video": "mark-to-wordmark",
+    "samples": [
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:00–0:04",
+        "s": 0
+      },
+      {
+        "t": "Claude Fable 5.1",
+        "id": "ROF2Nv_KjOM",
+        "at": "1:19–1:24",
+        "s": 79
+      },
+      {
+        "t": "Arc Boosts",
+        "id": "N0jMmiCS8oQ",
+        "at": "0:38–0:40",
+        "s": 38
+      },
+      {
+        "t": "Stripe Sessions 2024",
+        "id": "KH0_HM6e66w",
+        "at": "0:05–0:07",
+        "s": 5
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The mark and the name are bound into one action: the wordmark is pulled out from behind the mark, or the mark stays put while the other letters grow around it. Scrambled characters appear only on the newly added position, and the other letters stay stable. The opening and the ending can use the same move, one in black and one in white.",
+        "spec": [
+          [
+            "Timing",
+            "Film 9.4s: product window shot 0–3.6s (drift 0–2.6s, push 2.6–3.6s); mark hand-off 3.6s; accent half leans back 3.75–4.05s and returns 4.15–5.05s; mark moves left and the wordmark unfolds 4.15–5.45s (1.3s), letters from 4.2s at 0.08s stagger (1.25s each); tagline 6.3s (0.8s); slow push 3.6–9.4s"
+          ],
+          [
+            "Easing",
+            "Unfold and push <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); the mark moves <code>x 322→0</code> while a <code>clip-path</code> left edge slides 250px→−72px; letters go from blur 12px→0 and opacity 0→1 (0.4s <code>power1.out</code>); the accent half <code>rotation 0→−20°</code> with <code>power2.out</code> 0.3s, then back with <code>back.out(2.2)</code> 0.9s"
+          ],
+          [
+            "Camera",
+            "Product window at an angle (perspective 1600px): <code>rotationY</code> 9°→5.5°, <code>rotationX</code> −5°→−3°, <code>rotation</code> −1.4°→−0.7°, <code>scale</code> 1.06→1.16 over 2.6s <code>linear</code>; then a 1.0s <code>expo.out</code> push to about 12.6x (328/26) with the tilt flattened to 0, centering the sidebar mark; the lockup then drifts <code>scale</code> 1→1.05 over 5.8s"
+          ],
+          [
+            "Subject",
+            "Shot 1: an issue-tracker window (3 groups, 17 rows fading in with 0.022s stagger, headers 0.12s) with a selection highlight stepping at 1.15s and 1.95s and a 'link copied' toast 1.4–2.3s, whose workspace logo is a 26×16.5px mark. Shot 2: that mark at 328×208px (two quarter discs, ink and accent) slides left by 322px while the 4-letter wordmark (286px, weight 600) is revealed from behind it letter by letter"
+          ],
+          [
+            "Sync",
+            "The window mark and the vector mark swap on the same frame (3.6s) at the same size and position; the clip edge follows the mark's right edge; letters start 0.05s after the mark begins moving; the UI fades over the first 0.4s of the push"
+          ],
+          [
+            "Style",
+            "Warm light <code>#efece4</code> background, ink <code>#14130f</code> wordmark, accent <code>#ff4a1f</code> on one half of the mark; tagline in 22px monospace with 0.26em tracking; soft vignette"
+          ]
+        ],
+        "prompt": "Build a brand ending called Mark-to-Wordmark Unfold. Start on a product window (an issue list) tilted in 1600px perspective (rotationY 9 to 5.5 degrees, rotationX -5 to -3, scale 1.06 to 1.16 over 2.6s with linear ease), then push 1.0s with expo.out about 12.6x into the small logo mark in its sidebar while the tilt flattens and the UI fades, so the mark fills the frame at 328px on a warm light background (#efece4). Hand off to a vector mark of two quarter discs (ink and orange) on the same frame. The orange half leans back -20 degrees over 0.3s and returns with back.out(2.2). Then the mark slides left 322px over 1.3s with expo.out while the four-letter wordmark is revealed by a clip-path edge that follows the mark's right side, each letter sliding out from behind the mark 0.08 seconds apart and going from blur 12px to sharp over 1.25s. Fade in a monospace tagline at 6.3s, and keep a slow scale push from 1 to 1.05 through the hold.",
+        "says": [
+          "The logo appears first, then the brand name grows out",
+          "The mark slides aside and the name pulls out from behind it",
+          "The name pops out letter by letter from the middle to both sides"
+        ],
+        "vs": [
+          [
+            "chromatic-aberration-text-effect",
+            "Chromatic Stretch locally distorts the wordmark itself with RGB ghosting; Mark-to-Wordmark Unfold is about the order in which the mark and the wordmark appear."
+          ],
+          [
+            "wipe-flash-transition",
+            "Foreground Wipe & Flash is a transition between scenes; Mark-to-Wordmark Unfold is often followed by a white flash."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "符号和名字绑成一个动作：字标从符号背后被拉出，或符号原地不动、其他字母围着它长出来。乱码只出现在新加入的那一位，其余字母保持稳定；开头和结尾可以用同一套动作，一黑一白。",
+        "spec": [
+          [
+            "时长",
+            "全片 9.4s：产品窗口镜头 0–3.6s（漂移 0–2.6s，推近 2.6–3.6s）；3.6s 标志交接；强调色半圆 3.75–4.05s 后仰、4.15–5.05s 回位；标志左移并展开字标 4.15–5.45s（1.3s），字母 4.2s 起错开 0.08s（每个 1.25s）；标语 6.3s（0.8s）；3.6–9.4s 缓慢推近"
+          ],
+          [
+            "缓动",
+            "展开与推近 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；标志 <code>x 322→0</code> 移动，同时 <code>clip-path</code> 左边缘 250px→−72px 滑动；字母 blur 12px→0、opacity 0→1（0.4s <code>power1.out</code>）；强调色半圆 <code>rotation 0→−20°</code> 用 <code>power2.out</code> 0.3s，再用 <code>back.out(2.2)</code> 0.9s 回位"
+          ],
+          [
+            "镜头",
+            "产品窗口斜放（perspective 1600px）：<code>rotationY</code> 9°→5.5°，<code>rotationX</code> −5°→−3°，<code>rotation</code> −1.4°→−0.7°，<code>scale</code> 1.06→1.16，2.6s <code>linear</code>；随后 1.0s <code>expo.out</code> 推近到约 12.6x（328/26），倾斜归零，把侧栏标志推到画面中心；字标定格后 5.8s 内 <code>scale</code> 1→1.05 缓推"
+          ],
+          [
+            "主体",
+            "第一镜：问题追踪窗口（3 个分组，17 行以 0.022s 错开淡入，分组标题 0.12s 错开），选中高亮在 1.15s 和 1.95s 下移，1.4–2.3s 弹出「链接已复制」toast，窗口里的工作区标志是 26×16.5px 的标志。第二镜：这枚标志放大为 328×208px（两个四分之一圆，墨色和强调色）向左滑 322px，4 个字母的字标（286px，字重 600）从它背后逐字露出"
+          ],
+          [
+            "同步",
+            "窗口里的标志与矢量标志在 3.6s 同一帧、同尺寸同位置交接；clip 边缘跟随标志右缘；字母比标志开始移动晚 0.05s 起步；界面在推近开始的 0.4s 内淡出"
+          ],
+          [
+            "风格",
+            "暖浅色 <code>#efece4</code> 底，字标墨色 <code>#14130f</code>，标志一半用强调色 <code>#ff4a1f</code>；标语用 22px 等宽字，字距 0.26em；柔和暗角"
+          ]
+        ],
+        "prompt": "用「符号展开字标（Mark-to-Wordmark Unfold）」做品牌收尾：先放一个产品窗口（问题列表），在 1600px perspective 里斜放（rotationY 9 到 5.5 度，rotationX −5 到 −3，scale 1.06 到 1.16，2.6s linear），然后用 1.0s、expo.out 推近约 12.6x，对准侧栏里的小标志，倾斜归零、界面淡出，标志以 328px 铺在暖浅色背景（#efece4）上。同一帧交接成由两个四分之一圆（墨色和橙色）组成的矢量标志。橙色半圆用 0.3s 向后仰 −20 度，再用 back.out(2.2) 回位。随后标志用 1.3s、expo.out 向左滑 322px，四个字母的字标由跟随标志右缘的 clip-path 边缘露出，每个字母从标志背后滑出，间隔 0.08 秒，用 1.25s 从 blur 12px 变清晰。6.3s 淡入一行等宽标语，停稳阶段保持 scale 1 到 1.05 的缓慢推近。",
+        "says": [
+          "logo 先出现然后长出品牌名",
+          "符号往旁边挪，名字从后面拉出来",
+          "名字从中间向两边一个个字母冒出来"
+        ],
+        "vs": [
+          [
+            "chromatic-aberration-text-effect",
+            "色散拉伸是字标自身局部变形并带 RGB 重影；符号展开字标是符号与字标之间的出现顺序"
+          ],
+          [
+            "wipe-flash-transition",
+            "遮挡与闪白是场景之间的转场；符号展开字标结束后常接闪白"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Logo Wordmark Reveal",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Logo Wordmark Reveal\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Logo Wordmark Reveal: Logo Animation Recipe and Code",
+    "description": "A logo mark slides aside while the wordmark unfolds letter by letter from behind it, each letter sharpening from blur. Make it with Claude Code or Codex.",
+    "lede": "A logo mark sits centered, then the wordmark unfolds from behind it or outward from its center, optionally with a scramble-then-lock effect.",
+    "name": "Logo Wordmark Reveal",
+    "ownName": "Mark-to-Wordmark Unfold",
+    "body": [
+      {
+        "h2": "How to make a Logo Wordmark Reveal with Claude Code or Codex",
+        "body": "Start on a product window in 1600 px perspective (rotationY 9 to 5.5 degrees, scale 1.06 to 1.16 over 2.6 s). Push about 12.6x into the sidebar mark over 1.0 s with expo.out while the tilt flattens. At 3.6 s swap to a 328 x 208 px vector mark at the same size and position on the same frame.\n\nLean the accent half back -20 degrees over 0.3 s and return it with back.out(2.2). From 4.15 s slide the mark left 322 px over 1.3 s with expo.out while a clip-path edge follows its right side. Four letters start 0.08 s apart and go from blur 12 px to sharp. For a scramble, cycle random characters in the newest slot before it locks.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own mark and name."
+      }
+    ],
+    "alt": "The vela logo: a black quarter-circle mark with a red corner beside the black wordmark, on off-white.",
+    "faq": [
+      [
+        "What is a logo wordmark reveal?",
+        "The animation starts on the logo mark alone, then the brand name appears beside it. It is the common ending of a launch film: the mark lands first, the name follows, and the full lockup holds for a second or two."
+      ],
+      [
+        "Can I add a text scramble to the letters?",
+        "Yes. The film resolves each letter from a 12 px blur. For a scramble-then-lock version, cycle random characters in the newest letter slot before it locks; ask the agent for it in the prompt."
+      ],
+      [
+        "Is the Logo Wordmark Reveal recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "Logo 字标展开动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Logo 字标展开动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Logo 字标展开动画：示例与配方",
+    "description": "Logo 符号向一侧滑开，字标从符号背后逐个字母展开，字母从模糊变清晰。用免费配方，让 Claude Code 或 Codex 做出这段 Logo 动画。",
+    "lede": "logo 符号居中，字标从符号背后或中心向两侧展开，可带乱码定格。",
+    "name": "Logo 字标展开动画",
+    "ownName": "符号展开字标",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做Logo 字标展开动画",
+        "body": "开场是 1600px 透视下倾斜的产品窗口（rotationY 从 9° 到 5.5°，2.6 秒内缩放 1.06 到 1.16）。随后用 expo.out 在 1.0 秒内推近约 12.6 倍到侧栏的符号，倾斜同时归零。3.6 秒的同一帧换成 328 x 208px 的矢量符号，大小和位置与原符号一致。\n\n彩色半边向后倾 -20°，用时 0.3 秒，再用 back.out(2.2) 回正。4.15 秒起，符号用 expo.out 在 1.3 秒内左移 322px，clip-path 的边缘跟着符号右侧移动。四个字母间隔 0.08 秒出现，从 12px 模糊变清晰。要加乱码，就让最新一个位置先轮换随机字符再定格。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，换成你自己的符号和名字。"
+      }
+    ],
+    "alt": "米白底上的 vela 标志：黑色四分之一圆图形带红色角块，旁边是黑色字标。",
+    "faq": [
+      [
+        "Logo 字标展开动画是什么？",
+        "先只出现 Logo 符号，再在旁边出现品牌名。这是宣传片常见的结尾：符号先落定，名字随后出现，完整的组合停留一两秒。"
+      ],
+      [
+        "可以给字母加乱码效果吗？",
+        "可以。片子里每个字母从 12px 模糊变清晰。要做乱码定格版本，就让最新一个字母位置先轮换随机字符再定格，在提示词里告诉智能体即可。"
+      ],
+      [
+        "Logo 字标展开配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

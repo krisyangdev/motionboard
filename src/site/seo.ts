@@ -1,17 +1,14 @@
 // Head data of Motionboard's page types, on the template's seoHead() and JSON-LD helpers.
-import { notFound } from '@tanstack/react-router'
 import { HTML_LANG, pageUrl, type Locale } from '@/core/i18n'
 import { coreMessages } from '@/core/messages'
-import { breadcrumbLd, organizationLd, seoHead, videoLd, websiteLd } from '@/core/seo'
+import { breadcrumbLd, organizationLd, seoHead, websiteLd } from '@/core/seo'
 import type { PageData } from '@/site/components/page/load'
 import { SITE, SITE_URL, MEDIA_URL } from '@/site/config'
 import type { Block } from '@/site/data/content'
 import { HERO_FILM } from '@/site/data/hero'
-import { bySlug, loadText, media, recipePath, termName, type RecipeText, type Term } from '@/site/data/terms'
+import { bySlug, media, recipePath, termName } from '@/site/data/terms'
 import { messages } from '@/site/messages'
 
-/** Date the preview films were published, for VideoObject.uploadDate */
-const FILM_UPLOAD_DATE = '2026-10-30'
 /** Date the guides were first published, for Article.datePublished */
 const GUIDE_PUBLISHED = '2026-11-16'
 
@@ -28,33 +25,6 @@ export const homeHead = (locale: Locale) =>
 
 export const savedHead = (locale: Locale) =>
   seoHead({ title: messages[locale].saved.title, description: SITE.description[locale], path: '/saved/', locale, noindex: true })
-
-/** Route loader of the recipe pages: the term and its long text in the page locale. */
-export async function loadRecipe(locale: Locale, slug: string) {
-  const term = bySlug[slug]
-  if (!term) throw notFound()
-  return { term, text: await loadText(term.slug, locale) }
-}
-
-export function recipeHead(locale: Locale, t: Term, text: RecipeText) {
-  const path = recipePath(t)
-  const name = termName(t, locale)
-  const image = media(t, 'jpg')
-  const video = media(t, 'mp4')
-  const { title, description } = text.seo
-  return seoHead({
-    title,
-    description,
-    path,
-    locale,
-    image,
-    video,
-    jsonLd: [
-      videoLd({ name, description, thumbnailUrl: image, contentUrl: video, uploadDate: FILM_UPLOAD_DATE, duration: t.dur, locale, path }),
-      breadcrumbLd(locale, [{ name: coreMessages[locale].page.home, path: '/' }, { name, path }]),
-    ],
-  })
-}
 
 const films = (blocks: Block[]) => [...new Set(blocks.flatMap((b) => (b.t === 'films' ? b.slugs : [])))].filter((s) => bySlug[s])
 const ORG = { '@type': 'Organization', name: SITE.name, url: SITE_URL }

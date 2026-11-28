@@ -1,0 +1,200 @@
+{
+  "slug": "converge-logo-reveal",
+  "category": [
+    "close"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/converge-to-mark.mp4",
+    "poster": "https://media.motionboard.app/converge-to-mark.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.6
+  },
+  "data": {
+    "n": 9,
+    "cat": "A",
+    "star": true,
+    "video": "converge-to-mark",
+    "samples": [
+      {
+        "t": "Apple AirPods Pro 3",
+        "id": "EMmKs8vMKhU",
+        "at": "0:38–0:43",
+        "s": 38
+      },
+      {
+        "t": "Notion Calendar",
+        "id": "C4Q2ezioTUM",
+        "at": "1:12–1:15",
+        "s": 72
+      },
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:00–0:04",
+        "s": 0
+      },
+      {
+        "t": "Dia",
+        "id": "YVOw0TAO9ok",
+        "at": "1:03–1:06",
+        "s": 63
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "A slow drift followed by a fast gather contrasts speeds and gives a clear end point. The shape loses detail step by step, from a concrete product to geometry to a brand mark, while its position stays at the center of the frame without jumping. When the ending uses the same technique as the opening, the film closes on itself.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.6s. Workspace demo 0–6.2s; the pieces drift down from 5.0s (1.2–1.5s, about 4–5% of frame height); converge from 6.2s: each piece starts 0–0.55s after 6.2s and takes 0.65–0.95s (20–29 frames); chrome leaves 6.2–6.7s, wallpaper washes to white 6.4–7.4s; mark lands 7.32s and settles over 0.65s (20 frames); wordmark pulls out 8.05–9.3s, tagline 8.9–9.7s, held to 10.6s"
+          ],
+          [
+            "Easing",
+            "Drift <code>linear</code>; converge position on <code>cubic-bezier(0.32,0,0.67,0)</code> (power3.in, faster as they get closer) for one axis and power2.in for the other, so paths curve; scale power2.in, rotation power1.in, opacity fade power1.in over the last 35%; mark landing back.out(2.1); wordmark and tagline <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out)"
+          ],
+          [
+            "Camera",
+            "Fixed frame, target icon at the center (960, 540). Slow push 1.00→1.035 linear over 0–6.2s (x −14px, y −6px), back to 1.0 over 6.2–7.1s with power2.inOut; after landing the lockup pushes 1.00→1.04 linear over 3.0s from 7.6s"
+          ],
+          [
+            "Subject",
+            "17 pieces drift down, then gather on the center: 4 windows, a timer, a notification, a picture-in-picture, a command palette, 2 collaborator cursors, and 7 dock icons; they scale to 0.07–0.4, rotate 6–30° and fade out in their last 35%; the dock's own Tessel icon travels at full scale and the 200px mark takes over from it at the same size, leaving only the mark"
+          ],
+          [
+            "Style",
+            "Light base <code>#f5f5f7</code> under a pastel wallpaper (peach, pink, blue, lilac) that washes to white; white windows with 12px radius and soft violet shadows; indigo accent <code>#5b5bf0</code> (icon gradient <code>#8a8cff</code> → <code>#3d31d6</code>) with four white tiles and one amber tile; faint violet vignette"
+          ]
+        ],
+        "prompt": "Build an ending called Converge to Mark as a 10.6-second film. Build a product workspace on a light #f5f5f7 base with a pastel wallpaper: four white windows, a timer, a notification, a picture-in-picture, a command palette, two collaborator cursors, and a dock of 7 app icons with your icon in the middle; run a short demo for 6.2 seconds with a slow linear push (scale 1.00→1.035). From 5.0s drift every piece down at constant speed (34px per second). At 6.2s the menu bar and dock background leave over 0.5s, the wallpaper washes to white over 1.0s, and every piece travels to the center of the frame (960, 540): each starts 0–0.55 seconds after 6.2s and takes 0.65–0.95 seconds, with power3.in on one axis and power2.in on the other, scaling to 0.07–0.4 (windows 0.07–0.09), rotating 6–30° and fading out over the last 35%. The dock icon of your product travels at full scale and a 200px version takes over at the same size at 7.32s, landing with back.out(2.1) over 0.65 seconds with a glow ring behind it. At 8.05s the mark slides left while the wordmark is pulled out from behind it over 1.25 seconds with expo.out (cubic-bezier(0.16,1,0.3,1)), blur 10px→0, then the tagline fades in at 8.9s; push the lockup 4% and hold to 10.6s. Build it with HTML/SVG + GSAP.",
+        "says": [
+          "Everything shrinks into one icon at the end",
+          "The scattered icons fly to the middle and become the logo",
+          "The text shrinks to a dot of light, then becomes the mark"
+        ],
+        "vs": [
+          [
+            "rotating-logo-reveal",
+            "Converge to Mark gathers many elements to a point; Rotate to Lockup turns one object to a target angle."
+          ],
+          [
+            "dispense-line-up",
+            "The retract in Dispense Line-up only returns to the original subject; Converge to Mark ends on a new icon or logo."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "先慢漂再快收，速度对比给出明确的结束点；从具体产品逐步去掉细节变成几何，再变成品牌标，形状和位置始终在画面中心不跳；片尾手法与开场一致时首尾闭合。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.6s。工作区演示 0–6.2s；从 5.0s 起各元素向下漂移（1.2–1.5s，约 4–5% 画面高）；6.2s 起汇聚：每个元素在 6.2s 后 0–0.55s 开始，各用 0.65–0.95s（20–29 帧）；界面外框 6.2–6.7s 退出，壁纸 6.4–7.4s 洗成白色；标在 7.32s 落成，落定 0.65s（20 帧）；字标 8.05–9.3s 拉出，标语 8.9–9.7s，停到 10.6s"
+          ],
+          [
+            "缓动",
+            "漂移 <code>linear</code>；汇聚位移一个轴用 <code>cubic-bezier(0.32,0,0.67,0)</code>（power3.in，越近越快），另一个轴用 power2.in，路径因此带弧度；缩放 power2.in，旋转 power1.in，最后 35% 时间内淡出 power1.in；标落成 back.out(2.1)；字标和标语 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）"
+          ],
+          [
+            "镜头",
+            "画幅固定，目标图标位于画面中心 (960, 540)。0–6.2s 线性慢推 1.00→1.035（x −14px，y −6px），6.2–7.1s 用 power2.inOut 回到 1.0；落标后 lockup 从 7.6s 起用 3.0s 线性推近 1.00→1.04"
+          ],
+          [
+            "主体",
+            "17 个元素先向下漂移，再汇聚到中心：4 个窗口、计时器、通知、画中画、命令面板、2 个协作者光标和 7 个 Dock 图标；它们缩到 0.07–0.4，旋转 6–30°，在最后 35% 时间内淡出；Dock 里的 Tessel 图标以原大小飞到中心，200px 的标在同一大小接手，最后只剩这个标"
+          ],
+          [
+            "风格",
+            "浅色底 <code>#f5f5f7</code> 上叠柔和壁纸（桃、粉、蓝、淡紫），随后洗成白色；白色窗口 12px 圆角带柔和紫色阴影；靛蓝强调色 <code>#5b5bf0</code>（图标渐变 <code>#8a8cff</code> → <code>#3d31d6</code>），四个白色方块加一个琥珀色方块；淡紫色暗角"
+          ]
+        ],
+        "prompt": "用「收束成标（Converge to Mark）」做片尾，整段 10.6 秒。在浅色 #f5f5f7 底和柔和壁纸上搭一个产品工作区：4 个白色窗口、计时器、通知、画中画、命令面板、2 个协作者光标，以及一排 7 个应用图标的 Dock，你的图标在中间；先做 6.2 秒的简短演示，配线性慢推（scale 1.00→1.035）。5.0 秒起所有元素匀速向下漂移（每秒 34px）。6.2 秒时菜单栏和 Dock 底板用 0.5 秒退出，壁纸用 1.0 秒洗成白色，所有元素飞向画面中心 (960, 540)：每个在 6.2 秒后 0–0.55 秒开始，各用 0.65–0.95 秒，一个轴用 power3.in，另一个轴用 power2.in，缩到 0.07–0.4（窗口 0.07–0.09），旋转 6–30°，最后 35% 时间内淡出。你产品的 Dock 图标以原大小飞到中心，7.32 秒时 200px 的大图标在同一大小接手，用 back.out(2.1) 落成 0.65 秒，背后带一圈光晕。8.05 秒图标向左滑，字标从它身后用 expo.out（cubic-bezier(0.16,1,0.3,1)）拉出 1.25 秒，blur 10px→0，8.9 秒淡入标语；lockup 推近 4%，停到 10.6 秒。用 HTML/SVG + GSAP 实现。",
+        "says": [
+          "最后所有东西缩成一个图标",
+          "散开的图标一起飞到中间变成 logo",
+          "文字缩成一个光点再变成标志"
+        ],
+        "vs": [
+          [
+            "rotating-logo-reveal",
+            "收束成标是多个元素向一点聚合；旋转落定是同一物体转到目标角度"
+          ],
+          [
+            "dispense-line-up",
+            "吐出排列的收回只回到原主体；收束成标的终点是新的图标或 logo"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Converging Logo Reveal",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Converging Logo Reveal\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Converging Logo Reveal: Example and Code Recipe",
+    "description": "Seventeen workspace pieces drift, then gather into one centered app icon and wordmark. Make this logo reveal with Claude Code or Codex.",
+    "lede": "At the end, multiple elements gather and compress into a single icon or logo, always centered in the frame.",
+    "name": "Converging Logo Reveal",
+    "ownName": "Converge to Mark",
+    "body": [
+      {
+        "h2": "How to make a Converging Logo Reveal with Claude Code or Codex",
+        "body": "Start with a workspace demo of 17 pieces: 4 windows, a timer, a notification, a picture-in-picture, a command palette, 2 collaborator cursors and 7 dock icons. The pieces drift down 4–5% of frame height from 5.0s, then converge from 6.2s. Each starts 0–0.55s late and takes 0.65–0.95s on power3.in, so it speeds up near the center.\n\nScale the pieces to 0.07–0.4, rotate them 6–30° and fade them over their last 35%. The target is the frame center (960, 540). The 200px mark lands at 7.32s with back.out(2.1) and settles in 0.65s, the wallpaper washes to white 6.4–7.4s, and the wordmark pulls out over 8.05–9.3s on expo.out.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the 17 pieces and their converge paths. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "Mail, task board, roadmap and calendar windows crowded on a desktop above the dock.",
+    "faq": [
+      [
+        "What is a converging logo reveal?",
+        "A logo animation in which scattered elements move to one point and combine into the mark. The elements shrink and fade as they approach, so only the mark remains on screen."
+      ],
+      [
+        "Why accelerate the pieces as they converge?",
+        "Easing in with power3.in makes each piece faster as it nears the center, which gives the gather a clear end point after the slow drift. The paths curve because one axis uses power3.in and the other power2.in."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "元素汇聚 Logo 动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"元素汇聚 Logo 动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "元素汇聚 Logo 动画：示例与代码配方",
+    "description": "十七个工作区元素先缓慢漂移，再收拢成画面中心的一个应用图标和字标。用 Claude Code 或 Codex 按免费配方做出这个汇聚 logo 动画。",
+    "lede": "片尾把多个元素收拢、压缩成一个图标或 logo，位置始终在画面中心。",
+    "name": "元素汇聚 Logo 动画",
+    "ownName": "收束成标",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做元素汇聚 Logo 动画",
+        "body": "先做一段工作区演示，共 17 个元素：4 个窗口、计时器、通知、画中画、命令面板、2 个协作者光标和 7 个 Dock 图标。5.0s 起元素向下漂移画面高度的 4–5%，6.2s 起向中心汇聚。每个元素延迟 0–0.55s 出发，用 0.65–0.95s 完成，缓动 power3.in，越靠近中心越快。\n\n元素缩放到 0.07–0.4，旋转 6–30°，最后 35% 的时间里淡出。目标位置是画面中心（960, 540）。200px 的标志在 7.32s 落下，用 back.out(2.1) 在 0.65s 内稳定；壁纸在 6.4–7.4s 洗成白色；字标在 8.05–9.3s 用 expo.out 拉出。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出这 17 个元素和各自的汇聚路径。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "桌面上挤满邮件、任务看板、路线图和日历窗口，下方是程序坞。",
+    "faq": [
+      [
+        "什么是汇聚式 logo 动画？",
+        "散开的多个元素移动到同一点，合成一个 logo。元素靠近时缩小、淡出，最后只剩标志。"
+      ],
+      [
+        "为什么元素越靠近越快？",
+        "用 power3.in 缓入，元素靠近中心时加速，在缓慢漂移之后给汇聚一个明确的终点。一条轴用 power3.in、另一条轴用 power2.in，所以路径是弧线。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

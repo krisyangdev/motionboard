@@ -1,0 +1,190 @@
+{
+  "slug": "card-flip-animation",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/card-flip-code.mp4",
+    "poster": "https://media.motionboard.app/card-flip-code.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 15,
+    "cat": "B",
+    "star": false,
+    "video": "card-flip-code",
+    "samples": [
+      {
+        "t": "Vercel v0",
+        "id": "By9wCB9IZp0",
+        "at": "0:28–0:31",
+        "s": 28
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Preview and code are the front and back of one card, which says they are the same thing. The surrounding interface stays completely still during the flip, so the motion happens on one element only.",
+        "spec": [
+          [
+            "Timing",
+            "Per component: flip to code 0.8s (24 frames), hold about 1s, flip back 0.8s (24 frames). Pricing card 1.03–1.83s, back 2.88–3.68s (hold 1.05s); sign-in form 4.56–5.36s, back 6.26–7.06s (hold 0.9s); notification settings flips to code 7.71–8.51s and stays; component swaps are hard cuts at 3.88s and 7.03s; window leaves 9.4s (0.7s), wordmark 9.85s; film 11s"
+          ],
+          [
+            "Easing",
+            "One <code>cubic-bezier(0.65,0,0.35,1)</code> (power3.inOut) curve for each 180°; Preview/Code pill slides 0.2s <code>expo.out</code>; cursor press <code>scale 0.86</code> over 0.06s, release 0.18s <code>back.out(2)</code>"
+          ],
+          [
+            "Camera",
+            "Whole window in frame with a continuous slow push, <code>scale</code> 1→1.05 over 9.4s <code>linear</code>; 3D stage <code>perspective</code> 2400px, <code>perspective-origin</code> 820px 500px; edge-on the card shadow narrows to <code>scaleX</code> 0.04"
+          ],
+          [
+            "Subject",
+            "A 940×680px component card turns <code>rotateY</code> 0→180° about its center; the second turn continues 180→360° in the same direction; the back face is <code>rotateY(180deg)</code>, a dark code editor (<code>#0d1117</code>) with file tabs, an install command, and line-numbered TSX; the front is white with a dot grid"
+          ],
+          [
+            "Sync",
+            "The cursor clicks the Preview/Code switch at 0.98s, the pill and labels change at 1.0s, and the flip starts at 1.03s; card shadow width and a black shading overlay (opacity up to 0.2) read the same eased angle each frame; window chrome, sidebar and header stay still; swapping component changes card, title, panel and sidebar row on one frame"
+          ],
+          [
+            "Style",
+            "Light app window with a dark stage and deep shadow; shadcn-style components on the front; GitHub-dark syntax colors on the back; JetBrains Mono for code"
+          ]
+        ],
+        "prompt": "Build a preview-and-code switch called Card Flip to Code. Put a 940×680px component card in a light app window with perspective 2400px (origin 820px 500px). Clicking a Preview/Code segmented control (the pill slides over 0.2s with expo.out) starts a 0.8s rotateY from 0 to 180° about the card center with power3.inOut. The back face is rotateY(180deg), a dark code editor, and both faces use backface-visibility: hidden. The card shadow width (down to scaleX 0.04) and a black shading overlay (up to opacity 0.2) follow the same eased angle every frame. Hold about 1s, click back, and keep rotating from 180 to 360° in the same direction. Repeat for three components, swapping card, title, panel and sidebar row on a single frame between them, and leave the last one on code. Window chrome stays still, the camera pushes scale 1 to 1.05 over 9.4s, and at 9.4s the window leaves and your wordmark lands.",
+        "says": [
+          "The preview card flips over and the back is code",
+          "A flip that switches between preview and code",
+          "The card turns halfway to show the source"
+        ],
+        "vs": [
+          [
+            "morph-transition",
+            "Morph Relay turns one element into a different shape; Card Flip to Code shows two faces of the same card, and the shape does not change."
+          ],
+          [
+            "control-driven-change",
+            "In Control-Driven Change a control changes the page on the same frame; here the trigger and the result are on the same element."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "预览和代码做成同一张卡的正反面，说明二者是同一个东西；翻转时周围界面完全静止，运动只发生在一个元素上。",
+        "spec": [
+          [
+            "时长",
+            "每个组件：翻到代码面 0.8s（24 帧），停留约 1s，翻回 0.8s（24 帧）。定价卡 1.03–1.83s，翻回 2.88–3.68s（停留 1.05s）；登录表单 4.56–5.36s，翻回 6.26–7.06s（停留 0.9s）；通知设置 7.71–8.51s 翻到代码并停在代码面；组件在 3.88s 和 7.03s 硬切换；窗口 9.4s 退场（0.7s），字标 9.85s；全片 11s"
+          ],
+          [
+            "缓动",
+            "每个 180° 用一条 <code>cubic-bezier(0.65,0,0.35,1)</code>（power3.inOut）；预览/代码药丸滑动 0.2s <code>expo.out</code>；光标按下 <code>scale 0.86</code> 历时 0.06s，松开 0.18s <code>back.out(2)</code>"
+          ],
+          [
+            "镜头",
+            "整个窗口入画，全程缓慢推近，<code>scale</code> 1→1.05，9.4s <code>linear</code>；3D 舞台 <code>perspective</code> 2400px，<code>perspective-origin</code> 820px 500px；侧面朝向时卡片阴影收窄到 <code>scaleX</code> 0.04"
+          ],
+          [
+            "主体",
+            "940×680px 的组件卡以自身中心为轴 <code>rotateY</code> 0→180°；第二次翻转沿同一方向 180→360°；背面是 <code>rotateY(180deg)</code> 的深色代码编辑器（<code>#0d1117</code>），有文件标签、安装命令和带行号的 TSX；正面白底点阵"
+          ],
+          [
+            "同步",
+            "光标 0.98s 点击预览/代码开关，1.0s 药丸和标签变化，1.03s 开始翻转；卡片阴影宽度和黑色遮罩（不透明度最高 0.2）每帧读取同一个缓动角度；窗口外壳、侧栏和页头保持不动；切换组件时卡片、标题、面板和侧栏高亮行在同一帧变化"
+          ],
+          [
+            "风格",
+            "浅色应用窗口配深色舞台和重阴影；正面是 shadcn 风格组件；背面是 GitHub 深色语法配色；代码用 JetBrains Mono"
+          ]
+        ],
+        "prompt": "用「翻面看代码（Card Flip to Code）」做预览和代码切换：浅色应用窗口里放一张 940×680px 的组件卡，perspective 2400px（origin 820px 500px）。点击预览/代码分段开关（药丸 0.2s expo.out 滑动）后，卡片以自身中心为轴用 0.8s、power3.inOut 从 rotateY 0 转到 180°。背面是 rotateY(180deg) 的深色代码编辑器，两面都设 backface-visibility: hidden。卡片阴影宽度（收窄到 scaleX 0.04）和黑色遮罩（不透明度最高 0.2）每帧读取同一个缓动角度。停留约 1s，再点回去，沿同一方向继续从 180 转到 360°。对三个组件重复这个动作，组件之间在同一帧切换卡片、标题、面板和侧栏高亮行，最后一个停在代码面。窗口外壳保持不动，镜头 9.4s 内 scale 1→1.05 缓推，9.4s 窗口退场，落上你的字标。",
+        "says": [
+          "预览卡翻过去背面是代码",
+          "切换预览和代码的翻转",
+          "卡片转半圈看源码"
+        ],
+        "vs": [
+          [
+            "morph-transition",
+            "形变接力是同一元素变成另一种形状；本条是同一张卡的正反两面，形状不变"
+          ],
+          [
+            "control-driven-change",
+            "控件驱动是控件变化同帧改变页面；本条的触发和结果在同一个元素上"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Card Flip Animation",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 140 for \"card flip animation\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Card Flip Animation: Example and Code Recipe",
+    "description": "A UI component card turns 180° on its Y axis and the back face shows the code. Make this card flip animation with Claude Code or Codex.",
+    "lede": "The preview card rotates 180° around the Y axis and its back face shows the code.",
+    "name": "Card Flip Animation",
+    "ownName": "Card Flip to Code",
+    "body": [
+      {
+        "h2": "How to make a Card Flip Animation with Claude Code or Codex",
+        "body": "Build a 940×680px card in a 3D stage (perspective 2400px, perspective-origin 820px 500px). Rotate it rotateY 0° to 180° about its center in 0.8s (24 frames) on power3.inOut, cubic-bezier(0.65,0,0.35,1). The back face is rotateY(180deg), a dark code editor (#0d1117), and the second turn continues 180° to 360° in the same direction.\n\nKeep the window chrome, sidebar and header still during the flip. While the card is edge-on, its shadow narrows to scaleX 0.04 and a black shading overlay rises to 0.2 opacity, both read from the same eased angle each frame. The cursor clicks the Preview/Code switch at 0.98s and the flip starts at 1.03s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the card with its preview face and its code face. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A component card in a design app turned halfway through a flip, showing code on its back.",
+    "faq": [
+      [
+        "What is a card flip animation?",
+        "A card flip rotates a card 180° around its vertical axis to show the reverse side. In a UI it switches between two views of the same item, such as a preview and its code."
+      ],
+      [
+        "How do I make a card flip in CSS?",
+        "Give the container a perspective, rotate the card with rotateY from 0° to 180°, place the back face at rotateY(180deg) and hide back faces with backface-visibility. This recipe drives the angle from a GSAP timeline."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "卡片翻转动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"卡片翻转动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "卡片翻转动画：示例与代码配方",
+    "description": "UI 组件卡片绕 Y 轴翻转 180°，背面显示代码。用 Claude Code 或 Codex 按免费配方做出这个卡片翻转动画。",
+    "lede": "预览卡绕 Y 轴翻转 180°，背面是代码。",
+    "name": "卡片翻转动画",
+    "ownName": "翻面看代码",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做卡片翻转动画",
+        "body": "在 3D 舞台里做一张 940×680px 的卡片（perspective 2400px，perspective-origin 820px 500px）。用 0.8s（24 帧）、power3.inOut（cubic-bezier(0.65,0,0.35,1)）让它绕中心 rotateY 从 0° 转到 180°。背面是 rotateY(180deg) 的深色代码编辑器（#0d1117），第二次翻转沿同一方向从 180° 继续到 360°。\n\n翻转时窗口外框、侧栏和页头保持不动。卡片侧立时，阴影收窄到 scaleX 0.04，黑色遮罩升到 0.2 不透明度，两者每帧读取同一个缓动后的角度。光标在 0.98s 点击预览/代码开关，1.03s 开始翻转。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出带预览面和代码面的卡片。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "设计工具里的一张组件卡片翻到一半，背面露出代码。",
+    "faq": [
+      [
+        "什么是卡片翻转动画？",
+        "卡片翻转让卡片绕竖直轴转 180°，露出背面。在界面里，它用来切换同一个对象的两种视图，比如预览和代码。"
+      ],
+      [
+        "用 CSS 怎么做卡片翻转？",
+        "给容器设置 perspective，用 rotateY 把卡片从 0° 转到 180°，背面设为 rotateY(180deg)，再用 backface-visibility 隐藏背面朝向的一面。这份配方用 GSAP 时间线驱动角度。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

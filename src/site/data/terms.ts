@@ -1,9 +1,10 @@
-// Typed access to the recipe data. scripts/site/recipes.mjs generates src/site/data/gen/ from content/recipes/terms.json (Chinese
-// copy) and en.json (English copy): index.json is bundled with every page, the long text of one recipe
-// is a separate chunk that only the recipe page loads (loadText).
-// Adding a film: an entry in both files, then media/<video>.mp4, <video>-s.mp4, <video>.jpg (uploaded to R2)
+// Typed access to the recipe data. A recipe is content/collections/recipes/<slug>.json (the template's collection
+// loads it: loadItem, recipeData). scripts/site/recipes.mjs generates the card index src/site/data/gen/index.json
+// from those files; it is bundled with every page.
+// Adding a film: a recipe file, then media/<video>.mp4, <video>-s.mp4, <video>.jpg (uploaded to R2)
 // and the runnable HyperFrames folder in skills/motionboard/source/<video>/ (copied to public/source at build).
 import raw from './gen/index.json'
+import type { Item } from '@/core/content/items'
 import { MEDIA_URL, type Locale } from '@/site/config'
 
 export type Category = 'A' | 'B' | 'C' | 'D' | 'E'
@@ -24,9 +25,19 @@ export type RecipeText = {
   says: string[]
   /** [other recipe's slug, how they differ] */
   vs: [string, string][]
-  /** search copy of the recipe page (content/recipes/seo/<slug>.json) */
-  seo: { title: string; description: string; howto: string[]; faq: [string, string][] }
 }
+
+/** The `data` of a recipe item */
+export type RecipeData = {
+  n: number
+  cat: Category
+  star: boolean
+  video: string
+  samples: Sample[]
+  text: Record<Locale, RecipeText>
+}
+
+export const recipeData = (item: Item) => item.data as RecipeData
 
 export type Term = {
   n: number
@@ -66,9 +77,6 @@ export const bySlug: Record<string, Term> = Object.fromEntries(terms.map((t) => 
 /** Site order: by position in a film, then by number */
 export const order = [...terms].sort((a, b) => POSITION_ORDER.indexOf(a.pos) - POSITION_ORDER.indexOf(b.pos) || a.n - b.n)
 export const byPos = (p: Position) => order.filter((t) => t.pos === p)
-
-const textFiles = import.meta.glob<RecipeText>('./gen/text/*.json', { import: 'default' })
-export const loadText = (slug: string, locale: Locale) => textFiles[`./gen/text/${slug}.${locale}.json`]()
 
 export const num = (t: Term) => String(t.n).padStart(2, '0')
 const MEDIA_FILE = {

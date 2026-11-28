@@ -1,0 +1,190 @@
+{
+  "slug": "scrolling-text-animation",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/ramble-summary.mp4",
+    "poster": "https://media.motionboard.app/ramble-summary.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 45,
+    "cat": "C",
+    "star": false,
+    "video": "ramble-summary",
+    "samples": [
+      {
+        "t": "Google Pixel Drop",
+        "id": "rUqLlMVJE3w",
+        "at": "0:06–0:14",
+        "s": 6
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The scroll starts almost still, so viewers can read the first words, then accelerates to about 8,200 px/s with horizontal blur that grows with speed. They read first and are then left behind, which shows how long the input is. Holding the last m and zooming into it fills the frame with repeated shapes and sets the beat of the film. The squeeze and the bloom happen at the same spot, frame center: the zoomed frame squeezes into a bar whose width, height and color match the bubble's starting bar, and the bubble opens from it evenly to both sides, so the eye does not move. The result sits next to the input: the counter stops at 36 words and the line under the bubble says 36 words to 10. One accent color (violet #5b3df5) is shared by the bubble, the mic, the badge and the mark.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Scroll 0.1–3.2s (3.1s, 93 frames); brake 3.2–3.7s; held m 3.3–4.1s (0.8s, 26 extra m); zoom-in 3.45–4.4s (0.95s); squeeze 4.6–5.05s (0.45s, about 14 frames); bubble bloom 5.05–5.75s (0.7s); summary words 5.3–6.3s; camera pull-back 6.3–8.0s (1.7s, 51 frames); reply bubble 7.6s; window drift 8.0–8.9s (0.9s); window fades 8.65–8.9s; lockup lands at 8.9s and holds to the end (2.1s)"
+          ],
+          [
+            "Easing",
+            "Scroll power2.in (cubic ease-in); brake and bloom expo.out; zoom-in and pull-back interpolate scale in log space (outQuart and outQuint curves); squeeze power3.inOut; summary words expo.out"
+          ],
+          [
+            "Camera",
+            "One 120px line (Inter 500, letter-spacing -0.035em), 36 words, 9,833px wide, starting at x=160 and ending with \"um\" parked at x=930, next to frame center; horizontal blur stdDeviation 0 to 36px with speed, back to 0 within 0.5s of the brake; zoom-in 1x to 6.8x about frame center, so each m hump is about 446px tall (41% of the frame height) and only 2 to 3 m's stay in view; the 140px side fades go to 0 over 3.5–3.95s (0.45s, power2.inOut), so an m cut by the frame edge reads as part of an m; the squeeze treats the zoomed frame as one flat image, clipped to the 446px band the m's occupy so no blurred glyph tops show above the bar, and scales it on X about frame center from 1 to 0.0075, a bar about 14px wide and 446px tall, while its color turns from ink to violet (4.78–5.03s) and the horizontal blur rises to 14px (4.6–4.9s) and returns to 0 within 0.13s; pull-back 6.03x to 1x with no tilt at the start, a tilt that grows to -2° (Y) and 1° (X) as it pulls back and stays (perspective 2600px), then a slow drift 1.00 to 1.02 over 8.0–8.9s with the Y tilt easing to -1.4°"
+          ],
+          [
+            "Subject",
+            "The bubble is 277×74px in the chat window with 15px type, violet, 20px corners and a 6px bottom-right corner. Its close-up is a separate element at screen size, 1,671×446px with 91px type and 121px and 36px corners (the same shape times 6.03), so the text stays sharp and the bubble keeps at least 120px to each frame edge. It opens from the squeezed bar, 14px wide and 446px tall and centered on x=960, widening evenly to both sides over 5.05–5.75s while the corner radius grows with the width. On the first frame of the pull-back (6.3s) the bubble inside the chat window, scaled 6.03x, takes over at the same size and position. The chat window is 1640×900px with an 11-conversation sidebar, 5 earlier messages, the summary bubble, Liam's reply and a composer with a Gist button; after the pull-back to 1x the bubble lands in the lower right of the window"
+          ],
+          [
+            "Sync",
+            "The pill label changes from Listening to Summarizing at 4.4s, the moment the zoom lands and 0.2s before the squeeze starts, while the mic icon swaps to a sparkle icon and the waveform bars flatten to scaleY 0.12 over 0.25s (power2.out); the pill fades out from 4.9s over 0.35s (power2.in) and drops 14px; the word counter climbs to 36 words with the scroll and the last word is counted at 3.18s; the window background fades in over 0.35s starting at 6.3s and the window content over 0.45s starting at 6.35s; the line under the bubble (Summarized by Gist · 36 words to 10 · Delivered) fades in over 0.5s from 6.45s, after the pull-back has made it narrower than the frame; the reply bubble appears and the sidebar preview (Liam's reply, cut with an ellipsis) and time change on the same frame (7.6s)"
+          ],
+          [
+            "Style",
+            "Warm cream background #f2efe9, text #1c1b19, one violet accent #5b3df5; the chat window is white with #e9e6e0 hairlines; Inter throughout; the closing mark is a violet rounded square with three white bars (84, 84 and 42px) and a 176px Inter 700 wordmark"
+          ]
+        ],
+        "prompt": "Build a shot called Ramble to Summary, 11 seconds, 1920×1080, 30 fps, silent, for a product named Gist (a chat app that turns a long voice note into one short message). Light theme: warm cream background #f2efe9, text #1c1b19, one violet accent #5b3df5, Inter throughout. A white listening pill (720×84px) rises at the bottom from 0.05s over 0.7s with expo.out, with a violet mic circle, the label \"Listening\", 28 violet waveform bars and a word counter that climbs from 0 to 36 words; label and counter are 23px and the counter number is bold violet. In the middle of the frame one line of dictated text, Inter 500 120px, letter-spacing -0.035em, starting at x=160: \"ok so basically Thursday is a problem because Priya is out and Liam hasn't finished the pricing page and legal wants one more look so I think we push the launch review to Friday and um\" (36 words). It scrolls left from 0.1s to 3.2s with power2.in (cubic ease-in), starting almost still and reaching about 8,200 px/s, with horizontal motion blur (an SVG feGaussianBlur whose stdDeviation grows from 0 to 36px with speed) and 140px edge fades that go to 0 between 3.5 and 3.95s. From 3.2 to 3.7s it brakes with expo.out and the blur returns to 0; after the brake the end of \"um\" rests at x=930, next to frame center, so the text fills the left half and the right half is left for the m's. From 3.3 to 4.1s the final m of \"um\" is held down: 26 more m appear one by one, slightly accelerating. From 3.45 to 4.4s zoom the whole line in 6.8x about frame center (interpolate scale in log space, outQuart) until each m hump is about 446px tall and only 2 to 3 m's are in view. At 4.4s the pill label switches to \"Summarizing\", the mic icon swaps to a sparkle icon and the waveform bars flatten to scaleY 0.12 over 0.25s (power2.out); the pill fades out from 4.9s over 0.35s with power2.in, moving down 14px. From 4.6 to 5.05s treat the zoomed frame as one flat image, clipped to the 446px band the m's occupy (so no blurred glyph tops show above the bar), and squeeze it horizontally about frame center (scaleX 1 to 0.0075, power3.inOut) into a vertical bar about 14px wide and 446px tall; from 4.78 to 5.03s the ink color turns violet, and horizontal blur rises to 14px between 4.6 and 4.9s and returns to 0 within 0.13s. On the frame the bar disappears, a violet bubble of the same center, width and height takes over and widens evenly to both sides, staying centered on x=960, from 5.05 to 5.75s to its full 1,671px width (expo.out). In this close-up the bubble is its own element at screen size: 1,671×446px, 91px type, 121px corners and a 36px bottom-right corner (the 20px and 6px corners of the 277×74px bubble times 6.03); the corner radius grows with the width, so the bubble stays sharp and keeps at least 120px to each frame edge. It holds the summary \"Launch review moves to Friday. / Pricing page and legal pending.\" (10 words); from 5.3s each word rises in 65ms apart (0.4s expo.out). The bubble is the newest sent message in a macOS-style chat window (1640×900px: 360px sidebar with 11 conversations, a Launch crew thread with 5 earlier messages followed by the summary bubble and Liam's reply, a composer with a violet Gist button), and in the chat window it is 277×74px with 15px type. During the close-up the window is scaled 6.03x about the bubble center with no tilt and its background and content hidden; at 6.3s, on the first frame of the pull-back, the bubble inside the window takes over at the same size and position. From 6.3 to 8.0s pull the camera back to 1x (log-space scale, outQuint) while a perspective tilt grows from 0 to -2° Y and 1° X (perspective 2600px) and stays; the window background fades in over 0.35s starting at 6.3s and the window content over 0.45s starting at 6.35s, and a small line under the bubble, \"Summarized by Gist · 36 words to 10 · Delivered\", fades in over 0.5s from 6.45s. At 7.6s Liam's reply \"Friday works. I'll have the pricing copy by Thursday night.\" rises in, and on the same frame the sidebar preview changes to Liam's reply cut with an ellipsis and the time updates. From 8.0 to 8.9s the window drifts from 1.00 to 1.02 while the Y tilt eases to -1.4°; from 8.65 to 8.9s it fades out. From 8.9s a violet mark (156px rounded square with three white bars), a 176px Gist wordmark and \"Voice notes, summarized.\" rise in with expo.out and hold to 11s, drifting up 6px. Use HTML plus one paused GSAP timeline, fully deterministic, with no random numbers and no requestAnimationFrame.",
+        "says": [
+          "A sentence too long to finish scrolls faster and faster",
+          "The last letter is stretched into giant shapes",
+          "The whole line squeezes to a bar and pops out as one short bubble"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "Word-by-Word Highlight sets the reading pace of a paragraph with color changes; Ramble to Summary scrolls the text itself at rising speed and then compresses it into a very short result."
+          ],
+          [
+            "typing-animation",
+            "Rhythmic Typing types one command at a steady pace; Ramble to Summary accelerates from slow to fast and ends as a single message."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "滚动用三次方缓入，起步几乎静止，前两秒还能读出开头的字，之后加速到约 8200px/s，横向模糊随速度增大，观众先读到开头，随后文字快到读不完，最后感到这段话太长。句尾的 m 被拖长，用推近把重复的字形放大到每个 m 约占画面高度的 41%，这是整支片子的节拍点。压缩和展开发生在同一个位置：推近到位的画面压成一条竖线，竖线的宽度、高度和颜色与气泡的起始细条一致，气泡从这条线向左右两侧均匀展开，视线不用移动。结果和原文并置：底部聆听条里的计数器停在 36 words，气泡下方写着 36 words to 10，两个数字直接对比输入和输出的长度。全片只用一个强调色（紫色 #5b3df5），气泡、麦克风、计数徽标和标志共用它。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。滚动 0.1–3.2s（3.1s，93 帧）；刹车 3.2–3.7s；拖长 m 3.3–4.1s（0.8s，26 个 m）；推近 3.45–4.4s（0.95s）；压缩 4.6–5.05s（0.45s，约 14 帧）；气泡展开 5.05–5.75s（0.7s）；摘要逐词出现 5.3–6.3s；镜头拉远 6.3–8.0s（1.7s，51 帧）；回复气泡 7.6s；窗口慢漂 8.0–8.9s（0.9s）；窗口淡出 8.65–8.9s；标志 8.9s 起落定并停到片尾（2.1s）"
+          ],
+          [
+            "缓动",
+            "滚动 power2.in（三次方缓入），刹车和气泡展开 expo.out，推近和拉远用对数缩放（按 scale 的对数插值，输出 outQuart 和 outQuint），压缩 power3.inOut，摘要逐词 expo.out"
+          ],
+          [
+            "镜头",
+            "一行 120px 字（Inter 500，字距 -0.035em）横向滚动，全文 36 词，宽 9833px，起点 x=160，终点让“um”停在 x=930，靠近画面中心；横向模糊 stdDeviation 0 到 36px，随速度上升，刹车 0.5s 内回到 0；推近 1 到 6.8 倍，以画面中心为原点，m 字形高约 446px（约占画面高度的 41%），画面里只剩 2 到 3 个 m；左右 140px 的渐隐在 3.5–3.95s 内收到 0（0.45s，power2.inOut），推近到位时贴着画面边缘的 m 被直接切开；压缩时把推近到位的画面当作一张平面图，只保留 m 字形所在的 446px 高的横带，竖线上方不会露出模糊的字形顶端，以画面中心为原点 scaleX 从 1 到 0.0075，压成约 14px 宽、446px 高的竖条，4.78–5.03s 字色从墨色变成紫色，横向模糊 4.6–4.9s 升到 14px，之后 0.13s 内回到 0；拉远 6.03 倍到 1 倍，起点没有倾斜，随拉远增长到 -2°（Y）和 1°（X）并保留（perspective 2600px），之后 8.0–8.9s 慢漂 1.00 到 1.02，Y 倾斜漂到 -1.4°"
+          ],
+          [
+            "主体",
+            "聊天窗口里的短消息气泡 277×74px，15px 字，紫色底，圆角 20px，右下角 6px。特写里的气泡是一个按屏幕尺寸单独做的元素，1,671×446px，字 91px，圆角 121px、右下 36px（同样的形状乘以 6.03），所以文字保持清晰，左右各留至少 120px 边距。它从压缩出的竖条（约 14px 宽、446px 高，以 x=960 为中线）向两侧均匀展开，5.05–5.75s，圆角随宽度增大。拉远的第一帧（6.3s），聊天窗口里放大 6.03 倍的气泡以同样的大小和位置接替。聊天窗口 1640×900px，有 11 个会话的侧栏、5 条较早消息、摘要气泡和 Liam 的回复、带 Gist 按钮的输入框；镜头拉远到 1 倍后气泡落在窗口右下区"
+          ],
+          [
+            "同步",
+            "底部聆听条的字从 Listening 换成 Summarizing 发生在 4.4s，与推近到位同一刻，压缩开始前 0.2s，麦克风图标同时换成星花图标，波形条用 0.25s（power2.out）压平到 scaleY 0.12，聆听条在 4.9s 用 0.35s（power2.in）淡出并下移 14px；字数计数器随滚动逐词增加到 36 words，最后一个词在 3.18s 计入；窗口背景从 6.3s 起用 0.35s 淡入，窗口内容从 6.35s 起用 0.45s 淡入；气泡下方的小字（Summarized by Gist · 36 words to 10 · Delivered）从 6.45s 起用 0.5s 淡入，此时拉远已经让它窄于画面；窗口里回复气泡出现和侧栏预览（Liam 的回复被省略号截断）、时间变化在同一帧（7.6s）"
+          ],
+          [
+            "风格",
+            "背景暖奶油色 #f2efe9，文字 #1c1b19，唯一强调色紫色 #5b3df5；聊天窗口白底，细线 #e9e6e0；Inter 全程；收尾字标是紫色圆角方块加三条白线（84、84、42px）和 176px Inter 700 的 Gist"
+          ]
+        ],
+        "prompt": "用「长句收成一句（Ramble to Summary）」做一支 11 秒、1920×1080、30fps 的无声镜头，产品叫 Gist（把长语音消息收成一条短消息的聊天应用），浅色，暖奶油底 #f2efe9，文字 #1c1b19，唯一强调色紫色 #5b3df5，字体 Inter。底部一个 720×84px 的白色聆听条从 0.05 秒起用 0.7 秒 expo.out 升起（紫色麦克风圆形图标、“Listening”、28 根紫色波形条、右侧字数计数器 0 到 36 words，标签和计数器 23px，计数数字紫色加粗）。画面中央一行 120px Inter 500 的口述文字（“ok so basically Thursday is a problem because Priya is out and Liam hasn’t finished the pricing page and legal wants one more look so I think we push the launch review to Friday and um”，36 词，字距 -0.035em，起点 x=160），从 0.1 秒到 3.2 秒向左滚动，power2.in 三次方缓入，起步近乎静止，末速约 8200px/s，并加横向模糊（SVG feGaussianBlur，stdDeviation 随速度从 0 增到 36px），左右 140px 做渐隐，渐隐范围在 3.5 到 3.95 秒内收到 0。3.2 到 3.7 秒用 expo.out 刹车，模糊回到 0，刹车后“um”的末尾停在 x=930，靠近画面中心，左半屏是字，右半屏留给后面的 m。3.3 到 4.1 秒在“um”后面按住 m，再追加 26 个 m，逐个出现且略加速。3.45 到 4.4 秒以画面中心为原点把整行推近 6.8 倍（按 scale 的对数插值，outQuart），每个 m 的字形约 446px 高，画面里只剩 2 到 3 个 m。4.4 秒聆听条文字换成 Summarizing，麦克风图标换成星花图标，波形条用 0.25 秒（power2.out）压平到 scaleY 0.12；聆听条在 4.9 秒用 0.35 秒 power2.in 淡出并下移 14px。4.6 到 5.05 秒把推近到位的画面当作一张平面图，只保留 m 字形所在的 446px 高的横带（这样竖线上方不会露出模糊的字形顶端），以画面中心为原点横向压缩（scaleX 1 到 0.0075，power3.inOut），压成约 14px 宽、446px 高的竖线；4.78 到 5.03 秒字色从墨色变成紫色，横向模糊 4.6 到 4.9 秒升到 14px，之后 0.13 秒内回到 0。竖线消失的同一帧，同样中心、同样宽度和高度的紫色气泡接替，5.05 到 5.75 秒以 x=960 为中线向两侧均匀展开到完整的 1,671px 宽（expo.out）。这个特写里的气泡是一个按屏幕尺寸单独做的元素：1,671×446px，字 91px，圆角 121px、右下 36px（277×74px 气泡的 20px 和 6px 圆角乘以 6.03），圆角随宽度增大，所以气泡保持清晰，左右各留至少 120px 边距。气泡内是摘要“Launch review moves to Friday. / Pricing page and legal pending.”（10 词），5.3 秒起每词间隔 65ms、0.4s expo.out 升入。气泡是聊天窗口（1640×900px，macOS 风格，左侧 360px 带 11 个会话的侧栏，右侧 Launch crew 线程有 5 条较早的消息，之后是摘要气泡和 Liam 的回复，底部输入框带紫色 Gist 按钮）里最新一条已发送消息，在窗口里它是 277×74px、15px 字。特写期间窗口以气泡中心为原点放大 6.03 倍，没有倾斜，窗口背景和内容不可见；6.3 秒、拉远的第一帧，窗口里的气泡以同样的大小和位置接替。6.3 到 8.0 秒镜头拉远到 1 倍（对数缩放，outQuint），同时窗口的透视倾斜从 0 增长到 -2° Y、1° X（perspective 2600px）并保留；窗口背景从 6.3 秒起用 0.35 秒淡入，窗口内容从 6.35 秒起用 0.45 秒淡入，气泡下方一行小字“Summarized by Gist · 36 words to 10 · Delivered”从 6.45 秒起用 0.5 秒淡入。7.6 秒 Liam 的回复“Friday works. I’ll have the pricing copy by Thursday night.”升入，同一帧侧栏预览改成这条回复被省略号截断的样子，时间更新。8.0 到 8.9 秒窗口慢漂 1.00 到 1.02，Y 倾斜漂到 -1.4°；8.65 到 8.9 秒窗口淡出；8.9 秒起紫色标志（156px 圆角方块加三条白线）、176px Gist 字标和“Voice notes, summarized.”用 expo.out 升入，停到 11 秒，期间缓慢上移 6px。用 HTML + GSAP 单条暂停时间轴，全程确定，不用随机和 requestAnimationFrame。",
+        "says": [
+          "一句说不完的话越滚越快",
+          "最后一个字母被拖成巨大的字形",
+          "整行压成一条线，再弹成一个短消息气泡"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "逐词点亮用颜色变化控制一段字的阅读节奏；长句收成一句让字本身高速滚动，再压缩成一个很短的结果"
+          ],
+          [
+            "typing-animation",
+            "节奏打字是光标逐字打出一条指令，速度恒定；长句收成一句的字从慢到快一路加速，最后变成一条消息"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Scrolling Text Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Scrolling Text Animation\": scrolling text animation; scrolling text animation canva; scrolling text animation online; scrolling text animation figma",
+      "checked": "2026-11-28"
+    },
+    "title": "Scrolling Text Animation: Example and Code Recipe",
+    "description": "A long run-on line scrolls faster and faster, then squeezes into one short chat bubble. Build it with Claude Code or Codex from the free recipe.",
+    "lede": "One dictated line scrolls sideways from slow to fast, the last m is held and zoomed into giant humps, then the whole line squeezes into a bar and blooms into a two-line message bubble while the camera pulls back to the chat window around it.",
+    "name": "Scrolling Text Animation",
+    "ownName": "Ramble to Summary",
+    "body": [
+      {
+        "h2": "How to make a Scrolling Text Animation with Claude Code or Codex",
+        "body": "Set one 120px line of text (Inter 500, letter-spacing -0.035em, 36 words, 9,833px wide) at x=160 and scroll it left from 0.1 to 3.2s with power2.in, so it starts almost still and reaches about 8,200 px/s. Add horizontal blur with an SVG feGaussianBlur that grows from 0 to 36px with speed, then brake with expo.out over 0.5s so \"um\" rests at x=930, next to frame center.\n\nHold the last letter: 26 extra m appear between 3.3 and 4.1s, and the camera zooms 6.8x into them from 3.45 to 4.4s, so each m is about 446px tall. At 4.6s squeeze the zoomed frame into a bar about 14px wide over 0.45s (scaleX 1 to 0.0075, power3.inOut) while it turns violet, then open a violet bubble from the same bar, centered on x=960, from 5.05 to 5.75s with expo.out. Build the close-up bubble as its own element at screen size so the text stays sharp. The 10 summary words rise in one by one, 65ms apart.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the scroll, the squeeze and the 1.7s pull-back to the chat window. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "Huge black letters running off both edges of a white screen, above a Listening bar counting 36 words.",
+    "faq": [
+      [
+        "How do you make a scrolling text animation that speeds up?",
+        "Put the whole sentence in one nowrap line and translate it left with power2.in, a cubic ease-in, so the speed starts near 0. Here the line travels about 8,500px in 3.1s and ends near 8,200 px/s. Link a horizontal blur to the speed so fast text smears into streaks."
+      ],
+      [
+        "How does the long line turn into one short message?",
+        "The line squeezes to a bar at frame center in 0.45s and a bubble of the same height replaces it on the same frame. The bubble blooms in 0.7s and the summary words rise in one after another, so the eye stays on one spot."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "滚动文字动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"滚动文字动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "滚动文字动画：示例与代码配方",
+    "description": "一整行长句越滚越快，随后压成一个短消息气泡。用 Claude Code 或 Codex 按免费配方做出这个滚动文字动画。",
+    "lede": "一整行口述文字从慢到快横向滚过画面，句尾的 m 被拖长并推近成巨大字形，整行随后压成一条竖线，展开成一个两行的短消息气泡，镜头拉远露出它所在的聊天窗口。",
+    "name": "滚动文字动画",
+    "ownName": "长句收成一句",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做滚动文字动画",
+        "body": "用一行 120px 的文字（Inter 500，字距 -0.035em，36 词，宽 9833px），起点 x=160，在 0.1 到 3.2s 用 power2.in 向左滚动，起步几乎静止，末速约 8200px/s。用 SVG feGaussianBlur 加横向模糊，stdDeviation 随速度从 0 增到 36px，之后用 expo.out 在 0.5s 内刹车，让“um”停在 x=930，靠近画面中心。\n\n句尾的字母被按住：3.3 到 4.1s 追加 26 个 m，3.45 到 4.4s 镜头推近 6.8 倍，每个 m 约 446px 高。4.6s 用 0.45s 把推近到位的画面压成约 14px 宽的竖线（scaleX 1 到 0.0075，power3.inOut），同时字色变成紫色；5.05 到 5.75s 紫色气泡从这条线、以 x=960 为中线用 expo.out 向两侧展开。特写里的气泡单独做成按屏幕尺寸的元素，文字才保持清晰。10 词摘要逐词升入，间隔 65ms。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出滚动、压缩和 1.7s 拉远到聊天窗口的整个镜头。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "白色画面上的巨大黑字从两侧溢出，下方是显示 36 个词的收听条。",
+    "faq": [
+      [
+        "怎么做一段越滚越快的滚动文字动画？",
+        "把整句话放进一行不换行的文本，用 power2.in（三次方缓入）向左平移，速度从接近 0 开始。这支片子里整行在 3.1s 内移动约 8500px，末速约 8200px/s。让横向模糊跟着速度走，快的文字会被抹成一道横向的拖影。"
+      ],
+      [
+        "长句怎么变成一条短消息？",
+        "整行在 0.45s 内压成画面中心的竖线，同一帧换成同样高度的气泡。气泡 0.7s 展开，摘要的词逐个升入，视线始终停在同一个位置。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

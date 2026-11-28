@@ -1,0 +1,202 @@
+{
+  "slug": "confetti-success-animation",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/confirmation-burst.mp4",
+    "poster": "https://media.motionboard.app/confirmation-burst.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 38,
+    "cat": "E",
+    "star": false,
+    "video": "confirmation-burst",
+    "samples": [
+      {
+        "t": "Stripe Reader S700",
+        "id": "9oieNo53aNY",
+        "at": "0:44–0:46",
+        "s": 44
+      },
+      {
+        "t": "Stripe Reader S700",
+        "id": "9oieNo53aNY",
+        "at": "1:06–1:07",
+        "s": 66
+      },
+      {
+        "t": "Arc Boosts",
+        "id": "N0jMmiCS8oQ",
+        "at": "0:33–0:35",
+        "s": 33
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Graphics appear only on key action frames such as a tap or a successful payment, which marks the key moments of the product. The fragments share shapes and colors with the maps and feature cards used elsewhere in the film. The confirmation icon has thickness and highlights that contrast in material with the flat interface, and the expanding outline reuses the same shape.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Keypad taps at 1.0, 1.22, 1.44 and 1.66s; fragment burst on the Review tap at 2.65s (expand 0.3s, drift to 0.64s, fade 0.64-0.8s); review screen takes over at 3.0s; Pay tap at 5.1s, button disabled state 5.1-5.3s, icon pops at 5.45s (scale 0.6 to 1.1 in 0.28s, to 1.0 in 0.24s), outline ring 0.6s in parallel; phone leaves 8.0s; wordmark 8.45s"
+          ],
+          [
+            "Easing",
+            "Fragments expand <code>expo.out</code> 0.3s, then drift linearly 12px over 0.5s and fade <code>power1.in</code> 0.16s; icon scale <code>power3.out</code> 0.6 to 1.1, then <code>power2.inOut</code> 1.1 to 1.0; outline scale <code>power2.out</code> 1 to 3 and opacity <code>power2.in</code> 0.6 to 0 over 0.6s; check stroke <code>power2.out</code> 0.24s; button disable <code>power1.out</code> 0.2s"
+          ],
+          [
+            "Camera",
+            "Not fixed: slow push 1.18 to 1.215 until 1.9s, then an <code>expo.out</code> push to 1.7 anchored on the Review button (0.6s from 2.0s) so the burst fills the lower frame; pull-back to 1.42 at 3.0s (0.9s), drift to 1.5 by 5.25s, 1.3 at 5.53s (1.0s) drifting to 1.36. A 54px touch indicator travels to each target and presses (scale 0.78 in 0.06-0.07s, back in 0.14-0.16s)"
+          ],
+          [
+            "Subject",
+            "Burst: 6 elements leave the tap point upward and sideways at angles -26, -78, -156, -128, -52 and -104 degrees: a white line with navy outline, a navy line, a blue line, a navy wavy line, a white dot and a blue square, travelling 96-120px (about 20% of frame height at camera scale 1.7). Icon: after the Pay button turns into a disabled Sending state with a spinner, a 132px scalloped blue seal with gradient, inner highlight and shadow and a white check stroke pops in with a same-shape outline expanding behind it"
+          ],
+          [
+            "Sync",
+            "The burst and the button press (scale 0.965) share the tap frame at 2.65s and the review screen takes over 0.35s later; for the icon, the disabled state starts on the tap at 5.1s and the icon pops 0.35s later, with the same button turning into Done on that frame"
+          ],
+          [
+            "Style",
+            "Navy backdrop <code>#0b1b6a</code> with blurred bank notification cards (fade out at 8.0s), white phone UI, brand blue <code>#1e45d6</code> and fragments in navy <code>#0b1b6a</code>, blue <code>#2a58ee</code> and white; icon gradient <code>#86a4ff</code> to <code>#1530b4</code>; wordmark Inter 700 168px, letter-spacing -0.055em, white"
+          ]
+        ],
+        "prompt": "Emphasize a successful tap with a shot called Confirmation Burst, 11s, on a phone money-transfer UI over a navy backdrop (#0b1b6a) with blurred notification cards. Tap the keypad at 1.0, 1.22, 1.44 and 1.66s, then push the camera with expo.out to 1.7 anchored on the Review button (0.6s from 2.0s). On the tap frame at 2.65s, press the button to 0.965 and a 54px touch indicator to 0.78, and send 6 elements from the contact point upward and sideways at angles -26, -78, -156, -128, -52 and -104 degrees: a white line with a navy outline, a navy line, a blue line, a navy wavy line, a white dot and a blue square rotating 45 to 135 degrees. They expand 96-120px (about 20% of frame height) over 0.3s with expo.out, drift 12px more over 0.5s, and fade over 0.16s from 0.64s. Switch to the review screen 0.35s later. Icon version: at the Pay tap (5.1s) fade the button to a disabled Sending state with a spinner over 0.2s with power1.out, hold 0.15s, then pop a 132px scalloped blue seal (gradient #86a4ff to #1530b4, inner highlight and shadow, white check stroke drawn in 0.24s) from scale 0.6 to 1.1 with power3.out over 0.28s and back to 1.0 with power2.inOut over 0.24s, while an outline of the same shape goes scale 1 to 3 with power2.out and opacity 0.6 to 0 with power2.in over 0.6s, the same button turning into Done. Take the phone out at 8.0s and bring in a white Finch wordmark lockup at 8.45s.",
+        "says": [
+          "A burst of small shapes around the spot you tap",
+          "Lines, squares, and dots pop out when a payment succeeds",
+          "The confirmation icon pops and a ring of outline spreads out"
+        ],
+        "vs": [
+          [
+            "map-pin-animation",
+            "Map Pin Drop's fragments appear at the pin's landing position; Confirmation Burst's fragments appear at the tap contact point."
+          ],
+          [
+            "match-cut-transition",
+            "Match Cut swaps the whole object for another; Confirmation Burst only overlays feedback graphics on the existing picture."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "图形只出现在点击或付款成功这类关键动作帧，标出产品的关键时刻。碎片元素与全片的地图、功能卡共用一套形状和颜色；确认图标带厚度和高光，与扁平界面形成材质对比，外扩描边沿用同一形状。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。键盘点击在 1.0s、1.22s、1.44s、1.66s；点击「Review」时碎片爆发在 2.65s（外扩 0.3s，漂移到 0.64s，0.64–0.8s 淡出）；3.0s 切到确认页；5.1s 点击「Pay」，按钮禁用态 5.1–5.3s，5.45s 图标弹出（0.28s 内缩放从 0.6 到 1.1，再用 0.24s 回到 1.0），描边光环同时扩散 0.6s；8.0s 手机离场；8.45s 出字标"
+          ],
+          [
+            "缓动",
+            "碎片外扩 <code>expo.out</code> 0.3s，随后线性漂移 12px（0.5s），用 <code>power1.in</code> 0.16s 淡出；图标缩放先 <code>power3.out</code> 从 0.6 到 1.1，再 <code>power2.inOut</code> 从 1.1 回到 1.0；描边缩放 <code>power2.out</code> 从 1 到 3，透明度 <code>power2.in</code> 在 0.6s 内从 0.6 到 0；对勾描边 <code>power2.out</code> 0.24s；按钮禁用 <code>power1.out</code> 0.2s"
+          ],
+          [
+            "镜头",
+            "不固定：1.9s 前缓推 1.18 到 1.215，之后用 <code>expo.out</code> 推到 1.7 并锚定在 Review 按钮上（从 2.0s 起 0.6s），让爆发占据画面下方；3.0s 拉回到 1.42（0.9s），5.25s 前漂移到 1.5，5.53s 变为 1.3（1.0s）并漂移到 1.36。54px 的触点指示器移动到每个目标并按下（0.06–0.07s 缩放到 0.78，0.14–0.16s 回弹）"
+          ],
+          [
+            "主体",
+            "爆发：6 个元素从点击点向上和两侧弹出，角度为 -26、-78、-156、-128、-52、-104 度：白色描深蓝边的线、深蓝线、蓝色线、深蓝波浪线、白色圆点、蓝色方块，行进 96–120px（镜头缩放 1.7 时约为画面高的 20%）。图标：Pay 按钮变成带转圈的禁用态 Sending 之后，一枚 132px 的波浪边蓝色徽章（带渐变、内高光和内阴影、白色对勾描边）弹出，同形描边在其后扩散"
+          ],
+          [
+            "同步",
+            "爆发和按钮按下（缩放 0.965）共用 2.65s 的点击帧，0.35s 后切到确认页；图标版里禁用态从 5.1s 的点击开始，图标在 0.35s 后弹出，同一个按钮在这一帧变成 Done"
+          ],
+          [
+            "风格",
+            "深蓝底 <code>#0b1b6a</code>，带虚化的银行通知卡（8.0s 淡出），白色手机界面，品牌蓝 <code>#1e45d6</code>，碎片用深蓝 <code>#0b1b6a</code>、蓝 <code>#2a58ee</code> 和白色；图标渐变从 <code>#86a4ff</code> 到 <code>#1530b4</code>；字标 Inter 700 168px，字距 -0.055em，白色"
+          ]
+        ],
+        "prompt": "用「确认爆发（Confirmation Burst）」强调点击成功，全片 11s，画面是深蓝底（#0b1b6a）上带虚化通知卡的手机转账界面。在 1.0s、1.22s、1.44s、1.66s 点击键盘，然后用 expo.out 把镜头推到 1.7 并锚定在 Review 按钮上（从 2.0s 起 0.6 秒）。在 2.65s 的点击帧，按钮按到 0.965，54px 的触点指示器按到 0.78，并从接触点向上和两侧弹出 6 个元素，角度为 -26、-78、-156、-128、-52、-104 度：白色描深蓝边的线、深蓝线、蓝色线、深蓝波浪线、白色圆点，以及从 45 度转到 135 度的蓝色方块。它们用 expo.out 在 0.3 秒内外扩 96–120px（约为画面高的 20%），再漂移 12px（0.5 秒），从 0.64 秒起用 0.16 秒淡出。0.35 秒后切到确认页。图标版：点击 Pay（5.1s）时，按钮用 power1.out 在 0.2 秒内褪成带转圈的禁用态 Sending，停 0.15 秒，然后弹出一枚 132px 的波浪边蓝色徽章（渐变 #86a4ff 到 #1530b4，带内高光和内阴影，白色对勾用 0.24 秒描出），缩放从 0.6 用 power3.out 在 0.28 秒内到 1.1，再用 power2.inOut 在 0.24 秒内回到 1.0；同形描边用 power2.out 从缩放 1 到 3，同时透明度用 power2.in 在 0.6 秒内从 0.6 到 0，同一个按钮在这一帧变成 Done。8.0s 手机离场，8.45s 带入白色 Finch 字标。",
+        "says": [
+          "点下去那一下周围炸出一圈小图形",
+          "付款成功时冒出线条方块和圆点",
+          "确认图标弹出来外面扩散一圈描边"
+        ],
+        "vs": [
+          [
+            "map-pin-animation",
+            "地图落钉的碎片出现在落钉位置；确认爆发的碎片出现在点击接触点"
+          ],
+          [
+            "match-cut-transition",
+            "同位替换是整个物体被换成另一个；确认爆发只在原画面上叠加反馈图形"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Confetti Success Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Confetti Success Animation\": confetti success animation; how to animate confetti in after effects",
+      "checked": "2026-11-28"
+    },
+    "title": "Confetti Success Animation: Burst Recipe",
+    "description": "Lines, squares and dots burst from a tap, and a check seal pops with an echo outline on payment. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "On the frame of a tap, payment, or confirmation, lines, squares, and dots radiate from the contact point, or an icon pops with a bounce and an echo outline expands.",
+    "name": "Confetti Success Animation",
+    "ownName": "Confirmation Burst",
+    "body": [
+      {
+        "h2": "How to make a Confetti Success Animation with Claude Code or Codex",
+        "body": "On the Review tap at 2.65 s, send 6 elements from the tap point at -26, -78, -156, -128, -52 and -104 degrees: a white line with navy outline, a navy line, a blue line, a navy wavy line, a white dot and a blue square. They travel 96 to 120 px. Expand with expo.out over 0.3 s, drift 12 px linearly over 0.5 s and fade with power1.in over 0.16 s.\n\nFor payment, the Pay tap at 5.1 s turns the button into a disabled Sending state. At 5.45 s a 132 px scalloped blue seal pops from scale 0.6 to 1.1 with power3.out in 0.28 s, then to 1.0 with power2.inOut in 0.24 s. An echo outline scales 1 to 3 while fading from 0.6 to 0 over 0.6 s, and the check stroke draws in 0.24 s.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own tap and payment screens."
+      }
+    ],
+    "alt": "A phone showing a $1,240 instant transfer to Maya Chen, with a finger about to tap the blue Pay button.",
+    "faq": [
+      [
+        "What is a confetti success animation?",
+        "A short burst of small shapes, such as strips, squares and dots, released at the moment an action succeeds, like a tap or a payment. The graphics appear only on the key action frame, so they mark the moment that matters."
+      ],
+      [
+        "Can I make a burst without a particle library?",
+        "Yes. Six elements are enough: send each from the contact point along a fixed angle with expo.out, then drift and fade. This recipe uses six elements travelling 96 to 120 px, which a handful of GSAP tweens can drive."
+      ],
+      [
+        "Is the Confetti Success Animation recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "撒花成功动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"撒花成功动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "撒花成功动画：点击与付款爆发配方",
+    "description": "点击和付款的那一帧，线条、方块、圆点从接触点爆开，确认图标回弹弹出并扩散描边。用免费配方，让 Claude Code 或 Codex 做出来。",
+    "lede": "点击或付款那一帧，接触点外扩线条、方块、圆点，或图标回弹弹出并扩散同形描边。",
+    "name": "撒花成功动画",
+    "ownName": "确认爆发",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做撒花成功动画",
+        "body": "2.65 秒点击 Review 时，从点击位置向 -26°、-78°、-156°、-128°、-52°、-104° 六个方向发出六个元素：带深蓝描边的白线、深蓝线、蓝线、深蓝波浪线、白点和蓝色方块，行进 96 到 120px。用 expo.out 在 0.3 秒内展开，再线性漂移 12px 用时 0.5 秒，最后用 power1.in 在 0.16 秒内淡出。\n\n付款时，5.1 秒点击 Pay，按钮变成禁用的 Sending 状态。5.45 秒一个 132px 的波浪边蓝色印章弹出：用 power3.out 在 0.28 秒内从 0.6 缩放到 1.1，再用 power2.inOut 在 0.24 秒内回到 1.0。同形的描边在 0.6 秒内从 1 倍放大到 3 倍，不透明度从 0.6 降到 0，对勾笔画用 0.24 秒画出。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，点击和付款界面换成你自己的。"
+      }
+    ],
+    "alt": "手机上是转给 Maya Chen 的 1,240 美元即时转账，手指正要点蓝色支付按钮。",
+    "faq": [
+      [
+        "撒花成功动画是什么？",
+        "在点击、付款这类操作成功的瞬间，放出一小团碎片图形，比如线条、方块和圆点。图形只在关键操作帧出现，用来标出重要的时刻。"
+      ],
+      [
+        "不用粒子库能做出爆发效果吗？",
+        "可以。六个元素就够：每个元素从接触点出发，沿固定角度用 expo.out 展开，再漂移并淡出。这份配方用六个元素行进 96 到 120px，几个 GSAP 动画就能驱动。"
+      ],
+      [
+        "撒花成功动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

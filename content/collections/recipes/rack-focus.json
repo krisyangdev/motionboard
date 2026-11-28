@@ -1,0 +1,183 @@
+{
+  "slug": "rack-focus",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/rack-focus.mp4",
+    "poster": "https://media.motionboard.app/rack-focus.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.6
+  },
+  "data": {
+    "n": 56,
+    "cat": "A",
+    "star": false,
+    "video": "rack-focus",
+    "samples": [],
+    "text": {
+      "en": {
+        "why": "One shared focus distance drives the whole film and each plane computes its blur from its own distance to it, so one plane going soft and another going sharp happen on the same frame and the same easing curve, and the viewer reads a lens turning its focus ring. The foreground card grows slightly as it defocuses, which is real lens focus breathing, and a slow parallax drift keeps the order of the planes visible. Each rack shows only two planes: the insight card against the laptop, the approval card against the laptop, then the headline against the defocused laptop; one card drifts out before the next comes in, so the frame never holds three layers at once. Each pull is followed by a hold of about 1.5s with something happening on the interface (a counting number, a new transaction row, an Approve press), so there is content to read the moment focus lands. The headline appears last and sits on the farthest content plane, so it stays soft whenever focus is elsewhere. Bokeh lights sit at the back and swell and shrink with focus, giving the background a change on every pull. There is one accent color, mint #3fe0a5.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.6s. Insight card rises 0.1–0.9s; runway count 12.9→14.2 over 1.0–2.3s and sparkline draws 0.9–2.2s; rack 1 to the laptop 2.5–3.4s (0.9s); insight card drifts off left 3.0–4.4s; new transaction row 3.75–4.3s, cash 482,310→481,070 over 3.85–4.5s, tooltip $33.9k 4.2–4.55s; approval card slides in from the right 4.6–5.6s; rack 2 to the card 4.9–5.8s (0.9s); Approve pressed at 6.2s, budget bar fills 6.4–7.1s; card leaves 7.1–7.8s; rack 3 to the headline 7.1–8.1s (1.0s), headline fades in 7.5–8.3s, underline draws 8.15–8.85s; scene fades 9.1–9.6s; lockup rises 9.3–10.4s and holds to the end"
+          ],
+          [
+            "Easing",
+            "All three racks use power2.inOut, interpolating the focus distance between keyframes; card rise and slide-in, number counts, underline and lockup rise use expo.out; sparkline, fades and blur recovery use power2.out; card exits use power2.inOut and power2.in; the background drift is linear (none)"
+          ],
+          [
+            "Camera",
+            "Locked camera with one focus distance driving the film. Depths: foreground cards 0, laptop 0.8, headline 1.5, bokeh 2.0–2.5. Focus is 0 for 0–2.5s, 0.8 at 3.4–4.9s, back to 0 at 4.9–5.8s, then 1.5 at 7.1–8.1s. Blur radius: planes in front of the focus get 40px per unit of distance capped at 24px; planes behind it get 28px per unit capped at 22px. Focus breathing: a foreground card grows 5% when fully defocused, the laptop and headline at most 1.4%. Parallax drift is linear over the 10.6s: x offset headline 10px, laptop 22px, approval card 44px, insight card 60px, with y at 25% of x"
+          ],
+          [
+            "Subject",
+            "Insight card 700x448px scaled 1.2x to about 840x538px, centred at (510, 700), left of centre; approval card 520x338px scaled 1.2x to about 624x406px, centred at (1500, 520), right of centre; laptop lid 1000x600px scaled 1.18x to about 1180x708px, centred near (1190, 640), screen 976x576px with 14–15px UI text (about 16.5–17.7px on screen) and a 1120x24px base; headline Every dollar, in focus. at 140px with 144px line height, centred; 7 bokeh discs of 65–180px with a thin brighter rim, a faint fill and a soft outer edge, clustered at the laptop's upper left and right at depth 2.0–2.5; diameter = size × (0.3 + 0.7 × min(1, |depth − focus| / 2.4)), opacity = (0.08 + 0.17 × (1 − that ratio)) × 0.75–1, with a 3px blur"
+          ],
+          [
+            "Sync",
+            "In each rack one plane's blur rises while the other falls on the same frame and the same curve; the laptop is sharp at 3.4s and the new transaction row lands 0.35s later; focus settles on the approval card at 5.8s and Approve is pressed 0.4s after, with the figures and budget bar following; the headline starts to appear at 7.5s while focus is still moving and is sharp at 8.1s, when the underline begins; the laptop drops to 45% opacity at 7.2–8.1s so the headline owns the frame"
+          ],
+          [
+            "Style",
+            "Background <code>#09090b</code>, one accent mint <code>#3fe0a5</code>, neutral dark grey cards and UI; Inter throughout, headline weight 700; cards with 26px corners, a 1px hairline border and a large soft shadow; grain at 7% opacity re-rolled every 3 frames and a vignette reaching 50% at the edges"
+          ]
+        ],
+        "prompt": "Build a 10.6-second, 1920x1080, 30 fps dark product film called Rack Focus for a fictional product, Corsa (a team finance app). Background #09090b, one accent color mint #3fe0a5, font Inter. The frame has four planes, each with a depth: an insight card and an approval card in front (depth 0), a laptop in the middle (depth 0.8), the headline Every dollar, in focus. far back (depth 1.5), and 7 bokeh lights at the very back (depth 2.0–2.5). Drive the film with one focus distance f over time: 0 for 0–2.5s, to 0.8 over 2.5–3.4s, held at 0.8 until 4.9s, back to 0 over 4.9–5.8s, held at 0 until 7.1s, then to 1.5 over 7.1–8.1s, every segment eased with power2.inOut. On each frame compute each plane's blur radius from its distance to f: 40px per unit of distance when the plane is in front of the focus, capped at 24px; 28px per unit when it is behind, capped at 22px. Apply it as CSS filter: blur() on the plane. Scale a plane up as it defocuses (focus breathing): foreground cards up to 5%, laptop and headline up to 1.4%. Add a linear parallax drift: x offset = −u × factor, with u running from −1 to 1 over the film and factors of 10px for the headline, 22px for the laptop, 44px for the approval card and 60px for the insight card, y offset at 25% of x. Put all state in one render(t) function driven by one linear proxy tween from 0 to 10.6s, with no CSS animations. The insight card is 700x448px scaled 1.2x and centred at (510, 700): a Corsa Insight header, a number counting 12.9→14.2 months of runway, a +1.3 mo chip, a sparkline, one line of copy and two buttons. The laptop lid is 1000x600px scaled 1.18x and centred near (1190, 640), with a 976x576px Corsa dashboard: a 176px sidebar, three KPI cards (Cash balance $482,310, Monthly burn $33,920, Runway 14.2 mo), an 8-month spend bar chart with November in mint and a transactions table, UI text 14–15px. The approval card is 520x338px scaled 1.2x and centred at (1500, 520): Priya Nair requesting $2,400.00 for annual design seats, a Marketing budget $6,180 left bar, and Approve and Decline buttons. Timeline: the insight card rises 0.1–0.9s (expo.out, from 50px below, scale 0.94→1) and the other planes fade in 0–1.2s; the number counts to 14.2 over 1.0–2.3s and the sparkline draws 0.9–2.2s; rack 1 to the laptop 2.5–3.4s while the insight card drifts 380px left and fades over 3.0–4.4s; at 3.75–4.3s a row Planwise −$1,240.00 slides in at the top of the transactions table (the other rows move down 34px, the new row flashes mint), cash counts to $481,070 over 3.85–4.5s and a $33.9k tooltip appears on the chart at 4.2–4.55s; the approval card slides in from 340px right at 4.6–5.6s (expo.out); rack 2 back to the foreground at 4.9–5.8s; at 6.2s Approve is pressed (scale 0.95 and back), the label turns to Approved and the budget bar fills from 38.2% to 62.2% over 6.4–7.1s with the text changing to $3,780 left; the card leaves right 7.1–7.8s; rack 3 to the headline 7.1–8.1s, with the headline fading in 7.5–8.3s, the laptop dropping to 45% opacity and a mint underline under focus. drawing 8.15–8.85s; the scene fades out 9.1–9.6s; the lockup rises 9.3–10.4s (120px mint mark, Corsa at 136px, Team finance, made clear. at 34px), going from 14px blur to sharp as it rises. Bokeh sits only at the laptop's upper left and right: diameter = size × (0.3 + 0.7 × min(1, |depth − f| / 2.4)) and opacity = (0.08 + 0.17 × (1 − that ratio)) × 0.75–1, so the discs swell, shrink and dim with focus. Finish with 7% grain re-rolled every 3 frames and a vignette.",
+        "says": [
+          "The card in front goes soft while the laptop behind it comes into focus",
+          "Focus moves between the near and far planes like a camera operator turning the focus ring",
+          "The last pull brings the headline out of the blur"
+        ],
+        "vs": [
+          [
+            "device-push-in-focus",
+            "Device Push-in Focus moves the camera toward parts of one device; in Rack Focus the camera stays still and focus moves between planes at different depths: foreground cards, the laptop and the headline."
+          ],
+          [
+            "3d-tilted-ui-depth-of-field",
+            "Tilted UI with Depth of Field leads the eye with a sharp band and graded blur across one tilted interface; in Rack Focus a whole plane is sharp at a time and the sharp plane changes over time."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "全片由一个共享的焦点距离驱动，每个平面按自己和焦点的距离算虚化，所以一个平面变虚和另一个平面变清楚发生在同一帧、同一条缓动曲线上，观众读到的是镜头在转对焦环。前景卡片虚化时略微放大，是真实镜头的对焦呼吸，缓慢的视差漂移让几个平面的前后关系一直可见。每次拉焦的画面里只有两个平面：第 1 次是洞察卡对笔记本，第 2 次是审批卡对笔记本，第 3 次是标题对虚掉的笔记本；前一张卡片先漂出画面，下一张才进来，画面不会同时出现三层。拉焦之间各留 1.5s 左右的保持，保持期里界面上有动作：数字滚动、新交易行、批准按钮，拉焦一结束就有东西可看。标题到最后才出现，并且放在最远的平面，焦点在别处时它始终是虚的。光斑放在最远的平面，随焦点放大缩小，让背景在每次拉焦时都有变化。全片只用一个强调色薄荷绿 #3fe0a5。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.6s。洞察卡 0.1–0.9s 升起；跑道数字 12.9→14.2 用 1.0–2.3s，折线 0.9–2.2s 画出；第 1 次拉焦到笔记本 2.5–3.4s（0.9s）；洞察卡 3.0–4.4s 向左漂出画面；新交易行 3.75–4.3s 插入，现金 482,310→481,070 用 3.85–4.5s，提示条 $33.9k 4.2–4.55s 出现；审批卡 4.6–5.6s 从右侧滑入；第 2 次拉焦到审批卡 4.9–5.8s（0.9s）；6.2s 按下 Approve，预算条 6.4–7.1s 填充；审批卡 7.1–7.8s 离开；第 3 次拉焦到标题 7.1–8.1s（1.0s），标题 7.5–8.3s 淡入，下划线 8.15–8.85s 画出；整个场景 9.1–9.6s 淡出；字标 9.3–10.4s 升起并保持到片尾"
+          ],
+          [
+            "缓动",
+            "三次拉焦都用 power2.inOut，焦点距离在两个关键值之间插值；卡片升起、滑入、数字滚动、下划线、字标升起用 expo.out；折线、淡入、虚化回收用 power2.out；卡片离开用 power2.inOut 和 power2.in；背景漂移用线性（none）"
+          ],
+          [
+            "镜头",
+            "机位不动，用一个焦点距离驱动全片：前景卡片深度 0，笔记本 0.8，标题 1.5，光斑 2.0–2.5。焦点 0–2.5s 在 0，2.5–3.4s 到 0.8，4.9–5.8s 回到 0，7.1–8.1s 到 1.5。虚化半径：在焦点之前的平面每单位距离 40px，上限 24px；在焦点之后的平面每单位 28px，上限 22px。对焦呼吸：前景卡片完全虚化时放大 5%，笔记本和标题最多放大 1.4%。视差漂移：全片 10.6s 线性，x 偏移标题 10px、笔记本 22px、审批卡 44px、洞察卡 60px，y 偏移取 x 的 25%"
+          ],
+          [
+            "主体",
+            "洞察卡 700x448px，放大 1.2 倍后约 840x538px，中心在 (510, 700) 偏左；审批卡 520x338px，放大 1.2 倍后约 624x406px，中心在 (1500, 520) 偏右；笔记本盖板 1000x600px，放大 1.18 倍后约 1180x708px，中心约 (1190, 640)，屏幕 976x576px，界面文字 14–15px，放大后约 16.5–17.7px，底边 1120x24px；标题 Every dollar, in focus. 140px，行高 144px，居中；光斑 7 个，直径 65–180px，圆盘有略亮的细边、淡填充和柔和外缘，位置集中在笔记本的左上和右侧，深度 2.0–2.5，直径 = 尺寸 ×（0.3 + 0.7 × min(1, |深度 − 焦点| / 2.4)），不透明度 =（0.08 + 0.17 ×（1 − 该比例））× 0.75–1，叠 3px 模糊"
+          ],
+          [
+            "同步",
+            "每次拉焦里，一个平面的虚化上升和另一个平面的虚化下降在同一帧、同一条曲线上发生；笔记本 3.4s 变清晰，0.35s 后新交易行插入；焦点 5.8s 落在审批卡上，0.4s 后按下 Approve，数字和预算条紧跟着变；标题 7.5s 开始出现时焦点还在移动，8.1s 对焦完成，下划线 8.15s 开始画；笔记本在 7.2–8.1s 降到 45% 不透明度，让标题独占画面"
+          ],
+          [
+            "风格",
+            "背景 <code>#09090b</code>，唯一强调色薄荷绿 <code>#3fe0a5</code>，卡片和界面是深灰中性色；全片 Inter，标题 700；卡片用 26px 圆角、1px 细边框和柔和的大阴影；颗粒 7% 不透明度，每 3 帧重新取一次，暗角边缘 50%"
+          ]
+        ],
+        "prompt": "用「拉焦（Rack Focus）」做一支 10.6 秒、1920x1080、30fps 的深色产品片，虚构产品 Corsa（团队财务 App）。背景 #09090b，唯一强调色薄荷绿 #3fe0a5，字体 Inter。画面里有四个平面，每个平面有一个深度：洞察卡和审批卡在最前面（深度 0），笔记本在中间（深度 0.8），标题 Every dollar, in focus. 在远处（深度 1.5），7 个光斑在最远处（深度 2.0–2.5）。全片只用一个焦点距离 f，按时间插值：0–2.5s 为 0，2.5–3.4s 到 0.8，3.4–4.9s 保持 0.8，4.9–5.8s 回到 0，5.8–7.1s 保持 0，7.1–8.1s 到 1.5，每一段都用 power2.inOut。每一帧里每个平面的虚化半径由它和 f 的距离算出：平面在焦点之前时每单位距离 40px，上限 24px；在焦点之后时每单位 28px，上限 22px；用 CSS filter: blur() 写在平面上，小于 0.05px 就关掉滤镜。平面虚化时按虚化程度放大，前景卡片最多 5%，笔记本和标题最多 1.4%，模拟对焦呼吸。全片再加线性视差漂移，x 偏移 = −u × 系数，u 从 −1 线性走到 1，系数为标题 10px、笔记本 22px、审批卡 44px、洞察卡 60px，y 偏移取 x 的 25%。把所有状态放进一个 render(t) 函数，由一个 0 到 10.6s 的线性代理 tween 的 onUpdate 驱动，不用 CSS 动画。洞察卡 700x448px，放大 1.2 倍，中心在 (510, 700)，内容：Corsa Insight 标题、大数字 12.9→14.2 months of runway、一条 +1.3 mo this month 的标签、折线图、一句说明和 Review savings、Dismiss 两个按钮。笔记本盖板 1000x600px，放大 1.18 倍，中心约 (1190, 640)，屏幕 976x576px 是 Corsa 仪表盘：左侧 176px 导航、三张指标卡（Cash balance $482,310、Monthly burn $33,920、Runway 14.2 mo）、8 个月的支出柱状图（Nov 为强调色）、最近交易表，界面文字 14–15px。审批卡 520x338px，放大 1.2 倍，中心在 (1500, 520)，内容：Priya Nair 申请 $2,400.00 的设计工具年费，Marketing budget $6,180 left，Approve 和 Decline 按钮。时间线：0.1–0.9s 洞察卡升起（expo.out，从下方 50px，缩放 0.94→1），其他平面 0–1.2s 淡入；1.0–2.3s 数字滚到 14.2，折线 0.9–2.2s 画出；2.5–3.4s 第 1 次拉焦到笔记本，洞察卡 3.0–4.4s 向左漂出 380px 并淡出；3.75–4.3s 笔记本里插入一行 Planwise −$1,240.00（其余行下移 34px，新行带薄荷绿闪光），现金 3.85–4.5s 滚到 $481,070，4.2–4.55s 柱状图上出现 $33.9k 提示条；4.6–5.6s 审批卡从右侧 340px 外滑入（expo.out）；4.9–5.8s 第 2 次拉焦回到前景；6.2s 按下 Approve（缩到 0.95 再回弹），标签换成 Approved，预算条 6.4–7.1s 从 38.2% 填到 62.2%，文字变成 $3,780 left；7.1–7.8s 审批卡向右离开；7.1–8.1s 第 3 次拉焦到标题，标题 7.5–8.3s 淡入，笔记本同时降到 45% 不透明度，focus. 下划线 8.15–8.85s 画出；9.1–9.6s 场景淡出；9.3–10.4s 字标升起（薄荷绿方块 Logo 120px 加 Corsa 136px，下方一行 34px 的 Team finance, made clear.），升起时从 14px 虚化拉到清晰。光斑只放在笔记本的左上和右侧，直径 = 尺寸 ×（0.3 + 0.7 × min(1, |深度 − f| / 2.4)），不透明度 =（0.08 + 0.17 ×（1 − 该比例））× 0.75–1，会随焦点一起变大变小、变亮变暗。最后加 7% 不透明度的颗粒（每 3 帧重取一次）和暗角。",
+        "says": [
+          "前景的卡片一虚，后面的笔记本界面同时变清楚",
+          "焦点像摄影师转对焦环一样，在近处和远处之间来回",
+          "最后一次拉焦，标题从虚影里变清楚"
+        ],
+        "vs": [
+          [
+            "device-push-in-focus",
+            "实物推进聚焦靠推近和平移把视线引向一个设备的局部；拉焦的镜头不动，焦点在前景卡片、笔记本和标题这几个前后平面之间转移。"
+          ],
+          [
+            "3d-tilted-ui-depth-of-field",
+            "斜拍景深界面把一块界面倾斜拍，用一条清晰带加分级虚化带视线；拉焦里清晰的是整个平面，并且清晰的平面随时间在前后之间换。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Rack Focus",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 2400 for \"rack focus\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Rack Focus: Example and Code Recipe",
+    "description": "A rack focus between planes: a foreground card softens as a laptop sharpens, then a second card and a headline. Make it with Claude Code or Codex.",
+    "lede": "A large insight card sits sharp in the foreground with a blurred laptop behind it. Focus pulls to the laptop, the card softens and drifts away, a second card slides in from the right and takes focus back, and a last pull lands on the headline Every dollar, in focus. before the Corsa lockup.",
+    "name": "Rack Focus",
+    "ownName": "Rack Focus",
+    "body": [
+      {
+        "h2": "How to make a Rack Focus with Claude Code or Codex",
+        "body": "Give every plane a depth and drive the film with one focus distance: foreground cards 0, laptop 0.8, headline 1.5. Interpolate the focus with power2.inOut, 2.5–3.4s to the laptop (0.9s), 4.9–5.8s back to the cards (0.9s) and 7.1–8.1s to the headline (1.0s). Each frame, blur a plane by its distance to the focus: 40px per unit in front of it up to 24px, 28px per unit behind it up to 22px. Scale a defocused foreground card up 5% for focus breathing and add a linear parallax drift of 10–60px so the planes read as layers.\n\nKeep each rack to two planes. The 700x448px insight card (scaled 1.2x, left of centre) is sharp for the first 2.5s while the laptop behind it is blurred, then drifts 380px left over 3.0–4.4s after the first pull. The approval card (520x338px, scaled 1.2x) slides in from the right at 4.6–5.6s and takes focus back at 5.8s. The headline fades in at 7.5–8.3s only for the last pull, while the laptop drops to 45% opacity. Give each hold something to read: a count from 12.9 to 14.2, a new transaction row at 3.75s, an Approve press at 6.2s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the cards, the laptop dashboard and the focus math. Start the lockup at 9.3s with the mint mark, the word Corsa and a tagline racking from 14px blur to sharp. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A finance dashboard with cash balance, monthly burn and spending bars, sharp behind blurred lights in front.",
+    "faq": [
+      [
+        "What is a rack focus in a product film?",
+        "A rack focus changes which plane of the scene is sharp during a shot. The camera stays still while one subject softens and another sharpens, which moves the viewer's attention from, for example, a notification card in front to the product behind it."
+      ],
+      [
+        "How do you make the focus pull look like a real lens?",
+        "Drive every plane from one shared focus distance and blur each plane by its distance to it, so the blur on one plane falls while the other rises on the same frame and curve. Add 5% scale growth on a defocused foreground plane for focus breathing, ease with power2.inOut over 0.9s and cap the foreground blur at 24px."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "拉焦",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"拉焦效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "拉焦（焦点转移）：示例与代码配方",
+    "description": "镜头不动，焦点在前景卡片、笔记本和标题之间转移：一个平面变虚，另一个同时变清楚。用 Claude Code 或 Codex 按免费配方做出这个拉焦效果。",
+    "lede": "前景一张洞察卡片很大、很清楚，后面的笔记本虚成一团；焦点拉到笔记本，卡片虚开并漂出画面，界面变清楚；第二张审批卡片从右侧滑入拉回前景；最后拉焦到标题 Every dollar, in focus.，接着是 Corsa 字标。",
+    "name": "拉焦效果",
+    "ownName": "拉焦（焦点转移）",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做拉焦效果",
+        "body": "给每个平面一个深度，用一个焦点距离驱动全片：前景卡片 0，笔记本 0.8，标题 1.5。焦点用 power2.inOut 插值：2.5–3.4s 到笔记本（0.9s），4.9–5.8s 回到卡片（0.9s），7.1–8.1s 到标题（1.0s）。每一帧按平面和焦点的距离算虚化：在焦点之前每单位 40px，上限 24px；在焦点之后每单位 28px，上限 22px。虚化的前景卡片放大 5% 作为对焦呼吸，再加 10–60px 的线性视差漂移，让几个平面像分层的实物。\n\n每次拉焦只保留两个平面。700x448px 的洞察卡（放大 1.2 倍，偏左）前 2.5s 清晰，后面的笔记本是虚的；第 1 次拉焦之后，它 3.0–4.4s 向左漂出 380px。审批卡（520x338px，放大 1.2 倍）4.6–5.6s 从右侧滑入，5.8s 重新拿回焦点。标题 7.5–8.3s 淡入，只服务最后一次拉焦，同时笔记本降到 45% 不透明度。每段保持都要有东西可看：数字从 12.9 滚到 14.2，3.75s 插入一行新交易，6.2s 按下 Approve。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出卡片、笔记本仪表盘和焦点计算。9.3s 开始字标：薄荷绿方块、Corsa 文字和一行标语，从 14px 虚化拉到清晰。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "财务仪表盘显示现金余额、月支出和柱状图，前景的光斑是虚的。",
+    "faq": [
+      [
+        "产品片里的拉焦是什么？",
+        "拉焦是在一个镜头里改变画面中哪个平面是清晰的。机位不动，一个主体变虚，另一个变清楚，把观众的注意力从前景的通知卡片转到后面的产品上。"
+      ],
+      [
+        "怎样让拉焦看起来像真实镜头？",
+        "用一个共享的焦点距离驱动所有平面，按每个平面和焦点的距离算虚化，这样一个平面的虚化下降和另一个平面的虚化上升在同一帧、同一条曲线上发生。虚化的前景平面放大 5% 模拟对焦呼吸，用 power2.inOut 缓动、每次 0.9s，前景虚化上限 24px。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

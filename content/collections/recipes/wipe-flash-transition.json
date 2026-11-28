@@ -1,0 +1,202 @@
+{
+  "slug": "wipe-flash-transition",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/foreground-wipe-flash.mp4",
+    "poster": "https://media.motionboard.app/foreground-wipe-flash.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 37,
+    "cat": "E",
+    "star": false,
+    "video": "foreground-wipe-flash",
+    "samples": [
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:15–0:16",
+        "s": 15
+      },
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:03",
+        "s": 3
+      },
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:23",
+        "s": 23
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The transition object comes straight from the current scene (a ball, a halo), so viewers see the transition as part of the camera movement. The whole film uses only these two transitions and very few hard cuts, which keeps continuity in a monochrome style; the switch point lands on a fully covered frame.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s, four scenes: logs explorer 0-2.6s, parameter 2.6-5.1s, trace waterfall 5.1-7.4s, wordmark 7.4-11s. Wipe 1: ball drifts 0-2.4s, sweep 2.4-2.9s (7 frames in, 8 frames out), scene swap at 2.6s. Flash: halo rises 4.83-5.1s (8 frames), swap at 5.1s, white fades 5.1-5.4s (9 frames). Wipe 2: ball drifts to 7.2s, sweep 7.2-7.7s, swap at 7.4s"
+          ],
+          [
+            "Easing",
+            "Wipe enters with <code>expo.out</code> over 7 frames (0.233s) and exits right with <code>power2.in</code> over 8 frames (0.267s); flash halo rises with <code>ease: \"none\"</code> over 8 frames and falls with <code>power3.out</code> (<code>cubic-bezier(0.33,1,0.68,1)</code>) over 9 frames; scene camera moves are <code>ease: \"none\"</code>"
+          ],
+          [
+            "Camera",
+            "Scene 1: camera moves right (content x 70 to -60, scale 1.26 to 1.36 over 2.6s) with a 3D tilt easing rotationY 9 to 6 (perspective 1700px). Scene 2: slow push 1.0 to 1.05 over 2.5s. Scene 3: x 70 to -50, scale 1.42 to 1.5, tilt the other way (rotationY -10 to -6). Scene 4: 1.0 to 1.05 over 3.6s"
+          ],
+          [
+            "Subject",
+            "A matte black ball (2800px at scale 0.42-0.45 waiting at the lower left, blur 54px, soft top-left highlight) sweeps across the foreground to the frame center scale 1, then leaves right at scale 1.08. The flash is a 5200px radial gradient halo (white core to 42%) from the frame center scaling 0.05 to 1.5, then a full white plate. Small blurred spheres (150px, 70px, 190px) sit in the lower-right foreground"
+          ],
+          [
+            "Sync",
+            "The scene swap lands on the frame the ball is centered (frame 78 and frame 222) or the frame white is full (frame 153); the ball sweep is 15 frames and the flash 17 frames. The final wordmark scene opens with a white seed glow at 7.4s that fades as the mark sharpens"
+          ],
+          [
+            "Style",
+            "Light scenes: gray studio (<code>#d7d7d9</code> to <code>#bdbdc0</code>, soft highlight at 68% 36%, 26% edge vignette); dark scenes: radial <code>#131315</code> to <code>#060607</code>; ball matte black <code>#09090a</code> shading to <code>#5b5b61</code> highlight; flash pure white. Wordmark Inter 600 190px, letter-spacing -0.045em, <code>#f4f4f5</code>"
+          ]
+        ],
+        "prompt": "Build transitions between scenes called Foreground Wipe & Flash, 11s: a light gray studio scene (0-2.6s), a dark scene with a large number counting 412 to 38 (2.6-5.1s), a second light studio scene (5.1-7.4s) and a wordmark scene (7.4-11s). Each light scene already contains a large matte black ball (2800px, blur 54px, soft top-left highlight) waiting at the lower left at scale 0.42-0.45 and drifting slowly while the camera moves right with a 3D tilt. At 2.4s the ball sweeps to the frame center at scale 1 with expo.out in 7 frames and exits right to x 3700 at scale 1.08 with power2.in in 8 frames; swap the scene on frame 78 (2.6s) when the ball fills the frame, and the next scene is already in frame as the ball leaves. Between the dark scene and the second light scene use a flash instead: release a 5200px radial white halo from the frame center, scaling 0.05 to 1.5 linearly over 8 frames, set full white one frame before the swap at 5.1s, then fade the white plate over 9 frames with power3.out. Repeat the wipe at 7.2s with the swap on frame 222 (7.4s), then open the wordmark scene with a white seed glow that fades as the mark and wordmark slide into place over 1.3s with expo.out. Use only these transitions in the whole film.",
+        "says": [
+          "A big blurred ball passes in front of the camera, covers the frame, and the scene changes",
+          "A glow blows out the whole frame and cuts to the next scene",
+          "No hard cuts, only wipes or flashes to connect scenes"
+        ],
+        "vs": [
+          [
+            "match-cut-transition",
+            "Match Cut keeps the anchor still and swaps the object directly; Foreground Wipe & Flash changes scenes on the frame that covers the screen."
+          ],
+          [
+            "logo-wordmark-reveal",
+            "Mark-to-Wordmark Unfold is often followed by a white flash; the flash itself is only a transition device."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "转场物件直接取自当前场景（球、光环），观众把转场看成镜头运动的一部分。全片只用这两种转场，硬切很少，单色风格下的连贯性靠这个维持；切换点落在完全遮挡的帧上。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s，四个场景：日志浏览 0–2.6s，大数字参数 2.6–5.1s，调用链瀑布 5.1–7.4s，字标 7.4–11s。遮挡一：球漂移 0–2.4s，划过 2.4–2.9s（7 帧进、8 帧出），2.6s 换场景。闪白：光晕 4.83–5.1s（8 帧）上升，5.1s 换场景，白场 5.1–5.4s（9 帧）回落。遮挡二：球漂移到 7.2s，划过 7.2–7.7s，7.4s 换场景"
+          ],
+          [
+            "缓动",
+            "遮挡进入用 <code>expo.out</code>，7 帧（0.233s）；向右移出用 <code>power2.in</code>，8 帧（0.267s）；闪白光晕 8 帧 <code>ease: \"none\"</code> 上升，9 帧用 <code>power3.out</code>（<code>cubic-bezier(0.33,1,0.68,1)</code>）回落；场景镜头移动 <code>ease: \"none\"</code>"
+          ],
+          [
+            "镜头",
+            "场景一：镜头向右移动（内容 x 从 70 到 -60，缩放 1.26 到 1.36，2.6s），带 3D 倾斜，rotationY 从 9 渐变到 6（透视 1700px）。场景二：2.5s 内缓推 1.0 到 1.05。场景三：x 从 70 到 -50，缩放 1.42 到 1.5，朝另一个方向倾斜（rotationY 从 -10 到 -6）。场景四：3.6s 内 1.0 到 1.05"
+          ],
+          [
+            "主体",
+            "一颗哑光黑球（2800px，缩放 0.42–0.45，等在左下，blur 54px，左上有柔和高光）划过前景到画面中心缩放 1，再以 1.08 倍向右离开。闪白是从画面中心出发的 5200px 径向渐变光晕（白色核心到 42%），缩放 0.05 到 1.5，随后整屏纯白。右下前景有几颗小的虚焦球（150px、70px、190px）"
+          ],
+          [
+            "同步",
+            "场景切换落在球到达中心的那一帧（第 78 帧和第 222 帧）或白场全满的那一帧（第 153 帧）；球划过共 15 帧，闪白共 17 帧。最后的字标场景在 7.4s 以一团白色光晕开场，标志变清晰时光晕淡去"
+          ],
+          [
+            "风格",
+            "浅色场景：灰色棚拍底（<code>#d7d7d9</code> 到 <code>#bdbdc0</code>，68% 36% 处有柔和高光，26% 边缘暗角）；深色场景：径向 <code>#131315</code> 到 <code>#060607</code>；球为哑光黑 <code>#09090a</code>，高光处渐变到 <code>#5b5b61</code>；闪白为纯白。字标 Inter 600 190px，字距 -0.045em，<code>#f4f4f5</code>"
+          ]
+        ],
+        "prompt": "用「遮挡与闪白（Foreground Wipe & Flash）」做场景之间的转场，全片 11s：浅灰棚拍场景（0–2.6s）、大数字从 412 数到 38 的深色场景（2.6–5.1s）、第二个浅色棚拍场景（5.1–7.4s）和字标场景（7.4–11s）。每个浅色场景里已有一颗大号哑光黑球（2800px，blur 54px，左上有柔和高光），以缩放 0.42–0.45 等在左下并缓慢漂移，同时镜头带 3D 倾斜向右移动。2.4s 时球用 expo.out 在 7 帧内划到画面中心、缩放 1，再用 power2.in 在 8 帧内向右移出到 x 3700、缩放 1.08；在第 78 帧（2.6s）球铺满画面时换场景，球移开后下一幕已在画面中。深色场景到第二个浅色场景之间改用闪白：从画面中心放出 5200px 的白色径向光晕，8 帧内线性从缩放 0.05 放大到 1.5，在 5.1s 换场景前一帧铺满纯白，随后白场用 power3.out 在 9 帧内淡去。7.2s 再做一次遮挡，在第 222 帧（7.4s）换场景，然后字标场景以一团白色光晕开场，光晕淡去时标志和字标用 expo.out 在 1.3 秒内滑入位置。全片只使用这些转场。",
+        "says": [
+          "一个虚化的大球从镜头前划过遮住画面然后换场景",
+          "光晕吹白整个画面再切下一幕",
+          "没有硬切，靠遮挡或闪白衔接"
+        ],
+        "vs": [
+          [
+            "match-cut-transition",
+            "同位替换保持锚点不动、直接换物体；遮挡与闪白借助遮满画面的一帧换场景"
+          ],
+          [
+            "logo-wordmark-reveal",
+            "符号展开字标的结尾常接闪白；闪白本身只是转场手段"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Wipe and Flash Transition",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Wipe and Flash Transition\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Foreground Wipe and Flash Transition: Recipe and Code",
+    "description": "A defocused black ball sweeps across the frame to change scenes, and a central halo blows out to white. Make it with Claude Code or Codex from the recipe.",
+    "lede": "A defocused foreground object sweeps across and covers the frame to cut scenes, or a central glow blows out to white before the next scene.",
+    "name": "Wipe and Flash Transition",
+    "ownName": "Foreground Wipe & Flash",
+    "body": [
+      {
+        "h2": "How to make a Wipe and Flash Transition with Claude Code or Codex",
+        "body": "For the wipe, hold a matte black ball (2800 px, scale 0.42 to 0.45, 54 px blur) at the lower left. It sweeps to frame center at scale 1 with expo.out over 7 frames (0.233 s), then leaves right at 1.08 with power2.in over 8 frames. Swap scenes on the frame where the ball is centered, at 2.6 s and 7.4 s.\n\nFor the flash, scale a 5200 px radial halo (white core to 42%) from 0.05 to 1.5 with ease none over 8 frames, ending at 5.1 s in a full white plate. Swap the scene on the full white frame and fade the white out with power3.out over 9 frames. Scene camera moves use ease none, for example content x 70 to -60 and scale 1.26 to 1.36 in 1700 px perspective.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own scenes."
+      }
+    ],
+    "alt": "A log search screen flashes to white, then a big \"38 ms\" p99 latency number appears on black.",
+    "faq": [
+      [
+        "What are wipe and flash transitions?",
+        "A wipe replaces one shot with another by moving a shape across the frame, and here the shape is a foreground object from the scene. A flash brightens the frame to full white, cuts to the next scene and fades the white away."
+      ],
+      [
+        "Where should the scene change land?",
+        "On a frame that is fully covered. In this recipe the swap lands on frame 78 and frame 222, when the ball is centered, and on frame 153, when the white is full, so the cut is hidden inside the transition object."
+      ],
+      [
+        "Is the Wipe and Flash Transition recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "遮挡闪白转场",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"遮挡闪白转场\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "遮挡闪白转场：示例与制作配方",
+    "description": "场景里虚焦的黑色大球横扫遮满画面来切场，或中心光晕吹白后换场。用免费配方，让 Claude Code 或 Codex 做出这段转场。",
+    "lede": "场景内虚焦大物体横扫遮满画面切场，或中心光晕吹白后切场。",
+    "name": "遮挡闪白转场",
+    "ownName": "遮挡与闪白",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做遮挡闪白转场",
+        "body": "遮挡转场：一个哑光黑球（2800px，缩放 0.42 到 0.45，54px 模糊）等在左下角。它用 expo.out 在 7 帧（0.233 秒）内扫到画面中心，缩放 1，再用 power2.in 在 8 帧内向右离开，缩放 1.08。场景在球位于中心的那一帧切换，分别是 2.6 秒和 7.4 秒。\n\n闪白转场：一个 5200px 的径向光晕（白色核心到 42%）用 ease none 在 8 帧内从 0.05 倍放大到 1.5 倍，5.1 秒变成整屏纯白。在全白那一帧换场景，再用 power3.out 在 9 帧内淡出白色。场景里的镜头运动用 ease none，例如内容 x 从 70 到 -60，缩放从 1.26 到 1.36，透视 1700px。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，场景换成你自己的。"
+      }
+    ],
+    "alt": "日志搜索界面闪白后，黑底上出现大字 38 ms 的 p99 延迟。",
+    "faq": [
+      [
+        "遮挡转场和闪白转场是什么？",
+        "遮挡转场让一个形状划过画面，用它盖住一个镜头再露出下一个，这里的形状是场景里的前景物体。闪白转场把画面亮到全白，在白屏时切到下一个场景，再淡出白色。"
+      ],
+      [
+        "换场景应该落在哪一帧？",
+        "落在画面被完全盖住的那一帧。配方里换场景在第 78 帧和第 222 帧，此时球在中心，以及第 153 帧，此时白色最满，切换藏在转场物体里面。"
+      ],
+      [
+        "遮挡闪白转场配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

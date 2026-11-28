@@ -1,0 +1,183 @@
+{
+  "slug": "star-wars-text-crawl",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/text-crawl.mp4",
+    "poster": "https://media.motionboard.app/text-crawl.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 12
+  },
+  "data": {
+    "n": 52,
+    "cat": "C",
+    "star": false,
+    "video": "text-crawl",
+    "samples": [],
+    "text": {
+      "en": {
+        "why": "The text block sits on a plane tilted about its bottom edge, and perspective squeezes it into a trapezoid. Lines at the bottom are large and readable, each line above is smaller than the last and narrower, and that shrinking is the only depth cue the eye needs. The plane moves at one constant speed, so every line spends the same time between appearing and becoming small, and the viewer can predict how long a paragraph stays readable. A mask at the top fades the lines that have become too small to read, which leaves a band of plain stars above the text instead of a pile of fine lines. The intro line is the only centred text in the film. It sets up the story in one sentence before the crawl rises from the bottom edge, so the viewer knows to read next. The stars use depth parallax, and when the crawl is done the camera tilts down and the stars rise, which moves the frame from reading to looking at the lockup. The crawl is warm cream and only the kicker, the intro line and the mark use the cool blue, so the film keeps one accent colour.",
+        "spec": [
+          [
+            "Timing",
+            "Film 12s. Intro line fades in at 0.05s (0.4s) and out 2.7–3.0s (0.3s); stars go to 0.16 over 0–0.6s and rise to 1 over 2.2–3.4s (1.2s); the crawl starts at 2.7s and runs at a constant 210px/s (the block top starts 30px past the pivot line); the crawl layer fades 9.3–10.2s (0.9s); the dark pocket behind the lockup 9.2–10.2s; mark at 9.4s (0.7s), wordmark at 9.5s (0.8s), tagline at 9.7s (0.6s), held to the end; stars rise 9.0–12.0s (3.0s)"
+          ],
+          [
+            "Easing",
+            "Crawl linear (ease none, constant speed); intro in power2.out and out power2.in; stars power1.out then power1.inOut; crawl fade power1.in; lockup dim power2.out; mark, wordmark and tagline <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); star rise power2.inOut; twinkle on a sine curve"
+          ],
+          [
+            "Camera",
+            "The plane tilts about its bottom edge with <code>rotateX(45deg)</code>, pivot line at y=1040px, perspective 405px with the origin at the frame centre (960px, 540px), so the vanishing point sits near y≈135px (540 − 405 × cot 45°). The camera holds still during the crawl; from 9.0–12.0s it tilts down and the stars rise by 420px scaled by depth (nearer stars rise more)"
+          ],
+          [
+            "Subject",
+            "Plane 1700px wide, 110px from the left. Text block in Inter 700, 67px on an 84px line, letter-spacing 0.01em, justified (<code>text-wrap: pretty</code>): an EPISODE 4.0 kicker (54px, tracking 0.36em, accent), the title THE MERGE AWAKENS (92px, 800, one line) and three paragraphs of about 21 words; 84px between the title and the first paragraph, 56px between paragraphs. About 16 lines show at once and capitals at the bottom edge are about 77px tall. A mask is transparent above 14% of the frame height, fully visible from 40%, and fades out from 94% at the bottom. The sky is 640 seeded stars (seed 19770525) plus 20 brighter stars with a glow, depth 0.15–1, drifting 3px per second scaled by depth and twinkling on a sine"
+          ],
+          [
+            "Sync",
+            "The intro line starts to fade at 2.7s, the same moment the crawl starts; the stars finish brightening at 3.4s, while the first line is still rising from under the bottom edge; the dark pocket starts at 9.2s, 0.1s before the crawl fades (9.3s), so the background behind the lockup is already dark while the last lines go"
+          ],
+          [
+            "Style",
+            "Background <code>#06070b</code>, crawl text warm cream <code>#efe5cf</code>, one cool accent <code>#86b8ff</code> (intro line, kicker, mark), with none of the classic crawl yellow; Inter only: body 700, title 800, intro line 500 at 62px; mark is a 104px rounded square with two dark upward chevrons, wordmark Kestrel 156px 700, tagline Code review, minus the wait. at 40px 500; vignette"
+          ]
+        ],
+        "prompt": "Build a 12-second, 1920x1080, 30 fps dark product film called Release Crawl, in the style of the 1977 space-opera opening crawl: a justified block of text recedes up a tilted plane. The fictional product is Kestrel, a code-review tool. Use no film logo, name or marks, and no classic crawl yellow. Background #06070b, crawl text warm cream #efe5cf, one cool accent #86b8ff, Inter only.\n\nStarfield: one 1920x1080 canvas redrawn every frame from timeline time (tween a dummy object across the whole timeline with onUpdate: render(tl.time()); no requestAnimationFrame). Generate 640 stars with mulberry32 seed 19770525, each with a depth 0.15–1, a radius, a brightness and a twinkle frequency, mostly white-ish (240,244,255) with some warm (255,238,214) and cool (186,212,255). Add 20 brighter stars (radius 1.7–2.7px, glow 7x the radius). Each star drifts up 3px per second times its depth, wrapping, and twinkles with alpha × (0.78 + 0.22 × sin(t × frequency + phase)). Canvas opacity goes 0 to 0.16 over 0.6s, then from 2.2s to 1 over 1.2s (power1.inOut).\n\nIntro line: centred, two lines, Inter 500, 62px on an 88px line, letter-spacing 0.012em, accent #86b8ff: Two sprints ago, in a repo / far, far away… It fades in from 0.05s over 0.4s (power2.out, scale 0.985 to 1) and fades out from 2.7s over 0.3s (power2.in).\n\nCrawl: an outer container with perspective: 405px and perspective-origin 960px 540px; inside it a plane 1700px wide, 110px from the left, with its top edge at y=1040px, transform-origin 50% 0 and transform: rotateX(45deg), which puts the vanishing point near y=135px. The text block is anchored above the plane's pivot line in Inter 700, 67px on an 84px line, letter-spacing 0.01em, text-align: justify, text-wrap: pretty, upright. Content in order: the kicker EPISODE 4.0 (54px on a 72px line, tracking 0.36em, centred, accent); the title THE MERGE AWAKENS (92px on a 108px line, 800, tracking 0.04em, one line, centred, 20px below the kicker); then three paragraphs of about 21 words each, the first 84px below the title and 56px between paragraphs, a release note told as an epic: the review backlog, Kestrel reading every change first and flagging risky lines, then version 4.0 shipping with inline suggestions, faster diffs and a queue that never stalls. Wrap the crawl layer in a vertical mask: fully transparent above 14% of the frame height, fully visible from 40%, fading out from 94% at the bottom edge. The block moves up the plane at a constant 210px per second (ease none): at 2.7s its top sits 30px below the pivot line and it ends at y = −300px, so the duration is (block height + 30 + 300) / 210 with the height read from offsetHeight. The crawl layer fades out from 9.3s over 0.9s (power1.in). About 16 lines show at once.\n\nEnding: from 9.0 to 12.0s every star rises by 420px times its depth (power2.inOut), which reads as the camera tilting down. From 9.2s a dark radial pocket fades in over 1.0s in the centre (power2.out). The mark appears at 9.4s: a 104px accent rounded square with two dark (#07101f) upward chevrons, rising from 16px below at scale 0.9 over 0.7s expo.out. The wordmark Kestrel (Inter 700, 156px, tracking −0.045em) rises 24px from 9.5s over 0.8s expo.out. The tagline Code review, minus the wait. (40px, 500, cream at 62% opacity) rises 16px from 9.7s over 0.6s expo.out. Hold to the end.\n\nConstraints: deterministic, a single paused GSAP timeline; set start values with tl.set and animate with .to tweens that state their end values.",
+        "says": [
+          "A justified block of text recedes up a tilted plane and shrinks toward the distance",
+          "One short line fades in and out first, then the whole crawl rises from the bottom edge",
+          "When the crawl ends the stars rise and the product lockup appears"
+        ],
+        "vs": [
+          [
+            "scrolling-text-animation",
+            "Ramble to Summary scrolls one line sideways, speeds it up and squeezes it into a message bubble; Release Crawl moves a whole block at constant speed up a tilted plane and ends on the product lockup."
+          ],
+          [
+            "3d-ribbon-text-animation",
+            "Folded Ribbon Text folds a title into 3D ribbons and multiplies them into rows; Release Crawl is one block of text that shrinks because the plane is tilted, at a constant speed."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "字幕块放在一个绕底边倾斜的平面上，平面前窄后宽被透视压成梯形：底边的行大、读得清，往上每一行都比前一行小，行宽跟着收窄，眼睛靠这种渐缩感知深度，不需要任何别的景深提示。平面以固定速度匀速移动，所以每一行从出现到变小的时间是固定的，观众可以预判自己有多少时间读完一段。顶部蒙版把已经小到读不了的行淡掉，画面上方留出一片只有星星的空间，不会出现一堆糊在一起的细线。开场句是整支片子里唯一一块居中的文字，先用一句话交代“故事”，再让字幕从底边升起，这个顺序让观众知道接下来要读。星空按深度做视差，近的星漂得多、闪得快，字幕滚完后镜头下倾，星星整体上升，把画面从“读字”转到“看标识”。文字用暖奶白，只有小标、开场句和符号用冷蓝，一支片子只有一个强调色。",
+        "spec": [
+          [
+            "时长",
+            "全片 12s。开场句 0.05s 淡入（0.4s），2.7–3.0s 淡出（0.3s）；星空 0–0.6s 淡到 0.16，2.2–3.4s 升到 1（1.2s）；字幕 2.7s 起步，之后以 210px/s 匀速滚动（块顶起点在枢轴线下方 30px），滚动层 9.3–10.2s 淡出（0.9s）；暗角光斑 9.2–10.2s；符号 9.4s 出现（0.7s），字标 9.5s（0.8s），标语 9.7s（0.6s），保持到片尾；星空 9.0–12.0s 上升（3.0s）"
+          ],
+          [
+            "缓动",
+            "字幕滚动 linear（ease none，匀速）；开场句淡入 power2.out、淡出 power2.in；星空 power1.out 和 power1.inOut；滚动层淡出 power1.in；暗角光斑 power2.out；符号、字标、标语 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；星空上升 power2.inOut；闪烁 sin 曲线"
+          ],
+          [
+            "镜头",
+            "平面沿底边倾斜 <code>rotateX(45deg)</code>，枢轴线在画面 y=1040px，透视 405px，透视原点在画面中心（960px、540px），消失点在 y≈135px（540 − 405 × cot 45°）；字幕滚动期间镜头不动；9.0–12.0s 镜头向下倾，星空按深度上升 420px（越近的星升得越多）"
+          ],
+          [
+            "主体",
+            "平面宽 1700px，左边 110px；文字块 Inter 700，67px / 行高 84px，字距 0.01em，两端对齐（<code>text-wrap: pretty</code>）：EPISODE 4.0 小标（54px，字距 0.36em，强调色）、标题 THE MERGE AWAKENS（92px，800，一行）、三段各约 21 词的正文，首段与标题间距 84px，段间 56px；约 16 行同时在画面里，底边处大写字高约 77px；顶部蒙版 14% 以上透明、40% 起全显，底部 94% 起渐隐；星空是 640 颗带种子（19770525）的星加 20 颗带光晕的亮星，深度 0.15–1，每秒按深度漂 3px，亮度按 sin 闪烁"
+          ],
+          [
+            "同步",
+            "开场句 2.7s 开始淡出，与字幕起步同一刻；星空 2.2s 开始升亮，在字幕第一行升出底边前就到位；暗角光斑 9.2s 先于滚动层淡出（9.3s）0.1s，最后几行淡掉时标识背后已经是暗的"
+          ],
+          [
+            "风格",
+            "背景 <code>#06070b</code>，字幕暖奶白 <code>#efe5cf</code>，唯一强调色冷蓝 <code>#86b8ff</code>（开场句、小标、符号），不使用经典字幕的黄色；只用 Inter：正文 700、标题 800、开场句 500（62px）；符号为 104px 的圆角方块加两道深色向上人字，字标 Kestrel 156px 700，标语 Code review, minus the wait.（40px，500）；暗角"
+          ]
+        ],
+        "prompt": "用「发布滚动字幕（Release Crawl）」做一支 12 秒、1920x1080、30fps 的深色产品片，风格参照 1977 年那种太空歌剧的开场字幕滚动：一块两端对齐的文字沿倾斜平面向远处退去。虚构产品 Kestrel（代码评审工具）。不使用任何影片的标志、字样或商标，也不使用经典字幕的黄色。画面背景 #06070b，字幕颜色暖奶白 #efe5cf，唯一强调色冷蓝 #86b8ff，字体只用 Inter。\n\n星空：一块 1920x1080 的 canvas，每帧按时间线时间重画（用 tl.to 一个空对象加 onUpdate: render(tl.time())），不用 requestAnimationFrame。用 mulberry32 种子 19770525 生成 640 颗星，每颗带深度 0.15–1、半径、亮度和闪烁频率，颜色 72% 偏白 (240,244,255)、14% 偏暖 (255,238,214)、14% 偏冷 (186,212,255)；再生成 20 颗亮星，半径 1.7–2.7px，带半径 7 倍的径向光晕。每颗星纵向漂移 3px/s 乘深度，超出画面底部从上方回绕；亮度乘 0.78 + 0.22 × sin(t × 频率 + 相位) 闪烁。星空画布不透明度 0 到 0.16 用 0.6s（power1.out），2.2s 起 1.2s 升到 1（power1.inOut）。背景叠一层很淡的冷蓝椭圆（在 y 约 24%）和边缘暗角。\n\n开场句：画面居中两行，Inter 500、62px、行高 88px、字距 0.012em、冷蓝 #86b8ff：Two sprints ago, in a repo / far, far away…。0.05s 起 0.4s 淡入（power2.out，缩放 0.985 到 1），2.7s 起 0.3s 淡出（power2.in）。\n\n字幕：外层容器用 perspective: 405px，透视原点 960px 540px；里面一个宽 1700px、左边 110px、顶边在 y=1040px 的平面，transform-origin 50% 0，transform: rotateX(45deg)，所以消失点在 y 约 135px。文字块锚在平面枢轴线上方，用 Inter 700、67px、行高 84px、字距 0.01em、text-align: justify、text-wrap: pretty，字体样式保持正体。内容依次是：EPISODE 4.0（54px、行高 72px、字距 0.36em、居中、冷蓝）；标题 THE MERGE AWAKENS（92px、行高 108px、800、字距 0.04em、一行、居中，距小标 20px）；三段正文，每段约 21 词，首段距标题 84px，段间 56px，内容是一份发布说明写成史诗：第一段讲评审积压、合并窗口在没人读完 diff 前关闭；第二段讲 Kestrel 先读每一处改动、标出有风险的行、把评审人直接带到要点；第三段讲 4.0 今天发布，带内联建议、更快的 diff 和不会卡住的队列，主分支重新变绿。文字加很淡的暖色辉光（0 0 30px，不透明度 0.12）。整个字幕层再套一个竖向蒙版：画面高度 14% 以上完全透明，40% 起全显，94% 起向底边渐隐。字幕以 210px/s（平面像素）匀速上移，ease none：块在 2.7s 开始时块顶位于枢轴线下方 30px，终点 y = −300px，时长按（块高 + 30 + 300）/ 210 计算，块高用 offsetHeight 读取。字幕层 9.3s 起 0.9s 淡出（power1.in）。这样同一时刻约有 16 行在画面里，底边大写字高约 77px。\n\n收尾：星空 9.0–12.0s 整体按深度上升 420px（power2.inOut），表现镜头下倾。9.2s 起 1.0s 在中央出现暗色径向光斑（power2.out）。符号 9.4s 出现：104px 圆角方块冷蓝，里面两道深色（#07101f）向上人字，0.7s expo.out，从下方 16px 和 0.9 倍升起；字标 Kestrel，Inter 700、156px、字距 −0.045em，9.5s 起 0.8s expo.out 上移 24px；标语 Code review, minus the wait.，40px、500、奶白 62% 不透明度，9.7s 起 0.6s expo.out 上移 16px；保持到片尾。\n\n约束：时间线确定性，只用一条 GSAP 暂停时间线；初始隐藏的元素先用 tl.set 设起始值，再用 .to 补终点值；不叠加多个 fromTo。",
+        "says": [
+          "一块两端对齐的文字沿倾斜的平面向远处退去，越远越小",
+          "先有一行淡入淡出的开场句，再从画面底边升起一整块字幕",
+          "字幕滚完后星空上升，出现产品标识"
+        ],
+        "vs": [
+          [
+            "scrolling-text-animation",
+            "长句收成一句是一句话横向滚动、加速、再收成一个气泡；发布滚动字幕是一整块文字沿倾斜平面匀速退向远处，结尾是产品标识。"
+          ],
+          [
+            "3d-ribbon-text-animation",
+            "折带文字让标题折成 3D 带子并成排复制；发布滚动字幕只有一块文字，靠透视平面的倾斜产生渐缩，速度恒定。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Star Wars Text Crawl",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 170 for \"star wars text crawl\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Star Wars Text Crawl: Example and Code Recipe",
+    "description": "A justified block of text recedes up a tilted plane over a starfield, in the style of the 1977 opening crawl. Make it with Claude Code or Codex.",
+    "lede": "A line of cool-blue text fades in and out on black, then a justified block of cream text with a kicker and a title recedes up a tilted plane over a starfield, the stars rise when the crawl ends, and the Kestrel lockup appears.",
+    "name": "Star Wars Text Crawl",
+    "ownName": "Release Crawl",
+    "body": [
+      {
+        "h2": "How to make a Star Wars Text Crawl with Claude Code or Codex",
+        "body": "Put the text block on a plane tilted with rotateX(45deg) about its bottom edge, inside a container with perspective: 405px and the origin at the frame centre (960px, 540px). The plane is 1700px wide with its pivot line at y=1040px, so the vanishing point lands near y≈135px. Set the text in Inter 700 at 67px on an 84px line, justified, with a 54px kicker and a 92px title above three paragraphs, and fade the top of the layer out with a mask that is transparent above 14% of the frame height and fully visible from 40%.\n\nMove the block up the plane at a constant 210px per second with ease none, starting at 2.7s with the block top 30px past the pivot line, so about 16 lines show at once. Fade a short intro line in at 0.05s and out at 2.7s over 0.3s, and bring the 640-star canvas up from 0.16 to full opacity over 2.2–3.4s. At 9.0s the stars rise by 420px scaled by depth over 3.0s while the crawl fades 9.3–10.2s, then the mark appears at 9.4s, the wordmark at 9.5s and the tagline at 9.7s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the starfield, the crawl and the lockup. Replace the kicker, the title and the three paragraphs with your own release notes and swap the cool blue #86b8ff for your accent. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "Yellow text titled \"The Merge Awakens\" receding into a starfield.",
+    "faq": [
+      [
+        "How does a perspective text crawl work?",
+        "The text sits on a plane tilted back with CSS rotateX, inside a container with a perspective value. The plane narrows toward a vanishing point, so every line is smaller than the one below it. Moving the text up the plane at a constant speed with ease none makes the crawl steady, and a mask at the top hides lines that have become too small to read."
+      ],
+      [
+        "Does this use the Star Wars logo or the film's text?",
+        "No. This recipe recreates the style of the 1977 opening crawl, a block of text receding up a tilted plane over stars, with its own text, its own font (Inter) and its own colours. It contains no logo, no marks and no text from the film, and it does not use the classic crawl yellow."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "星战片头字幕滚动",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"星战片头字幕滚动\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "星战片头字幕滚动：示例与代码配方",
+    "description": "一块两端对齐的文字沿倾斜平面在星空上退向远处，复刻 1977 年开场字幕的样式。用 Claude Code 或 Codex 按免费配方做出这个字幕滚动。",
+    "lede": "黑场里一行冷蓝的开场句淡入淡出，接着一块带小标和标题的两端对齐文字沿倾斜平面在星空上向远处退去，字幕滚完后星星上升，出现 Kestrel 标识。",
+    "name": "星战片头字幕滚动",
+    "ownName": "发布滚动字幕",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做星战片头字幕滚动",
+        "body": "把文字块放在一个绕底边 rotateX(45deg) 倾斜的平面上，外层容器 perspective: 405px，透视原点在画面中心（960px、540px）。平面宽 1700px，枢轴线在 y=1040px，消失点落在 y≈135px。文字用 Inter 700，67px，行高 84px，两端对齐，上面是 54px 小标和 92px 标题，下面是三段正文；用蒙版把图层顶部淡掉，画面高度 14% 以上完全透明，40% 起全显。\n\n文字块沿平面以 210px/s 匀速上移，ease none，2.7s 起步时块顶在枢轴线下方 30px，画面里同时约有 16 行。开场句 0.05s 淡入，2.7s 起用 0.3s 淡出，640 颗星的画布在 2.2–3.4s 从 0.16 升到全亮。9.0s 起星空用 3.0s 按深度上升 420px，字幕 9.3–10.2s 淡出，符号 9.4s 出现，字标 9.5s，标语 9.7s。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出星空、字幕和标识。把小标、标题和三段正文换成你自己的发布说明，把冷蓝 #86b8ff 换成你的强调色。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "以 The Merge Awakens 为标题的黄色文字向星空深处远去。",
+    "faq": [
+      [
+        "透视字幕滚动是怎么做的？",
+        "文字放在一个用 CSS rotateX 向后倾倒的平面上，外层容器设置 perspective。平面向消失点收窄，每一行都比下面一行小。让文字沿平面以固定速度（ease none）上移，滚动就是匀速的，顶部加一层蒙版，把小到读不了的行淡掉。"
+      ],
+      [
+        "这个配方用了星战的标志或影片里的文字吗？",
+        "没有。这个配方只复刻 1977 年那种开场字幕的样式：一块文字沿倾斜平面在星空上退向远处。文字、字体（Inter）和颜色都是自己的，不含影片的标志、商标和影片里的任何文字，也没有使用经典字幕的黄色。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

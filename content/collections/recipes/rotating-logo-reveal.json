@@ -1,0 +1,194 @@
+{
+  "slug": "rotating-logo-reveal",
+  "category": [
+    "close"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/rotate-to-lockup.mp4",
+    "poster": "https://media.motionboard.app/rotate-to-lockup.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 7,
+    "cat": "A",
+    "star": true,
+    "video": "rotate-to-lockup",
+    "samples": [
+      {
+        "t": "Cursor 1.0",
+        "id": "s5kX-UHgMLo",
+        "at": "1:53–2:00",
+        "s": 113
+      },
+      {
+        "t": "Nothing Phone (3)",
+        "id": "MHGQRnvE9GQ",
+        "at": "0:25–0:30",
+        "s": 25
+      },
+      {
+        "t": "Linear 发布片",
+        "id": "lKwyrKUEPS4",
+        "at": "0:05–0:07",
+        "s": 5
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The last frame of the rotation is the logo, and the motion shows where the flat mark comes from in three dimensions. Rotation speed keeps dropping, so the last 0.8s is a slow approach to the target. The material uses only three gray tones with flat light, so the angle reads clearly.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. Spin 0.2–2.7s (2.5s, 75 frames): 1.62 turns, about 1.5 of them in the first second; fade-in 0.2–0.42s; still hold 2.7–5.0s (2.3s, 69 frames). Hard cut at 5.0s to the fragment-assembly shot: three slabs fly in from 5.14s, 0.8s each (24 frames), staggered 0.08s; lockup 6.55–7.45s (0.9s, 27 frames); held to 10s"
+          ],
+          [
+            "Easing",
+            "<code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out, normalized to end exactly at 1), no overshoot; rotation angle runs 1.62 turns × (1 − eased progress), and a tilt quaternion slerps to identity on the same curve; fly-in and lockup expo.out; fade-in smoothstep"
+          ],
+          [
+            "Camera",
+            "Fixed orthographic camera, object centered; the hexagon silhouette height grows 324px→432px (30%→40% of frame height) on the spin curve. In the second shot the assembled mark is 300px tall, then shrinks to 150px and steps left to make room for the wordmark"
+          ],
+          [
+            "Subject",
+            "A cube cut into three stacked slabs (gap 0.05 of the edge) flips around a tilted view-space axis (0.62, 0.74, 0.26); the end pose is isometric (rotX 35.264°, rotY −45°) with a vertex pointing at the camera so the silhouette is a hexagon matching the logo. The slabs sit staggered along the view diagonal until the final angle lines them up; bevel and face gradient fade out as the stone stops. In the fragment shot the slabs enter from the lower left, right and top, rotating 1.35–1.5 rad and scaling 1.25–1.3x→1x"
+          ],
+          [
+            "Style",
+            "Near-black background <code>#0b0b0c</code>, three flat gray tones for three faces (top <code>#ecebe7</code>, darkest <code>#5c5b58</code>, left in between), no highlights; 180° shutter motion blur by sub-frame accumulation; wordmark Inter 600, 103px, <code>#ecebe7</code>"
+          ]
+        ],
+        "prompt": "Build a logo ending called Rotate to Lockup. Near-black background (#0b0b0c) and a fixed orthographic camera. A cube cut into three stacked slabs (gap 5% of the edge) fades in at the center over 0.2–0.42 seconds and flips around a tilted axis for 1.62 turns; use expo.out (cubic-bezier(0.16,1,0.3,1)) over 2.5 seconds (0.2–2.7s), so about 1.5 turns happen in the first second and the speed drops gradually, while its hexagon silhouette grows from 30% to 40% of frame height (324px to 432px). On the last turn the stone lands in an isometric pose (rotX 35.264°, rotY −45°) with one vertex pointing at the camera, lined up exactly with your logo outline; the slabs stay staggered along the view diagonal until that final angle. Hold still for 2.3 seconds with no overshoot. Use three flat gray tones for the faces (#ecebe7 top, #5c5b58 darkest, left in between), no highlights, with bevel and gradient only while it moves, and 180° shutter motion blur. At 5.0s cut to the second shot: the three slabs fly in from outside the frame starting 5.14s, 0.8 seconds each with expo.out, staggered 0.08 seconds, rotating into place and scaling from 1.3x to 1x to form a 300px mark. At 6.55s the mark shrinks to 150px and steps left over 0.9 seconds (expo.out) while the wordmark is uncovered from behind it (clip edge riding the mark, x −36px→0). Hold to 10s. Build it with Three.js: orthographic camera, custom flat-shaded material, rotation from an angle around a view-space axis plus a slerp from a tilt quaternion.",
+        "says": [
+          "The cube spins and turns into the logo",
+          "It spins and stops at just the right angle",
+          "Fragments fly in and form a ring"
+        ],
+        "vs": [
+          [
+            "converge-logo-reveal",
+            "Rotate to Lockup turns one object to a target angle; Converge to Mark gathers many elements and compresses them into one icon."
+          ],
+          [
+            "outline-to-solid-reveal",
+            "Outline to Solid goes from line to fill; in Rotate to Lockup the material stays the same and only the orientation changes."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "旋转结束的那一帧就是 logo，过程交代平面标志的三维来源；转速逐渐降低，最后 0.8s 几乎在慢速逼近目标；材质只用三档灰、平面光，角度读得清楚。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。旋转 0.2–2.7s（2.5s，75 帧）：共 1.62 圈，前 1s 约 1.5 圈；淡入 0.2–0.42s；静止保持 2.7–5.0s（2.3s，69 帧）。5.0s 硬切到碎片拼合镜头：三块板从 5.14s 起飞入，每块 0.8s（24 帧），错开 0.08s；落标 6.55–7.45s（0.9s，27 帧）；停到 10s"
+          ],
+          [
+            "缓动",
+            "<code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out，归一化到恰好在 1 结束），无回弹；旋转角度 = 1.62 圈 ×（1 − 缓动进度），倾斜四元数在同一条曲线上 slerp 到单位姿态；飞入和落标 expo.out；淡入 smoothstep"
+          ],
+          [
+            "镜头",
+            "固定正交相机，物体居中；六边形轮廓高度按旋转曲线从 324px 放大到 432px（画面高 30%→40%）。第二个镜头里拼好的标高 300px，随后缩到 150px 并向左让位给字标"
+          ],
+          [
+            "主体",
+            "一个切成三层的立方体（层间缝 0.05 倍边长）绕倾斜的视图空间轴 (0.62, 0.74, 0.26) 翻转；终点姿态为等轴测（rotX 35.264°，rotY −45°），顶点朝向镜头，轮廓是与 logo 对齐的六边形。三块板沿视线对角方向错位，到终点角度才对齐成一体；停下时倒角和面渐变淡出。碎片镜头里三块板分别从左下、右侧、上方入画，旋转 1.35–1.5 rad，scale 1.25–1.3x→1x"
+          ],
+          [
+            "风格",
+            "近黑背景 <code>#0b0b0c</code>，三个面用三档平面灰（顶面 <code>#ecebe7</code>，最暗 <code>#5c5b58</code>，左面居中），无高光；180° 快门运动模糊（子帧累加）；字标 Inter 600、103px、<code>#ecebe7</code>"
+          ]
+        ],
+        "prompt": "用「旋转落定（Rotate to Lockup）」做 logo 收尾。近黑底（#0b0b0c），固定正交相机。画面中央 0.2–0.42 秒淡入一个切成三层的立方体（层间缝为边长的 5%），绕斜轴翻转 1.62 圈：用 expo.out（cubic-bezier(0.16,1,0.3,1)）共 2.5 秒（0.2–2.7 秒），前 1 秒完成约 1.5 圈，转速逐渐降低，六边形轮廓从画面高 30% 放大到 40%（324px 到 432px）。最后一圈落在等轴测姿态（rotX 35.264°，rotY −45°），某个顶点朝向镜头，正好对齐你的 logo 轮廓；三块板沿视线对角方向错位，直到这个终点角度才对齐。停住 2.3 秒，无回弹。三个面只用三档平面灰（顶面 #ecebe7，最暗 #5c5b58，左面居中），无高光，倒角和渐变只在运动时出现，加 180° 快门运动模糊。5.0 秒切第二个镜头：三块板从 5.14 秒起从画外飞入，每块 expo.out 0.8 秒，错开 0.08 秒，旋转归位并从 1.3 倍缩到 1 倍，拼成 300px 的标。6.55 秒标缩到 150px 并向左让位 0.9 秒（expo.out），字标从它身后被揭开（裁切边跟随标，x −36px→0）。停到 10 秒。用 Three.js 实现：正交相机，自定义平面着色材质，旋转用绕视图空间轴的角度加一个从倾斜四元数出发的 slerp。",
+        "says": [
+          "立方体转着转着变成 logo",
+          "东西转一转停在正好的角度",
+          "碎片飞过来拼成一个圆环"
+        ],
+        "vs": [
+          [
+            "converge-logo-reveal",
+            "旋转落定是同一个物体转到目标角度；收束成标是多个元素收拢压缩成一个图标"
+          ],
+          [
+            "outline-to-solid-reveal",
+            "描边显形先线后实；旋转落定整个过程材质不变，只改变朝向"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Rotating Logo Reveal",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Rotating Logo Reveal\": rotating logo reveal; animated logo reveal; animated logo reveal after effects; animated logo reveal ai",
+      "checked": "2026-11-28"
+    },
+    "title": "Rotating Logo Reveal: Example and Code Recipe",
+    "description": "A cube spins on a long ease-out and stops at the isometric angle where its silhouette forms the logo. Make this logo reveal with Claude Code or Codex.",
+    "lede": "An object spins with a long ease-out and stops at the exact angle that forms the logo silhouette or the hero view of the product.",
+    "name": "Rotating Logo Reveal",
+    "ownName": "Rotate to Lockup",
+    "body": [
+      {
+        "h2": "How to make a Rotating Logo Reveal with Claude Code or Codex",
+        "body": "Cut a cube into three stacked slabs with a gap of 0.05 of the edge and spin it around a tilted axis (0.62, 0.74, 0.26). The spin runs 2.5s (0.2–2.7s) for 1.62 turns, about 1.5 of them in the first second, on expo.out cubic-bezier(0.16,1,0.3,1) normalized to end exactly at 1, with no overshoot.\n\nThe end pose is isometric (rotX 35.264°, rotY −45°) with a vertex toward the camera, so the silhouette is a hexagon that matches the logo. A fixed orthographic camera grows it from 30% to 40% of frame height on the spin curve, and the three faces use three flat gray tones. At 5.0s a second shot flies three slabs in over 0.8s each, staggered 0.08s, and the lockup lands at 6.55–7.45s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the slabs and the camera. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A grey cube split into three stacked layers, standing alone on a black background.",
+    "faq": [
+      [
+        "What is a logo reveal?",
+        "A logo reveal is a short animation that builds up to a brand mark and holds it on screen. Common techniques include spinning, assembling pieces and drawing outlines. This recipe uses a rotation that decelerates onto the logo angle."
+      ],
+      [
+        "How long should a logo reveal be?",
+        "In this film the spin takes 2.5s and the stop is held for 2.3s, and the second shot lands the lockup in 0.9s. The last 0.8s of the rotation is a slow approach, which gives the stop a visible landing."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "旋转 Logo 揭示动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"旋转 Logo 揭示动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "旋转 Logo 揭示动画：示例与代码配方",
+    "description": "立方体用长缓出旋转，停在轮廓正好是 logo 的等轴角度。用 Claude Code 或 Codex 按免费配方做出这个旋转 Logo 揭示动画。",
+    "lede": "物体在缓出旋转中停下，停止那一帧的角度正好是 logo 轮廓或产品的主视角。",
+    "name": "旋转 Logo 揭示动画",
+    "ownName": "旋转落定",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做旋转 Logo 揭示动画",
+        "body": "把立方体切成三层叠放的板块，间隙为边长的 0.05，绕倾斜轴（0.62, 0.74, 0.26）旋转。旋转在 0.2–2.7s 用 2.5s 转 1.62 圈，第一秒转掉约 1.5 圈，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)），归一化到正好在 1 结束，无过冲。\n\n终点姿态是等轴视角（rotX 35.264°，rotY −45°），一个顶点朝向相机，轮廓是与 logo 吻合的六边形。固定的正交相机让轮廓高度沿旋转曲线从画面高度的 30% 增长到 40%，三个面用三种平涂灰色。5.0s 切到第二个镜头，三块板各用 0.8s 飞入，错开 0.08s，6.55–7.45s 定格成 lockup。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会搭好板块和相机。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "黑底上一个分成三层的灰色立方体。",
+    "faq": [
+      [
+        "什么是 logo 揭示动画？",
+        "logo 揭示动画是一段短动画，逐步构成品牌标志并定格在画面上。常见做法有旋转、碎片拼合、描边绘制。这份配方用逐渐减速的旋转停在 logo 的角度上。"
+      ],
+      [
+        "logo 揭示应该多长？",
+        "这支片子里旋转用 2.5s，停下后保持 2.3s，第二个镜头里 lockup 在 0.9s 内落定。旋转的最后 0.8s 是缓慢逼近，让停下的一刻有明确的落点。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

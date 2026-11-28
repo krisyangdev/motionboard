@@ -1,0 +1,202 @@
+{
+  "slug": "text-object-interleave",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/text-object-interleave.mp4",
+    "poster": "https://media.motionboard.app/text-object-interleave.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 5,
+    "cat": "A",
+    "star": false,
+    "video": "text-object-interleave",
+    "samples": [
+      {
+        "t": "Apple iPhone 17 Pro",
+        "id": "TNhX1uR2vO8",
+        "at": "0:00–0:04",
+        "s": 0
+      },
+      {
+        "t": "Apple iPhone 17 Pro",
+        "id": "TNhX1uR2vO8",
+        "at": "0:35–0:42",
+        "s": 35
+      },
+      {
+        "t": "Apple AirPods Pro 3",
+        "id": "EMmKs8vMKhU",
+        "at": "0:28–0:31",
+        "s": 28
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The text sits one layer behind the product, and the product covers about 1/3 of the wordmark, which creates a front layer and a back layer. The sentence breaks in the middle and the device becomes part of it, so the eye travels from the left word through the screen to the right word. Translation is shown through occlusion: the word goes in as black source text and comes out as gradient-colored translation, with no arrows.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s with hard cuts at 3.2s and 7.8s. Wordmark-rise scene 0–3.2s: product lights 0–1.15s, sinks while the wordmark rises 0.9–2.7s (1.8s, 54 frames). Pass-through scene 3.2–7.8s: source text slides in 1.0s (30 frames; 3.75–4.75s and 5.85–6.85s), translation emerges 0.4s (12 frames; 4.75–5.15s and 6.85–7.25s). Slot-in scene 7.8–11.0s: device drops in 8.55–9.05s (0.5s, 15 frames), light ring glows 9.05–9.65s (0.6s, 18 frames)"
+          ],
+          [
+            "Easing",
+            "Wordmark rise, device drop, translation emerging and lockup <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); source text slide <code>linear</code>; product lighting power2.inOut; word lighting and ring glow power2.out and power2.inOut"
+          ],
+          [
+            "Camera",
+            "Fixed perspective camera, 20° fov, distance 34 units, medium close-up. When the wordmark rises, the case sinks from top 350px to 515px (165px, about 15% of frame height) while the wordmark rises 255px; slow drift: case scale +2.5% in the first scene, earbud scale +2% in the second"
+          ],
+          [
+            "Subject",
+            "Layer order: text at the back, 3D product in the middle, text in front. In the pass-through scene the translation is clipped to start at the earbud tip (x 1060px) and the source text is hidden past x 820px; in the slot-in scene the sentence splits into two groups with a 400px gap, one earbud wide, and the left words light first (8.05s), the right words second (8.3s)"
+          ],
+          [
+            "Sync",
+            "The light ring turns on after both word groups have lit and the device has dropped in (9.05s); the translation emerges at the earbud's sound outlet (tip at 1060px, 580px) and its language label follows 0.12s later"
+          ],
+          [
+            "Style",
+            "Black background in the first and last scene, light gray <code>#f5f5f7</code> in the middle one; wordmark vertical gradient <code>#ff5a0a</code> → <code>#ff7a26</code> → <code>#ffb27a</code> → <code>#ffd2ad</code> (Archivo Black 340px), translation gradient <code>#4b2dff</code> → <code>#9b33ff</code> → <code>#ff2f8a</code> (<code>background-clip: text</code>), sentence words <code>#5e5e63</code> lighting to <code>#f5f5f7</code>"
+          ]
+        ],
+        "prompt": "Build a front-and-back interleave of text and product called Text–Object Interleave as an 11-second film with three scenes and hard cuts at 3.2s and 7.8s. Use three layers: text at the back, your 3D product in the middle (fixed perspective camera, 20° fov, distance 34 units), text in front. Scene 1 (black stage): the case lights up (rim 0–0.45s, key 0.25–1.15s), then from 0.9 to 2.7s it sinks 165px (about 15% of frame height) with expo.out (cubic-bezier(0.16,1,0.3,1)) while a large wordmark with a vertical orange gradient (#ff5a0a to #ffd2ad) rises 255px from behind its top edge and is clipped at the bottom. Scene 2 (light gray #f5f5f7): an earbud close-up with its sound outlet fixed on screen; source text slides at constant speed (linear) for 1.0s into the earbud and is hidden, then 0.4s later the translation emerges from the outlet with expo.out in a purple-pink gradient (#4b2dff to #ff2f8a, background-clip: text); run two passes (3.75–5.15s and 5.85–7.25s). Scene 3 (black): a sentence split into two word groups with a 400px gap one earbud wide; the left words light first (8.05s), the right words 0.25s later; the earbud drops into the gap from above over 0.5s with expo.out (8.55–9.05s), then its light ring glows over 0.6s (9.05–9.65s) and the wordmark settles in with expo.out. Use layered HTML + GSAP over a Three.js canvas.",
+        "says": [
+          "The text rises up from behind the product",
+          "A phone slides down between two pieces of text",
+          "The text passes through the earbuds and comes out in another language"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "Word-by-Word Highlight controls reading pace on plain text; Text–Object Interleave puts text and object into an occlusion relationship."
+          ],
+          [
+            "dispense-line-up",
+            "Dispense Line-up has objects slide out of the main subject in turn, synced word by word with the caption; Text–Object Interleave emphasizes the front-and-back layering of text and object."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "文字放在产品后面一层，产品压住字标约 1/3，形成前后两层空间；句子在中间断开，设备成为句子的一部分，视线从左词经屏幕到右词；翻译用遮挡关系表达，词进去是黑色原文，出来是渐变色译文，画面里没有箭头。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s，3.2s 和 7.8s 硬切。字标升起场景 0–3.2s：产品 0–1.15s 亮起，0.9–2.7s 字标升起（1.8s，54 帧）。穿过场景 3.2–7.8s：原文滑入 1.0s（30 帧；3.75–4.75s 和 5.85–6.85s），译文冒出 0.4s（12 帧；4.75–5.15s 和 6.85–7.25s）。夹入场景 7.8–11.0s：设备 8.55–9.05s 落入（0.5s，15 帧），光环 9.05–9.65s 亮起（0.6s，18 帧）"
+          ],
+          [
+            "缓动",
+            "字标升起、设备落入、译文冒出和收尾字标 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；原文滑入 <code>linear</code>；产品打光 power2.inOut；词亮起 power2.out，光环亮起 power2.inOut"
+          ],
+          [
+            "镜头",
+            "固定透视相机，fov 20°，距离 34 单位，中近景。字标升起时机壳顶边从 350px 下沉到 515px（165px，约 15% 画面高），字标同时上升 255px；缓慢漂移：第一场景机壳 scale +2.5%，第二场景耳机 scale +2%"
+          ],
+          [
+            "主体",
+            "分层顺序：背层文字，中层 3D 产品，前层文字。穿过场景里译文被裁切成从耳机出声口（x 1060px）开始，原文越过 x 820px 即被遮住；夹入场景里句子分左右两组词，中间留 400px（一台耳机宽度）的缺口，左词先亮（8.05s），右词后亮（8.3s）"
+          ],
+          [
+            "同步",
+            "光环在两组词都亮起、设备落入之后（9.05s）才点亮；译文从耳机出声口（出口位置 1060px、580px）冒出，语种标签晚 0.12s 出现"
+          ],
+          [
+            "风格",
+            "第一和最后一个场景纯黑背景，中间场景浅灰 <code>#f5f5f7</code>；字标竖向渐变 <code>#ff5a0a</code> → <code>#ff7a26</code> → <code>#ffb27a</code> → <code>#ffd2ad</code>（Archivo Black 340px），译文渐变 <code>#4b2dff</code> → <code>#9b33ff</code> → <code>#ff2f8a</code>（<code>background-clip: text</code>），句子词 <code>#5e5e63</code> 亮起到 <code>#f5f5f7</code>"
+          ]
+        ],
+        "prompt": "用「字物穿插（Text–Object Interleave）」做文字和产品的前后穿插，整段 11 秒，三个场景，3.2 秒和 7.8 秒硬切。分三层：最下层文字，中层你的 3D 产品（固定透视相机，fov 20°，距离 34 单位），最上层文字。场景一（黑场）：机壳先亮起（轮廓光 0–0.45s，主光 0.25–1.15s），0.9 到 2.7 秒用 expo.out（cubic-bezier(0.16,1,0.3,1)）下沉 165px（约 15% 画面高），同时竖向橙色渐变（#ff5a0a 到 #ffd2ad）的大字标从机壳顶边背后上升 255px，底部被裁切。场景二（浅灰 #f5f5f7）：耳机特写，出声口固定在画面上；原文匀速（linear）滑进耳机 1.0 秒后被遮住，随后 0.4 秒内译文用 expo.out 从出声口冒出，紫粉渐变（#4b2dff 到 #ff2f8a，background-clip: text）；做两轮（3.75–5.15 秒和 5.85–7.25 秒）。场景三（黑场）：句子分成左右两组词，中间留 400px（一台耳机宽度）的缺口；左词先亮（8.05 秒），右词晚 0.25 秒；耳机从上方用 expo.out 落入缺口 0.5 秒（8.55–9.05 秒），随后光环亮起 0.6 秒（9.05–9.65 秒），字标用 expo.out 落定。用 HTML 分层 + GSAP，叠在 Three.js 画布上。",
+        "says": [
+          "文字在产品后面升起来",
+          "手机从上面滑进两段文字中间",
+          "文字从耳机里穿过去变成另一种语言"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "逐词点亮在纯文字上控制阅读节奏；字物穿插让文字与实物发生遮挡关系"
+          ],
+          [
+            "dispense-line-up",
+            "吐出排列是实物从主体里依次排出并与文案逐词同步；字物穿插强调字与物的前后层次"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Text–Object Interleave",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Text–Object Interleave\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Text–Object Interleave: Example and Code Recipe",
+    "description": "Type rises from behind a product, an earbud slots into a sentence and a word passes through it as a translation. Make it with Claude Code or Codex.",
+    "lede": "Text and object interleave in depth: type rises from behind the product, a device slots into a gap in a sentence, or a word passes through an object and comes out as another word.",
+    "name": "Text–Object Interleave",
+    "ownName": "Text–Object Interleave",
+    "body": [
+      {
+        "h2": "How to make a Text–Object Interleave with Claude Code or Codex",
+        "body": "Order the layers back to front: text, 3D product, text. In the first scene (0–3.2s) the product sinks 165px while the wordmark rises 255px over 1.8s with expo.out, cubic-bezier(0.16,1,0.3,1), so the product covers about a third of the wordmark. Use a fixed 20° fov camera at 34 units.\n\nIn the pass-through scene (3.2–7.8s) the source text slides in linearly over 1.0s and is hidden past x 820px, while the translation is clipped to start at the earbud tip (x 1060px) and emerges in 0.4s. In the slot-in scene (7.8–11.0s) the sentence splits with a 400px gap, one earbud wide, the device drops in over 0.5s and a light ring glows 0.6s later.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the three scenes with the 3D product between two text layers. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A white earbud passing in front of the pink word こんにちは under the heading Live Translation.",
+    "faq": [
+      [
+        "What is a text behind object effect?",
+        "It places type on a layer behind the main subject so the subject partly covers the letters, which gives a flat title a front and a back. This film also lets a word pass through an object and slots a device into a sentence."
+      ],
+      [
+        "How does the film show a translation without arrows?",
+        "The object marks the change. The word enters the earbud as black source text and leaves it as gradient-colored translation clipped at the earbud tip, and a language label follows 0.12s later."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "文字穿插实物",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"文字穿插实物效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "文字穿插实物：示例与代码配方",
+    "description": "文字从产品后面升起，耳机插进句子中间，文字穿过耳机变成译文。用 Claude Code 或 Codex 按免费配方做出这个文字穿插实物效果。",
+    "lede": "文字和实物在深度上互相穿插：文字出现在产品后面，设备插入句子中间，或文字穿过实物变成另一种文字。",
+    "name": "文字穿插实物效果",
+    "ownName": "字物穿插",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做文字穿插实物效果",
+        "body": "图层从后到前依次是：文字、3D 产品、文字。第一幕（0–3.2s）里产品下沉 165px，字标用 1.8s 上升 255px，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)），产品遮住字标约三分之一。相机固定，视场角 20°，距离 34 个单位。\n\n穿过场景（3.2–7.8s）中，原文用 1.0s 线性滑入，越过 x 820px 的部分被隐藏；译文从耳机尖端（x 1060px）起裁切，用 0.4s 出现。插入场景（7.8–11.0s）里，句子从中间拉开 400px，宽度正好是一只耳机，设备用 0.5s 落入，之后光环亮起 0.6s。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出这三个场景，让 3D 产品夹在两层文字之间。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "白色耳机从粉色的“こんにちは”前面经过，上方标题是实时翻译。",
+    "faq": [
+      [
+        "什么是文字在物体后面的效果？",
+        "把文字放在主体后面的图层，主体盖住一部分字，平面标题就有了前后层次。这支片子还让文字穿过实物，并让设备插进句子中间。"
+      ],
+      [
+        "片子怎么表现翻译，又没有箭头？",
+        "靠实物本身标记变化。文字以黑色原文进入耳机，从耳机尖端以渐变色译文出来，语言标签晚 0.12s 跟上。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

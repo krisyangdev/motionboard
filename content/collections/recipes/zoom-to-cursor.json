@@ -1,0 +1,202 @@
+{
+  "slug": "zoom-to-cursor",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/zoom-to-cursor.mp4",
+    "poster": "https://media.motionboard.app/zoom-to-cursor.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 11,
+    "cat": "B",
+    "star": true,
+    "video": "zoom-to-cursor",
+    "samples": [
+      {
+        "t": "Vercel v0",
+        "id": "By9wCB9IZp0",
+        "at": "0:13–0:27",
+        "s": 13
+      },
+      {
+        "t": "Notion Calendar",
+        "id": "C4Q2ezioTUM",
+        "at": "0:39–0:40",
+        "s": 39
+      },
+      {
+        "t": "Figma Slides",
+        "id": "p-B--SGq_ZQ",
+        "at": "1:00–1:02",
+        "s": 60
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Each push-in serves exactly one action and pulls back as soon as the action is done, so viewers always know where they are on the full page. The ease is fast at first and slow at the end, so the camera lands crisply.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s with two push–act–pull sequences. Push-in 0.6s (18 frames) at 1.1s and 5.0s; hold 2.35s and 2.75s; pull-back 0.7s (21 frames) at 4.05s and 8.35s. Cursor moves 0.5s (1.8–2.3s and 5.7–6.2s), drag 0.6s (2.55–3.15s), click 6.25s, typing 6.45–7.45s, Enter 7.65s; window leaves and the wordmark comes in 9.25–10.5s"
+          ],
+          [
+            "Easing",
+            "Push and pull <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); cursor moves power2.inOut; press 0.08s power2.out, release 0.22s back.out; motion-blur filter ramps up with power1.out and fades with power1.in"
+          ],
+          [
+            "Camera",
+            "Put the whole window in one container, <code>scale</code> 2x on both pushes, with the target element translated to frame center (960, 540) and <code>transform-origin</code> at the container's top-left corner; blur 3px on each push and 2px on each pull (0.12s up, 0.3s down); a slow whole-scene drift <code>scale</code> 1.00→1.035 over 9.2s"
+          ],
+          [
+            "Subject",
+            "The camera arrives first, and the cursor starts moving 0.1s after the push completes. Action one: drag a calendar card to the next day (grab 2.4s, drop 3.2s). Action two: click an empty slot (6.25s, ripple), a draft card opens, a title is typed, Enter at 7.65s"
+          ],
+          [
+            "Sync",
+            "The drop at 3.2s changes the card, side panel, menu-bar text, activity log and toast on the same frame; Enter at 7.65s swaps the panel and shows the toast on the same frame; each pull-back starts 0.7–0.85s after the action while the toast is still showing; every push is 0.6s and every pull 0.7s on the same easing"
+          ],
+          [
+            "Style",
+            "macOS desktop with a calendar window rebuilt in DOM so text stays sharp at 2x; violet selection ring <code>rgba(139,92,246,1)</code>, mark <code>#3b5bfd</code>; the motion blur is a CSS <code>blur</code> on the camera layer; closing lockup with a 3% push over 1.5s"
+          ]
+        ],
+        "prompt": "Show two actions in your interface with a shot called Auto Zoom / Zoom-to-Cursor, 11 seconds long. Put the whole window in a container and rebuild the UI in DOM so it stays sharp when magnified. Push the camera to the first target over 0.6s with cubic-bezier(0.16,1,0.3,1), scale 2x, translating the target to frame center with transform-origin at the container's top-left, and add a slight CSS blur (3px) that ramps up in 0.12s and fades over 0.3s. Only after the push completes (0.1s later) does the cursor move: grab a calendar card at 2.4s and drag it to the next day over 0.6s; on the drop frame (3.2s) the card, side panel, menu-bar text and a toast all change together. Hold, then pull back to the full view over 0.7s with the same easing (blur 2px). Repeat for the second action: push at 5.0s, click an empty slot at 6.25s with a ripple, a draft card opens, type a title from 6.45s, press Enter at 7.65s so the panel swaps and a toast shows on the same frame, and pull back at 8.35s. Keep a slow 3.5% drift on the whole scene (scale 1.00→1.035 over 9.2s). At 9.25s fade the window out and bring in the wordmark lockup over 0.6s (expo.out).",
+        "says": [
+          "The camera zooms in on the button that matters",
+          "After the click it zooms back out to the full page",
+          "Like the auto-zoom in screen recording software"
+        ],
+        "vs": [
+          [
+            "3d-tilted-ui-depth-of-field",
+            "Tilted UI with Depth of Field stays close and pans sideways, shooting a flat UI like a physical object through tilt and blur; Auto Zoom uses scale to go back and forth between the full view and a detail."
+          ],
+          [
+            "focus-hop",
+            "Focus Hop moves a highlight between cells while the camera barely moves; in Auto Zoom the camera is what moves."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "每次推近只服务一个操作，操作完成立刻拉回，观众始终知道当前位置在整页哪里；前快后慢的缓动让镜头落位干脆。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s，两段推近–操作–拉回。推近 0.6s（18 帧），分别在 1.1s 和 5.0s；停留 2.35s 和 2.75s；拉回 0.7s（21 帧），分别在 4.05s 和 8.35s。光标移动 0.5s（1.8–2.3s 和 5.7–6.2s），拖拽 0.6s（2.55–3.15s），点击 6.25s，打字 6.45–7.45s，回车 7.65s；窗口淡出、字标在 9.25–10.5s 进入"
+          ],
+          [
+            "缓动",
+            "推拉 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；光标移动 power2.inOut；按下 0.08s power2.out，释放 0.22s back.out；运动模糊滤镜升起用 power1.out，淡出用 power1.in"
+          ],
+          [
+            "镜头",
+            "整个窗口放进一个容器，两次推近都是 <code>scale</code> 2x，把目标元素平移到画面中心 (960, 540)，<code>transform-origin</code> 设在容器左上角；每次推近 blur 3px，每次拉回 blur 2px（0.12s 升起，0.3s 淡出）；整场景缓慢漂移 <code>scale</code> 1.00→1.035，共 9.2s"
+          ],
+          [
+            "主体",
+            "镜头先到位，光标在推近完成后 0.1s 才开始移动。操作一：把日历卡片拖到下一天（抓取 2.4s，放下 3.2s）。操作二：点击空白时段（6.25s，带涟漪），弹出草稿卡片，打出标题，7.65s 回车"
+          ],
+          [
+            "同步",
+            "3.2s 放下时，卡片、侧栏面板、菜单栏文字、活动记录和 toast 在同一帧变化；7.65s 回车时面板切换并显示 toast，同在一帧；每次拉回在操作后 0.7–0.85s 开始，toast 仍在显示；每次推近都是 0.6s、每次拉回都是 0.7s，缓动相同"
+          ],
+          [
+            "风格",
+            "macOS 桌面加日历窗口，用 DOM 重建，放大 2x 后文字保持清晰；紫色选中描边 <code>rgba(139,92,246,1)</code>，标 <code>#3b5bfd</code>；运动模糊是相机层上的 CSS <code>blur</code>；收尾 lockup 用 1.5s 推近 3%"
+          ]
+        ],
+        "prompt": "用「推近操作再拉回（Auto Zoom / Zoom-to-Cursor）」展示你的界面两次操作，整段 11 秒。整个窗口放在容器里，界面用 DOM 重建，放大后保持清晰。镜头用 0.6s、cubic-bezier(0.16,1,0.3,1) 推到第一个目标，scale 2x，把目标平移到画面中心，transform-origin 设在容器左上角，推近时加轻微 CSS 模糊（3px），0.12s 升起、0.3s 淡出。推近完成后（晚 0.1s）光标才开始移动：2.4s 抓住一张日历卡片，用 0.6s 拖到下一天；放下那一帧（3.2s），卡片、侧栏面板、菜单栏文字和 toast 同时变化。停留后用同一条缓动 0.7s 拉回全景（模糊 2px）。第二次操作同样处理：5.0s 推近，6.25s 点击空白时段并带涟漪，弹出草稿卡片，6.45s 起打出标题，7.65s 回车，面板切换与 toast 在同一帧出现，8.35s 拉回。整个场景保持 3.5% 的缓慢漂移（9.2s 内 scale 1.00→1.035）。9.25s 窗口淡出，字标 lockup 用 0.6s（expo.out）进入。",
+        "says": [
+          "镜头自动凑近要点的按钮",
+          "点完又拉回整个页面",
+          "录屏软件的自动放大"
+        ],
+        "vs": [
+          [
+            "3d-tilted-ui-depth-of-field",
+            "斜拍景深界面保持贴近并横移，靠倾斜和虚化当实物拍；本条用缩放在全景与局部之间往返"
+          ],
+          [
+            "focus-hop",
+            "焦点跳格是高亮在多个格子间移动，镜头基本不动；本条移动的是镜头"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Zoom-to-Cursor Effect",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Zoom-to-Cursor Effect\": after effects zoom to cursor",
+      "checked": "2026-11-28"
+    },
+    "title": "Zoom-to-Cursor Effect: Example and Code Recipe",
+    "description": "The camera pushes into a UI element in 0.6s, holds for one click or drag, then pulls back. Make this zoom-to-cursor effect with Claude Code or Codex.",
+    "lede": "The camera pushes to the target element in 0.4–0.8s, holds for one click or input, then pulls back to the full view.",
+    "name": "Zoom-to-Cursor Effect",
+    "ownName": "Auto Zoom / Zoom-to-Cursor",
+    "body": [
+      {
+        "h2": "How to make a Zoom-to-Cursor Effect with Claude Code or Codex",
+        "body": "Put the whole calendar window in one container and scale it 2× on each push, translating the target element to the frame center (960, 540) with transform-origin at the container top-left. Push in over 0.6s with expo.out, cubic-bezier(0.16,1,0.3,1), hold 2.35–2.75s, then pull back in 0.7s on the same easing.\n\nThe camera arrives first and the cursor starts moving 0.1s after the push completes. Add a CSS blur of 3px on each push and 2px on each pull (0.12s up, 0.3s down) as motion blur. Each pull-back starts 0.7–0.85s after the action, while the toast is still showing. The two actions are dragging a card to the next day and clicking an empty slot to type a title.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent rebuilds the window in DOM so text stays sharp at 2×. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A weekly calendar app full of coloured events, with the cursor on a design review meeting.",
+    "faq": [
+      [
+        "What is zoom-to-cursor?",
+        "Zoom-to-cursor is an effect in which the view zooms toward the pointer or the element being used, holds while the action happens, then returns to the full view. It keeps small UI actions legible in a recording."
+      ],
+      [
+        "How long should each zoom be?",
+        "This recipe uses 0.6s for each push-in and 0.7s for each pull-back on the same expo.out ease, with one action per zoom. Short moves keep the viewer oriented in the full page."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "光标自动放大效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"光标自动放大效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "光标自动放大效果：示例与代码配方",
+    "description": "镜头用 0.6s 快推到要操作的元素，完成一次点击或拖动后拉回。用 Claude Code 或 Codex 按免费配方做出这个光标自动放大效果。",
+    "lede": "镜头 0.4–0.8s 快推到要操作的元素，完成一次点击或输入后拉回全景。",
+    "name": "光标自动放大效果",
+    "ownName": "推近操作再拉回",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做光标自动放大效果",
+        "body": "把整个日历窗口放进同一个容器，每次推近缩放 2 倍，把目标元素平移到画面中心（960, 540），transform-origin 设在容器左上角。推近用 0.6s，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)），停留 2.35–2.75s，再用同一条缓动在 0.7s 内拉回。\n\n镜头先到位，推近完成 0.1s 后光标才开始移动。每次推近加 3px 的 CSS 模糊，每次拉回加 2px（0.12s 升起、0.3s 回落），作为运动模糊。每次拉回在操作完成 0.7–0.85s 后开始，此时提示条仍在显示。两个操作分别是把卡片拖到第二天，以及点击空时段并输入标题。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用 DOM 重建窗口，保证 2 倍放大后文字仍然清晰。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "排满彩色日程的周历应用，鼠标停在一场设计评审会议上。",
+    "faq": [
+      [
+        "什么是光标自动放大？",
+        "光标自动放大指画面自动推近到指针或正在操作的元素，操作期间保持，结束后回到全景。它让录屏里的小操作看得清。"
+      ],
+      [
+        "每次放大应该多长？",
+        "这份配方每次推近 0.6s、每次拉回 0.7s，缓动同为 expo.out，每次放大只服务一个操作。动作短，观众能一直知道自己在整页的哪个位置。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

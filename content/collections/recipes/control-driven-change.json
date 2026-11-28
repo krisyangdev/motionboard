@@ -1,0 +1,202 @@
+{
+  "slug": "control-driven-change",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/control-driven.mp4",
+    "poster": "https://media.motionboard.app/control-driven.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 16,
+    "cat": "B",
+    "star": true,
+    "video": "control-driven",
+    "samples": [
+      {
+        "t": "Arc Boosts",
+        "id": "N0jMmiCS8oQ",
+        "at": "0:07–0:12",
+        "s": 7
+      },
+      {
+        "t": "Figma Slides",
+        "id": "p-B--SGq_ZQ",
+        "at": "0:28–0:35",
+        "s": 28
+      },
+      {
+        "t": "Arc Boosts",
+        "id": "N0jMmiCS8oQ",
+        "at": "0:26–0:28",
+        "s": 26
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Control state and page result are strictly on the same frame, so cause and effect need no narration. In split-screen the left is a dark control and the right is light content, so control and content are separated by brightness.",
+        "spec": [
+          [
+            "Timing",
+            "Close-up 0–0.85s, pull-out 0.85–1.75s (0.9s); color-dot drags 1.9–2.3s (0.4s, 12 frames), 3.3–3.7s (0.4s) and 6.9–7.4s (0.5s, 15 frames); dark-mode knob slides 5.0–5.17s (5 frames), theme flips at 5.17s; Brand popover reopens 6.1s (0.2s); window leaves 8.6s (0.7s), wordmark 9.1s; film 11s"
+          ],
+          [
+            "Easing",
+            "Drags <code>cubic-bezier(0.65,0,0.35,1)</code> (power3.inOut), with dot and cursor sampled per frame from the same curve; free cursor moves <code>expo.out</code> in x and <code>power2.out</code> in y; press <code>scale 0.86</code> over 0.06s, release <code>back.out(2)</code> 0.18s; dot grab <code>scale 1.18</code>; page changes are hard sets on the landing frame"
+          ],
+          [
+            "Camera",
+            "Opens as a 2.6x close-up on the inspector and popover (slow push to 2.66x), pulls out over 0.9s with <code>expo.out</code> to the whole window at 1.3x, then pushes slowly 1.3→1.36x <code>linear</code> until 8.6s"
+          ],
+          [
+            "Subject",
+            "A website editor: the cursor drags a dot across a 200×132px color field in the Brand popover, from indigo <code>#6366f1</code> to emerald <code>#10b981</code>, orange <code>#f97316</code>, and violet <code>#8b5cf6</code>; the cursor drifts 5–6px off the dot's path mid-drag; a Dark mode switch flips the whole page theme at 5.17s"
+          ],
+          [
+            "Sync",
+            "On the frame the dot lands, <code>--brand</code>, <code>--brand-t</code> and <code>--soft</code> are set on the root, so the hex field and the entire page change color together with no transition; the theme variables swap on the frame the knob arrives; one timeline drives control and page"
+          ],
+          [
+            "Style",
+            "Shadcn-style editor window, light (<code>#ffffff</code> with <code>#09090b</code> text) switching to dark (<code>#09090b</code> with <code>#fafafa</code> text); the page takes the dot's color as its accent"
+          ]
+        ],
+        "prompt": "Show your feature with a shot called Control-Driven Change. Open on a 2.6x close-up of an inspector with a Brand color popover (a 200×132px color field holding one draggable dot), then pull out over 0.9s with expo.out to the whole editor window at 1.3x, and keep pushing slowly to 1.36x. The cursor grabs the dot (scale 1.18) and drags it through indigo, emerald, orange and violet in drags of 0.4 to 0.5s with power3.inOut; dot and cursor follow one sampled curve and the cursor drifts 5 to 6px off the path mid-drag. On the frame the dot lands, hard-set the CSS variables --brand, --brand-t and --soft on the root, so the hex field and the whole page change color together with no transition. Between drags the cursor clicks a Dark mode switch: the knob slides over 5 frames and the whole page swaps to the dark theme on the arrival frame. At 8.6s the window shrinks away over 0.7s and your wordmark lands.",
+        "says": [
+          "Drag a color wheel and the whole website changes color",
+          "Flip a switch and the page changes right away",
+          "Adjust on the left and the page changes at the same time"
+        ],
+        "vs": [
+          [
+            "locked-layout-reskin",
+            "Locked-Layout Reskin is driven by hard cuts in the edit, with no control in the frame; Control-Driven Change shows the control, and cause and effect are expressed by a same-frame change."
+          ],
+          [
+            "focus-hop",
+            "Focus Hop moves a highlight block down a list; Control-Driven Change changes the state of the whole page through a control value."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "控件状态和页面结果严格同帧，因果关系不需要旁白；分屏时左边是深色控件、右边是浅色内容，控制和内容在明暗上分区。",
+        "spec": [
+          [
+            "时长",
+            "特写 0–0.85s，拉出 0.85–1.75s（0.9s）；色点三次拖动 1.9–2.3s（0.4s，12 帧）、3.3–3.7s（0.4s）、6.9–7.4s（0.5s，15 帧）；深色模式开关滑动 5.0–5.17s（5 帧），主题在 5.17s 切换；品牌色弹层 6.1s 再次打开（0.2s）；窗口 8.6s 退场（0.7s），字标 9.1s；全片 11s"
+          ],
+          [
+            "缓动",
+            "拖动 <code>cubic-bezier(0.65,0,0.35,1)</code>（power3.inOut），色点和光标逐帧取样同一条曲线；自由移动的光标 x 用 <code>expo.out</code>、y 用 <code>power2.out</code>；按下 <code>scale 0.86</code> 历时 0.06s，松开 <code>back.out(2)</code> 0.18s；抓取色点 <code>scale 1.18</code>；页面变化在落点帧硬设置"
+          ],
+          [
+            "镜头",
+            "开场是检查器和弹层的 2.6x 特写（缓推到 2.66x），用 <code>expo.out</code> 在 0.9s 内拉出到整个窗口 1.3x，然后 <code>linear</code> 缓推 1.3→1.36x，持续到 8.6s"
+          ],
+          [
+            "主体",
+            "一个网站编辑器：光标在品牌色弹层的 200×132px 色域里拖动色点，依次从靛蓝 <code>#6366f1</code> 到翠绿 <code>#10b981</code>、橙 <code>#f97316</code>、紫罗兰 <code>#8b5cf6</code>；拖动中光标比色点路径偏出 5–6px；深色模式开关在 5.17s 让整页切换主题"
+          ],
+          [
+            "同步",
+            "色点落定的那一帧，根节点设置 <code>--brand</code>、<code>--brand-t</code>、<code>--soft</code>，十六进制输入框和整个页面一起换色，页面无过渡；旋钮到位那一帧主题变量整体替换；同一条时间轴驱动控件和页面"
+          ],
+          [
+            "风格",
+            "shadcn 风格的编辑器窗口，浅色（<code>#ffffff</code> 底、<code>#09090b</code> 文字）切换到深色（<code>#09090b</code> 底、<code>#fafafa</code> 文字）；页面强调色取色点颜色"
+          ]
+        ],
+        "prompt": "用「控件驱动（Control-Driven Change）」展示你的功能：开场是检查器里品牌色弹层的 2.6x 特写（200×132px 的色域里有一个可拖动的色点），随后用 0.9s、expo.out 拉出到整个编辑器窗口 1.3x，并继续缓推到 1.36x。光标抓住色点（scale 1.18），用 0.4 到 0.5s、power3.inOut 依次拖过靛蓝、翠绿、橙和紫罗兰；色点和光标逐帧取样同一条曲线，拖动中光标比路径偏出 5 到 6px。色点落定的那一帧，在根节点硬设置 CSS 变量 --brand、--brand-t、--soft，十六进制输入框和整个页面一起换色，页面无过渡。两次拖动之间光标点击深色模式开关：旋钮用 5 帧滑过去，旋钮到位那一帧整页换成深色主题。8.6s 窗口用 0.7s 缩小退场，落上你的字标。",
+        "says": [
+          "拖一下色盘整个网页就变色",
+          "开关一拨页面立刻变样",
+          "左边调节右边同时变化"
+        ],
+        "vs": [
+          [
+            "locked-layout-reskin",
+            "同版换肤快切由剪辑硬切驱动，画面里没有控件；本条画面里有控件，因果由同帧变化表达"
+          ],
+          [
+            "focus-hop",
+            "焦点跳格是高亮块在列表上移动；本条是控件值改变整页状态"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Control-Driven Change",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Control-Driven Change\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Control-Driven Change: Example and Code Recipe",
+    "description": "Dragging a color dot or flipping a dark-mode switch changes the whole page on the same frame. Make this control-driven animation with Claude Code or Codex.",
+    "lede": "The frame a control (color picker, toggle, dial) lands, the page result changes on that same frame. It can be split-screen with the control on the left and the result on the right.",
+    "name": "Control-Driven Change",
+    "ownName": "Control-Driven Change",
+    "body": [
+      {
+        "h2": "How to make a Control-Driven Change with Claude Code or Codex",
+        "body": "Open with a 2.6× close-up on the inspector and Brand popover, then pull out over 0.9s on expo.out to the whole window at 1.3×. Drag a dot across a 200×132px color field, 0.4s per drag on power3.inOut, from indigo #6366f1 to emerald #10b981, orange #f97316 and violet #8b5cf6. The cursor drifts 5–6px off the dot path mid-drag.\n\nOn the frame the dot lands, set --brand, --brand-t and --soft on the root so the hex field and the entire page change color together with no transition. The dark-mode knob slides 5.0–5.17s and the theme variables swap on its arrival frame. One timeline drives both the control and the page, and page changes are hard sets.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the editor window with its popover and the theme variables. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A theme editor's colour picker setting an orange brand colour while the website preview beside it updates.",
+    "faq": [
+      [
+        "What does control-driven change mean?",
+        "A control such as a color picker, toggle or dial changes a page result on the exact frame the control reaches its value. Viewers see cause and effect without narration."
+      ],
+      [
+        "How do I keep the control and the result in sync?",
+        "Drive both from one timeline. Here the page reads CSS variables on the root, and the timeline sets them on the frame the control lands, so no transition delays the result."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "控件联动动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"控件联动动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "控件联动动画：示例与代码配方",
+    "description": "拖一下取色点或拨一下深色模式开关，整页在同一帧跟着变化。用 Claude Code 或 Codex 按免费配方做出这个控件联动动画。",
+    "lede": "控件（取色器、开关、调节盘）一到位，页面结果同帧变化，可分屏左控件右结果。",
+    "name": "控件联动动画",
+    "ownName": "控件驱动",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做控件联动动画",
+        "body": "开场是对准检查器和 Brand 弹层的 2.6 倍特写，随后用 0.9s、expo.out 拉出到 1.3 倍的整窗视角。在 200×132px 的色域里拖动取色点，每次拖动 0.4s，缓动 power3.inOut，颜色依次是靛蓝 #6366f1、翡翠绿 #10b981、橙色 #f97316 和紫罗兰 #8b5cf6。拖动途中光标偏离取色点轨迹 5–6px。\n\n取色点落下的那一帧，在根元素上设置 --brand、--brand-t 和 --soft，十六进制输入框和整个页面一起变色，没有过渡。深色模式开关在 5.0–5.17s 滑动，到位那一帧主题变量切换。控件和页面由同一条时间线驱动，页面变化直接硬设置。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会搭出带弹层的编辑器窗口和主题变量。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "主题编辑器的取色器在设定橙色品牌色，旁边的网站预览跟着变化。",
+    "faq": [
+      [
+        "控件联动是什么意思？",
+        "取色器、开关、调节盘这类控件一到位，页面结果就在同一帧变化。观众不需要解说，就能看出因果。"
+      ],
+      [
+        "怎样让控件和结果保持同步？",
+        "让同一条时间线驱动两者。这里页面读取根元素上的 CSS 变量，时间线在控件落下的那一帧设置这些变量，结果没有过渡延迟。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

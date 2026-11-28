@@ -1,0 +1,196 @@
+{
+  "slug": "count-up-animation",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/count-up.mp4",
+    "poster": "https://media.motionboard.app/count-up.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 54,
+    "cat": "C",
+    "star": false,
+    "video": "count-up",
+    "samples": [
+      {
+        "t": "Lovable",
+        "id": "EOxxULOG8SI",
+        "at": "0:05–0:10",
+        "s": 5
+      },
+      {
+        "t": "Apple MacBook Pro M6",
+        "id": "xWfNhWn88Bc",
+        "at": "0:06–0:09",
+        "s": 6
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Each digit is a column with a one-cell window, so mid-roll you see only the digit leaving and the one arriving, and a column stops on a whole digit. The last number reads clearly and the layout never shakes: tabular numerals in fixed-width columns mean a new leading digit or a changing last digit moves nothing else. A strong ease-out makes the count fast at first and lets the last digit or two settle slowly, so the viewer reads the magnitude first and the exact number after. The three stat cards each carry more than the last: a bare hero number, then a dashboard card with a sparkline, then a closing card with a tick strip, so the same move arrives on a new carrier each time. The line, the pips and the ticks share one progress with the digits, so the graphic is drawn exactly as far as the number has counted and both show the same fact. Each card has a small uppercase kicker (UP TO, COST SAVED TODAY, UPTIME) and one line underneath, the number takes the biggest space in the frame, and the only accent is yellow-green #bdf34f.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. Hero stat 0–3.0s: kicker UP TO rises at 0.12s (0.9s), the count 1 to 11 starts at 0.35s and runs 2.1s, two hairlines draw outward at 1.05s (1.1s), the label faster builds rises at 1.3s (1.1s), and the group lifts and blurs out 3.0–3.55s. Dashboard rises at 2.95s (1.0s): the hero card counts $100 to $803 from 3.35s over 2.2s, Active builds 0 to 9 from 3.5s over 1.5s, Queued 0 to 4 from 3.62s over 1.3s; bars grow from 3.45s (0.022s apart, 1.1s each), build rows slide in from 3.7s (0.07s apart), the delta chip appears at 4.3s, the hero card border lights at 4.2s (0.8s), and the dashboard lifts out at 5.62s (0.55s). Final card rises at 5.8s (0.95s): 90 ticks light with the count, 90.00% to 99.99% runs from 6.0s over 1.6s, the label rises at 6.55s, and the card lifts out at 7.5s (0.5s). Lockup from 7.6s: four bars grow at 7.75s (0.8s, 0.08s apart), the slash draws at 8.1s (0.7s), the word Tally rises from a mask at 8.0s (0.9s), the tagline appears at 8.5s (0.9s), held to the end at 10s"
+          ],
+          [
+            "Easing",
+            "Counts use power4.out (the big number, $803, 9 and 4) and power3.out (99.99%); entrances use <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); exits use power2.in; the dashboard push uses sine.inOut"
+          ],
+          [
+            "Camera",
+            "Fixed frame. The dashboard scene has one slow push: 3.0–5.9s from 1.0x to 1.1x around the hero card centre (773px, 352px) with sine.inOut, which leaves the dashboard's right edge about 30px inside the frame"
+          ],
+          [
+            "Subject",
+            "Each digit is a column holding a strip 0-9-0, with a window 0.6em wide and 0.85em high (digit cap height 0.73em plus about 0.12em gap), a 0.02em edge fade top and bottom, and tabular-nums, so the layout never moves while digits change. A column rests on a whole digit and rolls only through the last 40% of each unit it passes (smoothstep); a higher column turns only while every lower column rolls 9 to 0. The leading digit of 11× fades in as the value goes from 5.5 to 10. Hero scene: number 480px at weight 800 with the × in the accent colour, kicker 34px with 0.34em tracking, label 64px. Dashboard 1620x880px with a 240px sidebar: hero card 710x320px with $803 at 172px and a 252x150px sparkline (26 points, 3px line); two 285x320px small cards with numbers at 132px and a row of 12 pips; a 24-bar builds-per-hour chart with 16px bars; 5 recent-build rows. Final card 1320x700px with the number at 300px and 90 ticks, each 8x48px"
+          ],
+          [
+            "Sync",
+            "The sparkline line, its area, the tip dot and the digits share one eased progress, so the line is drawn exactly as far as the count has gone. A pip lights each time the count passes a whole number, and the final card's ticks light left to right with the progress. Vertical motion blur appears only during fast rolls, scales with roll speed and is capped at 1.2% of the font size (5.8px on the 480px number), and it switches off below 0.4%. All three counts stop exactly on 11, $803, 9, 4 and 99.99%"
+          ],
+          [
+            "Style",
+            "Background <code>#09090b</code>, one accent yellow-green <code>#bdf34f</code>; text <code>#f4f4f5</code>, secondary text <code>#8e8e98</code>; Inter, digits at weight 800; a 120px grid at 3.2% white fading at the edges, 7% overlay grain and a vignette; the mark is four vertical bars crossed by an accent slash (a tally mark)"
+          ]
+        ],
+        "prompt": "Build a 10-second, 1920x1080, 30 fps dark product film called Count Up Animation for a fictional product, Tally (a build and CI platform). Background #09090b, one accent yellow-green #bdf34f, text #f4f4f5, secondary text #8e8e98, font Inter. The core part is a rolling digit: each digit is a column holding a strip 0 to 9 followed by another 0, with a window 0.6em wide and 0.85em high (digit cap height 0.73em plus about 0.12em of gap), a 0.02em edge fade at top and bottom, and tabular numerals, so the layout never moves while digits change. One value drives every column: the ones position is floor(v) plus roll(fraction), where roll runs from 0 to 1 with a smoothstep over the last 40% of each unit, so the column rests on a whole digit the rest of the time; a higher column turns only while every lower column rolls 9 to 0, using the same floor plus roll. Motion blur is one SVG feGaussianBlur per column (stdDeviation=\"0 s\"), with s = roll speed x font size x 0.0007, capped at 1.2% of the font size and set to 0 below 0.4%, so only fast rolls get a faint vertical blur. Drive each count with a 0 to 1 proxy tween whose onUpdate applies power4.out (power3.out for the last card) and computes the value and its speed; the value, the sparkline and the ticks all come from the same progress, and every count ends exactly on its target integer. Timeline: at 0.12s the kicker UP TO (34px, uppercase, 0.34em tracking) rises; from 0.35s the number counts 1 to 11 over 2.1s at 480px and weight 800 with the × in the accent colour, and the tens digit fades in as the value goes from 5.5 to 10; from 1.05s two 300px hairlines with an accent dot at the outer end draw outward on both sides (1.1s); at 1.3s the label faster builds (64px) rises and deblurs; 3.0–3.55s the group lifts 56px, scales to 1.07 and blurs out. From 2.95s a Tally dashboard (1620x880px, 22px radius, a 240px sidebar with seven nav items, a top bar with a 24h/7d/30d control and a search box) rises over 1.0s from below. The hero card is 710x320px with the kicker COST SAVED TODAY and $803 at 172px counting from $100 over 2.2s starting at 3.35s; a 252x150px sparkline (26 rising noisy points) draws with the same progress and a dot rides the tip; at 4.2s the card border lights in the accent colour and at 4.3s a chip reading ↑ 18.4% appears. Active builds is a 285x320px card with a 132px number counting 0 to 9 from 3.5s over 1.5s and 12 pips that light one by one as the count passes each whole number; Queued is the same card counting 0 to 4 from 3.62s over 1.3s. A builds-per-hour chart (24 bars of 16px, the lower part lighter for cache hits) grows bar by bar from 3.45s (0.022s apart, 1.1s each). A recent builds list of 5 rows slides in from 3.7s, 0.07s apart. The whole dashboard pushes to 1.1x around the hero card centre from 3.0s to 5.9s and lifts out at 5.62s. At 5.8s the final card (1320x700px, 30px radius, a fading accent hairline on top) rises with the kicker UPTIME · LAST 90 DAYS and a 300px number counting 90.00% to 99.99% over 1.6s from 6.0s, a row of 90 ticks (8x48px) lighting left to right with the progress, and the label across 2.4M builds rising at 6.55s; it lifts out at 7.5s. From 7.6s the lockup grows four vertical bars, draws an accent slash across them, rises the word Tally from a mask and shows the tagline Builds that finish before the coffee does. at 8.5s, held to 10s. Add a 120px grid at 3.2% white fading at the edges, 7% overlay grain and a vignette.",
+        "says": [
+          "The digits roll up like an odometer and ease to a stop on the target",
+          "A big number climbs from $100 to $803 while the sparkline draws beside it",
+          "UP TO 11× faster, and the count locks on 11"
+        ],
+        "vs": [
+          [
+            "fluted-glass-effect",
+            "Fluted Glass reveals one key word or number through glass ribs and the figure itself never changes; here the number rolls digit by digit to its value and drives a sparkline and a tick strip in step."
+          ],
+          [
+            "kinetic-typography",
+            "Kinetic Typography places a few spec words at different spots where they hard-appear; here one big number rolls to its target with an ease-out, with a kicker above and a label below."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "每一位数字是一列竖条，窗口只有一格高，滚动时只会看到走出去和走进来的两个数字，数字落在整数字上才停，所以最后一个数读得清，也不会因为宽度变化让版面抖动：等宽数字加固定宽度的列，十位出现和个位变化都不挪动其他元素。强缓出让计数一开始很快、最后一两位慢慢落定，观众先看到量级，再看到精确的数字。三张统计卡一张比一张有内容：先是只有一个数字的大场，再是带折线的仪表盘主卡，最后是带刻度条的终卡，同一个手法每次换一个载体，不会重复。折线、小方块和刻度条和数字共用一个进度，数字到哪里，图形就画到哪里，数据读起来是同一个事实。每张卡都有小字大写的前缀（UP TO、COST SAVED TODAY、UPTIME）和下方的一行说明，数字占画面最大的位置，只有一个强调色黄绿 #bdf34f。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。大数字场 0–3.0s：小字 UP TO 0.12s 升起（0.9s），数字 1→11 从 0.35s 滚 2.1s，两条细线 1.05s 向两侧拉出（1.1s），标签 faster builds 1.3s 升起（1.1s），3.0–3.55s 整组上浮并虚化淡出。仪表盘 2.95s 升起（1.0s）：主卡 $100→$803 从 3.35s 滚 2.2s，Active builds 0→9 从 3.5s 滚 1.5s，Queued 0→4 从 3.62s 滚 1.3s；柱图 3.45s 起逐根长出（间隔 0.022s，每根 1.1s），列表 3.7s 起逐行滑入（间隔 0.07s），涨幅标签 4.3s 出现，主卡描边 4.2s 点亮（0.8s），仪表盘 5.62s 上浮淡出（0.55s）。终卡 5.8s 升起（0.95s）：90 根刻度条随数字点亮，90.00%→99.99% 从 6.0s 滚 1.6s，标签 6.55s 升起，7.5s 上浮淡出（0.5s）。收尾字标 7.6s 起：四根竖线 7.75s 逐根长出（0.8s，间隔 0.08s），斜线 8.1s 画出（0.7s），Tally 8.0s 从遮罩下升起（0.9s），标语 8.5s 出现（0.9s），保持到片尾 10s"
+          ],
+          [
+            "缓动",
+            "数字滚动用 power4.out（大数字、$803、9、4），终卡 99.99% 用 power3.out；出场和升起用 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；上浮淡出 power2.in；仪表盘缓推 sine.inOut"
+          ],
+          [
+            "镜头",
+            "画面固定，只有仪表盘场有一次缓推：3.0–5.9s 以主卡中心（773px，352px）为原点从 1.0 倍推到 1.1 倍（sine.inOut），推到最大时仪表盘右缘离画面右边约 30px"
+          ],
+          [
+            "主体",
+            "每一位数字是一列竖条，内容 0–9–0，窗口宽 0.6em、高 0.85em（约等于数字字高 0.73em 加 0.12em 间隙），窗口上下各 0.02em 的淡边，用等宽数字（tabular-nums），所以数字变化时版面不动。每列平时停在整数字上，只在每个单位的最后 40% 里快速滚过（smoothstep）；高位只在低位 9→0 滚动时才进位。11× 的十位在数值 5.5 到 10 之间淡入。大数字场：数字 480px、字重 800，× 用强调色；小字 34px、字距 0.34em；标签 64px。仪表盘 1620x880px、侧栏 240px：主卡 710x320px，$803 为 172px，右侧折线 252x150px（26 个点，线宽 3px）；Active builds 和 Queued 两张 285x320px 小卡，数字 132px，下面 12 格小方块逐格点亮；每小时构建柱图 24 根，每根 16px；最近构建 5 行。终卡 1320x700px，数字 300px，90 根 8x48px 的刻度条"
+          ],
+          [
+            "同步",
+            "折线、面积、笔尖圆点和数字用同一个缓动进度：数字滚到哪里，折线就画到哪里。小方块在计数越过整数时点亮一格，终卡的刻度条按进度从左到右点亮。纵向运动模糊只在快速滚动时出现，强度由滚动速度算出，上限是字号的 1.2%（480px 的大数字最多 5.8px），低于 0.4% 时关闭。三处计数都准确停在 11、$803、9、4 和 99.99%"
+          ],
+          [
+            "风格",
+            "背景 <code>#09090b</code>，唯一强调色黄绿 <code>#bdf34f</code>；文字 <code>#f4f4f5</code>，次要文字 <code>#8e8e98</code>；Inter，数字字重 800；背景有 120px 间距的 3.2% 白色网格（边缘淡出），7% 的叠加颗粒和暗角；字标是四根竖线加一条强调色斜线（计数符号）"
+          ]
+        ],
+        "prompt": "用「数字滚动动画（Count Up Animation）」做一支 10 秒、1920x1080、30fps 的黑底产品片，虚构产品 Tally（构建与 CI 平台）。背景 #09090b，唯一强调色黄绿 #bdf34f，文字 #f4f4f5，次要文字 #8e8e98，字体 Inter。核心部件是滚动数字：每一位是一列竖条，内容 0 到 9 再接一个 0，窗口宽 0.6em、高 0.85em（数字字高 0.73em 加约 0.12em 间隙），上下各 0.02em 淡边，使用等宽数字，所以数字变化时版面不动。一个数值同时驱动所有列：个位位置 = floor(v) + roll(小数部分)，roll 在每个单位的最后 40% 里用 smoothstep 从 0 走到 1，其余时间列停在整数字上；高位只在低位正在 9→0 滚动时才进位，位置同样用 floor 加 roll 算。列的纵向位移从时间线上算出，不用 CSS 动画。运动模糊用每列一个 SVG feGaussianBlur（stdDeviation=\"0 s\"），s 由滚动速度算出：速度乘字号再乘 0.0007，上限为字号的 1.2%，低于 0.4% 时为 0，所以只有快速滚动时有细微的纵向虚化。计数用一个 0→1 的代理补间，在 onUpdate 里按 power4.out（终卡用 power3.out）算出数值和速度，数值、折线和刻度全部从同一个进度算出，保证每次计数都准确停在目标整数。时间线：0.12s 小字 UP TO（34px，字距 0.34em，大写）升起；0.35s 起数字 1→11 滚 2.1s，数字 480px、字重 800，× 用强调色，十位在数值 5.5 到 10 之间淡入；1.05s 起两条 300px 的细线（端点一个强调色圆点）从数字两侧向外拉出（1.1s）；1.3s 标签 faster builds（64px）升起并去虚化；3.0–3.55s 整组上浮 56px、放大到 1.07、虚化淡出。2.95s 起 Tally 仪表盘（1620x880px、圆角 22px，240px 侧栏含 Overview、Pipelines、Builds、Cache、Runners、Secrets、Billing，顶栏有 24h/7d/30d 分段控件和搜索框）用 1.0s 从下方升起；主卡 710x320px，小字 COST SAVED TODAY，$803 为 172px，3.35s 起从 $100 滚 2.2s，右侧 252x150px 折线（26 个单调上升的带噪点）随同一进度画出，笔尖有一个圆点，4.2s 主卡描边点亮成强调色，4.3s 出现 ↑ 18.4% 标签；Active builds 285x320px，数字 132px，3.5s 起 0→9 滚 1.5s，下面 12 个小方块每越过一个整数点亮一格；Queued 同款，3.62s 起 0→4 滚 1.3s；每小时构建柱图（24 根，每根 16px，下面一段淡色表示命中缓存），3.45s 起逐根从下长出（间隔 0.022s，每根 1.1s），4.25s 峰值柱上方出现标注；最近构建列表 5 行（仓库、分支、提交信息、耗时、时间），3.7s 起逐行滑入（间隔 0.07s）；整个仪表盘 3.0–5.9s 以主卡中心为原点缓推到 1.1 倍；5.62s 上浮淡出。5.8s 终卡（1320x700px，圆角 30px，顶边一条强调色渐隐细线）升起：小字 UPTIME · LAST 90 DAYS，数字 300px，6.0s 起 90.00%→99.99% 滚 1.6s，下方 90 根 8x48px 的刻度条按进度从左到右点亮，标签 across 2.4M builds 6.55s 升起；7.5s 上浮淡出。7.6s 起收尾：四根竖线逐根长出，一条强调色斜线画出，Tally 字标从遮罩下升起，标语 Builds that finish before the coffee does. 8.5s 出现，保持到 10s。叠加 120px 间距的 3.2% 白色网格（边缘淡出）、7% 叠加颗粒和暗角。所有文字用你自己的产品数据替换。",
+        "says": [
+          "数字像里程表一样一位一位滚上去，最后慢慢停在目标数上",
+          "一个很大的数字从 100 涨到 803，旁边的折线同时画出来",
+          "UP TO 11× faster，数字滚到 11 就定住"
+        ],
+        "vs": [
+          [
+            "fluted-glass-effect",
+            "棱镜玻璃显字把一个关键词或数字用竖条玻璃折射出来，数字本身不变；数字滚动动画里数字是一位一位滚到目标值，并带动折线和刻度同步变化。"
+          ],
+          [
+            "kinetic-typography",
+            "散排参数把几条参数词摆到画面不同位置硬出现；数字滚动动画只有一个大数字，靠滚动和缓出落定，旁边是前缀和说明。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Count Up Animation",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 3600 for \"count up animation\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Count Up Animation: Example and Code Recipe",
+    "description": "A big stat rolls up digit by digit, then the same count drives a dashboard sparkline. Make this count up animation with Claude Code or Codex.",
+    "lede": "One very large number rolls up digit by digit, fast at first and settling slowly on its target, with a small uppercase kicker above and a one-line label below. The same move then runs inside a dashboard card with a sparkline drawn in step, and last on a closing stat with a strip of ticks.",
+    "name": "Count Up Animation",
+    "ownName": "Count Up Animation",
+    "body": [
+      {
+        "h2": "How to make a Count Up Animation with Claude Code or Codex",
+        "body": "Build each digit as a column that holds a strip 0-9-0, with a window 0.6em wide and 0.85em high and tabular numerals, so the layout never moves. Drive one value with a proxy tween: the big number counts 1 to 11 from 0.35s over 2.1s with power4.out at 480px. A column rests on a whole digit and rolls only through the last 40% of each unit it passes; a higher column turns only while every lower column rolls 9 to 0. Add a vertical blur of at most 1.2% of the font size during fast rolls only.\n\nRepeat the move on a dashboard. At 2.95s the Tally dashboard rises over 1.0s. The hero card counts $100 to $803 from 3.35s over 2.2s with power4.out, and a 252x150px sparkline draws from the same progress, so the line is as long as the count is far along. Two small cards count 0 to 9 and 0 to 4, and a pip lights each time the count passes a whole number. At 5.8s a closing card counts 90.00% to 99.99% over 1.6s with power3.out while 90 ticks light left to right.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the odometer, the three stat cards and the dashboard from your product. Draw the four-bar mark with its accent slash from 7.75s and rise the word Tally from a mask at 8.0s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A huge white 11 with a lime-green times sign, reading \"Up to 11× faster builds\" on black.",
+    "faq": [
+      [
+        "What is a count up animation?",
+        "A count up animation shows a number rising from a start value to an end value over a second or two. Product films use it for stats such as speed gains, revenue or uptime, so the viewer sees the size of the change as well as the final figure."
+      ],
+      [
+        "How do you stop the digits from shaking the layout while they count?",
+        "Use tabular numerals and give every digit a fixed-width column, or build an odometer where each digit is a vertical strip that rolls inside a window one cell high. Here the window is 0.6em wide and 0.85em high, so a new leading digit or a changing last digit moves nothing else."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "数字滚动动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"数字滚动动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "数字滚动动画：示例与代码配方",
+    "description": "一个很大的数字一位一位滚到目标值，同一个计数再带动仪表盘里的折线。用 Claude Code 或 Codex 按免费配方做出这个数字滚动动画。",
+    "lede": "一个很大的数字一位一位向上滚，开头很快，最后慢慢落在目标数上，上面是小字大写的前缀，下面是一行说明；之后同一个手法出现在仪表盘主卡里，折线随数字同步画出，最后是带刻度条的稳定性数字。",
+    "name": "数字滚动动画",
+    "ownName": "数字滚动动画",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做数字滚动动画",
+        "body": "每一位数字是一列竖条，内容 0–9–0，窗口宽 0.6em、高 0.85em，使用等宽数字，所以版面不会移动。用一个代理补间驱动数值：大数字 480px，从 0.35s 起用 2.1s 以 power4.out 从 1 滚到 11。每列平时停在整数字上，只在每个单位的最后 40% 里滚过；高位只在低位 9→0 滚动时才进位。纵向模糊只在快速滚动时出现，最多是字号的 1.2%。\n\n同样的手法放进仪表盘。2.95s Tally 仪表盘用 1.0s 升起，主卡从 3.35s 起用 2.2s 以 power4.out 从 $100 滚到 $803，252x150px 的折线用同一个进度画出，数字滚到哪里，线就画到哪里。两张小卡分别从 0 滚到 9 和从 0 滚到 4，计数每越过一个整数点亮一个小方块。5.8s 终卡用 1.6s 以 power3.out 把 90.00% 滚到 99.99%，90 根刻度条从左到右点亮。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用你的产品做出滚动数字、三张统计卡和仪表盘。7.75s 起画出四根竖线和强调色斜线的字标，8.0s 字标文字 Tally 从遮罩下升起。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "黑底上巨大的白色 11 和荧光绿乘号，文字为“最快 11 倍构建速度”。",
+    "faq": [
+      [
+        "什么是数字滚动动画？",
+        "数字滚动动画让一个数字用一两秒从起始值涨到目标值。产品片里常用它展示提速倍数、金额或稳定性，观众既看到变化的幅度，也看到最后的数字。"
+      ],
+      [
+        "数字滚动时怎么让版面不抖？",
+        "使用等宽数字，并给每一位固定宽度的列，或者做成里程表：每一位是一条竖向滚动的数字带，窗口只有一格高。这里窗口宽 0.6em、高 0.85em，所以新增的最高位和变化的末位都不会挤动其他元素。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

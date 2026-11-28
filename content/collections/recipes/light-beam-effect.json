@@ -1,0 +1,196 @@
+{
+  "slug": "light-beam-effect",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/projection-beams.mp4",
+    "poster": "https://media.motionboard.app/projection-beams.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 42,
+    "cat": "A",
+    "star": false,
+    "video": "projection-beams",
+    "samples": [
+      {
+        "t": "Apple MacBook Pro M6",
+        "id": "xWfNhWn88Bc",
+        "at": "0:09–0:13",
+        "s": 9
+      },
+      {
+        "t": "Apple MacBook Pro M6",
+        "id": "xWfNhWn88Bc",
+        "at": "0:18–0:29",
+        "s": 18
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The beam is a trapezoid window and the screen sits fixed in screen space. When the beam leans, only its far edge moves and the near edge stays on the lid top, so a swinging beam changes which part of the screen shows while the text stays level and readable. On a black frame only the beam has content, so the eye follows the light. The three screens go dark, light, dark (code editor, build console, mail), so the same beam never repeats itself. Every sync beat lands inside a beam: the completion pill, the build status cell, the mail toast and a whole mail paragraph sit where the beam shows them. The stat comes last, outside the right slanted edge of the widest beam, reading upward, and the number 2.4× is the largest element in the only accent color, teal #2dd4bf. The laptop is a thin silver lid seen from behind with a slim base edge, and it ends as a thin chamfered slab.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Laptop 1 rises 0–1.4s; beam 1 opens at 0.75s (1.0s); completion pill appears 1.15s and is accepted 1.9s; hand-off 3.0–3.45s (beam 1 leans left to -26° and narrows), then laptop 1 fades out 3.45–3.85s and back in at 4.45s (0.35s); beam 2 opens at 3.4s (1.0s); camera pulls back 4.4–5.5s; beam 1 reopens at 4.75s, beam 3 opens for the first time at 5.0s (laptop 3 fades in at 4.7s over 0.35s) and three beams run until 6.4s; beams 1 and 3 narrow 6.42–6.92s and their laptops fade out 6.5–6.9s (0.4s); wide beam 6.5–7.5s; stat slides in at 7.05s (0.9s) and fades at 8.3s (0.3s); beam narrows 8.25–8.85s; lid closes 8.4–9.4s; wordmark at 8.9s and held to the end (2.1s)"
+          ],
+          [
+            "Easing",
+            "Opening and slide-in <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); slow sweeps sine.inOut; narrowing power3.in (power2.inOut at the hand-off); camera pans, widening and lid closing power3.inOut"
+          ],
+          [
+            "Camera",
+            "Flat framing on black, never still: slow push 0.86→0.9x over 0–3.0s; a 1.1s pan to laptop 2 at 3.0–4.1s at 0.9x with a -3° roll; drift to 0.94x at 4.1–4.4s; pull back to 0.72x and level at 4.4–5.5s; roll to -3° and drift to 0.74x at 5.5–6.4s with all three beams inside the frame; 1.1s move to 0.9x at 6.4–7.5s with the frame centre 60px right of and 175px above laptop 2, so the whole wide beam and the stat stay in frame; 0.93x at 7.5–8.3s; push to 1.2x at 8.3–11.0s"
+          ],
+          [
+            "Subject",
+            "Lid 380x268px, corner radius 14px at the top and 9px at the bottom, 6px narrower per side at the top edge than at the bottom, a 4px bright line along the top, a two-line chamfer around the edge and a 44px darkening gradient along the bottom whose last 6px is a dark hinge band; open, the lid is 262px high (98% of 268px) with a slim 374x11px base edge (no key texture) showing about 4px under it and a 360x30px soft contact shadow; laptops 1 and 3 raise the base edge 2px while they yaw (4.6–5.6s) so the visible edge halves to about 2px and the lid reads as a thin slab; closed, the lid is a 380x268px rectangle, the hinge band fades out and the base edge drops 9px so about 7px of it shows. The beam's near edge stays on the lid top; leaning moves only the far edge (offset = length × tan of the angle) and the far-edge skew k lowers the right far corner by k px and raises the left one by k px (negative reverses). Beam 1 opens 800px long (820px by 3.1s), near half-width 170px, far half-width 520px; beam 2 is 860px long, near 170px, far 560px, k=30; in the three-beam stage beam 1 is 650px long, near 150px, far 330px, k=-40, beam 2 is 680px, near 150px, far 330px, k=0, and beam 3 is 650px, near 160px, far 350px, k=45; the wide beam is 560px long, near half-width 190px, far half-width 800px. Each screen is a full 1280x800 display scaled 1.25x (mail 1.1x with its layer 20px left of and 114px below the centred position so the toast and a whole paragraph sit inside the beam without text cut at the beam's left edge; the console in the wide beam 1.3x)"
+          ],
+          [
+            "Sync",
+            "The completion accepted at 1.9s, the pill vanishing and 5 code lines turning solid share one frame, all inside the beam; the build row going from Building to Ready and 0.9 s to 1.8 s lands at 5.05s, both cells in the middle of beam 2; the mail toast appears at 5.5s on the axis of beam 3 with one whole paragraph and both attachments in the same beam; the lid edge lights 0.2s before each beam opens"
+          ],
+          [
+            "Style",
+            "Pure black <code>#040405</code>, one accent teal <code>#2dd4bf</code>; UI in Inter 13px; stat in League Gothic, 40px small line, 224px number and 94px label, skewed -10° and rotated about -43° along the right edge, 18px off it; wordmark Inter 600; grain re-rolled every 3 frames and a vignette"
+          ]
+        ],
+        "prompt": "Build an 11-second, 1920x1080, 30 fps product film called Screen Projection Beams for a fictional product, Harbor (a laptop and its three app screens). The frame is pure black #040405 and the only accent color is teal #2dd4bf. The laptop is a thin silver lid seen from behind and slightly above: 380x268 px, corner radius 14 px at the top and 9 px at the bottom, 6 px narrower per side at the top edge than at the bottom, a 4 px bright line along the top edge, a two-line chamfer around the edge (1 px light line plus 3 px dark line), a 44 px gradient that darkens the bottom with a 6 px dark hinge band on its last pixels and a very faint vertical brushed texture. Open, the lid is 262 px high (98% of 268 px) with a slim 374x11 px base edge under it (a dark-to-light metal gradient, no key texture) showing about 4 px, and a 360x30 px soft contact shadow; laptops 1 and 3 raise the base edge 2 px while they yaw so the visible edge halves; when a beam is on, a faint teal pool of light shows on the floor. A dark engraved mark sits in the middle of the lid and the top edge of the lid is where light comes out. A beam is a clip-path trapezoid window whose near edge sits on the lid top and opens outward from it. To lean a beam, move only the far edge sideways (offset = length × tan of the angle); the near edge never moves, so it stays pinned to the lid. The far-edge skew k lowers the right far corner by k px and raises the left far corner by k px (negative k does the opposite). Behind the window sits a screen-space UI layer (a full 1280x800 screen scaled 1.25x) that does not move when the beam leans; the beam only changes which part of it is revealed. Add a 3 px bright line along the beam edges, a soft bloom at the lid edge (peak opacity 50% so the screens read first) and a lit edge on the lid top. Three screens, all real English product UI: A is a dark code editor (file tree, tabs, 33 lines of TypeScript, minimap, terminal, status bar); B is a light build console (sidebar, four KPI cards, a 14-day build-time line chart with a v2.14 · cache on annotation, a builds table with the columns Build, Commit, Status, Duration, Branch, Author, Started; median build 1.8 s, cache hit rate 94.2%); C is a dark mail app (sidebar, a list of 10 emails, an open thread titled Re: Q4 launch checklist with two body paragraphs and two attachments). Timeline: 0 to 1.4 s laptop 1 rises from 80 px below at 1.14x scale (expo.out) and fades from 0.35 to 1 over 0.7 s. The camera starts at 0.86x and pushes slowly to 0.9x over the first 3 s. At 0.55 s the lid top edge lights; at 0.75 s beam 1 opens (length 0 to 800, far half-width 170 to 520, near half-width 170, 1.0 s expo.out; lean -14 to -3 degrees over 1.3 s expo.out; k=0). At 1.15 s a floating Accept Tab pill appears in the middle of the beam above the cursor line; at 1.9 s the grayed-out completion in the editor is accepted, the pill disappears and 5 lines turn solid on the same frame, and the beam length eases to 820 by 3.1 s. From 2.05 to 3.0 s beam 1 sweeps slowly to +12 degrees (sine.inOut). From 2.35 to 3.0 s the terminal prints a line every 0.12 s, 6 lines, ending with Build complete in 1.8s. Hand-off from 3.0 s: beam 1 leans left to -26 degrees in 0.45 s and narrows to a line in the same 0.45 s (power2.in for the lean, power2.inOut for the narrowing) while the camera pans 1.1 s (power3.inOut) to laptop 2 on the right at 0.9x with a -3 degree roll. Beam 2 opens only after beam 1 has closed, at 3.4 s (lean -30 to -6 degrees over 1.3 s; length 860, near half-width 170, far half-width 560, k=30, over 1.0 s), so the two windows never overlap. Laptop 1 fades out from 3.45 to 3.85 s and fades back in over 0.35 s from 4.45 s; laptop 3 stays out of the frame until it fades in over 0.35 s at 4.7 s, so no unlit side laptop is cut off by the bottom of the frame. Beam 2 reveals the console and its line chart draws from 3.75 to 4.75 s; the camera drifts to 0.94x from 4.1 to 4.4 s. From 4.4 to 5.5 s the camera pulls back to 0.72x and levels out (1.1 s, power3.inOut). Beam 2 leans slowly to +4 degrees from 4.55 to 5.65 s and narrows from 4.65 to 5.55 s to length 680, near half-width 150, far half-width 330, k=0. Beam 1 reopens at 4.75 s (lean -30 to -17 degrees over 1.3 s; length 650, near half-width 150, far half-width 330, k=-40, over 1.0 s). Beam 3 opens for the first time at 5.0 s (lean +28 to +20 degrees over 1.3 s; length 650, near half-width 160, far half-width 350, k=45, over 1.0 s). Laptops 1 and 3 yaw -9 and +10 degrees from 4.6 to 5.6 s. Three beams run together; the mail screen is scaled 1.1x and its layer sits 20 px left of and 114 px below the centred position, so the middle of beam 3 shows one whole body paragraph and the two attachments with no letters cut at the beam's left edge. At 5.05 s the first row of the builds table turns from Building to Ready and its duration from 0.9 s to 1.8 s, both cells in the middle of beam 2 (the Ready cell flashes a green tint). At 5.5 s a mail toast (Priya Nair: Legal signed off on the terms. Sending the final PDF now.) appears above the paragraph in beam 3 and fades at 6.3 s. From 5.5 to 6.4 s beam 2 leans to -4 degrees, beam 3 leans to +18 degrees and the camera rolls to -3 degrees and drifts to 0.74x, with all three beams inside the frame. From 6.4 to 6.9 s beams 1 and 3 lean inward to +12 and -12 degrees and narrow (6.42 to 6.92 s, power3.in) and from 6.5 to 6.9 s their laptops fade out (0.4 s), so they are gone before the stat appears; the camera moves to laptop 2 at 0.9x over 1.1 s with the frame centre 60 px right of and 175 px above laptop 2. From 6.5 to 7.5 s beam 2 levels out and becomes one wide flat beam that sits entirely inside the frame (near half-width 190, far half-width 800, length 560, k=0, power3.inOut) and the console scales to 1.3x; the chart annotation v2.14 · cache on sits right next to the dashed line and the Nov 4 tooltip (Median 1.8 s, p95 4.1 s) sits in the free space further right, so they never overlap. At 7.05 s the stat slides in along the right slanted edge (200 px along the edge, 0.9 s expo.out). It sits outside the edge, 18 px away from it, starting 200 px along the edge from the lid corner, and the whole block is rotated about -43 degrees so it reads upward, parallel to the edge. It has three parts: a small UP TO (League Gothic 40 px), the number 2.4× in a teal gradient (224 px, the largest element) and FASTER BUILDS (94 px, white-to-gray gradient), all skewed -10 degrees and all inside the frame. The camera drifts to 0.93x from 7.5 to 8.3 s. At 8.3 s the stat fades over 0.3 s. From 8.25 to 8.85 s the beam narrows (power3.in); from 8.4 to 9.4 s the lid height goes from 0.98 to 1, its trapezoid outline becomes a rectangle, the hinge band fades out and the base edge drops 9 px so only about 7 px of it shows, and the laptop moves to the center of the frame (1.0 s, power3.inOut) while the camera pushes to 1.2x from 8.3 to 11.0 s; at 8.9 s the lid mark lights teal over 0.8 s and the word Harbor fades in under the lid (Inter 600, 52 px growing to 62 px with the camera, 0.6 s expo.out). The wordmark is placed in the same group as the lid so it moves with it and never overlaps it, and it holds to the end of the film (2.1 s); at 9.2 s a highlight sweeps across the lid. Add film grain re-rolled every 3 frames and a vignette.",
+        "says": [
+          "The trapezoid beam is a window that reveals the fixed screen behind it as it sweeps",
+          "One laptop's light sweeps away and the next one lights up",
+          "The stat runs along the right slanted edge of the wide beam, then the laptop closes"
+        ],
+        "vs": [
+          [
+            "3d-tilted-ui-depth-of-field",
+            "Tilted UI with Depth of Field tilts one interface and uses blur to lead the eye; here the interface stays still behind a trapezoid beam window and the light hands off between several laptops."
+          ],
+          [
+            "light-reveal",
+            "Light Reveal uses a sweeping light to bring out the material of a product on black; the beams here reveal app screens and pass from one laptop to the next."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "光束是一个梯形窗口，界面固定在屏幕空间里，光束倾斜时只有远端边平移，近端边始终贴在盖板上沿，所以光束摆动时界面保持不动，只是露出的部分在变，界面始终可读。黑场里只有光束内部有内容，观众的视线被它带着走。三块界面一深一浅一深（代码编辑器、构建控制台、邮件），同一束光换不同内容也不显得重复。每个同步动作都落在光束里：补全提示条、构建状态格、邮件提示条和一整段邮件正文都放在光束覆盖的位置。参数文字最后才出现，贴着最宽那束光的右侧斜边，从下往上读，数字 2.4× 最大，用唯一的强调色青绿 #2dd4bf。笔记本是从背后看的薄银色盖板加一条薄底边，合上时只剩一块带倒角的薄板。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。笔记本 1 升起 0–1.4s；光束 1 0.75s 展开（1.0s）；补全提示条 1.15s 出现，1.9s 接受；3.0–3.45s 交接（光束 1 向左倾到 −26° 并收窄），笔记本 1 3.45–3.85s 淡出，4.45s 淡回（0.35s）；光束 2 3.4s 展开（1.0s）；镜头拉远 4.4–5.5s；光束 1 4.75s 重开，光束 3 5.0s 首次展开（笔记本 3 4.7s 淡入，0.35s），三束同时亮到 6.4s；光束 1 和 3 6.42–6.92s 收窄，笔记本 1 和 3 6.5–6.9s 淡出（0.4s）；宽光束 6.5–7.5s；参数文字 7.05s 滑入（0.9s），8.3s 淡出（0.3s）；光束收窄 8.25–8.85s；合盖 8.4–9.4s；字标 8.9s，保持到片尾 2.1s"
+          ],
+          [
+            "缓动",
+            "展开和滑入 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；慢摆 sine.inOut；收窄 power3.in（交接时 power2.inOut）；镜头平移、变宽、合盖 power3.inOut"
+          ],
+          [
+            "镜头",
+            "黑场里的平面构图，镜头全程不停：0–3.0s 从 0.86 倍推到 0.9 倍；3.0–4.1s 用 1.1s 平移到笔记本 2，0.9 倍，带 −3° 横滚；4.1–4.4s 漂到 0.94 倍；4.4–5.5s 拉远到 0.72 倍并回正；5.5–6.4s 横滚到 −3° 并推到 0.74 倍，三束光都留在画面内；6.4–7.5s 用 1.1s 到 0.9 倍，画面中心放在笔记本 2 右侧 60px、上方 175px，整束宽光和参数文字都在画面内；7.5–8.3s 推到 0.93 倍；8.3–11.0s 推到 1.2 倍"
+          ],
+          [
+            "主体",
+            "笔记本盖板 380x268px，圆角上 14px、下 9px，上沿每侧比下沿窄 6px，上沿一条 4px 高的亮线，四周两层倒角线，下沿 44px 渐变加深（最下 6px 是深色铰链暗带）；打开时盖板高度 262px（268px 的 98%），下面是一条 374x11px 的薄底边（没有按键纹理）露出约 4px，底边下是 360x30px 的柔和接触阴影；笔记本 1 和 3 在 4.6–5.6s 偏航时底边上移 2px，露出的边只剩约 2px，盖板读成薄板；合上时盖板变成 380x268px 的矩形，铰链暗带淡出，底边下移 9px，只露出约 7px。光束近端始终贴在盖板上沿，倾斜只平移远端边（平移量 = 长度 × tan 角度），不旋转整束光。远端边两角的高度差用偏移 k 表示（右角低 k，左角高 k，负值相反）。光束 1 开场长 800px（1.9–3.1s 到 820px），近端半宽 170px，远端半宽 520px；光束 2 长 860px，近端半宽 170px，远端半宽 560px，k=30；三束同时亮时，光束 1 长 650px、近端半宽 150px、远端半宽 330px、k=−40，光束 2 长 680px、近端半宽 150px、远端半宽 330px、k=0，光束 3 长 650px、近端半宽 160px、远端半宽 350px、k=45；宽光束长 560px，近端半宽 190px，远端半宽 800px。界面是 1280x800 的整屏，放大 1.25 倍（邮件 1.1 倍，图层比居中位置向左 20px、向下 114px，邮件提示条和一整段正文都落在光束内；宽光束里的控制台 1.3 倍）"
+          ],
+          [
+            "同步",
+            "1.9s 补全被接受、提示条消失和 5 行代码变实在同一帧，提示条和代码都在光束里；构建表 Building 变 Ready、0.9 s 变 1.8 s 在 5.05s 同一帧，两格都在光束 2 中央；邮件提示条 5.5s 出现在光束 3 的轴线上，同一束光里有完整的一段正文和两个附件；光束出现前 0.2s 笔记本上沿先亮"
+          ],
+          [
+            "风格",
+            "纯黑 <code>#040405</code>，唯一强调色青绿 <code>#2dd4bf</code>；界面 Inter 13px；参数文字 League Gothic，小字 40px，数字 224px，标签 94px，倾斜 −10°，沿右侧斜边旋转约 −43°，离边 18px；字标 Inter 600；每 3 帧换一次的颗粒和暗角"
+          ]
+        ],
+        "prompt": "用「屏幕投光（Screen Projection Beams）」做一支 11 秒、1920x1080、30fps 的黑场产品片，虚构产品 Harbor（笔记本和它的三个 App 界面）。画面纯黑 #040405，唯一强调色青绿 #2dd4bf。笔记本是从背后略偏上看的薄银色盖板：380x268px，圆角上 14px、下 9px，上沿每侧比下沿窄 6px，上沿一条 4px 高的亮线，四周两层倒角线（1px 亮线加 3px 暗线），下沿 44px 渐变加深，最下 6px 再叠一条深色铰链暗带，表面有极淡的竖向拉丝；打开时盖板高度 262px（268px 的 98%），下面是一条 374x11px 的薄底边（上暗下亮的金属渐变，没有按键纹理）露出约 4px，底边下有 360x30px 的柔和接触阴影；偏航的笔记本 1 和 3 把底边上移 2px，露出的边减半，光束亮起时地面泛一圈淡青色；盖板中央一个暗刻的字标，盖板上沿是出光口。光束是 clip-path 梯形窗口，近端贴在盖板上沿，从出光口向外张开。倾斜光束时只平移远端边（平移量 = 长度 × tan 角度），近端边不动，所以近端始终贴着盖板；远端边两角的高度差用偏移 k 表示（右角低 k px，左角高 k px，负值相反）。窗口后面是固定在屏幕空间的界面图层（1280x800 的整屏，放大 1.25 倍），光束摆动时界面不动，只是露出的部分在变。光束边缘加 3px 的亮线，出光口加一团亮光（峰值不透明度 50%，让界面先被读到），笔记本盖板上沿同时亮起。三块界面全部是英文真实内容：A 深色代码编辑器（文件树、标签页、33 行 TypeScript、小地图、底部终端、状态栏），B 浅色构建控制台（侧栏、4 张 KPI 卡、14 天构建时长折线图，图上标注 v2.14 · cache on、构建表，列顺序 Build、Commit、Status、Duration、Branch、Author、Started，中位数 1.8s，缓存命中率 94.2%），C 深色邮件（侧栏、10 封邮件列表、打开的一封 Re: Q4 launch checklist，含两段正文和两个附件）。时间线：0–1.4s 笔记本 1 从下方 80px、1.14 倍升起落位（expo.out），透明度 0.35→1 用 0.7s；镜头起始 0.86 倍，3 秒内慢推到 0.9 倍。0.55s 上沿亮边，0.75s 光束 1 展开（长度 0→800、远端半宽 170→520、近端半宽 170，1.0s expo.out；倾斜 −14°→−3°，1.3s expo.out，k=0）。1.15s 编辑器里出现浮动提示条 Accept Tab，位置在光束中央；1.9s 按 Tab 接受，提示条消失，灰显补全的 5 行同帧变实，光束长度 1.9–3.1s 慢变到 820。2.05–3.0s 光束 1 慢摆到 +12°（sine.inOut）；2.35–3.0s 终端每 0.12s 出一行，共 6 行，最后是 Build complete in 1.8s。3.0–3.45s 交接：光束 1 在 0.45s 内向左倾到 −26° 并收窄成线（倾斜 power2.in，收窄 power2.inOut），镜头用 1.1s（power3.inOut）平移到右边的笔记本 2，0.9 倍，带 −3° 横滚；光束 1 收完后，3.4s 光束 2 才展开（倾斜 −30°→−6°，1.3s；长度 860，近端半宽 170，远端半宽 560，k=30，1.0s），露出控制台，两束光不重叠；笔记本 1 在 3.45–3.85s 淡出，4.45s 起用 0.35s 淡回；笔记本 3 4.7s 才用 0.35s 淡入，所以画面下沿不会切到没亮的侧面笔记本；折线在 3.75–4.75s 画出；4.1–4.4s 镜头漂到 0.94 倍。4.4–5.5s 镜头拉到 0.72 倍并回正（1.1s，power3.inOut）；光束 2 在 4.55–5.65s 慢摆到 +4°，4.65–5.55s 收窄到长 680、近端半宽 150、远端半宽 330、k=0。4.75s 光束 1 重开（倾斜 −30°→−17°，1.3s；长 650、近端半宽 150、远端半宽 330、k=−40，1.0s），5.0s 光束 3 首次展开（倾斜 +28°→+20°，1.3s；长 650、近端半宽 160、远端半宽 350、k=45，1.0s），笔记本 1 和 3 在 4.6–5.6s 偏航 −9° 和 +10°；三束同时亮，光束 3 打开时落在邮件界面上，邮件界面放大 1.1 倍，图层比居中位置向左 20px、向下 114px，摆放成光束中央是一整段正文加两个附件，文字不被光束左边缘切到。5.05s 构建表第一行的 Status 列 Building 变 Ready，Duration 列 0.9 s 变 1.8 s，两格都在光束 2 中央（Ready 格闪一下绿色底）；5.5s 邮件提示条（Priya Nair：Legal signed off on the terms. Sending the final PDF now.）出现在光束 3 轴线上，6.3s 淡出；5.5–6.4s 光束 2 慢摆到 −4°，光束 3 摆到 +18°，镜头横滚到 −3° 并推到 0.74 倍。6.4–6.9s 光束 1 和 3 向内摆到 +12° 和 −12° 并收窄（6.42–6.92s，power3.in），6.5–6.9s 笔记本 1 和 3 淡出（0.4s），7.05s 参数文字出现时它们已经不在画面里；6.4–7.5s 镜头用 1.1s 到笔记本 2，0.9 倍，画面中心放在笔记本 2 右侧 60px、上方 175px；6.5–7.5s 光束 2 回正并变成一束完整落在画面内的宽扁光束（近端半宽 190，远端半宽 800，长 560，k=0，power3.inOut），控制台放大到 1.3 倍，图表的标注 v2.14 · cache on 紧贴虚线右侧，Nov 4 提示框（Median 1.8 s、p95 4.1 s）在它右边的空位，两者不重叠。7.05s 参数文字沿右侧斜边向前滑入（沿边 200px，0.9s expo.out）：文字在斜边外侧，离边 18px，从离盖板右角 200px 处开始，整体旋转约 −43°，从下往上读，依次是小字 UP TO（League Gothic 40px）、青绿渐变大字 2.4×（224px）、白到灰渐变 FASTER BUILDS（94px），全部倾斜 −10°，2.4× 是最大的元素，整段文字都在画面内。7.5–8.3s 镜头推到 0.93 倍。8.3s 文字淡出 0.3s。8.25–8.85s 光束收窄（power3.in）；8.4–9.4s 盖板高度 0.98→1 并从梯形变成矩形，铰链暗带淡出，底边下移 9px 只露出约 7px，笔记本移到画面中心（1.0s，power3.inOut），镜头 8.3–11.0s 推到 1.2 倍；8.9s 字标亮成青绿光（0.8s），同时字标文字 Harbor 在盖板下方淡入（Inter 600，52px 随镜头放大到 62px，0.6s expo.out），它和盖板在同一个元素组里一起移动，任何一帧都不会压在盖板上，并保持到片尾（2.1s）；9.2s 盖板上扫过一道高光。叠加颗粒（每 3 帧换一次）和暗角。",
+        "says": [
+          "梯形光束是一个窗口，扫过时露出后面固定的界面",
+          "一台笔记本的光扫过去，下一台接着亮起来",
+          "参数文字沿宽光束的右侧斜边排开，最后笔记本合上"
+        ],
+        "vs": [
+          [
+            "3d-tilted-ui-depth-of-field",
+            "斜拍景深界面把一块界面倾斜拍，靠景深带视线；屏幕投光里界面不动，由梯形光束当窗口，多台设备之间交接。"
+          ],
+          [
+            "light-reveal",
+            "暗场显影用扫过的光在黑场里显出实物材质；屏幕投光的光束露出的是 App 界面，并且在几台笔记本之间交接。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Light Beam Effect",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Light Beam Effect\": light beam effect; light beam effect photoshop; light beam effect png; light beam effect figma",
+      "checked": "2026-11-28"
+    },
+    "title": "Light Beam Effect: Example and Code Recipe",
+    "description": "Laptops throw trapezoid beams of light that reveal app screens, hand off and carry a stat along one edge. Make it with Claude Code or Codex.",
+    "lede": "Small laptops on black each throw a trapezoid beam of light with an app screen inside it. The beams swing, hand off, merge into one wide beam that carries a stat along its right edge, and the last laptop closes.",
+    "name": "Light Beam Effect",
+    "ownName": "Screen Projection Beams",
+    "body": [
+      {
+        "h2": "How to make a Light Beam Effect with Claude Code or Codex",
+        "body": "Build each beam as a clip-path trapezoid window over a screen that stays fixed in screen space. The first beam opens at 0.75s over 1.0s with expo.out, cubic-bezier(0.16,1,0.3,1): length 0 to 800px, far half-width 170px to 520px, lean -14° to -3°. Lean a beam by moving only its far edge sideways (length × tan of the angle), so the near edge stays pinned to the lid top and the beam sweeps across a still, readable UI. Each laptop lid is 380x268px, 262px high when open, with a slim 11px base edge under a dark hinge band.\n\nHand the light from one laptop to the next. At 3.0s beam 1 leans left to -26° and narrows in 0.45s while the camera pans for 1.1s to laptop 2, whose beam opens at 3.4s once beam 1 has closed. At 4.4s the camera pulls back to 0.72x and three beams run together, each 650–680px long with a far half-width of 330–350px. At 6.5s one beam widens to 800px half-width and 560px length, fully inside the frame, and at 7.05s the stat slides in along its right edge at about 43° over 0.9s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the laptops, the three screens and the beams. Close the lid from 8.4s to 9.4s, light the mark teal #2dd4bf and fade the word Harbor in under the lid at 8.9s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "Three white devices projecting glowing glass panels upward: code, a chart and an email.",
+    "faq": [
+      [
+        "What is a light beam effect in a product film?",
+        "A light beam effect throws a cone of light from a screen or a device and shows content inside the cone. In this film the cone is a window onto an app screen, so the beam can swing and hand off between devices while the screen itself stays still."
+      ],
+      [
+        "How do you keep the UI readable while the beam moves?",
+        "Keep the screen layer fixed in screen space and lean the beam by moving only its far edge, so the near edge stays on the lid. The beam changes which part of the UI shows, but the text never tilts. Scale the screen 1.25x so 13px interface text stays legible inside a beam about 1000px wide."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "光束效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"光束效果\": ps 光束效果; ai 光束效果; ppt 光束效果; illustrator 光束效果",
+      "checked": "2026-11-28"
+    },
+    "title": "光束效果：示例与代码配方",
+    "description": "笔记本向外投出梯形光束，光束露出 App 界面、在几台设备间交接，并沿右侧斜边展开参数文字。用 Claude Code 或 Codex 按免费配方做出这个光束效果。",
+    "lede": "几台笔记本在黑场里各自向外投出一束梯形光，光束里是它的 App 界面，光束摆动、交接，最后收成一束宽光，参数文字沿右侧斜边展开，笔记本合上。",
+    "name": "光束效果",
+    "ownName": "屏幕投光",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做光束效果",
+        "body": "每束光是一个 clip-path 梯形窗口，窗口后面的界面固定在屏幕空间。第一束光 0.75s 开始展开，用 1.0s，缓动 expo.out（cubic-bezier(0.16,1,0.3,1)）：长度 0 到 800px，远端半宽 170px 到 520px，倾斜 −14° 到 −3°。倾斜时只平移光束的远端边（长度 × tan 角度），近端边始终贴在盖板上沿，光束扫过的是一块不动、读得清的界面。笔记本盖板 380x268px，打开时高 262px，下面是 11px 的薄底边和一条深色铰链暗带。\n\n光在笔记本之间交接。3.0s 光束 1 用 0.45s 向左倾到 −26° 并收窄，镜头同时用 1.1s 平移到笔记本 2，光束 1 收完后它的光束 3.4s 展开。4.4s 镜头拉到 0.72 倍，三束光同时亮，每束长 650–680px，远端半宽 330–350px。6.5s 一束光变宽，远端半宽 800px、长 560px，整束都在画面内，7.05s 参数文字用 0.9s 沿右侧约 43° 的斜边滑入。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出笔记本、三块界面和光束。8.4s 到 9.4s 合上盖板，字标亮成青绿 #2dd4bf，8.9s 字标文字 Harbor 在盖板下淡入。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "三个白色设备向上投射发光的玻璃面板，分别是代码、图表和邮件。",
+    "faq": [
+      [
+        "产品片里的光束效果是什么？",
+        "光束效果从屏幕或设备向外投出一束光，光束里显示内容。这支片子里光束是一扇窗，后面是 App 界面，所以光束可以摆动、在设备之间交接，而界面本身不动。"
+      ],
+      [
+        "光束移动时怎么让界面保持可读？",
+        "把界面图层固定在屏幕空间，倾斜光束时只平移远端边，近端边留在盖板上。光束只改变露出界面的哪一部分，文字不会倾斜。界面放大 1.25 倍，13px 的界面文字在约 1000px 宽的光束里仍然清楚。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

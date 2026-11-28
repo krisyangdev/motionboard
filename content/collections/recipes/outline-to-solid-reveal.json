@@ -1,0 +1,188 @@
+{
+  "slug": "outline-to-solid-reveal",
+  "category": [
+    "reveal"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/outline-to-solid.mp4",
+    "poster": "https://media.motionboard.app/outline-to-solid.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 8,
+    "cat": "A",
+    "star": false,
+    "video": "outline-to-solid",
+    "samples": [
+      {
+        "t": "Apple Vision Pro",
+        "id": "7B-rzR2avR0",
+        "at": "0:01–0:07",
+        "s": 1
+      },
+      {
+        "t": "Vercel v0",
+        "id": "By9wCB9IZp0",
+        "at": "0:00–0:02",
+        "s": 0
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The shape comes before the material, so the first thing viewers remember is the silhouette. The light stays the only light source, and when the solid appears its highlight sits where the light comes from. The wireframe stage has very low opacity, so it does not compete with the solid that follows.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Product shot 0–8.2s: light point fades in 0.45–1.0s, outline draw 1.0–4.0s (3.0s, 90 frames), solid body fades in 3.3–4.8s (1.5s, 45 frames, overlapping the last 0.7s of the draw), wide highlight 3.8–5.3s (peaks 0.5s, 15 frames, after the body), outline fades to 14% 4.6–5.7s, LED 5.5–6.1s, still, then push 6.3–8.2s. Short logo version 8.2–11.0s (2.8s): wireframe 8.22–8.62s (0.4s) + fill wipe 8.66–9.26s (0.6s)"
+          ],
+          [
+            "Easing",
+            "Outline draw <code>cubic-bezier(0.65,0,0.35,1)</code> (power2.inOut: slow, then fast, then slow); body and highlight fade in on the same curve; light point and outline fade sine.inOut; push power2.in; the fill wipe uses power2.inOut"
+          ],
+          [
+            "Camera",
+            "Perspective, 18° fov, fixed camera; still until 6.3s (1.0s after the highlight peak), then a slow push-in of 5% (scale 1.00→1.05) to 8.2s"
+          ],
+          [
+            "Subject",
+            "A light point starts at the top center and two heads extend symmetrically to both sides, drawing the full outline down to the bottom center; line about 1.5px (tube radius 0.0105 units) with bloom and a halo on the heads; the solid body fades in inside the outline, and the brightest wide highlight (a separate light pass) comes last"
+          ],
+          [
+            "Style",
+            "Pure black background, cool white line (<code>rgb(214,235,255)</code>), ACES tone mapping at exposure 1.2, bloom, 0.016 grain; the logo version uses a white background with a gray wireframe (<code>#b4b4b6</code>, 1.5px), a black solid (<code>#0b0b0c</code>) wiping in from left to right, and construction lines at 10% opacity"
+          ]
+        ],
+        "prompt": "Build a product opening called Outline to Solid. Pure black background, 18° fov fixed camera. A point of light fades in at the top center over 0.45–1.0 seconds, then from 1.0s two heads extend symmetrically to both sides, tracing the full outline of your product down to the bottom center, with line width about 1.5px and bloom plus a halo on the heads. The outline draw uses power2.inOut (cubic-bezier(0.65,0,0.35,1)) and takes 3 seconds. When the outline is nearly closed (3.3s), the solid product fades in inside it over 1.5 seconds, and the wide highlight, a separate light pass from above, reaches full brightness 0.5 seconds after the body (3.8–5.3s). The outline fades to 14% over 4.6–5.7s and a small LED comes on at 5.5–6.1s. Then hold still until 6.3s and push in slowly by 5% (power2.in) until 8.2s. For a logo (a 2.8-second cut on white): fade in a gray wireframe and 10%-opacity construction lines over 0.4 seconds, then wipe in a black solid from left to right over 0.6 seconds with power2.inOut, fade the wireframe and construction lines out, and scale the lockup 1.00→1.03 across the cut.",
+        "says": [
+          "Draws the outline first, then fills it in solid",
+          "A light draws the product's shape in one stroke",
+          "A wireframe turns into a solid logo"
+        ],
+        "vs": [
+          [
+            "light-reveal",
+            "Light Reveal raises overall exposure; Outline to Solid shows the line first, then the solid."
+          ],
+          [
+            "rotating-logo-reveal",
+            "Rotate to Lockup aligns to the target by rotating; Outline to Solid changes the material from line to surface."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "先给形状再给材质，观众第一眼记住的是轮廓；光线始终是唯一光源，实体显形时高光位置与光线来源一致；线框阶段的透明度很低，存在感不抢后面的实体。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。产品镜头 0–8.2s：光点 0.45–1.0s 淡入，勾线 1.0–4.0s（3.0s，90 帧），实体 3.3–4.8s 淡入（1.5s，45 帧，与勾线末段 0.7s 重叠），宽高光 3.8–5.3s（在实体之后 0.5s 即 15 帧达到最亮），轮廓线 4.6–5.7s 降到 14%，LED 5.5–6.1s，静止后 6.3–8.2s 推近。logo 短版 8.2–11.0s（2.8s）：线框 8.22–8.62s（0.4s）+ 填充擦入 8.66–9.26s（0.6s）"
+          ],
+          [
+            "缓动",
+            "勾线 <code>cubic-bezier(0.65,0,0.35,1)</code>（power2.inOut，前慢后快再慢）；实体和高光淡入用同一曲线；光点和轮廓线淡出用 sine.inOut；推近 power2.in；填充擦入 power2.inOut"
+          ],
+          [
+            "镜头",
+            "透视相机 fov 18°，固定机位；静止到 6.3s（高光最亮之后 1.0s），之后到 8.2s 缓慢推近 5%（scale 1.00→1.05）"
+          ],
+          [
+            "主体",
+            "光点从顶部中点起笔，两个笔头向两侧对称延伸，画完整轮廓直到底部中点；线宽约 1.5px（管半径 0.0105 单位），带辉光，笔头带光晕；实体在轮廓内淡入，最亮的宽高光（单独一层光照）最后出现"
+          ],
+          [
+            "风格",
+            "纯黑底，冷白光线（<code>rgb(214,235,255)</code>），ACES 色调映射，曝光 1.2，辉光，颗粒 0.016；logo 版用白底、灰色线框（<code>#b4b4b6</code>，1.5px），黑色实心（<code>#0b0b0c</code>）从左向右擦入，构造线 10% 不透明度"
+          ]
+        ],
+        "prompt": "用「描边显形（Outline to Solid）」做产品开场。纯黑底，fov 18° 固定机位。顶部中央 0.45–1.0 秒淡入一个光点，1.0 秒起两个笔头向两侧对称延伸，沿你的产品轮廓一路画到底部中点，线宽约 1.5px，带辉光，笔头带光晕。勾线用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）共 3 秒。轮廓基本闭合时（3.3 秒），产品实体在轮廓内淡入 1.5 秒，宽高光（来自上方的单独一层光照）在实体之后 0.5 秒达到最亮（3.8–5.3 秒）。轮廓线在 4.6–5.7 秒降到 14%，小 LED 在 5.5–6.1 秒亮起。之后静止到 6.3 秒，再用 power2.in 缓慢推近 5% 到 8.2 秒。如果是 logo（白底的 2.8 秒切镜）：灰色线框和 10% 不透明度的构造线淡入 0.4 秒，黑色实心用 power2.inOut 从左向右擦入 0.6 秒，随后线框和构造线淡出，整个 lockup 在这一段内 scale 1.00→1.03。",
+        "says": [
+          "先画轮廓线再填满变成实心的",
+          "光线一笔勾出产品形状",
+          "线框变成实体 logo"
+        ],
+        "vs": [
+          [
+            "light-reveal",
+            "暗场显影整体曝光抬升；描边显形先出线再出实体"
+          ],
+          [
+            "rotating-logo-reveal",
+            "旋转落定靠转动对准目标；描边显形靠材质从线到面的变化"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Outline-to-Solid Reveal",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Outline-to-Solid Reveal\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Outline-to-Solid Reveal: Example and Code Recipe",
+    "description": "A light point draws a product outline in 3s, then a solid body and highlight fill it in. Make this outline reveal with Claude Code or Codex.",
+    "lede": "A wireframe or light-drawn outline appears first, then fills into a solid shape or material.",
+    "name": "Outline-to-Solid Reveal",
+    "ownName": "Outline to Solid",
+    "body": [
+      {
+        "h2": "How to make a Outline-to-Solid Reveal with Claude Code or Codex",
+        "body": "On a pure black background, fade in a light point at top center at 0.45s. Two heads extend symmetrically and draw the outline (a tube about 1.5px wide) from 1.0 to 4.0s on power2.inOut, cubic-bezier(0.65,0,0.35,1), with bloom and a halo on the heads. Use an 18° fov perspective camera, fixed until 6.3s.\n\nThe solid body fades in inside the outline from 3.3 to 4.8s, overlapping the last 0.7s of the draw. The widest highlight, a separate light pass, runs 3.8–5.3s after the body. The outline then fades to 14% over 4.6–5.7s, and a 5% push-in runs 6.3–8.2s. A 2.8s logo version uses a 0.4s wireframe and a 0.6s fill wipe.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the outline, body and highlight as separate layers. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A black game controller drawn with a thin white outline on a black background.",
+    "faq": [
+      [
+        "What is an outline-to-solid reveal?",
+        "The shape first appears as a line drawing, such as a wireframe or a path drawn by light, and then fills with a solid surface or material. The viewer reads the silhouette before the material."
+      ],
+      [
+        "Should the outline stay visible after the fill?",
+        "In this film the outline fades to 14% between 4.6 and 5.7s, after the body is in. The faint line stays as a silhouette cue while the solid takes over."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "描边到实体显形动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"描边到实体显形动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "描边到实体显形动画：示例与代码配方",
+    "description": "一个光点用 3s 勾出产品轮廓，随后实体和高光填满。用 Claude Code 或 Codex 按免费配方做出这个描边显形动画。",
+    "lede": "先出线框或光线勾出的轮廓，再填成实心或材质。",
+    "name": "描边到实体显形动画",
+    "ownName": "描边显形",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做描边到实体显形动画",
+        "body": "纯黑背景，0.45s 在顶部中心淡入一个光点。两个线头对称向两侧延伸，在 1.0–4.0s 用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）画完整圈轮廓，线宽约 1.5px，线头带辉光和光晕。透视相机视场角 18°，6.3s 之前固定。\n\n实体在 3.3–4.8s 于轮廓内部淡入，与轮廓绘制的最后 0.7s 重叠。最宽的高光是单独一层光，在实体之后的 3.8–5.3s 出现。轮廓在 4.6–5.7s 降到 14%，6.3–8.2s 慢推 5%。另有 2.8s 的 logo 版本，线框 0.4s，填充擦除 0.6s。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会把轮廓、实体和高光分成三层来做。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "黑底上一只黑色游戏手柄，边缘勾着细白线。",
+    "faq": [
+      [
+        "什么是描边到实体的显形？",
+        "形状先以线稿出现，比如线框或光线画出的路径，再填成实心或材质。观众先记住轮廓，再看到材质。"
+      ],
+      [
+        "填充之后轮廓还要保留吗？",
+        "这支片子里轮廓在 4.6–5.7s 降到 14%，此时实体已经进入。保留的淡线起到轮廓提示作用，主体交给实体。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

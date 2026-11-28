@@ -162,6 +162,7 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
         <img
           src={media(term, 'jpgSmall')}
           alt=""
+          aria-hidden="true"
           width={960}
           height={540}
           loading={eager ? 'eager' : 'lazy'}

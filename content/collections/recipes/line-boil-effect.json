@@ -1,0 +1,196 @@
+{
+  "slug": "line-boil-effect",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/line-boil.mp4",
+    "poster": "https://media.motionboard.app/line-boil.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 34,
+    "cat": "D",
+    "star": false,
+    "video": "line-boil",
+    "samples": [
+      {
+        "t": "Superhuman",
+        "id": "nJUylrt1OdU",
+        "at": "0:01–0:52",
+        "s": 1
+      },
+      {
+        "t": "Superhuman",
+        "id": "nJUylrt1OdU",
+        "at": "0:05–0:11",
+        "s": 5
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Lines keep trembling slightly even when the picture is still, so the frame always seems to be moving while keeping the hand-drawn stroke. Low-frame-rate frame-by-frame animation reads differently from smooth tweened vector animation, and the action frame rate matches the boil frame rate.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Every state is a function of <code>K = floor(t*7.5)</code>, so one new trace every 4 frames (0.133s) for the whole film. Scenes: chaos 0-2.67s (K 0-19), split inbox 2.67-5.87s (K 20-43), draft reply 5.87-7.87s (K 44-58), inbox zero 7.87-8.8s (K 59-65), wordmark 8.8-11s with the name at 8.93s"
+          ],
+          [
+            "Easing",
+            "No tweening and no easing: position and shape jump per index. Flights are 3 positions on an arc, each held 4 frames (0.4s total); poses alternate every index; the whole canvas is redrawn from a clean white background each trace"
+          ],
+          [
+            "Camera",
+            "Fixed; the scene is swapped on a white background with hard cuts at K 20, 44, 59 and 66"
+          ],
+          [
+            "Subject",
+            "Each stroke is re-drawn every index with a smooth sine displacement of 1.05px amplitude plus a random offset of up to 0.65px per axis (about 1.7px), over a fixed 1.9px wobble. Open strokes get up to 3px of overshoot, fills sit up to 2.2px off the outline with marker streaks, and lettering uses 3 variants per letter. Character poses are mostly still; during an action the pose or position changes once per index (7.5fps)"
+          ],
+          [
+            "Sync",
+            "All changes are hard cuts keyed to the same index: unread counter steps 48, 97, 131, 166, 212 at K 1, 4, 7, 10, 13; red labels appear at K 4, 7, 10, 13; one envelope launches per index from K 21 and lands 3 indices later; rules write in as each tray receives its first envelope; draft words arrive 3 per index; SENT, the cursor press and the reply flight follow in single-index steps"
+          ],
+          [
+            "Style",
+            "Pure white background; ink <code>#1c1a21</code> at 4.4px with pressure variation and a chisel or fine nib; flat color fills with darker marker streaks; green <code>#16a35a</code> for the brand and titles, red <code>#e3352b</code> for chaos labels, tray colors VIP <code>#ffc417</code>, TEAM <code>#2f6bff</code>, BILLING <code>#ff7a1c</code>, NEWS <code>#f04e98</code>"
+          ]
+        ],
+        "prompt": "Build a hand-drawn animation called Line Boil, 11s on a pure white background. Draw every character, prop and letter as strokes on a canvas, and redraw the whole frame from the index K = floor(t*7.5), a new trace every 4 frames (0.133s). Each trace displaces every stroke with a smooth sine field of 1.05px amplitude plus a random per-stroke offset of up to 0.65px per axis, over a fixed 1.9px wobble; ink is #1c1a21 at 4.4px with pressure variation, tapered open ends with up to 3px overshoot, a chisel nib for titles and a fine nib for body text; fills are flat color offset up to 2.2px from the outline with darker marker streaks; lettering is single-stroke caps with 3 variants per letter. Poses stay mostly still, and every action (flights as 3 arc positions held 4 frames each, pose swaps, typing 3 words per index, counters) steps on the same 7.5fps index with no tweening. Hard-cut through five scenes at K 20, 44, 59 and 66 (2.67s, 5.87s, 7.87s, 8.8s): a chaos desk with an unread counter and red labels, a split inbox sorting 12 emails into four colored trays, a drafted reply with SEND, SENT and a flying envelope, an Inbox Zero cheer, and the wordmark written at 8.93s. All labels and clears are hard cuts with 0 frames of transition.",
+        "says": [
+          "The hand-drawn lines keep trembling slightly",
+          "It looks like a stick-figure animation drawn frame by frame",
+          "The line edges change a little every few frames"
+        ],
+        "vs": [
+          [
+            "dot-matrix-animation",
+            "Dot-Matrix Glyph restricts the graphic to grid points; Line Boil keeps continuous lines and only lowers the frame rate in time."
+          ],
+          [
+            "branching-growth",
+            "The doubling version of Branching Growth also uses 8fps frame skipping; Line Boil is the trace itself changing frame by frame."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "画面静止时线条仍在轻微抖动，画面看起来一直在动，同时保留手绘笔触。低帧率逐帧和平滑补间的矢量动画区分开；动作帧率与抖动帧率保持一致。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。所有状态都是 <code>K = floor(t*7.5)</code> 的函数，整段每 4 帧（0.133s）换一版描线。场景：混乱 0–2.67s（K 0–19），分拣收件箱 2.67–5.87s（K 20–43），起草回复 5.87–7.87s（K 44–58），收件箱清零 7.87–8.8s（K 59–65），字标 8.8–11s，名称在 8.93s 写出"
+          ],
+          [
+            "缓动",
+            "无补间、无缓动：位置和形状按序号跳变。飞行是弧线上的 3 个位置，每个位置停 4 帧（共 0.4s）；姿势每个序号交替一次；每一版都从干净的白底整体重画"
+          ],
+          [
+            "镜头",
+            "固定，白底上替换画面，在 K 20、44、59、66 处硬切"
+          ],
+          [
+            "主体",
+            "每根线条每个序号重画一次，叠加振幅 1.05px 的平滑正弦位移和每轴最多 0.65px 的随机偏移（合计约 1.7px），底下还有固定不变的 1.9px 抖动。开放线条两端最多 3px 出头，色块比轮廓偏移最多 2.2px 并带马克笔笔触，手写字每个字母有 3 种写法。角色姿势基本静止；有动作时，姿势或位置每个序号变一次（7.5fps）"
+          ],
+          [
+            "同步",
+            "所有变化都是硬切，并且对齐同一个序号：未读计数在 K 1、4、7、10、13 依次跳到 48、97、131、166、212；红色标签在 K 4、7、10、13 出现；从 K 21 起每个序号飞出一封邮件，3 个序号后落入托盘；每个托盘收到第一封邮件时写入对应规则；草稿每个序号出 3 个词；SENT、鼠标按下和回复飞出也按单个序号逐步推进"
+          ],
+          [
+            "风格",
+            "纯白底；墨色 <code>#1c1a21</code>，线宽 4.4px，带压力变化，用斜口笔尖或细笔尖；平涂色块叠加较深的马克笔笔触；品牌和标题用绿色 <code>#16a35a</code>，混乱标签用红色 <code>#e3352b</code>，托盘颜色 VIP <code>#ffc417</code>、TEAM <code>#2f6bff</code>、BILLING <code>#ff7a1c</code>、NEWS <code>#f04e98</code>"
+          ]
+        ],
+        "prompt": "用「手绘抖线（Line Boil）」做一段手绘风动画，全片 11s，纯白底。所有角色、道具和文字都用线条在画布上绘制，整帧按序号 K = floor(t*7.5) 重画，每 4 帧（0.133s）换一版描线。每一版给每根线条叠加振幅 1.05px 的平滑正弦位移，再加每根线每轴最多 0.65px 的随机偏移，底下还有固定的 1.9px 抖动；墨色 #1c1a21，线宽 4.4px，带压力变化，开放线条两端最多 3px 出头，标题用斜口笔尖，正文用细笔尖；色块平涂，比轮廓偏移最多 2.2px，并带较深的马克笔笔触；文字是单笔画大写字母，每个字母有 3 种写法。姿势基本静止，所有动作（弧线上 3 个位置、每个停 4 帧的飞行，姿势替换，每个序号打 3 个词，计数器）都在同一个 7.5fps 序号上逐步推进，不做任何补间。在 K 20、44、59、66（2.67s、5.87s、7.87s、8.8s）硬切五个场景：带未读计数和红色标签的混乱桌面，把 12 封邮件分进四个彩色托盘的分拣收件箱，带 SEND、SENT 和飞出信封的回复草稿，收件箱清零的欢呼，以及在 8.93s 写出的字标。所有标签和清空变化都用硬切，0 帧过渡。",
+        "says": [
+          "手绘线条一直在轻轻抖动",
+          "画面像一帧一帧画出来的火柴人动画",
+          "线条边缘每隔几帧就变一点"
+        ],
+        "vs": [
+          [
+            "dot-matrix-animation",
+            "点阵量化把图形限制在格点上；手绘抖线保留连续线条，只在时间上降帧"
+          ],
+          [
+            "branching-growth",
+            "分叉生长的翻倍版也用 8fps 跳帧；手绘抖线是描线本身的逐帧变化"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Line Boil",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 480 for \"line boil\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Line Boil: What It Is and How to Animate It in Code",
+    "description": "Line boil is the shimmer of hand-drawn lines redrawn every frame. This free recipe redraws each line every 4 frames (7.5 fps) with Claude Code or Codex.",
+    "lede": "Hand-drawn outlines swap to a slightly different trace every few frames, and motion steps at a low frame rate with no tweening.",
+    "name": "Line Boil Effect",
+    "ownName": "Line Boil",
+    "body": [
+      {
+        "h2": "How to make a Line Boil Effect with Claude Code or Codex",
+        "body": "Drive every state from one index, K = floor(t x 7.5), so a new trace appears every 4 frames (0.133 s) for the whole 11 s film. Redraw the whole canvas from a clean white background at each index. Use no tweening and no easing: position and shape jump per index, and scenes hard-cut at K 20, 44, 59 and 66.\n\nRedraw each stroke with a sine displacement of 1.05 px amplitude plus a random offset up to 0.65 px per axis, over a fixed 1.9 px wobble. Open strokes overshoot up to 3 px, fills sit up to 2.2 px off the outline with marker streaks, and lettering uses 3 variants per letter. Ink is #1c1a21 at 4.4 px with pressure variation.\n\nKey every change to the same index: counters step at K 1, 4, 7, 10 and 13, and one envelope launches per index. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own characters and scenes."
+      }
+    ],
+    "alt": "A hand-drawn scene of a happy person at a laptop, with emails sorted into VIP, Team, Billing and News trays.",
+    "faq": [
+      [
+        "What is line boil in animation?",
+        "Line boil is the slight wobble of outlines that appears when every frame of a hand-drawn animation is redrawn separately, so lines shimmer even when the pose is still. Digital work can reproduce it on purpose."
+      ],
+      [
+        "How do I fake line boil in code?",
+        "Generate each stroke from a seeded random function keyed to a frame index that changes every few frames, offset the points by about 1 to 2 px and redraw. This recipe uses one new trace every 4 frames at 30 fps, which is 7.5 traces per second."
+      ],
+      [
+        "Is the Line Boil Effect recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "线条抖动效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"线条抖动效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "线条抖动效果：手绘动画示例与配方",
+    "description": "手绘线条每 4 帧换一版描线，动作按每秒 7.5 帧逐帧走，没有补间。用免费配方，让 Claude Code 或 Codex 做出这个线条抖动效果。",
+    "lede": "手绘线条每 2–3 帧换一版描线，动作按低帧率逐帧，没有补间。",
+    "name": "线条抖动效果",
+    "ownName": "手绘抖线",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做线条抖动效果",
+        "body": "所有状态都由一个序号驱动：K = floor(t x 7.5)，整支 11 秒的片子每 4 帧（0.133 秒）出现一版新描线。每个序号都在干净的白底上重绘整个画布。不用补间也不用缓动，位置和形状按序号跳变，场景在 K 为 20、44、59、66 时硬切。\n\n每条笔画重绘时加一个振幅 1.05px 的正弦位移，再加每轴最多 0.65px 的随机偏移，叠在固定的 1.9px 抖动上。开放笔画最多多出 3px，色块偏离轮廓最多 2.2px 并带马克笔纹理，每个字母有 3 种写法。墨色 #1c1a21，线宽 4.4px，带压感变化。\n\n所有变化都对齐同一个序号：计数器在 K 为 1、4、7、10、13 时跳变，每个序号发出一个信封。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，角色和场景换成你自己的。"
+      }
+    ],
+    "alt": "手绘画面：一个人在笔记本前欢呼，邮件被分进 VIP、Team、Billing、News 四个格子。",
+    "faq": [
+      [
+        "动画里的线条抖动是什么？",
+        "手绘动画的每一帧都要单独重画，轮廓会有轻微的晃动，姿势静止时线条也在闪动，这就是线条抖动（line boil）。数字制作里可以刻意还原这种效果。"
+      ],
+      [
+        "怎样用代码做线条抖动？",
+        "用带种子的随机函数生成每条笔画，随机的键是每隔几帧才变化一次的帧序号，把点偏移 1 到 2px 后重绘。这份配方每 4 帧换一版描线，帧率 30fps，也就是每秒 7.5 版。"
+      ],
+      [
+        "线条抖动效果配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

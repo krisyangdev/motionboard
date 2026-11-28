@@ -1,0 +1,181 @@
+{
+  "slug": "ripple-effect",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/ripple.mp4",
+    "poster": "https://media.motionboard.app/ripple.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 51,
+    "cat": "D",
+    "star": false,
+    "video": "ripple",
+    "samples": [
+      {
+        "t": "Apple AirPods Pro 3",
+        "id": "EMmKs8vMKhU",
+        "at": "0:02–0:08",
+        "s": 2
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The headline sits in a spectral ring that swells and sends out a few fading echoes, so by the time the line is read the eye is already held by a circular rhythm. For the reveal the same circle becomes a window: five rings open from the centre one after another, each holding a full copy of the next scene, outer rings first and inner rings after. The product inside each ring starts magnified and eases back to size, so the cut reads as travelling down a tunnel onto the product. The circles share the centre of the title ring, so the ring contracts (4.4–4.7s) and the first circle bursts open from the same point, and no hard cut is needed. The ring's hue runs twice around it and is the only colour on the #09090b backdrop; the product scene uses only white forms and one #8fb4ff light, so the frame returns to a restrained dark after the reveal. The earbuds and case begin landing while the rings open and are nearly settled when the last ring leaves (about 5.8s), and the spec line rises after that.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. The ring grows to full size over 0.1–1.7s (1.6s); the two headline lines blur in at 0.5s and 0.64s (1.1s each) with a 10px red/blue split that closes by 1.55s; echo rings are born at 0.9, 1.7, 2.5, 3.3 and 4.1s and each lives 2.8s; fringe and wobble swell 3.9–4.6s; the ring contracts 5.5% over 4.4–4.7s; five reveal rings open from 4.7s, 0.14s apart, 2.0s each; the case lands at 4.75s (1.8s) and the earbuds at 4.8s and 4.9s (1.9s); the spec line rises at 5.55s (0.9s) and fades at 7.2s (0.5s); the product recedes 7.3–8.3s; lockup mark 7.55s, wordmark 7.65s, tagline 7.95s; a highlight sweeps 8.9–9.9s and the lockup holds to the end"
+          ],
+          [
+            "Easing",
+            "Ring growth, reveal rings, headline and product landing expo.out (1 − 2^(−10p)); echo rings cubic.out; the contraction before the reveal power3.in; float and the slow headline scale sine.inOut; product push-in sine.out; product recede and wordmark highlight power2.inOut"
+          ],
+          [
+            "Camera",
+            "Locked frame, no camera move. The headline block scales 1→1.03x over 0.8–4.7s (sine.inOut); inside the five reveal rings the product scene starts magnified 1.30, 1.24, 1.18, 1.12 and 1.06x and eases to 1x as its ring opens, while a black veil of 55%, 45%, 35%, 25% and 15% clears with it; the product group pushes in 1→1.05x over 4.7–9.9s"
+          ],
+          [
+            "Subject",
+            "Main ring base radius 380px with four strokes 26/11/5/2.2px wide. Its colour is a conic gradient of 24 stops whose hue runs twice around the ring (saturation 82%, lightness 62–78%), starting at 205° − 38°/s × time and rotating at 0.55 rad/s. The edge wobbles with three sines of 5, 8 and 13 lobes (weights 1, 0.6, 0.35) at an amplitude of 3.2–5.6px. Echo rings grow from 402px to 732px radius (1.7px line, plus a 1.1px companion at +7px); three thin rings sit inside at R−18, R−36 and R−62; 220 radial ticks outside have length = energy × (3 + 34n²), with energy 0.3 plus 0.95 during 3.9–4.6s. The reveal rings are five clip-path circles centred at (960, 540), each holding a full copy of the product scene, radius 1320 × (1 − 2^(−10p)); every edge gets a 38px soft band, four strokes of 30/13/5.5/2.4px and thin lines at r+11 and r−9. Product scene: dark radial backdrop, two 230x414px white earbuds (left 701px, right 989px, tilted ∓8°, with a silver head, grey ear tip, mic ports and a blue edge light) and a 400x276px rounded case (left 760px, top 590px) with a lid seam, an LED and an engraved ring"
+          ],
+          [
+            "Sync",
+            "Each echo is born with a 7px outward push on the main ring that decays as exp(−5·age); fringe energy, wobble and brightness peak together at 4.6s, 0.1s before the first reveal ring opens and after the ring has contracted; the first reveal ring covers the headline within 0.1s; the case and earbuds land while the rings open, so the product is already settling when it is revealed; the spec line rises as the last ring nears the frame edge (about 5.8s); the lockup mark starts drawing as the product recedes"
+          ],
+          [
+            "Style",
+            "Base <code>#09090b</code>, accent <code>#8fb4ff</code> (case light and spec dots); the spectral rings are the only other colour. Inter throughout: headline 88px 700, spec line 26px 500, footnote 16px 400, wordmark 150px 700, tagline 36px 500; elliptical vignette (85% × 78%), no grain"
+          ]
+        ],
+        "prompt": "Build a 10-second, 1920x1080, 30 fps dark product film called Ripple Effect for a fictional product, Hush (noise-cancelling earbuds). Base colour #09090b, accent #8fb4ff, font Inter. One onUpdate driven by the timeline redraws two canvases and sets the radii of five clip-paths; text and product use GSAP tweens. No random numbers, no CSS animation.\n\nPart 1, the title ring (0–4.7s): a glowing spectral ring centred at (960, 540) with a base radius of 380px, drawn on canvas with the lighter composite mode. It is four strokes (26/11/5/2.2px wide, faint to strong) whose colour is a 24-stop conic gradient (createConicGradient) with the hue running twice around the ring (saturation 82%, lightness 62–78%, hue start 205° − 38°/s × time, gradient rotating at 0.55 rad/s). From 0.1 to 1.7s the ring grows from 0.6x to 1x with expo.out. The edge radius is R + amplitude × (sin(5θ − 2.3t) + 0.6·sin(8θ + 1.7t) + 0.35·sin(13θ − 3.1t)), amplitude 3.2–5.6px. Add three thin rings inside (R−18, R−36, R−62) and 220 radial ticks outside, length = energy × (3 + 34n²) with energy about 0.3. Echo rings are born at 0.9, 1.7, 2.5, 3.3 and 4.1s, live 2.8s, grow from 402px to 732px radius with cubic.out, fade out and are 1.7px wide. Each birth pushes the main ring out 7px, decaying as exp(−5·age), so the ring seems to swell with the echoes. Inside the ring sits the headline Silence, / tuned to you. (88px, weight 700, letter-spacing −0.035em, line-height 1.08): the two lines start at 0.5s and 0.64s and take 1.1s with expo.out from 14px blur and 22px below, while a CSS variable drives a 10px red/blue split that closes over 1.0s from 0.55s. A 16px lab-test footnote fades in at the bottom left from 1.4s. From 3.9 to 4.6s the energy rises by 0.95 and the wobble grows, and from 4.4 to 4.7s the ring contracts 5.5% (power3.in).\n\nPart 2, the reveal (4.7–6.4s): five circular clip-paths centred at (960, 540); circle k starts at 4.7 + 0.14k seconds with radius = 1320 × (1 − 2^(−10p)), p being progress over 2.0s. Each circle holds a full copy of the same product scene (one function builds all five); circle 0 is at the bottom and circle 4 on top, so outer rings leave first and inner rings follow. The copies start magnified 1.30, 1.24, 1.18, 1.12 and 1.06x and ease back to 1x with their ring, and a black veil of 55%, 45%, 35%, 25% and 15% clears with them, which gives the tunnel look. Draw each circle's edge on the upper canvas: a 38px soft band, four spectral strokes 30/13/5.5/2.4px wide, and thin lines at r+11 and r−9; the edge fades once the radius passes 1000px.\n\nProduct scene: a dark radial backdrop (#23262f to #09090b) with a faint blue glow. Two 230x414px white earbuds in SVG (silver-white head, grey ear tip with a mesh, mic ports, a blue edge light): the left one at left 701px, top 140px, the right one at left 989px, top 150px, mirrored, tilted ∓8°, both with a drop shadow. A 400x276px white rounded case (left 760px, top 590px) with a lid seam, a blue LED and a soft shadow. The case rises from 150px below at 0.88x over 1.8s with expo.out starting at 4.75s; the earbuds start at 4.8s and 4.9s, rise from 230 and 250px below and rotate from ±26° to ±8° over 1.9s. The product group pushes in to 1.05x over 4.7–9.9s, and from 6.7s everything floats 12–14px (sine.inOut). From 5.55s a 26px spec line sits under the product, Hush · 45 dB adaptive noise cancelling · 9 h, or 36 h with the case, rising over 0.9s and fading at 7.2s.\n\nEnding (7.3–10s): from 7.3s the product group takes 1.0s to drop to 16% opacity, 0.94x and 5px blur. At 7.55s a 124px mark (two spectral thin rings and a white centre dot) draws on and rotates, at 7.65s the wordmark Hush (Inter 700, 150px) rises out of blur, at 7.95s the tagline Noise cancelling, tuned to you. (36px) rises, and from 8.9 to 9.9s a spectral highlight sweeps across the wordmark; from 7.5 to 9.9s one more faint echo ring leaves the frame centre. Add a vignette, no grain.",
+        "says": [
+          "The headline holds in a glowing spectral ring that swells with each echo",
+          "Rings open from the centre one after another, each showing the next scene",
+          "The last ring clears and the shot lands on the product"
+        ],
+        "vs": [
+          [
+            "iris-transition",
+            "Iris Transition keeps a fixed round window that jumps in size with the beat and cuts images inside it; here concentric rings open one after another from the centre, each edge is a spectral stroke and a mask, and the move happens once."
+          ],
+          [
+            "glass-droplet-split",
+            "Glass Droplet Split stretches a glass form until it breaks; Ripple Effect has no solid object, only a ring that swells, echoes that fade and circular masks that open outward."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "标题放在一个会起伏的光谱环里，环向外放出几圈逐渐变淡的回波，观众读完这句话时，眼睛已经被圆形的节奏带住。揭示时同一个圆形变成窗口：5 个圈从中心依次展开，每个圈里是下一个场景的完整副本，外圈先出、内圈后出，圈与圈之间的产品先放大再回到原大小，看上去像穿过一条隧道落在产品上。圆的圆心和标题环的圆心相同，所以标题环收缩（4.4–4.7s）之后接着第一个圈从同一点冲开，转场不需要硬切。环的颜色是绕环转两圈的色相，在 #09090b 的暗底上是唯一的色彩，产品场景只用白色形体和一个 #8fb4ff 的指示灯，所以揭示之后画面回到克制的暗色。耳机和机盒在圈展开时已经开始落位，圈展开完（约 5.8s）时它们刚好落稳，参数行随后升起。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。环 0.1–1.7s 长到全尺寸（1.6s）；标题两行 0.5s 和 0.64s 起模糊淡入（各 1.1s），10px 的红蓝错位到 1.55s 合拢；回波环在 0.9、1.7、2.5、3.3、4.1s 各生一圈，每圈存活 2.8s；锯齿边和起伏 3.9–4.6s 加强；环在 4.4–4.7s 收缩 5.5%；5 个揭示圈从 4.7s 起每隔 0.14s 展开一个，各 2.0s；机盒 4.75s 落位（1.8s），耳机 4.8s 和 4.9s 落位（1.9s）；参数行 5.55s 升起（0.9s），7.2s 淡出（0.5s）；产品 7.3–8.3s 退到背景；字标符号 7.55s，字标 7.65s，标语 7.95s；高光扫过 8.9–9.9s，保持到片尾"
+          ],
+          [
+            "缓动",
+            "环长大、揭示圈、标题和产品落位 expo.out（1 − 2^(−10p)）；回波环 cubic.out；揭示前的收缩 power3.in；漂浮和标题缓慢放大 sine.inOut；产品推近 sine.out；产品退后和字标高光 power2.inOut"
+          ],
+          [
+            "镜头",
+            "画面固定，不做镜头运动。标题块 0.8–4.7s 从 1 倍慢放大到 1.03 倍（sine.inOut）；5 个揭示圈里的产品场景分别先放大 1.30、1.24、1.18、1.12、1.06 倍，随各自的圈展开回到 1 倍，同时 55%、45%、35%、25%、15% 的黑色罩层同步褪去；产品组 4.7–9.9s 从 1 倍推到 1.05 倍"
+          ],
+          [
+            "主体",
+            "主环基础半径 380px，四层描边宽 26/11/5/2.2px，颜色是 24 个节点的锥形渐变，色相绕环转两圈（饱和度 82%，亮度 62–78%），色相起点 205° − 38°/s × 时间，渐变以 0.55 rad/s 旋转。边缘按 5、8、13 瓣三个正弦（系数 1、0.6、0.35）起伏，幅度 3.2–5.6px；回波环半径从 402px 扩到 732px（1.7px 线宽，另有一圈 +7px、1.1px 的伴线）；环内还有 R−18、R−36、R−62 三圈细环；环外有 220 根放射刻线，长度 = 能量 × (3 + 34n²)，能量 0.3 起，3.9–4.6s 加 0.95。揭示圈是 5 个以 (960, 540) 为圆心的 clip-path 圆，每个里面是一整份产品场景，半径 1320 × (1 − 2^(−10p))，圆边画 38px 柔光带、30/13/5.5/2.4px 四层描边和 r+11、r−9 两圈细线。产品场景：深色径向背景，两只 230x414px 的白色耳机（左 701px、右 989px，各倾 ∓8°，带银色头部、灰色耳塞、麦克风孔和蓝色边缘光），一个 400x276px 的圆角机盒（左 760px、上 590px，带盖缝、LED 和压刻圆环）"
+          ],
+          [
+            "同步",
+            "每个回波环出生时主环向外顶 7px，再按 exp(−5·时间) 衰减；锯齿边能量、起伏和亮度在 4.6s 一起到顶，比第一个揭示圈早 0.1s，此时环已收缩；第一个揭示圈在 0.1s 内盖住标题；机盒和耳机在圈展开时落位，产品在被看见时已经在落定；最后一个圈接近画面边缘时（约 5.8s）参数行升起；产品开始退后时字标符号开始画"
+          ],
+          [
+            "风格",
+            "底色 <code>#09090b</code>，强调色 <code>#8fb4ff</code>（机盒指示灯和参数行圆点），光谱环是唯一的其他色彩；全片 Inter：标题 88px 700，参数行 26px 500，脚注 16px 400，字标 150px 700，标语 36px 500；椭圆暗角（85% × 78%），无颗粒"
+          ]
+        ],
+        "prompt": "用「波纹效果（Ripple Effect）」做一支 10 秒、1920x1080、30fps 的暗色产品片，虚构产品 Hush（降噪耳机）。底色 #09090b，强调色 #8fb4ff，字体 Inter。全片只有一个时钟 S.t（0 到 10 秒），一个 onUpdate 里用它重绘两块 canvas，并设置 5 个圆形 clip-path 的半径；文字和产品用普通 GSAP 补间。不用随机数，不用 CSS 动画。\n\n第一段，标题环（0–4.7s）：画面中央 (960, 540) 一个发光的彩色环，基础半径 380px，用 canvas 画，叠加模式 lighter。环由四层描边组成（宽 26/11/5/2.2px，透明度从弱到强），颜色是 24 个节点的锥形渐变 createConicGradient，色相绕环转两圈（饱和度 82%，亮度 62–78%，色相起点 205° − 38°/s × 时间，渐变以 0.55 rad/s 旋转）。0.1–1.7s 环从 0.6 倍用 expo.out 长到 1 倍。边缘半径 = R + 幅度 × (sin(5θ − 2.3t) + 0.6·sin(8θ + 1.7t) + 0.35·sin(13θ − 3.1t))，幅度 3.2–5.6px，所有频率取整数，环才能闭合。环内再画 R−18、R−36、R−62 三圈细环，环外画 220 根放射刻线，长度 = 能量 × (3 + 34n²)，n 是三个正弦的乘积，能量 0.3 左右。回波环：0.9、1.7、2.5、3.3、4.1s 各生一圈，存活 2.8s，半径 402px 用 cubic.out 扩到 732px，透明度按 (1−u)^1.6 衰减，线宽 1.7px。每圈出生时主环向外顶 7px，按 exp(−5·时间) 衰减，让环像随回波起伏。环中央标题 Silence, / tuned to you.（88px，字重 700，字距 −0.035em，行高 1.08）：两行 0.5s 和 0.64s 起，用 1.1s expo.out 从模糊 14px、下移 22px 淡入，同时用 CSS 变量做 10px 的红蓝错位，0.55s 起 1.0s 合拢。左下角一行 16px 的测试脚注 1.4s 淡入。3.9–4.6s 能量加 0.95、起伏加强，4.4–4.7s 环收缩 5.5%（power3.in）。\n\n第二段，揭示（4.7–6.4s）：5 个圆形 clip-path 圆，圆心 (960, 540)，第 k 个从 4.7 + 0.14k 秒开始，半径 = 1320 × (1 − 2^(−10p))，p 为 2.0s 内的进度。每个圆里是同一份产品场景的完整副本（用函数生成 5 份，渐变 id 加后缀），第 0 个在最下、第 4 个在最上，所以外圈先出、内圈后出。副本分别先放大 1.30、1.24、1.18、1.12、1.06 倍，随各自的圈回到 1 倍，另有 55%、45%、35%、25%、15% 的黑色罩层同步褪去，形成隧道感。每个圆边在上层 canvas 里画：38px 柔光带、30/13/5.5/2.4px 四层光谱描边、r+11 和 r−9 两圈细线，边缘的起伏幅度从 12px 降到 2px，半径超过 1000px 后淡出。\n\n产品场景：径向深色背景（#23262f 到 #09090b）加一团淡蓝光。两只 230x414px 的白色耳机（SVG：银白渐变头部、灰色耳塞带网罩、柄上一条传感条、两个麦克风孔、右下蓝色边缘光），左耳机左 701px、上 140px，右耳机左 989px、上 150px 水平翻转，各倾 ∓8°，下方有 drop-shadow。一个 400x276px 的白色圆角机盒（左 760px、上 590px，盖缝、前面一个蓝色指示灯、压刻的圆环、底部接触阴影）。机盒 4.75s 起用 1.8s expo.out 从下方 150px、0.88 倍升起；耳机 4.8s 和 4.9s 起用 1.9s 从下方 230 和 250px、±26° 转到 ±8°。产品组 4.7–9.9s 慢推 1.05 倍，6.7s 起耳机和机盒上下漂浮 12–14px（sine.inOut）。5.55s 起产品下方 26px 的参数行：Hush · 45 dB adaptive noise cancelling · 9 h, or 36 h with the case，用 0.9s 升起，7.2s 淡出。\n\n收尾（7.3–10s）：产品组 7.3s 起用 1.0s 退到透明度 16%、0.94 倍、模糊 5px。7.55s 一个 124px 的字标符号（两圈光谱渐变细环加中心白点）画出并旋转，7.65s 字标 Hush（Inter 700，150px）从模糊升起，7.95s 标语 Noise cancelling, tuned to you.（36px）升起，8.9–9.9s 字标上扫过一道光谱高光；7.5–9.9s 从画面中心再放一圈淡回波。全片加椭圆暗角，不加颗粒。",
+        "says": [
+          "标题停在发光的光谱环里，环随回波轻轻起伏",
+          "一圈圈环从中心向外展开，每个圈里露出下一个场景",
+          "圈展开完，镜头落在产品上"
+        ],
+        "vs": []
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Ripple Effect",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 12100 for \"ripple effect\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Ripple Effect: Example and Code Recipe",
+    "description": "A headline sits in a glowing spectral ring that ripples, then rings expand and reveal the product. Make it with Claude Code or Codex.",
+    "lede": "A headline sits inside a glowing spectral ring that ripples and sends out faint echoes. The ring contracts, then concentric rings expand from the centre and each one reveals the next scene, landing on the product.",
+    "name": "Ripple Effect",
+    "ownName": "Ripple Effect",
+    "body": [
+      {
+        "h2": "How to make a Ripple Effect with Claude Code or Codex",
+        "body": "Draw the title ring on a canvas redrawn from timeline time. The base radius is 380px with four strokes 26/11/5/2.2px wide and a 24-stop conic gradient whose hue runs twice around the ring. Grow it over 0.1–1.7s with expo.out, and make the edge wobble with three sines of 5, 8 and 13 lobes at 3.2–5.6px. Echo rings are born at 0.9s and every 0.8s after, grow from 402px to 732px radius over 2.8s with cubic.out and fade, and each birth pushes the main ring out 7px. The headline Silence, tuned to you. is 88px, weight 700, and blurs in from 0.5s.\n\nReveal the next scene with five clip-path circles centred on the ring. Circle k opens at 4.7 + 0.14k seconds with radius 1320 × (1 − 2^(−10p)) over 2.0s, and each holds a full copy of the product scene, starting magnified 1.30x down to 1.06x so the rings read as a tunnel. First contract the ring 5.5% over 4.4–4.7s and raise the fringe energy at 3.9–4.6s. The case lands at 4.75s and the earbuds at 4.8s and 4.9s, so the product is already settling when the rings reveal it.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the ring, the five reveal circles and the product from your own product. At 7.3s let the product recede and draw the mark, wordmark Hush and tagline from 7.55s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A glowing rainbow ring rippling around the words \"Silence, tuned to you.\" on black.",
+    "faq": [
+      [
+        "What is a ripple effect in a product film?",
+        "A ripple effect sends rings outward from a point, like a wave in water or sound. In this film a ring around a headline swells and sends out echoes, then concentric rings expand from the centre and each one shows the next scene, so the title turns into the product."
+      ],
+      [
+        "How do you make rings that reveal the next scene?",
+        "Stack one copy of the next scene per ring and give each copy a circular clip-path centred on the frame. Animate the radius with expo.out, start each ring a little after the one before it, and draw a glowing stroke at every radius. The outer ring leaves first and the innermost copy ends up covering the frame."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "波纹效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"波纹效果\": ai 波纹效果; illustrator 波纹效果",
+      "checked": "2026-11-28"
+    },
+    "title": "波纹效果：示例与代码配方",
+    "description": "标题停在发光的彩色环里，环轻轻起伏并放出回波，随后一圈圈环向外展开，圆环里露出产品。用 Claude Code 或 Codex 按免费配方做出这个波纹效果。",
+    "lede": "标题停在一个发光的彩色环里，环轻轻起伏并向外放出几圈回波，接着环收缩，一圈圈同心环从中心向外展开，每个圈里露出下一个场景，最后落在产品上。",
+    "name": "波纹效果",
+    "ownName": "波纹效果",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做波纹效果",
+        "body": "标题环用 canvas 画，每帧按时间线时间重绘。基础半径 380px，四层描边宽 26/11/5/2.2px，颜色是 24 个节点的锥形渐变，色相绕环转两圈。0.1–1.7s 用 expo.out 长到全尺寸，边缘按 5、8、13 瓣三个正弦起伏，幅度 3.2–5.6px。回波环从 0.9s 起每隔 0.8s 生一圈，用 2.8s 和 cubic.out 从半径 402px 扩到 732px 并淡出，每圈出生时主环向外顶 7px。标题 Silence, tuned to you. 88px，字重 700，0.5s 起从模糊淡入。\n\n用 5 个以环心为圆心的 clip-path 圆揭示下一个场景。第 k 个圆 4.7 + 0.14k 秒开始，用 2.0s 把半径按 1320 × (1 − 2^(−10p)) 展开，每个圆里是一整份产品场景，分别先放大 1.30 倍到 1.06 倍，圈和圈之间像一条隧道。先让环在 4.4–4.7s 收缩 5.5%，3.9–4.6s 加强锯齿边的能量。机盒 4.75s 落位，耳机 4.8s 和 4.9s 落位，所以圈揭示产品时产品已经在落定。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用你的产品做出环、5 个揭示圆和产品场景。7.3s 让产品退到背景，7.55s 起画出符号、字标 Hush 和标语。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "黑底上一圈发光的彩虹环在“为你调校的安静”几个字周围荡开。",
+    "faq": [
+      [
+        "产品片里的波纹效果是什么？",
+        "波纹效果让一圈圈环从一个点向外扩散，像水波或声波。这支片子里标题外的环起伏并放出回波，接着一圈圈同心环从中心向外展开，每个圈里露出下一个场景，标题于是变成产品。"
+      ],
+      [
+        "怎么做出能揭示下一个场景的环？",
+        "每个环放一份下一个场景的副本，给每份副本一个以画面中心为圆心的圆形 clip-path。半径用 expo.out 展开，每个环比前一个晚一点开始，并在每个半径上画一圈发光描边。外圈先离开画面，最内层的副本最终盖住整个画面。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

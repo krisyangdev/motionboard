@@ -1,0 +1,188 @@
+{
+  "slug": "iris-transition",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/iris-montage.mp4",
+    "poster": "https://media.motionboard.app/iris-montage.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 31,
+    "cat": "D",
+    "star": false,
+    "video": "iris-montage",
+    "samples": [
+      {
+        "t": "Claude Fable 5.1",
+        "id": "ROF2Nv_KjOM",
+        "at": "1:14–1:19",
+        "s": 74
+      },
+      {
+        "t": "Claude Fable 5.1",
+        "id": "ROF2Nv_KjOM",
+        "at": "0:32–0:38",
+        "s": 32
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Dozens of images from completely different sources are unified into one series by the same circular frame, so the circle is what the viewer watches. During the fast cuts the eye remembers only the circle and the change of content. The scan-line version looks at the same network graph again through an oscilloscope view.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Fast cut 0-3.5s: 22 images at 6 frames (images 1-3), 5 frames (4-14), then 4 frames (15-22), i.e. 0.2s down to 0.133s; final image 3.5-3.7s; window opens 3.7-4.15s; push-in transition 4.15-4.65s. Scan window: expands 4.65-5.65s, hard jumps at 5.7, 6.1, 6.48s, green spread 6.58-8.33s with a jump at 7.43s, window closes to the mark at 8.38s, wordmark 8.74s, hold to 11s"
+          ],
+          [
+            "Easing",
+            "Window size and image change are hard sets with no easing; per-image push <code>ease: \"none\"</code>; final window open <code>expo.out</code> 0.45s; push-in <code>power3.in</code> 0.5s, window fade <code>power2.in</code> 0.42s; scan window expands <code>expo.out</code> 1.0s; green nuclei pop scale 0.35 to 1 with <code>expo.out</code> 0.25s; window close <code>expo.inOut</code> 0.5s; wordmark <code>expo.out</code> 0.6s"
+          ],
+          [
+            "Camera",
+            "Fixed. Inside the window each image starts at scale 0.6-1.0, random rotation up to +/-8 degrees and offset up to +/-40px, then drifts scale 1.02-1.05x and up to +/-1.5 degrees over its 4-6 frames. In the scan window the plate drifts linearly 1.0 to 1.04, then 1.8 to 1.85, 3.1 to 3.18, 1.3 to 1.37 and 2.0 to 2.14 between jumps"
+          ],
+          [
+            "Subject",
+            "A centered circular window with hard-set diameters from 52% to 110% of frame height (560-1188px), one preset size per image, showing 16 kinds of micrographs, then a cultured-cell image. Scan-window scene: window 70px growing to 0.7H, jumps to 1.0H, 0.84H, 0.96H and 0.8H at 1.8x, 3.1x, 1.3x and 2.0x zoom, about 38% of 300 nuclei light green over 1.75s while a counter climbs to 312"
+          ],
+          [
+            "Style",
+            "Background <code>#0d0d0e</code>; dark window with a 3px <code>#030303</code> edge, a 70px soft shadow and an inset vignette; HUD captions in Inter and JetBrains Mono. Scan window is paper-colored (<code>#ebe2cc</code> to <code>#d6caae</code> gradient) with horizontal scan lines, 1.5px at 20% opacity every 4px, scrolling 48px over the scene; green <code>#3fd35c</code> accent; wordmark Inter 600 116px, letter-spacing -0.035em"
+          ]
+        ],
+        "prompt": "Build a closing fast-cut called Iris Window Montage, 11s. Near-black background #0d0d0e with a circular viewing window fixed at the center, with a 3px #030303 edge, a soft 70px shadow and an inset vignette. Hard-cut inside the window through 22 images from one category: 6 frames each for the first 3, 5 frames each for the next 11, then 4 frames each (0.2s down to 0.133s). The circle diameter is hard-set per image between 52% and 110% of frame height (560-1188px) with no easing, and each image starts at a random rotation of up to 8 degrees and offset of up to 40px, then pushes 2-5% with ease: \"none\". After the last cut, hold the final image for 6 frames at 0.8H, open the window to 2320px over 0.45s with expo.out, then push the image to 3.6x over 0.5s with power3.in while the window fades. Cut to a paper-colored scan window (scan lines 1.5px every 4px at 20% opacity, scrolling) that grows from 70px to 0.7H over 1s with expo.out, then hard-jumps at 5.7s, 6.1s and 6.48s to 1.0H, 0.84H and 0.96H with new zoom levels, and lights about 38% of the nuclei green over 1.75s from 6.58s (scale 0.35 to 1, expo.out 0.25s) with a counter climbing to 312 and one more jump at 7.43s. At 8.38s close the window to a 96px mark with expo.inOut 0.5s, bring in the wordmark (expo.out 0.6s) and subline, and hold to 11s.",
+        "says": [
+          "A circular window flashing past lots of images",
+          "The circle size jumps in beats",
+          "Like looking at the same image through a microscope or radar screen"
+        ],
+        "vs": [
+          [
+            "branching-growth",
+            "Branching Growth is one structure growing; Iris Window Montage replaces content inside a fixed frame."
+          ],
+          [
+            "liquid-glass-effect",
+            "Glass Lens is a moving lens refracting content; the window in Iris Window Montage stays in place while the content cuts quickly."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "几十张来源完全不同的图被同一个圆形框统一成一个系列，圆窗就是看这个动作。快切时眼睛只记住圆和内容的变化；扫描线版把同一张网络图换成示波器视角再看一次。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。快切 0–3.5s：22 张图，前 3 张每张 6 帧，第 4–14 张每张 5 帧，第 15–22 张每张 4 帧，即从 0.2s 加快到 0.133s；末张 3.5–3.7s；窗口张开 3.7–4.15s；推近转场 4.15–4.65s。扫描窗：4.65–5.65s 扩大，5.7s、6.1s、6.48s 三次硬跳，6.58–8.33s 绿点扩散并在 7.43s 再跳一次，8.38s 圆窗收成标志，8.74s 出字标，停到 11s"
+          ],
+          [
+            "缓动",
+            "窗口尺寸和图像切换都是硬设置，无缓动；每张图内的慢推 <code>ease: \"none\"</code>；末张窗口张开 <code>expo.out</code> 0.45s；推近 <code>power3.in</code> 0.5s，窗口淡出 <code>power2.in</code> 0.42s；扫描窗扩大 <code>expo.out</code> 1.0s；绿色细胞核以 <code>expo.out</code> 0.25s 从缩放 0.35 弹到 1；圆窗收拢 <code>expo.inOut</code> 0.5s；字标 <code>expo.out</code> 0.6s"
+          ],
+          [
+            "镜头",
+            "固定。窗内每张图起始缩放 0.6–1.0，随机旋转最多 ±8 度，随机偏移最多 ±40px，然后在 4–6 帧内缓慢漂移，缩放 1.02–1.05 倍、旋转最多 ±1.5 度。扫描窗里底图在两次跳变之间线性漂移：1.0 到 1.04，1.8 到 1.85，3.1 到 3.18，1.3 到 1.37，2.0 到 2.14"
+          ],
+          [
+            "主体",
+            "画面中央一个圆形取景窗，直径按硬设置取画面高度的 52% 到 110%（560–1188px），每张图一个预设尺寸，展示 16 类显微图像，最后是一张培养细胞图。扫描窗场景：窗口从 70px 扩大到 0.7H，随后依次跳到 1.0H、0.84H、0.96H、0.8H，对应放大 1.8、3.1、1.3、2.0 倍；300 个细胞核中约 38% 在 1.75s 内亮起绿色，计数器升到 312"
+          ],
+          [
+            "风格",
+            "背景 <code>#0d0d0e</code>；暗色窗口带 3px <code>#030303</code> 边、70px 柔和投影和内侧暗角；HUD 字幕用 Inter 和 JetBrains Mono。扫描窗为纸色（<code>#ebe2cc</code> 到 <code>#d6caae</code> 渐变），叠横向扫描线，每 4px 一条、1.5px 宽、20% 不透明度，整段内滚动 48px；强调色绿 <code>#3fd35c</code>；字标 Inter 600 116px，字距 -0.035em"
+          ]
+        ],
+        "prompt": "用「圆窗蒙太奇（Iris Window Montage）」做收尾快切，全片 11s：近黑背景 #0d0d0e，中央固定一个圆形取景窗，带 3px #030303 边、70px 柔和投影和内侧暗角。窗里对同一类别的 22 张图硬切：前 3 张每张 6 帧，接下来 11 张每张 5 帧，最后 8 张每张 4 帧（从 0.2 秒加快到 0.133 秒）。圆窗直径按每张图预设，在画面高度的 52% 到 110%（560–1188px）之间硬设置，无缓动；每张图起始带最多 8 度的随机旋转和最多 40px 的随机偏移，再用 ease: \"none\" 慢推 2–5%。最后一张在 0.8H 的窗里停 6 帧，窗口用 expo.out 0.45 秒张开到 2320px，随后图像用 power3.in 0.5 秒推到 3.6 倍，同时窗口淡出。接着切到纸色扫描窗（横向扫描线 1.5px、每 4px 一条、20% 不透明度，持续滚动），用 1 秒 expo.out 从 70px 扩大到 0.7H，在 5.7s、6.1s、6.48s 硬跳到 1.0H、0.84H、0.96H 并换新的缩放，从 6.58s 起 1.75 秒内让约 38% 的细胞核亮起绿色（缩放 0.35 到 1，expo.out 0.25 秒），计数器升到 312，7.43s 再硬跳一次。8.38s 圆窗用 expo.inOut 0.5 秒收成 96px 的标志，字标（expo.out 0.6 秒）和副标随后进入，停到 11s。",
+        "says": [
+          "一个圆形窗口里快速闪过很多图",
+          "圆圈大小一跳一跳地变",
+          "像通过显微镜或雷达屏看同一张图"
+        ],
+        "vs": [
+          [
+            "branching-growth",
+            "分叉生长是同一结构的生长；圆窗蒙太奇是固定框里的内容替换"
+          ],
+          [
+            "liquid-glass-effect",
+            "玻璃透镜是移动的透镜折射内容；圆窗蒙太奇的窗位置固定，内容快切"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Iris Transition",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 110 for \"iris transition\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Iris Transition: Circular Window Recipe",
+    "description": "A circular window cuts through 22 images in 3.5 s while its size jumps with the rhythm. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A fixed circular window cuts rapidly between images, or revisits the same image, while its size jumps with the rhythm.",
+    "name": "Iris Transition",
+    "ownName": "Iris Window Montage",
+    "body": [
+      {
+        "h2": "How to make a Iris Transition with Claude Code or Codex",
+        "body": "Center a circular window with a 3 px #030303 edge, a 70 px soft shadow and an inset vignette on #0d0d0e. Hard-set its diameter per image between 52% and 110% of frame height (560 to 1188 px). Cut 22 images in 3.5 s: 6 frames each for images 1 to 3, 5 frames for 4 to 14 and 4 frames for 15 to 22. Size and image changes use no easing.\n\nInside the window each image starts at scale 0.6 to 1.0 with up to 8 degrees of rotation and 40 px of offset, then drifts to 1.02 to 1.05x over its 4 to 6 frames. The final window opens at 3.7 s with expo.out over 0.45 s and a push-in follows at 4.15 s. A scan window expands from 4.65 s, jumps at 5.7, 6.1 and 6.48 s, and closes to the mark at 8.38 s.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own images."
+      }
+    ],
+    "alt": "A round microscope view of cells on a black screen, labelled HeLa H2B-GFP, 24 h post-transfection.",
+    "faq": [
+      [
+        "What is an iris transition?",
+        "In film, a circular mask opens or closes around the picture to reveal or end a shot, known as iris in and iris out. The circle can also stay fixed while the content inside it changes."
+      ],
+      [
+        "Can I make an iris transition with CSS?",
+        "Yes. Animate clip-path: circle() from a radius of 0 to one that covers the frame, or the reverse, centered on the frame. In this recipe the window size is hard-set per image with no easing, which gives the jump-cut rhythm."
+      ],
+      [
+        "Is the Iris Transition recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "圆形光圈转场",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"圆形光圈转场\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "圆形光圈转场：圆窗快切示例与配方",
+    "description": "固定的圆形窗口在 3.5 秒内快切 22 张图像，窗口大小随节奏跳变。用免费配方，让 Claude Code 或 Codex 做出这段圆形光圈转场。",
+    "lede": "固定圆形取景窗，窗里快切图像或重看同一张图，圆窗大小随节奏跳变。",
+    "name": "圆形光圈转场",
+    "ownName": "圆窗蒙太奇",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做圆形光圈转场",
+        "body": "在 #0d0d0e 背景上居中放一个圆形窗口，3px 的 #030303 边缘，70px 柔和阴影和内侧暗角。每张图的窗口直径硬切设定，在画面高度的 52% 到 110% 之间（560 到 1188px）。3.5 秒切 22 张图：第 1 到 3 张各 6 帧，第 4 到 14 张各 5 帧，第 15 到 22 张各 4 帧。大小和图像变化都不加缓动。\n\n窗口内每张图从 0.6 到 1.0 倍缩放起步，带最多 8° 旋转和 40px 偏移，在自己的 4 到 6 帧里漂移到 1.02 到 1.05 倍。最后一个窗口 3.7 秒用 expo.out 在 0.45 秒内打开，4.15 秒开始推近。扫描窗口从 4.65 秒展开，在 5.7、6.1、6.48 秒跳变，8.38 秒收拢成符号。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，图像换成你自己的。"
+      }
+    ],
+    "alt": "黑色画面上的圆形显微镜视野里是一群细胞，标注 HeLa H2B-GFP。",
+    "faq": [
+      [
+        "光圈转场是什么？",
+        "电影里，圆形遮罩在画面周围张开或收拢，用来引出或结束一个镜头，叫做 iris in 和 iris out。圆也可以固定不动，只让里面的内容切换。"
+      ],
+      [
+        "能用 CSS 做光圈转场吗？",
+        "可以。以画面中心为圆心，用 clip-path: circle() 把半径从 0 动画到能盖住画面，或者反过来。这份配方里窗口大小逐张硬切设定，不加缓动，形成跳切的节奏。"
+      ],
+      [
+        "光圈转场配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

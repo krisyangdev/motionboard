@@ -1,0 +1,202 @@
+{
+  "slug": "morph-transition",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/morph-relay.mp4",
+    "poster": "https://media.motionboard.app/morph-relay.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 12,
+    "cat": "B",
+    "star": true,
+    "video": "morph-relay",
+    "samples": [
+      {
+        "t": "Vercel v0",
+        "id": "By9wCB9IZp0",
+        "at": "0:02–0:13",
+        "s": 2
+      },
+      {
+        "t": "Vercel v0",
+        "id": "By9wCB9IZp0",
+        "at": "0:35–0:40",
+        "s": 35
+      },
+      {
+        "t": "Raycast",
+        "id": "Mi173xGb0ZA",
+        "at": "0:17–0:20",
+        "s": 17
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The element from the previous segment becomes the subject of the next, so there is always only one shape changing in the frame, with empty space around it. Shape, corner radius, and text color inversion happen on the same frame, so the morph reads as one continuous action.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Headline word groups rise 0.2–0.9s; title→line 1.1–1.3s (0.2s, 6 frames), line→capsule 1.3–1.6s (0.3s, 9 frames), capsule→input box 1.7–2.1s (0.4s, 12 frames); typing 2.4–3.95s, send 4.2s; input box→window 4.55–5.3s (0.75s), page blocks 5.0–5.95s; window shrinks into a card 7.0–7.8s (0.8s, 24 frames), 11 gallery cards 7.6–8.6s; closing line→pill 9.15–9.65s, held to 11s"
+          ],
+          [
+            "Easing",
+            "Line expansion, input box and window growth <code>cubic-bezier(0.65,0,0.35,1)</code> (power3.inOut); capsule thickening, page blocks, shrink into the card and the closing pill <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); send press back.out(1.7)"
+          ],
+          [
+            "Camera",
+            "Camera basically fixed; slow linear push 1.00→1.03 over 6.2–7.0s, then 1.03→1.08 with a small pan (x −24px, y −14px) over 7.6–8.6s while the gallery appears; closing drift 1.00→1.025 over 9.6–11s"
+          ],
+          [
+            "Subject",
+            "One black shape (<code>#111111</code>) changes width, height and corner radius together: 960×3 line, 960×96 capsule (radius 48), 920×88 input box (radius 44), 1440×820 window (radius 18, fill <code>#f6f1e8</code>), then a 0.26-scale gallery card among 11 others; the headline shrinks into the input as the placeholder, the avatar and buttons fade in 0.3s (1.8s), and page blocks rise 24px"
+          ],
+          [
+            "Sync",
+            "The headline turns white on the frame after the capsule starts thickening (1.33s, 0.04s); the surrounding gallery stays hidden until the card is formed (cards appear from 7.6s); the window fill flips to cream within the first 0.3s of its growth"
+          ],
+          [
+            "Style",
+            "Near-white soft-lit background (radial <code>#ffffff</code> → <code>#e9e9e9</code>) with a black shape; one subject throughout; gallery thumbnails use 11 different site styles; closing wordmark white on a 440×112 black pill"
+          ]
+        ],
+        "prompt": "Build a continuous morph with no cuts called Morph Relay, an 11-second film on a near-white soft-lit background. A headline (64px, black) rises in word groups. A black line (960×3px) expands from under it (0.2s, power3.inOut cubic-bezier(0.65,0,0.35,1)). The line thickens into a 96px capsule with expo.out (cubic-bezier(0.16,1,0.3,1)) over 0.3s and the headline inverts to white one frame later. The capsule then narrows into an 88px input box over 0.4s (power3.inOut) while the headline shrinks into the placeholder and an avatar and buttons fade in; type a prompt from 2.4s, press send at 4.2s, then grow the input box into a 1440×820 browser window with an 18px radius over 0.75s (4.55–5.3s) as its fill flips to cream, with page blocks rising 24px (0.5s expo.out each, staggered 0.04–0.06s) from 5.0s. Push in 3% linearly, then shrink the whole window into a gallery card (scale 0.26, 0.8s expo.out) and bring in 11 other cards around it 0.04s apart. Finally the opening line returns, thickens into a black pill and the wordmark appears inside it. Keep the surrounding elements empty so only one shape changes throughout.",
+        "says": [
+          "One thing keeps turning into the next",
+          "No cuts, one continuous shot",
+          "The title turns into an input box"
+        ],
+        "vs": [
+          [
+            "wireframe-re-layout",
+            "Wireframe Re-layout strips a group of elements down to wireframes and re-flows them together; Morph Relay changes a single element step by step into another kind of element."
+          ],
+          [
+            "card-flip-animation",
+            "Card Flip to Code shows the front and back of the same card, rotating 180° around an axis; Morph Relay changes shape continuously with no front or back."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "上一段的元素直接成为下一段的主体，画面里始终只有一个形体在变，周围留空；形状、圆角、文字反白在同一帧发生，变形读成一次连续动作。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。标题词组上升 0.2–0.9s；标题→横线 1.1–1.3s（0.2s，6 帧），横线→胶囊 1.3–1.6s（0.3s，9 帧），胶囊→输入框 1.7–2.1s（0.4s，12 帧）；打字 2.4–3.95s，发送 4.2s；输入框→窗口 4.55–5.3s（0.75s），页面区块 5.0–5.95s；窗口缩成卡片 7.0–7.8s（0.8s，24 帧），11 张画廊卡片 7.6–8.6s；收尾横线→胶囊 9.15–9.65s，停到 11s"
+          ],
+          [
+            "缓动",
+            "横线展开、输入框和窗口变形 <code>cubic-bezier(0.65,0,0.35,1)</code>（power3.inOut）；胶囊加厚、页面区块、缩成卡片和收尾胶囊 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；发送按压 back.out(1.7)"
+          ],
+          [
+            "镜头",
+            "镜头基本固定；6.2–7.0s 线性慢推 1.00→1.03，7.6–8.6s 画廊出现时 1.03→1.08 并轻微平移（x −24px，y −14px）；收尾漂移 9.6–11s 1.00→1.025"
+          ],
+          [
+            "主体",
+            "一个黑色形体（<code>#111111</code>）同时插值宽、高、圆角：960×3 的横线、960×96 的胶囊（圆角 48）、920×88 的输入框（圆角 44）、1440×820 的窗口（圆角 18，填充 <code>#f6f1e8</code>），最后缩成 0.26 倍的画廊卡片并入其他 11 张；标题缩小成输入框里的占位文字，头像和按钮 0.3s 淡入（1.8s），页面区块上升 24px"
+          ],
+          [
+            "同步",
+            "胶囊开始加厚后的下一帧标题反白（1.33s，0.04s）；周围画廊在卡片成形前一直隐藏（卡片 7.6s 起出现）；窗口填充在变形的前 0.3s 内翻成米色"
+          ],
+          [
+            "风格",
+            "近白色柔光背景（径向 <code>#ffffff</code> → <code>#e9e9e9</code>）配黑色形体；全程只有一个主体；画廊缩略图用 11 种不同网站风格；收尾字标白字，放在 440×112 的黑色胶囊里"
+          ]
+        ],
+        "prompt": "用「形变接力（Morph Relay）」做一段无切镜的连续变形，整段 11 秒，背景近白色柔光。64px 黑色标题按词组上升。标题下展开一条黑色横线（960×3px，0.2s，power3.inOut，cubic-bezier(0.65,0,0.35,1)）。横线用 expo.out（cubic-bezier(0.16,1,0.3,1)）0.3s 加厚成 96px 的胶囊，标题晚一帧反白。胶囊再用 0.4s（power3.inOut）收窄成 88px 的输入框，标题缩成占位文字，头像和按钮淡入；2.4s 起打出提示词，4.2s 点发送，然后输入框用 0.75s（4.55–5.3s）长成 1440×820、圆角 18px 的浏览器窗口，填充翻成米色，页面区块从 5.0s 起各上升 24px（expo.out 0.5s，错开 0.04–0.06s）。线性慢推 3%，再把整个窗口缩成画廊卡片（scale 0.26，expo.out 0.8s），周围每隔 0.04s 带入另外 11 张卡片。最后开场那条线回来，加厚成黑色胶囊，字标出现在胶囊里。周围元素保持空白，全程只有一个形体在变。",
+        "says": [
+          "一个东西一直变成下一个东西",
+          "没有切镜头，一镜到底",
+          "标题变成输入框"
+        ],
+        "vs": [
+          [
+            "wireframe-re-layout",
+            "线框重排是一组元素先退成线框再整体重排；本条是单个元素逐步变成另一种元素"
+          ],
+          [
+            "card-flip-animation",
+            "翻面是同一张卡的正反两面，轴旋转 180°；本条形状连续变化，没有正反面"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Morph Transition",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 260 for \"morph transition\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Morph Transition: Example and Code Recipe",
+    "description": "One black shape morphs from a line to a capsule, an input box, a window and a gallery card with no hard cut. Make it with Claude Code or Codex.",
+    "lede": "One element keeps morphing into the next, replacing cuts, so the whole sequence has no hard cut.",
+    "name": "Morph Transition",
+    "ownName": "Morph Relay",
+    "body": [
+      {
+        "h2": "How to make a Morph Transition with Claude Code or Codex",
+        "body": "Animate one black shape (#111111) by width, height and corner radius together: a 960×3 line, a 960×96 capsule (radius 48), a 920×88 input box (radius 44), a 1440×820 window (radius 18), then a 0.26-scale gallery card among 11 others. The line, capsule and input steps take 0.2s, 0.3s and 0.4s, and the window growth takes 0.75s on power3.inOut.\n\nTie each change to a frame. The headline turns white on the frame after the capsule starts thickening (1.33s), the window fill flips to cream within the first 0.3s of its growth, and the gallery stays hidden until the card forms at 7.6s. The window shrinks into a card over 0.8s on expo.out, and the camera stays nearly fixed.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the shape as one DOM element with the headline, input and gallery around it. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A typed prompt asking for a coffee roaster landing page turns into the finished page in a browser window.",
+    "faq": [
+      [
+        "What is a morph transition?",
+        "A morph transition turns one element into the next by animating its shape, size and color continuously. The next scene arrives as the same object, so the sequence has no hard cut."
+      ],
+      [
+        "Can I use a morph transition on a website?",
+        "Yes. The film animates the width, height and corner radius of one DOM element with GSAP, which also runs on a page. Keep a single subject on screen at a time so the change reads clearly."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "形变转场",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"形变转场\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "形变转场：示例与代码配方",
+    "description": "一个黑色形状从线变成胶囊、输入框、窗口再变成画廊卡片，全程没有硬切。用 Claude Code 或 Codex 按免费配方做出这个形变转场。",
+    "lede": "同一个元素连续变形成下一个元素，代替切镜，整段没有硬切。",
+    "name": "形变转场",
+    "ownName": "形变接力",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做形变转场",
+        "body": "让一个黑色形状（#111111）同时改变宽、高和圆角：960×3 的线、960×96 的胶囊（圆角 48）、920×88 的输入框（圆角 44）、1440×820 的窗口（圆角 18），最后缩成 11 张卡片里的一张，缩放 0.26。线、胶囊、输入框三步分别用 0.2s、0.3s、0.4s，窗口放大用 0.75s，缓动 power3.inOut。\n\n每个变化都对齐到具体帧。标题在胶囊开始变粗后的下一帧（1.33s）变白，窗口填充色在放大的前 0.3s 内翻成奶油色，画廊在 7.6s 卡片成形前一直隐藏。窗口用 0.8s 缩成卡片，缓动 expo.out，镜头基本固定。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会把形状做成一个 DOM 元素，周围布置标题、输入框和画廊。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "输入框里写着要做咖啡烘焙店落地页，随后变成浏览器窗口里做好的页面。",
+    "faq": [
+      [
+        "什么是形变转场？",
+        "形变转场让一个元素通过连续改变形状、尺寸和颜色变成下一个元素。下一个场景以同一个物体的身份出现，整段没有硬切。"
+      ],
+      [
+        "网站上能用形变转场吗？",
+        "可以。这支片子用 GSAP 改变一个 DOM 元素的宽、高和圆角，网页上同样能运行。画面里同一时间只保留一个主体，变化才容易看懂。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

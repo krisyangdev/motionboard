@@ -158,7 +158,7 @@ npm run build      # 生成配方文件，预渲染所有页面，写入 sitemap
 npm run deploy     # 构建后执行 cf deploy
 ```
 
-`scripts/site/recipes.mjs` 在每次 dev 和 build 之前运行。它根据 `content/recipes/` 生成给 Agent 读的配方文件，网站用 `public/r/`，skill 用 `skills/motionboard/recipes/`，并把 `skills/motionboard/source/` 复制到 `public/source/`。
+`scripts/site/recipes.mjs` 在每次 dev 和 build 之前运行。它根据 `content/collections/recipes/` 里的配方文件生成给 Agent 读的配方文件，网站用 `public/r/`，skill 用 `skills/motionboard/recipes/`，并把 `skills/motionboard/source/` 复制到 `public/source/`。
 
 影片和封面放在 R2，地址是 https://media.motionboard.app。源文件放在 `media/`（不进 git），用 `scripts/site/upload-media.sh [file ...]` 上传。复制、点赞和想要的计数存在 D1，本地首次运行需执行 `npx wrangler d1 migrations apply DB --local`。
 

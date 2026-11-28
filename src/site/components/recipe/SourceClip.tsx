@@ -11,7 +11,7 @@ export function SourceClip({ source: s, selected, onSelect }: { source: Source; 
   const poster = s.clip?.poster
 
   const thumb = poster ? (
-    <img src={poster} alt="" width={960} height={540} loading="lazy" decoding="async" className="aspect-video w-full rounded-[10px] object-cover" />
+    <img src={poster} alt="" aria-hidden="true" width={960} height={540} loading="lazy" decoding="async" className="aspect-video w-full rounded-[10px] object-cover" />
   ) : (
     <span aria-hidden="true" className="grid aspect-video w-full place-items-center rounded-[10px] bg-media text-white/80">
       <Play fill="currentColor" className="size-4" />

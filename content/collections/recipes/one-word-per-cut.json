@@ -1,0 +1,196 @@
+{
+  "slug": "one-word-per-cut",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/word-per-cut.mp4",
+    "poster": "https://media.motionboard.app/word-per-cut.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.8
+  },
+  "data": {
+    "n": 47,
+    "cat": "E",
+    "star": false,
+    "video": "word-per-cut",
+    "samples": [
+      {
+        "t": "Anthropic What we make of this moment",
+        "id": "JDsFHmq9hlA",
+        "at": "0:06–0:16",
+        "s": 6
+      },
+      {
+        "t": "Anthropic What we make of this moment",
+        "id": "JDsFHmq9hlA",
+        "at": "1:04–1:09",
+        "s": 64
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The word keeps its position and size while only the screen behind it changes, so the viewer's eye never moves and each word has 0.5s to read. Eight words map to eight real screens (doc, inbox, board, meeting notes, calendar, dashboard, customer table, Q&A), so by the end of the sentence the product's main modules have all appeared. The comma holds 0.2s longer and the last word holds 0.9s, which gives the line a rhythm. The complete sentence appears once, at the end, on a cream card, and the closing wordmark uses a single accent color.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.8s, all hard cuts. Eight words: Everything 0–0.6s, your 0.6–1.1s, team 1.1–1.6s, knows, 1.6–2.3s (comma holds 0.2s longer), ready 2.3–2.8s, when 2.8–3.3s, you 3.3–3.8s, ask. 3.8–4.7s (last word holds 0.9s). Four file-name captions at 4.7–5.2s, 5.2–5.8s, 5.8–6.3s and 6.3–6.8s. Full-line card 6.8–8.6s (1.8s), wordmark 8.6–10.8s (2.2s)"
+          ],
+          [
+            "Easing",
+            "Each shot's camera move uses <code>power3.out</code> for the full shot length (0.5–0.9s), so it is still moving at the cut; word entrance <code>expo.out</code> 0.28s, scale 1.08 to 1 and blur 10px to 0; the screen's defocus settles from 6px to 2.5px in 0.3s (caption shots 5px to 3px); caption <code>expo.out</code> 0.22s, rising 6px while fading in; card lines <code>expo.out</code> 0.5s, rising 14px, 0.08s apart; icon tiles <code>expo.out</code> 0.8s, 0.07s apart; wordmark letters <code>expo.out</code> 0.9s, 0.05s apart"
+          ],
+          [
+            "Camera",
+            "Each shot is one 1920×1080 app screen (a 1560×900 window, alternating light and dark) with 1800px perspective. Everything pulls from 2.0x to 1.5x with Y rotation -7° to -2°; your pushes from 1.15x to 1.45x, rotation 10° to 4°, roll -1.5° to -0.5°; team holds 1.5x while the camera center slides 360px right; knows, pulls from 2.3x to 1.4x, roll 1.5° to 0°; ready pulls from 1.6x to 1.45x, X rotation -6° to -1°, roll 3° to 0°; when pushes from 1.05x to 1.6x; you goes 1.55x to 1.45x, X rotation 8° to 2°, roll -1° to 0°; ask. pushes from 1.25x to 1.4x. Caption shots are macro crops of four screens, each centered on a dense, colorful area, alternating light and dark: 4.7s light doc, goals list above and the milestone table with avatars and status pills below, the caption in the blank band between them, 2.6x to 2.9x; 5.2s dark meeting notes, waveforms and transcript, 2.5x to 2.8x; 5.8s light dashboard, metric cards and the line-and-area chart, 2.6x to 3.1x; 6.3s dark inbox, avatars and mail rows, 2.6x to 3.0x; roll within ±2°. The card scales 1.00 to 1.035 and the wordmark 1.00 to 1.04, linear"
+          ],
+          [
+            "Subject",
+            "Word: EB Garamond 500, 184px, letter-spacing -0.025em, fixed at frame center; warm white <code>#f8f4ec</code> on dark screens, ink <code>#17161b</code> on light screens. Behind each word sits a soft ellipse scrim (dark screens 1000×340px <code>rgba(6,6,10,0.72)</code>, light screens 1240×440px <code>rgba(250,249,253,0.72)</code>, fading out in steps to 0) plus a vignette (dark screens edge <code>rgba(0,0,0,0.42)</code>, light screens edge <code>rgba(40,36,60,0.18)</code>). All eight screens belong to the product Tessel: doc, inbox, board, meeting notes, calendar, dashboard, customer table and Q&A, each with 12–30 items of real content. Captions use JetBrains Mono 38px, centered over each macro crop on a rounded backing pill (17px 32px 19px padding, 14px radius; dark crops <code>rgba(8,8,12,0.72)</code>, light crops <code>rgba(250,249,253,0.94)</code> with a 1px <code>rgba(23,22,27,0.08)</code> border and a <code>0 6px 24px rgba(30,28,60,0.12)</code> shadow), for example <code>/ Q4-launch-plan /</code>. On dark crops the text is <code>#f6f3ee</code> with <code>#a9a9ff</code> slashes under a 1100×420px dimming scrim (<code>rgba(6,6,10,0.5)</code> fading to 0.14); on light crops the text is <code>#17161b</code> with <code>#5b5bf0</code> slashes under a 1240×440px light scrim (<code>rgba(250,249,253,0.56)</code> fading to 0)"
+          ],
+          [
+            "Sync",
+            "The cut, the word and the screen change on the same frame; the word's entrance blur clears within 0.28s and the screen's defocus settles to 2.5px within 0.3s, so both turn sharp almost together. Captions start fading in 0.04s after the cut. On the card the first line appears at 6.8s and the second 0.08s later, with the last word ask. in the accent color. Wordmark scene: icon base from 8.6s for 0.7s, the four tiles from 8.68s each 0.07s later, letters from 8.65s, tagline at 8.6s (0.3s fade)"
+          ],
+          [
+            "Style",
+            "Dark screens (window <code>#0f0f13</code>, panel <code>#17171c</code>) alternate with light screens (window <code>#f3f3f6</code>, panel <code>#ffffff</code>) over soft violet-blue and peach radial wallpapers; the only accent is indigo <code>#5b5bf0</code> (<code>#9a9aff</code> for text on dark screens); the ending uses a cream background <code>#f3efe6</code>, wordmark Inter 600 176px, letter-spacing -0.04em, and a 210px app icon (indigo rounded square, four tiles, one of them amber)"
+          ]
+        ],
+        "prompt": "Build a 10.8s opening shot called One Word per Cut, 1920×1080, 30fps, silent, all hard cuts. Split the line \"Everything your team knows, ready when you ask.\" into words: Everything 0–0.6s, your 0.6–1.1s, team 1.1–1.6s, knows, 1.6–2.3s, ready 2.3–2.8s, when 2.8–3.3s, you 3.3–3.8s, ask. 3.8–4.7s. Set each word in EB Garamond 500, 184px, letter-spacing -0.025em, always at the exact center of the frame, warm white #f8f4ec on dark screens and ink #17161b on light screens. Behind each word is a different product screen (a 1560×900 macOS window with 12–30 items of real English content, alternating light and dark): doc, inbox, board, meeting notes, calendar, dashboard, customer table, Q&A. Use 1800px perspective. Each screen has its own camera move with power3.out for the full shot length: shot 1 pulls from 2.0x to 1.5x with Y rotation -7° to -2°; shot 2 pushes from 1.15x to 1.45x with rotation 10° to 4°; shot 3 holds 1.5x and slides 360px right; shot 4 pulls from 2.3x to 1.4x; shot 5 pulls from 1.6x to 1.45x with X rotation -6° to -1°; shot 6 pushes from 1.05x to 1.6x; shot 7 goes 1.55x to 1.45x with X rotation 8° to 2°; shot 8 pushes from 1.25x to 1.4x. Each screen lands defocused by 6px and settles to 2.5px in 0.3s, and the word resolves with expo.out in 0.28s from scale 1.08 and 10px blur. Put a soft ellipse scrim behind the word (dark screens 1000×340px rgba(6,6,10,0.72); light screens 1240×440px rgba(250,249,253,0.72); both fading out in steps to 0) plus a vignette (dark edge rgba(0,0,0,0.42), light edge rgba(40,36,60,0.18)) so the word stays readable. From 4.7 to 6.8s add four file-name captions with fixed windows: 4.7–5.2s \"/ Q4-launch-plan /\", 5.2–5.8s \"/ Acme-renewal-call-Nov-6 /\", 5.8–6.3s \"/ Ask-usage-last-90-days /\", 6.3–6.8s \"/ Q3-pricing-review-final /\". Each is a macro crop of one of the same screens, centered on a dense, colorful area and alternating light and dark: 4.7s the light doc with the goals list above and the milestone table (avatars and status pills) below, the caption in the blank band between them, at 2.6x to 2.9x; 5.2s the dark meeting notes (waveforms and transcript) at 2.5x to 2.8x; 5.8s the light dashboard (metric cards and the line-and-area chart) at 2.6x to 3.1x; 6.3s the dark inbox (avatars and mail rows) at 2.6x to 3.0x; roll within ±2°, defocus 5px settling to 3px. Set each caption in JetBrains Mono 38px, centered on a rounded backing pill (17px 32px 19px padding, 14px radius; rgba(8,8,12,0.72) on dark crops, rgba(250,249,253,0.94) on light crops, with a 1px rgba(23,22,27,0.08) border and a 0 6px 24px rgba(30,28,60,0.12) shadow), entering 0.04s after the cut with expo.out over 0.22s while rising 6px. On dark crops the text is #f6f3ee with #a9a9ff slashes over a 1100×420px scrim (rgba(6,6,10,0.5) fading to 0.14); on light crops the text is #17161b with #5b5bf0 slashes over a 1240×440px light scrim (rgba(250,249,253,0.56) fading to 0). From 6.8 to 8.6s hard cut to a cream #f3efe6 card with two lines, \"Everything your team knows,\" and \"ready when you ask.\", in EB Garamond 500 124px, ink, with the last word ask. in the accent #5b5bf0; each line rises 14px and fades in with expo.out over 0.5s, the second line 0.08s after the first, and the card pushes slowly from 1.00 to 1.035. From 8.6 to 10.8s hard cut to the wordmark: a 210px app icon (indigo rounded square, four tiles, one amber) whose four tiles settle from the corners with expo.out over 0.8s, 0.07s apart, then the wordmark \"Tessel\" (or your product name) in Inter 600 176px, letters appearing one by one from 8.65s with expo.out over 0.9s, a one-line tagline reading \"Docs, mail, meetings and answers in one place.\" (Inter 32px, grey #6b685f) at 8.6s with a 0.3s fade, and a slow push from 1.00 to 1.04. The only accent color is indigo #5b5bf0.",
+        "says": [
+          "One line is split so each word gets its own shot",
+          "The word stays dead center while a new product screen changes behind it every 0.5s",
+          "File-name captions follow, then the full line lands on a cream card"
+        ],
+        "vs": [
+          [
+            "kinetic-typography",
+            "Scattered Spec Type scatters several spec lines around the camera; One Word per Cut shows one word at a time at a fixed center while the whole screen behind it changes."
+          ],
+          [
+            "typing-animation",
+            "Rhythmic Typing types one line out in place letter by letter; One Word per Cut swaps whole words by cutting, so the cuts set the rhythm and the screen behind changes each time."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "词的位置和字号始终不变，变的只有背后的界面，观众的视线不用移动，每个词有 0.5 秒读完；八个词对应八种真实界面（文档、收件箱、看板、会议纪要、日历、数据看板、客户表格、问答），一句话说完，产品的主要模块也都出现过一遍；逗号处多停 0.2 秒，最后一个词停 0.9 秒，句子有节奏；整句话最后才完整出现一次，落在米色卡片上收束，片尾字标只用一个强调色。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.8s，全部硬切。八个词：Everything 0–0.6s，your 0.6–1.1s，team 1.1–1.6s，knows, 1.6–2.3s（逗号多停 0.2s），ready 2.3–2.8s，when 2.8–3.3s，you 3.3–3.8s，ask. 3.8–4.7s（最后一词停 0.9s）。四张文件名字幕 4.7–5.2s、5.2–5.8s、5.8–6.3s、6.3–6.8s。整句卡片 6.8–8.6s（1.8s），字标 8.6–10.8s（2.2s）"
+          ],
+          [
+            "缓动",
+            "每个镜头的推拉平移用 <code>power3.out</code>，时长等于该镜头时长（0.5–0.9s），到切点时仍在缓慢运动；词入场 <code>expo.out</code> 0.28s，scale 1.08 到 1，模糊 10px 到 0；界面失焦 0.3s 内从 6px 收到 2.5px（字幕镜头 5px 到 3px）；字幕 0.22s <code>expo.out</code>，上移 6px 并淡入；卡片两行 0.5s <code>expo.out</code>，上移 14px，间隔 0.08s；图标四块方格 0.8s <code>expo.out</code>，间隔 0.07s；字标字母 0.9s <code>expo.out</code>，间隔 0.05s"
+          ],
+          [
+            "镜头",
+            "每个镜头是一屏 1920×1080 的应用界面（1560×900 窗口，浅色和深色交替），透视 1800px。Everything 从 2.0 倍拉到 1.5 倍，Y 轴转角 -7° 到 -2°；your 从 1.15 倍推到 1.45 倍，转角 10° 到 4°，倾斜 -1.5° 到 -0.5°；team 保持 1.5 倍，镜头中心向右移 360px；knows, 从 2.3 倍拉到 1.4 倍，倾斜 1.5° 到 0°；ready 从 1.6 倍拉到 1.45 倍，X 轴转角 -6° 到 -1°，倾斜 3° 到 0°；when 从 1.05 倍推到 1.6 倍；you 从 1.55 倍到 1.45 倍，X 轴转角 8° 到 2°，倾斜 -1° 到 0°；ask. 从 1.25 倍推到 1.4 倍。字幕镜头是四屏界面的微距，镜头中心都取在内容密集、有颜色的区域，浅色和深色交替：4.7s 浅色文档，上方是目标列表，下方是里程碑表格的头像和状态标签，字幕落在两者之间的空白带上，2.6 到 2.9 倍；5.2s 深色会议纪要，波形和转写，2.5 到 2.8 倍；5.8s 浅色数据看板，指标卡和折线面积图，2.6 到 3.1 倍；6.3s 深色收件箱，头像和邮件行，2.6 到 3.0 倍，倾斜都在 ±2° 以内。卡片整体 scale 1.00 到 1.035，字标 1.00 到 1.04，线性"
+          ],
+          [
+            "主体",
+            "词：EB Garamond 500，184px，字距 -0.025em，固定在画面正中；深色界面上是暖白 <code>#f8f4ec</code>，浅色界面上是墨色 <code>#17161b</code>。每个镜头在词后面放一层柔边椭圆（深色界面 1000×340px <code>rgba(6,6,10,0.72)</code>，浅色界面 1240×440px <code>rgba(250,249,253,0.72)</code>，边缘逐级渐隐到 0），再加暗角（深色界面边缘 <code>rgba(0,0,0,0.42)</code>，浅色界面边缘 <code>rgba(40,36,60,0.18)</code>）。八个界面都是产品 Tessel 的屏幕：文档、收件箱、看板、会议纪要、日历、数据看板、客户表格、问答，每屏 12–30 条真实内容。字幕用 JetBrains Mono 38px，居中放在微距画面上，底下垫一块圆角底板（内边距 17px 32px 19px，圆角 14px，深色画面 <code>rgba(8,8,12,0.72)</code>，浅色画面 <code>rgba(250,249,253,0.94)</code>，另有 1px 边线 <code>rgba(23,22,27,0.08)</code> 和阴影 <code>0 6px 24px rgba(30,28,60,0.12)</code>），如 <code>/ Q4-launch-plan /</code>。深色画面上文字 <code>#f6f3ee</code>、斜杠 <code>#a9a9ff</code>，下面压一层 1100×420px 的暗层（<code>rgba(6,6,10,0.5)</code> 渐隐到 0.14）；浅色画面上文字 <code>#17161b</code>、斜杠 <code>#5b5bf0</code>，下面压一层 1240×440px 的浅色层（<code>rgba(250,249,253,0.56)</code> 渐隐到 0）"
+          ],
+          [
+            "同步",
+            "切镜、换词和换界面发生在同一帧；词入场的模糊在 0.28s 内收到 0，界面的失焦在 0.3s 内收到 2.5px，两者几乎同时变清晰。字幕比切镜晚 0.04s 开始淡入。卡片第一行 6.8s 出现，第二行晚 0.08s，最后一个词 ask. 用强调色。字标段：图标底 8.6s 起 0.7s，四块方格 8.68s 起每块晚 0.07s，字母 8.65s 起，一句话说明 8.6s（0.3s 淡入）"
+          ],
+          [
+            "风格",
+            "深色界面（窗口 <code>#0f0f13</code>，面板 <code>#17171c</code>）和浅色界面（窗口 <code>#f3f3f6</code>，面板 <code>#ffffff</code>）逐个轮换，壁纸是紫蓝和桃色的柔和径向渐变；强调色只有靛蓝 <code>#5b5bf0</code>（深色界面里文字用 <code>#9a9aff</code>）；片尾背景米色 <code>#f3efe6</code>，字标 Inter 600 176px，字距 -0.04em，应用图标 210px（靛蓝圆角方块，四块方格，其中一块琥珀色）"
+          ]
+        ],
+        "prompt": "用「一词一切（One Word per Cut）」做一支 10.8s 的开场，1920×1080、30fps、无声，全部硬切。把一句话「Everything your team knows, ready when you ask.」按词拆开：Everything 0–0.6s，your 0.6–1.1s，team 1.1–1.6s，knows, 1.6–2.3s，ready 2.3–2.8s，when 2.8–3.3s，you 3.3–3.8s，ask. 3.8–4.7s。词用 EB Garamond 500，184px，字距 -0.025em，每次都固定在画面正中，深色界面上用暖白 #f8f4ec，浅色界面上用墨色 #17161b。每个词后面是一屏不同的产品界面（1560×900 的 macOS 窗口，12–30 条真实英文内容，浅色和深色交替）：文档、收件箱、看板、会议纪要、日历、数据看板、客户表格、问答。透视 1800px，每屏有自己的镜头运动，用 power3.out、时长等于该镜头时长：1 号从 2.0 倍拉到 1.5 倍，Y 轴转 -7° 到 -2°；2 号从 1.15 倍推到 1.45 倍，转角 10° 到 4°；3 号 1.5 倍向右平移 360px；4 号从 2.3 倍拉到 1.4 倍；5 号从 1.6 倍拉到 1.45 倍，X 轴转 -6° 到 -1°；6 号从 1.05 倍推到 1.6 倍；7 号 1.55 倍到 1.45 倍，X 轴转 8° 到 2°；8 号从 1.25 倍推到 1.4 倍。界面落地时失焦 6px，用 0.3s 收到 2.5px，词用 expo.out 0.28s 从 scale 1.08、模糊 10px 收到清晰。词后面放一层柔边椭圆压暗（深色 1000×340px rgba(6,6,10,0.72)，浅色 1240×440px rgba(250,249,253,0.72)，边缘逐级渐隐），再加暗角（深色边缘 rgba(0,0,0,0.42)，浅色边缘 rgba(40,36,60,0.18)），保证词可读。4.7–6.8s 接四张文件名字幕，窗口固定为：4.7–5.2s「/ Q4-launch-plan /」，5.2–5.8s「/ Acme-renewal-call-Nov-6 /」，5.8–6.3s「/ Ask-usage-last-90-days /」，6.3–6.8s「/ Q3-pricing-review-final /」。画面是同一批界面的微距，中心取在内容密集、有颜色的区域，浅色和深色交替：4.7s 浅色文档，上方是目标列表，下方是里程碑表格（头像和状态标签），字幕落在两者之间的空白带上，2.6 到 2.9 倍；5.2s 深色会议纪要的波形和转写 2.5 到 2.8 倍；5.8s 浅色数据看板的指标卡和折线面积图 2.6 到 3.1 倍；6.3s 深色收件箱的头像和邮件行 2.6 到 3.0 倍；倾斜在 ±2° 以内，失焦 5px 收到 3px。字幕用 JetBrains Mono 38px，居中，底下垫一块圆角底板（内边距 17px 32px 19px，圆角 14px，深色画面 rgba(8,8,12,0.72)，浅色画面 rgba(250,249,253,0.94)，另有 1px 边线 rgba(23,22,27,0.08) 和阴影 0 6px 24px rgba(30,28,60,0.12)），比切镜晚 0.04s，用 expo.out 0.22s 上移 6px 并淡入；深色画面上文字 #f6f3ee、斜杠 #a9a9ff，压一层 1100×420px 暗层（rgba(6,6,10,0.5) 渐隐到 0.14）；浅色画面上文字 #17161b、斜杠 #5b5bf0，压一层 1240×440px 浅色层（rgba(250,249,253,0.56) 渐隐到 0）。6.8–8.6s 切到米色 #f3efe6 卡片，两行字「Everything your team knows,」和「ready when you ask.」用 EB Garamond 500 124px 墨色，最后一个词 ask. 用强调色 #5b5bf0，两行各用 expo.out 0.5s 上移 14px 并淡入，第二行晚 0.08s，整体慢推 1.00 到 1.035。8.6–10.8s 硬切到字标：应用图标（210px 靛蓝圆角方块、四块方格，一块琥珀色）四块方格从四角用 expo.out 0.8s 落位，间隔 0.07s，字标「Tessel」（或你的产品名）用 Inter 600 176px，字母从 8.65s 起用 expo.out 0.9s 依次出现，8.6s 出一行小字「Docs, mail, meetings and answers in one place.」（Inter 32px，灰 #6b685f，0.3s 淡入），整体慢推 1.00 到 1.04。强调色只有靛蓝 #5b5bf0。",
+        "says": [
+          "一句话拆开，每个词单独占一个镜头",
+          "词始终在画面正中，背后每 0.5 秒换一屏产品界面",
+          "文件名小字接在后面，最后整句落在米色卡片上"
+        ],
+        "vs": [
+          [
+            "kinetic-typography",
+            "散排参数是几行规格词散落在镜头周围；一词一切每次只出一个词，位置固定在正中，背后换整屏界面"
+          ],
+          [
+            "typing-animation",
+            "节奏打字让一行字在原位逐字敲出；一词一切整词换镜头，靠切点打节奏，背后的界面每次都换"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "One Word per Cut",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"One Word per Cut\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "One Word per Cut Video: Recipe and Code",
+    "description": "A sentence lands one word per cut, each word dead center over a different product screen. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "One line is split into one word per shot. Each word sits at the center of the frame over a different product screen, file-name captions follow, then the full line lands on a cream card before the wordmark.",
+    "name": "One Word per Cut",
+    "ownName": "One Word per Cut",
+    "body": [
+      {
+        "h2": "How to make a One Word per Cut with Claude Code or Codex",
+        "body": "Split the line into words and give each word its own shot. In the film the eight words hold 0.6, 0.5, 0.5, 0.7, 0.5, 0.5, 0.5 and 0.9 s (0 to 4.7 s), with 0.2 s extra after the comma and 0.9 s on the last word. Set every word in EB Garamond 500 at 184 px, letter-spacing -0.025em, at the exact center of the frame, with all cuts hard.\n\nPut a different product screen behind each word: a 1560×900 window alternating light and dark, with 12 to 30 items of real content. Each shot moves with power3.out for its full length, for example 2.0x to 1.5x, then 1.15x to 1.45x with a 10° rotation, then a 360 px slide. The screen lands 6 px out of focus and settles to 2.5 px in 0.3 s while the word resolves in 0.28 s with expo.out. A soft scrim behind the word (1000×340 px dark, 1240×440 px light) keeps it readable.\n\nFrom 4.7 to 6.8 s add four file-name captions in JetBrains Mono 38 px over macro crops of the same screens (2.5x to 3.1x, centered on dense, colorful areas, alternating light and dark, defocus 5 px to 3 px) on a small backing pill, then hard cut to a cream card with the full line and the wordmark at 8.6 s. Press the copy button to send the recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard, and render an MP4 with HyperFrames."
+      }
+    ],
+    "alt": "The single word \"knows,\" in large white serif type over a dimmed meeting transcript.",
+    "faq": [
+      [
+        "What is a one word per cut video?",
+        "A sentence is shown one word at a time, and every word gets its own shot with a new image behind it. The word stays in the same place, so the cuts set the rhythm and the pictures carry the meaning. Launch films use it for a mission line or a product claim."
+      ],
+      [
+        "How long should each word stay on screen?",
+        "About 0.5 s for short words. This film holds 0.5 s for most words, 0.6 s for the long first word, 0.7 s after the comma and 0.9 s for the last word. A line of 8 words then takes 4.7 s."
+      ],
+      [
+        "Is the One Word per Cut recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "一词一切",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"一词一切文字动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "一词一切：示例与代码配方",
+    "description": "一句话按一词一个镜头出现，每个词固定在画面正中，背后每次换一屏产品界面。用免费配方，让 Claude Code 或 Codex 做出来。",
+    "lede": "一句话按一词一镜头拆开，词固定在画面正中，背后每次换一屏产品界面，随后接一组文件名字幕，整句落到米色卡片上，再出字标。",
+    "name": "一词一切文字动画",
+    "ownName": "一词一切",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做一词一切文字动画",
+        "body": "把一句话拆成词，每个词单独一个镜头。这支片子里八个词依次停 0.6、0.5、0.5、0.7、0.5、0.5、0.5、0.9 秒（0 到 4.7 秒），逗号后多停 0.2 秒，最后一个词停 0.9 秒。每个词都用 EB Garamond 500，184px，字距 -0.025em，固定在画面正中，全部硬切。\n\n每个词后面放一屏不同的产品界面：1560×900 的窗口，浅色和深色轮换，每屏 12 到 30 条真实内容。每个镜头在整段时长里用 power3.out 运动，例如 2.0 倍拉到 1.5 倍，接着 1.15 倍推到 1.45 倍并带 10° 转角，再接 360px 平移。界面落地时失焦 6px，0.3 秒收到 2.5px，词同时用 expo.out 在 0.28 秒内变清晰。词后面放一层柔边压暗（深色 1000×340px，浅色 1240×440px），保证可读。\n\n4.7 到 6.8 秒接四张文件名字幕，JetBrains Mono 38px，叠在同一批界面的微距上（2.5 到 3.1 倍，中心取在内容密集、有颜色的区域，浅色和深色交替，失焦 5px 到 3px），字幕底下垫一块圆角底板，再硬切到米色卡片显示整句，8.6 秒出字标。点配方页的复制按钮，把配方发给 Claude Code 或 Codex，也可以运行一次 npx skills add krisyangdev/motionboard 安装 skill，再用 HyperFrames 渲染 MP4。"
+      }
+    ],
+    "alt": "变暗的会议记录上方是一个白色大号衬线词 knows,。",
+    "faq": [
+      [
+        "什么是一词一切视频？",
+        "一句话按词逐个出现，每个词单独一个镜头，背后换一张新画面。词的位置不变，节奏由切点决定，意思靠画面补足。宣传片常用它来说使命句或产品主张。"
+      ],
+      [
+        "每个词应该停多久？",
+        "短词约 0.5 秒。这支片子大多数词停 0.5 秒，较长的第一个词 0.6 秒，逗号后 0.7 秒，最后一个词 0.9 秒，8 个词一共 4.7 秒。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

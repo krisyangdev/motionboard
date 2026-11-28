@@ -1,0 +1,202 @@
+{
+  "slug": "kinetic-typography",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/scattered-spec.mp4",
+    "poster": "https://media.motionboard.app/scattered-spec.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 25,
+    "cat": "C",
+    "star": false,
+    "video": "scattered-spec",
+    "samples": [
+      {
+        "t": "Apple MacBook Pro M5",
+        "id": "GriXfu4tL30",
+        "at": "0:20–0:27",
+        "s": 20
+      },
+      {
+        "t": "Apple MacBook Pro M5",
+        "id": "GriXfu4tL30",
+        "at": "0:31–0:37",
+        "s": 31
+      },
+      {
+        "t": "Apple MacBook Pro M5",
+        "id": "GriXfu4tL30",
+        "at": "0:57–0:59",
+        "s": 57
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Words are spread far apart on staggered baselines, so reading the spec sentence has pauses. Italics are used only on key words such as \"faster\" and \"Introducing\", and the type stays at about 3% of frame height so it does not compete with the main picture.",
+        "spec": [
+          [
+            "Timing",
+            "Four sentences of 2.05s each starting at 0.1, 2.15, 4.2, 6.25s: words appear over the first 0.76–1.04s, then the sentence holds about 1.0–1.3s and hard-cuts; wordmark card 8.3–11s: letters scatter in 8.35–8.8s, settle at 8.96s over 0.55s, tagline 8.96s; film 11s"
+          ],
+          [
+            "Easing",
+            "Words and letters appear with <code>tl.set</code> hard cuts (no fade); stair letters sit at <code>x: i×24–26px, y: −i×28–30px</code>, and two of the stair words collapse to one line with <code>expo.out</code> 0.4s; the scattered wordmark settles <code>expo.out</code> 0.55s"
+          ],
+          [
+            "Camera",
+            "One 3D lens model (Three.js, fov 20°) re-framed for each sentence: lens offset x +640, −640, +560, −520px with scale 1.0, 1.15, 1.2, 1.1, tilt and a 4% scale growth plus a few pixels of drift inside each 2.05s group; scale 1.35 behind the wordmark with the background dimmed to 34% opacity"
+          ],
+          [
+            "Subject",
+            "Four sentences with word starts 0.12–0.42s apart, each word placed by its left edge on its own baseline: 'Now with 48 megapixels', 'Constant f/1.8 aperture from 24–70mm', 'Up to 18 hours per charge', 'Weighs just 312 grams, lens included'; connector words ('with', 'from', 'per', 'just') appear letter by letter on an uneven beat as a staircase; numerals are 128px weight 300; the wordmark 'Quarry' appears as scattered letters offset up to ±150px"
+          ],
+          [
+            "Sync",
+            "Each sentence swap, camera re-frame and background change land on the same frame (0.1, 2.15, 4.2, 6.25, 8.3s); the wordmark and tagline settle on the same frame at 8.96s"
+          ],
+          [
+            "Style",
+            "Near-black <code>#070708</code> radial background with a vignette; white <code>#f5f5f7</code> Inter 66px, Playfair Display italic 74px, numerals 128px weight 300, one muted 40px line; red <code>#ff4a2b</code> dot in the tagline; set over a dark 3D product render"
+          ]
+        ],
+        "prompt": "Write four spec lines with a shot called Scattered Spec Type: 'Now with 48 megapixels', 'Constant f/1.8 aperture from 24–70mm', 'Up to 18 hours per charge' and 'Weighs just 312 grams, lens included', each shown for 2.05s over a dark 3D product render. Each word appears with a hard cut and no fade, 0.12 to 0.42 seconds apart, at positions spread across the frame on different baselines, in white Inter 66px with key words in Playfair italic 74px and numerals at 128px weight 300. Connector words ('with', 'from', 'per', 'just') appear letter by letter on an uneven beat and step upward, each letter 24 to 26px across and 28 to 30px up; settle some of them into one line with a 0.4 second expo.out. Re-frame the camera with a new lens offset, scale and tilt on every sentence, with a 4% growth inside each group, and hard-cut between sentences. At 8.3s, scatter the wordmark's letters up to 150px off their slots, settle them into one line with a 0.55 second expo.out, and fade in a tagline.",
+        "says": [
+          "The spec text pops up word by word at different positions",
+          "The words are spread wide apart with ups and downs",
+          "Small spec text mixing roman and italic"
+        ],
+        "vs": [
+          [
+            "typing-animation",
+            "In Rhythmic Typing the text is appended character by character on one fixed line; in Scattered Spec Type the words land at spread-out positions."
+          ],
+          [
+            "word-by-word-text-highlight",
+            "In Word-by-Word Highlight the words turn from gray to white on one line; in Scattered Spec Type the words appear with a hard cut at staggered positions."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "单词在画面里拉成大间距、基线错开，读参数句时有停顿；斜体只用在「faster」「Introducing」这类重点词；字号保持在画面高度约 3%，不和主画面抢位置。",
+        "spec": [
+          [
+            "时长",
+            "四句文案，每句 2.05s，分别在 0.1、2.15、4.2、6.25s 开始：词在前 0.76–1.04s 内出现，随后整句停留约 1.0–1.3s 并硬切；字标卡 8.3–11s：字母 8.35–8.8s 错落出现，8.96s 用 0.55s 归位，标语 8.96s 出现；全片 11s"
+          ],
+          [
+            "缓动",
+            "词和字母用 <code>tl.set</code> 硬出现（无淡入）；台阶字母位于 <code>x: i×24–26px, y: −i×28–30px</code>，四个台阶词中有两个用 <code>expo.out</code> 0.4s 收成一行；错落的字标 <code>expo.out</code> 0.55s 归位"
+          ],
+          [
+            "镜头",
+            "一个 3D 镜头模型（Three.js，fov 20°），每句重新取景：镜头偏移 x +640、−640、+560、−520px，scale 1.0、1.15、1.2、1.1，带倾斜，每个 2.05s 的段落内 scale 增长 4% 并有几像素漂移；字标后 scale 1.35，背景压暗到 34% 不透明度"
+          ],
+          [
+            "主体",
+            "四句话，词起始间隔 0.12–0.42s，每个词按左边缘放在各自的基线上：「Now with 48 megapixels」「Constant f/1.8 aperture from 24–70mm」「Up to 18 hours per charge」「Weighs just 312 grams, lens included」；连接词（with、from、per、just）按不均匀节拍逐字母出现，排成台阶；数字 128px、字重 300；字标「Quarry」以偏移最多 ±150px 的散落字母出现"
+          ],
+          [
+            "同步",
+            "每次换句、镜头重新取景和背景变化同一帧（0.1、2.15、4.2、6.25、8.3s）；字标和标语 8.96s 同一帧归位"
+          ],
+          [
+            "风格",
+            "近黑 <code>#070708</code> 径向背景带暗角；白色 <code>#f5f5f7</code> Inter 66px、Playfair Display 斜体 74px、数字 128px 字重 300，另有一行 40px 弱色小字；标语里有红色 <code>#ff4a2b</code> 圆点；叠在深色 3D 产品渲染上"
+          ]
+        ],
+        "prompt": "用「散排参数（Scattered Spec Type）」写四句参数文案：「Now with 48 megapixels」「Constant f/1.8 aperture from 24–70mm」「Up to 18 hours per charge」「Weighs just 312 grams, lens included」，每句叠在深色 3D 产品渲染上显示 2.05s。每个词硬出现、无淡入，间隔 0.12 到 0.42 秒，落在画面各处不同基线的位置，白色 Inter 66px，重点词用 Playfair 斜体 74px，数字 128px、字重 300。连接词（with、from、per、just）按不均匀节拍逐字母出现并向上成台阶，每个字母横移 24 到 26px、上移 28 到 30px；其中一部分用 0.4 秒 expo.out 收成一行。每句话换一次镜头取景（新的偏移、scale 和倾斜），段落内 scale 增长 4%，句与句之间硬切。8.3s 让字标的字母偏离各自位置最多 150px 散落出现，用 0.55 秒 expo.out 归位成一行，并淡入标语。",
+        "says": [
+          "参数文字一个词一个词蹦到不同位置",
+          "文字间距拉得很开，高低错落",
+          "正体斜体混着排的小字参数"
+        ],
+        "vs": [
+          [
+            "typing-animation",
+            "节奏打字的文字在固定一行里按字符追加；散排参数的词落在拉开的不同位置"
+          ],
+          [
+            "word-by-word-text-highlight",
+            "逐词点亮的词在同一行里由灰变白；散排参数的词是硬出现，位置错开"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Kinetic Typography",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 1600 for \"kinetic typography\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Kinetic Typography: Example and Code Recipe",
+    "description": "Spec sentences split into words on uneven baselines appear by hard cut over a 3D product. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A spec line is split into words placed far apart on uneven baselines, with a connector word stepping up letter by letter.",
+    "name": "Kinetic Typography",
+    "ownName": "Scattered Spec Type",
+    "body": [
+      {
+        "h2": "How to make a Kinetic Typography with Claude Code or Codex",
+        "body": "Run four sentences of 2.05 s each, starting at 0.1, 2.15, 4.2 and 6.25 s. Words appear with tl.set hard cuts 0.12 to 0.42 s apart, each placed by its left edge on its own baseline. The sentence holds for about 1.0 to 1.3 s and then hard-cuts to the next.\n\nMake connector words ('with', 'from', 'per', 'just') appear letter by letter as a staircase, stepping x by 24 to 26 px and y by -28 to -30 px per letter. Mix Inter 66 px, Playfair Display italic 74 px on key words, and numerals at 128 px weight 300. Behind the text a 3D lens model (fov 20 degrees) reframes for each sentence.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own product specs."
+      }
+    ],
+    "alt": "The words \"Up to 18 hours\" scattered across the left side, next to a large camera lens with glowing reflections.",
+    "faq": [
+      [
+        "What is kinetic typography?",
+        "Kinetic typography is animated text in which the movement, timing and placement of the words carry meaning. The type is the main animated element, and each word can have its own entrance, position and pace."
+      ],
+      [
+        "How do I time kinetic typography to a product shot?",
+        "Put every text change, camera reframe and background change on the same frame. In this film that is 0.1, 2.15, 4.2, 6.25 and 8.3 s, so each sentence swap lands together with a new framing of the 3D lens."
+      ],
+      [
+        "Is the Kinetic Typography recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "动态文字排版",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"动态文字排版\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "动态文字排版：示例与制作配方",
+    "description": "参数句拆成单词，落在拉开的位置和错落的基线上，叠在 3D 产品之上硬切出现。用免费配方，让 Claude Code 或 Codex 做出这段动态排版。",
+    "lede": "参数句拆成单词落在拉开的位置，连接词字母阶梯错开，正斜体混排。",
+    "name": "动态文字排版",
+    "ownName": "散排参数",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做动态文字排版",
+        "body": "做四句话，每句 2.05 秒，起点分别是 0.1、2.15、4.2、6.25 秒。单词用 tl.set 硬切出现，间隔 0.12 到 0.42 秒，每个词按左边缘放在自己的基线上。一句话停留约 1.0 到 1.3 秒，再硬切到下一句。\n\n连接词（with、from、per、just）逐字母出现，排成阶梯，每个字母 x 方向前进 24 到 26px，y 方向上移 28 到 30px。字体混用 Inter 66px，关键词用 Playfair Display 斜体 74px，数字用 128px 字重 300。文字后面的 3D 镜头模型（视场角 20°）每句重新取景。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，参数换成你自己的产品。"
+      }
+    ],
+    "alt": "Up to 18 hours 几个词散落在左侧，右边是一只反着光的大相机镜头。",
+    "faq": [
+      [
+        "动态文字排版是什么？",
+        "指文字本身会动的排版动画，词的运动、时间和位置都承载含义。文字是画面里的主要动画对象，每个词可以有自己的入场方式、位置和节奏。"
+      ],
+      [
+        "动态文字怎样和产品画面对齐？",
+        "让每次文字切换、镜头重新取景和背景变化落在同一帧。这支片子里是 0.1、2.15、4.2、6.25 和 8.3 秒，每次换句的同时，3D 镜头也换一个新的取景。"
+      ],
+      [
+        "动态文字排版配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

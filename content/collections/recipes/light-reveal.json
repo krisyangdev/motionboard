@@ -1,0 +1,200 @@
+{
+  "slug": "light-reveal",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/light-reveal.mp4",
+    "poster": "https://media.motionboard.app/light-reveal.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 1,
+    "cat": "A",
+    "star": true,
+    "video": "light-reveal",
+    "samples": [
+      {
+        "t": "Apple iPhone 17 Pro",
+        "id": "TNhX1uR2vO8",
+        "at": "0:00–0:04",
+        "s": 0
+      },
+      {
+        "t": "Apple iPhone 17 Pro",
+        "id": "TNhX1uR2vO8",
+        "at": "0:47–0:50（多色机型）",
+        "s": 47
+      },
+      {
+        "t": "Nothing Phone (3)",
+        "id": "MHGQRnvE9GQ",
+        "at": "0:25–0:30",
+        "s": 25
+      },
+      {
+        "t": "Apple A19 Pro 芯片",
+        "id": "dJObc0V6hJU",
+        "at": "0:53–0:55",
+        "s": 53
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The reveal comes from light alone, with no fade or cross-dissolve. The camera hole, flash, and edge reflections appear in sequence, and the different reflections of each material (silver, orange, deep blue) show up one by one during the fade-up. The opening and the closing use the same camera position, so the film starts and ends on the same frame.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. Rim light on 0.0–0.4s; fade-up 0.4–1.6s (1.2s, 36 frames); hold with slow push 1.6–4.4s (2.8s, 84 frames). Cut at 4.4s to three colorways: each fades up over 1.5s (45 frames), 0.1s apart from the left, starting 4.55s; cut back to the single phone at 7.0s; fade-out in reverse 7.35–8.55s (1.2s, 36 frames), rim light off 8.55–8.9s; wordmark 8.78–9.58s, held to 11s"
+          ],
+          [
+            "Easing",
+            "Fade-up and fade-out <code>cubic-bezier(0.65,0,0.35,1)</code> (power2.inOut); rim light and the hold push use sine.inOut; multi-color fade-up <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); wordmark power2.out"
+          ],
+          [
+            "Camera",
+            "Perspective, 24° fov. Single-phone shot: close-up on the camera bar from slightly above, distance 13 units, push-in during the hold scale 1.00→1.03, no depth of field. Three-color shot: straight-on at distance 47 units, push-in 1.00→1.015 linear over 4.4–7.0s"
+          ],
+          [
+            "Subject",
+            "A 3D phone (Three.js) that never moves. Exposure runs from 3.5% to 100% on one power2.inOut curve applied per material in order: lens glass and optics 0–0.55 of the curve, flash 0.18–0.72, metal edges and camera bar 0.30–0.95, back glass 0.45–1.0. Three colorways, left to right: silver, orange, blue, 8.7 units apart"
+          ],
+          [
+            "Style",
+            "Pure black background. Rim pass: one hard strip light high and behind on the right, grazing the top and right edges. Key pass: large soft box upper left plus a hard strip on the right. ACES tone mapping at exposure 1.25, bloom, 0.28 vignette, 0.022 film grain; wordmark in Inter 600 76px, <code>#ecebe8</code>, blur 6px→0"
+          ]
+        ],
+        "prompt": "Build a product opening called Light Reveal. Pure black background, one phone in a close-up on its camera bar (24° fov, distance 13 units, from slightly above). Render two light passes and add them: a rim pass (one hard strip light high and behind on the right, grazing the top and right edges) that fades in over 0–0.4s, and a key pass (large soft box upper left plus a hard strip on the right) that starts at 3.5% and rises to 100% over 1.2 seconds (0.4–1.6s) with power2.inOut (cubic-bezier(0.65,0,0.35,1)). Stage that one curve per material: the camera lenses first, then the flash, then the metal edges and camera bar, and the back glass last, with no fade or cross-dissolve. Hold for 2.8 seconds (1.6–4.4s) and push in slowly by 3% (scale 1.00→1.03, sine.inOut); the phone does not move. At 4.4s cut to a straight-on shot of three colorways (silver, orange, blue) 8.7 units apart; starting 4.55s each fades up over 1.5 seconds with expo.out (cubic-bezier(0.16,1,0.3,1)), 0.1 seconds after the previous one from the left, while the camera pushes in 1.5% linearly. At 7.0s cut back to the single phone and run the key light down in reverse over 1.2 seconds (7.35–8.55s), then turn the rim light off over 8.55–8.9s. The wordmark fades in over 8.78–9.58s (power2.out, blur 6px→0, y 8px→0) and holds to 11s. Use ACES tone mapping, bloom, a 0.28 vignette, 0.022 grain, and no depth of field. Build it with Three.js (MeshPhysicalMaterial, per-material envMapIntensity) driven by a seekable time function, with GSAP for the wordmark.",
+        "says": [
+          "The product lights up out of the dark",
+          "Slowly fades up from black",
+          "Three phone colors light up together"
+        ],
+        "vs": [
+          [
+            "rotating-logo-reveal",
+            "Light Reveal keeps the subject still and changes only the light; Rotate to Lockup turns the object to a target angle."
+          ],
+          [
+            "x-ray-effect",
+            "X-ray Dissolve switches between an inner layer and an outer shell, while Light Reveal only adjusts exposure."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "亮起全靠光线推进，没有淡入叠化；镜头孔、闪光灯、边缘反光依次出现，不同材质（银、橙、深蓝）的反光差异在亮起过程中逐个显出。开场亮起、片尾熄灭用同一个机位，整片首尾闭合。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。轮廓光 0.0–0.4s 亮起；亮起 0.4–1.6s（1.2s，36 帧）；保持并慢推 1.6–4.4s（2.8s，84 帧）。4.4s 切到三色机型：每台亮起 1.5s（45 帧），从最左一台起错开 0.1s，4.55s 开始；7.0s 切回单台；反向熄灭 7.35–8.55s（1.2s，36 帧），轮廓光 8.55–8.9s 熄灭；字标 8.78–9.58s 出现，停到 11s"
+          ],
+          [
+            "缓动",
+            "亮起与熄灭 <code>cubic-bezier(0.65,0,0.35,1)</code>（power2.inOut）；轮廓光和保持阶段的推近用 sine.inOut；三色亮起 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；字标 power2.out"
+          ],
+          [
+            "镜头",
+            "透视相机 fov 24°。单台镜头：从略偏上方对准摄像头模组特写，距离 13 单位，保持阶段推近 scale 1.00→1.03，无景深变化。三色镜头：正面机位，距离 47 单位，4.4–7.0s 线性推近 1.00→1.015"
+          ],
+          [
+            "主体",
+            "Three.js 3D 手机，全程不位移。曝光从 3.5% 抬到 100%，同一条 power2.inOut 曲线按材质依次生效：镜头玻璃和光学件占曲线的 0–0.55，闪光灯 0.18–0.72，金属边框和摄像头模组 0.30–0.95，背面玻璃 0.45–1.0。三色机型从左到右依次为银、橙、蓝，间距 8.7 单位"
+          ],
+          [
+            "风格",
+            "纯黑背景。轮廓光层：右后上方一条硬条形灯，擦过顶边和右边。主光层：左上方大柔光箱加右侧一条硬条形灯。ACES 色调映射，曝光 1.25，辉光，暗角 0.28，颗粒 0.022；字标 Inter 600、76px、<code>#ecebe8</code>，模糊 6px→0"
+          ]
+        ],
+        "prompt": "用「暗场显影（Light Reveal）」做一个产品开场。纯黑背景，一台手机，镜头从略偏上方对准摄像头模组特写（fov 24°，距离 13 单位）。分两层光渲染再相加：轮廓光层（右后上方一条硬条形灯，擦过顶边和右边）0–0.4s 淡入；主光层（左上方大柔光箱加右侧一条硬条形灯）起始 3.5%，1.2 秒内（0.4–1.6s）用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）抬到 100%。这一条曲线按材质分级生效：摄像头镜片先亮，然后闪光灯，再到金属边框和摄像头模组，背面玻璃最后，没有淡入叠化。之后保持 2.8 秒（1.6–4.4s）并缓慢推近 3%（scale 1.00→1.03，sine.inOut），手机不位移。4.4s 切到正面机位的三色机型（银、橙、蓝，间距 8.7 单位）；从 4.55s 起每台用 expo.out（cubic-bezier(0.16,1,0.3,1)）亮起 1.5 秒，从最左一台起每台错开 0.1 秒，镜头线性推近 1.5%。7.0s 切回单台，主光层反向熄灭 1.2 秒（7.35–8.55s），随后轮廓光 8.55–8.9s 熄灭。字标 8.78–9.58s 淡入（power2.out，模糊 6px→0，y 8px→0），停到 11s。ACES 色调映射，加辉光、暗角 0.28 和颗粒 0.022，不加景深。用 Three.js（MeshPhysicalMaterial，逐材质 envMapIntensity）由可 seek 的时间函数驱动，字标用 GSAP。",
+        "says": [
+          "产品从黑暗里被灯光照亮",
+          "黑场里慢慢亮起来",
+          "三个颜色的手机一起亮起来"
+        ],
+        "vs": [
+          [
+            "rotating-logo-reveal",
+            "暗场显影主体不动、只变光；旋转落定靠物体转动到目标角度"
+          ],
+          [
+            "x-ray-effect",
+            "透视叠化切换的是内部层与外壳层，暗场显影只调曝光"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Light Reveal",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 20 for \"light reveal\" (DataForSEO keyword overview)",
+      "checked": "2026-11-15"
+    },
+    "title": "Light Reveal Effect: Example and Code Recipe",
+    "description": "A product fades up out of pure black on exposure alone, with a 3% push-in. Make this light reveal with Claude Code or Codex from the free recipe.",
+    "lede": "The product emerges from pure black as exposure rises, with a barely perceptible push-in, and the closing shot runs the same move in reverse.",
+    "name": "Light Reveal",
+    "ownName": "Light Reveal",
+    "body": [
+      {
+        "h2": "How to make a Light Reveal with Claude Code or Codex",
+        "body": "Start from a pure black frame with one 3D phone and a 24° perspective camera close on the camera module. Render two light passes and add them: a rim pass that fades in over 0.0–0.4s, and a key pass that rises from 3.5% to 100% exposure over 1.2s (0.4–1.6s) on a power2.inOut curve, cubic-bezier(0.65,0,0.35,1).\n\nApply that one curve to each material in sequence: lens glass first (0–0.55 of the curve), then the flash (0.18–0.72), the metal edges and camera bar (0.30–0.95), and the back glass last (0.45–1.0). Hold 2.8s with a 3% push-in on sine.inOut. At 7.35s the film runs the same move in reverse over 1.2s to close.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds a Three.js scene driven by a seekable time function, with the wordmark in GSAP. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "Three phones in silver, orange and dark blue standing side by side, lit from above against black.",
+    "faq": [
+      [
+        "What is a light reveal?",
+        "A light reveal shows a subject by raising the light on it from darkness, usually starting from a black frame. Parts of the subject light up in stages, so edges and highlights appear before the whole surface is visible. This film applies it to a phone."
+      ],
+      [
+        "How long should a light reveal take?",
+        "This recipe uses a 1.2s fade-up (36 frames) followed by a 2.8s hold. The fade is long enough for the lens, flash and metal edges to appear in order, and the hold lets the viewer read the product before the next shot."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "暗场打光显影",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"暗场打光显影\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "暗场打光显影效果：示例与代码配方",
+    "description": "产品在纯黑画面中只靠提高曝光逐步显出，镜头轻推 3%。用 Claude Code 或 Codex 按免费配方做出这个暗场显影效果。",
+    "lede": "产品从全黑中靠提高曝光逐步显出，镜头只有极轻的推近，片尾同镜头反向熄灭。",
+    "name": "暗场打光显影",
+    "ownName": "暗场显影",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做暗场打光显影",
+        "body": "从纯黑画面开始，放一台 3D 手机，用 24° 透视相机贴近摄像头模组。分两层光渲染再相加：轮廓光 0.0–0.4s 淡入；主光层在 1.2s 内（0.4–1.6s）用 power2.inOut（cubic-bezier(0.65,0,0.35,1)）把曝光从 3.5% 抬到 100%。\n\n这一条曲线按材质依次生效：镜头玻璃最先（曲线的 0–0.55），然后是闪光灯（0.18–0.72）、金属边框和摄像头模组（0.30–0.95），背面玻璃最后（0.45–1.0）。接着保持 2.8s，用 sine.inOut 慢推 3%。7.35s 起用同一条曲线反向熄灭 1.2s，片尾首尾呼应。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会用由可 seek 的时间函数驱动的 Three.js 场景，字标用 GSAP 做。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "银色、橙色、深蓝三台手机并排立在黑底上，从上方打光。",
+    "faq": [
+      [
+        "什么是暗场显影？",
+        "暗场显影指产品从黑暗中被灯光逐步照亮，通常从全黑画面开始。不同部位按顺序亮起，边缘和高光先出现，然后才是整个表面。这支片子把它用在一台手机上。"
+      ],
+      [
+        "暗场显影应该多长？",
+        "这份配方的亮起用 1.2s（36 帧），之后保持 2.8s。1.2s 足够让镜头、闪光灯和金属边框依次显出，保持阶段让观众在下一个镜头前看清产品。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

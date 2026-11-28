@@ -1,0 +1,188 @@
+{
+  "slug": "glass-droplet-split",
+  "category": [
+    "bridge"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/glass-droplet-split.mp4",
+    "poster": "https://media.motionboard.app/glass-droplet-split.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 29,
+    "cat": "D",
+    "star": false,
+    "video": "glass-droplet-split",
+    "samples": [
+      {
+        "t": "Apple iOS 26 Liquid Glass",
+        "id": "jGztGfRujSE",
+        "at": "1:44–1:48",
+        "s": 104
+      },
+      {
+        "t": "Apple AirPods Pro 3",
+        "id": "EMmKs8vMKhU",
+        "at": "0:04–0:07",
+        "s": 4
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "On an all-black background, a single highlight along the glass edge outlines the shape, with no fill and no shadow. The stretch and break follow surface tension, and the bead rebounds about 5% at the moment of separation; this bead becomes the prototype of the button that follows. The ring version separates the spikes outside the ring from the quiet text inside it, so the graphic itself explains noise reduction.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. Slab arc slide 0-1.2s, stand up and stretch 1.2-2.2s, neck thins 2.12-2.41s and breaks at 2.41s, bead hovers 2.45-3.45s, bead opens into a ring 3.45-3.75s, ring contracts 3.75-4.55s, settling jitter 4.55-6.75s, ring gathers into a logo bead 6.75-7.35s, wordmark 7.42s and subline 7.8s hold to 10s"
+          ],
+          [
+            "Easing",
+            "Stretch and rotate <code>cubic-bezier(0.65,0,0.35,1)</code>; break rebound <code>cubic-bezier(0.34,1.56,0.64,1)</code> over 0.5s; ring contraction <code>cubic-bezier(0.16,1,0.3,1)</code> over 0.8s; ring gather <code>cubic-bezier(0.65,0,0.35,1)</code> over 0.6s; wordmark and subline <code>expo.out</code> (0.9s, 0.8s)"
+          ],
+          [
+            "Camera",
+            "Perspective camera (15 degree field) arcs from 101.5 to 90 degrees at radius 1500 over 0-1.2s with ease <code>1-(1-t)^1.6</code> while pulling back 200 units, then holds fixed until a 3% push 7.35-10s with <code>sine.inOut</code>"
+          ],
+          [
+            "Subject",
+            "A thin glass slab (thickness 0.085 of its width) slides along an arc and rotates upright from 54 degrees about its long axis and -68 degrees roll to 0, thickening to 0.5 and scaling 1 to 1.3. Its lower end stretches to a droplet (lower radius 150 to 270, tip down to -700), the neck thins from radius 18 to 1.6, then breaks at 2.41s with a flash; the lower body falls away and a bead (radius 150 shrinking to 70, about 54px below frame center) swells 5% and rebounds 8% vertically. At 3.45s the bead opens into a ring that contracts from radius 1000 to 350 with tube radius 120 to 34, jitters 5px at 5.5Hz and sprouts up to 18 spikes of 90-240px, then collapses into a 86px logo bead 310px left of center"
+          ],
+          [
+            "Style",
+            "Background <code>#04060b</code> with a navy radial pool, a faint grid with crosshairs and ten blurred notification cards (fade in 3.45s) behind the glass; Focus caption 4.35-4.95s. Raymarched glass, IOR 1.47, RGB spread 0.016 growing to 0.12 on the ring, edge highlight only, no fill, no drop shadow, 30% vignette. Wordmark Inter 600 180px, letter-spacing -0.035em, <code>#eef1f7</code>; subline Inter 400 28px <code>#8790a3</code>"
+          ]
+        ],
+        "prompt": "Build an abstract graphic called Glass Droplet Split, 10s. Background #04060b with a navy radial pool, a faint grid and ten blurred notification cards that fade in at 3.45s behind the glass. Render raymarched glass (IOR 1.47, RGB spread 0.016), outlined by an edge highlight only, with no fill and no shadow. A thin slab slides along an arc over 1.2s while a perspective camera arcs from 101.5 to 90 degrees and pulls back 200 units (ease 1-(1-t)^1.6), then rotates upright from 54 degrees tilt and -68 degrees roll to 0 over 1.2-2.2s with cubic-bezier(0.65,0,0.35,1), thickening and scaling 1.3x. Its lower end stretches into a droplet, the neck thins from radius 18 to 1.6 starting at 2.12s, and it breaks at 2.41s with a flash; the lower body falls away and the bead swells 5% and rebounds 8% vertically with cubic-bezier(0.34,1.56,0.64,1) over 0.5s, then hovers below center until 3.45s. The bead then opens into a ring (3.45-3.75s) that contracts over 0.8s with cubic-bezier(0.16,1,0.3,1) from radius 1000 to 350 while RGB spread rises to 0.12 and the edge turns iridescent, jitters 5px at 5.5Hz until 6.75s with up to 18 spikes, and collapses over 0.6s into a logo bead 310px left of center. Fade the wordmark in at 7.42s (blur 10px to 0, x -18 to 0, 0.9s expo.out) with a subline at 7.8s, and push the camera in 3% over 7.35-10s with sine.inOut.",
+        "says": [
+          "A glass piece stretches into a droplet and then breaks off",
+          "A drop of glass separating from a large piece",
+          "A rainbow-edged ring closing in toward the middle"
+        ],
+        "vs": [
+          [
+            "liquid-glass-effect",
+            "Glass Lens emphasizes refraction of content; Glass Droplet Split emphasizes the glass stretching and breaking."
+          ],
+          [
+            "branching-growth",
+            "Branching Growth grows a multi-level structure outward from a point; Glass Droplet Split is one shape shedding one bead."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "全黑背景只靠玻璃边缘一条高光勾出形状，没有填色和投影。拉伸与断开符合表面张力，断开瞬间圆珠有约 5% 的回弹，这颗圆珠成为后续按钮的原型；环形版把环外的尖峰与环内的安静文字分开，图形本身说明降噪。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。玻璃片弧线滑动 0–1.2s，立起拉伸 1.2–2.2s，颈部 2.12–2.41s 收细并在 2.41s 断开，圆珠悬停 2.45–3.45s，圆珠张开成环 3.45–3.75s，环收束 3.75–4.55s，落定抖动 4.55–6.75s，环收成 logo 圆珠 6.75–7.35s，字标 7.42s、副标 7.8s 出现并停到 10s"
+          ],
+          [
+            "缓动",
+            "拉伸和旋转 <code>cubic-bezier(0.65,0,0.35,1)</code>；断开回弹 <code>cubic-bezier(0.34,1.56,0.64,1)</code>，持续 0.5s；环收束 <code>cubic-bezier(0.16,1,0.3,1)</code>，持续 0.8s；环收成圆珠 <code>cubic-bezier(0.65,0,0.35,1)</code>，持续 0.6s；字标和副标 <code>expo.out</code>（0.9s、0.8s）"
+          ],
+          [
+            "镜头",
+            "透视镜头（15 度视野）在 0–1.2s 沿弧线从 101.5 度转到 90 度，半径 1500，缓动曲线 <code>1-(1-t)^1.6</code>，同时后退 200 单位，之后固定，直到 7.35–10s 做 3% 的 <code>sine.inOut</code> 推近"
+          ],
+          [
+            "主体",
+            "一块薄玻璃片（厚度为宽度的 0.085）沿弧线滑动，同时绕长轴从 54 度、滚转 -68 度旋转到 0 度立起，厚度增到 0.5，整体缩放 1 到 1.3。下端拉长成水滴（下端半径 150 到 270，尖端下探到 -700），颈部半径从 18 收细到 1.6，在 2.41s 断开并闪光；下半身坠落，圆珠（半径从 150 缩到 70，位于画面中心下方约 54px）膨胀 5% 并纵向回弹 8%。3.45s 圆珠张开成环，环半径从 1000 收到 350、管径从 120 收到 34，以 5.5Hz 抖动 5px，长出最多 18 根 90–240px 的尖刺，随后收成中心偏左 310px 的 86px logo 圆珠"
+          ],
+          [
+            "风格",
+            "背景 <code>#04060b</code>，玻璃后方有深蓝径向光池、带十字标记的淡网格和十张模糊通知卡（3.45s 淡入）；Focus 文案 4.35–4.95s。光线步进玻璃，折射率 1.47，RGB 分离 0.016 在环上增长到 0.12，只有边缘高光，无填色、无投影，30% 暗角。字标 Inter 600 180px，字距 -0.035em，<code>#eef1f7</code>；副标 Inter 400 28px <code>#8790a3</code>"
+          ]
+        ],
+        "prompt": "用「玻璃水滴分离（Glass Droplet Split）」做一段抽象图形，全片 10s。背景 #04060b，带深蓝径向光池、淡网格，以及在 3.45s 淡入玻璃后方的十张模糊通知卡。玻璃用光线步进渲染（折射率 1.47，RGB 分离 0.016），只靠边缘高光勾形，无填色、无投影。一块薄玻璃片沿弧线滑动 1.2s，同时透视镜头从 101.5 度转到 90 度并后退 200 单位（缓动 1-(1-t)^1.6），然后在 1.2–2.2s 内用 cubic-bezier(0.65,0,0.35,1) 从倾斜 54 度、滚转 -68 度旋转到 0 度立起，同时变厚并放大 1.3 倍。下端拉长成水滴，颈部从 2.12s 起半径由 18 收细到 1.6，在 2.41s 断开并闪光；下半身坠落，圆珠膨胀 5% 并用 cubic-bezier(0.34,1.56,0.64,1) 在 0.5s 内纵向回弹 8%，随后悬停在中心偏下到 3.45s。圆珠在 3.45–3.75s 张开成环，环用 0.8s cubic-bezier(0.16,1,0.3,1) 从半径 1000 收到 350，同时 RGB 分离升到 0.12、边缘出现彩虹色，之后以 5.5Hz 抖动 5px 并长出最多 18 根尖刺，持续到 6.75s，再用 0.6s 收成中心偏左 310px 的 logo 圆珠。字标在 7.42s 淡入（模糊 10px 到 0，x 从 -18 到 0，0.9s expo.out），副标 7.8s 跟入，镜头在 7.35–10s 用 sine.inOut 推近 3%。",
+        "says": [
+          "玻璃片拉长变成水滴然后断开",
+          "一滴玻璃从大块上分离出来",
+          "彩虹边的圆环往中间收拢"
+        ],
+        "vs": [
+          [
+            "liquid-glass-effect",
+            "玻璃透镜强调折射内容；水滴分离强调玻璃自身的拉伸与断开"
+          ],
+          [
+            "branching-growth",
+            "分叉生长是从一个点向外长出多层结构；水滴分离是一个形体分出一颗圆珠"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Glass Droplet Split",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Glass Droplet Split\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Glass Droplet Split: 3D Glass Animation Recipe",
+    "description": "A glass slab stretches into a droplet, its neck thins and breaks, and the bead opens into a ring. Make it with Claude Code or Codex from the free recipe.",
+    "lede": "A glass slab stretches into a droplet, its neck thins and breaks, leaving a round bead. A dispersive glass ring contracting inward is the sibling form.",
+    "name": "Glass Droplet Split",
+    "ownName": "Glass Droplet Split",
+    "body": [
+      {
+        "h2": "How to make a Glass Droplet Split with Claude Code or Codex",
+        "body": "Render glass with a raymarching shader (IOR 1.47, RGB spread 0.016) on #04060b, with an edge highlight only, no fill and no drop shadow. A thin slab (thickness 0.085 of its width) slides along an arc over 0 to 1.2 s while a 15 degree perspective camera arcs from 101.5 to 90 degrees. It then stands up and stretches from 1.2 to 2.2 s with cubic-bezier(0.65,0,0.35,1).\n\nThin the neck from radius 18 to 1.6 between 2.12 and 2.41 s and break it at 2.41 s with a flash. The bead (radius 150 shrinking to 70) swells 5% and rebounds 8% vertically with cubic-bezier(0.34,1.56,0.64,1) over 0.5 s. At 3.45 s it opens into a ring that contracts from radius 1000 to 350 over 0.8 s with expo.out, sprouting up to 18 spikes as the RGB spread grows to 0.12.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site where WebGL is available."
+      }
+    ],
+    "alt": "A spiky glass bubble on a dark screen holding the text \"Quiet until 5:00 PM\", with blurred notifications around it.",
+    "faq": [
+      [
+        "What is a glass droplet split animation?",
+        "A 3D glass shape stretches under surface-tension-like motion, its neck thins until it breaks, and a single rounded bead remains. On a dark background a thin edge highlight is enough to outline the glass."
+      ],
+      [
+        "What does this recipe use to render the glass?",
+        "A raymarching shader with an index of refraction of 1.47 and an RGB spread for dispersion, running inside a HyperFrames composition. The same timeline can run in a browser page, and the MP4 render covers viewers without GPU support."
+      ],
+      [
+        "Is the Glass Droplet Split recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "玻璃水滴分离动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"玻璃水滴分离动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "玻璃水滴分离动画：3D 玻璃配方",
+    "description": "玻璃片拉长成水滴，颈部收细断开，留下的圆珠再展开成色散玻璃环。用免费配方，让 Claude Code 或 Codex 做出这段 3D 玻璃动画。",
+    "lede": "玻璃片拉长成水滴，颈部收细断开，留下一颗圆珠；同类形式是色散玻璃环向中心收束。",
+    "name": "玻璃水滴分离动画",
+    "ownName": "玻璃水滴分离",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做玻璃水滴分离动画",
+        "body": "玻璃用光线步进着色器渲染（折射率 1.47，RGB 分离 0.016），背景 #04060b，只有边缘高光，没有填充和投影。一块薄玻璃片（厚度为宽度的 0.085）在 0 到 1.2 秒沿弧线滑入，15° 视场的透视相机同时从 101.5° 转到 90°。1.2 到 2.2 秒玻璃片立起并拉长，缓动 cubic-bezier(0.65,0,0.35,1)。\n\n2.12 到 2.41 秒颈部半径从 18 收细到 1.6，2.41 秒伴随一次闪光断开。圆珠半径从 150 缩到 70，用 cubic-bezier(0.34,1.56,0.64,1) 在 0.5 秒内膨胀 5%，纵向回弹 8%。3.45 秒圆珠展开成环，用 expo.out 在 0.8 秒内从半径 1000 收到 350，长出最多 18 根尖刺，RGB 分离增加到 0.12。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，在支持 WebGL 的环境里运行。"
+      }
+    ],
+    "alt": "深色画面中央有一个带尖刺的玻璃气泡，里面写着 5 点前免打扰，四周是虚化的通知。",
+    "faq": [
+      [
+        "玻璃水滴分离动画是什么？",
+        "一块 3D 玻璃按类似表面张力的方式被拉长，颈部越来越细直到断开，只留下一颗圆珠。深色背景上，一条细的边缘高光就足以勾出玻璃的轮廓。"
+      ],
+      [
+        "这份配方用什么渲染玻璃？",
+        "用光线步进着色器，折射率 1.47，用 RGB 分离表现色散，跑在 HyperFrames 合成里。同一条时间线可以放进浏览器页面，没有 GPU 支持的观众则用渲染好的 MP4。"
+      ],
+      [
+        "玻璃水滴分离动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

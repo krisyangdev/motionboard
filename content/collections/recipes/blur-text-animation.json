@@ -1,0 +1,196 @@
+{
+  "slug": "blur-text-animation",
+  "category": [
+    "close"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/blur-text.mp4",
+    "poster": "https://media.motionboard.app/blur-text.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 49,
+    "cat": "C",
+    "star": false,
+    "video": "blur-text",
+    "samples": [
+      {
+        "t": "Webflow Campaigns",
+        "id": "MWbSTVGM-Ws",
+        "at": "0:41–0:44",
+        "s": 41
+      },
+      {
+        "t": "Linear At your command",
+        "id": "mRql2VJ99gM",
+        "at": "0:46–0:50",
+        "s": 46
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Blur reads as not yet in focus. A word at 52px blur still has its colour and rough width, so the eye sees where the text will land and then reads the meaning one word at a time at the pace of the stagger. The hero lines resolve letter by letter, so a word grows from the inside letter by letter; the smaller lines resolve per word, which keeps them quick. The blur-out is the same move in reverse, word by word, so a line leaves in the order it came and the next line arrives in the space it freed. The product screen behind starts blurred too and sharpens from 9px blur with the line We bring it into focus., so the image and the words say the same thing. The close is the only hold in the film: the tagline sharpens last, the screen dims to 13% and the mark lands under it, so the final frame is a tagline and a mark on near black with one amber accent, #ffb15c.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s. Line 1 resolves 0.45–2.6s (0.28s between words, 0.035s between letters, 1.1s per letter) and blurs out 2.95–3.95s (0.1s between words); line 2 resolves 3.55–4.9s (0.2s between words, 0.95s each) and blurs out 5.15–6.05s; line 3 resolves 5.7–7.28s (0.17s between words, 0.9s each) and blurs out 7.0–8.02s (0.08s between words); tagline letters resolve 7.55–9.28s (0.3s between words, 0.04s between letters, 1.15s per letter); the tagline rises and the mark lands 8.7–9.65s; wordmark letters 8.85–10.11s; held to the end"
+          ],
+          [
+            "Easing",
+            "Entrance blur, scale and drift power3.out, opacity power1.out over half the duration; exit blur, scale and drift power2.in, opacity power1.in starting 0.12s later; tagline rise, mark and wordmark <code>cubic-bezier(0.16,1,0.3,1)</code> (expo.out); background screen sharpening and dimming power2.inOut; the pushes, the screen scale and the page scroll are constant-speed"
+          ],
+          [
+            "Camera",
+            "Locked framing with slow drifts only: the text layer scales 1.0→1.045 over 0–10.5s; the editor behind scales 1.07→1.0 over 0–8s while its page scrolls up 140px; the lockup layer scales 1.0→1.035 over 8.7–10.5s"
+          ],
+          [
+            "Subject",
+            "Inter 700, letter-spacing -0.035em, line height 1.04: lines 1 and 3 at 150px in two rows, line 2 at 168px in one row, tagline at 184px in one row. Each unit starts at 52px blur (tagline 60px), scale 1.12, opacity 0, drifts at most 9px sideways and rises from 12–26px below, and ends at 0px blur, scale 1; the exit goes to 46px blur, scale 1.07, 14px up, at most 7px sideways and opacity 0, with the drift taken from a seeded generator (mulberry32). Line 1 and the tagline split into letters; lines 2 and 3 move per word. The mark is a 108px amber rounded square (radius 24 per 100) with a dark C stroke and a cursor bar; the Clearline wordmark is Inter 700 at 96px, 26px from the mark. Behind it sits a 1700x960 Clearline editor at (110px, 60px) with a 250px sidebar, a draft titled Introducing Clearline 2.0 and a 360px clarity panel (score 92), at 60% opacity under an elliptical dark veil (1350x620, 80% at the centre, 12% at the edge)"
+          ],
+          [
+            "Sync",
+            "While line 3 reads We bring it into focus., the editor sharpens from 9px blur over 5.6–6.9s; as the tagline resolves the editor dims from 60% to 13% over 7.5–8.6s and an amber glow behind the tagline rises over 7.55–8.95s; the tagline rises 104px at 8.7s and the mark starts resolving at 8.75s, so the lockup sits under the tagline; each line starts arriving 0.35–0.47s before the previous line has finished blurring out"
+          ],
+          [
+            "Style",
+            "Near black <code>#09090b</code>, text <code>#f4f4f6</code>, grey <code>#8a8a96</code> for blurry. and rough., one accent amber <code>#ffb15c</code> (clearly., the glow behind the tagline, the mark gradient #ffc98a to #ff8c38 and the suggestion marks in the editor); Inter only; a vignette (55% at the edge) and film grain (9% opacity, repositioned every 1/12s from a seeded generator)"
+          ]
+        ],
+        "prompt": "Build a 10.5-second, 1920x1080, 30 fps product film called Blur Text Animation for a fictional product, Clearline (an AI writing app). The frame is near black #09090b with text #f4f4f6; grey #8a8a96 is used only on the words blurry. and rough., and the only accent color is amber #ffb15c. Use Inter 700 only, letter-spacing -0.035em, line height 1.04, text centered. Behind the text sits a blurred product screen: a 1700x960 Clearline editor with its top-left at (110, 60), a 250px sidebar (Search, Ask Clearline, Recent, a Drafts list, Folders, a user Maya Chen at the bottom), a real draft titled Introducing Clearline 2.0 in the middle (a few English paragraphs, a list and two amber-underlined suggestions) and a 360px clarity panel on the right (score 92, Readability Grade 7, four suggestion cards). The editor is at 60% opacity under an elliptical dark veil (1350x620, rgba(9,9,11,0.8) at the centre, 0.12 at the edge). Every text unit moves the same way. Entrance: start at 52px blur, scale 1.12, opacity 0, at most 9px sideways drift and 12–26px below; blur, scale and position ease to 0px, 1 and 0 with power3.out and opacity rises to 1 with power1.out over half the duration. Exit: 46px blur, scale 1.07, 14px up, at most 7px sideways, power2.in over 0.7s, opacity fading with power1.in over 0.5s starting 0.12s later. Take drift values from a seeded generator (mulberry32), never Math.random. Timeline: at 0.45s line 1 enters at 150px in two rows, Every idea / starts blurry., split into letters, 0.28s between words, 0.035s between letters, 1.1s per letter; from 2.95s it blurs out word by word, 0.1s apart. At 3.55s line 2, Say it rough., enters at 168px in one row, moving per word, 0.2s between words, 0.95s each; from 5.15s it blurs out word by word, 0.1s apart. At 5.7s line 3, We bring it / into focus., enters at 150px in two rows, 0.17s between words, 0.9s each; from 7.0s it blurs out word by word, 0.08s apart. Each line starts arriving about 0.4s before the previous line has finished blurring out. Background screen: opacity rises to 60% over 0–1.2s (power2.out) with a 9px blur at the start, sharpens over 5.6–6.9s (power2.inOut, aligned with line 3) and dims to 13% over 7.5–8.6s; over 0–8s it scales from 1.07 to 1.0 while its page scrolls up 140px at constant speed. At 7.55s the tagline Write clearly. enters at 184px in one row, split into letters, starting at 60px blur, 0.3s between words, 0.04s between letters, 1.15s per letter, with clearly. in amber; an amber glow rises behind it (ellipse 900x380, 20% at the centre, 1.4s power2.out). At 8.7s the tagline rises 104px (0.95s, expo.out) and at 8.75s the mark resolves from 24px blur and scale 0.8 (0.9s, expo.out): a 108px amber gradient rounded square (#ffc98a to #ff8c38, radius 24 per 100) with a dark #1a1209 C stroke and a cursor bar. To its right the wordmark Clearline, Inter 700 at 96px, 26px away, resolves letter by letter from 22px blur starting 8.85s, 0.045s between letters, 0.9s each. The lockup row sits with its top at 656px and holds to the end of the film, pushing slowly to 1.035x over 8.7–10.5s. Across the whole film the text layer scales from 1.0 to 1.045 at constant speed. Add a vignette (55% at the edge) and film grain (9% opacity, repositioned every 1/12s).",
+        "says": [
+          "Words come out of heavy blur one at a time",
+          "One line blurs away word by word and the next line comes in",
+          "The tagline sharpens last and the product mark lands under it"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "Word-by-Word Highlight brightens words from gray to white in a line that never moves or blurs; in Blur Text Animation each word resolves from heavy blur with scale and drift, and the whole line then blurs away word by word."
+          ],
+          [
+            "one-word-per-cut",
+            "One Word per Cut swaps words by cutting, with a new screen behind each one; in Blur Text Animation the words resolve in place from blur, lines hand over by blurring out, and the screen behind focuses once."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "模糊在画面里读作还没对上焦。一个 52px 模糊的词仍有颜色和大致宽度，观众先看到文字会落在哪里，再随着变清楚一个词一个词读到意思，节奏由错开的间隔决定。主视觉行逐字变清楚，词从内部一点点长出来；较小的行按词变清楚，速度更快。虚化消失用同一个动作反向做，也是逐词，一行按进来的顺序离开，下一行在它让出的位置上进来。背后的产品界面一开始同样是虚的，到「We bring it into focus.」那一行时从 9px 模糊变清楚，画面和文字说的是同一件事。结尾是全片唯一的停顿：标语最后变清楚，界面压暗到 13%，标志落在标语下面，最后一帧是近黑底上的一句标语和一个标志，只有一个琥珀色强调色 #ffb15c。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s。第 1 行 0.45–2.6s 变清楚（词间隔 0.28s，字间隔 0.035s，每个字 1.1s），2.95–3.95s 逐词虚化消失（词间隔 0.1s）；第 2 行 3.55–4.9s 变清楚（词间隔 0.2s，每个词 0.95s），5.15–6.05s 虚化消失；第 3 行 5.7–7.28s 变清楚（词间隔 0.17s，每个词 0.9s），7.0–8.02s 虚化消失（词间隔 0.08s）；标语 7.55–9.28s 逐字变清楚（词间隔 0.3s，字间隔 0.04s，每个字 1.15s）；8.7–9.65s 标语上移、标志落下；字标逐字 8.85–10.11s；保持到片尾"
+          ],
+          [
+            "缓动",
+            "进场时模糊、缩放和位移用 power3.out，透明度用 power1.out，时长是进场的一半；出场时模糊、缩放和位移用 power2.in，透明度用 power1.in 并晚 0.12s 开始；标语上移、标志和字标 <code>cubic-bezier(0.16,1,0.3,1)</code>（expo.out）；背景界面变清楚和压暗 power2.inOut；整体慢推、界面缩放和页面滚动匀速"
+          ],
+          [
+            "镜头",
+            "构图固定，只有慢漂移：文字层 0–10.5s 从 1.0 倍推到 1.045 倍；背后的编辑器 0–8s 从 1.07 倍缩到 1.0 倍，页面同时向上滚 140px；落款层 8.7–10.5s 从 1.0 倍推到 1.035 倍"
+          ],
+          [
+            "主体",
+            "Inter 700，字距 −0.035em，行高 1.04：第 1、3 行 150px 两排，第 2 行 168px 一排，标语 184px 一排。每个单元起始 52px 模糊（标语 60px）、缩放 1.12、透明度 0，侧向最多漂 9px、从下方 12–26px 处升起，结束于 0px 模糊、缩放 1；出场到 46px 模糊、缩放 1.07、上移 14px、侧向最多 7px、透明度 0，漂移量来自带种子的随机数（mulberry32）。第 1 行和标语按字拆开，第 2、3 行按词动。标志是 108px 的琥珀色圆角方块（圆角 24/100），里面是深色的 C 形描边和一条光标短杠；字标 Clearline 为 Inter 700、96px，和标志间距 26px。背后是 1700x960 的 Clearline 编辑器（左上角 110px、60px），含 250px 侧栏、标题 Introducing Clearline 2.0 的草稿和 360px 的清晰度面板（得分 92），透明度 60%，上面压一层椭圆形暗罩（1350x620，中心不透明度 80%，边缘 12%）"
+          ],
+          [
+            "同步",
+            "第 3 行显示 We bring it into focus. 时，编辑器在 5.6–6.9s 从 9px 模糊变清楚；标语变清楚时编辑器在 7.5–8.6s 从 60% 压暗到 13%，标语背后的琥珀光在 7.55–8.95s 升起；标语 8.7s 上移 104px，标志 8.75s 开始变清楚，所以落款在标语下面；下一行在上一行还有 0.35–0.47s 才虚化完时就开始进场"
+          ],
+          [
+            "风格",
+            "近黑 <code>#09090b</code>，文字 <code>#f4f4f6</code>，blurry. 和 rough. 用灰 <code>#8a8a96</code>，唯一强调色琥珀 <code>#ffb15c</code>（clearly.、标语背后的光、标志渐变 #ffc98a 到 #ff8c38、编辑器里的建议标记）；只用 Inter；暗角（边缘 55%）和胶片颗粒（不透明度 9%，每 1/12s 用种子随机数换一次位置）"
+          ]
+        ],
+        "prompt": "用「模糊文字动画（Blur Text Animation）」做一支 10.5 秒、1920x1080、30fps 的黑场产品片，虚构产品 Clearline（AI 写作应用）。画面近黑 #09090b，文字 #f4f4f6，灰 #8a8a96 只用在 blurry. 和 rough. 两个词上，唯一强调色琥珀 #ffb15c。字体只用 Inter 700，字距 −0.035em，行高 1.04，文字居中。背后是一个虚化的产品界面：1700x960、左上角在 (110,60) 的 Clearline 编辑器，左侧 250px 侧栏（Search、Ask Clearline、Recent、Drafts 列表、Folders、底部用户 Maya Chen），中间是标题为 Introducing Clearline 2.0 的真实草稿（几段英文正文、一个列表、两处琥珀色下划线的建议），右侧 360px 的清晰度面板（得分 92、Readability Grade 7、四张建议卡）。编辑器透明度 60%，上面压一层椭圆暗罩（1350x620，中心 rgba(9,9,11,0.8)，边缘 0.12）。每个文字单元的动作统一：进场从 52px 模糊、缩放 1.12、透明度 0、侧向最多漂 9px、从下方 12–26px 处开始，模糊、缩放和位移用 power3.out 变到 0px、1、0，透明度用 power1.out 在一半时长内升到 1；出场到 46px 模糊、缩放 1.07、上移 14px、侧向最多 7px，用 power2.in 用时 0.7s，透明度用 power1.in 晚 0.12s 开始、用时 0.5s。漂移量用带种子的随机数（mulberry32），不要用 Math.random。时间线：0.45s 第 1 行进场，150px，两排 Every idea / starts blurry.，按字拆开，词间隔 0.28s，字间隔 0.035s，每个字 1.1s；2.95s 起逐词虚化消失，词间隔 0.1s。3.55s 第 2 行 Say it rough. 进场，168px 一排，按词动，词间隔 0.2s，每个词 0.95s；5.15s 起逐词虚化消失，词间隔 0.1s。5.7s 第 3 行 We bring it / into focus. 进场，150px 两排，词间隔 0.17s，每个词 0.9s；7.0s 起逐词虚化消失，词间隔 0.08s。每一行在上一行虚化完之前约 0.4s 就开始进场。背景界面：0–1.2s 透明度升到 60%（power2.out），起始带 9px 模糊，5.6–6.9s 变清楚（power2.inOut，和第 3 行对齐），7.5–8.6s 压暗到 13%；0–8s 界面从 1.07 倍缩到 1.0 倍，页面同时向上滚 140px，匀速。7.55s 标语 Write clearly. 进场，184px 一排，按字拆开，起始模糊 60px，词间隔 0.3s，字间隔 0.04s，每个字 1.15s，clearly. 用琥珀色；同时标语背后升起一团琥珀光（椭圆 900x380，中心不透明度 20%，1.4s power2.out）。8.7s 标语上移 104px（0.95s，expo.out），标志 8.75s 从 24px 模糊、缩放 0.8 变清楚（0.9s，expo.out）：108px 琥珀色渐变圆角方块（#ffc98a 到 #ff8c38，圆角 24/100），里面是深色 #1a1209 的 C 形描边和一条光标短杠；右边字标 Clearline，Inter 700、96px，间距 26px，8.85s 起逐字从 22px 模糊变清楚，字间隔 0.045s，每个字 0.9s；落款行上沿在 656px。落款保持到片尾，8.7–10.5s 缓慢推到 1.035 倍。全程文字层 0–10.5s 从 1.0 倍匀速推到 1.045 倍。叠加暗角（边缘 55%）和胶片颗粒（不透明度 9%，每 1/12s 换一次位置）。",
+        "says": [
+          "文字一个词一个词从重度模糊里变清楚",
+          "一行字逐词虚化散去，下一行接着进来",
+          "标语最后变清楚，产品标志落在它下面"
+        ],
+        "vs": [
+          [
+            "word-by-word-text-highlight",
+            "逐词点亮让一行小字里的词按顺序由灰变白，字不动也不虚化；模糊文字动画的词从重度模糊里变清楚，带缩放和漂移，整行还会逐词虚化散去。"
+          ],
+          [
+            "one-word-per-cut",
+            "一词一切整词靠切点换镜头，背后每次换一屏界面；模糊文字动画的词在原位靠模糊变清楚，行与行之间用虚化过渡，背景界面只有一次对焦。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Blur Text Animation",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 10 for \"blur text animation\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Blur Text Animation: Example and Code Recipe",
+    "description": "Words resolve from heavy blur one at a time, blur out, and a tagline sharpens into a product mark. Make it with Claude Code or Codex.",
+    "lede": "Large words on a dark field resolve from heavy blur one at a time, each line blurs away word by word before the next arrives, the product screen behind sharpens with the line about focus, and the closing tagline sharpens before the product mark lands under it.",
+    "name": "Blur Text Animation",
+    "ownName": "Blur Text Animation",
+    "body": [
+      {
+        "h2": "How to make a Blur Text Animation with Claude Code or Codex",
+        "body": "Give every word or letter the same entrance: start at 52px blur, scale 1.12 and opacity 0, with up to 9px of sideways drift and 12–26px below, then ease to 0px blur and scale 1 over 1.1s with power3.out while opacity rises over half that time with power1.out. Stagger the units: 0.28s between words and 0.035s between letters on the 150px hero line, 0.2s between words on the 168px second line. A line leaves by the reverse move word by word (46px blur, scale 1.07, 14px up, power2.in over 0.7s, 0.1s apart), and the next line starts arriving about 0.4s before it has finished.\n\nPut a product screen behind the text and let it carry the idea. A 1700x960 editor sits at 60% opacity under a dark veil, starts at 9px blur and sharpens over 5.6–6.9s while the third line reads We bring it into focus. At 7.55s the 184px tagline Write clearly. resolves from 60px blur letter by letter (0.3s between words, 0.04s between letters), the screen dims to 13%, and at 8.7s the tagline rises 104px as a 108px mark and the wordmark resolve under it.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the editor, the text units and the lockup. Use one accent such as amber #ffb15c on the last word of the tagline and the mark, keep Inter 700 with -0.035em letter-spacing, and take drift values from a seeded generator. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "The headline \"Write clearly.\" with an orange last word above the Clearline logo, over a dimmed app screen.",
+    "faq": [
+      [
+        "What is a blur text animation?",
+        "A blur text animation shows text that starts heavily blurred and invisible and sharpens into focus, usually one word or letter at a time. A staggered start for each unit makes the line read in sequence, and the same blur applied in reverse makes a line leave."
+      ],
+      [
+        "How large should the blur be?",
+        "Large enough that a word loses its letter shapes but keeps its colour and width, which is about 46–60px of blur on 150–184px type. Add a small scale change (1.12 down to 1.0) and a few pixels of drift so the blur looks like focus pulling."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "模糊文字动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"模糊文字动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "模糊文字动画：示例与代码配方",
+    "description": "文字逐词从重度模糊中变清楚，再逐词虚化消失，最后标语变清楚、产品标志落下。用 Claude Code 或 Codex 按免费配方做出这个模糊文字动画。",
+    "lede": "黑场上的大字逐词从重度模糊里变清楚，一行逐词虚化散去，下一行接着出现，背后虚化的写作应用界面随着「对焦」一句变清楚，最后标语变清楚，产品标志落在它下面。",
+    "name": "模糊文字动画",
+    "ownName": "模糊文字动画",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做模糊文字动画",
+        "body": "每个词或每个字用同一个进场动作：从 52px 模糊、缩放 1.12、透明度 0 开始，侧向最多漂 9px、从下方 12–26px 升起，用 1.1s、power3.out 变到 0px 模糊、缩放 1，透明度用 power1.out 在一半时长内升到 1。单元之间错开：150px 的主视觉行词间隔 0.28s、字间隔 0.035s，168px 的第 2 行词间隔 0.2s。一行字用反向动作逐词离开（46px 模糊、缩放 1.07、上移 14px，power2.in 用时 0.7s，间隔 0.1s），下一行在它虚化完之前约 0.4s 就开始进场。\n\n文字背后放一个产品界面，让它也参与表达。1700x960 的编辑器以 60% 透明度压在暗罩下，起始带 9px 模糊，在 5.6–6.9s 变清楚，此时第 3 行正好是 We bring it into focus.。7.55s 184px 的标语 Write clearly. 从 60px 模糊逐字变清楚（词间隔 0.3s，字间隔 0.04s），界面压暗到 13%，8.7s 标语上移 104px，108px 的标志和字标在它下面变清楚。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出编辑器、文字单元和落款。只用一个强调色，比如琥珀 #ffb15c，用在标语最后一个词和标志上，字体保持 Inter 700、字距 −0.035em，漂移量取自带种子的随机数。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "变暗的应用界面上，大标题 Write clearly.（clearly 为橙色）下方是 Clearline 标志。",
+    "faq": [
+      [
+        "什么是模糊文字动画？",
+        "模糊文字动画让文字从重度模糊、几乎看不见的状态变清楚，通常一个词或一个字一个字地来。每个单元错开起始时间，一行字就按顺序被读到；把同样的模糊反过来用，一行字就离开画面。"
+      ],
+      [
+        "模糊半径取多大合适？",
+        "大到词失去笔画形状、但还留着颜色和宽度，在 150–184px 的字上大约是 46–60px 的模糊。再加一点缩放（1.12 到 1.0）和几 px 的漂移，看上去才像对焦。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

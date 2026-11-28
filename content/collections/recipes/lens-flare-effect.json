@@ -1,0 +1,190 @@
+{
+  "slug": "lens-flare-effect",
+  "category": [
+    "open"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/lens-flare.mp4",
+    "poster": "https://media.motionboard.app/lens-flare.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10
+  },
+  "data": {
+    "n": 50,
+    "cat": "D",
+    "star": false,
+    "video": "lens-flare",
+    "samples": [
+      {
+        "t": "Apple Watch Series 12",
+        "id": "MO9HJsUxEEk",
+        "at": "1:12–1:15",
+        "s": 72
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Every part of the flare comes from one source position, so the optics read correctly: the ghosts sit on the line through the source and the frame centre, they move left when the light moves right, they weaken and the veil thickens as the source nears the centre, which is how a real lens behaves. The streak is a thin horizontal line (2.6px to 34px high, up to 2500px long) like an anamorphic lens produces, and the ghosts are rings, discs and a hexagon (the shape of aperture blades) with three chromatic fringes on the rings. These details make the flare read as light inside a lens, and a glow texture pasted over the picture would lack them. The light moves slowest over the watch (about 0.31x speed mid-frame), which gives the viewer time to read the face. The rim of the case, the highlight on the glass and the bright band on the title all follow the same source x, so the light seems to fall on the objects. A black frame and one cool blue accent keep the picture clean and the flare is the only bright thing in it. The second flare is scaled to 0.62 with five ghosts and crosses the title, and each letter brightens as the light reaches it; a short pulse on the mark ends the film.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10s. The watch fades up 0–1.1s with a 24px rise; face elements appear in turn 0.45–1.85s; the activity rings fill 0.7–2.5s; flare A crosses the watch 1.25–5.0s (3.75s); the watch leaves 4.55–5.25s (0.7s); the title starts at 5.05s (1.2s, the two words 0.14s apart); flare B runs 5.95–7.4s (1.45s); the title fades at 7.4s (0.45s); the mark ring draws at 7.85s (0.8s), the asterisk at 8.0s (1.0s), the wordmark at 8.25s (0.9s) and the tagline at 8.75s (0.8s); flare C flashes on the mark at 8.4s and decays with a 0.5s time constant; hold to 10s"
+          ],
+          [
+            "Easing",
+            "Source travel <code>p + 0.11·sin(2πp)</code>: about 0.31x speed in mid-frame and about 1.69x at the ends, so the light moves slowest above the watch; intensity fades in over the first 14% and out over the last 14% with smoothstep; face elements and the title use expo.out (<code>cubic-bezier(0.16,1,0.3,1)</code>); the watch fades in with power2.out and leaves with power2.in; the mark ring draws with power3.inOut; the activity rings use 1−(1−x)³"
+          ],
+          [
+            "Camera",
+            "Locked frame, no roll. The watch layer pushes linearly from 1.04x to 1.1x over 0–4.55s, then to 1.22x with a 10px blur and a fade over 4.55–5.25s; the title layer pushes linearly from 1x to 1.03x over 4.9–7.9s; the flare canvas sits in screen space and ignores the camera"
+          ],
+          [
+            "Subject",
+            "Case 480x590px with a 132px radius; display inset 20px (440x550px, 112px radius); dark woven bands above and below (340px and 360px wide, fading out toward the frame edge); crown 22x92px on the right. Face: WED 26, 18°, time 10:09 (Inter 600, 124px), seconds counting up from 42 once a second; three activity rings with radii 80/58/36px and 19px stroke filled to 81%, 100% and 75%; MOVE 486/600 CAL, EXERCISE 31/30 MIN, STAND 9/12 HR; three tiles, HEART RATE 72 BPM, BATT 86% and STEPS 8.4k. Flare A's source runs from x -420px to 2340px with y on a quadratic curve 200→620 (control point)→330px, about 442px at the centre; three streak layers with half-lengths 1250/1000/780px and half-heights 34/9/2.6px; a core of 95px radius. Flare B is scaled to 0.62, with its source running from x 2200px to -300px, y 505→548px, intensity 0.85. Ghost position = frame centre + g × (source − centre), eight ghosts: g=-0.30 ring r58, -0.55 disc r24, -0.84 hexagon r118, -1.12 ring r76, -1.50 big disc r205, +0.40 ring r34, +0.70 disc r15, -1.95 ring r46; flare B uses five of them. Title Aster Series 2 (Inter 700, 176px, letter-spacing -0.045em)"
+          ],
+          [
+            "Sync",
+            "Ghosts, streaks, core, veiling glare, the rim light on the case, the diagonal sheen on the glass and the highlight band on the title all come from one source function evaluated every frame, so they move with the light; ghosts sit on the opposite side of the centre and fade out as the source nears it (strength smoothstep(0.04, 0.4, d/960) with d the source's distance from the centre); the veil peaks with the source near the centre, falling off as exp(−d²/640²); while flare B crosses the title, the highlight band of each word is centred on the source x; flare C starts at 8.4s once the mark is drawn"
+          ],
+          [
+            "Style",
+            "Background <code>#04050a</code>, one accent cool blue <code>#4da3ff</code>; flare colours (70,130,255), (130,190,255) and (235,245,255); ring ghosts use three chromatic fringes at radius ratios 0.955/1.0/1.05 in (255,95,175), (60,235,225) and (85,120,255); the flare canvas uses screen blending; 7% grain and a vignette to 60% black at the edge; Inter throughout"
+          ]
+        ],
+        "prompt": "Build a 10-second, 1920x1080, 30 fps dark product film called Lens Flare Effect for a fictional product, Aster (a smartwatch). Background #04050a and one accent, cool blue #4da3ff. Draw the flare on a single 1920x1080 canvas: fill it black every frame, draw with the lighter composite operation, and lay the whole layer over the scene with mix-blend-mode: screen. Every state is a pure function of time: one empty tween that spans the film calls render(time) from its onUpdate (plus an hf-seek listener), with no Math.random, no Date and no CSS animation. The light is a moving point S. Each frame draw: a veiling glare (a full-frame fill of (40,80,190) at 0.1×v, plus a radial gradient of 1250px radius, where v = intensity × exp(−d²/640²) and d is the distance from S to the frame centre (960,540), so the haze is heaviest with the source near the centre); a bloom of 460px radius; three horizontal streak layers drawn as elliptical radial gradients with half-lengths 1250/1000/780px, half-heights 34/9/2.6px, colours (70,130,255), (130,190,255) and (235,245,255) and opacities 0.30/0.75/0.95, which together make one long thin blue line; a hot white core of 95px radius; and a faint streak on the opposite side of the frame at centre − 0.72×(S − centre), 700px half-length and 5px half-height. Place the ghosts on the line from the source through the frame centre: position = centre + g × (S − centre), recomputed every frame, so when the light moves right the ghosts move left. Use eight: g=−0.30 ring r58, −0.55 disc r24, −0.84 hexagon r118 (rotated to the line), −1.12 ring r76, −1.50 large ellipse disc r205, +0.40 ring r34, +0.70 disc r15, −1.95 ring r46. Draw each ring ghost as three chromatic fringes at radius ratios 0.955/1.0/1.05 in (255,95,175), (60,235,225) and (85,120,255), and multiply ghost strength by smoothstep(0.04, 0.4, d/960) so the ghosts vanish when the source is near the centre. The frame: the watch sits at the centre, case 480x590px with a 132px radius, a dark metal gradient and a cool bright line along the top edge, display inset 20px (440x550px, 112px radius), dark woven bands above and below fading out toward the frame edge. The face is dense: WED 26, 18°, time 10:09 (124px), a seconds counter that adds 1 every second, three activity rings of radius 80/58/36px, MOVE 486/600 CAL, EXERCISE 31/30 MIN, STAND 9/12 HR, HEART RATE 72 BPM with an ECG line, a BATT 86% ring and STEPS 8.4k. The bright line on the case edge and the diagonal sheen on the glass are computed from the source x and follow the light. Timeline: 0–1.1s the watch fades up; 0.7–2.5s the activity rings fill; 1.25–5.0s flare A travels from left of the frame (x=−420px) to right of it (x=2340px), with y along a curve 200→442→330px, sweeping over the watch, using travel p + 0.11·sin(2πp) so it is slowest mid-frame; 4.55–5.25s the watch scales to 1.22x and leaves with a blur and a fade; at 5.05s the title Aster Series 2 (Inter 700, 176px) rises one word at a time under a small INTRODUCING line; 5.95–7.4s flare B (scale 0.62, five ghosts) crosses the title from right to left, with a highlight band on the letters that follows the source x so each letter brightens as the light reaches it; at 7.4s the title fades out; from 7.85s the lockup: a ring draws, an asterisk mark spins in, the wordmark Aster (Inter 600, 112px) wipes in from the left and the tagline Time, in depth. fades up, and at 8.4s a short flare (streaks and core, no ghosts) flashes on the mark. Add 7% grain and a vignette.",
+        "says": [
+          "A long thin blue line sweeps across the watch",
+          "Round and hexagonal light spots move opposite the light source",
+          "The light passes over the title and the letters light up in turn"
+        ],
+        "vs": [
+          [
+            "light-reveal",
+            "Light Reveal uses a sweeping light to bring out the material of an object on black; here the light is a lens artifact, with streaks, ghosts and veiling glare computed from the source position each frame and added over the product and the title."
+          ],
+          [
+            "light-beam-effect",
+            "In Screen Projection Beams the beam is a window onto a fixed screen; the flare here hides and reveals nothing, it adds a layer of light spots that move with the source."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "光晕的每个部分都由同一个光源位置算出，所以光学关系是对的：鬼影落在光源与画面中心的连线上，光源向右它们向左，光源靠近中心时鬼影变弱、遮光雾变重，镜头里的真实光晕就是这样变化的。条纹只有 2.6px 到 34px 高、最长 2500px，是变形镜头的横线，鬼影是圆环、圆盘和六边形（光圈叶片的形状），环带三层色散边，这些细节让光晕读成镜头里的光，看不出是一块叠上去的发光贴图。光在手表上方走得最慢（中段约 0.31 倍速），观众有时间读表盘上的信息；表壳边缘、玻璃高光和标题上的亮带都跟着同一个光源 x 动，光像真的照在物体上。暗场和一个冷蓝强调色把画面压得很干净，光晕是画面里唯一的亮处。第二道光晕缩到 0.62 倍、只留 5 个鬼影，扫过标题，字被光扫到才亮，最后只用一道很短的光晕点在字标上收尾。",
+        "spec": [
+          [
+            "时长",
+            "全片 10s。手表 0–1.1s 淡入并上移 24px；表盘元素 0.45–1.85s 依次出现；活动环 0.7–2.5s 填满；光晕 A 1.25–5.0s 扫过手表（3.75s）；手表 4.55–5.25s 退场（0.7s）；标题 5.05s 起（1.2s，两个词间隔 0.14s）；光晕 B 5.95–7.4s（1.45s）；标题 7.4s 淡出（0.45s）；字标圆环 7.85s 画出（0.8s），星号 8.0s（1.0s），字标 8.25s（0.9s），标语 8.75s（0.8s）；光晕 C 8.4s 在标记上闪一下，按 0.5s 的时间常数衰减；保持到 10s"
+          ],
+          [
+            "缓动",
+            "光源行进 <code>p + 0.11·sin(2πp)</code>：画面中段速度约 0.31 倍，两端约 1.69 倍，光在手表上方走得最慢；光强前 14% 和后 14% 用 smoothstep 淡入淡出；表盘元素和标题 expo.out（<code>cubic-bezier(0.16,1,0.3,1)</code>）；手表淡入 power2.out，退场 power2.in；圆环描边 power3.inOut；活动环 1−(1−x)³"
+          ],
+          [
+            "镜头",
+            "机位固定，没有横滚。手表层 0–4.55s 从 1.04 倍匀速推到 1.1 倍，4.55–5.25s 推到 1.22 倍并模糊到 10px 淡出；标题层 4.9–7.9s 从 1 倍匀速推到 1.03 倍；光晕画布固定在屏幕空间，不跟镜头"
+          ],
+          [
+            "主体",
+            "表壳 480x590px、圆角 132px，屏幕内缩 20px（440x550px、圆角 112px），上下各一条深色织带（340px 和 360px 宽，向画面外渐隐），右侧表冠 22x92px。表盘：WED 26、18°、时间 10:09（Inter 600，124px）、秒数 42 起每秒加 1；三层活动环半径 80/58/36px、线宽 19px，填到 81%、100%、75%；MOVE 486/600 CAL、EXERCISE 31/30 MIN、STAND 9/12 HR；三块小组件 HEART RATE 72 BPM、BATT 86%、STEPS 8.4k。光晕 A 的光源 x 从 −420px 走到 2340px，y 沿二次曲线 200→620（控制点）→330px，过中心时约 442px；条纹三层，半长 1250/1000/780px，半高 34/9/2.6px；核心半径 95px；光晕 B 缩到 0.62 倍，光源 x 从 2200px 走到 −300px，y 505→548px，强度 0.85。鬼影位置 = 画面中心 + g × (光源 − 中心)，8 个：g=−0.30 环 r58、−0.55 圆盘 r24、−0.84 六边形 r118、−1.12 环 r76、−1.50 大圆盘 r205、+0.40 环 r34、+0.70 圆盘 r15、−1.95 环 r46；光晕 B 只用其中 5 个。标题 Aster Series 2（Inter 700，176px，字距 −0.045em）"
+          ],
+          [
+            "同步",
+            "鬼影、条纹、核心、遮光雾、表壳边缘的亮边、玻璃上的斜向高光和标题上的高光带都由同一个光源函数每帧算出，光源动，它们一起动；鬼影按光源位置反向排布，强度乘 smoothstep(0.04, 0.4, d/960)，d 是光源到画面中心的距离，光源靠近中心时鬼影淡到消失；遮光雾在光源靠近中心时最强，范围 exp(−d²/640²)；光晕 B 经过标题时，两个词的高光带中心跟着光源 x；光晕 C 在 8.4s 标记画好之后出现"
+          ],
+          [
+            "风格",
+            "背景 <code>#04050a</code>，强调色冷蓝 <code>#4da3ff</code>；光晕色 (70,130,255)、(130,190,255)、(235,245,255)；环形鬼影用三层色散边，半径比 0.955/1.0/1.05，颜色 (255,95,175)、(60,235,225)、(85,120,255)；光晕画布用 screen 混合；颗粒 7%，暗角边缘 60% 黑；字体 Inter"
+          ]
+        ],
+        "prompt": "用「镜头光晕效果（Lens Flare Effect）」做一支 10 秒、1920x1080、30fps 的暗场产品片，虚构产品 Aster（智能手表）。背景 #04050a，唯一强调色冷蓝 #4da3ff。光晕用一张 1920x1080 的 canvas 画，canvas 每帧先涂黑再用 lighter 叠加绘制，整层用 mix-blend-mode: screen 盖在画面上；所有状态由时间的纯函数算出，用一个跨全片的空 tween 的 onUpdate（再加 hf-seek 监听）每帧重画，不用 Math.random、Date 和 CSS 动画。光源是一个随时间走的点 S。每帧画：遮光雾（全屏叠一层 (40,80,190)、不透明度 0.1×v，再叠半径 1250px 的径向光，v = 强度 × exp(−d²/640²)，d 是 S 到画面中心 (960,540) 的距离，光源靠近中心时雾最重）；半径 460px 的泛光；三层水平条纹，椭圆径向渐变，半长 1250/1000/780px、半高 34/9/2.6px，颜色 (70,130,255)、(130,190,255)、(235,245,255)，不透明度 0.30/0.75/0.95，形成一条又长又细的蓝色横线；半径 95px 的白色高热核心；一条画面另一侧的暗条纹，位置 = 中心 − 0.72×(S − 中心)，半长 700px、半高 5px。鬼影放在光源与画面中心连线上，位置 = 中心 + g × (S − 中心)，每帧重算，所以光源向右，鬼影向左：8 个，g=−0.30 环 r58、−0.55 圆盘 r24、−0.84 六边形 r118（朝向跟着连线）、−1.12 环 r76、−1.50 椭圆大圆盘 r205、+0.40 环 r34、+0.70 圆盘 r15、−1.95 环 r46；环形鬼影画三层色散边，半径比 0.955/1.0/1.05，颜色 (255,95,175)、(60,235,225)、(85,120,255)；鬼影强度乘 smoothstep(0.04, 0.4, d/960)，光源靠近中心时鬼影消失。画面：手表放在画面中心，表壳 480x590px、圆角 132px、深色金属渐变加顶部一道冷色亮边，屏幕内缩 20px（440x550px、圆角 112px），上下是深色织带，向画面外渐隐。表盘信息要密：WED 26、18°、时间 10:09（124px）、每秒加 1 的秒数、半径 80/58/36px 的三层活动环、MOVE 486/600 CAL、EXERCISE 31/30 MIN、STAND 9/12 HR、HEART RATE 72 BPM 带心电折线、BATT 86% 圆环、STEPS 8.4k。表壳边缘的亮边和玻璃上的斜向高光都由光源 x 算出，跟着光走。时间线：0–1.1s 手表淡入；0.7–2.5s 活动环填满；1.25–5.0s 光晕 A 从画面左外（x=−420px）走到右外（x=2340px），y 沿曲线 200→442→330px 从手表上方扫过，行进量 p + 0.11·sin(2πp)，中段最慢；4.55–5.25s 手表放大到 1.22 倍并模糊淡出；5.05s 标题 Aster Series 2（Inter 700，176px）一词一词升起，上方小字 INTRODUCING；5.95–7.4s 光晕 B（0.62 倍，5 个鬼影）从右向左扫过标题，标题文字上的高光带跟着光源 x，被光扫到的字变亮；7.4s 标题淡出；7.85s 起收尾：圆环画出、星号标记转入、字标 Aster（Inter 600，112px）从左向右擦出、标语 Time, in depth. 淡入，8.4s 在标记上闪一道短光晕（只有条纹和核心，没有鬼影）。叠加 7% 颗粒和暗角。",
+        "says": [
+          "一条又长又细的蓝色横线扫过手表",
+          "圆形和六边形的光斑和光源反向移动",
+          "光从标题上扫过，字一个个被点亮"
+        ],
+        "vs": [
+          [
+            "light-reveal",
+            "暗场显影用扫过的光在黑场里显出实物材质；镜头光晕效果画的是镜头里的光学瑕疵，条纹、鬼影和遮光雾按光源位置每帧算出，叠在产品和标题上。"
+          ],
+          [
+            "light-beam-effect",
+            "屏幕投光里光束是一扇窗，露出固定在后面的界面；镜头光晕效果的光不遮挡也不露出任何内容，只在画面上叠加一层随光源移动的光斑。"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Lens Flare Effect",
+    "demand": {
+      "source": "dataforseo",
+      "note": "US monthly search volume 14800 for \"lens flare\" (DataForSEO keyword overview)",
+      "checked": "2026-11-26"
+    },
+    "title": "Lens Flare Effect: Example and Code Recipe",
+    "description": "A thin anamorphic flare sweeps across a smartwatch and its title, with ghosts that move opposite the light. Make it with Claude Code or Codex.",
+    "lede": "A smartwatch on black. A long thin blue streak sweeps across the frame with a chain of chromatic ring and hexagon ghosts placed opposite the source along the line through the frame centre. The title Aster Series 2 rises, a smaller flare crosses it from right to left, and a short lockup closes the film.",
+    "name": "Lens Flare Effect",
+    "ownName": "Lens Flare Effect",
+    "body": [
+      {
+        "h2": "How to make a Lens Flare Effect with Claude Code or Codex",
+        "body": "Compute the whole flare from one source point S, every frame, from the timeline time. Flare A moves from x -420px to 2340px between 1.25s and 5.0s, with y on a curve from 200px through 442px to 330px, and travel p + 0.11·sin(2πp) so it is slowest above the subject. Draw a core of 95px radius, three streak layers with half-lengths 1250/1000/780px and half-heights 34/9/2.6px, and a bloom of 460px radius, all with additive blending.\n\nPlace the ghosts on the line through S and the frame centre: position = centre + g × (S − centre), with g values from -1.95 to +0.70, so they move opposite the source. Use rings with three chromatic fringes at radius ratios 0.955/1.0/1.05, discs, one hexagon of 118px radius and one large disc of 205px radius. Fade the ghosts with smoothstep(0.04, 0.4, d/960) and raise a veiling glare of exp(−d²/640²) as the source nears the centre. At 5.95s a second flare scaled to 0.62 crosses the title from right to left until 7.4s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the watch face, the canvas flare and the title. Draw the mark at 7.85s, wipe in the word Aster at 8.25s and flash a short flare on the mark at 8.4s. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A smartwatch face reading 10:09 with activity rings, heart rate and steps, lit by a blue glow.",
+    "faq": [
+      [
+        "What is a lens flare effect?",
+        "A lens flare is light that scatters inside a camera lens when a bright source is in or near the frame. It appears as a streak, a hot core, a veil of haze and a chain of ghost discs and rings. Product films add it to give a shot the look of real optics."
+      ],
+      [
+        "How do you make a lens flare in HTML and canvas?",
+        "Draw it on a canvas with additive blending and compute every part from one source point each frame. Put the ghosts at centre + g × (source − centre), so they move opposite the source, and fade them as the source nears the centre. Redraw the canvas from the timeline time so the render is deterministic."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "镜头光晕效果",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"镜头光晕效果\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "镜头光晕效果：示例与代码配方",
+    "description": "一道细长的变形镜头光晕扫过智能手表和标题，鬼影与光源反向移动。用 Claude Code 或 Codex 按免费配方做出这个镜头光晕效果。",
+    "lede": "一只暗场里的智能手表，一道细长的蓝色横向光晕从画面左外扫到右外，沿光源与画面中心的连线反向排开一串带色散边的圆环和六边形鬼影；随后标题 Aster Series 2 升起，一道更小的光晕从右向左掠过，最后收成一个小字标。",
+    "name": "镜头光晕效果",
+    "ownName": "镜头光晕效果",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做镜头光晕效果",
+        "body": "整个光晕每帧由时间算出，只依赖一个光源点 S。光晕 A 在 1.25s 到 5.0s 之间从 x −420px 走到 2340px，y 沿曲线从 200px 经 442px 到 330px，行进量用 p + 0.11·sin(2πp)，在主体上方最慢。画半径 95px 的核心、三层半长 1250/1000/780px、半高 34/9/2.6px 的条纹和半径 460px 的泛光，全部用叠加混合。\n\n鬼影放在 S 与画面中心的连线上：位置 = 中心 + g × (S − 中心)，g 取 −1.95 到 +0.70，所以它们与光源反向移动。用带三层色散边的环（半径比 0.955/1.0/1.05）、圆盘、一个半径 118px 的六边形和一个半径 205px 的大圆盘。鬼影按 smoothstep(0.04, 0.4, d/960) 淡出，光源靠近中心时加一层强度为 exp(−d²/640²) 的遮光雾。5.95s 第二道光晕缩到 0.62 倍，从右向左扫过标题，到 7.4s 结束。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会做出表盘、canvas 光晕和标题。7.85s 画出标记，8.25s 擦出字标 Aster，8.4s 在标记上闪一道短光晕。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "智能手表表盘显示 10:09，有活动圆环、心率和步数，四周泛着蓝光。",
+    "faq": [
+      [
+        "镜头光晕是什么？",
+        "镜头光晕是明亮光源在画面内或画面附近时，光在镜头内部散射形成的效果，表现为一条条纹、一个高热核心、一层雾和一串鬼影圆盘与圆环。产品片加上它，是为了让镜头有真实光学的质感。"
+      ],
+      [
+        "怎么用 HTML 和 canvas 做镜头光晕？",
+        "在 canvas 上用叠加混合绘制，每帧由一个光源点算出所有部分。鬼影放在 中心 + g × (光源 − 中心) 的位置，所以与光源反向移动，光源靠近中心时让它们淡出。用时间线的时间重画 canvas，渲染结果就是确定的。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "slug": "wireframe-re-layout",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/wireframe-relayout.mp4",
+    "poster": "https://media.motionboard.app/wireframe-relayout.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 10.5
+  },
+  "data": {
+    "n": 13,
+    "cat": "B",
+    "star": true,
+    "video": "wireframe-relayout",
+    "samples": [
+      {
+        "t": "Framer",
+        "id": "6xJWQRVl9nw",
+        "at": "0:19–0:26",
+        "s": 19
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "The wireframe state separates layout from content, so viewers see the structure itself changing. The morph stage has only 1px blue lines on black, with no color to distract.",
+        "spec": [
+          [
+            "Timing",
+            "Film 10.5s. Wireframe mode 1.6–2.1s (0.5s, 15 frames); layout click 3.3–3.44s; re-layout 3.4–4.2s (0.8s, 24 frames); wireframe off clicked 4.84–4.98s; cells fill in turn from 4.9s (0.35s each, 0.15s apart, finished 5.7s); pull-back 5.8–6.6s (0.8s, 24 frames); Publish click 7.0s, enlarged button 7.08–8.1s, Published 8.3s"
+          ],
+          [
+            "Easing",
+            "Re-layout <code>cubic-bezier(0.65,0,0.35,1)</code> (power3.inOut), with size and position interpolated together; wireframe fade power2.out; fill-in expo.out (<code>cubic-bezier(0.16,1,0.3,1)</code>); push-in and pull-back expo.out"
+          ],
+          [
+            "Camera",
+            "Wide at scale 1.26→1.30 (linear, 0–3.4s); push-in to 1.6 on the content block over 3.4–4.5s (1.1s expo.out), slow drift to 1.65 until 5.8s; pull-back to 1.3 over 5.8–6.6s (0.8s) to the editor overview, then drift 1.30→1.34 until 10.5s"
+          ],
+          [
+            "Subject",
+            "Two sections side by side (544×420 each, an inbox list and feature copy) fade out their content and keep only a 1.5px blue wireframe with 7% fill; the wireframes split into four and move into a 2×2 bento grid (640×202, 448×202 over 448×202, 640×202, 16px gaps); each cell then fills with new content in turn, starting at the top left"
+          ],
+          [
+            "Sync",
+            "The click on Grid at 3.4s starts the control, the layer rows and all four frames moving on the same frame; content stays hidden while the frames move (labels return at 4.25s and spacing guides at 4.3s); the fill starts 0.7s after the layout lands, when the cursor turns Wireframe off"
+          ],
+          [
+            "Style",
+            "Near-black editor (window <code>#1c1c1e</code>) with 1.5px blue frames <code>rgb(10,132,255)</code>; filled cells <code>rgb(16,16,19)</code> with 14px radius holding UI panels (inbox, copy, integrations grid, workflow); closing Publish button in the same blue"
+          ]
+        ],
+        "prompt": "Show a redesign of your page with a shot called Wireframe Re-layout, a 10.5-second film inside a dark editor window. At 1.6s the cursor clicks a Wireframe toggle: over 0.5s two side-by-side sections (544×420 each) fade out their content and keep only a 1.5px blue wireframe (rgb(10,132,255)) with a 7% fill and a corner radius shrinking from 14px to 2px. At 3.4s, on the frame of the click on Grid, the wireframes split into four and move over 0.8s with cubic-bezier(0.65,0,0.35,1), size and position interpolated together, into a 2×2 bento grid (640×202 and 448×202 over 448×202 and 640×202, 16px gaps), while the camera pushes in over 1.1s with expo.out (scale 1.3 to 1.6). Content stays hidden while the frames move. Then the cursor clicks Wireframe off (4.9s) and the four cells fill with new content in turn from the top left, each over 0.35s with expo.out, staggered 0.15s. At 5.8s pull back over 0.8s with expo.out to the full editor, drift slowly, and end by clicking Publish (7.0s), whose button enlarges to the center of the frame and turns to Published at 8.3s.",
+        "says": [
+          "The content disappears leaving only frames, then the frames rearrange",
+          "The layout changes, then content fills in cell by cell",
+          "The page structure changes before your eyes"
+        ],
+        "vs": [
+          [
+            "morph-transition",
+            "Morph Relay turns one element into another; Wireframe Re-layout strips a group of elements of content and re-flows them together."
+          ],
+          [
+            "pile-up-and-clear",
+            "Pile-up and Clear swaps images with a hard cut; Wireframe Re-layout interpolates continuously between wireframes."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "线框态把布局和内容拆开展示，观众直接看到结构本身在变；变形阶段只有 1px 蓝线和黑底，没有颜色干扰。",
+        "spec": [
+          [
+            "时长",
+            "全片 10.5s。线框模式 1.6–2.1s（0.5s，15 帧）；点击布局 3.3–3.44s；重排 3.4–4.2s（0.8s，24 帧）；点击关闭线框 4.84–4.98s；各格从 4.9s 起依次填入（每格 0.35s，错开 0.15s，5.7s 完成）；拉远 5.8–6.6s（0.8s，24 帧）；Publish 点击 7.0s，放大按钮 7.08–8.1s，Published 8.3s"
+          ],
+          [
+            "缓动",
+            "重排用 <code>cubic-bezier(0.65,0,0.35,1)</code>（power3.inOut），尺寸与位置同时插值；线框淡化 power2.out；填入 expo.out（<code>cubic-bezier(0.16,1,0.3,1)</code>）；推近和拉远 expo.out"
+          ],
+          [
+            "镜头",
+            "全景 scale 1.26→1.30（线性，0–3.4s）；3.4–4.5s 推近到 1.6 对准内容区（1.1s expo.out），之后缓慢漂移到 1.65 直到 5.8s；5.8–6.6s 拉远到 1.3 回到编辑器全景（0.8s），之后 1.30→1.34 漂移到 10.5s"
+          ],
+          [
+            "主体",
+            "左右并排的两块 section（各 544×420，收件箱列表和功能文案）淡出内容，只留 1.5px 蓝色线框和 7% 填充；线框分裂成四个，移动重排成 2×2 bento 网格（640×202、448×202 在上，448×202、640×202 在下，间距 16px）；各格从左上起依次淡入新内容"
+          ],
+          [
+            "同步",
+            "3.4s 点击 Grid 时，控件、图层行和四个线框在同一帧开始移动；线框移动时内容保持隐藏（标签 4.25s 回来，间距参考线 4.3s）；填入在布局落定后 0.7s 才开始，由光标关闭线框模式触发"
+          ],
+          [
+            "风格",
+            "近黑编辑器（窗口 <code>#1c1c1e</code>），1.5px 蓝色线框 <code>rgb(10,132,255)</code>；填入后的格子 <code>rgb(16,16,19)</code>、14px 圆角，内容是界面面板（收件箱、文案、集成网格、工作流）；收尾 Publish 按钮用同一蓝色"
+          ]
+        ],
+        "prompt": "用「线框重排（Wireframe Re-layout）」演示你的页面改版，整段 10.5 秒，放在深色编辑器窗口里。1.6 秒光标点击线框开关：0.5 秒内左右并排的两块 section（各 544×420）淡出内容，只留 1.5px 蓝色线框（rgb(10,132,255)）、7% 填充，圆角从 14px 缩到 2px。3.4 秒，在点击 Grid 的同一帧，线框分裂成四个，用 0.8 秒、cubic-bezier(0.65,0,0.35,1) 移动，尺寸与位置同时插值，重排成 2×2 bento 网格（640×202 和 448×202 在上，448×202 和 640×202 在下，间距 16px），同时镜头用 expo.out 在 1.1 秒内推近（scale 1.3 到 1.6）。线框移动时内容保持隐藏。随后光标点击关闭线框（4.9 秒），四个格子从左上起依次填入新内容，每格 0.35 秒（expo.out），错开 0.15 秒。5.8 秒用 expo.out 在 0.8 秒内拉远回整个编辑器，缓慢漂移，最后点击 Publish（7.0 秒），按钮放大到画面中心，8.3 秒变成 Published。",
+        "says": [
+          "内容消失只剩框，框再重新排好",
+          "布局换了，内容再一格格填进去",
+          "网页结构在眼前变化"
+        ],
+        "vs": [
+          [
+            "morph-transition",
+            "形变接力是单个元素变成另一个元素；本条是一组元素先脱去内容再整体重排"
+          ],
+          [
+            "pile-up-and-clear",
+            "堆积清空靠硬切换图；本条在线框之间做连续插值"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Wireframe Re-layout",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Wireframe Re-layout\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "Wireframe Re-layout: Example and Code Recipe",
+    "description": "Content fades to blue wireframes, the frames re-flow into a 2×2 bento grid, then each cell fills with new content. Make it with Claude Code or Codex.",
+    "lede": "Content fades to wireframes, the wireframes re-flow into a new layout, then each cell fills with new content in turn.",
+    "name": "Wireframe Re-layout",
+    "ownName": "Wireframe Re-layout",
+    "body": [
+      {
+        "h2": "How to make a Wireframe Re-layout with Claude Code or Codex",
+        "body": "Show two sections side by side (544×420px each) in an editor window. Wireframe mode fades their content out over 0.5s, leaving 1.5px blue frames (rgb(10,132,255)) with 7% fill. The Grid click at 3.3s starts the re-layout, which runs 0.8s on power3.inOut, interpolating size and position together as the frames split into four.\n\nThe four frames settle into a 2×2 bento grid (640×202, 448×202 over 448×202, 640×202, with 16px gaps). Content stays hidden while they move. The cells then fill from the top left, 0.35s each and 0.15s apart on expo.out, starting 0.7s after the layout lands. The camera pushes to 1.6× over 1.1s and pulls back over 0.8s.\n\nPress the copy button to send this recipe to Claude Code or Codex, or install the skill once with npx skills add krisyangdev/motionboard. The agent builds the editor window, the frames and the four content panels. Render an MP4 with HyperFrames, or port the GSAP timeline to your website."
+      }
+    ],
+    "alt": "A support landing page in a design tool with its feature section turned into a two-by-two wireframe grid.",
+    "faq": [
+      [
+        "What is a wireframe re-layout animation?",
+        "It shows a page layout changing by reducing the content to wireframes, rearranging the frames and filling them again. Separating layout from content lets viewers see the structure itself change."
+      ],
+      [
+        "Which technique animates frames between layouts?",
+        "The recipe interpolates size and position together on one ease, the idea behind FLIP animation (First, Last, Invert, Play): measure positions before and after the change, then play the frames between them."
+      ],
+      [
+        "Is it free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "线框重排动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"线框重排动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "线框重排动画：示例与代码配方",
+    "description": "内容退成蓝色线框，线框重排成 2×2 便当网格，再依次填入新内容。用 Claude Code 或 Codex 按免费配方做出这个线框重排动画。",
+    "lede": "内容退成线框，线框 Flip 重排成新布局，各格依次填入新内容。",
+    "name": "线框重排动画",
+    "ownName": "线框重排",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做线框重排动画",
+        "body": "在编辑器窗口里并排放两个区块，各 544×420px。线框模式用 0.5s 让内容淡出，只留 1.5px 的蓝色框（rgb(10,132,255)）和 7% 填充。3.3s 点击 Grid 启动重排，用 0.8s、power3.inOut，让尺寸和位置一起插值，线框分裂成四个。\n\n四个框落成 2×2 便当网格（640×202、448×202 叠 448×202、640×202，间距 16px）。移动期间内容保持隐藏。重排落定 0.7s 后，各格从左上角依次填入内容，每格 0.35s，间隔 0.15s，缓动 expo.out。镜头 1.1s 内推到 1.6 倍，再用 0.8s 拉回。\n\n点击复制按钮，把配方发给 Claude Code 或 Codex，也可以用 npx skills add krisyangdev/motionboard 安装 skill。agent 会搭出编辑器窗口、线框和四块内容面板。可以用 HyperFrames 渲染成 MP4，也可以把 GSAP 时间线移植到网站上。"
+      }
+    ],
+    "alt": "设计工具里的客服落地页，功能区被改成 2×2 的线框网格。",
+    "faq": [
+      [
+        "什么是线框重排动画？",
+        "线框重排动画先把内容退成线框，重新排列这些框，再填回内容，展示页面布局的变化。布局和内容分开，观众能直接看到结构在变。"
+      ],
+      [
+        "布局之间的框用什么技术做动画？",
+        "这份配方让尺寸和位置在同一条缓动上一起插值，思路与 FLIP 动画（First、Last、Invert、Play）一致：先测量变化前后的位置，再让框在两者之间播放。"
+      ],
+      [
+        "可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "slug": "map-pin-animation",
+  "category": [
+    "feature"
+  ],
+  "media": {
+    "kind": "video",
+    "src": "https://media.motionboard.app/map-pin-drop.mp4",
+    "poster": "https://media.motionboard.app/map-pin-drop.jpg",
+    "width": 1920,
+    "height": 1080,
+    "duration": 11
+  },
+  "data": {
+    "n": 32,
+    "cat": "D",
+    "star": false,
+    "video": "map-pin-drop",
+    "samples": [
+      {
+        "t": "Stripe Reader S700",
+        "id": "9oieNo53aNY",
+        "at": "0:04–0:08",
+        "s": 4
+      },
+      {
+        "t": "Stripe Reader S700",
+        "id": "9oieNo53aNY",
+        "at": "0:19–0:26",
+        "s": 19
+      }
+    ],
+    "text": {
+      "en": {
+        "why": "Map, pin, and fragments use only one brand color plus deep blue and white, and the information is a single point and a single place name. The same pin-and-fragment burst carries on from the graphic world into real street view, connecting a customer from a dot on a map to a real storefront.",
+        "spec": [
+          [
+            "Timing",
+            "Film 11s. City one: name rises 0.12s, pin drops 0.5s (0.3s), impact 0.63s, fragments to 1.27s, hold to 3.9s. Pull-back to the country 3.9-4.9s; 19 network pins pop 4.45s onward; route line 5.0-5.8s; push-in to the second city 5.85-6.95s; second pin drops 7.0s; dive into the pin 8.05-8.6s; end card 8.6-11s"
+          ],
+          [
+            "Easing",
+            "Pin drop <code>cubic-bezier(0.34,1.56,0.64,1)</code> over 0.3s; fragments expand <code>cubic-bezier(0.16,1,0.3,1)</code> over 0.6s (lines grow <code>power2.out</code> 0.22s then shrink <code>power2.in</code> 0.38s); pull-back, route and push-in <code>cubic-bezier(0.65,0,0.35,1)</code> (zoom interpolated on a log scale); dive <code>t^3</code>; city name and tag <code>expo.out</code>"
+          ],
+          [
+            "Camera",
+            "City one framed about 26 km wide and pushing 4% per second; pulls back over 1.0s to the whole country, drifts 2% per second, pushes over 1.1s into the second city (framed about 23 km wide, 4% per second again), then dives 8.05-8.6s with the zoom growing 2.2x and the pin scaling from 1.45x to 12x"
+          ],
+          [
+            "Subject",
+            "A navy location pin (scale 1.45) drops 360px from above; at impact 9 fragments burst outward (4 white lines, 3 dots, 2 squares, one navy) and pin two bursts 10 (4 lines, 2 dots, 3 squares, two navy, plus an expanding ring of radius 48 to 150). A white 5px route arcs north from city one to city two with an 11px round head. 19 small indigo pins mark the live cities. End card: pin settles at scale 1.2, mini map with 20 dots and three pulse rings, wordmark, subline and three stats (21 US cities, 94 min, $0)"
+          ],
+          [
+            "Sync",
+            "The 168px city name (Oswald, white at 43%) is locked to the map and scales with the camera push; both pins and the 19 city pins follow the camera. The cut to the end card happens at 8.6s as the pin fills the center, and the end-card pin continues from the same scale"
+          ],
+          [
+            "Style",
+            "Land <code>#7667f6</code> on a deeper water purple <code>#5d4bea</code>, navy pin <code>#0f1f3d</code>, white roads (zoom-dependent opacity), fragments and route, indigo network pins <code>#4a37d6</code>. Wordmark Inter 700 150px, letter-spacing -0.055em; end card on the same purple"
+          ]
+        ],
+        "prompt": "Introduce a customer with a shot called Map Pin Drop, 11s. Land #7667f6 on a deeper water purple #5d4bea, thin white roads, and a 168px city name (Oswald, white at 43%) at the lower right that rises over 1s with expo.out and stays locked to the map. Frame the first city about 26 km wide and push the map in at 4% per second. At 0.5s a navy pin (#0f1f3d, scale 1.45) drops 360px with cubic-bezier(0.34,1.56,0.64,1) over 0.3s; at impact burst 9 white fragments (4 lines, 3 dots, 2 squares) outward over 0.6s with cubic-bezier(0.16,1,0.3,1), fading from 0.42s to 0.64s after impact, and fade the pin tag in at 0.24s. At 3.9s pull back over 1s with cubic-bezier(0.65,0,0.35,1) to the whole country and pop 19 small indigo pins in with a 0.022s stagger. At 5.0s draw a 5px white route with an 11px round head along a gentle northern arc to the second city over 0.8s with the same curve, then push in over 1.1s to a 23 km frame while the route tail retracts to a 170px stub. Drop a second pin at 7.0s with 10 fragments including an expanding ring, then dive into it over 0.55s (t^3, pin scaling to 12x) and cut at 8.6s to an end card: pin settles at scale 1.2, a mini map of 20 dots with three pulse rings, the wordmark, subline and three stats.",
+        "says": [
+          "A location pin drops on the map and fragments burst around it",
+          "The map pulls out to the whole country and then flies to the next city",
+          "A line is drawn from one city to another"
+        ],
+        "vs": [
+          [
+            "confetti-success-animation",
+            "Confirmation Burst puts fragments at the contact point of a tap or payment; in Map Pin Drop the fragments appear at the pin's landing point on the map."
+          ],
+          [
+            "match-cut-transition",
+            "Match Cut swaps the map pin for a pin in real footage; Map Pin Drop is the pin dropping, the fragments, and the pull-back route."
+          ]
+        ]
+      },
+      "zh": {
+        "why": "地图、钉、碎片只用一个品牌色加深蓝和白，信息只有一个点位和一个地名。同一套钉加碎片爆发从图形世界延续到实景街景，把客户从地图上的一个点接到真实门店。",
+        "spec": [
+          [
+            "时长",
+            "全片 11s。第一座城市：城市名 0.12s 升起，0.5s 落钉（0.3s），0.63s 触地，碎片到 1.27s，停到 3.9s。3.9–4.9s 拉远到全国；4.45s 起 19 枚网络小钉依次弹出；5.0–5.8s 画轨迹线；5.85–6.95s 推近到第二座城市；7.0s 第二枚钉落下；8.05–8.6s 扎进钉里；8.6–11s 结尾卡"
+          ],
+          [
+            "缓动",
+            "落钉 <code>cubic-bezier(0.34,1.56,0.64,1)</code>，0.3s；碎片外扩 <code>cubic-bezier(0.16,1,0.3,1)</code>，0.6s（线段先 <code>power2.out</code> 拉长 0.22s，再 <code>power2.in</code> 缩短 0.38s）；拉远、轨迹线和推近用 <code>cubic-bezier(0.65,0,0.35,1)</code>（缩放按对数插值）；扎入用 <code>t^3</code>；城市名和标签 <code>expo.out</code>"
+          ],
+          [
+            "镜头",
+            "第一座城市取景约 26 公里宽，每秒推近 4%；1.0s 拉远到全国，之后每秒漂移 2%，1.1s 推近到第二座城市（取景约 23 公里宽，同样每秒推近 4%），8.05–8.6s 扎入，缩放再放大 2.2 倍，钉从 1.45 倍放大到 12 倍"
+          ],
+          [
+            "主体",
+            "一枚深海军蓝定位钉（缩放 1.45）从上方 360px 落下；触地时爆出 9 个碎片（4 条白线、3 个圆点、2 个方块，其中 1 个为海军蓝），第二枚钉爆出 10 个（4 条线、2 个圆点、3 个方块，其中 2 个为海军蓝，外加一个半径 48 到 150 向外扩张的圆环）。一条 5px 白色轨迹线向北弧形连接两座城市，线头是 11px 圆点。19 枚靛蓝小钉标出已上线城市。结尾卡：钉落定为 1.2 倍，迷你地图上 20 个点加三圈脉冲环，字标、副标和三项数据（21 个美国城市、94 分钟、$0）"
+          ],
+          [
+            "同步",
+            "168px 城市名（Oswald，43% 白）锁定在地图上，随镜头推近一起缩放；两枚钉和 19 枚城市小钉都跟随镜头。8.6s 钉占满画面中心时切到结尾卡，结尾卡里的钉从同一缩放继续"
+          ],
+          [
+            "风格",
+            "陆地 <code>#7667f6</code>，水系为更深的紫 <code>#5d4bea</code>，钉为海军蓝 <code>#0f1f3d</code>，白色道路（透明度随缩放变化）、碎片和轨迹线，靛蓝网络小钉 <code>#4a37d6</code>。字标 Inter 700 150px，字距 -0.055em；结尾卡同样是紫色底"
+          ]
+        ],
+        "prompt": "用「地图落钉（Map Pin Drop）」介绍一个客户，全片 11s：陆地 #7667f6，水系为更深的紫 #5d4bea，细白道路，右下角 168px 城市名（Oswald，43% 白）用 expo.out 1 秒升起，并锁定在地图上。第一座城市取景约 26 公里宽，地图每秒推近 4%。0.5s 一枚海军蓝定位钉（#0f1f3d，缩放 1.45）从上方 360px 落下，用 cubic-bezier(0.34,1.56,0.64,1) 在 0.3 秒内回弹；触地时向外爆出 9 个白色碎片（4 条线、3 个圆点、2 个方块），用 cubic-bezier(0.16,1,0.3,1) 外扩 0.6 秒，在触地后 0.42–0.64 秒淡出，钉的标签在 0.24 秒后淡入。3.9s 用 cubic-bezier(0.65,0,0.35,1) 1 秒拉远到全国，19 枚靛蓝小钉以 0.022 秒的间隔弹出。5.0s 用同一条曲线 0.8 秒沿偏北的弧线画出 5px 白色轨迹线（线头为 11px 圆点）连到第二座城市，随后 1.1 秒推近到 23 公里取景，轨迹线尾部收缩成 170px 的短线。7.0s 落下第二枚钉，爆出 10 个碎片（含一个向外扩张的圆环），然后用 0.55 秒（t^3，钉放大到 12 倍）扎进钉里，8.6s 切到结尾卡：钉落定为 1.2 倍，迷你地图上 20 个点加三圈脉冲环，字标、副标和三项数据。",
+        "says": [
+          "地图上落下一枚定位钉，周围炸出碎片",
+          "地图拉远到整个国家再飞到下一个城市",
+          "一条线从一个城市划到另一个城市"
+        ],
+        "vs": [
+          [
+            "confetti-success-animation",
+            "确认爆发是点击或付款瞬间的接触点碎片；地图落钉的碎片出现在地图上钉的落点"
+          ],
+          [
+            "match-cut-transition",
+            "同位替换用实景钉换掉地图钉；地图落钉是钉落下、碎片和拉远轨迹"
+          ]
+        ]
+      }
+    }
+  },
+  "published": "2026-10-30",
+  "updated": "2026-11-26",
+  "en": {
+    "keyword": "Map Pin Drop Animation",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"Map Pin Drop Animation\": map pin drop animation; map where i can drop multiple pins; what is a pin drop location",
+      "checked": "2026-11-28"
+    },
+    "title": "Map Pin Drop Animation: Recipe and Code",
+    "description": "A pin drops onto a map and bursts into fragments, the map zooms out and a route draws to the next city. Make it with Claude Code or Codex from the recipe.",
+    "lede": "A pin drops onto a map with a bounce and bursts into fragments, the map zooms out to the whole country, and a route line draws to the next city.",
+    "name": "Map Pin Drop Animation",
+    "ownName": "Map Pin Drop",
+    "body": [
+      {
+        "h2": "How to make a Map Pin Drop Animation with Claude Code or Codex",
+        "body": "Drop a navy pin (#0f1f3d, scale 1.45) 360 px from above at 0.5 s over 0.3 s with cubic-bezier(0.34,1.56,0.64,1). At impact (0.63 s) 9 fragments burst outward: 4 white lines, 3 dots and 2 squares, expanding with cubic-bezier(0.16,1,0.3,1) over 0.6 s. The 168 px city name (Oswald, white at 43%) is locked to the map and scales with the camera push.\n\nHold city one until 3.9 s, then pull back over 1.0 s to the whole country with cubic-bezier(0.65,0,0.35,1), interpolating zoom on a log scale. 19 small indigo pins pop from 4.45 s, a white 5 px route arcs between 5.0 and 5.8 s, and the camera pushes into city two from 5.85 to 6.95 s. The second pin drops at 7.0 s with 10 fragments and a ring growing from radius 48 to 150.\n\nDive into the pin at 8.05 to 8.6 s with a t^3 zoom, then cut to the end card. Press the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own cities."
+      }
+    ],
+    "alt": "A map of the United States on purple with white pins over many cities and San Francisco labelled.",
+    "faq": [
+      [
+        "What is a map pin drop animation?",
+        "A location pin falls onto a map, lands with a bounce and often releases a small burst at the landing point. The camera then moves to the next place, so a single point and a place name carry the information."
+      ],
+      [
+        "How do I keep labels and pins locked to the map?",
+        "Put the map, pins and labels in one container and scale that container for every camera move, so everything stays registered. Interpolating zoom on a log scale keeps pull-backs and push-ins at a constant perceived speed."
+      ],
+      [
+        "Is the Map Pin Drop Animation recipe free to use?",
+        "Yes. Motionboard is free and MIT licensed, so you can use and modify the recipes and the films they produce in personal and commercial projects. The licence asks only that copies of the recipe files keep the copyright notice."
+      ]
+    ]
+  },
+  "zh": {
+    "keyword": "地图标记动画",
+    "demand": {
+      "source": "autocomplete",
+      "note": "Google autocomplete for \"地图标记动画\" returned no suggestions",
+      "checked": "2026-11-28"
+    },
+    "title": "地图标记动画：示例与配方",
+    "description": "定位钉回弹落在地图上并爆出碎片，镜头拉远到全国，轨迹线划向下一座城市。用免费配方，让 Claude Code 或 Codex 做出这段地图标记动画。",
+    "lede": "定位钉回弹落下并爆出碎片，镜头拉远到全国，轨迹线划向下一座城市。",
+    "name": "地图标记动画",
+    "ownName": "地图落钉",
+    "body": [
+      {
+        "h2": "用 Claude Code 或 Codex 做地图标记动画",
+        "body": "深蓝定位钉（#0f1f3d，缩放 1.45）0.5 秒从上方 360px 处落下，用时 0.3 秒，缓动 cubic-bezier(0.34,1.56,0.64,1)。0.63 秒落地的瞬间爆出 9 个碎片：4 条白线、3 个圆点、2 个方块，用 cubic-bezier(0.16,1,0.3,1) 在 0.6 秒内向外扩散。168px 的城市名（Oswald，白色 43% 不透明度）锁定在地图上，随镜头推拉缩放。\n\n第一座城市停到 3.9 秒，然后用 cubic-bezier(0.65,0,0.35,1) 在 1.0 秒内拉远到全国，缩放按对数插值。19 个靛蓝小钉从 4.45 秒起弹出，白色 5px 的轨迹线在 5.0 到 5.8 秒划过，镜头 5.85 到 6.95 秒推向第二座城市。第二枚钉 7.0 秒落下，带 10 个碎片和一个半径 48 到 150 的扩散环。\n\n8.05 到 8.6 秒用 t^3 的缩放扎进定位钉，再切到结尾画面。在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，城市换成你自己的。"
+      }
+    ],
+    "alt": "紫色底上的美国地图，多个城市插着白色图钉，标出了旧金山。",
+    "faq": [
+      [
+        "地图定位钉动画是什么？",
+        "一枚定位钉落到地图上，回弹着落地，常在落点放出一小团碎片，随后镜头移向下一个地点。一个点和一个地名就承担了全部信息。"
+      ],
+      [
+        "怎样让标签和定位钉始终锁在地图上？",
+        "把地图、钉和标签放进同一个容器，每次镜头运动都缩放这个容器，各元素就始终对位。缩放按对数插值，拉远和推近的体感速度才会恒定。"
+      ],
+      [
+        "地图标记动画配方可以免费使用吗？",
+        "可以。Motionboard 免费，使用 MIT 许可证，你可以在个人和商业项目里使用、修改配方和它生成的视频。许可证只要求复制配方文件时保留版权声明。"
+      ]
+    ]
+  }
+}
