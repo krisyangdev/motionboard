@@ -8,16 +8,29 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
 import { LOCALES, localizePath } from './src/core/i18n.ts'
-import { contentIndex, hubPagination, pageLocales, sitePages } from './src/core/pages.ts'
+import { collectionIds, collectionItems, contentIndex, contentLists, hubPagination, pageLocales, sitePages } from './src/core/pages.ts'
 import { sitemapExclude } from './src/site/pages.ts'
 import { generate } from './scripts/generate.mjs'
 
 // Writes robots.txt, _redirects, _headers, llms.txt, the sitemaps and feed.xml into public/ before every build and dev start.
-// `virtual:content-index`: names and frontmatter of all content files (see contentIndex()).
+// Content registry modules (src/core/pages.ts): `virtual:content-index` (every page: page existence, hub names),
+// `virtual:content-lists` (tools and docs with descriptions), `virtual:content-collections` (one lazy import per
+// collection) and `virtual:content-collection/<id>` (that collection's items and a lazy import per item file).
+const CONTENT = 'virtual:content-'
 const contentIndexPlugin = (): Plugin => ({
   name: 'content-index',
-  resolveId: (id) => (id === 'virtual:content-index' ? '\0virtual:content-index' : undefined),
-  load: (id) => (id === '\0virtual:content-index' ? `export default ${JSON.stringify(contentIndex())}` : undefined),
+  resolveId: (id) => (id.startsWith(CONTENT) ? `\0${id}` : undefined),
+  load: (id) => {
+    if (!id.startsWith(`\0${CONTENT}`)) return undefined
+    const name = id.slice(1 + CONTENT.length)
+    if (name === 'index') return `export default ${JSON.stringify(contentIndex())}`
+    if (name === 'lists') return `export default ${JSON.stringify(contentLists())}`
+    if (name === 'collections') return `export default {${collectionIds().map((c) => `${JSON.stringify(c)}: () => import(${JSON.stringify(`${CONTENT}collection/${c}`)})`).join(',')}}`
+    const c = name.slice('collection/'.length)
+    const items = collectionItems(c)
+    const files = items.map((i) => `${JSON.stringify(i.slug)}: () => import(${JSON.stringify(`/content/collections/${c}/${i.slug}.json`)}).then((m) => m.default)`)
+    return `export const items = ${JSON.stringify(items)}\nexport const files = {${files.join(',')}}`
+  },
 })
 
 const prebuild = (): Plugin => ({ name: 'prebuild', buildStart: () => generate(), configureServer: () => generate() })

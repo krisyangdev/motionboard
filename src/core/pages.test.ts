@@ -44,10 +44,10 @@ describe('sitePages with a third language that has no content', () => {
   })
 
   it('lists the tool pages only in the languages their JSON has a block for', async () => {
-    const { sitePages, pageLocales, contentIndex } = await load(['en', 'zh', 'es'])
+    const { sitePages, pageLocales, contentLists } = await load(['en', 'zh', 'es'])
     // Works on any site's content: no page may claim the content-less third language.
     for (const page of sitePages().filter((p) => p.path !== '/')) expect(pageLocales(page)).not.toContain('es')
-    for (const t of contentIndex().tools) expect(t.locales).not.toContain('es')
+    for (const t of contentLists().tools) expect(Object.keys(t.name)).not.toContain('es')
   })
 })
 
@@ -137,17 +137,21 @@ describe.runIf(demo)('collection items in the registry (template demo content: t
   })
 
   it('counts only the indexable items in the hubs: the thin one is a member of no hub list', async () => {
-    const { contentIndex } = await load(['en', 'zh'])
+    const { contentIndex, collectionItems } = await load(['en', 'zh'])
     const index = contentIndex()
-    expect(index.collections.symbols.items).toHaveLength(8)
-    expect(index.pages['/symbols/music-note-symbols/']).toEqual({ locales: ['en', 'zh'], noindex: ['en', 'zh'] })
-    expect(index.pages['/symbols/heart-symbols/']).toEqual({ locales: ['en', 'zh'], noindex: [] })
+    const items = collectionItems('symbols')
+    expect(items).toHaveLength(8)
+    expect(items.find((i) => i.slug === 'music-note-symbols')).toMatchObject({ locales: ['en', 'zh'], noindex: ['en', 'zh'] })
+    expect(items.find((i) => i.slug === 'heart-symbols')).toMatchObject({ locales: ['en', 'zh'], noindex: [] })
+    // The every-page index has no collection items and no descriptions.
+    expect(Object.keys(index.pages).some((p) => p.startsWith('/symbols/') && p !== '/symbols/' && !index.categories.symbols.some((c) => p === `/symbols/${c}/`))).toBe(false)
+    expect(JSON.stringify(index)).not.toContain('"description"')
     expect(index.hubs['symbols/decorative']).toEqual({ en: 'Decorative', zh: '装饰' })
   })
 
   it('gives every item 3 to 8 related items from its own language and never the thin one', async () => {
-    const { contentIndex } = await load(['en', 'zh'])
-    for (const i of contentIndex().collections.symbols.items) {
+    const { collectionItems } = await load(['en', 'zh'])
+    for (const i of collectionItems('symbols')) {
       for (const l of i.locales) {
         const related = i.related[L(l)] ?? []
         expect(related.length, `${i.slug} ${l}`).toBeGreaterThanOrEqual(3)
@@ -159,8 +163,8 @@ describe.runIf(demo)('collection items in the registry (template demo content: t
   })
 
   it('uses an explicit related list when the item has one', async () => {
-    const { contentIndex } = await load(['en', 'zh'])
-    const currency = contentIndex().collections.symbols.items.find((i) => i.slug === 'currency-symbols')
+    const { collectionItems } = await load(['en', 'zh'])
+    const currency = collectionItems('symbols').find((i) => i.slug === 'currency-symbols')
     expect(currency?.related[L('en')]).toEqual(['math-symbols', 'check-mark-symbols', 'arrow-symbols'])
   })
 

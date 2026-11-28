@@ -3,7 +3,7 @@
 // Item order: breadcrumb, h1 (+ own name), lede, main media, the site's data block, body blocks, FAQ, related items.
 import index from 'virtual:content-index'
 import { notFound } from '@tanstack/react-router'
-import { isSitePage, seoState } from '@/core/content/exists'
+import { isSitePage } from '@/core/content/exists'
 import { pageH1 } from '@/core/content/h1'
 import { categoryHubId, itemPath } from '@/core/content/hubs'
 import { loadItem, type Item } from '@/core/content/items'
@@ -28,14 +28,14 @@ export type CollectionPageData =
  * has no text block in the language (never another language's text).
  */
 export async function loadCollectionPage(collection: string, slug: string, localeParam: string | undefined): Promise<CollectionPageData> {
-  if (index.collections[collection]?.categories.includes(slug)) {
+  if (index.categories[collection]?.includes(slug)) {
     const hub = await loadHub(categoryHubId(collection, slug), localeParam, 1)
     return { kind: 'hub', hub, locales: hub.locales }
   }
   const locale = paramLocale(localeParam)
   const item = await loadItem(collection, slug, locale)
   if (!item) throw notFound()
-  return { kind: 'item', item, related: relatedItemEntries(collection, slug, locale), locales: item.locales }
+  return { kind: 'item', item, related: await relatedItemEntries(collection, slug, locale), locales: item.locales }
 }
 
 /**
@@ -62,7 +62,8 @@ export function itemHead(item: Item, locale: Locale) {
     description: t.description,
     path,
     locale,
-    ...seoState(path, locale),
+    noindex: item.noindex.includes(locale),
+    locales: item.locales.filter((x) => !item.noindex.includes(x)),
     image: item.ogImage ?? (m?.kind === 'image' ? m.src : m?.kind === 'video' ? m.poster : undefined),
     video: m?.kind === 'video' ? m.src : undefined,
     breadcrumb: itemCrumbs(item, locale),

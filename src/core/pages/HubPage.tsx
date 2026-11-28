@@ -55,10 +55,13 @@ export async function loadHub(hub: string, localeParam: string | undefined, n: n
   const text = file?.[locale]
   if (!file || !text) throw notFound()
   const size = file.pageSize ?? HUB_PAGE_SIZE
-  const pages = hubPageCount(members(hub, locale).length, size)
+  const all = await members(hub, locale)
+  const pages = hubPageCount(all.length, size)
   if (!Number.isInteger(n) || n < 1 || n > pages) throw notFound()
-  const hreflang = seoState(path, locale).locales.filter((l) => hubPageCount(members(hub, l).length, size) >= n)
-  return { hub, n, pages, text, entries: hubPageSlice(members(hub, locale), n, size), categories: hub.includes('/') ? [] : subHubs(hub, locale), locales: existingLocales(path), hreflang }
+  const indexed = seoState(path, locale).locales
+  const counts = await Promise.all(indexed.map(async (l) => (l === locale ? all : await members(hub, l)).length))
+  const hreflang = indexed.filter((_, k) => hubPageCount(counts[k], size) >= n)
+  return { hub, n, pages, text, entries: hubPageSlice(all, n, size), categories: hub.includes('/') ? [] : subHubs(hub, locale), locales: existingLocales(path), hreflang }
 }
 
 /**

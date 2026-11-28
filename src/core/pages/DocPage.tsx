@@ -49,7 +49,7 @@ export async function loadDocPage(collection: DocCollection, localeParam: string
   if (!doc) throw notFound()
   const fm = doc.frontmatter
   // A guide's related block: its `related` slugs, guides first, then tools.
-  const related = isGuide(fm) ? relatedEntries(fm.related, locale, ['guides', 'tools']) : []
+  const related = isGuide(fm) ? await relatedEntries(fm.related, locale, ['guides', 'tools']) : []
   return { fm, related, locales: existingLocales(docPath(collection, slug)) }
 }
 

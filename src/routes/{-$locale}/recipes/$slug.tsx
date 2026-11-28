@@ -13,7 +13,7 @@ export const Route = createFileRoute('/{-$locale}/recipes/$slug')({
     const item = term && (await loadItem('recipes', params.slug, locale))
     if (!item) throw notFound()
     // Related recipes in site order; an entry's href is /recipes/<slug>/.
-    const slugs = new Set(relatedItemEntries('recipes', params.slug, locale).map((e) => e.href.split('/')[2]))
+    const slugs = new Set((await relatedItemEntries('recipes', params.slug, locale)).map((e) => e.href.split('/')[2]))
     // The loader data is serialized into the page for hydration: keep only this language's recipe text.
     const data = recipeData(item)
     const trimmed = { ...item, data: { ...data, text: { [locale]: data.text[locale] } } }
