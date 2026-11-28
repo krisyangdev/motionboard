@@ -14,6 +14,11 @@ describe('seoHead', () => {
     expect(seoHead(base).meta[0].title).toBe(`Merge PDFs · ${SITE.name}`)
     expect(seoHead({ ...base, title: `Merge PDFs · ${SITE.name}` }).meta[0].title).toBe(`Merge PDFs · ${SITE.name}`)
   })
+  it('writes og:video as an absolute URL, only when a video is given', () => {
+    expect(metaOf(seoHead({ ...base, video: '/v/a.mp4' }), 'property', 'og:video')).toBe(`${SITE_URL}/v/a.mp4`)
+    expect(metaOf(seoHead({ ...base, video: 'https://v.test/a.mp4' }), 'property', 'og:video')).toBe('https://v.test/a.mp4')
+    expect(metaOf(seoHead(base), 'property', 'og:video')).toBeUndefined()
+  })
   it('mirrors title and description into Open Graph', () => {
     const head = seoHead(base)
     expect(metaOf(head, 'property', 'og:title')).toBe(head.meta[0].title)

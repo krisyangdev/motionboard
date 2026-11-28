@@ -391,10 +391,18 @@ check('noindex items: noindex page, not in sitemap, llms.txt or hub lists', noin
   return errs.length ? `${url}: ${errs.join('; ')}` : ''
 })
 const collectionIds = [...new Set(pages.filter(fromCollection).map((p) => p.collection))]
-check('collection hub lists exactly the indexable items', collectionIds.flatMap((c) => LOCALES.map((l) => [c, l])), ([collection, l]) => {
+check('collection hub lists exactly the indexable items (no hub: each is linked from an indexable page)', collectionIds.flatMap((c) => LOCALES.map((l) => [c, l])), ([collection, l]) => {
   const items = pages.filter((p) => p.type === 'item' && p.collection === collection && indexableLocales(p).includes(l)).map((p) => localizePath(l, p.path))
   const hubs = hubPagesOf(collection, l).filter((x) => stripLocale(x.path) === `/${collection}/` || stripLocale(x.path).startsWith(`/${collection}/page/`))
-  if (!hubs.length) return items.length ? `no hub page for ${collection} (${l}) but ${items.length} indexable items` : ''
+  // No hub in this language (e.g. the hub path redirects to a page that lists the items): every indexable item must
+  // then be linked from the main content of some indexable non-item page in that language.
+  if (!hubs.length) {
+    const linked = new Set(
+      sitemapPages.filter((x) => localeOfPath(x.path) === l && pageOfPath(x.path)?.type !== 'item').flatMap((x) => all(/\shref="([^"]*)"/g, mainOf(x.html)).map((m) => decode(m[1]))),
+    )
+    const unlinked = items.filter((h) => !linked.has(h))
+    return unlinked.length ? `no hub page for ${collection} (${l}) and ${unlinked.length} indexable items are not linked from any indexable page: ${unlinked.slice(0, 5).join(', ')}` : ''
+  }
   const listed = [...new Set(hubs.flatMap((h) => all(/\shref="([^"]*)"/g, mainOf(h.html)).map((m) => decode(m[1]))).filter((h) => items.includes(h) || pageOfPath(h)?.type === 'item'))]
   const extra = listed.filter((h) => !items.includes(h))
   const missing = items.filter((h) => !listed.includes(h))

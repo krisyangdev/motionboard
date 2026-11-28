@@ -64,6 +64,7 @@ export function itemHead(item: Item, locale: Locale) {
     locale,
     ...seoState(path, locale),
     image: item.ogImage ?? (m?.kind === 'image' ? m.src : m?.kind === 'video' ? m.poster : undefined),
+    video: m?.kind === 'video' ? m.src : undefined,
     breadcrumb: itemCrumbs(item, locale),
     jsonLd,
   })
