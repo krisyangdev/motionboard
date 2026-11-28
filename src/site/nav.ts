@@ -7,7 +7,10 @@ export type NavItem = { label: Record<Locale, string>; path?: string; href?: str
 
 /** Header links. */
 export const nav: NavItem[] = [
-  { label: { en: 'Recipes', zh: '配方' }, path: '/#recipes' },
+  { label: { en: 'Effects', zh: '全部动效' }, path: '/#recipes' },
+  { label: { en: 'Text', zh: '文字' }, path: '/text-animation/' },
+  { label: { en: 'Transitions', zh: '转场' }, path: '/transitions/' },
+  { label: { en: 'Logo', zh: 'Logo' }, path: '/logo-animation/' },
   { label: { en: 'Saved', zh: '收藏' }, path: '/saved/' },
   { label: { en: 'GitHub', zh: 'GitHub' }, href: GITHUB_URL, cta: 'github' },
 ]

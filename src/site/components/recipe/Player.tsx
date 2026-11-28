@@ -6,10 +6,10 @@ import { track } from '@/core/track'
 import { media, termName, type Term } from '@/site/data/terms'
 import { useStrings } from '@/site/lib/strings'
 
-type FilmProps = { src: string; mobileSrc?: string; poster: string; posterSmall?: string; name: string; transitionName?: string; slug?: string }
+type FilmProps = { src: string; mobileSrc?: string; poster: string; posterSmall?: string; name: string; transitionName?: string; slug?: string; radius?: string }
 
 // Autoplays muted on loop; click toggles. Reduced motion shows the poster and plays only on click.
-export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName, slug }: FilmProps) {
+export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName, slug, radius = 'rounded-media' }: FilmProps) {
   const video = useRef<HTMLVideoElement>(null)
   const bar = useRef<HTMLElement>(null)
   const [paused, setPaused] = useState(false)
@@ -77,7 +77,7 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
   return (
     <div>
       <div
-        className="relative aspect-video overflow-hidden rounded-xl bg-muted shadow-[0_40px_90px_-50px_rgb(0_0_0/0.5)] ring-1 ring-border"
+        className={cn('relative aspect-video overflow-hidden bg-media', radius)}
         style={transitionName ? { viewTransitionName: transitionName } : undefined}
       >
         {/* keyed so a new source remounts the video and autoplays */}
@@ -130,5 +130,5 @@ export function Film({ src, mobileSrc, poster, posterSmall, name, transitionName
 // The full film of a recipe.
 export function Player({ term: t }: { term: Term }) {
   const locale = useLocale()
-  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} posterSmall={media(t, 'jpgSmall')} name={termName(t, locale)} transitionName="film" slug={t.slug} />
+  return <Film src={media(t, 'mp4')} mobileSrc={media(t, 'mobile')} poster={media(t, 'jpg')} posterSmall={media(t, 'jpgSmall')} name={termName(t, locale)} transitionName="film" slug={t.slug} radius="rounded-[15px] md:rounded-[24px]" />
 }

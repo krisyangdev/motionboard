@@ -7,7 +7,7 @@ const TOKEN = /\[([^\]]+)\]\(([^)\s]+)\)|`([^`]+)`/g
 /** The text without its markup, for JSON-LD */
 export const plain = (text: string) => text.replace(TOKEN, (_, label, _url, code) => label ?? code)
 
-export const linkClass = 'text-foreground underline decoration-border underline-offset-4 transition-[text-decoration-color] hover:decoration-foreground'
+export const linkClass = 'text-link underline underline-offset-3 hover:text-primary-hover'
 
 // Outbound links the stats count: GitHub and skills.sh.
 const CTA: Record<string, string> = { 'github.com': 'github', 'skills.sh': 'skills.sh' }
@@ -35,7 +35,7 @@ function Anchor({ href, children }: { href: string; children: ReactNode }) {
   )
 }
 
-const code = 'rounded-sm bg-muted px-1.5 py-px font-mono text-[0.8125rem] text-foreground ring-1 ring-border [overflow-wrap:anywhere]'
+const code = 'rounded-md bg-surface-2 px-1.5 py-px font-mono text-[0.85em] text-foreground [overflow-wrap:anywhere]'
 
 export function Inline({ text }: { text: string }) {
   const out: ReactNode[] = []

@@ -7,7 +7,7 @@ export function burst(el: HTMLElement) {
   if (reduced()) return
   const b = document.createElement('span')
   b.className = 'burst'
-  b.innerHTML = '<i></i>'.repeat(8)
+  b.innerHTML = '<i style="background:currentColor"></i>'.repeat(8)
   el.appendChild(b)
   gsap.fromTo(
     b.children,

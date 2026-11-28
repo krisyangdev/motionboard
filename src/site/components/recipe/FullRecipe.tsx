@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Check, ChevronDown, Copy } from 'lucide-react'
+import { Check, Copy } from 'lucide-react'
 import { useLocale } from '@/core/locale'
 import { Button } from '@/core/ui/button'
+import { foldClass, foldSummary } from '@/site/components/Faq'
 import { bySlug, recipeFile, termName, type RecipeText, type Term } from '@/site/data/terms'
 import { RecipeLink } from '@/site/lib/links'
 import { useStrings } from '@/site/lib/strings'
@@ -32,15 +33,14 @@ export function FullRecipe({ term: t, text }: { term: Term; text: RecipeText }) 
   const locale = useLocale()
   const { full } = useStrings()
   return (
-    <details className="group rounded-xl bg-muted ring-1 ring-border" data-rv>
-      <summary className="flex min-h-12 cursor-pointer list-none select-none items-center justify-between gap-3 rounded-xl px-4 font-semibold text-[0.9375rem] hover:bg-accent group-open:rounded-b-none group-open:shadow-[0_1px_0_var(--border)] [&::-webkit-details-marker]:hidden">
+    <details className={foldClass} data-rv>
+      <summary className={foldSummary}>
         <span>{full.title}</span>
-        <ChevronDown aria-hidden="true" className="size-[18px] text-muted-foreground transition-transform duration-300 group-open:rotate-180" />
       </summary>
-      <div className="grid max-w-[820px] gap-8 px-4 pt-5 pb-6 sm:px-5 sm:pt-6 sm:pb-7">
+      <div className="grid gap-8 px-5 pt-2 pb-6 md:px-6">
         <section>
           <h3 className={h3}>{full.why}</h3>
-          <p className="text-[0.9375rem] leading-relaxed">{text.why}</p>
+          <p className="text-base leading-relaxed">{text.why}</p>
         </section>
         <section>
           <h3 className={h3}>{full.spec}</h3>
@@ -48,14 +48,14 @@ export function FullRecipe({ term: t, text }: { term: Term; text: RecipeText }) 
             {text.spec.map(([k, v]) => (
               <div key={k} className="grid gap-0.5 border-t py-3 text-sm leading-relaxed last:border-b sm:grid-cols-[minmax(80px,140px)_minmax(0,1fr)] sm:gap-4">
                 <dt className="text-muted-foreground">{k}</dt>
-                <dd className="m-0 [overflow-wrap:anywhere] [&_code]:rounded-sm [&_code]:bg-background [&_code]:px-1.5 [&_code]:py-px [&_code]:font-mono [&_code]:text-[0.78rem] [&_code]:ring-1 [&_code]:ring-border" dangerouslySetInnerHTML={{ __html: v }} />
+                <dd className="m-0 [overflow-wrap:anywhere] [&_code]:rounded-sm [&_code]:bg-card [&_code]:px-1.5 [&_code]:py-px [&_code]:font-mono [&_code]:text-[0.78rem] [&_code]:shadow-soft" dangerouslySetInnerHTML={{ __html: v }} />
               </div>
             ))}
           </dl>
         </section>
         <section>
           <h3 className={h3}>{full.prompt}</h3>
-          <div className="relative rounded-lg bg-background py-3.5 pr-14 pl-4 ring-1 ring-border">
+          <div className="relative rounded-xl bg-card py-3.5 pr-14 pl-4 shadow-soft">
             <p className="text-sm leading-relaxed [overflow-wrap:anywhere]">{text.prompt}</p>
             <PromptCopy text={text.prompt} />
           </div>
@@ -64,7 +64,7 @@ export function FullRecipe({ term: t, text }: { term: Term; text: RecipeText }) 
           <h3 className={h3}>{full.says}</h3>
           <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
             {text.says.map((s) => (
-              <li key={s} className="inline-flex min-h-8 items-center rounded-full px-3.5 py-1 text-muted-foreground text-[0.8125rem] ring-1 ring-border">
+              <li key={s} className="inline-flex min-h-8 items-center rounded-full bg-card px-3.5 py-1 text-muted-foreground text-[0.8125rem] shadow-soft">
                 {s}
               </li>
             ))}

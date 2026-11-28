@@ -1,17 +1,20 @@
 import type { ReactNode } from 'react'
-import { Plus } from 'lucide-react'
+
+/** Fold style shared by the FAQ and the recipe page: a surface card with a +/– marker. */
+export const foldClass = 'group mb-3 rounded-card-sm bg-surface'
+export const foldSummary =
+  "flex cursor-pointer list-none select-none items-center justify-between gap-4 rounded-card-sm px-5 py-[18px] text-lg font-semibold leading-snug after:text-[22px] after:leading-none after:text-muted-foreground after:content-['+'] group-open:after:content-['–'] md:px-6 [&::-webkit-details-marker]:hidden"
 
 /** FAQ as native <details>, so the answers are in the prerendered HTML. `items` are [question, answer]; nodes allow inline links. */
 export function Faq({ items }: { items: [ReactNode, ReactNode][] }) {
   return (
-    <div className="border-b">
+    <div>
       {items.map(([q, a], i) => (
-        <details key={i} className="group border-t">
-          <summary className="flex min-h-14 cursor-pointer list-none select-none items-center justify-between gap-4 py-2.5 font-semibold text-[0.9375rem] leading-snug tracking-tight hover:text-foreground sm:text-base [&::-webkit-details-marker]:hidden">
+        <details key={i} className={foldClass}>
+          <summary className={foldSummary}>
             <span>{q}</span>
-            <Plus aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-45" />
           </summary>
-          <p className="mb-5 max-w-[64ch] text-[0.9375rem] text-muted-foreground leading-relaxed">{a}</p>
+          <p className="m-0 px-5 pb-[18px] text-base text-muted-foreground leading-relaxed md:px-6">{a}</p>
         </details>
       ))}
     </div>

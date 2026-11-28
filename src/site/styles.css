@@ -1,18 +1,174 @@
 @import "../core/styles/app.css";
 
-/* The one per-site colour: logo, links, highlights. Leave coss tokens (--primary etc.) alone. */
+/*
+ * Look: prototype C "Bright reel" (Rui, 2026-11-28). Warm white surfaces, red primary, soft-shadow white cards,
+ * sky-to-peach gradients. Values override the template's coss tokens; extra tokens below are Motionboard's own.
+ * Dark is derived from the same tokens: warm near-black base, same red primary, same radii.
+ */
 :root {
-  --brand: oklch(0.52 0.2 262);
-  --brand-foreground: oklch(0.99 0 0);
-  /* Content and header width; the films and the recipe grid use more of a wide screen than the template's 64rem. */
-  --site-width: 90rem;
-  /* Height of the header: the home hero sizes the film so hero and timeline fit one screen. */
-  --nav-h: 3.1rem;
+  --background: #ffffff;
+  --foreground: #1b1512;
+  --card: #ffffff;
+  --card-foreground: #1b1512;
+  --popover: #ffffff;
+  --popover-foreground: #1b1512;
+  --primary: #d9381f;
+  --primary-foreground: #ffffff;
+  --secondary: #efebe6;
+  --secondary-foreground: #1b1512;
+  --muted: #f7f4f1;
+  --muted-foreground: #645a54;
+  --accent: #efebe6;
+  --accent-foreground: #1b1512;
+  --border: rgba(27, 21, 18, 0.08);
+  --input: rgba(27, 21, 18, 0.12);
+  --ring: #d9381f;
+  --brand: #d9381f;
+  --brand-foreground: #ffffff;
+  --radius: 0.75rem;
+
+  --surface: #f7f4f1;
+  --surface-2: #efebe6;
+  --ink-3: #998e87;
+  --primary-hover: #c22d16;
+  --link: #c22d16;
+  --kicker: #c22d16;
+  --ok: #12a150;
+  --pos-open: #ffb020;
+  --pos-reveal: #2f7bff;
+  --pos-feature: #18b45b;
+  --pos-bridge: #ff4f8b;
+  --pos-close: #8a5cff;
+  --hl-underline: #ffb020;
+  --media-bg: #1b1512;
+  --header-bg: rgba(255, 255, 255, 0.72);
+  --footer-bg: #fff6ef;
+  --chip-bg: rgba(255, 255, 255, 0.75);
+  --ring-soft: rgba(27, 21, 18, 0.06);
+  --shadow-card-v: 0 10px 30px -14px rgba(90, 50, 20, 0.28), 0 0 0 1px rgba(27, 21, 18, 0.05);
+  --shadow-card-hover-v: 0 24px 50px -18px rgba(90, 50, 20, 0.38), 0 0 0 1px rgba(27, 21, 18, 0.05);
+  --shadow-film-v: 0 30px 70px -30px rgba(90, 50, 20, 0.45);
+  --shadow-float-v: 0 24px 50px -20px rgba(60, 30, 10, 0.4), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-primary-v: 0 10px 24px -10px rgba(217, 56, 31, 0.7);
+  --shadow-search-v: 0 12px 40px -12px rgba(120, 70, 40, 0.28), 0 0 0 1px rgba(27, 21, 18, 0.06);
+  --grad-hero: linear-gradient(160deg, #dcebff 0%, #eef3ff 35%, #fff1e6 70%, #ffe6d6 100%);
+  --grad-recipe: linear-gradient(180deg, #eef4ff 0, #fff5ee 520px, var(--background) 900px);
+  --grad-hub: linear-gradient(180deg, #fff1e6 0, #eef4ff 360px, var(--background) 700px);
+  --grad-step: linear-gradient(160deg, #eef4ff, #fff3ea);
+
+  /* Content and header width (C: 1312px incl. 32px padding). */
+  --site-width: 82rem;
+  /* Height of the sticky header. */
+  --nav-h: 4.25rem;
 }
 .dark {
-  --brand: oklch(0.66 0.18 259);
-  --brand-foreground: oklch(0.15 0 0);
+  --background: #17120f;
+  --foreground: #f6efe9;
+  --card: #221b17;
+  --card-foreground: #f6efe9;
+  --popover: #221b17;
+  --popover-foreground: #f6efe9;
+  --primary: #d9381f;
+  --primary-foreground: #ffffff;
+  --secondary: #2e2621;
+  --secondary-foreground: #f6efe9;
+  --muted: #221b17;
+  --muted-foreground: #b8aca4;
+  --accent: #2e2621;
+  --accent-foreground: #f6efe9;
+  --border: rgba(255, 240, 230, 0.09);
+  --input: rgba(255, 240, 230, 0.14);
+  --ring: #ef5a3e;
+  --brand: #ef5a3e;
+  --brand-foreground: #ffffff;
+
+  --surface: #221b17;
+  --surface-2: #2e2621;
+  --ink-3: #8f837b;
+  --primary-hover: #e94a2f;
+  --link: #ff8266;
+  --kicker: #ff8a6e;
+  --ok: #19b85d;
+  --media-bg: #0d0a08;
+  --header-bg: rgba(23, 18, 15, 0.72);
+  --footer-bg: #1e1814;
+  --chip-bg: rgba(46, 38, 33, 0.8);
+  --ring-soft: rgba(255, 240, 230, 0.08);
+  --shadow-card-v: 0 10px 30px -14px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 240, 230, 0.06);
+  --shadow-card-hover-v: 0 24px 50px -18px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 240, 230, 0.1);
+  --shadow-film-v: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
+  --shadow-float-v: 0 24px 50px -20px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-primary-v: 0 10px 24px -10px rgba(217, 56, 31, 0.6);
+  --shadow-search-v: 0 12px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 240, 230, 0.08);
+  --grad-hero: linear-gradient(160deg, #18202e 0%, #1a1c27 35%, #2a1c16 70%, #321e14 100%);
+  --grad-recipe: linear-gradient(180deg, #19202c 0, #261a14 520px, var(--background) 900px);
+  --grad-hub: linear-gradient(180deg, #2a1c16 0, #19202c 360px, var(--background) 700px);
+  --grad-step: linear-gradient(160deg, #1b2230, #2a1e17);
 }
+
+/* Utilities for the tokens above: bg-surface, text-ink-3, text-link, shadow-card, rounded-card, font-display, bg-hero… */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink-3: var(--ink-3);
+  --color-primary-hover: var(--primary-hover);
+  --color-link: var(--link);
+  --color-kicker: var(--kicker);
+  --color-ok: var(--ok);
+  --color-media: var(--media-bg);
+  --color-pos-open: var(--pos-open);
+  --color-pos-reveal: var(--pos-reveal);
+  --color-pos-feature: var(--pos-feature);
+  --color-pos-bridge: var(--pos-bridge);
+  --color-pos-close: var(--pos-close);
+  --shadow-card: var(--shadow-card-v);
+  --shadow-card-hover: var(--shadow-card-hover-v);
+  --shadow-film: var(--shadow-film-v);
+  --shadow-float: var(--shadow-float-v);
+  --shadow-primary: var(--shadow-primary-v);
+  --shadow-search: var(--shadow-search-v);
+  --shadow-soft: 0 0 0 1px var(--ring-soft);
+  --radius-card: 1.5rem;
+  --radius-card-lg: 1.75rem;
+  --radius-card-sm: 1.25rem;
+  --radius-media: 1rem;
+  /* Headings: the template's display-font slot (SITE.fonts.display); body is the system font (SITE.fonts.body). */
+  --font-display: var(--font-heading);
+  --animate-bob: bob 7s ease-in-out infinite alternate;
+}
+
+@utility bg-hero { background-image: var(--grad-hero); }
+@utility bg-recipe { background-image: var(--grad-recipe); }
+@utility bg-hub { background-image: var(--grad-hub); }
+@utility bg-step { background-image: var(--grad-step); }
+
+/* Display headings: Bricolage 800, tight tracking (C). Chinese keeps the system font and no negative tracking (below). */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* Header (template shell): sticky, translucent, no rule, as in C. */
+body > header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 0;
+  background: var(--header-bg);
+  backdrop-filter: saturate(1.6) blur(16px);
+  -webkit-backdrop-filter: saturate(1.6) blur(16px);
+}
+body > header > div { min-height: var(--nav-h); }
+body > header > div > a:first-of-type { color: var(--foreground); font-family: var(--font-display); font-weight: 700; }
+body > header > div > a:first-of-type svg { color: var(--brand); }
+/* Phones: no nav row in the header (C); the hero chips and the footer carry the links. */
+@media (max-width: 767px) {
+  body > header nav { display: none; }
+}
+body > footer { background: var(--footer-bg); border-top: 0; }
+html { scroll-padding-top: calc(var(--nav-h) + 1rem); }
 
 /* Content column used by every page. */
 @utility wrap {
@@ -20,19 +176,8 @@
   width: 100%;
   max-width: var(--site-width);
   padding-inline: 1rem;
-}
-
-/* Home hero: on large screens H1, film and timeline fit one viewport. 370px is H1, timeline, shot row and spacing. */
-@media (min-width: 900px) {
-  .hero-stage {
-    --vw: min(100%, max(640px, calc((100svh - var(--nav-h) - 370px) * 16 / 9)));
-  }
-}
-
-/* Recipe page: both films and their captions fit the first screen. */
-@media (min-width: 900px) {
-  .rc-compare {
-    max-width: min(var(--site-width), max(720px, calc((100svh - var(--nav-h) - 140px) * 32 / 9 + 12px)));
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
   }
 }
 
@@ -53,6 +198,12 @@
   background: var(--foreground);
 }
 
+/* Floating hero films bob up and down (C). */
+@keyframes bob {
+  from { transform: translateY(-8px); }
+  to { transform: translateY(8px); }
+}
+
 @keyframes like-pop {
   0% { transform: scale(0.7); }
   55% { transform: scale(1.25); }
@@ -70,6 +221,14 @@
 :root:lang(zh) :is(h1, h2, h3) {
   letter-spacing: 0;
   line-height: 1.25;
+}
+/* The Chinese hero headline breaks at its comma and spaces only, one step smaller so it keeps to two lines. */
+:root:lang(zh) .hero-h1 { word-break: keep-all; }
+@media (max-width: 767px) {
+  :root:lang(zh) .hero-h1 { font-size: 36px; }
+}
+@media (min-width: 1280px) {
+  :root:lang(zh) .hero-h1 { font-size: 60px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

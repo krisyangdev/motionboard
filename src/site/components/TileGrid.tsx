@@ -33,7 +33,7 @@ function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
 
 export function TileGrid({ terms }: { terms: Term[] }) {
   return (
-    <div className="grid grid-cols-2 gap-x-3 gap-y-5 min-[560px]:gap-x-4 min-[560px]:gap-y-7 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-4" onKeyDown={onKeyDown}>
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 min-[1200px]:grid-cols-4" onKeyDown={onKeyDown}>
       {terms.map((t) => (
         <FilmTile key={t.slug} term={t} />
       ))}

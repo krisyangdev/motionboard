@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLocale } from '@/core/locale'
 import { coreMessages } from '@/core/messages'
-import { buttonVariants } from '@/core/ui/button'
 import { CopyAction, LikeButton, SaveButton, WishLink } from '@/site/components/actions'
 import { TileGrid } from '@/site/components/TileGrid'
 import { FullRecipe } from '@/site/components/recipe/FullRecipe'
@@ -14,10 +13,12 @@ import { byPos, order, shotName, sources, termName, type RecipeText, type Term }
 import { gsap, ScrollTrigger, useGSAP } from '@/site/lib/gsap'
 import { HomeLink, RecipeLink, useGoToRecipe } from '@/site/lib/links'
 import { useStat } from '@/site/lib/stats'
-import { Faq } from '@/site/components/Faq'
+import { Faq, foldClass, foldSummary } from '@/site/components/Faq'
 import { useStrings } from '@/site/lib/strings'
 
-const h2 = 'mb-4 font-semibold text-xl leading-tight tracking-tight'
+const h2 = 'text-[1.625rem] leading-tight md:text-[2rem]'
+const h2Small = 'mb-4 text-[1.625rem] leading-tight'
+const navBtn = 'inline-flex size-10 items-center justify-center rounded-full bg-card text-foreground shadow-soft transition-colors hover:bg-surface pointer-coarse:size-11'
 
 const typing = (el: EventTarget | null) =>
   el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))
@@ -37,7 +38,6 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   const [pick, setPick] = useState({ slug: t.slug, k: 0 })
   const k = pick.slug === t.slug ? pick.k : 0
   const selected = clips[k]
-  const compare = useRef<HTMLDivElement>(null)
   const name = termName(t, locale)
   const shot = shotName(t, locale)
   const more = byPos(t.pos).filter((x) => x.slug !== t.slug)
@@ -55,10 +55,7 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   const select = (idx: number) => {
     setPick({ slug: t.slug, k: idx })
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-    // Below 768px the compare wrapper is display: contents (no box), so scroll to the original figure instead.
-    const narrow = matchMedia('(max-width: 767px)').matches
-    const target = narrow ? compare.current?.querySelector('[data-original]') : compare.current
-    target?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
+    root.current?.querySelector('[data-original]')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
   }
 
   // Lower sections fade up once as they scroll into view.
@@ -83,119 +80,116 @@ export function RecipePage({ term: t, text }: { term: Term; text: RecipeText }) 
   )
 
   return (
-    <main className="wrap min-h-[70vh] pt-2" ref={root}>
-      <div className="mx-auto flex min-h-13 max-w-[var(--site-width)] items-center justify-between gap-3">
-        <nav className="flex min-h-11 min-w-0 items-center gap-2 text-muted-foreground text-[0.8125rem]" aria-label={coreMessages[locale].page.breadcrumb}>
-          <ol className="flex min-w-0 items-center gap-2">
-            <li className="flex items-center">
-              <HomeLink className="inline-flex min-h-11 items-center hover:text-foreground">{coreMessages[locale].page.home}</HomeLink>
-            </li>
-            <li className="flex min-w-0 items-center gap-2">
-              <span aria-hidden="true">/</span>
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-foreground" aria-current="page">
-                {termName(t, locale)}
-              </span>
-            </li>
-          </ol>
-        </nav>
-        <div className="flex shrink-0 gap-2">
-          <RecipeLink slug={prev.slug} className={buttonVariants({ variant: 'outline', size: 'icon-lg' })} aria-label={s.recipe.prev(termName(prev, locale))}>
-            <ChevronLeft aria-hidden="true" />
-          </RecipeLink>
-          <RecipeLink slug={next.slug} className={buttonVariants({ variant: 'outline', size: 'icon-lg' })} aria-label={s.recipe.next(termName(next, locale))}>
-            <ChevronRight aria-hidden="true" />
-          </RecipeLink>
+    <main className="min-h-[70vh] bg-recipe" ref={root}>
+      <div className="wrap pt-2">
+        <div className="flex min-h-13 items-center justify-between gap-3">
+          <nav className="flex min-h-11 min-w-0 items-center text-[0.875rem] text-muted-foreground md:text-[0.9375rem]" aria-label={coreMessages[locale].page.breadcrumb}>
+            <ol className="flex min-w-0 items-center gap-2">
+              <li className="flex items-center">
+                <HomeLink className="inline-flex min-h-11 items-center hover:text-foreground">{coreMessages[locale].page.home}</HomeLink>
+              </li>
+              <li className="flex min-w-0 items-center gap-2">
+                <span aria-hidden="true">/</span>
+                <span className="overflow-hidden text-ellipsis whitespace-nowrap font-medium text-foreground" aria-current="page">
+                  {name}
+                </span>
+              </li>
+            </ol>
+          </nav>
+          <div className="flex shrink-0 gap-2">
+            <RecipeLink slug={prev.slug} className={navBtn} aria-label={s.recipe.prev(termName(prev, locale))}>
+              <ChevronLeft aria-hidden="true" className="size-5" />
+            </RecipeLink>
+            <RecipeLink slug={next.slug} className={navBtn} aria-label={s.recipe.next(termName(next, locale))}>
+              <ChevronRight aria-hidden="true" className="size-5" />
+            </RecipeLink>
+          </div>
         </div>
-      </div>
 
-      {/* Below 768px this wrapper is a flex column and the two wrappers inside dissolve (contents), so the order is:
-          recreation, header, actions, original (data-original in Compare), rest. */}
-      <div className="max-md:flex max-md:flex-col">
-        <div className="rc-compare mx-auto mt-1 max-w-[var(--site-width)] scroll-mt-4 max-md:contents" ref={compare}>
-          {selected ? (
-            <Compare term={t} source={selected} />
-          ) : (
-            <figure className="m-0 min-w-0 max-md:order-1 max-md:mt-1">
+        <div className="mt-1 grid items-center gap-4 md:gap-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-12">
+          <div className="min-w-0">
+            <div className="rounded-[20px] bg-card p-[5px] shadow-film md:rounded-[2rem] md:p-2 md:motion-safe:-rotate-1">
               <Player term={t} />
-              <figcaption className="mt-1 flex h-7 items-center font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">
-                <span className="min-w-0 truncate">{s.recipe.recreationOnly}</span>
-              </figcaption>
-            </figure>
-          )}
-        </div>
-
-        <div className="mx-auto max-w-[var(--site-width)] max-md:contents">
-          <header className="mt-5 sm:mt-7 max-md:order-2">
-            <h1 className="text-balance font-semibold text-[clamp(1.9rem,4vw,3.25rem)] leading-[1.05] tracking-tight" style={{ viewTransitionName: 'title' }}>
-              {name}
-            </h1>
-            {shot.toLowerCase() !== name.toLowerCase() && (
-              <p className="mt-2.5 font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.recipe.shot(shot)}</p>
-            )}
-            <p className="mt-3.5 max-w-[60ch] text-pretty text-base text-muted-foreground leading-relaxed sm:text-[1.0625rem]">{t.def[locale]}</p>
-          </header>
-
-          <div className="mt-6 flex flex-wrap items-center gap-2.5 max-md:order-3">
-            <CopyAction term={t} className="max-md:w-full" />
-            <LikeButton slug={t.slug} />
-            <SaveButton slug={t.slug} />
-            {copies >= 10 && <span className="mx-1.5 font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide">{s.recipe.copiedTimes(copies)}</span>}
+            </div>
+            {!selected && <p className="mt-4 text-[15px] text-muted-foreground">{s.recipe.recreationOnly}</p>}
           </div>
 
-          <div className="max-md:order-6">
-            {clips.length > 1 && (
-              <section className="mt-14 sm:mt-18" data-rv>
-                <h2 className={h2}>{s.recipe.seenIn}</h2>
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-3">
-                  {clips.map((c, idx) => (
-                    <SourceClip key={`${c.href}-${idx}`} source={c} selected={idx === k} onSelect={() => select(idx)} />
-                  ))}
-                </div>
-              </section>
-            )}
-
-            <section className="mt-14 sm:mt-18" data-rv>
-              <h2 className={h2}>{s.recipe.howto(name)}</h2>
-              <p className="mb-3.5 max-w-[64ch] text-muted-foreground leading-relaxed">{s.recipe.pasteLine}</p>
-              <div className="flex flex-wrap items-center gap-3">
-                <InstallCommand />
-              </div>
-              <details className="group mt-5 rounded-xl bg-muted ring-1 ring-border">
-                <summary className="flex min-h-12 cursor-pointer list-none select-none items-center justify-between gap-3 rounded-xl px-4 font-semibold text-[0.9375rem] hover:bg-accent group-open:rounded-b-none group-open:shadow-[0_1px_0_var(--border)] [&::-webkit-details-marker]:hidden">
-                  <span>{s.recipe.built}</span>
-                  <ChevronDown aria-hidden="true" className="size-[18px] text-muted-foreground transition-transform duration-300 group-open:rotate-180" />
-                </summary>
-                <div className="px-4 pt-5 pb-6 sm:px-5">
-                  {text.seo.howto.map((p) => (
-                    <p key={p} className="mb-3.5 max-w-[64ch] text-muted-foreground leading-relaxed last:mb-0">
-                      {p}
-                    </p>
-                  ))}
-                </div>
-              </details>
-            </section>
-
-            <section className="mt-14 sm:mt-18">
-              <FullRecipe term={t} text={text} />
-            </section>
-
-            <section className="mt-14 sm:mt-18" data-rv>
-              <h2 className={h2}>{s.recipe.faq}</h2>
-              <Faq items={text.seo.faq} />
-            </section>
-
-            <div className="mt-8">
-              <WishLink slug={t.slug} />
+          <div className="flex min-w-0 flex-col gap-3 md:gap-4">
+            <span className="inline-flex self-start rounded-full bg-card px-3.5 py-1.5 font-semibold text-[15px] text-kicker shadow-soft">
+              {s.positions[t.pos]} · {s.recipe.filmLength(t.dur)}
+            </span>
+            <h1 className="m-0 text-balance text-[34px] leading-[1.04] md:text-[52px]" style={{ viewTransitionName: 'title' }}>
+              {name}
+            </h1>
+            <p className="m-0 line-clamp-3 text-pretty text-base text-muted-foreground md:text-lg">{t.def[locale]}</p>
+            {shot.toLowerCase() !== name.toLowerCase() && <p className="m-0 text-[13px] text-muted-foreground">{s.recipe.shot(shot)}</p>}
+            <div className="mt-1 flex flex-wrap items-center gap-2.5">
+              <CopyAction term={t} className="max-md:w-full" />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <LikeButton slug={t.slug} />
+              <SaveButton slug={t.slug} />
+              {copies >= 10 && <span className="mx-1.5 text-[13px] text-muted-foreground">{s.recipe.copiedTimes(copies)}</span>}
             </div>
           </div>
         </div>
+
+        {selected && (
+          <section className="mt-14 md:mt-20" data-rv>
+            <h2 className={h2}>{s.recipe.seenIn}</h2>
+            <div className="mt-4 grid items-start gap-4 md:mt-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-12">
+              <Compare source={selected} />
+              <div className="flex flex-col gap-3">
+                {clips.map((c, idx) => (
+                  <SourceClip key={`${c.href}-${idx}`} source={c} selected={idx === k} onSelect={() => select(idx)} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <div className="max-w-[800px]">
+          <section className="mt-14 md:mt-[4.5rem]" data-rv>
+            <h2 className={h2Small}>{s.recipe.howto(name)}</h2>
+            <p className="mb-4 text-base text-muted-foreground leading-relaxed">{s.recipe.pasteLine}</p>
+            <div className="mb-5 flex flex-wrap items-center gap-3">
+              <InstallCommand />
+            </div>
+            <details className={foldClass}>
+              <summary className={foldSummary}>
+                <span>{s.recipe.built}</span>
+              </summary>
+              <div className="px-5 pb-[18px] md:px-6">
+                {text.seo.howto.map((p) => (
+                  <p key={p} className="mb-3 text-base text-muted-foreground leading-relaxed last:mb-0">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </details>
+            <FullRecipe term={t} text={text} />
+          </section>
+
+          <section className="mt-10" data-rv>
+            <h2 className={h2Small}>{s.recipe.faq}</h2>
+            <Faq items={text.seo.faq} />
+          </section>
+
+          <div className="mt-14">
+            <WishLink slug={t.slug} />
+          </div>
+        </div>
+
+        {more.length > 0 && (
+          <section className="mt-14 md:mt-20" data-rv>
+            <h2 className={h2}>{s.recipe.more(s.positions[t.pos])}</h2>
+            <div className="mt-4 md:mt-6">
+              <TileGrid terms={more} />
+            </div>
+          </section>
+        )}
+        <div className="h-16 md:h-20" aria-hidden="true" />
       </div>
-      {more.length > 0 && (
-        <section className="mt-14 sm:mt-18" data-rv>
-          <h2 className={h2}>{s.recipe.more(s.positions[t.pos])}</h2>
-          <TileGrid terms={more} />
-        </section>
-      )}
     </main>
   )
 }

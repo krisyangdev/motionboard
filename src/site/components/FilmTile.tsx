@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FocusEvent, MouseEvent, PointerEvent } from 'react'
 import { cn } from '@/core/lib/utils'
 import { useLocale } from '@/core/locale'
-import { CopyAction, LikeButton, SaveButton } from '@/site/components/actions'
+import { CopyAction, SaveButton } from '@/site/components/actions'
 import { media, termName } from '@/site/data/terms'
 import type { Term } from '@/site/data/terms'
 import { RecipeLink } from '@/site/lib/links'
@@ -152,19 +152,13 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
   return (
     <article
       ref={root}
-      className="group relative min-w-0"
+      className="group relative flex min-w-0 flex-col rounded-[18px] bg-card p-[5px] shadow-card transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-card-hover motion-reduce:hover:translate-y-0 md:rounded-card md:p-2"
       onPointerEnter={onEnter}
       onPointerLeave={onLeave}
       onFocus={onFocus}
       onBlur={onBlur}
     >
-      <div
-        className={cn(
-          'relative aspect-video overflow-hidden rounded-xl bg-muted ring-1 ring-border transition-shadow group-focus-within:ring-foreground/20 group-hover:ring-foreground/20',
-          live && 'ring-brand/70 group-focus-within:ring-brand/70 group-hover:ring-brand/70',
-        )}
-        ref={frame}
-      >
+      <div className="relative aspect-video overflow-hidden rounded-[13px] bg-media md:rounded-media" ref={frame}>
         <img
           src={media(term, 'jpgSmall')}
           alt=""
@@ -172,12 +166,15 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
           height={540}
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
-          className="absolute inset-0 size-full object-cover"
+          className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
         />
         {armed && (
           <video
             ref={video}
-            className={cn('absolute inset-0 size-full object-cover transition-opacity duration-200', live ? 'opacity-100' : 'opacity-0')}
+            className={cn(
+              'absolute inset-0 size-full object-cover transition-[opacity,transform] duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100',
+              live ? 'opacity-100' : 'opacity-0',
+            )}
             src={src}
             muted
             loop
@@ -187,33 +184,30 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
             onPlaying={() => setLive(true)}
           />
         )}
+        <span className="pointer-events-none absolute right-2 bottom-2 rounded-full bg-black/55 px-2 py-1 font-semibold text-white text-xs leading-none tabular-nums max-md:hidden">
+          {Number(term.dur.toFixed(1))}s
+        </span>
         {hint && (
-          <div role="status" className="absolute inset-x-0 bottom-0 z-10 bg-background/85 px-2.5 py-1.5 text-xs leading-snug backdrop-blur-md">
+          <div role="status" className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-background/85 px-2.5 py-1.5 text-xs leading-snug backdrop-blur-md">
             {s.actions.pasteHint}
           </div>
         )}
       </div>
-      <div className="absolute top-2 right-2 z-10 flex gap-0.5 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100 max-md:opacity-100">
-        <CopyAction term={term} compact onCopied={onCopied} />
+      <div className="absolute top-3.5 right-3.5 z-10 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100 max-md:hidden">
         <SaveButton slug={term.slug} compact />
       </div>
-      <div className="flex items-center justify-between gap-2 pt-2">
-        <div className="grid min-w-0 gap-px">
-          <RecipeLink
-            ref={title}
-            slug={term.slug}
-            viewTransition
-            data-tile-title
-            className="line-clamp-2 font-medium text-[0.9rem] leading-snug outline-none pointer-coarse:-my-3 pointer-coarse:py-3 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-brand focus-visible:after:ring-offset-2 focus-visible:after:ring-offset-background"
-            onClick={onNavigate}
-          >
-            {termName(term, locale)}
-          </RecipeLink>
-          <span className="font-mono text-[0.6875rem] text-muted-foreground uppercase tracking-wide max-[559px]:hidden">{s.positions[term.pos]}</span>
-        </div>
-        <div className="relative z-10 shrink-0">
-          <LikeButton slug={term.slug} compact />
-        </div>
+      <div className="flex items-center gap-2 pt-2 pr-1 pb-[3px] pl-1.5 md:px-2 md:pt-3 md:pb-1.5">
+        <RecipeLink
+          ref={title}
+          slug={term.slug}
+          viewTransition
+          data-tile-title
+          className="line-clamp-2 min-w-0 flex-1 font-semibold text-sm leading-[1.3] outline-none after:absolute after:inset-0 after:rounded-[18px] focus-visible:after:ring-2 focus-visible:after:ring-primary focus-visible:after:ring-offset-2 focus-visible:after:ring-offset-background md:text-base md:after:rounded-card"
+          onClick={onNavigate}
+        >
+          {termName(term, locale)}
+        </RecipeLink>
+        <CopyAction term={term} compact onCopied={onCopied} />
       </div>
     </article>
   )

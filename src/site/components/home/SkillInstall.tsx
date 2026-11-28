@@ -25,7 +25,7 @@ export function CommandBox({ text, what }: { text: string; what: 'install' | 'co
   }
 
   return (
-    <div className="flex w-full max-w-full min-w-0 items-center gap-1 rounded-xl bg-muted py-0 pr-1 pl-4 ring-1 ring-border sm:w-fit">
+    <div className="flex w-full max-w-full min-w-0 items-center gap-1 rounded-2xl bg-card py-0 pr-1 pl-4 shadow-soft sm:w-fit">
       <code className="min-w-0 flex-1 py-2.5 font-mono text-[0.8125rem] [overflow-wrap:anywhere] sm:text-sm">{text}</code>
       <Button ref={btn} variant="ghost" size="icon-lg" className="text-muted-foreground hover:text-foreground" aria-label={done ? s.actions.copied : s.skill.copy} onClick={copy}>
         {done ? <Check aria-hidden /> : <Copy aria-hidden />}
@@ -40,15 +40,17 @@ export const InstallCommand = () => <CommandBox text={SKILL_INSTALL} what="insta
 export function SkillInstall() {
   const s = useStrings()
   return (
-    <section className="wrap pt-14 sm:pt-18" aria-labelledby="skill-h">
-      <h2 className="mb-4 font-semibold text-[1.375rem] leading-tight tracking-tight" id="skill-h">
-        {s.skill.title}
-      </h2>
-      <div className="flex flex-wrap items-center gap-3">
-        <InstallCommand />
-        <a className={buttonVariants({ variant: 'outline', size: 'lg', className: 'max-sm:w-full' })} href={GITHUB_URL} target="_blank" rel="noopener" data-cta="github">
-          {s.skill.github}
-        </a>
+    <section className="wrap pt-4 pb-16 md:pb-24" aria-labelledby="skill-h">
+      <div className="rounded-card bg-step p-5 md:p-8">
+        <h2 className="mb-4 text-[22px] leading-[1.2] md:text-[26px]" id="skill-h">
+          {s.skill.title}
+        </h2>
+        <div className="flex flex-wrap items-center gap-3">
+          <InstallCommand />
+          <a className={buttonVariants({ variant: 'outline', size: 'lg', className: 'max-sm:w-full' })} href={GITHUB_URL} target="_blank" rel="noopener" data-cta="github">
+            {s.skill.github}
+          </a>
+        </div>
       </div>
     </section>
   )

@@ -75,10 +75,11 @@ check('recipe film in server HTML', terms.flatMap((t) => prefixes.map((p) => ({ 
   if (!hasSource(html, t.video)) return `${p}/recipes/${t.slug}/ has no <source> for ${t.video}`
   return /<img[^>]*fetchPriority="high"[^>]*elementtiming="poster"/.test(html) ? '' : `${p}/recipes/${t.slug}/ has no poster with elementtiming`
 })
-check('hero film in server HTML', prefixes, (p) => {
+check('home hero in server HTML: LCP heading and floating film posters', prefixes, (p) => {
   const html = read(`${p ? `${p.slice(1)}/` : ''}index.html`)
-  if (!hasSource(html, 'hero-film')) return `${p || '/'} has no hero <source>`
-  return /<img[^>]*fetchPriority="high"[^>]*elementtiming="poster"/.test(html) ? '' : `${p || '/'} hero poster has no elementtiming`
+  if (!/<h1[^>]*elementtiming="lcp"/.test(html)) return `${p || '/'} hero h1 has no elementtiming="lcp"`
+  const posters = html.match(/<img[^>]*width="960"[^>]*height="540"[^>]*>/g) ?? []
+  return posters.length >= 6 ? '' : `${p || '/'} has ${posters.length} hero film posters, expected 6`
 })
 
 // 6. values repeated outside site.config.ts

@@ -1,4 +1,4 @@
-// The launch film on the home page, cut into the recipes it is made of.
+// Motionboard's launch film, cut into the recipes it is made of. Used by the launch-film guide page (ContentPage); the home hero no longer plays it.
 // One film (Motionboard's own launch film, made with the recipes below); each segment is a
 // time range of it, taken from the film's segments.json. Both encodes have a keyframe at every
 // segment start, so jumping to a segment shows its first frame at once.
@@ -10,7 +10,6 @@ export const HERO_FILM = {
   mobile: `${MEDIA_URL}/hero-film-m.mp4`,
   /** the film's first frame, so the film takes over the poster without a visible cut */
   poster: `${MEDIA_URL}/hero-start.jpg`,
-  posterSmall: `${MEDIA_URL}/hero-start-m.jpg`,
   /** share image */
   cover: `${MEDIA_URL}/hero-film.jpg`,
 }
