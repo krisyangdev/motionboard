@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { FocusEvent, MouseEvent, PointerEvent } from 'react'
+import type { FocusEvent, MouseEvent } from 'react'
 import { cn } from '@/core/lib/utils'
 import { useLocale } from '@/core/locale'
 import { CopyAction, SaveButton } from '@/site/components/actions'
@@ -12,7 +12,7 @@ const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').match
 
 // Touch devices have no hover: of the tiles on screen, the one whose center is nearest the
 // viewport center plays, one at a time. One observer and one scroll listener serve all tiles.
-type Ctl = { play(): void; stop(): void }
+type Ctl = { play(): void; stop(): void; pause(): void }
 const ctls = new WeakMap<Element, Ctl>()
 const visible = new Set<Element>()
 let playing: Element | null = null
@@ -67,7 +67,60 @@ function watchTouch(el: Element, ctl: Ctl) {
   }
 }
 
-export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean }) {
+// Desktop (hover + fine pointer): a tile plays while at least half of it is visible, and pauses when
+// it leaves the viewport or the tab is hidden. One observer serves all tiles. Nothing starts before
+// the page has loaded, so posters and the LCP come first.
+const desktopMedia = '(hover: hover) and (pointer: fine)'
+const inView = new Set<Element>()
+let dio: IntersectionObserver | null = null
+let ready = false
+
+function resumeAll() {
+  if (!ready || document.hidden) return
+  for (const el of inView) ctls.get(el)?.play()
+}
+
+function startDesktop() {
+  const go = () => {
+    ready = true
+    resumeAll()
+  }
+  const idle = () => (window.requestIdleCallback ? window.requestIdleCallback(go) : setTimeout(go, 200))
+  if (document.readyState === 'complete') idle()
+  else addEventListener('load', idle, { once: true })
+}
+
+function watchDesktop(el: Element, ctl: Ctl) {
+  if (!dio) {
+    dio = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) inView.add(e.target)
+          else inView.delete(e.target)
+          if (!ready || document.hidden) continue
+          if (e.isIntersecting) ctls.get(e.target)?.play()
+          else ctls.get(e.target)?.pause()
+        }
+      },
+      { threshold: 0.5 },
+    )
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) for (const t of inView) ctls.get(t)?.pause()
+      else resumeAll()
+    })
+    startDesktop()
+  }
+  ctls.set(el, ctl)
+  dio.observe(el)
+  return () => {
+    dio?.unobserve(el)
+    inView.delete(el)
+    ctls.delete(el)
+    ctl.pause()
+  }
+}
+
+export function FilmTile({ term, eager = false, priority = false }: { term: Term; eager?: boolean; priority?: boolean }) {
   const root = useRef<HTMLElement>(null)
   const frame = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
@@ -78,19 +131,22 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
   const [armed, setArmed] = useState(false)
   const [hint, setHint] = useState(false)
   const hintTimer = useRef(0)
+  // Whether the tile should be playing; a video armed after the request starts only if still wanted.
+  const wanted = useRef(false)
   const locale = useLocale()
   const s = useStrings()
   const src = media(term, 'small')
 
   const play = useCallback(() => {
     if (reducedMotion()) return
+    wanted.current = true
     const v = video.current
     if (!v) setArmed(true)
     else v.play().catch(() => {})
   }, [])
 
   useEffect(() => {
-    if (armed) video.current?.play().catch(() => {})
+    if (armed && wanted.current) video.current?.play().catch(() => {})
   }, [armed])
 
   useEffect(() => () => window.clearTimeout(hintTimer.current), [])
@@ -103,6 +159,7 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
   }
 
   const stop = useCallback(() => {
+    wanted.current = false
     const v = video.current
     if (!v) return
     v.pause()
@@ -110,21 +167,23 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
     setLive(false)
   }, [])
 
-  useEffect(() => {
-    if (!matchMedia('(hover: none)').matches) return
-    return watchTouch(root.current!, { play, stop })
-  }, [play, stop])
+  // Pause keeps the current frame and the video visible.
+  const pause = useCallback(() => {
+    wanted.current = false
+    video.current?.pause()
+  }, [])
 
-  const onEnter = (e: PointerEvent) => {
-    if (e.pointerType === 'mouse') play()
-  }
-  const onLeave = (e: PointerEvent) => {
-    if (e.pointerType === 'mouse') stop()
-  }
+  useEffect(() => {
+    if (matchMedia('(hover: none)').matches) return watchTouch(root.current!, { play, stop, pause })
+    if (matchMedia(desktopMedia).matches) return watchDesktop(root.current!, { play, stop, pause })
+    return undefined
+  }, [play, stop, pause])
+
   const onFocus = (e: FocusEvent) => {
     if (e.target.matches(':focus-visible')) play()
   }
   const onBlur = (e: FocusEvent) => {
+    if (matchMedia(desktopMedia).matches) return
     if (!e.currentTarget.contains(e.relatedTarget as Node | null)) stop()
   }
 
@@ -153,8 +212,6 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
     <article
       ref={root}
       className="group relative flex min-w-0 flex-col rounded-[18px] bg-card p-[5px] shadow-card transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-card-hover motion-reduce:hover:translate-y-0 md:rounded-card md:p-2"
-      onPointerEnter={onEnter}
-      onPointerLeave={onLeave}
       onFocus={onFocus}
       onBlur={onBlur}
     >
@@ -165,7 +222,8 @@ export function FilmTile({ term, eager = false }: { term: Term; eager?: boolean 
           aria-hidden="true"
           width={960}
           height={540}
-          loading={eager ? 'eager' : 'lazy'}
+          loading={eager || priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
           decoding="async"
           className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
         />

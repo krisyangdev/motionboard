@@ -27,9 +27,8 @@ export function Shelves({ query, onQuery }: { query: string; onQuery: (q: string
   )
 
   return (
-    <section id="recipes" className="pt-10 pb-8">
+    <section id="recipes" className="scroll-mt-20 pt-3 pb-8 md:pt-5">
       <div className="wrap">
-        <h2 className="mb-6 text-[26px] leading-[1.15] md:text-[32px]">{s.hero.allEffects}</h2>
         {searching ? (
           <div aria-live="polite">
             {found.length ? (
@@ -44,7 +43,7 @@ export function Shelves({ query, onQuery }: { query: string; onQuery: (q: string
             )}
           </div>
         ) : (
-          POSITION_ORDER.map((p) => {
+          POSITION_ORDER.map((p, i) => {
             const list = byPos(p)
             return (
               <section key={p} className="mb-12" id={`shelf-${p}`} data-pos={p} aria-labelledby={`shelf-${p}-h`}>
@@ -55,7 +54,7 @@ export function Shelves({ query, onQuery }: { query: string; onQuery: (q: string
                   </h2>
                   <span className="text-[15px] text-muted-foreground tabular-nums">{list.length}</span>
                 </div>
-                <TileGrid terms={list} />
+                <TileGrid terms={list} eagerCount={i === 0 ? 4 : 0} />
               </section>
             )
           })

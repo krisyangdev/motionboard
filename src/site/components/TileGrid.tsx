@@ -31,11 +31,11 @@ function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
   }
 }
 
-export function TileGrid({ terms }: { terms: Term[] }) {
+export function TileGrid({ terms, eagerCount = 0 }: { terms: Term[]; eagerCount?: number }) {
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 min-[1200px]:grid-cols-4" onKeyDown={onKeyDown}>
-      {terms.map((t) => (
-        <FilmTile key={t.slug} term={t} />
+      {terms.map((t, i) => (
+        <FilmTile key={t.slug} term={t} eager={i < eagerCount} priority={i === 0 && eagerCount > 0} />
       ))}
     </div>
   )
