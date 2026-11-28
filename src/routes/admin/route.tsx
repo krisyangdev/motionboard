@@ -3,6 +3,7 @@ import { createFileRoute, Link, Outlet, useLocation, useNavigate } from '@tansta
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, ApiError } from '@/core/app/api'
 import { QueryProvider } from '@/core/app/QueryProvider'
+import { adminSite } from '../../site/admin'
 import { cn } from '@/core/lib/utils'
 import { Button, buttonVariants } from '@/core/ui/button'
 import { Skeleton } from '@/core/ui/skeleton'
@@ -17,14 +18,18 @@ export const Route = createFileRoute('/admin')({
 
 type Me = { admin: { id: string; email: string; role: string } }
 
-const NAV = [
+type NavItem = { to: string; label: string; exact?: boolean }
+
+const NAV: NavItem[] = [
   { to: '/admin/', label: 'Dashboard', exact: true },
   { to: '/admin/users/', label: 'Users' },
   { to: '/admin/orders/', label: 'Orders' },
   { to: '/admin/jobs/', label: 'Jobs' },
   { to: '/admin/webhooks/', label: 'Webhooks' },
   { to: '/admin/audit/', label: 'Audit log' },
-] as const
+  // Site pages added through src/site/admin.ts.
+  ...(adminSite.nav ?? []),
+]
 
 function AdminLayout() {
   const pathname = useLocation({ select: (l) => l.pathname })
@@ -69,7 +74,7 @@ function Shell() {
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    activeOptions={{ exact: 'exact' in item }}
+                    activeOptions={{ exact: !!item.exact }}
                     className={cn(buttonVariants({ variant: 'ghost' }), 'text-muted-foreground aria-[current=page]:bg-accent aria-[current=page]:text-foreground md:w-full md:justify-start')}
                   >
                     {item.label}
