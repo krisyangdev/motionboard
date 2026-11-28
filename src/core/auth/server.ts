@@ -5,7 +5,7 @@ import { dodopayments, portal, webhooks, type DodoPaymentsPlugins } from '@dodop
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
-import { dodoClient, hasDodoKey, isMockPayments, webhookSecret } from '../billing/dodo'
+import { dodoClient, hasDodoKey, webhookSecret } from '../billing/dodo'
 import { handleDodoWebhook } from '../billing/webhooks'
 import { grant } from '../credits/ledger'
 import { db, schema } from '../db'
@@ -106,7 +106,9 @@ export function auth() {
     },
     plugins: [
       ...(authSite.plugins?.() ?? []),
-      dodopayments({ client: dodoClient(), createCustomerOnSignUp: !isMockPayments() && hasKey, use: dodoUse }),
+      // No Dodo call at sign-up: a Dodo outage must not fail registration. The portal creates the customer on first open
+      // and checkout passes the buyer's email.
+      dodopayments({ client: dodoClient(), createCustomerOnSignUp: false, use: dodoUse }),
       tanstackStartCookies(), // must stay last
     ],
   })
