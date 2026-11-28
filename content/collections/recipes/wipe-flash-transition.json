@@ -130,7 +130,7 @@
     }
   },
   "published": "2026-10-30",
-  "updated": "2026-11-26",
+  "updated": "2026-11-28",
   "en": {
     "keyword": "Wipe and Flash Transition",
     "demand": {
@@ -149,7 +149,7 @@
         "body": "For the wipe, hold a matte black ball (2800 px, scale 0.42 to 0.45, 54 px blur) at the lower left. It sweeps to frame center at scale 1 with expo.out over 7 frames (0.233 s), then leaves right at 1.08 with power2.in over 8 frames. Swap scenes on the frame where the ball is centered, at 2.6 s and 7.4 s.\n\nFor the flash, scale a 5200 px radial halo (white core to 42%) from 0.05 to 1.5 with ease none over 8 frames, ending at 5.1 s in a full white plate. Swap the scene on the full white frame and fade the white out with power3.out over 9 frames. Scene camera moves use ease none, for example content x 70 to -60 and scale 1.26 to 1.36 in 1700 px perspective.\n\nPress the copy button on the recipe page and paste it into Claude Code or Codex, or run npx skills add krisyangdev/motionboard. The agent renders an MP4 with HyperFrames, or ports the GSAP timeline to your site with your own scenes."
       }
     ],
-    "alt": "A log search screen flashes to white, then a big \"38 ms\" p99 latency number appears on black.",
+    "alt": "A dark blurred shape sweeps across a log search screen with an error histogram, wiping it off frame.",
     "faq": [
       [
         "What are wipe and flash transitions?",
@@ -183,7 +183,7 @@
         "body": "遮挡转场：一个哑光黑球（2800px，缩放 0.42 到 0.45，54px 模糊）等在左下角。它用 expo.out 在 7 帧（0.233 秒）内扫到画面中心，缩放 1，再用 power2.in 在 8 帧内向右离开，缩放 1.08。场景在球位于中心的那一帧切换，分别是 2.6 秒和 7.4 秒。\n\n闪白转场：一个 5200px 的径向光晕（白色核心到 42%）用 ease none 在 8 帧内从 0.05 倍放大到 1.5 倍，5.1 秒变成整屏纯白。在全白那一帧换场景，再用 power3.out 在 9 帧内淡出白色。场景里的镜头运动用 ease none，例如内容 x 从 70 到 -60，缩放从 1.26 到 1.36，透视 1700px。\n\n在配方页点复制按钮，粘贴给 Claude Code 或 Codex，也可以运行 npx skills add krisyangdev/motionboard 安装技能。智能体会用 HyperFrames 渲染 MP4，或者把 GSAP 时间线移植到你的网站，场景换成你自己的。"
       }
     ],
-    "alt": "日志搜索界面闪白后，黑底上出现大字 38 ms 的 p99 延迟。",
+    "alt": "一块虚化的深色前景从带错误柱状图的日志搜索界面上扫过，把画面擦掉。",
     "faq": [
       [
         "遮挡转场和闪白转场是什么？",
