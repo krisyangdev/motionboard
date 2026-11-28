@@ -16,14 +16,16 @@ vi.mock('../../site/auth', () => {
     return Buffer.from(bits).toString('base64url')
   }
   return {
-    password: {
-      hash: async (password: string) => {
-        const salt = crypto.randomUUID().replace(/-/g, '').slice(0, 16)
-        return `i2s-pbkdf2:${salt}:pbkdf2-sha256:12000:${await derive(password, salt, 12000)}`
-      },
-      verify: async ({ hash, password }: { hash: string; password: string }) => {
-        const m = hash.match(/^i2s-pbkdf2:(.+):pbkdf2-sha256:(\d+):(.+)$/)
-        return Boolean(m) && (await derive(password, m![1], Number(m![2]))) === m![3]
+    authSite: {
+      password: {
+        hash: async (password: string) => {
+          const salt = crypto.randomUUID().replace(/-/g, '').slice(0, 16)
+          return `i2s-pbkdf2:${salt}:pbkdf2-sha256:12000:${await derive(password, salt, 12000)}`
+        },
+        verify: async ({ hash, password }: { hash: string; password: string }) => {
+          const m = hash.match(/^i2s-pbkdf2:(.+):pbkdf2-sha256:(\d+):(.+)$/)
+          return Boolean(m) && (await derive(password, m![1], Number(m![2]))) === m![3]
+        },
       },
     },
   }

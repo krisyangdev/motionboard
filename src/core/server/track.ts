@@ -9,7 +9,7 @@ import { appEnv } from './env'
 import { SITE } from '../../../site.config.ts'
 
 export type ServerEvent = 'signup' | 'checkout_start' | 'payment_success' | 'generate_request' | 'generate_result'
-type Props = Record<string, string | number | boolean | null | undefined>
+export type Props = Record<string, string | number | boolean | null | undefined>
 
 /** User agent and country of the request being served; empty in queue and cron context where there is no request. */
 function requestProps(): Props {
