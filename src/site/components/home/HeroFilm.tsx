@@ -181,7 +181,7 @@ export function HeroFilm({ query, onQuery, onLoaded }: { query: string; onQuery:
     >
       <div className="relative z-[2] mx-auto flex w-full max-w-[760px] flex-col items-center px-4 pt-6 text-center md:max-w-[640px] md:px-8 md:pt-10 md:pb-24 xl:max-w-[760px]">
         <span className="inline-flex h-9 items-center rounded-full bg-(--chip-bg) px-4 font-semibold text-kicker text-sm shadow-soft">{s.hero.kicker(terms.length)}</span>
-        <h1 {...LCP} className="hero-h1 mt-3.5 text-[42px] leading-[0.98] [font-variation-settings:'opsz'_96] md:mt-5 md:text-[60px] xl:text-[72px]">
+        <h1 {...LCP} className="hero-h1 mt-3.5 text-[42px] leading-[0.98] [font-variation-settings:'opsz'_96] md:mt-5 md:text-[60px] xl:w-[min(880px,calc(100vw-500px))] xl:max-w-none xl:text-[64px]">
           <Headline text={BRAND.headline[locale]} />
         </h1>
         <p className="mt-3.5 mb-[22px] max-w-[26em] text-[17px] text-muted-foreground md:mt-6 md:mb-8 md:text-xl">{s.hero.sub}</p>
