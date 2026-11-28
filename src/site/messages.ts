@@ -16,7 +16,6 @@ const en = {
   hero: {
     shots: 'Shots in the film',
     all: 'All',
-    allEffects: 'All effects',
   },
   shelves: {
     label: 'Recipe positions',
@@ -95,7 +94,6 @@ const zh: Strings = {
   hero: {
     shots: '影片中的镜头',
     all: '全部',
-    allEffects: '全部动效',
   },
   shelves: {
     label: '配方分类',

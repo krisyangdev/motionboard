@@ -34,8 +34,8 @@ export function HeroFilm({ query, onQuery, onLoaded }: { query: string; onQuery:
   const locale = useLocale()
 
   return (
-    <section className="relative overflow-hidden bg-hero">
-      <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center px-4 pt-5 pb-5 text-center md:px-8 md:pt-9 md:pb-8">
+    <section className="relative overflow-hidden bg-hero after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-8 after:bg-linear-to-b after:from-transparent after:to-background">
+      <div className="relative z-[1] mx-auto flex w-full max-w-[1100px] flex-col items-center px-4 pt-5 pb-5 text-center md:px-8 md:pt-9 md:pb-8">
         <h1 {...LCP} className="hero-h1 mb-5 text-[34px] leading-[1.05] [font-variation-settings:'opsz'_96] md:mb-7 md:text-[46px] xl:text-[54px]">
           <Headline text={BRAND.headline[locale]} />
         </h1>

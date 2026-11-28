@@ -1,3 +1,5 @@
+import { pageType } from '@/site/analytics'
+import { stripLocale } from '@/core/i18n'
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { Bookmark, Check, Copy, Heart } from 'lucide-react'
 import { track } from '@/core/track'
@@ -44,7 +46,7 @@ export function CopyAction({ term, compact, className, onCopied }: { term: Term;
     await writeClipboard(copyText(term))
     if (ref.current) burst(ref.current)
     trackCopy(term.slug)
-    track('copy', { tool: SITE.id, what: 'prompt', recipe: term.slug, page: location.pathname })
+    track('copy', { tool: SITE.id, what: 'prompt', recipe: term.slug, page: location.pathname, from: pageType(stripLocale(location.pathname)) })
     setDone(true)
     setHinted({ slug: term.slug, on: true })
     window.clearTimeout(timer.current)
